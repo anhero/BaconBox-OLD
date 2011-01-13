@@ -506,8 +506,8 @@
 				51CF8D8112DF60E0003FBBAD /* States system */,
 			);
 			name = RedBox;
-			path = /Users/dupuisj/Desktop/igfproject/libraries/RedBox/RedBox;
-			sourceTree = "<absolute>";
+			path = ../../RedBox;
+			sourceTree = SOURCE_ROOT;
 		};
 		51CF8D2812DF60E0003FBBAD /* Audio */ = {
 			isa = PBXGroup;
@@ -696,8 +696,8 @@
 				51CF8EC012DF60EE003FBBAD /* simple-image */,
 			);
 			name = libraries;
-			path = /Users/dupuisj/Desktop/igfproject/libraries/RedBox/libraries;
-			sourceTree = "<absolute>";
+			path = ../../libraries;
+			sourceTree = SOURCE_ROOT;
 		};
 		51CF8DD812DF60ED003FBBAD /* Finch */ = {
 			isa = PBXGroup;
