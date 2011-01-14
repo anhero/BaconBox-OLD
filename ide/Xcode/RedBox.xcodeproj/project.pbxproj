@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2480744F12E0A3F800F49E74 /* RenderInfo.h */; };
 		512B7DB612DF6103002E9698 /* Finch.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8DD912DF60ED003FBBAD /* Finch.h */; };
 		512B7DB712DF6104002E9698 /* Finch.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8DDA12DF60ED003FBBAD /* Finch.m */; };
 		512B7DB812DF6105002E9698 /* RevolverSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8DDB12DF60ED003FBBAD /* RevolverSound.h */; };
@@ -180,6 +181,7 @@
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2480744F12E0A3F800F49E74 /* RenderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderInfo.h; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -544,6 +546,7 @@
 				51CF8D5F12DF60E0003FBBAD /* Sprite.h */,
 				51CF8D6012DF60E0003FBBAD /* SpriteEmitter.cpp */,
 				51CF8D6112DF60E0003FBBAD /* SpriteEmitter.h */,
+				2480744F12E0A3F800F49E74 /* RenderInfo.h */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -1029,6 +1032,7 @@
 				512B7DB812DF6105002E9698 /* RevolverSound.h in Headers */,
 				512B7DBB12DF6107002E9698 /* Sound.h in Headers */,
 				512B7E3012DF67B1002E9698 /* Edge.h in Headers */,
+				2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
