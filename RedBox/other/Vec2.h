@@ -19,6 +19,13 @@ namespace RedBox{
 	 * @ingroup Physics
 	 */
 	class Vec2 {
+        /**
+         * Outputs the vector's content.
+         * @param output The ostream in which Vec2 is output.
+         * @param v Vec2 to output in the ostream.
+         * @return Resulting ostream.
+         */
+        friend std::ostream& operator<<(std::ostream& output, const Vec2& v);
 	private:
 		/**
 		 * Uses pointers or not depending on the necessities. If the vector is
@@ -221,23 +228,6 @@ namespace RedBox{
 		 * zero, it will instead print an error message. 
 		 */
 		void normalize();
-        /**
-         * Outputs the vector's content.
-         * @param output The ostream in which Vec2 is output.
-         * @param v Vec2 to output in the ostream.
-         * @return Resulting ostream.
-         */
-        friend std::ostream& operator<<(std::ostream& output, const Vec2& v)  {
-            output << "{";
-            if(v.isPtr) {
-                output << "isPtr:true, coordsPtr.x:" << v.coordsPtr.x << "(" << *(v.coordsPtr.x) << "f), coordsPtr.y:" <<
-                v.coordsPtr.y << "(" << *(v.coordsPtr.y) << "f)}";
-            } else {
-                output << "isPtr:false, coordsVal.x:" << v.coordsVal.x << "f, coordsVal.y:" << v.coordsVal.y << "f)}";
-            }
-            return output;  // for multiple << operators.
-        }
-
 	};
 }
 

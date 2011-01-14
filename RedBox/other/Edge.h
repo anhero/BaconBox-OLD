@@ -19,6 +19,12 @@ namespace RedBox {
      * @ingroup Physics
      */
     class Edge {
+        /**
+         * Outputs the edge's content.
+         * @param output The ostream in which Edge is output.
+         * @param e Edge to output in the ostream.
+         * @return Resulting ostream.
+         */
         friend std::ostream& operator<<(std::ostream& output, const Edge& e);
     private:
         /// Distance between the two vertices.
