@@ -24,3 +24,32 @@ RenderStep& RenderStep::operator=(const RenderStep &src) {
     copyFrom(src);
     return *this;
 }
+
+void RenderStep::render() {
+    // We use the bitwise inclusive OR to combine different modes.
+    if(mode == SHAPE | TEXTURE | COLOR) {
+        // drawShapeWithTextureAndColor
+    } else if(mode == SHAPE | TEXTURE) {
+        // drawShapeWithTexture
+    }
+}
+
+RenderInfo& RenderStep::getRenderInfo() {
+    return info;
+}
+
+void RenderStep::setRenderInfo(const RenderInfo& newRenderInfo) {
+    info = newRenderInfo;
+}
+
+RenderStepMode RenderStep::getMode() const {
+    return mode;
+}
+
+void RenderStep::setMode(RenderStepMode newMode) {
+    mode = newMode;
+}
+
+void RenderStep::addMode(RenderStepMode newMode) {
+    mode |= newMode;
+}

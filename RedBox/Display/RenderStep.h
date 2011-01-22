@@ -11,6 +11,7 @@
 #include "Vertex.h"
 #include "RenderInfo.h"
 #include "RenderStepMode.h"
+#include "OpenGLDrawer.h"
 
 namespace RedBox {
     /**
@@ -19,9 +20,12 @@ namespace RedBox {
      */
     class RenderStep {
     private:
-        /// Information on the render.
+        /// Information on the render. Includes the color and the texture ID.
         RenderInfo info;
-        /// Render mode to be used for this rendering step.
+        /**
+         * Render mode to be used for this rendering step. Modes can be
+         * combined with the bitwise inclusive OR.
+         */
         RenderStepMode mode;
         /// Vertices to be rendered in this step.
         std::vector<Vertex*> vertices;
@@ -51,6 +55,37 @@ namespace RedBox {
          * @return Current instance for assignation chaining.
          */
         RenderStep& operator=(const RenderStep& src);
+        /**
+         * Renders the vertices using the info and the mode known.
+         */
+        void render();
+        /**
+         * Accessor for the rendering information.
+         * @return Information about the rendering.
+         */
+        RenderInfo& getRenderInfo();
+        /**
+         * Changes the rendering information.
+         * @param newRenderInfo New rendering information to overwrite the
+         * current one.
+         */
+        void setRenderInfo(const RenderInfo& newRenderInfo);
+        /**
+         * Gets the rendering mode.
+         * @return Current rendering mode.
+         */
+        RenderStepMode getMode() const;
+        /**
+         * Sets the rendering mode.
+         * @param newMode New mode to be set.
+         */
+        void setMode(RenderStepMode newMode);
+        /**
+         * Adds a mode with the bitwise inclusive OR. More than one mode can
+         * be added at the same time using the same operator.
+         * @param New mode to add.
+         */
+        void addMode(RenerStepMode newMode);
     };
 }
 
