@@ -2,19 +2,7 @@
 
 using namespace RedBox;
 
-void Sprite::clean() {
-    vertices.clear();
-    edges.clear();
-}
 
-void Sprite::copyFrom(const Sprite& src) {
-    clean();
-    if(this != &src && &src) {
-        vertices = src.vertices;
-        edges = src.edges;
-    } else {
-    }
-}
 
 Sprite::Sprite(): Renderable() {
 }
@@ -47,4 +35,20 @@ void Sprite::createEdge(Vertex* firstVertex, Vertex* secondVertex) {
 
 void Sprite::createVertex(float x, float y) {
     vertices.addVertex(x, y);
+}
+
+void Sprite::clean() {
+    renderSteps.clear();
+    vertices.clear();
+    edges.clear();
+}
+
+void Sprite::copyFrom(const Sprite& src) {
+    if(this != &src && &src) {
+        renderSteps = src.renderSteps;
+        vertices = src.vertices;
+        edges = src.edges;
+    } else {
+        clean();
+    }
 }

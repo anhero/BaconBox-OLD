@@ -13,6 +13,7 @@
 #include "Renderable.h"
 #include "VerticesGroup.h"
 #include "Edge.h"
+#include "RenderStep.h"
 
 namespace RedBox{
     /** 
@@ -20,20 +21,6 @@ namespace RedBox{
      * @ingroup Display
      */
 	class Sprite : public Renderable {
-    private:
-        /// Vertices making up the sprite.
-        VerticesGroup vertices;
-        /// Edges making up the sprite.
-        std::list<Edge> edges;
-        /**
-         * Resets the sprite. Also frees up all allocated memory.
-         */
-        void clean();
-        /**
-         * Makes the instance a copy of the recieved one.
-         * @param src Sprite to make a copy of.
-         */
-        void copyFrom(const Sprite& src);
     public:
         /**
          * Default constructor.
@@ -73,6 +60,23 @@ namespace RedBox{
          */
         void createVertex(float x, float y);
         void warnVertexBodyOfDeletion();
+        
+    private:
+        /// Vector containing the rendering steps.
+        std::vector<RenderStep> renderSteps;
+        /// Vertices making up the sprite.
+        VerticesGroup vertices;
+        /// Edges making up the sprite.
+        std::list<Edge> edges;
+        /**
+         * Resets the sprite. Also frees up all allocated memory.
+         */
+        void clean();
+        /**
+         * Makes the instance a copy of the recieved one.
+         * @param src Sprite to make a copy of.
+         */
+        void copyFrom(const Sprite& src);
     };
 }
 
