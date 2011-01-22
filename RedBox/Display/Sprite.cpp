@@ -3,11 +3,15 @@
 using namespace RedBox;
 
 void Sprite::clean() {
+    vertices.clear();
+    edges.clear();
 }
 
 void Sprite::copyFrom(const Sprite& src) {
+    clean();
     if(this != &src && &src) {
-        clean();
+        vertices = src.vertices;
+        edges = src.edges;
     } else {
     }
 }
@@ -39,4 +43,8 @@ void Sprite::createEdge(Vertex* firstVertex, Vertex* secondVertex) {
         // We add the edge to the list.
         edges.push_back(Edge(firstVertex, secondVertex));
     }
+}
+
+void Sprite::createVertex(float x, float y) {
+    vertices.addVertex(x, y);
 }

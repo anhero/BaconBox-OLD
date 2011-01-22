@@ -8,6 +8,7 @@
 #define REDBOX_SPRITE
 
 #include <list>
+#include <vector>
 
 #include "Renderable.h"
 #include "VerticesGroup.h"
@@ -65,6 +66,12 @@ namespace RedBox{
          * link.
          */
         void createEdge(Vertex* firstVertex, Vertex* secondVertex);
+        /**
+         * Creates a vertex in the vertices group.
+         * @param x Horizontal position.
+         * @param y Vertical position.
+         */
+        void createVertex(float x, float y);
         void warnVertexBodyOfDeletion();
     };
 }
