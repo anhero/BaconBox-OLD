@@ -8,33 +8,18 @@
 
 #include <vector>
 
-#include "Vertex.h"
+#include "Renderable.h"
+#include "VerticesGroup.h"
 #include "RenderInfo.h"
 #include "RenderStepMode.h"
 #include "OpenGLDrawer.h"
 
 namespace RedBox {
-    class Vertex;
     /**
      * Definition of a specific render step.
      * @ingroup Display
      */
-    class RenderStep {
-    private:
-        /// Information on the render. Includes the color and the texture ID.
-        RenderInfo info;
-        /**
-         * Render mode to be used for this rendering step. Modes can be
-         * combined with the bitwise inclusive OR.
-         */
-        RenderStepMode mode;
-        /// Vertices to be rendered in this step.
-        std::vector<Vertex*> vertices;
-        /**
-         * Makes the instance a copy of the recieved RenderStep.
-         * @param src RenderStep to make a copy of.
-         */
-        void copyFrom(const RenderStep& src);
+    class RenderStep : public Renderable {
     public:
         /**
          * Default constructor. Constructs an empty RenderStep.
@@ -48,7 +33,7 @@ namespace RedBox {
         /**
          * Empty destructor.
          */
-        ~RenderStep();
+        virtual ~RenderStep();
         /**
          * Assignation operator overload. Makes the instance a copy of the
          * recieved RenderStep.
@@ -87,6 +72,52 @@ namespace RedBox {
          * @param New mode to add.
          */
         void addMode(RenerStepMode newMode);
+        /**
+         * Checks if the RenderStep needs to delete its vertices in its
+         * destructor.
+         * @return True if it needs to delete, false if not.
+         */
+        bool isDeleteVerticesGroup() const;
+        /**
+         * Sets if the RenderStep needs to delete its vertices in its
+         * destructor.
+         * @param newDeleteVerticesGroup New boolean value.
+         */
+        void setDeleteVerticesGroup(bool newDeleteVerticesGroup);
+        /**
+         * Gets a pointer to the instance's vertices group.
+         * @return Pointer to the vertices group.
+         */
+        VerticesGroup* getVerticesGroup();
+        /**
+         * Sets the pointer to the instance's vertices group.
+         * @param newVertices Pointer to the new vertices group.
+         */
+        void setVerticesGroup(VerticesGroup* newVertices);
+    private:
+        /// Information on the render. Includes the color and the texture ID.
+        RenderInfo info;
+        /**
+         * Render mode to be used for this rendering step. Modes can be
+         * combined with the bitwise inclusive OR.
+         */
+        RenderStepMode mode;
+        /// Vertices to be rendered in this step.
+        VerticesGroup* vertices;
+        /**
+         * Determines if the RenderStep needs to delete its vertices in its
+         * destructor.
+         */
+        bool deleteVerticesGroup;
+        /**
+         * Resets the RenderStep. Also frees up all allocated memory.
+         */
+        void clean();
+        /**
+         * Makes the instance a copy of the recieved RenderStep.
+         * @param src RenderStep to make a copy of.
+         */
+        void copyFrom(const RenderStep& src);
     };
 }
 

@@ -43,7 +43,7 @@ void Sprite::warnVerticesOfDeletion() {
 }
 
 void setParentGraphicBody(GraphicBody* body) {
-
+	
 }
 
 void Sprite::clean() {
@@ -60,4 +60,22 @@ void Sprite::copyFrom(const Sprite& src) {
     } else {
         clean();
     }
+}
+
+void Sprite::removeEdge(Edge* edge) {
+	bool notFound = true;
+	std::vector<Edge>::iterator i = edges.begin();
+	// We search for the edge to delete.
+	while(notFound && i != edges.end()) {
+        // If we found it.
+        if(edge == &(*i)) {
+			// We make sure to stop the loop.
+            notFound = false;
+            // We remove it from the list.
+            edges.erase(i);
+        } else {
+            // If we haven't found it, we go to the next one.
+            i++;
+        }
+	}       
 }

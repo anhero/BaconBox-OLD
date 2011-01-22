@@ -68,6 +68,11 @@ namespace RedBox{
         * @param body Pointer to the parent graphic body to set.
         */
         void setParentGraphicBody(GraphicBody* body);
+        /**
+         * Removes the given edge from the sprite's edges.
+         * @param edge Pointer to the edge to remove.
+         */
+        void removeEdge(Edge* edge);
     private:
         /// Vector containing the rendering steps.
         std::vector<RenderStep> renderSteps;
