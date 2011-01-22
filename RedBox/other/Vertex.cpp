@@ -29,23 +29,7 @@ parentGraphicBody(NULL), deleteLinks(true) {
 
 Vertex::~Vertex() {
     clearLinks();
-}
-
-void Vertex::clearLinks() {
-    if(deleteLinks) {
-        for(std::vector<Link*>::iterator i = parentLinks.begin(); i != parentLinks.end(); i++) {
-            delete *(i);
-        }
-    }
-    parentLinks.clear();
-}
-
-void Vertex::clean() {
-    parentEdges.clear();
-    parentRenderSteps.clear();
-    parentSprite = NULL;
-    parentGraphicBody = NULL;
-    clearLinks();
+    clearEdges();
 }
 
 void Vertex::copyFrom(const Vertex& src) {
@@ -92,8 +76,12 @@ void Vertex::setYPosition(float yPos) {
     position.setY(yPos);
 }
 void Vertex::deleteFromParentSprite() {
+    if(parentSprite) {
+        clearEdges();
+    }
 }
 void Vertex::deleteFromParentBody() {
+    
 }
 Sprite* Vertex::getParentSprite() {
     return parentSprite;
@@ -110,6 +98,10 @@ void Vertex::setParentGraphicBody(GraphicBody* newParentGraphicBody) {
 
 void Vertex::dontDeleteLinks() {
     deleteLinks = false;
+}
+
+void Vertex::warnOfParentSpriteDeletion() {
+    edges.clear();
 }
 
 Link* Vertex::addParentLink(Link* link) {
@@ -130,3 +122,33 @@ bool Vertex::containsParentLink(Link* link) {
     }
     return !notFound;
 }
+
+void Vertex::clearLinks() {
+    if(deleteLinks) {
+        for(std::vector<Link*>::iterator i = parentLinks.begin(); i != parentLinks.end(); i++) {
+            if(*i)
+                delete *(i);
+        }
+    }
+    parentLinks.clear();
+}
+
+void Vertex::clearEdges() {
+    // We check if the sprite isn't NULL.
+    if(parentSprite) {
+        // For each of the vertex's edges.
+        for(std::vector<Edge*>::iterator i = parentEdges.begin(); i != parentEdges.end(); i++) {
+            // We remove it from its parent sprite.
+            parentSprite->removeEdge(*i);
+        }
+    }
+}
+
+void Vertex::clean() {
+    parentEdges.clear();
+    parentRenderSteps.clear();
+    parentSprite = NULL;
+    parentGraphicBody = NULL;
+    clearLinks();
+}
+

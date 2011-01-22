@@ -26,41 +26,6 @@ namespace RedBox{
      * @ingroup Display
      */
     class Vertex {
-    private:
-#ifdef REDBOX_PHYSICS_ENABLED
-        Vec2 oldPosition;
-        Vec2 acceleration;
-#endif
-        /// Current position. Stores X and Y as direct values or as pointers.
-        Vec2 position;
-        /// Pointers to the edges that are linked to the edge.
-        std::vector<Edge*> parentEdges;
-        /// Links that use this vertex.
-        std::vector<Link*> parentLinks;
-        /// Rendering steps that render this vertex.
-        std::vector<RenderStep*> parentRenderSteps;
-        /// Pointer to the vertex's parent sprite.
-        Sprite* parentSprite;
-        /// Pointer to the vertex's parent graphic body.
-        GraphicBody* parentGraphicBody;
-        /** 
-         * Flag to know if the vertex needs to delete its links in the
-         * destructor.
-         */
-        bool deleteLinks;
-        /**
-         * Makes the instance a copy of the recieved vertex.
-         * @param src Vertex to make a copy of.
-         */
-        void copyFrom(const Vertex& src);
-        /**
-         * Deletes the links if necessary.
-         */
-        void clearLinks();
-        /**
-         * Deletes the links if necesseary and empties all the vectors.
-         */
-        void clean();
     public:
         /**
          * Default constructor. Constructs a vertex at position (0,0) linked
@@ -165,6 +130,11 @@ namespace RedBox{
          */
         void dontDeleteLinks();
         /**
+         * Warns that its parent sprite is about to be deleted so the vertex
+         * doesn't delete its edges. Simply clears the vector of edges.
+         */
+        void warnOfParentSpriteDeletion();
+        /**
          * Adds a parent link to the vertex. Checks to make sure it doesn't have
          * the same parent twice.
          * @param link Pointer to the parent link to be added.
@@ -177,6 +147,45 @@ namespace RedBox{
          * @return True if the link is a parent, false if not.
          */
         bool containsParentLink(Link* link);
+    private:
+#ifdef REDBOX_PHYSICS_ENABLED
+        Vec2 oldPosition;
+        Vec2 acceleration;
+#endif
+        /// Current position. Stores X and Y as direct values or as pointers.
+        Vec2 position;
+        /// Pointers to the edges that are linked to the edge.
+        std::vector<Edge*> parentEdges;
+        /// Links that use this vertex.
+        std::vector<Link*> parentLinks;
+        /// Rendering steps that render this vertex.
+        std::vector<RenderStep*> parentRenderSteps;
+        /// Pointer to the vertex's parent sprite.
+        Sprite* parentSprite;
+        /// Pointer to the vertex's parent graphic body.
+        GraphicBody* parentGraphicBody;
+        /** 
+         * Flag to know if the vertex needs to delete its links in the
+         * destructor.
+         */
+        bool deleteLinks;
+        /**
+         * Makes the instance a copy of the recieved vertex.
+         * @param src Vertex to make a copy of.
+         */
+        void copyFrom(const Vertex& src);
+        /**
+         * Deletes the links if necessary.
+         */
+        void clearLinks();
+        /**
+         * Deletes the edges.
+         */
+        void clearEdges();
+        /**
+         * Deletes the links if necesseary and empties all the vectors.
+         */
+        void clean();
     };
 }
 #endif

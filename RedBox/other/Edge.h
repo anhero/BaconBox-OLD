@@ -12,7 +12,7 @@
 #include "Vertex.h"
 
 namespace RedBox {
-    struct Vertex;
+    class Vertex;
     /**
      * Représente une arête. Conserve deux pointeurs vers les vertices qu'elle
      * relie et la distance entre ces deux vertices.

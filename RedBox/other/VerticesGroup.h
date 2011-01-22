@@ -11,8 +11,12 @@
 #include <iostream>
 
 #include "Vertex.h"
+//#include "Sprite.h"
+#include "GraphicBody.h"
 
 namespace RedBox {
+    class Sprite;
+    class GraphicBody;
 	/**
 	 * Group of Vertex for OpenGL and RedBox. Represents a group of vertex
 	 * with information accessible for OpenGL and RedBox.
@@ -20,20 +24,13 @@ namespace RedBox {
 	 * @ingroup Physics
 	 */
 	class VerticesGroup {
-	private:
-		/// Dynamic array containing the vertexes pointing to the vertexes' data.
-		std::vector<Vertex> vertices;
-		/// Array containing the vertexes' data.
-        std::vector<float> verticesData;
-		/**
-		 * Makes the instance a copy of the VertexGroup recieved.
-		 * @param src VertexGroup to make a copy of.
-		 */
-		void copyFrom(const VerticesGroup& src);
         /**
-         * Frees all memory allocated.
+         * Left shift operator overload for output with cout.
+         * @param output The ostream in which VertexGroup is output.
+         * @param vg VertexGroup to output in the ostream.
+         * @return Resulting ostream.
          */
-        void clean();
+        friend std::ostream& operator<<(std::ostream& output, const VerticesGroup& vg);
 	public:
 		/**
 		 * The default constructor.
@@ -62,7 +59,8 @@ namespace RedBox {
          * @param parentSprite Pointer to the vertex's parent sprite.
          * @param parentGraphicBody Pointer to the vertex's parent graphic body.
          */
-        void addVertex(float x, float y);
+        void addVertex(float x, float y, Sprite* sprite = NULL, 
+                       GraphicBody* graphicBody = NULL);
         /**
          * Gets the vertices. The vertices' values are actually pointers that
          * point to the values in verticesData.
@@ -84,32 +82,20 @@ namespace RedBox {
          * Warns the vertices to not delete their links.
          */
         void warnVerticesOfDeletion();
+	private:
+		/// Dynamic array containing the vertexes pointing to the vertexes' data.
+		std::vector<Vertex> vertices;
+		/// Array containing the vertexes' data.
+        std::vector<float> verticesData;
+		/**
+		 * Makes the instance a copy of the VertexGroup recieved.
+		 * @param src VertexGroup to make a copy of.
+		 */
+		void copyFrom(const VerticesGroup& src);
         /**
-         * Left shift operator overload for output with cout.
-         * @param output The ostream in which VertexGroup is output.
-         * @param vg VertexGroup to output in the ostream.
-         * @return Resulting ostream.
+         * Frees all memory allocated.
          */
-        friend std::ostream& operator<<(std::ostream& output, const VerticesGroup& vg) {
-            output << "VertexGroup:{verticesData:[";
-            int vSize = vg.vertices.size() * 2;
-            for(int i = 0; i < vSize; i++){
-                output << vg.verticesData[i];
-                if(i != vSize - 1) {
-                    output << ", ";
-                }
-            }
-            output << "], vertices:[";
-            vSize = vg.vertices.size();
-            for(int i = 0; i < vSize; i++) {
-                output << vg.vertices[i].position;
-                if(i != vSize - 1) {
-                    output << ", ";
-                }
-            }
-            output << "}";
-            return output;
-        }
+        void clean();
 	};
 }
 
