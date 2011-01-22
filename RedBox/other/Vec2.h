@@ -26,31 +26,6 @@ namespace RedBox{
          * @return Resulting ostream.
          */
         friend std::ostream& operator<<(std::ostream& output, const Vec2& v);
-	private:
-		/**
-		 * Uses pointers or not depending on the necessities. If the vector is
-		 * to be used with OpenGL, the pointers will point to values in the 
-		 * vertex's array that OpenGL uses. If it is only used for physics (for
-		 * example), it will only use the direct values.
-		 */
-		union {
-			struct {
-				float x;
-				float y;
-			} coordsVal;
-			struct {
-				float* x;
-				float* y;
-			} coordsPtr;
-		};
-		/// If vector is to access x and y using pointers.
-		bool isPtr;
-		/**
-		 * Makes the instance a copy of the recieved vector. The resulting copy
-         * will always be using direct values and not pointers.
-		 * @param src Vector to make a copy of.
-		 */
-		void copyFrom(const Vec2& src);
 	public:
 		/**
 		 * Default constructor. By default, the vector doesn't use pointers.
@@ -90,6 +65,18 @@ namespace RedBox{
 		 * @return Vector's vertical value.
 		 */
 		float getY() const;
+		/**
+		 * Gets 2D vector's pointer to the x value.
+		 * @return Pointer to the x value, if the 2D vector doesn't keep
+		 * pointers, returns NULL.
+		 */
+		float* getXPtr();
+		/**
+		 * Gets 2D vector's pointer to the y value.
+		 * @return Pointer to the y value, if the 2D vector doesn't keep
+		 * pointers, returns NULL.
+		 */
+		float* getYPtr();
 		/**
 		 * Sets the pointer to the vector's horizontal value. If isPtr is set to
 		 * false, this function does nothing whatever is recieved as a
@@ -228,6 +215,31 @@ namespace RedBox{
 		 * zero, it will instead print an error message. 
 		 */
 		void normalize();
+	private:
+		/**
+		 * Uses pointers or not depending on the necessities. If the vector is
+		 * to be used with OpenGL, the pointers will point to values in the 
+		 * vertex's array that OpenGL uses. If it is only used for physics (for
+		 * example), it will only use the direct values.
+		 */
+		union {
+			struct {
+				float x;
+				float y;
+			} coordsVal;
+			struct {
+				float* x;
+				float* y;
+			} coordsPtr;
+		};
+		/// If vector is to access x and y using pointers.
+		bool isPtr;
+		/**
+		 * Makes the instance a copy of the recieved vector. The resulting copy
+         * will always be using direct values and not pointers.
+		 * @param src Vector to make a copy of.
+		 */
+		void copyFrom(const Vec2& src);
 	};
 }
 

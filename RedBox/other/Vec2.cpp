@@ -6,11 +6,11 @@ Vec2::Vec2():isPtr(false) {
     coordsVal.x = 0.0f;
     coordsVal.y = 0.0f;
 }
-Vec2::Vec2(float pX, float pY):isPtr(false) {
+Vec2::Vec2(float pX, float pY): isPtr(false) {
     coordsVal.x = pX;
     coordsVal.y = pY;
 }
-Vec2::Vec2(float* pX, float* pY):isPtr(true){
+Vec2::Vec2(float* pX, float* pY): isPtr(true){
     coordsPtr.x = pX;
     coordsPtr.y = pY;
 }
@@ -23,20 +23,21 @@ Vec2::Vec2(const Vec2& src):isPtr(false) {
 Vec2::~Vec2() {
 }
 
-void Vec2::copyFrom(const Vec2& src) {
-	if(this != &src && &src) {
-        isPtr = false;
-        coordsVal.x = src.getX();
-        coordsVal.y = src.getY();
-    }
-}
-
 float Vec2::getX() const {
 	return (isPtr)?(*(coordsPtr.x)):(coordsVal.x);
 }
 float Vec2::getY() const {
 	return (isPtr)?(*(coordsPtr.y)):(coordsVal.y);
 }
+
+float* Vec2::getXPtr() {
+	return (isPtr)?(coordsPtr.x):(NULL);
+}
+
+float* Vec2::getYPtr() {
+	return (isPtr)?(coordsPtr.y):(NULL);
+}
+
 void Vec2::setXPtr(float* newXPtr) {
 	if (isPtr) {
 		coordsPtr.x = newXPtr;
@@ -134,6 +135,15 @@ void Vec2::normalize() {
 	setX(getX() * len);
 	setY(getY() * len);
 }
+
+void Vec2::copyFrom(const Vec2& src) {
+	if(this != &src && &src) {
+        isPtr = false;
+        coordsVal.x = src.getX();
+        coordsVal.y = src.getY();
+    }
+}
+
 std::ostream& RedBox::operator<<(std::ostream& output, const Vec2& v)  {
     output << "{";
     if(v.isPtr) {

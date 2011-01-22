@@ -8,6 +8,7 @@
 #define __VERTICES_GROUP_H
 
 #include <vector>
+#include <list>
 #include <iostream>
 
 #include "Vertex.h"
@@ -61,12 +62,17 @@ namespace RedBox {
          */
         void addVertex(float x, float y, Sprite* sprite = NULL, 
                        GraphicBody* graphicBody = NULL);
+		/**
+		 * Removes a vertex. Causes the vertices group to be rebuilt.
+		 * @param vertexToDelete Pointer to the vertex to delete.
+		 */
+		void deleteVertex(Vertex* vertexToDelete);
         /**
          * Gets the vertices. The vertices' values are actually pointers that
          * point to the values in verticesData.
          * @return Dynamic array containing the vertices.
          */
-        std::vector<Vertex>& getVertices();
+        std::list<Vertex>& getVertices();
         /**
          * Gets the vertices.
          * @return Dynamic array containing the vertices.
@@ -82,11 +88,28 @@ namespace RedBox {
          * Warns the vertices to not delete their links.
          */
         void warnVerticesOfDeletion();
+		/**
+		 * Sets the vertices' parent sprite. Loops through the vertices list
+		 * and sets the parent for each of the vertices.
+		 * @param parentSprite Pointer to the new parent sprite.
+		 */
+		void setParentSprite(Sprite* parentSprite);
+		/**
+		 * Sets the vertices' parent graphic body. Loops through the vertices
+		 * list and sets the parent for each of the vertices.
+		 * @param parentSprite Pointer to the new parent graphic body.
+		 */
+		void setParentGraphicBody(GraphicBody* parentGraphicBody);
 	private:
 		/// Dynamic array containing the vertexes pointing to the vertexes' data.
-		std::vector<Vertex> vertices;
+		std::list<Vertex> vertices;
 		/// Array containing the vertexes' data.
         std::vector<float> verticesData;
+		/**
+		 * Goes through all the vertices and re-sets their pointers to floats
+		 * correctly.
+		 */
+		void resetPointers();
 		/**
 		 * Makes the instance a copy of the VertexGroup recieved.
 		 * @param src VertexGroup to make a copy of.

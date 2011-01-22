@@ -14,8 +14,8 @@
 namespace RedBox {
     class Vertex;
     /**
-     * Représente une arête. Conserve deux pointeurs vers les vertices qu'elle
-     * relie et la distance entre ces deux vertices.
+     * Represents an edge in a shape. Keeps two pointers to the vertices linked
+     * along with the distance between the two vertices.
      * @ingroup Physics
      */
     class Edge {

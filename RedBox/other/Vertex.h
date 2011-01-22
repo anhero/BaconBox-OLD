@@ -38,7 +38,10 @@ namespace RedBox{
          * @param posX Horizontal position.
          * @param posY Vertical position.
          */
-        Vertex(float posX, float posY);
+        Vertex(float posX, float posY, Sprite* newParentSprite = NULL,
+			   GraphicBody* newParentGraphicBody = NULL);
+		Vertex(float* posX, float* posY, Sprite* newParentSprite = NULL,
+			   GraphicBody* newParentGraphicBody = NULL);
         /**
          * Copy constructor. Constructs a copy of the recieved vertex.
          * @param src Vertex to make a copy of.

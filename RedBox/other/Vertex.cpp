@@ -11,8 +11,10 @@ Vertex::Vertex(): parentGraphicBody(NULL), parentSprite(NULL), deleteLinks(true)
 #endif
 }
 
-Vertex::Vertex(float posX, float posY ): parentGraphicBody(NULL), 
-parentSprite(NULL), deleteLinks(true) {
+Vertex::Vertex(float posX, float posY, Sprite* newParentSprite,
+			   GraphicBody* newParentGraphicBody): 
+parentSprite(newParentSprite), parentGraphicBody(newParentGraphicBody), 
+deleteLinks(true) {
 	position.setX(posX);
 	position.setY(posY);
 #ifdef REDBOX_PHYSICS_ENABLED
@@ -21,10 +23,19 @@ parentSprite(NULL), deleteLinks(true) {
 #endif
 }
 
+Vertex::Vertex(float* posX, float* posY, Sprite* newParentSprite,
+			   GraphicBody* newParentGraphicBody): 
+parentSprite(newParentSprite), parentGraphicBody(newParentGraphicBody),
+deleteLinks(true) {
+	position.setIsPtr(true);
+	position.setXPtr(posX);
+	position.setYPtr(posY);
+}
+
 Vertex::Vertex(const Vertex& src): position(src.position), 
 parentEdges(src.parentEdges), parentLinks(src.parentLinks), 
-parentRenderSteps(src.parentRenderSteps), parentSprite(NULL), 
-parentGraphicBody(NULL), deleteLinks(true) {
+parentRenderSteps(src.parentRenderSteps), parentSprite(src.parentSprite), 
+parentGraphicBody(src.parentGraphicBody), deleteLinks(src.deleteLinks) {
 }
 
 Vertex::~Vertex() {
