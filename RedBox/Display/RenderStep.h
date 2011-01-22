@@ -12,7 +12,7 @@
 #include "VerticesGroup.h"
 #include "RenderInfo.h"
 #include "RenderStepMode.h"
-#include "OpenGLDrawer.h"
+//#include "OpenGLDrawer.h"
 
 namespace RedBox {
     /**
@@ -71,7 +71,7 @@ namespace RedBox {
          * be added at the same time using the same operator.
          * @param New mode to add.
          */
-        void addMode(RenerStepMode newMode);
+        void addMode(RenderStepMode newMode);
         /**
          * Checks if the RenderStep needs to delete its vertices in its
          * destructor.
@@ -120,5 +120,7 @@ namespace RedBox {
         void copyFrom(const RenderStep& src);
     };
 }
+
+#include "Sprite.h"
 
 #endif

@@ -11,11 +11,9 @@
 #include <vector>
 
 #include "Renderable.h"
-#include "VerticesGroup.h"
-#include "Edge.h"
 #include "RenderStep.h"
 
-namespace RedBox{
+namespace RedBox {
     /** 
      * Represents a sprite.
      * @ingroup Display
@@ -91,5 +89,7 @@ namespace RedBox{
         void copyFrom(const Sprite& src);
     };
 }
+
+#include "GraphicBody.h"
 
 #endif

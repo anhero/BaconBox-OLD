@@ -9,8 +9,6 @@
 #include <cmath>
 #include <iostream>
 
-#include "Vertex.h"
-
 namespace RedBox {
     class Vertex;
     /**
@@ -104,5 +102,7 @@ namespace RedBox {
         float getDistance() const;
     };
 }
+
+#include "Vertex.h"
 
 #endif

@@ -11,14 +11,12 @@
 
 #include "Vec2.h"
 #include "Edge.h"
-#include "Link.h"
-#include "Sprite.h"
-#include "GraphicBody.h"
 
 namespace RedBox{
-    class Edge;
-    class Link;
-    class RenderStep;
+	class Sprite;
+	class GraphicBody;
+	class RenderStep;
+	class Link;
     /**
      * Represents a vertex. Vertex used for forming up shapes and physics
      * elements.
@@ -174,4 +172,6 @@ namespace RedBox{
         void clean();
     };
 }
+
+#include "VerticesGroup.h"
 #endif

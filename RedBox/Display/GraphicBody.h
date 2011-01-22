@@ -11,10 +11,10 @@
 
 #include "Renderable.h"
 #include "Sprite.h"
-#include "Link.h"
 
 
 namespace RedBox{
+	class Link;
     /** 
      * @class GraphicBody
      * @ingroup Display
@@ -28,9 +28,9 @@ namespace RedBox{
 	class GraphicBody : public Renderable {
     private:
         /// Links linking the sprites within the graphic body.
-        list<Link*> links;
+		std::list<Link*> links;
         /// Sprites making up the graphic body.
-        list<Sprite*> sprites;
+		std::list<Sprite*> sprites;
         /**
          * Cleans up all allocated memory. Resets the instance.
          */
@@ -102,5 +102,7 @@ namespace RedBox{
         bool containsLink(Link* link);
     };
 }
+
+#include "Link.h"
 
 #endif

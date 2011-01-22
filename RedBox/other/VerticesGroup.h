@@ -12,12 +12,8 @@
 #include <iostream>
 
 #include "Vertex.h"
-//#include "Sprite.h"
-#include "GraphicBody.h"
 
 namespace RedBox {
-    class Sprite;
-    class GraphicBody;
 	/**
 	 * Group of Vertex for OpenGL and RedBox. Represents a group of vertex
 	 * with information accessible for OpenGL and RedBox.
@@ -121,5 +117,7 @@ namespace RedBox {
         void clean();
 	};
 }
+
+#include "RenderStep.h"
 
 #endif
