@@ -56,3 +56,18 @@ std::vector<Vertex>& VerticesGroup::getVertices() {
 std::vector<float>& VerticesGroup::getVerticesData() {
     return verticesData;
 }
+
+bool VerticesGroup::containsVertices(Vertex* firstVertex, Vertex* secondVertex) {
+    std::vector<Vertex>::iterator i = vertices.begin();
+    bool firstNotFound = true, secondNotFound = true;
+    while((firstNotFound || secondNotFound) && i != vertices.end()) {
+        if(&(*i) == firstVertex) {
+            firstNotFound = false;
+        }
+        if(&(*i) == secondVertex) {
+            secondNotFound = false;
+        }
+        i++;
+    }
+    return !(firstNotFound || secondNotFound);
+}

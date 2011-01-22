@@ -73,6 +73,12 @@ namespace RedBox {
          */
         std::vector<float>& getVerticesData();
         /**
+         * Checks if the vertices are from the instance.
+         * @param firstVertex First vertex to check for.
+         * @param secondVertex Second vertex to check for.
+         */
+        bool containsVertices(Vertex* firstVertex, Vertex* secondVertex);
+        /**
          * Left shift operator overload for output with cout.
          * @param output The ostream in which VertexGroup is output.
          * @param vg VertexGroup to output in the ostream.
