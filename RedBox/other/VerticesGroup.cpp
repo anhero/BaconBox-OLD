@@ -42,7 +42,6 @@ void VerticesGroup::addVertex(float x, float y) {
     verticesData[verticesData.size()-1] = y;
     verticesData[verticesData.size()-2] = x;
     vertices.resize(vertices.size() + 1);
-    
     for(int i = vertices.size(); i >= 0; i--) {
         vertices[i].getPosition().setIsPtr(true);
         vertices[i].getPosition().setYPtr(&(verticesData[i*2+1]));
@@ -75,5 +74,17 @@ bool VerticesGroup::containsVertices(Vertex* firstVertex, Vertex* secondVertex) 
 void VerticesGroup::warnVerticesOfDeletion() {
     for(std::vector<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
         i->dontDeleteLinks();
+    }
+}
+
+void Vertex::setParentGraphicBody(GraphicBody* body) {
+    for(std::vector<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+        i->setParentGraphicBody(body);
+    }
+}
+
+void Vertex::setParentSprite(Sprite* sprite) {
+    for(std::vector<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+        i->setParentSprite(sprite);
     }
 }

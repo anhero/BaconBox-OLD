@@ -59,6 +59,8 @@ namespace RedBox {
          * array.
          * @param x New vertex's horizontal value.
          * @param y New vertex's vertical value.
+         * @param parentSprite Pointer to the vertex's parent sprite.
+         * @param parentGraphicBody Pointer to the vertex's parent graphic body.
          */
         void addVertex(float x, float y);
         /**

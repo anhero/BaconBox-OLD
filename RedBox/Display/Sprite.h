@@ -62,7 +62,12 @@ namespace RedBox{
         /**
          * Warns the vertices not to delete their links on their destruction.
          */
-        void warnVerticesOfDeletion();        
+        void warnVerticesOfDeletion();   
+        /**
+        * Sets the parent graphic body to the vertices.
+        * @param body Pointer to the parent graphic body to set.
+        */
+        void setParentGraphicBody(GraphicBody* body);
     private:
         /// Vector containing the rendering steps.
         std::vector<RenderStep> renderSteps;

@@ -164,6 +164,19 @@ namespace RedBox{
          * Sets the vertex to not delete its links on its destruction.
          */
         void dontDeleteLinks();
+        /**
+         * Adds a parent link to the vertex. Checks to make sure it doesn't have
+         * the same parent twice.
+         * @param link Pointer to the parent link to be added.
+         * @return Pointer to the link added.
+         */
+        Link* addParentLink(Link* link);
+        /**
+         * Checks if the vertex is part of the given link.
+         * @param link Pointer to the link to check for.
+         * @return True if the link is a parent, false if not.
+         */
+        bool containsParentLink(Link* link);
     };
 }
 #endif

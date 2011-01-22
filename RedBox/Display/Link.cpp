@@ -26,6 +26,27 @@ void Link::copyFrom(const Link& src) {
 LinkData& Link::getInfo() {
     return info;
 }
-std::vector<Vertex*>& Link::getVertices() {
+std::list<Vertex*>& Link::getVertices() {
     return vertices;
+}
+Vertex* addVertex(Vertex* newVertex, Sprite* parentSprite, GraphicBody* parentGraphicBody) {
+    if(!containsVertex(newVertex)) {
+        vertices.push_back(newVertex);
+        newVertex->setParentSprite(parentSprite);
+        newVertex->setParentGraphicBody(parentGraphicBody);
+        newVertex->addParentLink(this);
+    }
+    return newVertex;
+}
+
+bool containsVertex(Vertex* vertex) {
+    bool notFound = true;
+    std::list<Vertex*>::iterator i = vertices.begin();
+    while(notFound && i != vertices.end()) {
+        if(vertex == *i) {
+            notFound = false;
+        }
+        i++;
+    }
+    return !notFound;
 }

@@ -66,7 +66,6 @@ namespace RedBox{
          * Renders the graphic body.
          */
         void render();
-        
         /**
          * Add a Sprite as a child
          */
@@ -87,6 +86,20 @@ namespace RedBox{
          * the default value is false
          */
         void removeLink(Link * link, bool andDelete = false);
+        /**
+         * Checks if the graphic body contains the given sprite.
+         * @param sprite Sprite to check.
+         * @return True if the graphic body contains the recieved sprite, false
+         * if not.
+         */
+        bool containsSprite(Sprite* sprite);
+        /**
+         * Checks if the graphic body contains the given link.
+         * @param sprite Link to check.
+         * @return True if the graphic body contains the recieved link, false
+         * if not.
+         */
+        bool containsLink(Link* link);
     };
 }
 

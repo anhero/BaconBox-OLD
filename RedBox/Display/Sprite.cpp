@@ -42,6 +42,10 @@ void Sprite::warnVerticesOfDeletion() {
     vertices.warnVerticesOfDeletion();
 }
 
+void setParentGraphicBody(GraphicBody* body) {
+
+}
+
 void Sprite::clean() {
     renderSteps.clear();
     vertices.clear();

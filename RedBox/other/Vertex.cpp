@@ -111,3 +111,22 @@ void Vertex::setParentGraphicBody(GraphicBody* newParentGraphicBody) {
 void Vertex::dontDeleteLinks() {
     deleteLinks = false;
 }
+
+Link* Vertex::addParentLink(Link* link) {
+    if(!containsParentLink(link)) {
+        parentLinks.push_back(link);
+    }
+    return link;
+}
+
+bool Vertex::containsParentLink(Link* link) {
+    bool notFound = true;
+    std::vector<Link*>::iterator i = parentLinks.begin();
+    while(notFound && i != parentLinks.end()) {
+        if(*i == link) {
+            notFound = false;
+        }
+        i++;
+    }
+    return !notFound;
+}
