@@ -2,7 +2,7 @@
 
 using namespace RedBox;
 
-Vertex::Vertex() {
+Vertex::Vertex(): parentGraphicBody(NULL), parentSprite(NULL) {
     position.setXPtr(NULL);
     position.setYPtr(NULL);
 #ifdef REDBOX_PHYSICS_ENABLED
@@ -11,7 +11,8 @@ Vertex::Vertex() {
 #endif
 }
 
-Vertex::Vertex(float posX, float posY ) {
+Vertex::Vertex(float posX, float posY ): parentGraphicBody(NULL), 
+parentSprite(NULL) {
 	position.setX(posX);
 	position.setY(posY);
 #ifdef REDBOX_PHYSICS_ENABLED
@@ -20,7 +21,10 @@ Vertex::Vertex(float posX, float posY ) {
 #endif
 }
 
-Vertex::Vertex(const Vertex& src): position(src.position), parentEdges(src.parentEdges), parentLinks(src.parentLinks), parentRenderSteps(src.parentRenderSteps) {
+Vertex::Vertex(const Vertex& src): position(src.position), 
+parentEdges(src.parentEdges), parentLinks(src.parentLinks), 
+parentRenderSteps(src.parentRenderSteps), parentSprite(NULL), 
+parentGraphicBody(NULL) {
 }
 
 Vertex::~Vertex() {
@@ -32,6 +36,8 @@ void Vertex::copyFrom(const Vertex& src) {
         parentEdges = src.parentEdges;
         parentLinks = src.parentLinks;
         parentRenderSteps = src.parentRenderSteps;
+        parentSprite = src.parentSprite;
+        parentGraphicBody = src.parentGraphicBody;
     }
 }
 
@@ -67,4 +73,16 @@ void Vertex::setYPosition(float yPos) {
 void Vertex::deleteFromParentSprite() {
 }
 void Vertex::deleteFromParentBody() {
+}
+Sprite* Vertex::getParentSprite() {
+    return parentSprite;
+}
+GraphicBody* Vertex::getParentGraphicBody() {
+    return parentGraphicBody;
+}
+void Vertex::setParentSprite(Sprite* newParentSprite) {
+    parentSprite = newParentSprite;
+}
+void Vertex::setParentGraphicBody(GraphicBody* newParentGraphicBody) {
+    parentGraphicBody = newParentGraphicBody;
 }

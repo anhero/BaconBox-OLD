@@ -12,6 +12,8 @@
 #include "Vec2.h"
 #include "Edge.h"
 #include "Link.h"
+#include "Sprite.h"
+#include "GraphicBody.h"
 
 namespace RedBox{
     class Edge;
@@ -37,7 +39,10 @@ namespace RedBox{
         std::vector<Link*> parentLinks;
         /// Rendering steps that render this vertex.
         std::vector<RenderStep*> parentRenderSteps;
-        // TODO: Add parent GraphicBody and parent Sprite.
+        /// Pointer to the vertex's parent sprite.
+        Sprite* parentSprite;
+        /// Pointer to the vertex's parent graphic body.
+        GraphicBody* parentGraphicBody;
         /**
          * Makes the instance a copy of the recieved vertex.
          * @param src Vertex to make a copy of.
@@ -73,47 +78,67 @@ namespace RedBox{
         Vertex& operator=(const Vertex& src);
         /**
          * Gets the parent edges.
-         * @return Vector containing pointers to all of the vertex' parent 
+         * @return Vector containing pointers to all of the vertex's parent 
          * edges.
          */
         std::vector<Edge*>& getParentEdges();
         /**
          * Gets the parent links.
-         * @return Vector containing pointers to all of the vertex' parent
+         * @return Vector containing pointers to all of the vertex's parent
          * links.
          */
         std::vector<Link*>& getParentLinks();
         /**
          * Gets the parent render steps.
-         * @return Vector containing pointers to all of the vertex' parent
+         * @return Vector containing pointers to all of the vertex's parent
          * render steps.
          */
         std::vector<RenderStep*> getParentRenderSteps();
         /**
-         * Gets the vertex' horizontal position.
-         * @return Float representing the vertex' horizontal position.
+         * Gets the vertex's horizontal position.
+         * @return Float representing the vertex's horizontal position.
          */
         float getXPosition() const;
         /**
-         * Gets the vertex' vertical position.
-         * @return Float representing the vertex' vertical position.
+         * Gets the vertex's vertical position.
+         * @return Float representing the vertex's vertical position.
          */
         float getYPosition() const;
         /**
          * Gets the position.
-         * @return Vec2 representing the vertex' position.
+         * @return Vec2 representing the vertex's position.
          */
         Vec2& getPosition();
         /**
-         * Sets the vertex' horizontal position.
-         * @param xPos Vertex' new horizontal position.
+         * Sets the vertex's horizontal position.
+         * @param xPos Vertex's new horizontal position.
          */
         void setXPosition(float xPos);
         /**
-         * Sets the vertex' vertical position.
-         * @param xPos Vertex' new vertical position.
+         * Sets the vertex's vertical position.
+         * @param xPos Vertex's new vertical position.
          */
         void setYPosition(float yPos);
+        /**
+         * Gets the parent sprite.
+         * @return Pointer to the parent sprite.
+         */
+        Sprite* getParentSprite();
+        /**
+         * Gets the parent graphic body.
+         * @return Pointer to the parent graphic body.
+         */
+        GraphicBody* getParentGraphicBody();
+        /**
+         * Change the vertex's parent sprite.
+         * @param newParentSprite New parent sprite for the vertex.
+         */
+        void setParentSprite(Sprite* newParentSprite);
+        /**
+         * Change the vertex's parent graphic body.
+         * @param newParentGraphicBody New parent graphic body for the vertex.
+         */
+        void setParentGraphicBody(GraphicBody* newParentGraphicBody);
         /**
          * Deletes the vertex from its parent sprite.
          */
