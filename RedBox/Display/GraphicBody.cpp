@@ -3,20 +3,21 @@
 using namespace RedBox;
 
 void GraphicBody::clean() {
-    for(std::vector<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); i++) {
-        (*i)->warnVertexBodyOfDeletion();
+    for(std::list<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); i++) {
         delete (*i);
     }
     sprites.clear();
+    for(std::list<Link*>::iterator i = links.begin(); i != links.end(); i++) {
+        delete (*i);
+    }	
     links.clear();
 }
 
 void GraphicBody::copyFrom(const GraphicBody& src) {
     clean();
     if(this != &src && &src) {
-        renderSteps = src.renderSteps;
-        vertices = src.vertices;
-        edges = src.edges;
+		links = src.links;
+		sprites = src.sprites;
     } else {
     }
 }
@@ -69,10 +70,10 @@ Link* GraphicBody::addLink(Link* link) {
     }
     return link;
 }
-void GraphicBody::removeLink(Link * link, bool andDelete){
+void GraphicBody::removeLink(Link* link, bool andDelete){
     std::list<Link*>::iterator i = links.begin();
     bool notFound = true;
-    // Search for the sprite to remove.
+    // Search for the link to remove.
     while(notFound && i != links.end()) {
         if(*i == link) {
             notFound = false;

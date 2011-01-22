@@ -121,18 +121,6 @@ namespace RedBox{
          */
         void setParentGraphicBody(GraphicBody* newParentGraphicBody);
         /**
-         * Deletes the vertex from its parent sprite.
-         */
-        void deleteFromParentSprite();
-        /**
-         * Deletes the vertex from its parent graphic body.
-         */
-        void deleteFromParentBody();
-        /**
-         * Sets the vertex to not delete its links on its destruction.
-         */
-        void dontDeleteLinks();
-        /**
          * Warns that its parent sprite is about to be deleted so the vertex
          * doesn't delete its edges. Simply clears the vector of edges.
          */
@@ -167,11 +155,6 @@ namespace RedBox{
         Sprite* parentSprite;
         /// Pointer to the vertex's parent graphic body.
         GraphicBody* parentGraphicBody;
-        /** 
-         * Flag to know if the vertex needs to delete its links in the
-         * destructor.
-         */
-        bool deleteLinks;
         /**
          * Makes the instance a copy of the recieved vertex.
          * @param src Vertex to make a copy of.

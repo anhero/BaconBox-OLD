@@ -85,7 +85,7 @@ namespace RedBox {
          */
         bool containsVertices(Vertex* firstVertex, Vertex* secondVertex);
         /**
-         * Warns the vertices to not delete their links.
+         * Warns the vertices to not delete their links and edges.
          */
         void warnVerticesOfDeletion();
 		/**

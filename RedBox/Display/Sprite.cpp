@@ -48,6 +48,7 @@ void setParentGraphicBody(GraphicBody* body) {
 
 void Sprite::clean() {
     renderSteps.clear();
+	vertices.warnVerticesOfDeletion();
     vertices.clear();
     edges.clear();
 }

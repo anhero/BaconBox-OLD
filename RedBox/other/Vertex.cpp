@@ -2,7 +2,7 @@
 
 using namespace RedBox;
 
-Vertex::Vertex(): parentGraphicBody(NULL), parentSprite(NULL), deleteLinks(true) {
+Vertex::Vertex(): parentGraphicBody(NULL), parentSprite(NULL) {
     position.setXPtr(NULL);
     position.setYPtr(NULL);
 #ifdef REDBOX_PHYSICS_ENABLED
@@ -13,8 +13,7 @@ Vertex::Vertex(): parentGraphicBody(NULL), parentSprite(NULL), deleteLinks(true)
 
 Vertex::Vertex(float posX, float posY, Sprite* newParentSprite,
 			   GraphicBody* newParentGraphicBody): 
-parentSprite(newParentSprite), parentGraphicBody(newParentGraphicBody), 
-deleteLinks(true) {
+parentSprite(newParentSprite), parentGraphicBody(newParentGraphicBody) {
 	position.setX(posX);
 	position.setY(posY);
 #ifdef REDBOX_PHYSICS_ENABLED
@@ -25,8 +24,7 @@ deleteLinks(true) {
 
 Vertex::Vertex(float* posX, float* posY, Sprite* newParentSprite,
 			   GraphicBody* newParentGraphicBody): 
-parentSprite(newParentSprite), parentGraphicBody(newParentGraphicBody),
-deleteLinks(true) {
+parentSprite(newParentSprite), parentGraphicBody(newParentGraphicBody) {
 	position.setIsPtr(true);
 	position.setXPtr(posX);
 	position.setYPtr(posY);
@@ -39,8 +37,8 @@ parentGraphicBody(src.parentGraphicBody), deleteLinks(src.deleteLinks) {
 }
 
 Vertex::~Vertex() {
-    clearLinks();
-    clearEdges();
+	clearLinks();
+	clearEdges();
 }
 
 void Vertex::copyFrom(const Vertex& src) {
@@ -86,20 +84,15 @@ void Vertex::setXPosition(float xPos) {
 void Vertex::setYPosition(float yPos) {
     position.setY(yPos);
 }
-void Vertex::deleteFromParentSprite() {
-    if(parentSprite) {
-        clearEdges();
-    }
-}
-void Vertex::deleteFromParentBody() {
-    
-}
+
 Sprite* Vertex::getParentSprite() {
     return parentSprite;
 }
+
 GraphicBody* Vertex::getParentGraphicBody() {
     return parentGraphicBody;
 }
+
 void Vertex::setParentSprite(Sprite* newParentSprite) {
     parentSprite = newParentSprite;
 }
@@ -107,12 +100,9 @@ void Vertex::setParentGraphicBody(GraphicBody* newParentGraphicBody) {
     parentGraphicBody = newParentGraphicBody;
 }
 
-void Vertex::dontDeleteLinks() {
-    deleteLinks = false;
-}
-
 void Vertex::warnOfParentSpriteDeletion() {
-    edges.clear();
+	parentLinks.clear();
+	parentEdges.clear();
 }
 
 Link* Vertex::addParentLink(Link* link) {
@@ -135,12 +125,10 @@ bool Vertex::containsParentLink(Link* link) {
 }
 
 void Vertex::clearLinks() {
-    if(deleteLinks) {
-        for(std::vector<Link*>::iterator i = parentLinks.begin(); i != parentLinks.end(); i++) {
-            if(*i)
-                delete *(i);
-        }
-    }
+	for(std::vector<Link*>::iterator i = parentLinks.begin(); i != parentLinks.end(); i++) {
+		if(*i)
+			delete *(i);
+	}
     parentLinks.clear();
 }
 
