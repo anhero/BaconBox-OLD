@@ -26,6 +26,6 @@ void Link::copyFrom(const Link& src) {
 LinkData& Link::getInfo() {
     return info;
 }
-std::vector<Vertex>& Link::getVertices() {
+std::vector<Vertex*>& Link::getVertices() {
     return vertices;
 }

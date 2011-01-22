@@ -20,9 +20,9 @@ void VerticesGroup::copyFrom(const VerticesGroup& src) {
         verticesData = src.verticesData;
         vertices.resize(src.vertices.size());
         for(int i = vertices.size(); i >= 0; i--) {
-            vertices[i].position.setIsPtr(true);
-            vertices[i].position.setYPtr(&(verticesData[i*2+1]));
-            vertices[i].position.setXPtr(&(verticesData[i*2]));
+            vertices[i].getPosition().setIsPtr(true);
+            vertices[i].getPosition().setYPtr(&(verticesData[i*2+1]));
+            vertices[i].getPosition().setXPtr(&(verticesData[i*2]));
         }
 	}
 }
@@ -44,9 +44,9 @@ void VerticesGroup::addVertex(float x, float y) {
     vertices.resize(vertices.size() + 1);
     
     for(int i = vertices.size(); i >= 0; i--) {
-        vertices[i].position.setIsPtr(true);
-        vertices[i].position.setYPtr(&(verticesData[i*2+1]));
-        vertices[i].position.setXPtr(&(verticesData[i*2]));
+        vertices[i].getPosition().setIsPtr(true);
+        vertices[i].getPosition().setYPtr(&(verticesData[i*2+1]));
+        vertices[i].getPosition().setXPtr(&(verticesData[i*2]));
     }
 }
 

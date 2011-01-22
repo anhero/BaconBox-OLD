@@ -13,7 +13,8 @@
 #include "LinkData.h"
 #include "Vertex.h"
 
-namespace RedBox{
+namespace RedBox {
+    class Vertex;
     /** 
      * Links tie sprites together inside a GraphicBody
      * @ingroup Display
@@ -47,7 +48,7 @@ namespace RedBox{
          * Gets the link's vertices.
          * @return Reference to the vector containing the link's vertices.
          */
-        std::vector<Vertex>& getVertices();
+        std::vector<Vertex*>& getVertices();
     private:
         /**
          * Makes the instance a copy of the recieved Link.
@@ -57,7 +58,7 @@ namespace RedBox{
         /// Info on the Link.
         LinkData info;
         /// Vertices that the Link is made of.
-        std::vector<Vertex> vertices;
+        std::vector<Vertex*> vertices;
     };
 }
 

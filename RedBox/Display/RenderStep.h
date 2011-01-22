@@ -14,6 +14,7 @@
 #include "OpenGLDrawer.h"
 
 namespace RedBox {
+    class Vertex;
     /**
      * Definition of a specific render step.
      * @ingroup Display

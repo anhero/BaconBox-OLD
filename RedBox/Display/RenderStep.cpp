@@ -27,9 +27,9 @@ RenderStep& RenderStep::operator=(const RenderStep &src) {
 
 void RenderStep::render() {
     // We use the bitwise inclusive OR to combine different modes.
-    if(mode == SHAPE | TEXTURE | COLOR) {
+    if(mode == (SHAPE | TEXTURE | COLOR)) {
         // drawShapeWithTextureAndColor
-    } else if(mode == SHAPE | TEXTURE) {
+    } else if(mode == (SHAPE | TEXTURE)) {
         // drawShapeWithTexture
     }
 }
@@ -51,5 +51,5 @@ void RenderStep::setMode(RenderStepMode newMode) {
 }
 
 void RenderStep::addMode(RenderStepMode newMode) {
-    mode |= newMode;
+    mode = (mode | newMode);
 }

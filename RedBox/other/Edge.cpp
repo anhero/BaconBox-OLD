@@ -51,8 +51,8 @@ float RedBox::Edge::recalculateDistance() {
     // We make sure the vertices are valid.
     if(v1 != NULL && v2 != NULL) {
         // Get the horizontal and vertical distances between the two vertices.
-        float x = fabs(v2->position.getX() - v1->position.getX());
-        float y = fabs(v2->position.getY() - v1->position.getY());
+        float x = fabs(v2->getPosition().getX() - v1->getPosition().getX());
+        float y = fabs(v2->getPosition().getY() - v1->getPosition().getY());
         // Use the pythagorean theorem to get the distance between the two
         // vertices.
         distance = sqrtf( x*x + y*y );
@@ -67,7 +67,7 @@ float RedBox::Edge::getDistance() const {
     return distance;
 }
 std::ostream& RedBox::operator<<(std::ostream& output, const RedBox::Edge& e) {
-    output << "Edge:{v1:" << e.v1 << "(" << e.v1->position << "), v2:" << e.v2 <<
-    "(" << e.v2->position << "), distance:" << e.distance << "}";
+    output << "Edge:{v1:" << e.v1 << "(" << e.v1->getPosition() << "), v2:" << e.v2 <<
+    "(" << e.v2->getPosition() << "), distance:" << e.distance << "}";
     return output;
 }
