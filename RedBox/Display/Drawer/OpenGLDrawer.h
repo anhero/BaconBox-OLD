@@ -7,9 +7,6 @@
 #ifndef OPENGLDRAWER
 #define OPENGLDRAWER
 
-
-#include "PlatformFlager.h"
-
 #ifdef RB_IPHONE_PLATFORM
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
@@ -36,7 +33,7 @@ namespace RedBox{
          * @param renderingInfo object of type RenderInfo, containing colors array and textureID
          * @param nbVertices number of vertices to draw
          */
-                static void drawShapeWithTextureAndColor(GLfloat * vertices, GLFloat * textCoordArray, RenderInfo * renderingInfo, int nbVertices);
+                static inline void drawShapeWithTextureAndColor(GLfloat * vertices, GLFloat * textCoordArray, RenderInfo * renderingInfo, int nbVertices);
         
         /**
          * Draw a textured shape 
@@ -49,7 +46,7 @@ namespace RedBox{
          * @param renderingInfo object of type RenderInfo, containing colors array and textureID
          * @param nbVertices number of vertices to draw
          */
-                static void drawShapeWithTexture(GLfloat * vertices,GLFloat * textCoordArray, RenderInfo * renderingInfo, int nbVertices);
+                static inline void drawShapeWithTexture(GLfloat * vertices,GLFloat * textCoordArray, RenderInfo * renderingInfo, int nbVertices);
 
 	};	
 
