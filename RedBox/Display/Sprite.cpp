@@ -7,8 +7,9 @@ using namespace RedBox;
 Sprite::Sprite(): Renderable() {
 }
 
-Sprite::Sprite(const Sprite& src):Renderable(src) {
-    copyFrom(src);
+Sprite::Sprite(const Sprite& src):Renderable(src), edges(src.edges), 
+vertices(src.vertices), renderSteps(src.renderSteps) {
+    //copyFrom(src);
 }
 
 Sprite::~Sprite() {

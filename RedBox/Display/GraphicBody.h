@@ -7,9 +7,11 @@
 #ifndef GRAPHICBODY
 #define GRAPHICBODY
 
+#include <list>
+
+#include "Renderable.h"
 #include "Sprite.h"
 #include "Link.h"
-#include <list>
 
 
 namespace RedBox{
@@ -23,18 +25,47 @@ namespace RedBox{
      * like a blob or a revolving door, etc.
      * 
      */
-	class GraphicBody {
+	class GraphicBody : public Renderable {
     private:
+        /// Links linking the sprites within the graphic body.
         list<Link*> links;
+        /// Sprites making up the graphic body.
         list<Sprite*> sprites;
-        
+        /**
+         * Cleans up all allocated memory. Resets the instance.
+         */
+        void clean();
+        /**
+         * Makes the instance a copy of the recieved graphic body.
+         * @param src Makes the instance a copy of this graphic body.
+         */
+        void copyFrom(const GraphicBody& src);
     public:
         /**
-         * Destructor 
-         * Warn all child Sprite that their parent body is about to be delete so they 
-         * can warn their child Vertex
+         * Default constructor.
          */
-        ~GraphicBody();
+        GraphicBody();
+        /**
+         * Copy constructor.
+         * @param src Graphic body to make a copy of.
+         */
+        GraphicBody(const GraphicBody& src);
+        /**
+         * Destructor 
+         * Warns all child Sprite that their parent body is about to be deleted 
+         * so they can warn their children Vertices.
+         */
+        virtual ~GraphicBody();
+        /**
+         * Assignation operator overload.
+         * @param src Graphic body to make a copy of.
+         * @return Current instance.
+         */
+        GraphicBody& operator=(const GraphicBody& src);
+        /**
+         * Renders the graphic body.
+         */
+        void render();
         
         /**
          * Add a Sprite as a child

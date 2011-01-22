@@ -1,13 +1,46 @@
 #include "GraphicBody.h"
 
 using namespace RedBox;
-GraphicBody::~GraphicBody(){
-    int nbOfSprites = sprites.size();
-    for(int i = 0; i < nbOfSprites; i++){
-        sprites[i]->warnVertexBodyOfDeletion();
-        delete sprite[i];
+
+void GraphicBody::clean() {
+    for(std::vector<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); i++) {
+        (*i)->warnVertexBodyOfDeletion();
+        delete (*i);
+    }
+    sprites.clear();
+    links.clear();
+}
+
+void GraphicBody::copyFrom(const GraphicBody& src) {
+    clean();
+    if(this != &src && &src) {
+        renderSteps = src.renderSteps;
+        vertices = src.vertices;
+        edges = src.edges;
+    } else {
     }
 }
+
+GraphicBody::GraphicBody(): Renderable() {
+}
+
+GraphicBody::GraphicBody(const GraphicBody& src): Renderable(src) {
+}
+
+GraphicBody::~GraphicBody() {
+    clean();
+}
+
+GraphicBody& GraphicBody::operator=(const GraphicBody& src) {
+    Renderable::operator=(src);
+    copyFrom(src);
+    return *this;
+}
+
+void GraphicBody::render() {
+    //TODO: Everything in this function...
+}
+
 Sprite* GraphicBody::addSprite(Sprite* sprite){
     sprites.push_back(sprite);
     return sprite;
