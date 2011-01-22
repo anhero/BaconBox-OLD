@@ -79,6 +79,10 @@ namespace RedBox {
          */
         bool containsVertices(Vertex* firstVertex, Vertex* secondVertex);
         /**
+         * Warns the vertices to not delete their links.
+         */
+        void warnVerticesOfDeletion();
+        /**
          * Left shift operator overload for output with cout.
          * @param output The ostream in which VertexGroup is output.
          * @param vg VertexGroup to output in the ostream.

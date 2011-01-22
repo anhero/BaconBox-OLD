@@ -38,6 +38,10 @@ void Sprite::createVertex(float x, float y) {
     vertices.addVertex(x, y);
 }
 
+void Sprite::warnVerticesOfDeletion() {
+    vertices.warnVerticesOfDeletion();
+}
+
 void Sprite::clean() {
     renderSteps.clear();
     vertices.clear();

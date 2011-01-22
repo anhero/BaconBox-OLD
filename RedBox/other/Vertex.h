@@ -43,11 +43,24 @@ namespace RedBox{
         Sprite* parentSprite;
         /// Pointer to the vertex's parent graphic body.
         GraphicBody* parentGraphicBody;
+        /** 
+         * Flag to know if the vertex needs to delete its links in the
+         * destructor.
+         */
+        bool deleteLinks;
         /**
          * Makes the instance a copy of the recieved vertex.
          * @param src Vertex to make a copy of.
          */
         void copyFrom(const Vertex& src);
+        /**
+         * Deletes the links if necessary.
+         */
+        void clearLinks();
+        /**
+         * Deletes the links if necesseary and empties all the vectors.
+         */
+        void clean();
     public:
         /**
          * Default constructor. Constructs a vertex at position (0,0) linked
@@ -147,6 +160,10 @@ namespace RedBox{
          * Deletes the vertex from its parent graphic body.
          */
         void deleteFromParentBody();
+        /**
+         * Sets the vertex to not delete its links on its destruction.
+         */
+        void dontDeleteLinks();
     };
 }
 #endif

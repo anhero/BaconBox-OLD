@@ -59,8 +59,10 @@ namespace RedBox{
          * @param y Vertical position.
          */
         void createVertex(float x, float y);
-        void warnVertexBodyOfDeletion();
-        
+        /**
+         * Warns the vertices not to delete their links on their destruction.
+         */
+        void warnVerticesOfDeletion();        
     private:
         /// Vector containing the rendering steps.
         std::vector<RenderStep> renderSteps;

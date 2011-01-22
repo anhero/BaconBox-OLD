@@ -2,7 +2,7 @@
 
 using namespace RedBox;
 
-Vertex::Vertex(): parentGraphicBody(NULL), parentSprite(NULL) {
+Vertex::Vertex(): parentGraphicBody(NULL), parentSprite(NULL), deleteLinks(true) {
     position.setXPtr(NULL);
     position.setYPtr(NULL);
 #ifdef REDBOX_PHYSICS_ENABLED
@@ -12,7 +12,7 @@ Vertex::Vertex(): parentGraphicBody(NULL), parentSprite(NULL) {
 }
 
 Vertex::Vertex(float posX, float posY ): parentGraphicBody(NULL), 
-parentSprite(NULL) {
+parentSprite(NULL), deleteLinks(true) {
 	position.setX(posX);
 	position.setY(posY);
 #ifdef REDBOX_PHYSICS_ENABLED
@@ -24,13 +24,32 @@ parentSprite(NULL) {
 Vertex::Vertex(const Vertex& src): position(src.position), 
 parentEdges(src.parentEdges), parentLinks(src.parentLinks), 
 parentRenderSteps(src.parentRenderSteps), parentSprite(NULL), 
-parentGraphicBody(NULL) {
+parentGraphicBody(NULL), deleteLinks(true) {
 }
 
 Vertex::~Vertex() {
+    clearLinks();
+}
+
+void Vertex::clearLinks() {
+    if(deleteLinks) {
+        for(std::vector<Link*>::iterator i = parentLinks.begin(); i != parentLinks.end(); i++) {
+            delete *(i);
+        }
+    }
+    parentLinks.clear();
+}
+
+void Vertex::clean() {
+    parentEdges.clear();
+    parentRenderSteps.clear();
+    parentSprite = NULL;
+    parentGraphicBody = NULL;
+    clearLinks();
 }
 
 void Vertex::copyFrom(const Vertex& src) {
+    clean();
     if(this != &src && &src) {
         position = src.position;
         parentEdges = src.parentEdges;
@@ -38,6 +57,8 @@ void Vertex::copyFrom(const Vertex& src) {
         parentRenderSteps = src.parentRenderSteps;
         parentSprite = src.parentSprite;
         parentGraphicBody = src.parentGraphicBody;
+    } else {
+        position = Vec2();
     }
 }
 
@@ -85,4 +106,8 @@ void Vertex::setParentSprite(Sprite* newParentSprite) {
 }
 void Vertex::setParentGraphicBody(GraphicBody* newParentGraphicBody) {
     parentGraphicBody = newParentGraphicBody;
+}
+
+void Vertex::dontDeleteLinks() {
+    deleteLinks = false;
 }

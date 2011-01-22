@@ -71,3 +71,9 @@ bool VerticesGroup::containsVertices(Vertex* firstVertex, Vertex* secondVertex) 
     }
     return !(firstNotFound || secondNotFound);
 }
+
+void VerticesGroup::warnVerticesOfDeletion() {
+    for(std::vector<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+        i->dontDeleteLinks();
+    }
+}
