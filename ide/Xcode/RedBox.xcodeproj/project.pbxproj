@@ -639,6 +639,8 @@
 				51CF8D6C12DF60E0003FBBAD /* StringHelper.h */,
 				51CF8D6D12DF60E0003FBBAD /* TimeHelper.cpp */,
 				51CF8D6E12DF60E0003FBBAD /* TimeHelper.h */,
+				24D1FFA512EA9F52004652A6 /* SpriteFactory.cpp */,
+				24D1FFA612EA9F52004652A6 /* SpriteFactory.h */,
 			);
 			path = Helper;
 			sourceTree = "<group>";

@@ -26,20 +26,6 @@ namespace RedBox{
      * 
      */
 	class GraphicBody : public Renderable {
-    private:
-        /// Links linking the sprites within the graphic body.
-		std::list<Link*> links;
-        /// Sprites making up the graphic body.
-		std::list<Sprite*> sprites;
-        /**
-         * Cleans up all allocated memory. Resets the instance.
-         */
-        void clean();
-        /**
-         * Makes the instance a copy of the recieved graphic body.
-         * @param src Makes the instance a copy of this graphic body.
-         */
-        void copyFrom(const GraphicBody& src);
     public:
         /**
          * Default constructor.
@@ -100,6 +86,20 @@ namespace RedBox{
          * if not.
          */
         bool containsLink(Link* link);
+    private:
+        /// Links linking the sprites within the graphic body.
+		std::list<Link*> links;
+        /// Sprites making up the graphic body.
+		std::list<Sprite*> sprites;
+        /**
+         * Cleans up all allocated memory. Resets the instance.
+         */
+        void clean();
+        /**
+         * Makes the instance a copy of the recieved graphic body.
+         * @param src Makes the instance a copy of this graphic body.
+         */
+        void copyFrom(const GraphicBody& src);
     };
 }
 
