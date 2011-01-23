@@ -4,8 +4,9 @@
  */
 
 
-#ifndef GRAPHICBODY
-#define GRAPHICBODY
+#ifdef RB_PHYSICS_ENABLED
+#ifndef __GRAPHICBODY_H
+#define __GRAPHICBODY_H
 
 #include <list>
 
@@ -14,7 +15,6 @@
 
 
 namespace RedBox{
-	class Link;
     /** 
      * @class GraphicBody
      * @ingroup Display
@@ -105,4 +105,5 @@ namespace RedBox{
 
 #include "Link.h"
 
+#endif
 #endif

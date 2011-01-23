@@ -4,6 +4,7 @@
  * @ingroup Physics
  */
 
+#ifdef RB_PHYSICS_ENABLED
 #ifndef __LINK_DATA_H
 #define __LINK_DATA_H
 
@@ -26,4 +27,5 @@ struct LinkData {
              float newBackMinAngle):length(newLength), frontMaxAngle(newFrontMaxAngle), frontMinAngle(newFrontMinAngle), backMaxAngle(newBackMaxAngle), backMinAngle(newBackMinAngle) {}
 };
 
+#endif
 #endif

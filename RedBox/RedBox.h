@@ -1,3 +1,6 @@
+// Comment out if you don't need the physics engine.
+#define RB_PHYSICS_ENABLED
+
 /** 
  * @defgroup Display Display
  * @brief Display related classes (sprite, drawer, camera, etc.)

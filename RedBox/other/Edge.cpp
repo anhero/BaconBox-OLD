@@ -1,3 +1,4 @@
+#ifdef RB_PHYSICS_ENABLED
 #include "Edge.h"
 #include "Vertex.h"
 
@@ -71,3 +72,4 @@ std::ostream& RedBox::operator<<(std::ostream& output, const RedBox::Edge& e) {
     "(" << e.v2->getPosition() << "), distance:" << e.distance << "}";
     return output;
 }
+#endif

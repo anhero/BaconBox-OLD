@@ -12,7 +12,7 @@
 #include "VerticesGroup.h"
 #include "RenderInfo.h"
 #include "RenderStepMode.h"
-//#include "OpenGLDrawer.h"
+#include "OpenGLDrawer.h"
 
 namespace RedBox {
     /**

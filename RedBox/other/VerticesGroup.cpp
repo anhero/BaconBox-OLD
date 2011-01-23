@@ -17,8 +17,13 @@ VerticesGroup& VerticesGroup::operator=(const VerticesGroup& src) {
 	return *this;
 }
 
+#ifdef RB_PHYSICS_ENABLED
 void VerticesGroup::addVertex(float x, float y, Sprite* sprite, 
-                              GraphicBody* graphicBody) {
+                              GraphicBody* graphicBody)
+#else
+void VerticesGroup::addVertex(float x, float y, Sprite* sprite)
+#endif
+{
 	// We resize the verticesData and add its new floats.
     verticesData.resize(verticesData.size() + 2);
     verticesData[verticesData.size()-1] = y;
@@ -28,9 +33,17 @@ void VerticesGroup::addVertex(float x, float y, Sprite* sprite,
 	
 	// We add the new vertex to the list.
     if(vertices.size() == 1) {
-		vertices.push_back(&(verticesData[verticesData.size()-2]), &(verticesData[verticesData.size()-1]), sprite, graphicBody);
+#ifdef RB_PHYSICS_ENABLED
+		vertices.push_back(Vertex(&(verticesData[verticesData.size()-2]), &(verticesData[verticesData.size()-1]), sprite, graphicBody));
+#else
+		vertices.push_back(Vertex(&(verticesData[verticesData.size()-2]), &(verticesData[verticesData.size()-1]), sprite));
+#endif
     } else {
-		vertices.push_back(&(verticesData[verticesData.size()-2]), &(verticesData[verticesData.size()-1]), vertices.front().getParentSprite(), vertices.front().getParentGraphicBody());
+#ifdef RB_PHYSICS_ENABLED
+		vertices.push_back(Vertex(&(verticesData[verticesData.size()-2]), &(verticesData[verticesData.size()-1]), vertices.front().getParentSprite(), vertices.front().getParentSprite()));
+#else
+		vertices.push_back(Vertex(&(verticesData[verticesData.size()-2]), &(verticesData[verticesData.size()-1]), vertices.front().getParentSprite()));
+#endif
     }
 }
 
@@ -39,9 +52,8 @@ void VerticesGroup::deleteVertex(Vertex* vertexToDelete) {
 	// its x value.
 	float* xPtr = NULL;
 	std::list<Vertex>::iterator itr = vertices.begin();
-	int nbVerticesData = vertices.size() * 2;
 	while(itr != vertices.end()) {
-		if(vertexTodelete == &(*itr)) {
+		if(vertexToDelete == &(*itr)) {
 			xPtr = itr->getPosition().getXPtr();
 			vertices.erase(itr);
 			itr = vertices.end();
@@ -63,7 +75,7 @@ void VerticesGroup::deleteVertex(Vertex* vertexToDelete) {
 	resetPointers();
 }
 
-std::vector<Vertex>& VerticesGroup::getVertices() {
+std::list<Vertex>& VerticesGroup::getVertices() {
     return vertices;
 }
 std::vector<float>& VerticesGroup::getVerticesData() {
@@ -87,10 +99,11 @@ bool VerticesGroup::containsVertices(Vertex* firstVertex, Vertex* secondVertex) 
 
 void VerticesGroup::warnVerticesOfDeletion() {
     for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
-        i->dontDeleteLinks();
+        i->warnOfParentSpriteDeletion();
     }
 }
 
+#ifdef RB_PHYSICS_ENABLED
 void VerticesGroup::setParentSprite(Sprite* sprite) {
     for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
         i->setParentSprite(sprite);
@@ -102,6 +115,7 @@ void VerticesGroup::setParentGraphicBody(GraphicBody* body) {
         i->setParentGraphicBody(body);
     }
 }
+#endif
 
 void VerticesGroup::resetPointers() {
     // We reset the vertices' pointers to the correct new floats.
@@ -124,7 +138,7 @@ void VerticesGroup::copyFrom(const VerticesGroup& src) {
         verticesData = src.verticesData;
         vertices.resize(src.vertices.size());
 		int i = 0;
-		for(std::list<Vertex>::iterator itr = vertices.begin(); i != vertices.end(); i++) {
+		for(std::list<Vertex>::iterator itr = vertices.begin(); itr != vertices.end(); i++) {
 			itr->getPosition().setIsPtr(true);
 			itr->getPosition().setYPtr(&(verticesData[i*2+1]));
 			itr->getPosition().setXPtr(&(verticesData[i*2]));
@@ -136,24 +150,4 @@ void VerticesGroup::copyFrom(const VerticesGroup& src) {
 void VerticesGroup::clean() {
     verticesData.clear();
     vertices.clear();
-}
-
-std::ostream& RedBox::operator<<(std::ostream& output, const VerticesGroup& vg) {
-    output << "VertexGroup:{verticesData:[";
-    int vSize = vg.vertices.size() * 2;
-    for(int i = 0; i < vSize; i++){
-        output << vg.verticesData[i];
-        if(i != vSize - 1) {
-            output << ", ";
-        }
-    }
-    output << "], vertices:[";
-	for(std::list<Vertex>::iterator i = vg.vertices.begin(); i != vg.verties.end(); i++) {
-		output << i->position;
-		if(*i != vg.vertices.back()) {
-			output << ", ";
-		}
-	}
-    output << "}";
-    return output;
 }

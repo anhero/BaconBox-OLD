@@ -5,20 +5,16 @@
  */
 
 
+#ifdef RB_PHYSICS_ENABLED
 #ifndef BODYLINK
 #define BODYLINK
 
 #include <list>
 
 #include "LinkData.h"
-#include "Vertex.h"
 #include "GraphicBody.h"
-#include "Sprite.h"
 
 namespace RedBox {
-    class Vertex;
-    class GraphicBody;
-    class Sprite;
     /** 
      * Links tie sprites together inside a GraphicBody
      * @ingroup Display
@@ -79,3 +75,4 @@ namespace RedBox {
 }
 
 #endif
+#ifdef RB_PHYSICS_ENABLED

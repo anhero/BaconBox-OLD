@@ -7,10 +7,9 @@
 #define __RENDER_STEP_MODE_H
 
 namespace RedBox {
-    enum RenderStepMode {
-        SHAPE = 1,
-        TEXTURE = 2,
-        COLOR = 4
-    };
+	typedef unsigned int RenderStepMode;
+	const RenderStepMode SHAPE = 1;
+	const RenderStepMode TEXTURE = 2;
+	const RenderStepMode COLOR = 4;
 }
 #endif

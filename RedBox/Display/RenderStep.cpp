@@ -45,7 +45,7 @@ void RenderStep::setMode(RenderStepMode newMode) {
 }
 
 void RenderStep::addMode(RenderStepMode newMode) {
-    mode = (mode | newMode);
+    mode |= newMode;
 }
 
 bool RenderStep::isDeleteVerticesGroup() const {

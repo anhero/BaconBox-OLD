@@ -71,13 +71,16 @@ namespace RedBox {
          * @param edge Pointer to the edge to remove.
          */
         void removeEdge(Edge* edge);
+#endif
     private:
         /// Vector containing the rendering steps.
         std::vector<RenderStep> renderSteps;
         /// Vertices making up the sprite.
         VerticesGroup vertices;
+#ifdef RB_PHYSICS_ENABLED
         /// Edges making up the sprite.
         std::list<Edge> edges;
+#endif
         /**
          * Resets the sprite. Also frees up all allocated memory.
          */

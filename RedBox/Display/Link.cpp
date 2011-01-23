@@ -1,3 +1,4 @@
+#ifdef RB_PHYSICS_ENABLED
 #include "Link.h"
 
 using namespace RedBox;
@@ -50,3 +51,4 @@ bool containsVertex(Vertex* vertex) {
     }
     return !notFound;
 }
+#endif

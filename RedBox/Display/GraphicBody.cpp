@@ -1,3 +1,4 @@
+#ifdef RB_PHYSICS_ENABLED
 #include "GraphicBody.h"
 
 using namespace RedBox;
@@ -108,3 +109,4 @@ bool GraphicBody::containsLink(Link* link) {
     }
     return !notFound;
 }
+#endif

@@ -2,7 +2,7 @@
  * @file
  * @ingroup Physics
  */
-
+#ifdef RB_PHYSICS_ENABLED
 #ifndef __EDGE_H
 #define __EDGE_H
 
@@ -105,4 +105,5 @@ namespace RedBox {
 
 #include "Vertex.h"
 
+#endif
 #endif

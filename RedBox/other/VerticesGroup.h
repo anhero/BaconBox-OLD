@@ -21,13 +21,6 @@ namespace RedBox {
 	 * @ingroup Physics
 	 */
 	class VerticesGroup {
-        /**
-         * Left shift operator overload for output with cout.
-         * @param output The ostream in which VertexGroup is output.
-         * @param vg VertexGroup to output in the ostream.
-         * @return Resulting ostream.
-         */
-        friend std::ostream& operator<<(std::ostream& output, const VerticesGroup& vg);
 	public:
 		/**
 		 * The default constructor.
@@ -56,8 +49,12 @@ namespace RedBox {
          * @param parentSprite Pointer to the vertex's parent sprite.
          * @param parentGraphicBody Pointer to the vertex's parent graphic body.
          */
+#ifdef RB_PHYSICS_ENABLED
         void addVertex(float x, float y, Sprite* sprite = NULL, 
                        GraphicBody* graphicBody = NULL);
+#else
+        void addVertex(float x, float y, Sprite* sprite = NULL);
+#endif
 		/**
 		 * Removes a vertex. Causes the vertices group to be rebuilt.
 		 * @param vertexToDelete Pointer to the vertex to delete.
@@ -84,6 +81,7 @@ namespace RedBox {
          * Warns the vertices to not delete their links and edges.
          */
         void warnVerticesOfDeletion();
+#ifdef RB_PHYSICS_ENABLED
 		/**
 		 * Sets the vertices' parent sprite. Loops through the vertices list
 		 * and sets the parent for each of the vertices.
@@ -96,6 +94,7 @@ namespace RedBox {
 		 * @param parentSprite Pointer to the new parent graphic body.
 		 */
 		void setParentGraphicBody(GraphicBody* parentGraphicBody);
+#endif
 	private:
 		/// Dynamic array containing the vertexes pointing to the vertexes' data.
 		std::list<Vertex> vertices;

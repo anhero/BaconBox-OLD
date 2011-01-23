@@ -16,7 +16,7 @@ void ResourceLoader::loadTexture(string & filePath, string & key){
 #endif
 	}
 	else {
-		$ECHO("Can't load texture with key: " << key << " texture is already loaded");
+		//$ECHO("Can't load texture with key: " << key << " texture is already loaded");
 	}
 
 }
