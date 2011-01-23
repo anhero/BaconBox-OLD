@@ -1,9 +1,16 @@
+/**
+ * @file
+ * @ingroup TextDisplay
+ */
 #ifndef __STRINGPART_H
 #define __STRINGPART_H
 #include "OpenGLStringPartDrawer.h"
 #include <string>
 
 namespace RedBox {
+    /**
+     * @ingroup TextDisplay
+     */
 	class OpenGLStringPartDrawer;
 	
 	class StringPart  {

@@ -26,3 +26,8 @@
  * @defgroup Physics Physics
  * @brief Classes used in the physics engine.
  */
+
+/**
+ * @defgroup TextDisplay
+ * @ingroup Display
+ */

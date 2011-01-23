@@ -1,4 +1,7 @@
-
+/**
+ * @file
+ * @ingroup TextDisplay
+ */
 #ifndef __OPENGLSTRINGPARTDRAWER_H
 #define __OPENGLSTRINGPARTDRAWER_H
 #include "StringPart.h"
@@ -11,7 +14,9 @@
 
 #include "OpenGLTextureHandleCollection.h"
 namespace RedBox {
-	
+	/**
+     * @ingroup TextDisplay
+     */
 	class StringPart;
 
 	class OpenGLStringPartDrawer{

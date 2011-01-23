@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @ingroup TextDisplay
+ */
+
 #ifndef __CHARACTER_H
 #define __CHARACTER_H
 
@@ -9,7 +14,9 @@ struct Kerning {
 	int amount;
 	Kerning(int characterID, int amountOfKerning):charID(characterID), amount(amountOfKerning){}
 };
-
+    /** 
+     * @ingroup TextDisplay
+     */
 class Character {
 	friend class CharacterSet;
 

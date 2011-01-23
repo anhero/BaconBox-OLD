@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @ingroup TextDisplay
+ */
 #ifndef __OPENGLDRAWER_H
 #define __OPENGLDRAWER_H
 
@@ -26,7 +30,9 @@
 #include "OpenGLTextureHandleCollection.h"
 
 namespace RedBox{
-	
+	/**
+     * @ingroup TextDisplay
+     */
 	class OpenGLCharDrawer{
 	private:
 		std::string filename;

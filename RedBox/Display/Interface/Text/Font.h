@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @ingroup TextDisplay
+ */
 #include <ft2build.h>
 #include <freetype/freetype.h>
 #include <freetype/ftglyph.h>
@@ -9,7 +13,9 @@
 
 
 namespace RedBox {
-
+    /**
+     * @ingroup TextDisplay
+     */
 	struct bitmapChar{
 		std::string textureManagerKey; //was used for OpenGL rendering, can't tell at the moment of writing
 										   //if it will be used with DirectX
@@ -20,7 +26,9 @@ namespace RedBox {
 		FT_BitmapGlyph glyph; //Contain the buffer and info on the buffer, 
 							  //we keep directly the glyph so we are able to release the memory later
 	};
-	
+	/** 
+     * @ingroup TextDisplay
+     */
 	class Font {
 	private:
 		static std::map<std::string, Font*> fontCache;

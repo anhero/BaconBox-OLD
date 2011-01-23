@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @ingroup TextDisplay
+ */
 #ifndef __GRAPHICSTRING_H
 #define __GRAPHICSTRING_H
 
@@ -10,15 +14,22 @@
 #include "MathHelper.h"
 #include <sstream>
 namespace RedBox {
-	
+	/**
+     * @ingroup TextDisplay
+     */
 	enum AlignmentEnum {
 		leftAlign, rightAlign
 	};
-	
+	/**
+     * @ingroup TextDisplay
+     */
 	enum RenderMode{
 		perLetter, perWord
 	};
-	
+    
+	/**
+     * @ingroup TextDisplay
+     */
 	class GraphicString : public Renderable {
 	private:
 		std::vector<StringPart*> stringParts;

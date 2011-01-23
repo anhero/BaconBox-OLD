@@ -1,10 +1,16 @@
+/**
+ * @file
+ * @ingroup TextDisplay
+ */
 #ifndef __GRAPHICCHAR_H
 #define __GRAPHICCHAR_H
 
 #include "OpenGLCharDrawer.h"
 
 namespace RedBox {
-	
+	/**
+     * @ingroup TextDisplay
+     */
 	class GraphicChar {
 	private:
 		OpenGLCharDrawer renderedChar;
