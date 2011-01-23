@@ -43,6 +43,9 @@ void GraphicBody::render() {
     //TODO: Everything in this function...
 }
 
+void GraphicBody::update() {
+}
+
 Sprite* GraphicBody::addSprite(Sprite* sprite) {
     if(!containsSprite(sprite)) {
 		sprites.push_back(sprite);

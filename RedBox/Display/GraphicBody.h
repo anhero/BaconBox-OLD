@@ -51,7 +51,11 @@ namespace RedBox{
         /**
          * Renders the graphic body.
          */
-        void render();
+        virtual void render();
+		/**
+		 * Updates the sprite.
+		 */
+		virtual void update();
         /**
          * Add a Sprite as a child
          */

@@ -28,6 +28,9 @@ void RenderStep::render() {
     }
 }
 
+void RenderStep::update() {
+}
+
 RenderInfo& RenderStep::getRenderInfo() {
     return info;
 }

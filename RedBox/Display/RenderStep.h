@@ -12,7 +12,7 @@
 #include "VerticesGroup.h"
 #include "RenderInfo.h"
 #include "RenderStepMode.h"
-#include "OpenGLDrawer.h"
+//#include "OpenGLDrawer.h"
 
 namespace RedBox {
     /**
@@ -44,7 +44,11 @@ namespace RedBox {
         /**
          * Renders the vertices using the info and the mode known.
          */
-        void render();
+        virtual void render();
+		/**
+		 * Updates the the RenderStep.
+		 */
+		virtual void update();
         /**
          * Accessor for the rendering information.
          * @return Information about the rendering.

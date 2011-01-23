@@ -31,6 +31,9 @@ Sprite& Sprite::operator=(const Sprite& src) {
 void Sprite::render() {
 }
 
+void Sprite::update() {
+}
+
 void Sprite::createVertex(float x, float y) {
     vertices.addVertex(x, y);
 }

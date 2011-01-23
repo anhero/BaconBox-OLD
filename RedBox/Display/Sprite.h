@@ -41,7 +41,11 @@ namespace RedBox {
         /**
          * Renders the sprite.
          */
-        void render();
+        virtual void render();
+		/**
+		 * Updates the sprite.
+		 */
+		virtual void update();
         /**
          * Creates an edge on the sprite. Creates an edge linking two vertices.
          * The vertices given must be part of the same sprite.

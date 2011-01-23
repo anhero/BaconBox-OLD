@@ -12,17 +12,6 @@ namespace RedBox {
      * @ingroup Display
 	 */
 	class Renderable {
-	private:
-		/**
-		 * The z coordinate.
-		 */
-		int z;
-		/**
-		 * Copies another renderable.
-		 * Makes the current instance a copy of the renderable received.
-		 * @param src The renderable to make a copy of.
-		 */
-		void copyFrom(const Renderable& src);
 	public:
 		/**
 		 * The default constructor.
@@ -43,6 +32,10 @@ namespace RedBox {
 		 */
 		Renderable& operator=(const Renderable& src);
 		/**
+		 * Updates the renderable.
+		 */
+		virtual void update()=0;
+		/**
 		 * Renders the renderable.
 		 */
 		virtual void render()=0;
@@ -54,6 +47,38 @@ namespace RedBox {
 		 * Sets the z coordinate.
 		 */
 		void setZ(int z);
+		/**
+		 * Checks if the renderable needs to be deleted.
+		 * @return True if the renderable needs to be deleted false if not.
+		 */
+		bool isToBeDeleted() const;
+		/**
+		 * Checks if the z has recently been changed and not yet updated.
+		 * @return True if the z has recently been changed, false if not.
+		 */
+		bool isZChanged() const;
+		/**
+		 * Sets the renderable to be deleted or not.
+		 * @param newToBeDeleted New value to be deleted.
+		 */
+		void setToBeDeleted(bool newToBeDeleted);
+		/**
+		 * Resets the z changed status.
+		 */
+		void resetZChanged();
+	private:
+		/// The z coordinate.
+		int z;
+		/// Used to know if the renderable needs to be deleted.
+		bool toBeDeleted;
+		/// Used to know if the z changed.
+		bool zChanged;
+		/**
+		 * Copies another renderable.
+		 * Makes the current instance a copy of the renderable received.
+		 * @param src The renderable to make a copy of.
+		 */
+		void copyFrom(const Renderable& src);
 	};
 }
 
