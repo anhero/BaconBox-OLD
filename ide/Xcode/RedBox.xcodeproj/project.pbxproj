@@ -144,8 +144,6 @@
 		51CF8DD012DF60E1003FBBAD /* VerticesGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D7E12DF60E0003FBBAD /* VerticesGroup.h */; };
 		51CF8DD112DF60E1003FBBAD /* PlatformFlager.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D7F12DF60E0003FBBAD /* PlatformFlager.h */; };
 		51CF8DD212DF60E1003FBBAD /* RedBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D8012DF60E0003FBBAD /* RedBox.h */; };
-		51CF8DD312DF60E1003FBBAD /* RedboxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D8212DF60E0003FBBAD /* RedboxEngine.cpp */; };
-		51CF8DD412DF60E1003FBBAD /* RedboxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D8312DF60E0003FBBAD /* RedboxEngine.h */; };
 		51CF8DD512DF60E1003FBBAD /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D8412DF60E0003FBBAD /* State.cpp */; };
 		51CF8DD612DF60E1003FBBAD /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D8512DF60E0003FBBAD /* State.h */; };
 /* End PBXBuildFile section */
@@ -279,8 +277,6 @@
 		51CF8D7E12DF60E0003FBBAD /* VerticesGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticesGroup.h; sourceTree = "<group>"; };
 		51CF8D7F12DF60E0003FBBAD /* PlatformFlager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlager.h; sourceTree = "<group>"; };
 		51CF8D8012DF60E0003FBBAD /* RedBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBox.h; sourceTree = "<group>"; };
-		51CF8D8212DF60E0003FBBAD /* RedboxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedboxEngine.cpp; sourceTree = "<group>"; };
-		51CF8D8312DF60E0003FBBAD /* RedboxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedboxEngine.h; sourceTree = "<group>"; };
 		51CF8D8412DF60E0003FBBAD /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
 		51CF8D8512DF60E0003FBBAD /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		51CF8DD912DF60ED003FBBAD /* Finch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Finch.h; sourceTree = "<group>"; };
@@ -639,8 +635,6 @@
 				51CF8D6C12DF60E0003FBBAD /* StringHelper.h */,
 				51CF8D6D12DF60E0003FBBAD /* TimeHelper.cpp */,
 				51CF8D6E12DF60E0003FBBAD /* TimeHelper.h */,
-				24D1FFA512EA9F52004652A6 /* SpriteFactory.cpp */,
-				24D1FFA612EA9F52004652A6 /* SpriteFactory.h */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -692,8 +686,6 @@
 		51CF8D8112DF60E0003FBBAD /* States system */ = {
 			isa = PBXGroup;
 			children = (
-				51CF8D8212DF60E0003FBBAD /* RedboxEngine.cpp */,
-				51CF8D8312DF60E0003FBBAD /* RedboxEngine.h */,
 				51CF8D8412DF60E0003FBBAD /* State.cpp */,
 				51CF8D8512DF60E0003FBBAD /* State.h */,
 			);
@@ -1037,7 +1029,6 @@
 				51CF8DD012DF60E1003FBBAD /* VerticesGroup.h in Headers */,
 				51CF8DD112DF60E1003FBBAD /* PlatformFlager.h in Headers */,
 				51CF8DD212DF60E1003FBBAD /* RedBox.h in Headers */,
-				51CF8DD412DF60E1003FBBAD /* RedboxEngine.h in Headers */,
 				51CF8DD612DF60E1003FBBAD /* State.h in Headers */,
 				512B7DB612DF6103002E9698 /* Finch.h in Headers */,
 				512B7DB812DF6105002E9698 /* RevolverSound.h in Headers */,
@@ -1238,7 +1229,6 @@
 				51CF8DCB12DF60E1003FBBAD /* Vec2.cpp in Sources */,
 				51CF8DCD12DF60E1003FBBAD /* Vertex.cpp in Sources */,
 				51CF8DCF12DF60E1003FBBAD /* VerticesGroup.cpp in Sources */,
-				51CF8DD312DF60E1003FBBAD /* RedboxEngine.cpp in Sources */,
 				51CF8DD512DF60E1003FBBAD /* State.cpp in Sources */,
 				512B7DB712DF6104002E9698 /* Finch.m in Sources */,
 				512B7DB912DF6105002E9698 /* RevolverSound.m in Sources */,
