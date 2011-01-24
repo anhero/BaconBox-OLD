@@ -7,12 +7,13 @@
 #include <map>
 #include <list>
 #include <string>
+
 #include "Renderable.h"
 
 namespace RedBox {
 	/**
-     * A state represent the differents states of THE GAME, 
-	 * it content and manage the renderables objects. Ex: the playState, the MenuState...
+     * A state represents the THE GAME's different states, it contains and
+	 * manages the renderable objects. Ex: the playState, the MenuState.
      */
 	class State {
 	public:
@@ -30,13 +31,13 @@ namespace RedBox {
          */
         void update();
 	private:
-		//Temporarily stores the renderable objects to be deleted.
+		/// Temporarily stores the renderable objects to be deleted.
         std::list<Renderable*> toDelete;
-		//Temporarily stores the renderable objects that need to change their Z value.
+		/// Temporarily stores the renderable objects that need to change their Z value.
         std::list<Renderable*> zChange;
-		//Stores all the renderables active renderables objects.
+		/// Stores all the renderables active renderables objects.
         std::multimap<int, Renderable*> renderables;
-		//The name of the state.
+		/// The name of the state.
         std::string name;
 	}
 }
