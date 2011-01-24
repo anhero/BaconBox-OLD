@@ -44,19 +44,50 @@ namespace RedBox {
 		 * Gets the minimum fps.
 		 * @return Minimum fps.
 		 */
-		static unsigned int getFpsMin();
+		static int getFpsMin();
+		/**
+		 * Gets the number of updates per second.
+		 * @return Number of updates per second.
+		 */
+		static int getUpdatesPerSecond();
+		/**
+		 * Gets the ratio of time to catch up to time things correctly in the
+		 * updates.
+		 */
+		static double getDeltaRatio();
+		/**
+		 * Sets the minimum number of frames per second to be rendered. Cannot
+		 * have a higher number than the number of updates per second.
+		 * @param fpsMin Minimum number of frames per second.
+		 */
+		static void setFpsMin(int fpsMin);
+		/**
+		 * Sets the updates per second. Updates per second called on the current
+		 * state. Cannot have a lower number than the number of frames per
+		 * second.
+		 * @param updatesPerSecond Number of updates per second.
+		 */
+		static void setUpdatesPerSecond(int updatesPerSecond);
+		/**
+		 * Called by the context to call the update and the render correctly
+		 * on the current state.
+		 */
+		static void pulse();
 	private:
 		/// Map of states in the engine.
 		static std::map<std::string, State*> states;
 		/// Pointer to the current state being played.
 		static State* currentState;
-		/// Miminum frame per second before warnings start being given.
-		static unsigned int fpsMin;
-		/**
-		 * Number of updates per second required. Will lower the fps according
-		 * to the time update takes to do.
-		 */
-		static unsigned int updatePerSecond;
+		/// Maximum delay between each render called on the current state.
+		static double maxRenderDelay;
+		/// Delay between each update called on the current state.
+		static double updateDelay;
+		/// Time at which the last update was called on the current state.
+		static double lastUpdate;
+		/// Time at which the last render was called on the current state.
+		static double lastRender;
+		/// Ratio of time that the updates need to watch for to catch up.
+		static double deltaRatio;
 	};
 }
 
