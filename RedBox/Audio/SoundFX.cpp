@@ -1,7 +1,7 @@
 
 
 #include "SoundFX.h"
-#include "ResourceMacro.h"
+#include "ResourceHelper.h"
 using namespace RedBox;
 
 SoundFX::SoundFX(std::string path, const int maxNumberOfInstance){

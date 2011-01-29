@@ -33,7 +33,7 @@ namespace RedBox{
          * @param renderingInfo object of type RenderInfo, containing colors array and textureID
          * @param nbVertices number of vertices to draw
          */
-                static inline void drawShapeWithTextureAndColor(GLfloat * vertices, GLFloat * textCoordArray, RenderInfo * renderingInfo, int nbVertices);
+                static inline void drawShapeWithTextureAndColor(GLfloat * vertices, GLfloat * textCoordArray, RenderInfo * renderingInfo, int nbVertices);
         
         /**
          * Draw a textured shape 
@@ -46,7 +46,7 @@ namespace RedBox{
          * @param renderingInfo object of type RenderInfo, containing colors array and textureID
          * @param nbVertices number of vertices to draw
          */
-                static inline void drawShapeWithTexture(GLfloat * vertices,GLFloat * textCoordArray, RenderInfo * renderingInfo, int nbVertices);
+                static inline void drawShapeWithTexture(GLfloat * vertices,GLfloat * textCoordArray, RenderInfo * renderingInfo, int nbVertices);
 
 	};	
 
