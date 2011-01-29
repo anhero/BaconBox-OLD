@@ -39,6 +39,6 @@ namespace RedBox {
         std::multimap<int, Renderable*> renderables;
 		/// The name of the state.
         std::string name;
-	}
+	};
 }
 #endif

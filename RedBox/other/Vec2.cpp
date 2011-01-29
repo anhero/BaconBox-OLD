@@ -143,8 +143,8 @@ void Vec2::copyFrom(const Vec2& src) {
         coordsVal.y = src.getY();
     }
 }
-
-std::ostream& RedBox::operator<<(std::ostream& output, const Vec2& v)  {
+namespace RedBox{
+std::ostream& operator<<(std::ostream& output, const Vec2& v)  {
     output << "{";
     if(v.isPtr) {
         output << "isPtr:true, coordsPtr.x:" << v.coordsPtr.x << "(" << *(v.coordsPtr.x) << "f), coordsPtr.y:" <<
@@ -153,4 +153,4 @@ std::ostream& RedBox::operator<<(std::ostream& output, const Vec2& v)  {
         output << "isPtr:false, coordsVal.x:" << v.coordsVal.x << "f, coordsVal.y:" << v.coordsVal.y << "f)}";
     }
     return output;  // for multiple << operators.
-}
+}}

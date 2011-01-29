@@ -17,7 +17,7 @@ State* RedBoxEngine::addState(State* newState) {
 }
 
 void RedBoxEngine::removeState(const std::string& name) {
-	std::map<std::string, State*>::iteratir toDelete = states.find(name);
+	std::map<std::string, State*>::iterator toDelete = states.find(name);
 	if(currentState != toDelete->second) {
 		states.erase(toDelete);
 	}

@@ -13,11 +13,20 @@
 #include "Renderable.h"
 #include "RenderStep.h"
 
+#ifdef RB_PHYSICS_ENABLED
+#include "GraphicBody.h"
+#endif
 namespace RedBox {
     /** 
      * Represents a sprite.
      * @ingroup Display
      */
+	
+#ifdef RB_PHYSICS_ENABLED
+	class GraphicBody;
+	class Edge;
+#endif
+	
 	class Sprite : public Renderable {
     public:
         /**
@@ -65,17 +74,18 @@ namespace RedBox {
          * Warns the vertices not to delete their links on their destruction.
          */
         void warnVerticesOfDeletion();   
-        /**
+#ifdef RB_PHYSICS_ENABLED
+		/**
         * Sets the parent graphic body to the vertices.
         * @param body Pointer to the parent graphic body to set.
         */
         void setParentGraphicBody(GraphicBody* body);
-        /**
+		/**
          * Removes the given edge from the sprite's edges.
          * @param edge Pointer to the edge to remove.
          */
         void removeEdge(Edge* edge);
-#endif
+#endif //RB_PHYSICS_ENABLED
     private:
         /// Vector containing the rendering steps.
         std::vector<RenderStep> renderSteps;
@@ -84,7 +94,7 @@ namespace RedBox {
 #ifdef RB_PHYSICS_ENABLED
         /// Edges making up the sprite.
         std::list<Edge> edges;
-#endif
+#endif //RB_PHYSICS_ENABLED
         /**
          * Resets the sprite. Also frees up all allocated memory.
          */
@@ -99,4 +109,4 @@ namespace RedBox {
 
 #include "GraphicBody.h"
 
-#endif
+#endif //REDBOX_SPRITE

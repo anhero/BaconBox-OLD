@@ -7,7 +7,6 @@
 #else
 
 #ifdef _WIN32
-//est-ce nécesaaire?
 #include<windows.h>
 #endif //_WIN32
 
@@ -25,7 +24,7 @@ extern "C" {
 	extern GLboolean siTexImagePNG(
 								   GLenum target,
 								   GLenum internalFormat,
-								   const char *path, int* pixelWidth, int* pixelHeight);
+								   const char *path, unsigned int* pixelWidth, unsigned int* pixelHeight);
 	
 #if defined(__cplusplus)
 }

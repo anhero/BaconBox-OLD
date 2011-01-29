@@ -12,6 +12,7 @@
 #import <OpenGLES/ES1/glext.h>
 #endif
 
+#include "RenderInfo.h"
 namespace RedBox{
     /** 
      * @class OpenGLDrawer

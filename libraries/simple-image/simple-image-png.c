@@ -8,7 +8,7 @@
 
 #define PNG_HEADER_SIZE 8
 
-GLboolean siTexImagePNG(GLenum target,GLenum internalFormat, const char *path, int* pixelWidth, int* pixelHeight){
+GLboolean siTexImagePNG(GLenum target,GLenum internalFormat, const char *path, unsigned int* pixelWidth, unsigned int* pixelHeight){
 
     FILE *PNG_file;
 	GLubyte PNG_header[PNG_HEADER_SIZE];

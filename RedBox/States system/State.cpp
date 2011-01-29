@@ -1,14 +1,12 @@
 #include "State.h"
-
 using namespace RedBox;
 
 void State::addRenderable(Renderable* aRenderable) {
-    renderables.insert(pair<int, Renderable*>(aRenderable->getZ(), aRenderable));
+    renderables.insert(std::pair<int, Renderable*>(aRenderable->getZ(), aRenderable));
 }
 
 
 void State::render() {
-	//iterator to render every f***ing renderable
     for(std::multimap<int, Renderable*>::iterator i=renderables.begin();
 		i !=renderables.end();
 		i++) {
@@ -18,7 +16,7 @@ void State::render() {
 
 void State::update() {
 	// We loop through each of the renderables to update them.
-	for(std::multimap<int Renderable*>::iterator i = renderables.begin();
+	for(std::multimap<int, Renderable*>::iterator i = renderables.begin();
 		i != renderables.end();
 		i++) {
 		// We check if the delete flag is on.
@@ -47,7 +45,7 @@ void State::update() {
 	for(std::list<Renderable*>::iterator it=toDelete.begin();
 		it !=toDelete.end();
 		it++) {
-		delete it->second;
+		delete *it;
 	}
 	// We clear the list.
 	toDelete.clear();
@@ -57,7 +55,7 @@ void State::update() {
 	for(std::list<Renderable*>::iterator it=zChange.begin();
 		it !=zChange.end();
 		it++) {
-		renderables.insert(pair<int, Renderable*>(it->second->getZ(), it->second));
+		renderables.insert(std::pair<int, Renderable*>((*it)->getZ(), *it));
 	}
 	zChange.clear();
 }

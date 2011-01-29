@@ -75,6 +75,7 @@ void Sprite::copyFrom(const Sprite& src) {
         clean();
     }
 }
+#ifdef RB_PHYSICS_ENABLED
 void Sprite::removeEdge(Edge* edge) {
 	bool notFound = true;
 	std::vector<Edge>::iterator i = edges.begin();
@@ -92,3 +93,4 @@ void Sprite::removeEdge(Edge* edge) {
         }
 	}       
 }
+#endif
