@@ -18,23 +18,20 @@ std::map<std::string, BackgroundMusic*> ResourceLoader::musics = std::map<std::s
 AudioEngine* ResourceLoader::soundEngine = NULL;
 AudioEngine* ResourceLoader::musicEngine = NULL;
 
-void ResourceLoader::loadTexture(const std::string& filePath, const std::string& key) {
-	
+TextureInfo ResourceLoader::loadTexture(const std::string& filePath, const std::string& key) {
+	TextureInfo texInfo;
 	if (textures.find(key) ==  textures.end()) {
-		//#ifdef RB_OPENGL
-		unsigned int texID, imageWidth, imageHeight;
-		glGenTextures(1, &texID);
-		glBindTexture(GL_TEXTURE_2D, texID);
-		siTexImagePNG(GL_TEXTURE_2D, GL_RGBA, filePath.c_str(), &imageWidth, &imageHeight);
-		textures[key].textureID = texID;
-		textures[key].imageWidth = imageWidth;
-		textures[key].imageHeight = imageHeight;
-		//#endif
+#ifdef RB_OPENGL
+		glGenTextures(1, &(texInfo.textureId));
+		glBindTexture(GL_TEXTURE_2D, texInfo.textureId);
+		siTexImagePNG(GL_TEXTURE_2D, GL_RGBA, filePath.c_str(), &(texInfo.imageWidth), &(texInfo.imageHeight));
+		textures.insert(std::pair<std::string, TextureInfo>(key, texInfo));
+#endif
 	}
 	else {
 		//$ECHO("Can't load texture with key: " << key << " texture is already loaded");
 	}
-	
+	return texInfo;
 }
 
 TextureInfo ResourceLoader::getTextures(const std::string& key){

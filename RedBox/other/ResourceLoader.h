@@ -28,7 +28,7 @@ namespace RedBox {
 		 * @param filePath Path to the file containing the texture.
 		 * @param key Key used to identify this new texture.
 		 */
-		static void loadTexture(const std::string& filePath, const std::string& key);
+		static TextureInfo loadTexture(const std::string& filePath, const std::string& key);
 		/**
 		 * Gets the information about the asked texture. Uses the texture's key
 		 * to find it.

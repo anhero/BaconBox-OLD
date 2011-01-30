@@ -29,9 +29,25 @@ Sprite& Sprite::operator=(const Sprite& src) {
 }
 
 void Sprite::render() {
+	// We render the render steps.
+	for(std::set<RenderStep*>::iterator i = renderSteps.begin();
+		i != renderSteps.end();
+		i++) {
+		if(*i) {
+			(*i)->render();
+		}
+	}
 }
 
 void Sprite::update() {
+	// We update the render steps.
+	for(std::set<RenderStep*>::iterator i = renderSteps.begin();
+		i != renderSteps.end();
+		i++) {
+		if(*i) {
+			(*i)->update();
+		}
+	}
 }
 
 void Sprite::createVertex(float x, float y) {
@@ -40,6 +56,17 @@ void Sprite::createVertex(float x, float y) {
 
 void Sprite::warnVerticesOfDeletion() {
     vertices.warnVerticesOfDeletion();
+}
+
+RenderStep* Sprite::addRenderStep(RenderStep* newRenderStep) {
+	if(newRenderStep) {
+		renderSteps.insert(newRenderStep);
+	}
+	return newRenderStep;
+}
+
+void Sprite::removeRenderStep(RenderStep* renderStep) {
+	renderSteps.erase(renderStep);
 }
 
 #ifdef RB_PHYSICS_ENABLED
@@ -52,30 +79,10 @@ void Sprite::createEdge(Vertex* firstVertex, Vertex* secondVertex) {
     }
 }
 
-vertices.setParentGraphicBody(body);
-}
-#endif
-
-void Sprite::clean() {
-    renderSteps.clear();
-	vertices.warnVerticesOfDeletion();
-#ifdef RB_PHYSICS_ENABLED
-    edges.clear();
-#endif
+void Sprite::setParentGraphicBody(GraphicBody* body) {
+	vertices.setParentGraphicBody(body);
 }
 
-void Sprite::copyFrom(const Sprite& src) {
-    if(this != &src && &src) {
-        renderSteps = src.renderSteps;
-        vertices = src.vertices;
-#ifdef RB_PHYSICS_ENABLED
-        edges = src.edges;
-#endif
-    } else {
-        clean();
-    }
-}
-#ifdef RB_PHYSICS_ENABLED
 void Sprite::removeEdge(Edge* edge) {
 	bool notFound = true;
 	std::vector<Edge>::iterator i = edges.begin();
@@ -94,3 +101,34 @@ void Sprite::removeEdge(Edge* edge) {
 	}       
 }
 #endif
+
+void Sprite::clean() {
+	clearRenderSteps();
+	vertices.warnVerticesOfDeletion();
+#ifdef RB_PHYSICS_ENABLED
+    edges.clear();
+#endif
+}
+
+void Sprite::copyFrom(const Sprite& src) {
+    if(this != &src && &src) {
+        renderSteps = src.renderSteps;
+        vertices = src.vertices;
+#ifdef RB_PHYSICS_ENABLED
+        edges = src.edges;
+#endif
+    } else {
+        clean();
+    }
+}
+
+void Sprite::clearRenderSteps() {
+	for(std::set<RenderStep*>::iterator i = renderSteps.begin();
+		i != renderSteps.end();
+		i++) {
+		if(*i) {
+			delete *i;
+		}
+	}
+	renderSteps.clear();
+}

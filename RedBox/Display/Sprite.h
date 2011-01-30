@@ -7,8 +7,8 @@
 #ifndef REDBOX_SPRITE
 #define REDBOX_SPRITE
 
+#include <set>
 #include <list>
-#include <vector>
 
 #include "Renderable.h"
 #include "RenderStep.h"
@@ -50,15 +50,6 @@ namespace RedBox {
 		 */
 		virtual void update();
         /**
-         * Creates an edge on the sprite. Creates an edge linking two vertices.
-         * The vertices given must be part of the same sprite.
-         * @param firstVertex Pointer to the first vertex that the edge will 
-         * link.
-         * @param secondVertex Pointer to the second vertex that the edge will
-         * link.
-         */
-        void createEdge(Vertex* firstVertex, Vertex* secondVertex);
-        /**
          * Creates a vertex in the vertices group.
          * @param x Horizontal position.
          * @param y Vertical position.
@@ -67,12 +58,33 @@ namespace RedBox {
         /**
          * Warns the vertices not to delete their links on their destruction.
          */
-        void warnVerticesOfDeletion();   
-#ifdef RB_PHYSICS_ENABLED
+        void warnVerticesOfDeletion();
 		/**
-        * Sets the parent graphic body to the vertices.
-        * @param body Pointer to the parent graphic body to set.
-        */
+		 * Adds a rendering step. Does nothing if the recieved pointer is NULL.
+		 * @param newRenderStep Pointer to the rendering step to add.
+		 * @return Pointer to the rendering step added. NULL if it failed.
+		 */
+		RenderStep* addRenderStep(RenderStep* newRenderStep);
+		/**
+		 * Removes a rendering step. Does nothing if the recieved is either NULL
+		 * or isn't in the set.
+		 * @param renderStep Rendering step to remove from the set.
+		 */
+		void removeRenderStep(RenderStep* renderStep);
+#ifdef RB_PHYSICS_ENABLED
+        /**
+         * Creates an edge on the sprite. Creates an edge linking two vertices.
+         * The vertices given must be part of the same sprite.
+         * @param firstVertex Pointer to the first vertex that the edge will 
+         * link.
+         * @param secondVertex Pointer to the second vertex that the edge will
+         * link.
+         */
+        void createEdge(Vertex* firstVertex, Vertex* secondVertex);
+		/**
+		 * Sets the parent graphic body to the vertices.
+		 * @param body Pointer to the parent graphic body to set.
+		 */
         void setParentGraphicBody(GraphicBody* body);
 		/**
          * Removes the given edge from the sprite's edges.
@@ -81,8 +93,8 @@ namespace RedBox {
         void removeEdge(Edge* edge);
 #endif //RB_PHYSICS_ENABLED
     private:
-        /// Vector containing the rendering steps.
-        std::vector<RenderStep> renderSteps;
+        /// Set containing the rendering steps.
+        std::set<RenderStep*> renderSteps;
         /// Vertices making up the sprite.
         VerticesGroup vertices;
 #ifdef RB_PHYSICS_ENABLED
@@ -98,6 +110,10 @@ namespace RedBox {
          * @param src Sprite to make a copy of.
          */
         void copyFrom(const Sprite& src);
+		/**
+		 * Frees up all memory used by the render steps.
+		 */
+		void clearRenderSteps();
     };
 }
 

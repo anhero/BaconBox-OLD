@@ -7,3 +7,15 @@
 //
 
 #include "TextureInfo.h"
+
+using namespace RedBox;
+
+#ifdef RB_OPENGL
+TextureInfo::TextureInfo(): textureId(0), imageWidth(0), imageHeight(0) {
+}
+TextureInfo::TextureInfo(unsigned int newTextureId,
+			unsigned int newImageWidth,
+			unsigned int newImageHeight): textureId(newTextureId),
+imageWidth(newImageWidth), imageHeight(newImageHeight) {
+}
+#endif
