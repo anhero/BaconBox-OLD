@@ -5,13 +5,20 @@
 #ifndef RB_BACKGROUNDMUSIC_H
 #define RB_BACKGROUNDMUSIC_H
 
+#include "AudioEngine.h"
+#include "ResourceLoader.h"
+
 namespace RedBox {
+	class AudioEngine;
+	class ResourceLoader;
 	/**
 	 * Abstract class for background musics. Used by engine specific classes for
 	 * background music.
 	 * @ingroup Audio
 	 */
 	class BackgroundMusic {
+		friend class AudioEngine;
+		friend class ResourceLoader;
 	public:
 		/**
 		 * Plays the background music. Plays the background music the number of

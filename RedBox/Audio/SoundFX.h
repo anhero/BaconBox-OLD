@@ -5,13 +5,20 @@
 #ifndef RB_SOUNDFX_H
 #define RB_SOUNDFX_H
 
+#include "AudioEngine.h"
+#include "ResourceLoader.h"
+
 namespace RedBox {
+	class AudioEngine;
+	class ResourceLoader;
 	/**
 	 * Abstract class for sound effects. Used by engine specific classes for
 	 * sound effects.
 	 * @ingroup Audio
 	 */
 	class SoundFX {
+		friend class AudioEngine;
+		friend class ResourceLoader;
 	public:
 		/**
 		 * Plays the sound effect. Will make the necessary calls itself to the

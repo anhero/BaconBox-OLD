@@ -5,7 +5,12 @@
 #ifndef RB_AUDIO_ENGINE_H
 #define RB_AUDIO_ENGINE_H
 
+#include "SoundFX.h"
+#include "BackgroundMusic.h"
+
 namespace RedBox {
+	class SoundFX;
+	class BackgroundMusic;
 	/**
 	 * Abstract class used for the audio engines. Contains all the methods
 	 * specific engines will require to have to be used by the resource loader.
