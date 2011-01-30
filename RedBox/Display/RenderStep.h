@@ -3,8 +3,8 @@
  * @ingroup Display
  */
 
-#ifndef __RENDER_STEP_H
-#define __RENDER_STEP_H
+#ifndef RB_RENDER_STEP_H
+#define RB_RENDER_STEP_H
 
 #include <vector>
 

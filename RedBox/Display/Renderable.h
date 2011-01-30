@@ -3,8 +3,8 @@
  * @ingroup Display
  */
 
-#ifndef __RENDERABLE_H
-#define __RENDERABLE_H
+#ifndef RB_RENDERABLE_H
+#define RB_RENDERABLE_H
 
 namespace RedBox {
 	/**

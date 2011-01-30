@@ -5,8 +5,8 @@
 
 
 #ifdef RB_PHYSICS_ENABLED
-#ifndef __GRAPHICBODY_H
-#define __GRAPHICBODY_H
+#ifndef RB_GRAPHICBODY_H
+#define RB_GRAPHICBODY_H
 
 #include <list>
 

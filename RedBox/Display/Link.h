@@ -75,4 +75,4 @@ namespace RedBox {
 }
 
 #endif
-#ifdef RB_PHYSICS_ENABLED
+#endif

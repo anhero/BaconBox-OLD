@@ -5,8 +5,8 @@
  */
 
 #ifdef RB_PHYSICS_ENABLED
-#ifndef __LINK_DATA_H
-#define __LINK_DATA_H
+#ifndef RB_LINK_DATA_H
+#define RB_LINK_DATA_H
 
 /**
  * Contains the information about a Link.

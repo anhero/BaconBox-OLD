@@ -4,8 +4,8 @@
  */
 
 
-#ifndef REDBOX_SPRITE
-#define REDBOX_SPRITE
+#ifndef RB_SPRITE_H
+#define RB_SPRITE_H
 
 #include <set>
 #include <list>
@@ -119,4 +119,4 @@ namespace RedBox {
 
 #include "GraphicBody.h"
 
-#endif //REDBOX_SPRITE
+#endif // RB_SPRITE_H
