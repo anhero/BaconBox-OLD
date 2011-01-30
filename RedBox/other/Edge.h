@@ -24,18 +24,6 @@ namespace RedBox {
          * @return Resulting ostream.
          */
         friend std::ostream& operator<<(std::ostream& output, const Edge& e);
-    private:
-        /// Distance between the two vertices.
-        float distance;
-        /// Pointer to the edge's first vertex.
-        Vertex* v1;
-        /// Pointer to the edge's second vertex.
-        Vertex* v2;
-        /**
-         * Makes the instance a copy of the recieved Edge.
-         * @param src Edge to make a copy of.
-         */
-        void copyFrom(const Edge& src);
     public:
         /**
          * Default constructor. Creates an edge that has no vertices and
@@ -100,6 +88,18 @@ namespace RedBox {
          * @return Distance stored in the instance's distance member.
          */
         float getDistance() const;
+    private:
+        /// Distance between the two vertices.
+        float distance;
+        /// Pointer to the edge's first vertex.
+        Vertex* v1;
+        /// Pointer to the edge's second vertex.
+        Vertex* v2;
+        /**
+         * Makes the instance a copy of the recieved Edge.
+         * @param src Edge to make a copy of.
+         */
+        void copyFrom(const Edge& src);
     };
 }
 

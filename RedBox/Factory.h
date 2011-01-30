@@ -10,15 +10,6 @@ namespace RedBox {
 	
 	template <class ManufacturedType, typename ClassIDKey=std::string>
 	class GenericFactory {
-	private:
-		typedef ManufacturedType* (*BaseCreateFn)();
-		typedef std::map<ClassIDKey, BaseCreateFn> FnRegistry;
-		FnRegistry registry;
-		
-		GenericFactory() {}
-		//GenericFactory(const GenericFactory&); // Not implemented
-		//GenericFactory &operator=(const GenericFactory&); // Not implemented
-		static GenericFactory* myInstance;
 	public:
 		// Used for the singleton pattern, to get the Factory's instance.
 		static GenericFactory* instance() {
@@ -37,6 +28,15 @@ namespace RedBox {
 			BaseCreateFn test = registry[className];
 			return (*test)();
 		}
+	private:
+		typedef ManufacturedType* (*BaseCreateFn)();
+		typedef std::map<ClassIDKey, BaseCreateFn> FnRegistry;
+		FnRegistry registry;
+		
+		GenericFactory() {}
+		//GenericFactory(const GenericFactory&); // Not implemented
+		//GenericFactory &operator=(const GenericFactory&); // Not implemented
+		static GenericFactory* myInstance;
 	};
 	
 	// We initialize the static pointer for the singleton pattern.

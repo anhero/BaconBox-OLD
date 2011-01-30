@@ -15,9 +15,6 @@ namespace RedBox {
 	 * @ingroup Helper
 	 */
 	class Random {
-	private:
-		/// Maximum double value.
-		static double D_RAND_MAX;
 	public:
 		/**
 		 * Generates a random integer. The number generated will inclusively be
@@ -40,6 +37,9 @@ namespace RedBox {
 		 * @return Number generated randomly between min and max (inclusively).
 		 */
 		static double getRandomDouble(double min, double max);
+	private:
+		/// Maximum double value.
+		static double D_RAND_MAX;
 	};
 	
 }

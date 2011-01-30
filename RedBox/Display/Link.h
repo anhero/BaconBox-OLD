@@ -21,16 +21,6 @@ namespace RedBox {
      * @ingroup Physics
      */
 	class Link {
-    private:
-        /**
-         * Makes the instance a copy of the recieved Link.
-         * @param src Link to make a copy of.
-         */
-        void copyFrom(const Link& src);
-        /// Info on the Link.
-        LinkData info;
-        /// Vertices that the Link is made of.
-        std::list<Vertex*> vertices;
     public:
         /**
          * Default constructor. Creates a Link that links nothing.
@@ -71,6 +61,16 @@ namespace RedBox {
          * @return True if the vertex is part of the link, false if not.
          */
         bool containsVertex(Vertex* vertex);
+    private:
+        /**
+         * Makes the instance a copy of the recieved Link.
+         * @param src Link to make a copy of.
+         */
+        void copyFrom(const Link& src);
+        /// Info on the Link.
+        LinkData info;
+        /// Vertices that the Link is made of.
+        std::list<Vertex*> vertices;
     };
 }
 
