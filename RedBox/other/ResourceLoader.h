@@ -28,13 +28,13 @@ namespace RedBox {
 		 * @param filePath Path to the file containing the texture.
 		 * @param key Key used to identify this new texture.
 		 */
-		static TextureInfo loadTexture(const std::string& filePath, const std::string& key);
+		static TextureInfo* loadTexture(const std::string& filePath, const std::string& key);
 		/**
 		 * Gets the information about the asked texture. Uses the texture's key
 		 * to find it.
 		 * @param key Key used to identify and find the asked texture.
 		 */
-		static TextureInfo getTextures(const std::string& key);
+		static TextureInfo* getTextures(const std::string& key);
 		/**
 		 * Gets a pointer to the asked sound effect.
 		 * @param key Name of the sound effect to get a pointer of.
@@ -103,7 +103,7 @@ namespace RedBox {
 		static void updateAudio();
 	private:
 		/// Map associating the textures' keys and their information.
-		static std::map<std::string, TextureInfo> textures;
+		static std::map<std::string, TextureInfo*> textures;
 		/// Map associating the sound effects' names and their information.
 		static std::map<std::string, SoundFX*> sounds;
 		/// Map associating the musics' names and their information.

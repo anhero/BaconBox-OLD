@@ -12,20 +12,21 @@
 
 using namespace RedBox;
 
-std::map<std::string, TextureInfo> ResourceLoader::textures = std::map<std::string, TextureInfo>();
+std::map<std::string, TextureInfo*> ResourceLoader::textures = std::map<std::string, TextureInfo*>();
 std::map<std::string, SoundFX*> ResourceLoader::sounds = std::map<std::string, SoundFX*>();
 std::map<std::string, BackgroundMusic*> ResourceLoader::musics = std::map<std::string, BackgroundMusic*>();
 AudioEngine* ResourceLoader::soundEngine = NULL;
 AudioEngine* ResourceLoader::musicEngine = NULL;
 
-TextureInfo ResourceLoader::loadTexture(const std::string& filePath, const std::string& key) {
-	TextureInfo texInfo;
+TextureInfo* ResourceLoader::loadTexture(const std::string& filePath, const std::string& key) {
+	TextureInfo* texInfo = NULL;
 	if (textures.find(key) ==  textures.end()) {
 #ifdef RB_OPENGL
-		glGenTextures(1, &(texInfo.textureId));
-		glBindTexture(GL_TEXTURE_2D, texInfo.textureId);
-		siTexImagePNG(GL_TEXTURE_2D, GL_RGBA, filePath.c_str(), &(texInfo.imageWidth), &(texInfo.imageHeight));
-		textures.insert(std::pair<std::string, TextureInfo>(key, texInfo));
+		texInfo = new TextureInfo();
+		glGenTextures(1, &(texInfo->textureId));
+		glBindTexture(GL_TEXTURE_2D, texInfo->textureId);
+		siTexImagePNG(GL_TEXTURE_2D, GL_RGBA, filePath.c_str(), &(texInfo->imageWidth), &(texInfo->imageHeight));
+		textures.insert(std::pair<std::string, TextureInfo*>(key, texInfo));
 #endif
 	}
 	else {
@@ -34,7 +35,7 @@ TextureInfo ResourceLoader::loadTexture(const std::string& filePath, const std::
 	return texInfo;
 }
 
-TextureInfo ResourceLoader::getTextures(const std::string& key){
+TextureInfo* ResourceLoader::getTextures(const std::string& key){
 	return textures[key];
 }
 
