@@ -29,13 +29,12 @@ namespace RedBox{
          *
          * @param vertices Array of vertex to draw, must have this form (X1, Y1, X2, Y2, Xn, Yn).
          * The order must be clock wise
-         * @param textCoordArray Array of texture coordinate, every value must be in the range 0 to 1. 
+         * @param texCoordArray Array of texture coordinate, every value must be in the range 0 to 1. 
          * @param renderingInfo object of type RenderInfo, containing colors array and textureID
          * @param nbVertices number of vertices to draw
          */
 		static inline void drawShapeWithTextureAndColor(GLfloat* vertices,
-														GLfloat* textCoordArray,
-														RenderInfo* renderingInfo,
+														const RenderInfo& renderingInfo,
 														unsigned int nbVertices);
         
         /**
@@ -45,13 +44,12 @@ namespace RedBox{
          *
          * @param vertices Array of vertex to draw, must have this form (X1, Y1, X2, Y2, Xn, Yn).
          * The order must be clock wise
-         * @param textCoordArray Array of texture coordinate, every value must be in the range 0 to 1.
+         * @param texCoordArray Array of texture coordinate, every value must be in the range 0 to 1.
          * @param renderingInfo object of type RenderInfo, containing colors array and textureID
          * @param nbVertices number of vertices to draw
          */
 		static inline void drawShapeWithTexture(GLfloat* vertices,
-												GLfloat* textCoordArray,
-												RenderInfo* renderingInfo,
+												const RenderInfo& renderingInfo,
 												unsigned int nbVertices);
 	private:
 	};

@@ -23,9 +23,9 @@ void RenderStep::render() {
 	if(vertices) {
 		// We use the bitwise inclusive OR to combine different modes.
 		if(mode == (SHAPE | TEXTURE | COLOR)) {
-			Drawer::drawShapeWithTextureAndColor(vertices, NULL, &info, vertices->getVertices().size());
+			Drawer::drawShapeWithTextureAndColor(vertices, info, vertices->getVertices().size());
 		} else if(mode == (SHAPE | TEXTURE)) {
-			Drawer::drawShapeWithTexture(vertices, NULL, &info, vertices->getVertices().size());
+			Drawer::drawShapeWithTexture(vertices, info, vertices->getVertices().size());
 		}
 	}
 }

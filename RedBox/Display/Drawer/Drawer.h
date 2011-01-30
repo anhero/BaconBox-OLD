@@ -27,8 +27,7 @@ namespace RedBox{
          * @param nbVertices Number equal to the number of vertices to draw
          */
 		static void drawShapeWithTextureAndColor(VerticesGroup* vertices, 
-												 float* textCoordArray,
-												 RenderInfo* renderingInfo,
+												 const RenderInfo& renderingInfo,
 												 unsigned int nbVertices);
         /**
          * Draw a textured shape with the given vertices, texture coordinate,
@@ -40,8 +39,7 @@ namespace RedBox{
          * @param nbVertices Number equal to the number of vertices to draw.
          */
 		static void drawShapeWithTexture(VerticesGroup* vertices,
-										 float* textCoordArray,
-										 RenderInfo* renderingInfo,
+										 const RenderInfo& renderingInfo,
 										 unsigned int nbVertices);
 	private:
 	};
