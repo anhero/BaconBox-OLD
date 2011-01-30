@@ -21,12 +21,6 @@ namespace RedBox {
      * Represents a sprite.
      * @ingroup Display
      */
-	
-#ifdef RB_PHYSICS_ENABLED
-	class GraphicBody;
-	class Edge;
-#endif
-	
 	class Sprite : public Renderable {
     public:
         /**
