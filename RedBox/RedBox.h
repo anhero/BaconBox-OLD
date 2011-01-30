@@ -31,3 +31,8 @@
  * @defgroup TextDisplay
  * @ingroup Display
  */
+
+/**
+ * @defgroup Audio Audio
+ * *brief Classes used for the audio engine.
+ */
