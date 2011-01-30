@@ -1,5 +1,9 @@
 #include "State.h"
+
 using namespace RedBox;
+
+State::State() {
+}
 
 void State::addRenderable(Renderable* aRenderable) {
     renderables.insert(std::pair<int, Renderable*>(aRenderable->getZ(), aRenderable));

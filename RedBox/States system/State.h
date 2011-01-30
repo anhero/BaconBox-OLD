@@ -18,6 +18,10 @@ namespace RedBox {
 	class State {
 	public:
 		/**
+		 * Default constructor.
+		 */
+		State();
+		/**
          * Adds a renderable object to the multimap to begin rendering and updating it.
          * @param aRenderable the object to be rendered.
          */
@@ -25,11 +29,11 @@ namespace RedBox {
 		/**
          * Renders all the objects that need to be rendered.
          */
-        void render();
+        virtual void render();
 		/**
          * Deletes, Updates and moves all concerns objects.
          */
-        void update();
+        virtual void update();
 	private:
 		/// Temporarily stores the renderable objects to be deleted.
         std::list<Renderable*> toDelete;
