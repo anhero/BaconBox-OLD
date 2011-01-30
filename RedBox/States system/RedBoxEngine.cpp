@@ -25,6 +25,7 @@ void RedBoxEngine::removeState(const std::string& name) {
 
 State* RedBoxEngine::playState(const std::string& name) {
 	currentState = states[name];
+	return currentState;
 }
 
 State* RedBoxEngine::getCurrentState() {
