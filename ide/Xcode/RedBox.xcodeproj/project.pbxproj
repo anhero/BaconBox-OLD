@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		241F18CD12F4A2D2002F3247 /* RenderInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */; };
 		2447361112EF44550085668B /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2447360F12EF44550085668B /* Drawer.cpp */; };
 		2447361212EF44550085668B /* Drawer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361012EF44550085668B /* Drawer.h */; };
 		2447361912EF46030085668B /* PlatformFlagger.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361812EF46030085668B /* PlatformFlagger.h */; };
@@ -146,6 +147,7 @@
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderInfo.cpp; sourceTree = "<group>"; };
 		2447360F12EF44550085668B /* Drawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawer.cpp; sourceTree = "<group>"; };
 		2447361012EF44550085668B /* Drawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drawer.h; sourceTree = "<group>"; };
 		2447361812EF46030085668B /* PlatformFlagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlagger.h; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 				51CF8D5D12DF60E0003FBBAD /* Renderable.h */,
 				51CF8D5E12DF60E0003FBBAD /* Sprite.cpp */,
 				51CF8D5F12DF60E0003FBBAD /* Sprite.h */,
+				241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */,
 				2480744F12E0A3F800F49E74 /* RenderInfo.h */,
 				24B9BD7A12E1279E00057BB1 /* RenderStep.cpp */,
 				24B9BD7B12E1279E00057BB1 /* RenderStep.h */,
@@ -1012,6 +1015,7 @@
 				24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */,
 				24B86B5412F319620071930C /* MusicInfo.cpp in Sources */,
 				24B86B5612F319620071930C /* SoundInfo.cpp in Sources */,
+				241F18CD12F4A2D2002F3247 /* RenderInfo.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
