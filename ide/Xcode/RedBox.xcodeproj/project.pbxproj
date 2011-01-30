@@ -16,6 +16,8 @@
 		24B9BD7D12E1279E00057BB1 /* RenderStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B9BD7A12E1279E00057BB1 /* RenderStep.cpp */; };
 		24B9BD7E12E1279E00057BB1 /* RenderStep.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B9BD7B12E1279E00057BB1 /* RenderStep.h */; };
 		24B9BD7F12E1279E00057BB1 /* RenderStepMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B9BD7C12E1279E00057BB1 /* RenderStepMode.h */; };
+		24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24F0335012F1C59500BD5409 /* AudioEngine.cpp */; };
+		24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24F0335112F1C59500BD5409 /* AudioEngine.h */; };
 		512B7DB612DF6103002E9698 /* Finch.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8DD912DF60ED003FBBAD /* Finch.h */; };
 		512B7DB712DF6104002E9698 /* Finch.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8DDA12DF60ED003FBBAD /* Finch.m */; };
 		512B7DB812DF6105002E9698 /* RevolverSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8DDB12DF60ED003FBBAD /* RevolverSound.h */; };
@@ -149,6 +151,8 @@
 		24B9BD7A12E1279E00057BB1 /* RenderStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderStep.cpp; sourceTree = "<group>"; };
 		24B9BD7B12E1279E00057BB1 /* RenderStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderStep.h; sourceTree = "<group>"; };
 		24B9BD7C12E1279E00057BB1 /* RenderStepMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderStepMode.h; sourceTree = "<group>"; };
+		24F0335012F1C59500BD5409 /* AudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEngine.cpp; sourceTree = "<group>"; };
+		24F0335112F1C59500BD5409 /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -425,6 +429,8 @@
 		51CF8D2812DF60E0003FBBAD /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				24F0335012F1C59500BD5409 /* AudioEngine.cpp */,
+				24F0335112F1C59500BD5409 /* AudioEngine.h */,
 				51CF8D2912DF60E0003FBBAD /* BackgroundMusic.cpp */,
 				51CF8D2A12DF60E0003FBBAD /* BackgroundMusic.h */,
 				51CF8D2B12DF60E0003FBBAD /* RBIPhoneBackgroundMusic.h */,
@@ -832,6 +838,7 @@
 				519313F312ED62E1008B3AFB /* TextureInfo.h in Headers */,
 				2447361212EF44550085668B /* Drawer.h in Headers */,
 				2447361912EF46030085668B /* PlatformFlagger.h in Headers */,
+				24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -988,6 +995,7 @@
 				519313ED12ED62D5008B3AFB /* ResourceLoader.cpp in Sources */,
 				519313F212ED62E1008B3AFB /* TextureInfo.cpp in Sources */,
 				2447361112EF44550085668B /* Drawer.cpp in Sources */,
+				24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
