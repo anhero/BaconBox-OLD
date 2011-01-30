@@ -13,6 +13,10 @@
 		2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2480744F12E0A3F800F49E74 /* RenderInfo.h */; };
 		249C90B612ECFFB9000AF0DC /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */; };
 		249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */; };
+		24B86B5412F319620071930C /* MusicInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B86B5012F319620071930C /* MusicInfo.cpp */; };
+		24B86B5512F319620071930C /* MusicInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B86B5112F319620071930C /* MusicInfo.h */; };
+		24B86B5612F319620071930C /* SoundInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B86B5212F319620071930C /* SoundInfo.cpp */; };
+		24B86B5712F319620071930C /* SoundInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B86B5312F319620071930C /* SoundInfo.h */; };
 		24B9BD7D12E1279E00057BB1 /* RenderStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B9BD7A12E1279E00057BB1 /* RenderStep.cpp */; };
 		24B9BD7E12E1279E00057BB1 /* RenderStep.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B9BD7B12E1279E00057BB1 /* RenderStep.h */; };
 		24B9BD7F12E1279E00057BB1 /* RenderStepMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B9BD7C12E1279E00057BB1 /* RenderStepMode.h */; };
@@ -148,6 +152,10 @@
 		2480744F12E0A3F800F49E74 /* RenderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderInfo.h; sourceTree = "<group>"; };
 		249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedBoxEngine.cpp; sourceTree = "<group>"; };
 		249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
+		24B86B5012F319620071930C /* MusicInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicInfo.cpp; sourceTree = "<group>"; };
+		24B86B5112F319620071930C /* MusicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicInfo.h; sourceTree = "<group>"; };
+		24B86B5212F319620071930C /* SoundInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundInfo.cpp; sourceTree = "<group>"; };
+		24B86B5312F319620071930C /* SoundInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundInfo.h; sourceTree = "<group>"; };
 		24B9BD7A12E1279E00057BB1 /* RenderStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderStep.cpp; sourceTree = "<group>"; };
 		24B9BD7B12E1279E00057BB1 /* RenderStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderStep.h; sourceTree = "<group>"; };
 		24B9BD7C12E1279E00057BB1 /* RenderStepMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderStepMode.h; sourceTree = "<group>"; };
@@ -429,6 +437,10 @@
 		51CF8D2812DF60E0003FBBAD /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				24B86B5012F319620071930C /* MusicInfo.cpp */,
+				24B86B5112F319620071930C /* MusicInfo.h */,
+				24B86B5212F319620071930C /* SoundInfo.cpp */,
+				24B86B5312F319620071930C /* SoundInfo.h */,
 				24F0335012F1C59500BD5409 /* AudioEngine.cpp */,
 				24F0335112F1C59500BD5409 /* AudioEngine.h */,
 				51CF8D2912DF60E0003FBBAD /* BackgroundMusic.cpp */,
@@ -839,6 +851,8 @@
 				2447361212EF44550085668B /* Drawer.h in Headers */,
 				2447361912EF46030085668B /* PlatformFlagger.h in Headers */,
 				24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */,
+				24B86B5512F319620071930C /* MusicInfo.h in Headers */,
+				24B86B5712F319620071930C /* SoundInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -996,6 +1010,8 @@
 				519313F212ED62E1008B3AFB /* TextureInfo.cpp in Sources */,
 				2447361112EF44550085668B /* Drawer.cpp in Sources */,
 				24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */,
+				24B86B5412F319620071930C /* MusicInfo.cpp in Sources */,
+				24B86B5612F319620071930C /* SoundInfo.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
