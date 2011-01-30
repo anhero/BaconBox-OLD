@@ -4,8 +4,8 @@
  */
 
 
-#ifndef OPENGLDRAWER
-#define OPENGLDRAWER
+#ifndef RB_OPENGLDRAWER
+#define RB_OPENGLDRAWER
 
 #ifdef RB_IPHONE_PLATFORM
 #import <OpenGLES/ES1/gl.h>
