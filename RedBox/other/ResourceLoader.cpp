@@ -157,3 +157,36 @@ void ResourceLoader::updateAudio() {
 		musicEngine->update();
 	}
 }
+
+void ResourceLoader::unloadAll() {
+	// We unload the textures.
+	for(std::map<std::string, TextureInfo*>::iterator i = textures.begin();
+		i != textures.end();
+		i++) {
+		delete *i;
+	}
+	textures.clear();
+	// We unload the sound effects.
+	for(std::map<std::string, SoundFX*>::iterator i = sounds.begin();
+		i != sounds.end();
+		i++) {
+		delete *i;
+	}
+	sounds.clear();
+	// We unload the musics.
+	for(std::map<std::string, SoundFX*>::iterator i = musics.begin();
+		i != musics.end();
+		i++) {
+		delete *i;
+	}
+	musics.clear();
+	// We unload the audio engines.
+	if(soundEngine) {
+		if(musicEngine && musicEngine != soundEngine) {
+			delete musicEngine;
+		}
+		delete soundEngine;
+	} else if(musicEngine) {
+		delete musicEngine;
+	}
+}

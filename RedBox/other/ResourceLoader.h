@@ -100,7 +100,14 @@ namespace RedBox {
 		 * @param name Name of the background music to unload.
 		 */
 		static void removeBackgroundMusic(const std::string& name);
+		/**
+		 * Updates the audio engine.
+		 */
 		static void updateAudio();
+		/**
+		 * Unloads everything in the ResourceLoader.
+		 */
+		static void unloadAll();
 	private:
 		/// Map associating the textures' keys and their information.
 		static std::map<std::string, TextureInfo*> textures;
