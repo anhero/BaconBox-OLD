@@ -5,7 +5,7 @@
 #ifndef RB_DRAWER_H
 #define RB_DRAWER_H
 
-#include "PlatformFlager.h"
+#include "PlatformFlagger.h"
 
 namespace RedBox{
     /**

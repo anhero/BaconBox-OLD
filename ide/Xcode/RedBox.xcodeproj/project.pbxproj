@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2447361112EF44550085668B /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2447360F12EF44550085668B /* Drawer.cpp */; };
 		2447361212EF44550085668B /* Drawer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361012EF44550085668B /* Drawer.h */; };
+		2447361912EF46030085668B /* PlatformFlagger.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361812EF46030085668B /* PlatformFlagger.h */; };
 		2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2480744F12E0A3F800F49E74 /* RenderInfo.h */; };
 		249C90B612ECFFB9000AF0DC /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */; };
 		249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */; };
@@ -107,7 +108,6 @@
 		51CF8DCE12DF60E1003FBBAD /* Vertex.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D7C12DF60E0003FBBAD /* Vertex.h */; };
 		51CF8DCF12DF60E1003FBBAD /* VerticesGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D7D12DF60E0003FBBAD /* VerticesGroup.cpp */; };
 		51CF8DD012DF60E1003FBBAD /* VerticesGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D7E12DF60E0003FBBAD /* VerticesGroup.h */; };
-		51CF8DD112DF60E1003FBBAD /* PlatformFlager.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D7F12DF60E0003FBBAD /* PlatformFlager.h */; };
 		51CF8DD212DF60E1003FBBAD /* RedBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D8012DF60E0003FBBAD /* RedBox.h */; };
 		51CF8DD512DF60E1003FBBAD /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D8412DF60E0003FBBAD /* State.cpp */; };
 		51CF8DD612DF60E1003FBBAD /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D8512DF60E0003FBBAD /* State.h */; };
@@ -142,6 +142,7 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2447360F12EF44550085668B /* Drawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawer.cpp; sourceTree = "<group>"; };
 		2447361012EF44550085668B /* Drawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drawer.h; sourceTree = "<group>"; };
+		2447361812EF46030085668B /* PlatformFlagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlagger.h; sourceTree = "<group>"; };
 		2480744F12E0A3F800F49E74 /* RenderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderInfo.h; sourceTree = "<group>"; };
 		249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedBoxEngine.cpp; sourceTree = "<group>"; };
 		249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
@@ -210,7 +211,6 @@
 		51CF8D7C12DF60E0003FBBAD /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		51CF8D7D12DF60E0003FBBAD /* VerticesGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VerticesGroup.cpp; sourceTree = "<group>"; };
 		51CF8D7E12DF60E0003FBBAD /* VerticesGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticesGroup.h; sourceTree = "<group>"; };
-		51CF8D7F12DF60E0003FBBAD /* PlatformFlager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlager.h; sourceTree = "<group>"; };
 		51CF8D8012DF60E0003FBBAD /* RedBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBox.h; sourceTree = "<group>"; };
 		51CF8D8412DF60E0003FBBAD /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
 		51CF8D8512DF60E0003FBBAD /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
@@ -414,8 +414,8 @@
 				51CF8D6312DF60E0003FBBAD /* Helper */,
 				51CF8D6F12DF60E0003FBBAD /* Input */,
 				51CF8D7612DF60E0003FBBAD /* other */,
-				51CF8D7F12DF60E0003FBBAD /* PlatformFlager.h */,
 				51CF8D8012DF60E0003FBBAD /* RedBox.h */,
+				2447361812EF46030085668B /* PlatformFlagger.h */,
 				51CF8D8112DF60E0003FBBAD /* States system */,
 			);
 			name = RedBox;
@@ -818,7 +818,6 @@
 				51CF8DCC12DF60E1003FBBAD /* Vec2.h in Headers */,
 				51CF8DCE12DF60E1003FBBAD /* Vertex.h in Headers */,
 				51CF8DD012DF60E1003FBBAD /* VerticesGroup.h in Headers */,
-				51CF8DD112DF60E1003FBBAD /* PlatformFlager.h in Headers */,
 				51CF8DD212DF60E1003FBBAD /* RedBox.h in Headers */,
 				51CF8DD612DF60E1003FBBAD /* State.h in Headers */,
 				512B7DB612DF6103002E9698 /* Finch.h in Headers */,
@@ -832,6 +831,7 @@
 				519313EE12ED62D5008B3AFB /* ResourceLoader.h in Headers */,
 				519313F312ED62E1008B3AFB /* TextureInfo.h in Headers */,
 				2447361212EF44550085668B /* Drawer.h in Headers */,
+				2447361912EF46030085668B /* PlatformFlagger.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
