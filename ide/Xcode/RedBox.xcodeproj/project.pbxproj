@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2447361112EF44550085668B /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2447360F12EF44550085668B /* Drawer.cpp */; };
+		2447361212EF44550085668B /* Drawer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361012EF44550085668B /* Drawer.h */; };
 		2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2480744F12E0A3F800F49E74 /* RenderInfo.h */; };
 		249C90B612ECFFB9000AF0DC /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */; };
 		249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */; };
@@ -138,6 +140,8 @@
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2447360F12EF44550085668B /* Drawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawer.cpp; sourceTree = "<group>"; };
+		2447361012EF44550085668B /* Drawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drawer.h; sourceTree = "<group>"; };
 		2480744F12E0A3F800F49E74 /* RenderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderInfo.h; sourceTree = "<group>"; };
 		249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedBoxEngine.cpp; sourceTree = "<group>"; };
 		249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
@@ -469,6 +473,8 @@
 		51CF8D3A12DF60E0003FBBAD /* Drawer */ = {
 			isa = PBXGroup;
 			children = (
+				2447360F12EF44550085668B /* Drawer.cpp */,
+				2447361012EF44550085668B /* Drawer.h */,
 				51CF8D3B12DF60E0003FBBAD /* OpenGLDrawer.cpp */,
 				51CF8D3C12DF60E0003FBBAD /* OpenGLDrawer.h */,
 			);
@@ -825,6 +831,7 @@
 				249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */,
 				519313EE12ED62D5008B3AFB /* ResourceLoader.h in Headers */,
 				519313F312ED62E1008B3AFB /* TextureInfo.h in Headers */,
+				2447361212EF44550085668B /* Drawer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -980,6 +987,7 @@
 				249C90B612ECFFB9000AF0DC /* RedBoxEngine.cpp in Sources */,
 				519313ED12ED62D5008B3AFB /* ResourceLoader.cpp in Sources */,
 				519313F212ED62E1008B3AFB /* TextureInfo.cpp in Sources */,
+				2447361112EF44550085668B /* Drawer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
