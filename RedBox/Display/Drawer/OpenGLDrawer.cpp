@@ -4,7 +4,10 @@
 
 using namespace RedBox;
 
-void OpenGLDrawer::drawShapeWithTextureAndColor(GLfloat * vertices,GLfloat *  textCoordArray , RenderInfo * renderingInfo, int nbVertices){
+void OpenGLDrawer::drawShapeWithTextureAndColor(GLfloat* vertices,
+												GLfloat*  textCoordArray,
+												RenderInfo* renderingInfo,
+												unsigned int nbVertices){
 	
 	
         glColorPointer(4, GL_UNSIGNED_BYTE, 0, renderingInfo->color);
@@ -15,7 +18,10 @@ void OpenGLDrawer::drawShapeWithTextureAndColor(GLfloat * vertices,GLfloat *  te
 
 }
 
-void OpenGLDrawer::drawShapeWithTexture(GLfloat * vertices,GLfloat *  textCoordArray , RenderInfo * renderingInfo, int nbVertices){
+void OpenGLDrawer::drawShapeWithTexture(GLfloat* vertices,
+										GLfloat*  textCoordArray,
+										RenderInfo* renderingInfo,
+										unsigned int nbVertices){
 	glBindTexture(GL_TEXTURE_2D, renderingInfo->textureID);
 	
 	glEnable(GL_TEXTURE_2D);

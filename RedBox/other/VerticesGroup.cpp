@@ -103,13 +103,13 @@ void VerticesGroup::warnVerticesOfDeletion() {
     }
 }
 
-#ifdef RB_PHYSICS_ENABLED
 void VerticesGroup::setParentSprite(Sprite* sprite) {
     for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
         i->setParentSprite(sprite);
     }
 }
 
+#ifdef RB_PHYSICS_ENABLED
 void VerticesGroup::setParentGraphicBody(GraphicBody* body) {
     for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
         i->setParentGraphicBody(body);

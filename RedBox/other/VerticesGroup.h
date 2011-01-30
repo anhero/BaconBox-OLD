@@ -81,13 +81,13 @@ namespace RedBox {
          * Warns the vertices to not delete their links and edges.
          */
         void warnVerticesOfDeletion();
-#ifdef RB_PHYSICS_ENABLED
 		/**
 		 * Sets the vertices' parent sprite. Loops through the vertices list
 		 * and sets the parent for each of the vertices.
 		 * @param parentSprite Pointer to the new parent sprite.
 		 */
 		void setParentSprite(Sprite* parentSprite);
+#ifdef RB_PHYSICS_ENABLED
 		/**
 		 * Sets the vertices' parent graphic body. Loops through the vertices
 		 * list and sets the parent for each of the vertices.

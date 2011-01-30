@@ -20,12 +20,14 @@ RenderStep::~RenderStep() {
 }
 
 void RenderStep::render() {
-    // We use the bitwise inclusive OR to combine different modes.
-    if(mode == (SHAPE | TEXTURE | COLOR)) {
-        // drawShapeWithTextureAndColor
-    } else if(mode == (SHAPE | TEXTURE)) {
-        // drawShapeWithTexture
-    }
+	if(vertices) {
+		// We use the bitwise inclusive OR to combine different modes.
+		if(mode == (SHAPE | TEXTURE | COLOR)) {
+			Drawer::drawShapeWithTextureAndColor(vertices, NULL, &info, vertices->getVertices().size());
+		} else if(mode == (SHAPE | TEXTURE)) {
+			Drawer::drawShapeWithTexture(vertices, NULL, &info, vertices->getVertices().size());
+		}
+	}
 }
 
 void RenderStep::update() {
