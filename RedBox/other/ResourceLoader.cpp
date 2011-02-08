@@ -35,7 +35,7 @@ TextureInfo* ResourceLoader::loadTexture(const std::string& filePath, const std:
 	return texInfo;
 }
 
-TextureInfo* ResourceLoader::getTextures(const std::string& key){
+TextureInfo* ResourceLoader::getTexture(const std::string& key){
 	return textures[key];
 }
 
@@ -163,21 +163,21 @@ void ResourceLoader::unloadAll() {
 	for(std::map<std::string, TextureInfo*>::iterator i = textures.begin();
 		i != textures.end();
 		i++) {
-		delete *i;
+		delete i->second;
 	}
 	textures.clear();
 	// We unload the sound effects.
 	for(std::map<std::string, SoundFX*>::iterator i = sounds.begin();
 		i != sounds.end();
 		i++) {
-		delete *i;
+		delete i->second;
 	}
 	sounds.clear();
 	// We unload the musics.
-	for(std::map<std::string, SoundFX*>::iterator i = musics.begin();
+	for(std::map<std::string, BackgroundMusic*>::iterator i = musics.begin();
 		i != musics.end();
 		i++) {
-		delete *i;
+		delete i->second;
 	}
 	musics.clear();
 	// We unload the audio engines.

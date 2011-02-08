@@ -26,6 +26,12 @@ namespace RedBox {
          */
         RenderStep();
         /**
+         * Parametrized constructor.
+         * @param newTexInfo Pointer to the information about the texture.
+         * @param newColor Array to use to set the RenderInfo's color.
+         */
+        RenderStep(TextureInfo* newTexInfo, int* newColor);
+        /**
          * Copy constructor. Constructs a copy of the recieved RenderStep.
          * @param src RenderStep to make a copy of.
          */

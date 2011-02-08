@@ -5,6 +5,10 @@ using namespace RedBox;
 RenderStep::RenderStep(): Renderable(), vertices(NULL), deleteVerticesGroup(false) {
 }
 
+RenderStep::RenderStep(TextureInfo* newTexInfo, int* newColor): Renderable(),
+vertices(NULL), deleteVerticesGroup(false), info(RenderInfo(newTexInfo, newColor)) {
+}
+
 RenderStep::RenderStep(const RenderStep& src): mode(src.mode), info(src.info), 
 vertices(src.vertices), deleteVerticesGroup(src.deleteVerticesGroup) {
 }

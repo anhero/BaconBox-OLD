@@ -5,11 +5,11 @@
 using namespace RedBox;
 
 void OpenGLDrawer::drawShapeWithTextureAndColor(GLfloat* vertices,
-												const RenderInfo& renderingInfo,
+												RenderInfo& renderingInfo,
 												unsigned int nbVertices){
 	
 	
-        glColorPointer(4, GL_UNSIGNED_BYTE, 0, renderingInfo.color);
+        glColorPointer(4, GL_UNSIGNED_BYTE, 0, renderingInfo.getColor());
 	glEnableClientState(GL_COLOR_ARRAY);
         drawShapeWithTexture(vertices, renderingInfo, nbVertices);
 	
@@ -18,9 +18,9 @@ void OpenGLDrawer::drawShapeWithTextureAndColor(GLfloat* vertices,
 }
 
 void OpenGLDrawer::drawShapeWithTexture(GLfloat* vertices,
-										const RenderInfo& renderingInfo,
+										RenderInfo& renderingInfo,
 										unsigned int nbVertices){
-	glBindTexture(GL_TEXTURE_2D, renderingInfo.textureID);
+	glBindTexture(GL_TEXTURE_2D, renderingInfo.getTexInfo().textureId);
 	
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
@@ -31,7 +31,7 @@ void OpenGLDrawer::drawShapeWithTexture(GLfloat* vertices,
 	
 	
 	
-	glTexCoordPointer(2, GL_FLOAT, 0, &(*(renderingInfo.texCoords.begin())));
+	glTexCoordPointer(2, GL_FLOAT, 0, &(*(renderingInfo.getTexCoords().begin())));
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 	glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);

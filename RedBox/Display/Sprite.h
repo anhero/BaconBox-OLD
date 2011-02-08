@@ -9,6 +9,7 @@
 
 #include <set>
 #include <list>
+#include <string>
 
 #include "Renderable.h"
 #include "RenderStep.h"
@@ -27,6 +28,33 @@ namespace RedBox {
          * Default constructor.
          */
         Sprite();
+		/**
+		 * Parameterized constructor. Loads a sprite using the image in the
+		 * ResourceLoader with the corresponding key.
+		 * @param imageKey Image's key in the ResourceLoader to use for the
+		 * constructed sprite.
+		 */
+		Sprite(const std::string& imageKey);
+		/**
+		 * Parameterized constructor. Loads a sprite using the image in the 
+		 * ResourceLoader with the corresponding key. Only takes the asked
+		 * part of the image with the given width and height. Using the offsets,
+		 * can also take a part of the image that is not at the upper left
+		 * corner.
+		 * @param imageKey Image's key in the ResourceLoader to use for the
+		 * constructed sprite.
+		 * @param frameWidth Width (in pixels) of the image to use.
+		 * @param frameHeight Height (in pixels) of the image to use.
+		 * @param offsetX X position of the upper left corner of the frame to
+		 * take from the image.
+		 * @param offsetY Y position of the upper left corner of the frame to
+		 * take from the image.
+		 */
+		Sprite(const std::string& imageKey,
+			   unsigned int frameWidth,
+			   unsigned int frameHeight,
+			   unsigned int offsetX = 0,
+			   unsigned int offsetY = 0);
         /**
          * Copy constructor.
          * @param src Sprite to make a copy of.

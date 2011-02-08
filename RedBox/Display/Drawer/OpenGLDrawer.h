@@ -34,7 +34,7 @@ namespace RedBox{
          * @param nbVertices number of vertices to draw
          */
 		static inline void drawShapeWithTextureAndColor(GLfloat* vertices,
-														const RenderInfo& renderingInfo,
+														RenderInfo& renderingInfo,
 														unsigned int nbVertices);
         
         /**
@@ -49,7 +49,7 @@ namespace RedBox{
          * @param nbVertices number of vertices to draw
          */
 		static inline void drawShapeWithTexture(GLfloat* vertices,
-												const RenderInfo& renderingInfo,
+												RenderInfo& renderingInfo,
 												unsigned int nbVertices);
 	private:
 	};

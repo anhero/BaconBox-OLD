@@ -1,10 +1,44 @@
 #include "Sprite.h"
+#include "ResourceLoader.h"
+#include "Debug.h"
 
 using namespace RedBox;
 
 
 
 Sprite::Sprite(): Renderable() {
+}
+
+Sprite::Sprite(const std::string& imageKey): Renderable() {
+	TextureInfo* texInfo = ResourceLoader::getTexture(imageKey);
+	if(texInfo) {
+		// TODO: Load the vertices correctly.
+		RenderStep* initialRenderStep = new RenderStep(texInfo, NULL);
+		initialRenderStep->setMode(SHAPE | TEXTURE);
+		renderSteps.insert(initialRenderStep);
+		initialRenderStep->getRenderInfo().setTexInfo(texInfo);
+	} else {
+		$ECHO("Failed to load a sprite with the following image key: ");
+		$ECHO(imageKey);
+	}
+}
+
+Sprite::Sprite(const std::string& imageKey,
+	   unsigned int frameWidth,
+	   unsigned int frameHeight,
+	   unsigned int offsetX,
+	   unsigned int offsetY): Renderable() {
+	TextureInfo* texInfo = ResourceLoader::getTexture(imageKey);
+	if(texInfo) {
+		// TODO: Load the vertices correctly.
+		RenderStep* initialRenderStep = new RenderStep(texInfo, NULL);
+		initialRenderStep->setMode(SHAPE | TEXTURE);
+		renderSteps.insert(initialRenderStep);
+		initialRenderStep->getRenderInfo().setTexInfo(texInfo);
+	} else {
+		$ECHO("Failed to load a sprite with the following image key: ");
+		$ECHO(imageKey);
+	}
 }
 
 #ifdef RB_PHYSICS_ENABLED

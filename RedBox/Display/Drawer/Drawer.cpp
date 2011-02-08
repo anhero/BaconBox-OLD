@@ -7,7 +7,7 @@
 using namespace RedBox;
 
 void Drawer::drawShapeWithTextureAndColor(VerticesGroup* vertices,
-										  const RenderInfo& renderingInfo,
+										  RenderInfo& renderingInfo,
 										  unsigned int nbVertices) {
 #ifdef RB_OPENGL
 		OpenGLDrawer::drawShapeWithTextureAndColor(&(*(vertices->getVerticesData().begin())),
@@ -17,7 +17,7 @@ void Drawer::drawShapeWithTextureAndColor(VerticesGroup* vertices,
 }
 
 void Drawer::drawShapeWithTexture(VerticesGroup* vertices,
-								  const RenderInfo& renderingInfo,
+								  RenderInfo& renderingInfo,
 								  unsigned int nbVertices) {
 #ifdef RB_OPENGL
 		OpenGLDrawer::drawShapeWithTexture(&(*(vertices->getVerticesData().begin())),

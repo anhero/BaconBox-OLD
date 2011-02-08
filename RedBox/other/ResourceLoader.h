@@ -34,7 +34,7 @@ namespace RedBox {
 		 * to find it.
 		 * @param key Key used to identify and find the asked texture.
 		 */
-		static TextureInfo* getTextures(const std::string& key);
+		static TextureInfo* getTexture(const std::string& key);
 		/**
 		 * Gets a pointer to the asked sound effect.
 		 * @param key Name of the sound effect to get a pointer of.
