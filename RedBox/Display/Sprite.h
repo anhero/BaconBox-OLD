@@ -7,7 +7,6 @@
 #ifndef RB_SPRITE_H
 #define RB_SPRITE_H
 
-#include <set>
 #include <list>
 #include <string>
 
@@ -150,10 +149,31 @@ namespace RedBox {
 		RenderStep* addRenderStep(RenderStep* newRenderStep);
 		/**
 		 * Removes a rendering step. Does nothing if the recieved is either NULL
-		 * or isn't in the set.
+		 * or isn't in the list. Does not free up any memory used by the pointed
+		 * RenderStep.
 		 * @param renderStep Rendering step to remove from the set.
 		 */
 		void removeRenderStep(RenderStep* renderStep);
+		/**
+		 * Gets the main RenderStep. The main RenderStep is the one at the front
+		 * of the list.
+		 * @return Pointer to the RenderStep at the front of the list. Returns
+		 * NULL if the list is empty.
+		 */
+		RenderStep* getMainRenderStep();
+		/**
+		 * Gets a RenderStep. Has to loop through the list to get it, so it is
+		 * quite slower than a direct access.
+		 * @param position Position of the RenderStep to get from the list. 0 is
+		 * the first RenderStep (also known as the main RenderStep).
+		 * @return Pointer to the RenderStep at the position given.
+		 */
+		RenderStep* getRenderStep(unsigned int position);
+		/**
+		 * Gets the list of RenderStep's.
+		 * @return List of RenderStep used by the sprite.
+		 */
+		std::list<RenderStep*>& getRenderSteps();
 #ifdef RB_PHYSICS_ENABLED
         /**
          * Creates an edge on the sprite. Creates an edge linking two vertices.
@@ -176,8 +196,11 @@ namespace RedBox {
         void removeEdge(Edge* edge);
 #endif //RB_PHYSICS_ENABLED
     private:
-        /// Set containing the rendering steps.
-        std::set<RenderStep*> renderSteps;
+        /**
+		 * List containing the rendering steps. The first RenderStep in the list
+		 * is considered as the main one.
+		 */
+        std::list<RenderStep*> renderSteps;
         /// Vertices making up the sprite.
         VerticesGroup vertices;
 #ifdef RB_PHYSICS_ENABLED
