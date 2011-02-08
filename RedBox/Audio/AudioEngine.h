@@ -14,7 +14,6 @@
 namespace RedBox {
 	class SoundFX;
 	class BackgroundMusic;
-	class ResourceLoader;
 	/**
 	 * Abstract class used for the audio engines. Contains all the methods
 	 * specific engines will require to have to be used by the resource loader.
@@ -22,11 +21,29 @@ namespace RedBox {
 	 */
 	class AudioEngine {
 		friend class ResourceLoader;
-	protected:
+	public:
 		/**
-		 * Default constructor. Can only be called by the resource loader.
+		 * Loads the sound and the music engine.
 		 */
-		AudioEngine();
+		static void loadAudioEngine();
+		/**
+		 * Loads the sound engine.
+		 */
+		static void loadSoundEngine();
+		/**
+		 * Loads the music engine.
+		 */
+		static void loadMusicEngine();
+		/**
+		 * Gets the sound engine.
+		 * @return Pointer to the sound engine. Loads it if needed.
+		 */
+		static AudioEngine* getSoundEngine();
+		/**
+		 * Gets the music engine.
+		 * @return Pointer to the music engine. Loads it if needed.
+		 */
+		static AudioEngine* getMusicEngine();
 		/**
 		 * Initializes the audio engine.
 		 */
@@ -35,6 +52,11 @@ namespace RedBox {
 		 * Updates the necessary informations for the audio engine.
 		 */
 		virtual void update() = 0;
+	protected:
+		/**
+		 * Default constructor. Can only be called by the resource loader.
+		 */
+		AudioEngine();
 		/**
 		 * Loads a sound effect using a file path.
 		 * @param filePath Path to the file to load.
@@ -67,6 +89,8 @@ namespace RedBox {
 		 * loader.
 		 */
 		virtual ~AudioEngine() = 0;
+		static AudioEngine* soundEngine;
+		static AudioEngine* musicEngine;
 	};
 }
 

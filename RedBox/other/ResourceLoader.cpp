@@ -15,8 +15,6 @@ using namespace RedBox;
 std::map<std::string, TextureInfo*> ResourceLoader::textures = std::map<std::string, TextureInfo*>();
 std::map<std::string, SoundFX*> ResourceLoader::sounds = std::map<std::string, SoundFX*>();
 std::map<std::string, BackgroundMusic*> ResourceLoader::musics = std::map<std::string, BackgroundMusic*>();
-AudioEngine* ResourceLoader::soundEngine = NULL;
-AudioEngine* ResourceLoader::musicEngine = NULL;
 
 TextureInfo* ResourceLoader::loadTexture(const std::string& filePath, const std::string& key) {
 	TextureInfo* texInfo = NULL;
@@ -49,20 +47,14 @@ BackgroundMusic* ResourceLoader::getBackgroundMusic(const std::string& key) {
 	return (itr != musics.end())?(itr->second):(NULL);
 }
 
-void ResourceLoader::startAudioEngine() {
-	if(soundEngine == NULL && musicEngine == NULL) {
-		//TODO: Audio engine specific loading.
-	}
-}
-
 SoundFX* ResourceLoader::loadSoundFX(const std::string& filePath,
 									 const std::string& key) {
 	SoundFX* newSnd = NULL;
 	// We make sure the sound engine is loaded and that there already isn't 
 	// any sound effect with the same name.
-	if(soundEngine && sounds.find(key) == sounds.end()) {
+	if(AudioEngine::getSoundEngine() && sounds.find(key) == sounds.end()) {
 		// We load the sound effect.
-		newSnd = soundEngine->loadSoundFX(filePath);
+		newSnd = AudioEngine::getSoundEngine()->loadSoundFX(filePath);
 		// If it was loaded correctly.
 		if(newSnd) {
 			// We insert it into the map of sound effects with its
@@ -77,9 +69,9 @@ SoundFX* ResourceLoader::loadSoundFX(const SoundInfo& info) {
 	SoundFX* newSnd = NULL;
 	// We make sure the sound engine is loaded and that there already isn't 
 	// any sound effect with the same name.
-	if(soundEngine && sounds.find(info.name) == sounds.end()) {
+	if(AudioEngine::getSoundEngine() && sounds.find(info.name) == sounds.end()) {
 		// We load the sound effect.
-		newSnd = soundEngine->loadSoundFX(info);
+		newSnd = AudioEngine::getSoundEngine()->loadSoundFX(info);
 		// If it was loaded correctly.
 		if(newSnd) {
 			// We insert it into the map of sound effects with its
@@ -95,9 +87,9 @@ BackgroundMusic* ResourceLoader::loadBackgroundMusic(const std::string& filePath
 	BackgroundMusic* newBgm = NULL;
 	// We make sure the music engine is loaded and that there already isn't
 	// any music with the same name.
-	if(musicEngine && musics.find(key) == musics.end()) {
+	if(AudioEngine::getMusicEngine() && musics.find(key) == musics.end()) {
 		// We load the music.
-		newBgm = musicEngine->loadBackgroundMusic(filePath);
+		newBgm = AudioEngine::getMusicEngine()->loadBackgroundMusic(filePath);
 		// If it was successfully loaded.
 		if(newBgm) {
 			// We insert it into the map of musics with its corresponding key.
@@ -111,9 +103,9 @@ BackgroundMusic* ResourceLoader::loadBackgroundMusic(const MusicInfo& info) {
 	BackgroundMusic* newBgm = NULL;
 	// We make sure the music engine is loaded and that there already isn't
 	// any music with the same name.
-	if(musicEngine && musics.find(info.name) == musics.end()) {
+	if(AudioEngine::getMusicEngine() && musics.find(info.name) == musics.end()) {
 		// We load the music.
-		newBgm = musicEngine->loadBackgroundMusic(info);
+		newBgm = AudioEngine::getMusicEngine()->loadBackgroundMusic(info);
 		// If it was successfully loaded.
 		if(newBgm) {
 			// We insert it into the map of musics with its corresponding key.
@@ -147,17 +139,6 @@ void ResourceLoader::removeBackgroundMusic(const std::string& name) {
 	}
 }
 
-void ResourceLoader::updateAudio() {
-	if(soundEngine) {
-		soundEngine->update();
-		if(musicEngine && musicEngine != soundEngine) {
-			musicEngine->update();
-		}
-	} else if(musicEngine) {
-		musicEngine->update();
-	}
-}
-
 void ResourceLoader::unloadAll() {
 	// We unload the textures.
 	for(std::map<std::string, TextureInfo*>::iterator i = textures.begin();
@@ -180,13 +161,4 @@ void ResourceLoader::unloadAll() {
 		delete i->second;
 	}
 	musics.clear();
-	// We unload the audio engines.
-	if(soundEngine) {
-		if(musicEngine && musicEngine != soundEngine) {
-			delete musicEngine;
-		}
-		delete soundEngine;
-	} else if(musicEngine) {
-		delete musicEngine;
-	}
 }

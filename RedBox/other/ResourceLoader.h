@@ -16,7 +16,6 @@
 namespace RedBox {
 	class SoundFX;
 	class BackgroundMusic;
-	class AudioEngine;
 	/**
 	 * Class that loads resources like textures and audio.
 	 * @ingroup Display
@@ -48,10 +47,6 @@ namespace RedBox {
 		 * exist.
 		 */
 		static BackgroundMusic* getBackgroundMusic(const std::string& key);
-		/**
-		 * Sets the audio engine to be used.
-		 */
-		static void startAudioEngine();
 		/**
 		 * Loads a sound effect.
 		 * @param name Name to give to the sound effect.
@@ -101,10 +96,6 @@ namespace RedBox {
 		 */
 		static void removeBackgroundMusic(const std::string& name);
 		/**
-		 * Updates the audio engine.
-		 */
-		static void updateAudio();
-		/**
 		 * Unloads everything in the ResourceLoader.
 		 */
 		static void unloadAll();
@@ -115,10 +106,6 @@ namespace RedBox {
 		static std::map<std::string, SoundFX*> sounds;
 		/// Map associating the musics' names and their information.
 		static std::map<std::string, BackgroundMusic*> musics;
-		/// Pointer to the audio engine used to play sounds.
-		static AudioEngine* soundEngine;
-		/// Pointer to the music engine used to play musics.
-		static AudioEngine* musicEngine;
 	};
 }
 
