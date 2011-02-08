@@ -7,15 +7,6 @@ using namespace RedBox;
 RenderStep::RenderStep(): Renderable(), vertices(new VerticesGroup()), deleteVerticesGroup(true) {
 }
 
-RenderStep::RenderStep(TextureInfo* newTexInfo, int* newColor): Renderable(),
-vertices(NULL), deleteVerticesGroup(false),
-info(RenderInfo(newTexInfo, NULL, newColor)),
-mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE) {
-	if(newColor) {
-		mode |= RenderStepMode::COLOR;
-	}
-}
-
 RenderStep::RenderStep(TextureInfo* newTexInfo,
 					   VerticesGroup* newVertices,
 					   unsigned int nbFrames,
@@ -32,16 +23,15 @@ mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE) {
 	}
 }
 
-RenderStep::RenderStep(std::string key,
+RenderStep::RenderStep(const std::string& key,
 					   VerticesGroup* newVertices,
 					   unsigned int nbFrames,
 					   float factor,
 					   float offsetX,
 					   float offsetY,
-					   int* newColor,
 					   bool newDeleteVerticesGroup): Renderable(),
 vertices(newVertices), deleteVerticesGroup(newDeleteVerticesGroup),
-info(RenderInfo(ResourceLoader::getTexture(key), newVertices, nbFrames, factor, offsetX, offsetY, newColor)),
+info(RenderInfo(ResourceLoader::getTexture(key), newVertices, nbFrames, factor, offsetX, offsetY)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE) {
 }
 

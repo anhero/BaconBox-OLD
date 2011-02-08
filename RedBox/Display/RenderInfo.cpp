@@ -4,6 +4,7 @@
 
 #include "Debug.h"
 #include "MathHelper.h"
+#include "VerticesGroup.h"
 
 using namespace RedBox;
 
@@ -20,7 +21,6 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
 					   float factor,
 					   float offsetX,
 					   float offsetY,
-					   TextureInfo* newTexInfo,
 					   int* newColor):
 texCoords(std::vector< std::vector<float> >(nbFrames)), texInfo(newTexInfo) {
 	if(newColor) {
@@ -70,7 +70,7 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 				// horizontal offset because the vertical one will be added
 				// at each frame.
 				float currentFrame = offsetX / widthHeight.first;
-				for(std::vector<std::vector<float> >::iterator i = texCoords.begin(); i++) {
+				for(std::vector< std::vector<float> >::iterator i = texCoords.begin(); i != texCoords.end(); i++) {
 					// Upper left corner.
 					(*i)[0] = MathHelper::modFloat(currentFrame, nbFramesHorMax) * widthHeight.first;
 					// Here we do not forget to add the vertical offset.

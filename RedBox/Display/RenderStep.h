@@ -70,7 +70,7 @@ namespace RedBox {
 		 * the vertices when destroyed. False if not. Sprites loading their
 		 * render steps will put this parameter to false.
 		 */
-		RenderStep(std::string key,
+		RenderStep(const std::string& key,
 				   VerticesGroup* newVertices,
 				   unsigned int nbFrames = 1,
 				   float factor = 1.0f,

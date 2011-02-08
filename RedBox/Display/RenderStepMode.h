@@ -9,9 +9,9 @@
 namespace RedBox {
 	namespace RenderStepMode {
 		typedef unsigned int Enum;
-		const RenderStepMode SHAPE = 1;
-		const RenderStepMode TEXTURE = 2;
-		const RenderStepMode COLOR = 4;
+		const Enum SHAPE = 1;
+		const Enum TEXTURE = 2;
+		const Enum COLOR = 4;
 	}
 }
 #endif

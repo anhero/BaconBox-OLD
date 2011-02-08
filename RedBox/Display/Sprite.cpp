@@ -199,15 +199,15 @@ void Sprite::removeEdge(Edge* edge) {
 	}       
 }
 #endif
-void construct(TextureInfo* texInfo,
+void Sprite::construct(TextureInfo* texInfo,
 			   float frameWidth,
 			   float frameHeight,
-			   float offsetX = 0.0f,
+			   float offsetX,
 #ifdef RB_PHYSICS_ENABLED
-			   float offsetY = 0.0f,
+			   float offsetY,
 			   GraphicBody* parentBody = NULL)
 #else
-			   float offsetY = 0.0f)
+			   float offsetY)
 #endif
 {
 	if(texInfo) {
@@ -225,7 +225,7 @@ void construct(TextureInfo* texInfo,
 													   offsetY);
 		renderSteps.insert(initialRenderStep);
 	} else {
-		$ECHO("Failed to load a sprite with the following image key: " << imageKey);
+		$ECHO("Failed to load a sprite with the following texture information: " << texInfo);
 	}
 }
 void Sprite::clean() {

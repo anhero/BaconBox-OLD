@@ -155,7 +155,7 @@ std::pair<float, float> VerticesGroup::getWidthHeight() const {
 	std::pair<float, float>(FLT_MAX, FLT_MIN);
 	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
 	// We find the minimum and the maximum coordinates.
-	for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+	for(std::list<Vertex>::const_iterator i = vertices.begin(); i != vertices.end(); i++) {
 		if(i->getXPosition() < minX) {
 			minX = i->getXPosition();
 		}
@@ -180,7 +180,7 @@ float VerticesGroup::getWidth() const {
 	}
 	float minX = FLT_MAX, maxX = FLT_MIN;
 	// We find the smallest and the highest x position.
-	for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+	for(std::list<Vertex>::const_iterator i = vertices.begin(); i != vertices.end(); i++) {
 		if(i->getXPosition() < minX) {
 			minX = i->getXPosition();
 		}
@@ -199,7 +199,7 @@ float VerticesGroup::getHeight() const {
 	}
 	float minY = FLT_MAX, maxY = FLT_MIN;
 	// We find the smallest and the highest y position.
-	for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+	for(std::list<Vertex>::const_iterator i = vertices.begin(); i != vertices.end(); i++) {
 		if(i->getYPosition() < minY) {
 			minY = i->getYPosition();
 		}
@@ -208,7 +208,7 @@ float VerticesGroup::getHeight() const {
 		}
 	}
 	// We return their difference which results in the height.
-	return maxX - minX;
+	return maxY - minY;
 }
 
 #ifdef RB_PHYSICS_ENABLED

@@ -184,7 +184,7 @@ namespace RedBox {
         /// Edges making up the sprite.
         std::list<Edge> edges;
 #endif //RB_PHYSICS_ENABLED
-		void construct(const std::string& imageKey,
+		void construct(TextureInfo* texInfo,
 					   float frameWidth,
 					   float frameHeight,
 					   float offsetX = 0.0f,

@@ -10,6 +10,8 @@
 #import <OpenGLES/ES1/glext.h>
 #include "simple-image.h"
 
+#include "Debug.h"
+
 using namespace RedBox;
 
 std::map<std::string, TextureInfo*> ResourceLoader::textures = std::map<std::string, TextureInfo*>();
@@ -28,7 +30,7 @@ TextureInfo* ResourceLoader::loadTexture(const std::string& filePath, const std:
 #endif
 	}
 	else {
-		//$ECHO("Can't load texture with key: " << key << " texture is already loaded");
+		$ECHO("Can't load texture with key: " << key << " texture is already loaded");
 	}
 	return texInfo;
 }
@@ -52,15 +54,21 @@ SoundFX* ResourceLoader::loadSoundFX(const std::string& filePath,
 	SoundFX* newSnd = NULL;
 	// We make sure the sound engine is loaded and that there already isn't 
 	// any sound effect with the same name.
-	if(AudioEngine::getSoundEngine() && sounds.find(key) == sounds.end()) {
-		// We load the sound effect.
-		newSnd = AudioEngine::getSoundEngine()->loadSoundFX(filePath);
-		// If it was loaded correctly.
-		if(newSnd) {
-			// We insert it into the map of sound effects with its
-			// corresponding key.
-			sounds.insert(std::pair<std::string, SoundFX*>(key, newSnd));
+	if(AudioEngine::getSoundEngine()) {
+		if(sounds.find(key) == sounds.end()) {
+			// We load the sound effect.
+			newSnd = AudioEngine::getSoundEngine()->loadSoundFX(filePath);
+			// If it was loaded correctly.
+			if(newSnd) {
+				// We insert it into the map of sound effects with its
+				// corresponding key.
+				sounds.insert(std::pair<std::string, SoundFX*>(key, newSnd));
+			}
+		} else {
+			$ECHO("Couldn't load the sound effect named " << key << " found at " << filePath << " because a sound with that name already exists.");
 		}
+	} else {
+		$ECHO("Couldn't load the sound effect named " << key << " found at " << filePath << " because the sound engine couldn't be loaded.");
 	}
 	return newSnd;
 }
@@ -69,15 +77,21 @@ SoundFX* ResourceLoader::loadSoundFX(const SoundInfo& info) {
 	SoundFX* newSnd = NULL;
 	// We make sure the sound engine is loaded and that there already isn't 
 	// any sound effect with the same name.
-	if(AudioEngine::getSoundEngine() && sounds.find(info.name) == sounds.end()) {
-		// We load the sound effect.
-		newSnd = AudioEngine::getSoundEngine()->loadSoundFX(info);
-		// If it was loaded correctly.
-		if(newSnd) {
-			// We insert it into the map of sound effects with its
-			// corresponding key.
-			sounds.insert(std::pair<std::string, SoundFX*>(info.name, newSnd));
+	if(AudioEngine::getSoundEngine()) {
+		if(sounds.find(info.name) == sounds.end()) {
+			// We load the sound effect.
+			newSnd = AudioEngine::getSoundEngine()->loadSoundFX(info);
+			// If it was loaded correctly.
+			if(newSnd) {
+				// We insert it into the map of sound effects with its
+				// corresponding key.
+				sounds.insert(std::pair<std::string, SoundFX*>(info.name, newSnd));
+			}
+		} else {
+			$ECHO("Couldn't load the sound effect named " << info.name << " because a sound with that name already exists.");
 		}
+	} else {
+		$ECHO("Couldn't load the sound effect named " << info.name << " because the sound engine couldn't be loaded.");
 	}
 	return newSnd;
 }
@@ -87,14 +101,20 @@ BackgroundMusic* ResourceLoader::loadBackgroundMusic(const std::string& filePath
 	BackgroundMusic* newBgm = NULL;
 	// We make sure the music engine is loaded and that there already isn't
 	// any music with the same name.
-	if(AudioEngine::getMusicEngine() && musics.find(key) == musics.end()) {
-		// We load the music.
-		newBgm = AudioEngine::getMusicEngine()->loadBackgroundMusic(filePath);
-		// If it was successfully loaded.
-		if(newBgm) {
-			// We insert it into the map of musics with its corresponding key.
-			musics.insert(std::pair<std::string, BackgroundMusic*>(key, newBgm));
+	if(AudioEngine::getMusicEngine()) {
+		if(musics.find(key) == musics.end()) {
+			// We load the music.
+			newBgm = AudioEngine::getMusicEngine()->loadBackgroundMusic(filePath);
+			// If it was successfully loaded.
+			if(newBgm) {
+				// We insert it into the map of musics with its corresponding key.
+				musics.insert(std::pair<std::string, BackgroundMusic*>(key, newBgm));
+			}
+		} else {
+			$ECHO("Couldn't load the music named " << key << " because a music with that name already exists.");
 		}
+	} else {
+		$ECHO("Couldn't load the music named " << key << " because the sound engine couldn't be loaded.");
 	}
 	return newBgm;
 }
@@ -103,14 +123,20 @@ BackgroundMusic* ResourceLoader::loadBackgroundMusic(const MusicInfo& info) {
 	BackgroundMusic* newBgm = NULL;
 	// We make sure the music engine is loaded and that there already isn't
 	// any music with the same name.
-	if(AudioEngine::getMusicEngine() && musics.find(info.name) == musics.end()) {
-		// We load the music.
-		newBgm = AudioEngine::getMusicEngine()->loadBackgroundMusic(info);
-		// If it was successfully loaded.
-		if(newBgm) {
-			// We insert it into the map of musics with its corresponding key.
-			musics.insert(std::pair<std::string, BackgroundMusic*>(info.name, newBgm));
+	if(AudioEngine::getMusicEngine()) {
+		if(musics.find(info.name) == musics.end()) {
+			// We load the music.
+			newBgm = AudioEngine::getMusicEngine()->loadBackgroundMusic(info);
+			// If it was successfully loaded.
+			if(newBgm) {
+				// We insert it into the map of musics with its corresponding key.
+				musics.insert(std::pair<std::string, BackgroundMusic*>(info.name, newBgm));
+			}
+		} else {
+			$ECHO("Couldn't load the music named " << info.name << " because a music with that name already exists.");
 		}
+	} else {
+		$ECHO("Couldn't load the music named " << info.name << " because the sound engine couldn't be loaded.");
 	}
 	return newBgm;
 }
@@ -124,6 +150,8 @@ void ResourceLoader::removeSoundFX(const std::string& name) {
 		delete (snd->second);
 		// We remove it from the map.
 		sounds.erase(snd);
+	} else {
+		$ECHO("The sound effect named " << name << " could not be removed because it doesn't exist.");
 	}
 }
 
@@ -136,6 +164,8 @@ void ResourceLoader::removeBackgroundMusic(const std::string& name) {
 		delete (music->second);
 		// We remove it from the map.
 		musics.erase(music);
+	} else {
+		$ECHO("The music named " << name << " could not be removed because it doesn't exist.");
 	}
 }
 

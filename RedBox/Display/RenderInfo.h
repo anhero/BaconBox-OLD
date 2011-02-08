@@ -12,9 +12,9 @@
 
 #include "TextureInfo.h"
 #include "AnimationParameters.h"
-#include "VerticesGroup.h"
 
 namespace RedBox {
+	class VerticesGroup;
     /**
      * Struct contaning rendering information.
      * @ingroup Display

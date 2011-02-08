@@ -58,7 +58,7 @@
 //Appends the file name and line number of the statement
 #define $FLLN << __FILE__ << "@" << __LINE__ << ": "
 //Shortcut to print text
-#define $ECHO(a) $PRINT $FLLN $TXT(a) $ENDLN
+#define $ECHO(a) $PRINT $FLLN << a $ENDLN
 //Shortcut to print variables
 #define $DBG(a) $PRINT $FLLN $VAR(a) $ENDLN
 #else
