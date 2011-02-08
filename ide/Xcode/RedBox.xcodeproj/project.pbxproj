@@ -94,8 +94,6 @@
 		51CF8DB512DF60E1003FBBAD /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D5E12DF60E0003FBBAD /* Sprite.cpp */; };
 		51CF8DB612DF60E1003FBBAD /* Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D5F12DF60E0003FBBAD /* Sprite.h */; };
 		51CF8DB912DF60E1003FBBAD /* Factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D6212DF60E0003FBBAD /* Factory.h */; };
-		51CF8DBA12DF60E1003FBBAD /* Convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D6412DF60E0003FBBAD /* Convert.cpp */; };
-		51CF8DBB12DF60E1003FBBAD /* Convert.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D6512DF60E0003FBBAD /* Convert.h */; };
 		51CF8DBC12DF60E1003FBBAD /* MathHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D6612DF60E0003FBBAD /* MathHelper.cpp */; };
 		51CF8DBD12DF60E1003FBBAD /* MathHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D6712DF60E0003FBBAD /* MathHelper.h */; };
 		51CF8DBE12DF60E1003FBBAD /* Random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D6812DF60E0003FBBAD /* Random.cpp */; };
@@ -204,8 +202,6 @@
 		51CF8D5E12DF60E0003FBBAD /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sprite.cpp; sourceTree = "<group>"; };
 		51CF8D5F12DF60E0003FBBAD /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
 		51CF8D6212DF60E0003FBBAD /* Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Factory.h; sourceTree = "<group>"; };
-		51CF8D6412DF60E0003FBBAD /* Convert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Convert.cpp; sourceTree = "<group>"; };
-		51CF8D6512DF60E0003FBBAD /* Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convert.h; sourceTree = "<group>"; };
 		51CF8D6612DF60E0003FBBAD /* MathHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathHelper.cpp; sourceTree = "<group>"; };
 		51CF8D6712DF60E0003FBBAD /* MathHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathHelper.h; sourceTree = "<group>"; };
 		51CF8D6812DF60E0003FBBAD /* Random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Random.cpp; sourceTree = "<group>"; };
@@ -512,8 +508,6 @@
 		51CF8D6312DF60E0003FBBAD /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				51CF8D6412DF60E0003FBBAD /* Convert.cpp */,
-				51CF8D6512DF60E0003FBBAD /* Convert.h */,
 				51CF8D6612DF60E0003FBBAD /* MathHelper.cpp */,
 				51CF8D6712DF60E0003FBBAD /* MathHelper.h */,
 				51CF8D6812DF60E0003FBBAD /* Random.cpp */,
@@ -828,7 +822,6 @@
 				51CF8DB412DF60E1003FBBAD /* Renderable.h in Headers */,
 				51CF8DB612DF60E1003FBBAD /* Sprite.h in Headers */,
 				51CF8DB912DF60E1003FBBAD /* Factory.h in Headers */,
-				51CF8DBB12DF60E1003FBBAD /* Convert.h in Headers */,
 				51CF8DBD12DF60E1003FBBAD /* MathHelper.h in Headers */,
 				51CF8DBF12DF60E1003FBBAD /* Random.h in Headers */,
 				51CF8DC012DF60E1003FBBAD /* ResourceHelper.h in Headers */,
@@ -992,7 +985,6 @@
 				51CF8DB112DF60E1003FBBAD /* LinkData.cpp in Sources */,
 				51CF8DB312DF60E1003FBBAD /* Renderable.cpp in Sources */,
 				51CF8DB512DF60E1003FBBAD /* Sprite.cpp in Sources */,
-				51CF8DBA12DF60E1003FBBAD /* Convert.cpp in Sources */,
 				51CF8DBC12DF60E1003FBBAD /* MathHelper.cpp in Sources */,
 				51CF8DBE12DF60E1003FBBAD /* Random.cpp in Sources */,
 				51CF8DC112DF60E1003FBBAD /* StringHelper.cpp in Sources */,
