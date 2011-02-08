@@ -150,6 +150,35 @@ namespace RedBox {
          * @param newVertices Pointer to the new vertices group.
          */
         void setVerticesGroup(VerticesGroup* newVertices);
+		/**
+		 * Gets if the RenderStep is using the epoch time or not for animations.
+		 * @return True if the RenderStep uses epoch time, false if not.
+		 */
+		bool isUseSinceEpoch() const;
+		/**
+		 * Sets if the RenderStep uses the epoch time or not for animations.
+		 * @param newUseSinceEpoch True if the RenderStep needs to use the
+		 * epoch time, false if not.
+		 */
+		void setUseSinceEpoch(bool newUseSinceEpoch);
+		/**
+		 * Plays an animation.
+		 * @param name Name of the animation to play.
+		 */
+		void playAnimation(const std::string& name);
+		/**
+		 * Pauses the animation.
+		 */
+		void pauseAnimation();
+		/**
+		 * Resumes the animation.
+		 */
+		void resumeAnimation();
+		/**
+		 * Gets the name of the current animation.
+		 * @return Name of the current animation being played.
+		 */
+		const std::string& getCurrentAnimation() const;
     private:
         /// Information on the render. Includes the color and the texture ID.
         RenderInfo info;
@@ -160,11 +189,32 @@ namespace RedBox {
 		RenderStepMode::Enum mode;
         /// Vertices to be rendered in this step.
         VerticesGroup* vertices;
+		/**
+		 * Wether to use the epoch time or not for animations. If it doesn't, it 
+		 * uses the time since the game was started. Useful for RenderSteps with
+		 * animations used for the pause menu. By default this member is set to
+		 * false.
+		 */
+		bool useSinceEpoch;
         /**
          * Determines if the RenderStep needs to delete its vertices in its
          * destructor.
          */
         bool deleteVerticesGroup;
+		/**
+		 * Gets the time at which the last frame was changed for the animation.
+		 */
+		double lastFrameChange;
+		/**
+		 * Name of the animation currently playing.
+		 */
+		std::string currentAnimation;
+		/**
+		 * If the animation is paused or 
+		 */
+		bool isPaused;
+		/// Time since the last frame when it was paused.
+		double pauseFrameRemain;
         /**
          * Resets the RenderStep. Also frees up all allocated memory.
          */

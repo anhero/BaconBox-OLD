@@ -173,6 +173,38 @@ namespace RedBox {
 		 * @param newTexInfo Pointer to the new texture information.
 		 */
 		void setTexInfo(TextureInfo* newTexInfo);
+		/**
+		 * Checks wether an animation exists or not.
+		 * @param name Name of the animation to check.
+		 * @return True if the animation exists, false if not.
+		 */
+		bool animationExists(const std::string& name) const;
+		/**
+		 * Gets the animation parameters of a specific animation.
+		 * @param name Name of the animation to get.
+		 * @return Animation parameters asked for.
+		 */
+		AnimationParameters* getAnimationParameters(const std::string& name);
+		/**
+		 * Changes the frame to be shown.
+		 */
+		void setCurrentFrame(unsigned int newCurrentFrame);
+		/**
+		 * Gets the index of the current animation frame.
+		 * @return Index of the current animation frame.
+		 */
+		unsigned int getCurrentFrame() const;
+		/**
+		 * Checks if the RenderInfo is animated.
+		 * @return True if the RenderInfo contains animations and thus is
+		 * animated.
+		 */
+		bool isAnimated() const;
+		/**
+		 * Increments the frame index. If it goes over the number of available
+		 * frames, it resets to 0.
+		 */
+		void incrementFrame();
 	private:
         /**
          * Color, first int is red, second is green, third is blue and last one
@@ -187,6 +219,10 @@ namespace RedBox {
 		 * frame, you'd do texCoords[2].
 		 */
 		std::vector< std::vector<float> > texCoords;
+		/**
+		 * Current frame at which the animation is currently.
+		 */
+		unsigned int currentFrame;
 		/**
 		 * Map to associate names to each animations in texCoords. For example,
 		 * to get information about a specific animation, you'd do 

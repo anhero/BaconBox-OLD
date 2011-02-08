@@ -25,6 +25,7 @@ Sprite::Sprite(const std::string& imageKey): Renderable()
 		construct(texInfo,
 				  texInfo->imageWidth,
 				  texInfo->imageHeight,
+				  1,
 				  0.0f,
 #ifdef RB_PHYSICS_ENABLED
 				  0.0f,
@@ -47,6 +48,7 @@ Sprite::Sprite(TextureInfo* texInfo): Renderable()
 		construct(texInfo,
 				  texInfo->imageWidth,
 				  texInfo->imageHeight,
+				  1,
 				  0.0f,
 #ifdef RB_PHYSICS_ENABLED
 				  0.0f,
@@ -62,6 +64,7 @@ Sprite::Sprite(TextureInfo* texInfo): Renderable()
 Sprite::Sprite(const std::string& imageKey,
 			   float frameWidth,
 			   float frameHeight,
+			   unsigned int nbFrames,
 			   float offsetX,
 #ifdef RB_PHYSICS_ENABLED
 			   float offsetY,
@@ -73,6 +76,7 @@ float offsetY): Renderable()
 	construct(ResourceLoader::getTexture(imageKey),
 			  frameWidth,
 			  frameHeight,
+			  nbFrames,
 			  offsetX,
 #ifdef RB_PHYSICS_ENABLED
 			  offsetY,
@@ -85,6 +89,7 @@ float offsetY): Renderable()
 Sprite::Sprite(TextureInfo* texInfo,
 			   float frameWidth,
 			   float frameHeight,
+			   unsigned int nbFrames,
 			   float offsetX,
 #ifdef RB_PHYSICS_ENABLED
 			   float offsetY,
@@ -96,6 +101,7 @@ float offsetY): Renderable()
 	construct(texInfo,
 			  frameWidth,
 			  frameHeight,
+			  nbFrames,
 			  offsetX,
 #ifdef RB_PHYSICS_ENABLED
 			  offsetY,
@@ -247,6 +253,7 @@ void Sprite::removeEdge(Edge* edge) {
 void Sprite::construct(TextureInfo* texInfo,
 					   float frameWidth,
 					   float frameHeight,
+					   unsigned int nbFrames,
 					   float offsetX,
 #ifdef RB_PHYSICS_ENABLED
 					   float offsetY,
@@ -264,7 +271,7 @@ float offsetY)
 #endif
 		RenderStep* initialRenderStep = new RenderStep(texInfo,
 													   &vertices,
-													   1,
+													   nbFrames,
 													   1.0f,
 													   offsetX,
 													   offsetY);
@@ -273,6 +280,7 @@ float offsetY)
 		$ECHO("Failed to load a sprite with the following texture information: " << texInfo);
 	}
 }
+
 void Sprite::clean() {
 	clearRenderSteps();
 	vertices.warnVerticesOfDeletion();

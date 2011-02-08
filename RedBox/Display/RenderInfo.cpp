@@ -8,7 +8,7 @@
 
 using namespace RedBox;
 
-RenderInfo::RenderInfo(): texInfo(NULL) {
+RenderInfo::RenderInfo(): texInfo(NULL), currentFrame(0) {
 	color[0] = 0;
 	color[1] = 0;
 	color[2] = 0;
@@ -22,7 +22,8 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
 					   float offsetX,
 					   float offsetY,
 					   int* newColor):
-texCoords(std::vector< std::vector<float> >(nbFrames)), texInfo(newTexInfo) {
+texCoords(std::vector< std::vector<float> >(nbFrames)), texInfo(newTexInfo),
+currentFrame(0) {
 	if(newColor) {
 		color[0] = newColor[0];
 		color[1] = newColor[1];
@@ -144,7 +145,7 @@ void RenderInfo::addAnimation(const std::string& name,
 }
 
 void RenderInfo::addAnimation(const std::string& name,
-				  const AnimationParameters& newAnimation) {
+							  const AnimationParameters& newAnimation) {
 	if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, newAnimation)).second)) {
 		$ECHO("Failed to add the animation named : " << name);
 	}
@@ -190,4 +191,40 @@ void RenderInfo::setAlphaValue(int alpha) {
 }
 void RenderInfo::setTexInfo(TextureInfo* newTexInfo) {
 	texInfo = newTexInfo;
+}
+bool RenderInfo::animationExists(const std::string& name) const {
+	if(animations.find(name) == animations.end()) {
+		return false;
+	} else {
+		return true;
+	}
+}
+AnimationParameters* RenderInfo::getAnimationParameters(const std::string& name) {
+	if(animationExists(name)) {
+		return &(animations[name]);
+	} else {
+		$ECHO("Tried to get a non-existing animation: " << name);
+		return NULL;
+	}
+}
+
+void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
+	if(newCurrentFrame >= texCoords.size()) {
+		currentFrame = newCurrentFrame;
+	} else {
+		$ECHO("Tried to set the current frame that is too high: " << newCurrentFrame);
+	}
+}
+
+unsigned int RenderInfo::getCurrentFrame() const {
+	return currentFrame;
+}
+
+bool RenderInfo::isAnimated() const {
+	return !(animations.empty());
+}
+
+void RenderInfo::incrementFrame() {
+	if(texCoords.size() <= currentFrame) currentFrame = 0;
+	else ++currentFrame;
 }

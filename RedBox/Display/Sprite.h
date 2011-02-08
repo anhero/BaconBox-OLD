@@ -76,6 +76,7 @@ namespace RedBox {
 		Sprite(const std::string& imageKey,
 			   float frameWidth,
 			   float frameHeight,
+			   unsigned int nbFrames = 1,
 			   float offsetX = 0.0f,
 #ifdef RB_PHYSICS_ENABLED
 			   float offsetY = 0.0f,
@@ -101,6 +102,7 @@ namespace RedBox {
 		Sprite(TextureInfo* texInfo,
 			   float frameWidth,
 			   float frameHeight,
+			   unsigned int nbFrames = 1,
 			   float offsetX = 0.0f,
 #ifdef RB_PHYSICS_ENABLED
 			   float offsetY = 0.0f,
@@ -210,6 +212,7 @@ namespace RedBox {
 		void construct(TextureInfo* texInfo,
 					   float frameWidth,
 					   float frameHeight,
+					   unsigned int nbFrames = 1,
 					   float offsetX = 0.0f,
 #ifdef RB_PHYSICS_ENABLED
 					   float offsetY = 0.0f,

@@ -11,13 +11,20 @@
 using namespace RedBox;
 
 double TimeHelper::epoch = 0.0;
+double TimeHelper::sinceStart = 0.0;
+double TimeHelper::timeScale = 1.0;
+bool TimeHelper::paused = false;
 
 void TimeHelper::refreshTime() {
 #ifdef __APPLE__
 #if defined(TARGET_IPHONE_SIMULATOR) || defined(TARGET_OS_IPHONE)
+	double lastEpoch = epoch;
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	epoch = [[NSDate date] timeIntervalSince1970];
 	[pool release];
+	if(!paused) {
+		sinceStart += timeScale * (epoch - lastEpoch);
+	}
 #endif //Target iPhone
 #endif //__APPLE__
 	
@@ -41,4 +48,32 @@ void TimeHelper::refreshTime() {
 
 double TimeHelper::getSinceEpoch() {
 	return epoch;
+}
+
+void TimeHelper::pause() {
+	paused = true;
+}
+
+void TimeHelper::unpause() {
+	paused = false;
+}
+
+double TimeHelper::getSinceStart() {
+	return sinceStart;
+}
+void TimeHelper::setTimeScale(double newTimeScale) {
+	timeScale = newTimeScale;
+}
+
+TimeHelper::TimeHelper() {
+}
+
+TimeHelper::TimeHelper(const TimeHelper& src) {
+}
+
+TimeHelper::~TimeHelper() {
+}
+
+TimeHelper& TimeHelper::operator=(const TimeHelper& src) {
+	return *this;
 }
