@@ -10,6 +10,7 @@
 #include <string>
 
 #include "State.h"
+#include "AudioEngine.h"
 
 namespace RedBox {
 	/**

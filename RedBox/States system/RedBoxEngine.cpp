@@ -85,4 +85,10 @@ void RedBoxEngine::pulse() {
 			currentState->render();
 		}
 	}
+	if(AudioEngine::getSoundEngine()) {
+		AudioEngine::getSoundEngine()->update();
+	}
+	if(AudioEngine::getMusicEngine()) {
+		AudioEngine::getMusicEngine()->update();
+	}
 }
