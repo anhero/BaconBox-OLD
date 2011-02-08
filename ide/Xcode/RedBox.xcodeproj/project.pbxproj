@@ -13,7 +13,7 @@
 		2447361912EF46030085668B /* PlatformFlagger.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361812EF46030085668B /* PlatformFlagger.h */; };
 		2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2480744F12E0A3F800F49E74 /* RenderInfo.h */; };
 		249C90B612ECFFB9000AF0DC /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */; };
-		249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */; };
+		249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		24B86B5412F319620071930C /* MusicInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B86B5012F319620071930C /* MusicInfo.cpp */; };
 		24B86B5512F319620071930C /* MusicInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B86B5112F319620071930C /* MusicInfo.h */; };
 		24B86B5612F319620071930C /* SoundInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B86B5212F319620071930C /* SoundInfo.cpp */; };
@@ -120,7 +120,7 @@
 		51CF8DD012DF60E1003FBBAD /* VerticesGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D7E12DF60E0003FBBAD /* VerticesGroup.h */; };
 		51CF8DD212DF60E1003FBBAD /* RedBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D8012DF60E0003FBBAD /* RedBox.h */; };
 		51CF8DD512DF60E1003FBBAD /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D8412DF60E0003FBBAD /* State.cpp */; };
-		51CF8DD612DF60E1003FBBAD /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D8512DF60E0003FBBAD /* State.h */; };
+		51CF8DD612DF60E1003FBBAD /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D8512DF60E0003FBBAD /* State.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,15 +169,15 @@
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		5103E6E3109D7136002C753A /* libsimple-image.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libsimple-image.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		512B7E2D12DF67B0002E9698 /* Edge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Edge.cpp; path = ../../RedBox/other/Edge.cpp; sourceTree = SOURCE_ROOT; };
 		512B7E2E12DF67B1002E9698 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Edge.h; path = ../../RedBox/other/Edge.h; sourceTree = SOURCE_ROOT; };
-		512D565E109B6446009D504E /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		512D586C109B6D45009D504E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5132439C12FB4AAC00C297F9 /* RBString32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBString32.h; sourceTree = "<group>"; };
+		515EB50512FF34AA004FB469 /* libRedBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRedBox.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		515EB50612FF34AA004FB469 /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		515EB50712FF34AA004FB469 /* libsimple-image.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libsimple-image.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		517BDCDD11B04CA80095F001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		517D7C3210F87AB10022BBF2 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
-		5192774711D5B0F100C65B15 /* libRedBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRedBox.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5192780C11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedboxEngine_Prefix.pch; sourceTree = "<group>"; };
 		519313EB12ED62D5008B3AFB /* ResourceLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceLoader.cpp; sourceTree = "<group>"; };
 		519313EC12ED62D5008B3AFB /* ResourceLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceLoader.h; sourceTree = "<group>"; };
@@ -389,9 +389,9 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				512D565E109B6446009D504E /* liblibpng.a */,
-				5103E6E3109D7136002C753A /* libsimple-image.a */,
-				5192774711D5B0F100C65B15 /* libRedBox.a */,
+				515EB50512FF34AA004FB469 /* libRedBox.a */,
+				515EB50612FF34AA004FB469 /* liblibpng.a */,
+				515EB50712FF34AA004FB469 /* libsimple-image.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -823,6 +823,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51CF8DD612DF60E1003FBBAD /* State.h in Headers */,
+				249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */,
 				5192780D11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch in Headers */,
 				51CF8D8712DF60E0003FBBAD /* BackgroundMusic.h in Headers */,
 				51CF8D8812DF60E0003FBBAD /* RBIPhoneBackgroundMusic.h in Headers */,
@@ -848,7 +850,6 @@
 				51CF8DCE12DF60E1003FBBAD /* Vertex.h in Headers */,
 				51CF8DD012DF60E1003FBBAD /* VerticesGroup.h in Headers */,
 				51CF8DD212DF60E1003FBBAD /* RedBox.h in Headers */,
-				51CF8DD612DF60E1003FBBAD /* State.h in Headers */,
 				512B7DB612DF6103002E9698 /* Finch.h in Headers */,
 				512B7DB812DF6105002E9698 /* RevolverSound.h in Headers */,
 				512B7DBB12DF6107002E9698 /* Sound.h in Headers */,
@@ -856,7 +857,6 @@
 				2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */,
 				24B9BD7E12E1279E00057BB1 /* RenderStep.h in Headers */,
 				24B9BD7F12E1279E00057BB1 /* RenderStepMode.h in Headers */,
-				249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */,
 				519313EE12ED62D5008B3AFB /* ResourceLoader.h in Headers */,
 				519313F312ED62E1008B3AFB /* TextureInfo.h in Headers */,
 				2447361212EF44550085668B /* Drawer.h in Headers */,
@@ -888,7 +888,7 @@
 			);
 			name = "simple-image";
 			productName = "simple-image";
-			productReference = 5103E6E3109D7136002C753A /* libsimple-image.a */;
+			productReference = 515EB50712FF34AA004FB469 /* libsimple-image.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		512D565D109B6446009D504E /* libpng */ = {
@@ -905,7 +905,7 @@
 			);
 			name = libpng;
 			productName = libpng;
-			productReference = 512D565E109B6446009D504E /* liblibpng.a */;
+			productReference = 515EB50612FF34AA004FB469 /* liblibpng.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		5192774611D5B0F100C65B15 /* RedBox */ = {
@@ -924,7 +924,7 @@
 			);
 			name = RedBox;
 			productName = RedBox;
-			productReference = 5192774711D5B0F100C65B15 /* libRedBox.a */;
+			productReference = 515EB50512FF34AA004FB469 /* libRedBox.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -1113,15 +1113,16 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "../libraries/**";
+				HEADER_SEARCH_PATHS = "../../libraries/**";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../externalLib/freetype/lib\"",
 					"\"$(SRCROOT)/../../../..\"",
 				);
 				PREBINDING = NO;
+				PRIVATE_HEADERS_FOLDER_PATH = /private_include;
 				PRODUCT_NAME = RedBox;
+				PUBLIC_HEADERS_FOLDER_PATH = /include;
 			};
 			name = Debug;
 		};
@@ -1132,15 +1133,16 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "../libraries/**";
+				HEADER_SEARCH_PATHS = "../../libraries/**";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../externalLib/freetype/lib\"",
 					"\"$(SRCROOT)/../../../..\"",
 				);
 				PREBINDING = NO;
+				PRIVATE_HEADERS_FOLDER_PATH = /private_include;
 				PRODUCT_NAME = RedBox;
+				PUBLIC_HEADERS_FOLDER_PATH = /include;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1157,7 +1159,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = RedboxEngine_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../libraries/**";
@@ -1177,7 +1179,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../libraries/**";
