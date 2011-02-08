@@ -55,6 +55,7 @@
 		512B7DE812DF61DF002E9698 /* pngpread.c in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8EB112DF60EE003FBBAD /* pngpread.c */; };
 		512B7E2F12DF67B1002E9698 /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 512B7E2D12DF67B0002E9698 /* Edge.cpp */; };
 		512B7E3012DF67B1002E9698 /* Edge.h in Headers */ = {isa = PBXBuildFile; fileRef = 512B7E2E12DF67B1002E9698 /* Edge.h */; };
+		5132439D12FB4AAC00C297F9 /* RBString32.h in Headers */ = {isa = PBXBuildFile; fileRef = 5132439C12FB4AAC00C297F9 /* RBString32.h */; };
 		5192780D11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 5192780C11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch */; };
 		51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A9351410E8934500D144F4 /* AudioToolbox.framework */; };
 		51927C0711D5EA3E00C65B15 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5102AA7A10F547D300585718 /* AVFoundation.framework */; };
@@ -169,6 +170,7 @@
 		512B7E2E12DF67B1002E9698 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Edge.h; path = ../../RedBox/other/Edge.h; sourceTree = SOURCE_ROOT; };
 		512D565E109B6446009D504E /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		512D586C109B6D45009D504E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		5132439C12FB4AAC00C297F9 /* RBString32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBString32.h; sourceTree = "<group>"; };
 		517BDCDD11B04CA80095F001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		517D7C3210F87AB10022BBF2 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		5192774711D5B0F100C65B15 /* libRedBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRedBox.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -563,6 +565,7 @@
 				51CF8D7C12DF60E0003FBBAD /* Vertex.h */,
 				51CF8D7D12DF60E0003FBBAD /* VerticesGroup.cpp */,
 				51CF8D7E12DF60E0003FBBAD /* VerticesGroup.h */,
+				5132439C12FB4AAC00C297F9 /* RBString32.h */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -849,6 +852,7 @@
 				24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */,
 				24B86B5512F319620071930C /* MusicInfo.h in Headers */,
 				24B86B5712F319620071930C /* SoundInfo.h in Headers */,
+				5132439D12FB4AAC00C297F9 /* RBString32.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
