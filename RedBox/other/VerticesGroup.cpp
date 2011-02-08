@@ -33,26 +33,60 @@ void VerticesGroup::addVertex(float x, float y, Sprite* sprite)
     verticesData[verticesData.size()-1] = y;
     verticesData[verticesData.size()-2] = x;
     
+	// We reset the pointers correctly.
 	resetPointers();
 	
+	if(vertices.size() > 1) {
+		sprite = vertices.front().getParentSprite();
+#ifdef RB_PHYSICS_ENABLED
+		sprite = vertices.front().getParentGraphicBody();
+#endif
+	}
 	// We add the new vertex to the list.
-    if(vertices.size() == 1) {
+	vertices.push_back(Vertex());
+	vertices.back().getPosition().setIsPtr(true);
+	vertices.back().getPosition().setXPtr(&(verticesData[verticesData.size()-2]));
+	vertices.back().getPosition().setYPtr(&(verticesData[verticesData.size()-1]));
+	vertices.back().setParentSprite(sprite);
 #ifdef RB_PHYSICS_ENABLED
-		vertices.push_back(Vertex(&(verticesData[verticesData.size()-2]), &(verticesData[verticesData.size()-1]), sprite, graphicBody));
-#else
-		vertices.push_back(Vertex(&(verticesData[verticesData.size()-2]), &(verticesData[verticesData.size()-1]), sprite));
+	vertices.back().setParentGraphicBody(graphicBody);
 #endif
-    } else {
-#ifdef RB_PHYSICS_ENABLED
-		vertices.push_back(Vertex(&(verticesData[verticesData.size()-2]), &(verticesData[verticesData.size()-1]), vertices.front().getParentSprite(), vertices.front().getParentSprite()));
-#else
-		vertices.push_back(Vertex(&(verticesData[verticesData.size()-2]), &(verticesData[verticesData.size()-1]), vertices.front().getParentSprite()));
-#endif
-    }
 }
 
+void VerticesGroup::addVertices(unsigned int nbVertices, ...) {
+	va_list verticesCoords;
+	va_start(verticesCoords, nbVertices);
+	// We resize the verticesData vector.
+	unsigned int initialSize = verticesData.size();
+	verticesData.resize(verticesData.size() + nbVertices * 2);
+	for(unsigned int i = 0; i < nbVertices; i++) {
+		verticesData[i * 2 + initialSize] = va_arg(verticesCoords, float);
+		verticesData[i * 2 + 1 + initialSize] = va_arg(verticesCoords, float);
+	}
+	va_end(verticesCoords);
+	
+	// We reset the pointers correctly.
+	resetPointers();
+	
+	Sprite* parentSprite = ((vertices.size()) ? (vertices.front().getParentSprite()):(NULL));
+#ifdef RB_PHYSICS_ENABLED
+	GraphicBody* parentGraphicBody = ((vertices.size()) ? (vertices.front().getParentGraphicBody()):(NULL));
+#endif
+	for(unsigned int i = 0; i < nbVertices; i++) {
+		vertices.push_back(Vertex());
+		vertices.back().getPosition().setIsPtr(true);
+		vertices.back().getPosition().setXPtr(&(verticesData[i * 2 + initialSize]));
+		vertices.back().getPosition().setYPtr(&(verticesData[i * 2 + 1 + initialSize]));
+		vertices.back().setParentSprite(parentSprite);
+#ifdef RB_PHYSICS_ENABLED
+		vertices.back().setParentGraphicBody(parentGraphicBody);
+#endif
+	}	
+}
+
+
 void VerticesGroup::deleteVertex(Vertex* vertexToDelete) {
-	// We remove the vertex from the list, but we take not of its pointer to
+	// We remove the vertex from the list, but we take note of its pointer to
 	// its x value.
 	float* xPtr = NULL;
 	std::list<Vertex>::iterator itr = vertices.begin();

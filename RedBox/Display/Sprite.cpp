@@ -1,44 +1,108 @@
 #include "Sprite.h"
+
 #include "ResourceLoader.h"
 #include "Debug.h"
 
 using namespace RedBox;
 
-
-
-Sprite::Sprite(): Renderable() {
+#ifdef RB_PHYSICS_ENABLED
+Sprite::Sprite(GraphicBody* parentBody): Renderable()
+	vertices.setParentGraphicBody(parentBody);
+#else
+Sprite::Sprite(): Renderable()
+#endif
+{
 }
 
-Sprite::Sprite(const std::string& imageKey): Renderable() {
+#ifdef RB_PHYSICS_ENABLED
+Sprite::Sprite(const std::string& imageKey, GraphicBody* parentBody): Renderable()
+#else
+Sprite::Sprite(const std::string& imageKey): Renderable()
+#endif
+{
 	TextureInfo* texInfo = ResourceLoader::getTexture(imageKey);
 	if(texInfo) {
-		// TODO: Load the vertices correctly.
-		RenderStep* initialRenderStep = new RenderStep(texInfo, NULL);
-		initialRenderStep->setMode(SHAPE | TEXTURE);
-		renderSteps.insert(initialRenderStep);
-		initialRenderStep->getRenderInfo().setTexInfo(texInfo);
+		construct(texInfo,
+				  texInfo->imageWidth,
+				  texInfo->imageHeight,
+				  0.0f,
+#ifdef RB_PHYSICS_ENABLED
+				  0.0f,
+				  parentBody);
+#else
+				  0.0f);
+#endif
 	} else {
-		$ECHO("Failed to load a sprite with the following image key: ");
-		$ECHO(imageKey);
+		$ECHO("Tried to construct a sprite from an invalid image key: " << imageKey);
+	}
+}
+
+#ifdef RB_PHYSICS_ENABLED
+Sprite::Sprite(TextureInfo* texInfo, GraphicBody* parentBody): Renderable()
+#else
+Sprite::Sprite(TextureInfo* texInfo): Renderable()
+#endif
+{
+	if(texInfo) {
+		construct(texInfo,
+				  texInfo->imageWidth,
+				  texInfo->imageHeight,
+				  0.0f,
+#ifdef RB_PHYSICS_ENABLED
+				  0.0f,
+				  parentBody);
+#else
+		0.0f);
+#endif
+	} else {
+		$ECHO("Tried to construct a sprite from an invalid texture information: " << texInfo);
 	}
 }
 
 Sprite::Sprite(const std::string& imageKey,
-	   unsigned int frameWidth,
-	   unsigned int frameHeight,
-	   unsigned int offsetX,
-	   unsigned int offsetY): Renderable() {
-	TextureInfo* texInfo = ResourceLoader::getTexture(imageKey);
-	if(texInfo) {
-		// TODO: Load the vertices correctly.
-		RenderStep* initialRenderStep = new RenderStep(texInfo, NULL);
-		initialRenderStep->setMode(SHAPE | TEXTURE);
-		renderSteps.insert(initialRenderStep);
-		initialRenderStep->getRenderInfo().setTexInfo(texInfo);
-	} else {
-		$ECHO("Failed to load a sprite with the following image key: ");
-		$ECHO(imageKey);
-	}
+			   float frameWidth,
+			   float frameHeight,
+			   float offsetX,
+#ifdef RB_PHYSICS_ENABLED
+			   float offsetY,
+			   GraphicBody* parentBody): Renderable()
+#else
+			   float offsetY): Renderable()
+#endif
+{
+	construct(ResourceLoader::getTexture(imageKey),
+			  frameWidth,
+			  frameHeight,
+			  offsetX,
+#ifdef RB_PHYSICS_ENABLED
+			  offsetY,
+			  parentBody);
+#else
+			  offsetY);
+#endif
+}
+
+Sprite::Sprite(TextureInfo* texInfo,
+			   float frameWidth,
+			   float frameHeight,
+			   float offsetX,
+#ifdef RB_PHYSICS_ENABLED
+			   float offsetY,
+			   GraphicBody* parentBody): Renderable()
+#else
+float offsetY): Renderable()
+#endif
+{
+	construct(texInfo,
+			  frameWidth,
+			  frameHeight,
+			  offsetX,
+#ifdef RB_PHYSICS_ENABLED
+			  offsetY,
+			  parentBody);
+#else
+	offsetY);
+#endif
 }
 
 #ifdef RB_PHYSICS_ENABLED
@@ -85,7 +149,7 @@ void Sprite::update() {
 }
 
 void Sprite::createVertex(float x, float y) {
-    vertices.addVertex(x, y);
+	vertices.addVertex(x, y, this);
 }
 
 void Sprite::warnVerticesOfDeletion() {
@@ -135,7 +199,35 @@ void Sprite::removeEdge(Edge* edge) {
 	}       
 }
 #endif
-
+void construct(TextureInfo* texInfo,
+			   float frameWidth,
+			   float frameHeight,
+			   float offsetX = 0.0f,
+#ifdef RB_PHYSICS_ENABLED
+			   float offsetY = 0.0f,
+			   GraphicBody* parentBody = NULL)
+#else
+			   float offsetY = 0.0f)
+#endif
+{
+	if(texInfo) {
+		// Generates the square vertices from the frame width and height.
+		vertices.addVertices(0.0f, 0.0f, frameWidth, 0.0f, frameWidth, frameHeight, 0.0f, frameHeight);
+		vertices.setParentSprite(this);
+#ifdef RB_PHYSICS_ENABLED
+		vertices.setParentGraphicBody(parentBody);
+#endif
+		RenderStep* initialRenderStep = new RenderStep(texInfo,
+													   &vertices,
+													   1,
+													   1.0f,
+													   offsetX,
+													   offsetY);
+		renderSteps.insert(initialRenderStep);
+	} else {
+		$ECHO("Failed to load a sprite with the following image key: " << imageKey);
+	}
+}
 void Sprite::clean() {
 	clearRenderSteps();
 	vertices.warnVerticesOfDeletion();

@@ -1,9 +1,10 @@
 /**
  * @file
  * @ingroup Helper
+ * @ingroup Math
  */
-#ifndef __MATHHELPER_H
-#define __MATHHELPER_H
+#ifndef RB_MATHHELPER_H
+#define RB_MATHHELPER_H
 
 namespace RedBox {
 	/**
@@ -11,7 +12,7 @@ namespace RedBox {
 	 * @ingroup Helper
 	 * @ingroup Math
 	 */
-	class MathHelper{
+	class MathHelper {
 	public:
 		/**
 		 * Gets the next power of 2. Takes a number and finds the closest power
@@ -21,6 +22,13 @@ namespace RedBox {
 		 * @return Next power of 2 of the given number.
 		 */
 		static int nextPowerOf2(int number);
+		/**
+		 * Does a modulo on the two floats recieved.
+		 * @param dividend Dividend of the modulo.
+		 * @param divisor Divisor of the modulo.
+		 * @return Remainder from the division.
+		 */
+		static float modFloat(float dividend, float divisor);
 	};
 }
 #endif

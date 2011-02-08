@@ -1,6 +1,10 @@
 #include "RenderInfo.h"
+
 #include <cmath>
+
 #include "Debug.h"
+#include "MathHelper.h"
+
 using namespace RedBox;
 
 RenderInfo::RenderInfo(): texInfo(NULL) {
@@ -12,9 +16,12 @@ RenderInfo::RenderInfo(): texInfo(NULL) {
 
 RenderInfo::RenderInfo(TextureInfo* newTexInfo, 
 					   VerticesGroup* vertices,
-					   int* newColor
 					   unsigned int nbFrames,
-					   float factor):
+					   float factor,
+					   float offsetX,
+					   float offsetY,
+					   TextureInfo* newTexInfo,
+					   int* newColor):
 texCoords(std::vector< std::vector<float> >(nbFrames)), texInfo(newTexInfo) {
 	if(newColor) {
 		color[0] = newColor[0];
@@ -27,46 +34,62 @@ texCoords(std::vector< std::vector<float> >(nbFrames)), texInfo(newTexInfo) {
 		color[2] = 0;
 		color[3] = 0;
 	}
-	loadTexCoords(vertices, nbFrames, factor);
+	loadTexCoords(vertices, nbFrames, factor, offsetX, offsetY);
 }
 
 void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 							   unsigned int nbFrames,
 							   float factor,
+							   float offsetX,
+							   float offsetY,
 							   TextureInfo* newTexInfo) {
+	// We check if we also reassign the texInfo.
 	if(newTexInfo) {
 		texInfo = newTexInfo;
 	}
+	// We check if the texInfo, the vertices and the number of frames are valid.
 	if(texInfo && vertices && nbFrames > 0) {
+		// We get the width and the height of the of the vertices group.
 		std::pair<float, float> widthHeight = vertices->getWidthHeight();
-		
-		float imgWidth = static_cast<float>(texInfo->imageWidth) * factor, 
-		imgHeight = static_cast<float>(texInfo->imageHeight) * factor;
-		
-		unsigned int nbFramesHorMax = static_cast<unsigned int>(fabs(imgWidth / widthHeight.first)), 
-		nbFramesVerMax = static_cast<unsigned int>(fabs(imgHeight / widthHeight.second));
-		
-		if(nbFrames < nbFramesHorMax * nbFramesVerMax) {
-			texCoords.resize(nbFrames, std::vector<float>(8, 0.0f));
-			unsigned int currentFrame = 0;
-			for(std::vector<std::vector<float> >::iterator i = texCoords.begin(); i++) {
-				// Upper left corner.
-				(*i)[0] = static_cast<float>(currentFrame % nbFramesHorMax) * widthHeight.first;
-				(*i)[1] = static_cast<float>(currentFrame / nbFramesHorMax) * widthHeight.second;
-				// Upper right corner.
-				(*i)[2] = (*i)[0] + widthHeight.first;
-				(*i)[3] = (*i)[1];
-				// Lower right corner.
-				(*i)[4] = (*i)[2];
-				(*i)[5] = (*i)[1] + widthHeight.second;
-				// Lower left corner.
-				(*i)[6] = (*i)[0];
-				(*i)[7] = (*i)[5];
-				// Increment the frame counter.
-				++currentFrame;
+		// We make sure the width and the height are valid.
+		if(widthHeight.first != 0.0f && widthHeight.second != 0.0f) {
+			// We get the image width as a float and we consider the factor.
+			float imgWidth = static_cast<float>(texInfo->imageWidth) * factor, 
+			imgHeight = static_cast<float>(texInfo->imageHeight) * factor;
+			// We calculate the maximum number of frames the image can contain
+			// horizontally and vertically. We take into account the vertical
+			// offset.
+			float nbFramesHorMax = floor(imgWidth / widthHeight.first),
+			nbFramesVerMax = floor((imgHeight - offsetY) / widthHeight.second);
+			
+			// We check if the number of frames asked fits within the image. We
+			// take into account the horizontal offset.
+			if(nbFrames < nbFramesHorMax * nbFramesVerMax - floor((imgWidth - offsetX) / widthHeight.first)) {
+				texCoords.resize(nbFrames, std::vector<float>(8, 0.0f));
+				// Calculates at which frame we start, only affected by the
+				// horizontal offset because the vertical one will be added
+				// at each frame.
+				float currentFrame = offsetX / widthHeight.first;
+				for(std::vector<std::vector<float> >::iterator i = texCoords.begin(); i++) {
+					// Upper left corner.
+					(*i)[0] = MathHelper::modFloat(currentFrame, nbFramesHorMax) * widthHeight.first;
+					// Here we do not forget to add the vertical offset.
+					(*i)[1] = floor(floor(currentFrame) / nbFramesHorMax) * widthHeight.second + offsetY;
+					// Upper right corner.
+					(*i)[2] = (*i)[0] + widthHeight.first;
+					(*i)[3] = (*i)[1];
+					// Lower right corner.
+					(*i)[4] = (*i)[2];
+					(*i)[5] = (*i)[1] + widthHeight.second;
+					// Lower left corner.
+					(*i)[6] = (*i)[0];
+					(*i)[7] = (*i)[5];
+					// Increment the frame counter.
+					currentFrame += 1.0f;
+				}
+			} else {
+				$ECHO("Attempted to construct a RenderInfo with a number of frames too high: " << nbFrames);
 			}
-		} else {
-			$ECHO("Attempted to construct a RenderInfo with a number of frames too high: " << nbFrames);
 		}
 	} else {
 		// On affiche les erreurs.
@@ -116,16 +139,14 @@ void RenderInfo::addAnimation(const std::string& name,
 		}
 		va_end(frames);
 	} else {
-		$ECHO("Failed to add the animation named : ");
-		$ECHO(name);
+		$ECHO("Failed to add the animation named : " << name);
 	}
 }
 
 void RenderInfo::addAnimation(const std::string& name,
 				  const AnimationParameters& newAnimation) {
 	if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, newAnimation)).second)) {
-		$ECHO("Failed to add the animation named : ");
-		$ECHO(name);
+		$ECHO("Failed to add the animation named : " << name);
 	}
 }
 int* RenderInfo::getColor() {

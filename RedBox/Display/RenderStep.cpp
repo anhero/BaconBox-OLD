@@ -18,17 +18,30 @@ mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE) {
 
 RenderStep::RenderStep(TextureInfo* newTexInfo,
 					   VerticesGroup* newVertices,
+					   unsigned int nbFrames,
+					   float factor,
+					   float offsetX,
+					   float offsetY,
+					   int* newColor,
 					   bool newDeleteVerticesGroup): Renderable(),
 vertices(newVertices), deleteVerticesGroup(newDeleteVerticesGroup),
-info(RenderInfo(newTexInfo, newVertices)),
+info(RenderInfo(newTexInfo, newVertices, nbFrames, factor, offsetX, offsetY, newColor)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE) {
+	if(newColor) {
+		mode |= RenderStepMode::COLOR;
+	}
 }
 
 RenderStep::RenderStep(std::string key,
 					   VerticesGroup* newVertices,
+					   unsigned int nbFrames,
+					   float factor,
+					   float offsetX,
+					   float offsetY,
+					   int* newColor,
 					   bool newDeleteVerticesGroup): Renderable(),
 vertices(newVertices), deleteVerticesGroup(newDeleteVerticesGroup),
-info(RenderInfo(ResourceLoader::getTexture(key), newVertices)),
+info(RenderInfo(ResourceLoader::getTexture(key), newVertices, nbFrames, factor, offsetX, offsetY, newColor)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE) {
 }
 

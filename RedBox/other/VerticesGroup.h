@@ -11,6 +11,7 @@
 #include <list>
 #include <iostream>
 #include <pair>
+#include <cstdarg>
 
 #include "Vertex.h"
 
@@ -42,6 +43,7 @@ namespace RedBox {
 		 */
 		VerticesGroup& operator=(const VerticesGroup& src);
         
+#ifdef RB_PHYSICS_ENABLED
         /**
          * Adds a vertex to the instance. This includes resizing the vertexData
          * array.
@@ -50,12 +52,21 @@ namespace RedBox {
          * @param parentSprite Pointer to the vertex's parent sprite.
          * @param parentGraphicBody Pointer to the vertex's parent graphic body.
          */
-#ifdef RB_PHYSICS_ENABLED
         void addVertex(float x, float y, Sprite* sprite = NULL, 
                        GraphicBody* graphicBody = NULL);
 #else
         void addVertex(float x, float y, Sprite* sprite = NULL);
 #endif
+		/**
+		 * Adds multiple vertices. Can recieve a variable number of parameters.
+		 * @param nbVertices Number of vertices to add. Each of the following
+		 * parameters must be floats. The number of parameters must equal to
+		 * twice the number of vertices to add. In the order, the floats are the
+		 * horizontal value then the vertical value of the vertex to add, 
+		 * followed by the other vertices. For example, to add 4 vertices :
+		 * addVertices(4, 1.3f, 3.4f, 1.0f, 0.05f, 4.33f, 2.66f, 19.0f, 84.1f)
+		 */
+		void addVertices(unsigned int nbVertices, ...);
 		/**
 		 * Removes a vertex. Causes the vertices group to be rebuilt.
 		 * @param vertexToDelete Pointer to the vertex to delete.

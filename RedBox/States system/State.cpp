@@ -1,12 +1,19 @@
 #include "State.h"
 
+#include "Debug.h"
+
 using namespace RedBox;
 
 State::State() {
 }
 
 void State::addRenderable(Renderable* aRenderable) {
-    renderables.insert(std::pair<int, Renderable*>(aRenderable->getZ(), aRenderable));
+	if(aRenderable) {
+		aRenderable->resetZChanged();
+		renderables.insert(std::pair<int, Renderable*>(aRenderable->getZ(), aRenderable));
+	} else {
+		$ECHO("Tried to add an invalid renderable (" << aRenderable << ") to the state.");
+	}
 }
 
 

@@ -116,7 +116,7 @@ namespace RedBox{
          * doesn't delete its edges. Simply clears the vector of edges.
          */
         void warnOfParentSpriteDeletion();
-#ifdef REDBOX_PHYSICS_ENABLED
+#ifdef RB_PHYSICS_ENABLED
         /**
          * Gets the parent edges.
          * @return Vector containing pointers to all of the vertex's parent 
