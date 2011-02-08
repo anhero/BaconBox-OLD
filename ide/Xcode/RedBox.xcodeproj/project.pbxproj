@@ -71,6 +71,10 @@
 		519313EE12ED62D5008B3AFB /* ResourceLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 519313EC12ED62D5008B3AFB /* ResourceLoader.h */; };
 		519313F212ED62E1008B3AFB /* TextureInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 519313F012ED62E1008B3AFB /* TextureInfo.cpp */; };
 		519313F312ED62E1008B3AFB /* TextureInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 519313F112ED62E1008B3AFB /* TextureInfo.h */; };
+		51A80F6B12FDC23F00AD6878 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A80F6712FDC23F00AD6878 /* Parser.cpp */; };
+		51A80F6C12FDC23F00AD6878 /* Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A80F6812FDC23F00AD6878 /* Parser.h */; };
+		51A80F6D12FDC23F00AD6878 /* UTFConvert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A80F6912FDC23F00AD6878 /* UTFConvert.cpp */; };
+		51A80F6E12FDC23F00AD6878 /* UTFConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A80F6A12FDC23F00AD6878 /* UTFConvert.h */; };
 		51CF8D8612DF60E0003FBBAD /* BackgroundMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D2912DF60E0003FBBAD /* BackgroundMusic.cpp */; };
 		51CF8D8712DF60E0003FBBAD /* BackgroundMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D2A12DF60E0003FBBAD /* BackgroundMusic.h */; };
 		51CF8D8812DF60E0003FBBAD /* RBIPhoneBackgroundMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D2B12DF60E0003FBBAD /* RBIPhoneBackgroundMusic.h */; };
@@ -179,6 +183,10 @@
 		519313EC12ED62D5008B3AFB /* ResourceLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceLoader.h; sourceTree = "<group>"; };
 		519313F012ED62E1008B3AFB /* TextureInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureInfo.cpp; sourceTree = "<group>"; };
 		519313F112ED62E1008B3AFB /* TextureInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureInfo.h; sourceTree = "<group>"; };
+		51A80F6712FDC23F00AD6878 /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
+		51A80F6812FDC23F00AD6878 /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
+		51A80F6912FDC23F00AD6878 /* UTFConvert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UTFConvert.cpp; sourceTree = "<group>"; };
+		51A80F6A12FDC23F00AD6878 /* UTFConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UTFConvert.h; sourceTree = "<group>"; };
 		51A9351410E8934500D144F4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		51CF8D2912DF60E0003FBBAD /* BackgroundMusic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BackgroundMusic.cpp; sourceTree = "<group>"; };
 		51CF8D2A12DF60E0003FBBAD /* BackgroundMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundMusic.h; sourceTree = "<group>"; };
@@ -519,6 +527,10 @@
 				51CF8D6C12DF60E0003FBBAD /* StringHelper.h */,
 				51CF8D6D12DF60E0003FBBAD /* TimeHelper.cpp */,
 				51CF8D6E12DF60E0003FBBAD /* TimeHelper.h */,
+				51A80F6712FDC23F00AD6878 /* Parser.cpp */,
+				51A80F6812FDC23F00AD6878 /* Parser.h */,
+				51A80F6912FDC23F00AD6878 /* UTFConvert.cpp */,
+				51A80F6A12FDC23F00AD6878 /* UTFConvert.h */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -853,6 +865,8 @@
 				24B86B5512F319620071930C /* MusicInfo.h in Headers */,
 				24B86B5712F319620071930C /* SoundInfo.h in Headers */,
 				5132439D12FB4AAC00C297F9 /* RBString32.h in Headers */,
+				51A80F6C12FDC23F00AD6878 /* Parser.h in Headers */,
+				51A80F6E12FDC23F00AD6878 /* UTFConvert.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1012,6 +1026,8 @@
 				24B86B5412F319620071930C /* MusicInfo.cpp in Sources */,
 				24B86B5612F319620071930C /* SoundInfo.cpp in Sources */,
 				241F18CD12F4A2D2002F3247 /* RenderInfo.cpp in Sources */,
+				51A80F6B12FDC23F00AD6878 /* Parser.cpp in Sources */,
+				51A80F6D12FDC23F00AD6878 /* UTFConvert.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
