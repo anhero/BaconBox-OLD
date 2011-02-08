@@ -1,5 +1,9 @@
 #include "VerticesGroup.h"
 
+#include "Debug.h"
+
+#include <cfloat>
+
 using namespace RedBox;
 
 VerticesGroup::VerticesGroup() {
@@ -107,6 +111,70 @@ void VerticesGroup::setParentSprite(Sprite* sprite) {
     for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
         i->setParentSprite(sprite);
     }
+}
+
+std::pair<float, float> VerticesGroup::getWidthHeight() const {
+	if(vertices.size() == 0) {
+		$ECHO("Tried to get the width and the height of an empty VerticesGroup.");
+		return std::pair<float, float>(0.0f, 0.0f);
+	}
+	std::pair<float, float>(FLT_MAX, FLT_MIN);
+	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
+	// We find the minimum and the maximum coordinates.
+	for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+		if(i->getXPosition() < minX) {
+			minX = i->getXPosition();
+		}
+		if(i->getXPosition() > maxX) {
+			maxX = i->getXPosition();
+		}
+		if(i->getYPosition() < minY) {
+			minY = i->getYPosition();
+		}
+		if(i->getYPosition() > maxY) {
+			maxY = i->getYPosition();
+		}
+	}
+	// We return the width and the height.
+	return std::pair<float, float>(maxX - minX, maxY - minY);
+}
+
+float VerticesGroup::getWidth() const {
+	if(vertices.size() == 0) {
+		$ECHO("Tried to get the width of an empty VerticesGroup.");
+		return 0.0f;
+	}
+	float minX = FLT_MAX, maxX = FLT_MIN;
+	// We find the smallest and the highest x position.
+	for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+		if(i->getXPosition() < minX) {
+			minX = i->getXPosition();
+		}
+		if(i->getXPosition() > maxX) {
+			maxX = i->getXPosition();
+		}
+	}
+	// We return their difference which results in the width.
+	return maxX - minX;
+}
+
+float VerticesGroup::getHeight() const {
+	if(vertices.size() == 0) {
+		$ECHO("Tried to get the height of an empty VerticesGroup.");
+		return 0.0f;
+	}
+	float minY = FLT_MAX, maxY = FLT_MIN;
+	// We find the smallest and the highest y position.
+	for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+		if(i->getYPosition() < minY) {
+			minY = i->getYPosition();
+		}
+		if(i->getYPosition() > maxY) {
+			maxY = i->getYPosition();
+		}
+	}
+	// We return their difference which results in the height.
+	return maxX - minX;
 }
 
 #ifdef RB_PHYSICS_ENABLED

@@ -30,8 +30,27 @@ namespace RedBox {
          * @param newTexInfo Pointer to the information about the texture.
 		 * @param vertices Vertices to use to generate the texCoords.
          * @param newColor Array to use to set the RenderInfo's color.
+		 * @param nbFrames Number of frames of texture coordinates to generate.
+		 * @param factor Size factor between the shape and hte size of the
+		 * texxture coordinates to take.
          */
-        RenderInfo(TextureInfo* newTexInfo, VerticesGroup* vertices, int* newColor = NULL);
+        RenderInfo(TextureInfo* newTexInfo,
+				   VerticesGroup* vertices,
+				   int* newColor = NULL,
+				   unsigned int nbFrames = 1,
+				   float factor = 1.0f);
+		/**
+		 * Loads the texture coordinates.
+		 * @param vertices Vertices making up the shape to use for each frame.
+		 * @param nbFrames Number of frames of texture coordinates to generate.
+		 * @param factor Size factor between the shape and the size of the 
+		 * texture coordinates to take.
+		 * @param newTexInfo Pointer to the information about the texture.
+		 */
+		void loadTexCoords(VerticesGroup* vertices,
+						   unsigned int nbFrames = 1,
+						   float factor = 1.0f,
+						   TextureInfo* newTexInfo = NULL);
 		/**
 		 * Adds an animation.
 		 * @param name Animation's name used for identification when playing it.

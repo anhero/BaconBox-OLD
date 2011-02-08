@@ -1,4 +1,5 @@
 #include "RenderInfo.h"
+#include <cmath>
 #include "Debug.h"
 using namespace RedBox;
 
@@ -9,8 +10,12 @@ RenderInfo::RenderInfo(): texInfo(NULL) {
 	color[3] = 0;
 }
 
-RenderInfo::RenderInfo(TextureInfo* newTexInfo, VerticesGroup* vertices, int* newColor) {
-	texInfo = newTexInfo;
+RenderInfo::RenderInfo(TextureInfo* newTexInfo, 
+					   VerticesGroup* vertices,
+					   int* newColor
+					   unsigned int nbFrames,
+					   float factor):
+texCoords(std::vector< std::vector<float> >(nbFrames)), texInfo(newTexInfo) {
 	if(newColor) {
 		color[0] = newColor[0];
 		color[1] = newColor[1];
@@ -22,10 +27,62 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo, VerticesGroup* vertices, int* ne
 		color[2] = 0;
 		color[3] = 0;
 	}
-	if(vertices) {
-		// TODO: Load the texCoords array.
+	loadTexCoords(vertices, nbFrames, factor);
+}
+
+void RenderInfo::loadTexCoords(VerticesGroup* vertices,
+							   unsigned int nbFrames,
+							   float factor,
+							   TextureInfo* newTexInfo) {
+	if(newTexInfo) {
+		texInfo = newTexInfo;
+	}
+	if(texInfo && vertices && nbFrames > 0) {
+		std::pair<float, float> widthHeight = vertices->getWidthHeight();
+		
+		float imgWidth = static_cast<float>(texInfo->imageWidth) * factor, 
+		imgHeight = static_cast<float>(texInfo->imageHeight) * factor;
+		
+		unsigned int nbFramesHorMax = static_cast<unsigned int>(fabs(imgWidth / widthHeight.first)), 
+		nbFramesVerMax = static_cast<unsigned int>(fabs(imgHeight / widthHeight.second));
+		
+		if(nbFrames < nbFramesHorMax * nbFramesVerMax) {
+			texCoords.resize(nbFrames, std::vector<float>(8, 0.0f));
+			unsigned int currentFrame = 0;
+			for(std::vector<std::vector<float> >::iterator i = texCoords.begin(); i++) {
+				// Upper left corner.
+				(*i)[0] = static_cast<float>(currentFrame % nbFramesHorMax) * widthHeight.first;
+				(*i)[1] = static_cast<float>(currentFrame / nbFramesHorMax) * widthHeight.second;
+				// Upper right corner.
+				(*i)[2] = (*i)[0] + widthHeight.first;
+				(*i)[3] = (*i)[1];
+				// Lower right corner.
+				(*i)[4] = (*i)[2];
+				(*i)[5] = (*i)[1] + widthHeight.second;
+				// Lower left corner.
+				(*i)[6] = (*i)[0];
+				(*i)[7] = (*i)[5];
+				// Increment the frame counter.
+				++currentFrame;
+			}
+		} else {
+			$ECHO("Attempted to construct a RenderInfo with a number of frames too high: " << nbFrames);
+		}
+	} else {
+		// On affiche les erreurs.
+		$ECHO("Attempted to load texture coordinates with incorrect parameters: ");
+		if(!newTexInfo) {
+			$ECHO("    - Texture information pointer is invalid: " << texInfo);
+		}
+		if(!vertices) {
+			$ECHO("    - VerticesGroup pointer given is invalid : " << vertices);
+		}
+		if(nbFrames == 0) {
+			$ECHO("    - Number of frames must be of at least 1.");
+		}
 	}
 }
+
 void RenderInfo::addAnimation(const std::string& name,
 							  const std::vector<unsigned int> frames,
 							  double timePerFrame,
@@ -33,10 +90,10 @@ void RenderInfo::addAnimation(const std::string& name,
 	// We add the animation to the map and we check if it was successfully
 	// added.
 	if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(frames, timePerFrame, nbLoops))).second)) {
-		$ECHO("Failed to add the animation named : ");
-		$ECHO(name);
+		$ECHO("Failed to add the animation named : " << name);
 	}
 }
+
 void RenderInfo::addAnimation(const std::string& name,
 							  double timePerFrame,
 							  int nbLoops,

@@ -10,6 +10,7 @@
 #include <vector>
 #include <list>
 #include <iostream>
+#include <pair>
 
 #include "Vertex.h"
 
@@ -87,6 +88,25 @@ namespace RedBox {
 		 * @param parentSprite Pointer to the new parent sprite.
 		 */
 		void setParentSprite(Sprite* parentSprite);
+		/**
+		 * Gets the distance between the left-most and the right-most vertex and
+		 * the distance between the lowest and the highest vertex. Using this
+		 * function to get the width AND the height is faster than calling
+		 * getWidth() and getHeight() separately.
+		 * @return First element in the pair contains the width and the second
+		 * the height.
+		 */
+		std::pair<float, float> getWidthHeight() const;
+		/**
+		 * Gets the distance between the left-most and the right-most vertex.
+		 * @return Distance between the left-most and the right-most vertex.
+		 */
+		float getWidth() const;
+		/**
+		 * Gets the distance between the lowest and the highest vertex.
+		 * @return Distance between the lowest and the highest vertex.
+		 */
+		float getHeight() const;
 #ifdef RB_PHYSICS_ENABLED
 		/**
 		 * Sets the vertices' parent graphic body. Loops through the vertices
