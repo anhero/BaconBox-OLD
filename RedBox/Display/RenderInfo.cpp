@@ -9,7 +9,7 @@ RenderInfo::RenderInfo(): texInfo(NULL) {
 	color[3] = 0;
 }
 
-RenderInfo::RenderInfo(TextureInfo* newTexInfo, int* newColor) {
+RenderInfo::RenderInfo(TextureInfo* newTexInfo, VerticesGroup* vertices, int* newColor) {
 	texInfo = newTexInfo;
 	if(newColor) {
 		color[0] = newColor[0];
@@ -21,6 +21,9 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo, int* newColor) {
 		color[1] = 0;
 		color[2] = 0;
 		color[3] = 0;
+	}
+	if(vertices) {
+		// TODO: Load the texCoords array.
 	}
 }
 void RenderInfo::addAnimation(const std::string& name,

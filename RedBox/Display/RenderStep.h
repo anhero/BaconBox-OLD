@@ -7,12 +7,14 @@
 #define RB_RENDER_STEP_H
 
 #include <vector>
+#include <string>
 
 #include "Renderable.h"
 #include "VerticesGroup.h"
 #include "RenderInfo.h"
 #include "RenderStepMode.h"
 #include "Drawer.h"
+#include "TextureInfo.h"
 
 namespace RedBox {
     /**
@@ -26,11 +28,36 @@ namespace RedBox {
          */
         RenderStep();
         /**
-         * Parametrized constructor.
+         * Parameterized constructor.
          * @param newTexInfo Pointer to the information about the texture.
          * @param newColor Array to use to set the RenderInfo's color.
          */
-        RenderStep(TextureInfo* newTexInfo, int* newColor);
+        RenderStep(TextureInfo* newTexInfo, int* newColor = NULL);
+		/**
+		 * Parameterized constructor.
+		 * @param newTexInfo Pointer to the texture information needed to
+		 * initialize the render step.
+		 * @param newVertices Pointer to the vertices of the shape to take from
+		 * the image.
+		 * @param newDeleteVerticesGroup True if the RenderStep needs to delete
+		 * the vertices when destroyed. False if not. Sprites loading their
+		 * render steps will put this parameter to false.
+		 */
+		RenderStep(TextureInfo* newTexInfo,
+				   VerticesGroup* newVertices,
+				   bool newDeleteVerticesGroup = false);
+		/**
+		 * Parameterized constructor.
+		 * @param key Name of the image to get from the resource loader.
+		 * @param newVertices Pointer to the vertices of the shape to take from
+		 * the image.
+		 * @param newDeleteVerticesGroup True if the RenderStep needs to delete
+		 * the vertices when destroyed. False if not. Sprites loading their
+		 * render steps will put this parameter to false.
+		 */
+		RenderStep(std::string key,
+				   VerticesGroup* newVertices,
+				   bool newDeleteVerticesGroup = false);
         /**
          * Copy constructor. Constructs a copy of the recieved RenderStep.
          * @param src RenderStep to make a copy of.
@@ -70,18 +97,18 @@ namespace RedBox {
          * Gets the rendering mode.
          * @return Current rendering mode.
          */
-        RenderStepMode getMode() const;
+        RenderStepMode::Enum getMode() const;
         /**
          * Sets the rendering mode.
          * @param newMode New mode to be set.
          */
-        void setMode(RenderStepMode newMode);
+        void setMode(RenderStepMode::Enum newMode);
         /**
          * Adds a mode with the bitwise inclusive OR. More than one mode can
          * be added at the same time using the same operator.
          * @param New mode to add.
          */
-        void addMode(RenderStepMode newMode);
+        void addMode(RenderStepMode::Enum newMode);
         /**
          * Checks if the RenderStep needs to delete its vertices in its
          * destructor.
@@ -111,7 +138,7 @@ namespace RedBox {
          * Render mode to be used for this rendering step. Modes can be
          * combined with the bitwise inclusive OR.
          */
-        RenderStepMode mode;
+		RenderStepMode::Enum mode;
         /// Vertices to be rendered in this step.
         VerticesGroup* vertices;
         /**

@@ -12,6 +12,7 @@
 
 #include "TextureInfo.h"
 #include "AnimationParameters.h"
+#include "VerticesGroup.h"
 
 namespace RedBox {
     /**
@@ -27,9 +28,10 @@ namespace RedBox {
         /**
          * Parametrized constructor.
          * @param newTexInfo Pointer to the information about the texture.
+		 * @param vertices Vertices to use to generate the texCoords.
          * @param newColor Array to use to set the RenderInfo's color.
          */
-        RenderInfo(TextureInfo* newTexInfo, int* newColor);
+        RenderInfo(TextureInfo* newTexInfo, VerticesGroup* vertices, int* newColor = NULL);
 		/**
 		 * Adds an animation.
 		 * @param name Animation's name used for identification when playing it.
