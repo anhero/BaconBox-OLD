@@ -60,8 +60,8 @@ void VerticesGroup::addVertices(unsigned int nbVertices, ...) {
 	unsigned int initialSize = verticesData.size();
 	verticesData.resize(verticesData.size() + nbVertices * 2);
 	for(unsigned int i = 0; i < nbVertices; i++) {
-		verticesData[i * 2 + initialSize] = va_arg(verticesCoords, float);
-		verticesData[i * 2 + 1 + initialSize] = va_arg(verticesCoords, float);
+		verticesData[i * 2 + initialSize] = static_cast<float>(va_arg(verticesCoords, double));
+		verticesData[i * 2 + 1 + initialSize] = static_cast<float>(va_arg(verticesCoords, double));
 	}
 	va_end(verticesCoords);
 	

@@ -65,7 +65,7 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 			
 			// We check if the number of frames asked fits within the image. We
 			// take into account the horizontal offset.
-			if(nbFrames < nbFramesHorMax * nbFramesVerMax - floor((imgWidth - offsetX) / widthHeight.first)) {
+			if(nbFrames <= nbFramesHorMax * nbFramesVerMax - floor((imgWidth - offsetX) / widthHeight.first)) {
 				texCoords.resize(nbFrames, std::vector<float>(8, 0.0f));
 				// Calculates at which frame we start, only affected by the
 				// horizontal offset because the vertical one will be added

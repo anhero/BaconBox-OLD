@@ -25,8 +25,8 @@ Sprite::Sprite(const std::string& imageKey): Renderable()
 	TextureInfo* texInfo = ResourceLoader::getTexture(imageKey);
 	if(texInfo) {
 		construct(texInfo,
-				  texInfo->imageWidth,
-				  texInfo->imageHeight,
+				  static_cast<float>(texInfo->imageWidth),
+				  static_cast<float>(texInfo->imageHeight),
 				  1,
 				  0.0f,
 #ifdef RB_PHYSICS_ENABLED
@@ -48,8 +48,8 @@ Sprite::Sprite(TextureInfo* texInfo): Renderable()
 {
 	if(texInfo) {
 		construct(texInfo,
-				  texInfo->imageWidth,
-				  texInfo->imageHeight,
+				  static_cast<float>(texInfo->imageWidth),
+				  static_cast<float>(texInfo->imageHeight),
 				  1,
 				  0.0f,
 #ifdef RB_PHYSICS_ENABLED
@@ -266,7 +266,7 @@ float offsetY)
 {
 	if(texInfo) {
 		// Generates the square vertices from the frame width and height.
-		vertices.addVertices(0.0f, 0.0f, frameWidth, 0.0f, frameWidth, frameHeight, 0.0f, frameHeight);
+		vertices.addVertices(4, 0.0f, 0.0f, frameWidth, 0.0f, frameWidth, frameHeight, 0.0f, frameHeight);
 		vertices.setParentSprite(this);
 #ifdef RB_PHYSICS_ENABLED
 		vertices.setParentGraphicBody(parentBody);

@@ -196,6 +196,9 @@ namespace RedBox {
          * @param edge Pointer to the edge to remove.
          */
         void removeEdge(Edge* edge);
+		VerticesGroup& getVertices() {
+			return vertices;
+		}
 #endif //RB_PHYSICS_ENABLED
     private:
         /**
