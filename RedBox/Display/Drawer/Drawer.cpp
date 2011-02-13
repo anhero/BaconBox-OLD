@@ -12,7 +12,7 @@ void Drawer::drawShapeWithTextureAndColor(VerticesGroup* vertices,
 #ifdef RB_OPENGL
 		OpenGLDrawer::drawShapeWithTextureAndColor(&(*(vertices->getVerticesData().begin())),
 												   renderingInfo,
-												   nbVertices * 2);
+												   nbVertices);
 #endif
 }
 
@@ -22,6 +22,6 @@ void Drawer::drawShapeWithTexture(VerticesGroup* vertices,
 #ifdef RB_OPENGL
 		OpenGLDrawer::drawShapeWithTexture(&(*(vertices->getVerticesData().begin())),
 										   renderingInfo,
-										   nbVertices * 2);
+										   nbVertices);
 #endif
 }

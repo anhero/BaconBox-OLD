@@ -9,10 +9,10 @@
 using namespace RedBox;
 
 RenderInfo::RenderInfo(): texInfo(NULL), currentFrame(0) {
-	color[0] = 0;
-	color[1] = 0;
-	color[2] = 0;
-	color[3] = 0;
+	color[0] = 255;
+	color[1] = 255;
+	color[2] = 255;
+	color[3] = 255;
 }
 
 RenderInfo::RenderInfo(TextureInfo* newTexInfo, 
@@ -30,10 +30,10 @@ currentFrame(0) {
 		color[2] = newColor[2];
 		color[3] = newColor[3];
 	} else {
-		color[0] = 0;
-		color[1] = 0;
-		color[2] = 0;
-		color[3] = 0;
+		color[0] = 255;
+		color[1] = 255;
+		color[2] = 255;
+		color[3] = 255;
 	}
 	loadTexCoords(vertices, nbFrames, factor, offsetX, offsetY);
 }
@@ -62,26 +62,27 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 			// offset.
 			float nbFramesHorMax = floor(imgWidth / widthHeight.first),
 			nbFramesVerMax = floor((imgHeight - offsetY) / widthHeight.second);
-			
+
 			// We check if the number of frames asked fits within the image. We
 			// take into account the horizontal offset.
-			if(nbFrames <= nbFramesHorMax * nbFramesVerMax - floor((imgWidth - offsetX) / widthHeight.first)) {
+			if(nbFrames <= floor((imgWidth - offsetX) / widthHeight.first) + nbFramesHorMax * (nbFramesVerMax - 1)) {
 				texCoords.resize(nbFrames, std::vector<float>(8, 0.0f));
 				// Calculates at which frame we start, only affected by the
 				// horizontal offset because the vertical one will be added
 				// at each frame.
 				float currentFrame = offsetX / widthHeight.first;
 				for(std::vector< std::vector<float> >::iterator i = texCoords.begin(); i != texCoords.end(); i++) {
+					i->resize(8, 0.0f);
 					// Upper left corner.
-					(*i)[0] = MathHelper::modFloat(currentFrame, nbFramesHorMax) * widthHeight.first;
+					(*i)[0] = (MathHelper::modFloat(currentFrame, nbFramesHorMax) * widthHeight.first) / imgWidth;
 					// Here we do not forget to add the vertical offset.
-					(*i)[1] = floor(floor(currentFrame) / nbFramesHorMax) * widthHeight.second + offsetY;
+					(*i)[1] = (floor(floor(currentFrame) / nbFramesHorMax) * widthHeight.second + offsetY) / imgHeight;
 					// Upper right corner.
-					(*i)[2] = (*i)[0] + widthHeight.first;
+					(*i)[2] = (*i)[0] + widthHeight.first / imgWidth;
 					(*i)[3] = (*i)[1];
 					// Lower right corner.
 					(*i)[4] = (*i)[2];
-					(*i)[5] = (*i)[1] + widthHeight.second;
+					(*i)[5] = (*i)[1] + widthHeight.second / imgHeight;
 					// Lower left corner.
 					(*i)[6] = (*i)[0];
 					(*i)[7] = (*i)[5];
