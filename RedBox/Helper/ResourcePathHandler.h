@@ -5,8 +5,8 @@
 #define RESOURCE_PATH_FOR(path) (char*)((std::string)[[[NSBundle mainBundle] resourcePath] cStringUsingEncoding:NSASCIIStringEncoding] + "/" + path ).c_str()
 #endif
 
-#ifndef __RESOURCEPATHANDLER_H
-#define __RESOURCEPATHANDLER_H
+#ifndef RB_RESOURCE_PATH_HANDLER_H
+#define RB_RESOURCE_PATH_HANDLER_H
 
 #include <string>
 
