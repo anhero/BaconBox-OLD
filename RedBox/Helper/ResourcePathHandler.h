@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @ingroup Helper
+ */
+
 //RESOURCE_PATH_FOR() macro function
 //Iphone
 #if defined(TARGET_IPHONE_SIMULATOR) || defined(TARGET_OS_IPHONE)
@@ -11,38 +16,33 @@
 #include <string>
 
 namespace RedBox {
-	
+	/**
+	 * Functions used to get the resource paths for files.
+	 * @ingroup Helper
+	 */
 	class ResourcePathHandler {
-		
 	public:
-		static std::string getResourcePathFor(const std::string& item){
-#if defined(TARGET_IPHONE_SIMULATOR) || defined(TARGET_OS_IPHONE)
-			NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-			
-			NSString *resourceDirectory = [[NSBundle mainBundle] resourcePath];
-			std::string path = ((std::string)[resourceDirectory cStringUsingEncoding:NSASCIIStringEncoding] + "/" + item );
-			[pool release];
-#endif
-			return path;
-		}
-		static std::string getDocumentPathFor(const std::string& item){
-			std::string documentPath = getDocumentPath();
-			documentPath +=  "/" + item;
-			return documentPath;
-		}
-		static std::string getDocumentPath(){
-			std::string documentPath;
-#if defined(TARGET_IPHONE_SIMULATOR) || defined(TARGET_OS_IPHONE)
-			NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-			
-			NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-			NSString *documentsDirectory = [paths objectAtIndex:0];
-			documentPath = [documentsDirectory cStringUsingEncoding:NSASCIIStringEncoding];
-			[pool release];
-			
-#endif
-			return documentPath;		
-		}
+		/**
+		 * Gets the resource path for a file name.
+		 * @return Full resource path for the file.
+		 */
+		static std::string getResourcePathFor(const std::string& item);
+		/**
+		 * Gets the document path for a file name.
+		 * @return Full document path for the file.
+		 */
+		static std::string getDocumentPathFor(const std::string& item);
+		/**
+		 * Gets the document path.
+		 * @return Full document path.
+		 */
+		static std::string getDocumentPath();
+	private:
+		/**
+		 * Default constructor, to make sure no one tries to instantiate this
+		 * class.
+		 */
+		ResourcePathHandler();
 	};
 }
 
