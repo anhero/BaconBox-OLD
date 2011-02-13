@@ -106,7 +106,7 @@ bool GraphicBody::containsLink(Link* link) {
     bool notFound = true;
     std::list<Link*>::iterator i = links.begin();
     while(notFound && i != links.end()) {
-        if(sprite == *i)
+        if(link == *i)
             notFound = false;
         i++;
     }

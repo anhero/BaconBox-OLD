@@ -6,13 +6,15 @@
 using namespace RedBox;
 
 #ifdef RB_PHYSICS_ENABLED
-Sprite::Sprite(GraphicBody* parentBody): Renderable()
-vertices.setParentGraphicBody(parentBody);
-#else
-Sprite::Sprite(): Renderable()
-#endif
-{
+Sprite::Sprite(GraphicBody* parentBody): Renderable() {
+	vertices.setParentSprite(this);
+	vertices.setParentGraphicBody(parentBody);
 }
+#else
+Sprite::Sprite(): Renderable() {
+	vertices.setParentSprite(this);
+}
+#endif
 
 #ifdef RB_PHYSICS_ENABLED
 Sprite::Sprite(const std::string& imageKey, GraphicBody* parentBody): Renderable()
@@ -234,7 +236,7 @@ void Sprite::setParentGraphicBody(GraphicBody* body) {
 
 void Sprite::removeEdge(Edge* edge) {
 	bool notFound = true;
-	std::vector<Edge>::iterator i = edges.begin();
+	std::list<Edge>::iterator i = edges.begin();
 	// We search for the edge to delete.
 	while(notFound && i != edges.end()) {
         // If we found it.
@@ -257,7 +259,7 @@ void Sprite::construct(TextureInfo* texInfo,
 					   float offsetX,
 #ifdef RB_PHYSICS_ENABLED
 					   float offsetY,
-					   GraphicBody* parentBody = NULL)
+					   GraphicBody* parentBody)
 #else
 float offsetY)
 #endif

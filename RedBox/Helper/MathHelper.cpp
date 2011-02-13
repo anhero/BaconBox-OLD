@@ -1,6 +1,7 @@
 #include "MathHelper.h"
 
 #include <cmath>
+#include <climits>
 
 using namespace RedBox;
 

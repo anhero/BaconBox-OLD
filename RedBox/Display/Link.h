@@ -4,12 +4,14 @@
  * @ingroup Physics
  */
 
+#include "PlatformFlagger.h"
 
 #ifdef RB_PHYSICS_ENABLED
-#ifndef BODYLINK
-#define BODYLINK
+#ifndef RB_LINK_H
+#define RB_LINK_H
 
 #include <list>
+#include <iostream>
 
 #include "LinkData.h"
 #include "GraphicBody.h"
@@ -21,6 +23,14 @@ namespace RedBox {
      * @ingroup Physics
      */
 	class Link {
+        /**
+         * Outputs the Link's content.
+         * @param output The ostream in which Link is output.
+         * @param l Link to output in the ostream.
+         * @return Resulting ostream.
+         */
+		friend std::ostream& operator<<(std::ostream& output,
+										const Link& l);
     public:
         /**
          * Default constructor. Creates a Link that links nothing.

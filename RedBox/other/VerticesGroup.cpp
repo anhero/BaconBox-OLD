@@ -39,7 +39,7 @@ void VerticesGroup::addVertex(float x, float y, Sprite* sprite)
 	if(vertices.size() > 1) {
 		sprite = vertices.front().getParentSprite();
 #ifdef RB_PHYSICS_ENABLED
-		sprite = vertices.front().getParentGraphicBody();
+		graphicBody = vertices.front().getParentGraphicBody();
 #endif
 	}
 	// We add the new vertex to the list.

@@ -5,6 +5,10 @@
 #ifndef RB_TEXTURE_INFO_H
 #define RB_TEXTURE_INFO_H
 
+#include <iostream>
+
+#include "PlatformFlagger.h"
+
 namespace RedBox {
 	/**
 	 * Struct containing information about a texture. Will contain different
@@ -12,6 +16,14 @@ namespace RedBox {
 	 * @ingroup Display
 	 */
 	struct TextureInfo {
+        /**
+         * Outputs the TextureInfo's content.
+         * @param output The ostream in which TextureInfo is output.
+         * @param t TextureInfo to output in the ostream.
+         * @return Resulting ostream.
+         */
+		friend std::ostream& operator<<(std::ostream& output,
+										const TextureInfo& t);
 		/**
 		 * Default constructor.
 		 */
@@ -29,6 +41,9 @@ namespace RedBox {
 					unsigned int newImageHeight);
 		/// OpenGL's texture's ID.
 		unsigned int textureId;
+#else
+		TextureInfo(unsigned int newImageWidth,
+					unsigned int newImageHeight);
 #endif
 		/// Texture's image width.
 		unsigned int imageWidth;

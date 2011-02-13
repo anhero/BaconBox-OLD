@@ -4,8 +4,8 @@
  * @ingroup Display
  * @ingroup Physics
  */
-#ifndef __VECTOR2D_H__
-#define __VECTOR2D_H__
+#ifndef RB_VECTOR2D_H
+#define RB_VECTOR2D_H
 
 #include <cmath>
 #include <iostream>

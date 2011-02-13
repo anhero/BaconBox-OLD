@@ -4,12 +4,10 @@
  */
 #ifndef RB_ANIMATIONPARAMETERS_H
 #define RB_ANIMATIONPARAMETERS_H
+
 #include <vector>
 #include <string>
-
-#include "Debug.h"
-#include "TimeHelper.h"
-
+#include <iostream>
 
 namespace RedBox {
 	/**
@@ -18,6 +16,14 @@ namespace RedBox {
 	 * @ingroup Display
 	 */
 	struct AnimationParameters {
+        /**
+         * Outputs the AnimationParameters' content.
+         * @param output The ostream in which AnimationParameters is output.
+         * @param a AnimationParameters to output in the ostream.
+         * @return Resulting ostream.
+         */
+		friend std::ostream& operator<<(std::ostream& output,
+										const AnimationParameters& a);
 		/**
 		 * Default constructor. By default, an animation will loop indefinetely.
 		 */

@@ -10,3 +10,17 @@ AnimationParameters::AnimationParameters(const std::vector<unsigned int>& newFra
 					int newNbLoops): frames(newFrames), 
 timePerFrame(newTimePerFrame), nbLoops(newNbLoops) {
 }
+
+std::ostream& RedBox::operator<<(std::ostream& output,
+						 const AnimationParameters& a) {
+	output << "{timePerFrame: ";
+	output << a.timePerFrame << ", nbLoops: " << a.nbLoops << ", frames: [";
+	for(std::vector<unsigned int>::const_iterator i = a.frames.begin(); i != a.frames.end(); i++) {
+		if(i != a.frames.begin()) {
+			output << ", ";
+		}
+		output << *i;
+	}
+	output << "]}";
+	return output;
+}

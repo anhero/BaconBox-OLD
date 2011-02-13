@@ -9,6 +9,7 @@
 #include <map>
 #include <string>
 #include <cstdarg>
+#include <iostream>
 
 #include "TextureInfo.h"
 #include "AnimationParameters.h"
@@ -21,6 +22,14 @@ namespace RedBox {
      */
     class RenderInfo {
 	public:
+        /**
+         * Outputs the RenderInfo's content.
+         * @param output The ostream in which RenderInfo is output.
+         * @param r RenderInfo to output in the ostream.
+         * @return Resulting ostream.
+         */
+		friend std::ostream& operator<<(std::ostream& output,
+										const RenderInfo& r);
         /**
          * Default constructor.
          */

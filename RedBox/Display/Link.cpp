@@ -1,3 +1,5 @@
+#include "PlatformFlagger.h"
+
 #ifdef RB_PHYSICS_ENABLED
 #include "Link.h"
 
@@ -30,7 +32,7 @@ LinkData& Link::getInfo() {
 std::list<Vertex*>& Link::getVertices() {
     return vertices;
 }
-Vertex* addVertex(Vertex* newVertex, Sprite* parentSprite, GraphicBody* parentGraphicBody) {
+Vertex* Link::addVertex(Vertex* newVertex, Sprite* parentSprite, GraphicBody* parentGraphicBody) {
     if(!containsVertex(newVertex)) {
         vertices.push_back(newVertex);
         newVertex->setParentSprite(parentSprite);
@@ -40,7 +42,7 @@ Vertex* addVertex(Vertex* newVertex, Sprite* parentSprite, GraphicBody* parentGr
     return newVertex;
 }
 
-bool containsVertex(Vertex* vertex) {
+bool Link::containsVertex(Vertex* vertex) {
     bool notFound = true;
     std::list<Vertex*>::iterator i = vertices.begin();
     while(notFound && i != vertices.end()) {
@@ -50,5 +52,17 @@ bool containsVertex(Vertex* vertex) {
         i++;
     }
     return !notFound;
+}
+
+std::ostream& RedBox::operator<<(std::ostream& output, const Link& l) {
+	output << "{info: " << l.info << ", vertices: [";
+	for(std::list<Vertex*>::const_iterator i = l.vertices.begin(); i != l.vertices.end(); i++) {
+		if(i != l.vertices.begin()) {
+			output << ", ";
+		}
+		output << *i;
+	}
+	output << "]}";
+	return output;
 }
 #endif

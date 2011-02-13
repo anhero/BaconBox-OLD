@@ -15,6 +15,7 @@
 
 
 namespace RedBox{
+	class Sprite;
     /** 
      * @class GraphicBody
      * @ingroup Display

@@ -68,7 +68,7 @@ float RedBox::Edge::getDistance() const {
     return distance;
 }
 std::ostream& RedBox::operator<<(std::ostream& output, const RedBox::Edge& e) {
-    output << "Edge:{v1:" << e.v1 << "(" << e.v1->getPosition() << "), v2:" << e.v2 <<
+    output << "{v1: " << e.v1 << "(" << e.v1->getPosition() << "), v2:" << e.v2 <<
     "(" << e.v2->getPosition() << "), distance:" << e.distance << "}";
     return output;
 }
