@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		241F18CD12F4A2D2002F3247 /* RenderInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */; };
+		242F209D1301AC0200494000 /* ResourcePathHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242F209B1301AC0200494000 /* ResourcePathHandler.cpp */; };
+		242F209E1301AC0200494000 /* ResourcePathHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 242F209C1301AC0200494000 /* ResourcePathHandler.h */; };
 		2447361112EF44550085668B /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2447360F12EF44550085668B /* Drawer.cpp */; };
 		2447361212EF44550085668B /* Drawer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361012EF44550085668B /* Drawer.h */; };
 		2447361912EF46030085668B /* PlatformFlagger.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361812EF46030085668B /* PlatformFlagger.h */; };
@@ -150,6 +152,8 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderInfo.cpp; sourceTree = "<group>"; };
+		242F209B1301AC0200494000 /* ResourcePathHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourcePathHandler.cpp; sourceTree = "<group>"; };
+		242F209C1301AC0200494000 /* ResourcePathHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcePathHandler.h; sourceTree = "<group>"; };
 		2447360F12EF44550085668B /* Drawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawer.cpp; sourceTree = "<group>"; };
 		2447361012EF44550085668B /* Drawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drawer.h; sourceTree = "<group>"; };
 		2447361812EF46030085668B /* PlatformFlagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlagger.h; sourceTree = "<group>"; };
@@ -516,6 +520,8 @@
 		51CF8D6312DF60E0003FBBAD /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				242F209B1301AC0200494000 /* ResourcePathHandler.cpp */,
+				242F209C1301AC0200494000 /* ResourcePathHandler.h */,
 				51CF8D6612DF60E0003FBBAD /* MathHelper.cpp */,
 				51CF8D6712DF60E0003FBBAD /* MathHelper.h */,
 				51CF8D6812DF60E0003FBBAD /* Random.cpp */,
@@ -863,6 +869,7 @@
 				5132439D12FB4AAC00C297F9 /* RBString32.h in Headers */,
 				51A80F6C12FDC23F00AD6878 /* Parser.h in Headers */,
 				51A80F6E12FDC23F00AD6878 /* UTFConvert.h in Headers */,
+				242F209E1301AC0200494000 /* ResourcePathHandler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1024,6 +1031,7 @@
 				241F18CD12F4A2D2002F3247 /* RenderInfo.cpp in Sources */,
 				51A80F6B12FDC23F00AD6878 /* Parser.cpp in Sources */,
 				51A80F6D12FDC23F00AD6878 /* UTFConvert.cpp in Sources */,
+				242F209D1301AC0200494000 /* ResourcePathHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
