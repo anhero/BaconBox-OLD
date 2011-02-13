@@ -189,3 +189,42 @@ void Vertex::clean() {
 #endif
 }
 
+namespace RedBox {
+	std::ostream& operator<<(std::ostream& output, const Vertex& v) {
+		output << "{position: " << v.position << ", parentRenderSteps: [";
+		for(std::vector<RenderStep*>::const_iterator i = v.parentRenderSteps.begin();
+			i != v.parentRenderSteps.end();
+			i++) {
+			if(i != v.parentRenderSteps.begin()) {
+				output << ", ";
+			}
+			output << *i;
+		}
+		output << "], parentSprite: " << v.parentSprite;
+#ifdef RB_PHYSICS_ENABLED
+		output << ", parentEdges: [";
+		for(std::vector<Edge*>::const_iterator i = v.parentEdges.begin();
+			i != v.parentEdges.end();
+			i++) {
+			if( i != v.parentEdges.begin()) {
+				output << ", ";
+			}
+			output << *i;
+		}
+		output << "], parentLinks: [";
+		for(std::vector<Link*>::const_iterator i = v.parentLinks.begin();
+			i != v.parentLinks.end();
+			i++) {
+			if( i != v.parentLinks.begin()) {
+				output << ", ";
+			}
+			output << *i;
+		}
+		output << "], parentGraphicBody: " << v.parentGraphicBody <<
+		", oldPosition: " << v.oldPosition << ", acceleration: " <<
+		v.acceleration;
+#endif
+		output << "}";
+		return output;
+	}
+}

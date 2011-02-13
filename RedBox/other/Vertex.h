@@ -7,6 +7,7 @@
 #ifndef __VERTEX_H__
 #define __VERTEX_H__
 
+#include <iostream>
 #include <vector>
 
 #include "Vec2.h"
@@ -28,6 +29,13 @@ namespace RedBox{
      * @ingroup Display
      */
     class Vertex {
+        /**
+         * Outputs the vertex's content.
+         * @param output The ostream in which the vertex is output.
+         * @param v Vertex to output in the ostream.
+         * @return Resulting ostream.
+         */
+		friend std::ostream& operator<<(std::ostream& output, const Vertex& v);
     public:
         /**
          * Default constructor. Constructs a vertex at position (0,0) linked

@@ -23,6 +23,14 @@ namespace RedBox {
 	 * @ingroup Physics
 	 */
 	class VerticesGroup {
+        /**
+         * Outputs the vertices group's content.
+         * @param output The ostream in which the vertices group is output.
+         * @param v Vertices group to output in the ostream.
+         * @return Resulting ostream.
+         */
+		friend std::ostream& operator<<(std::ostream& output,
+										const VerticesGroup& v);
 	public:
 		/**
 		 * The default constructor.

@@ -253,3 +253,28 @@ void VerticesGroup::clean() {
     verticesData.clear();
     vertices.clear();
 }
+
+namespace RedBox {
+	std::ostream& operator<<(std::ostream& output, const VerticesGroup& v) {
+		output << "{vertices: [";
+		for(std::list<Vertex>::const_iterator i = v.vertices.begin();
+			i != v.vertices.end();
+			i++) {
+			if(i != v.vertices.begin()) {
+				output << ", ";
+			}
+			output << *i;
+		}
+		output << "], verticesData: [";
+		for(std::vector<float>::const_iterator i = v.verticesData.begin();
+			i != v.verticesData.end();
+			i++) {
+			if(i != v.verticesData.begin()) {
+				output << ", ";
+			}
+			output << *i;
+		}
+		output << "]}";
+		return output;
+	}
+}

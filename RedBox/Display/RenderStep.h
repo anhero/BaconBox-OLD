@@ -22,6 +22,14 @@ namespace RedBox {
      * @ingroup Display
      */
     class RenderStep : public Renderable {
+        /**
+         * Outputs the RenderStep's content.
+         * @param output The ostream in which RenderStep is output.
+         * @param r RenderStep to output in the ostream.
+         * @return Resulting ostream.
+         */
+		friend std::ostream& operator<<(std::ostream& output,
+										const RenderStep& r);
     public:
         /**
          * Default constructor. Constructs an empty RenderStep.

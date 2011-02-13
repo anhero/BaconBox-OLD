@@ -232,8 +232,8 @@ void RenderInfo::incrementFrame() {
 namespace RedBox {
 	std::ostream& operator<<(std::ostream& output, const RenderInfo& r) {
 		output << "{color: [" << r.color[0] << ", " << r.color[1] << ", " <<
-		r.color[2] << ", " << r.color[3] << "], texInfo: " << r.texInfo << "(" << 
-		(*(r.texInfo)) << "), texCoords: [";
+		r.color[2] << ", " << r.color[3] << "], texInfo: " << r.texInfo <<
+		", texCoords: [";
 		
 		for(std::vector< std::vector<float> >::const_iterator i = r.texCoords.begin(); i != r.texCoords.end(); i++) {
 			if(i != r.texCoords.begin()) {

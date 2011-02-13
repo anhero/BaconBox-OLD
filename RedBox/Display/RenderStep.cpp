@@ -185,3 +185,35 @@ void RenderStep::copyFrom(const RenderStep &src) {
 		pauseFrameRemain = 0.0;
     }
 }
+
+namespace RedBox {
+	std::ostream& operator<<(std::ostream& output, const RenderStep& r) {
+		output << "{info: " << r.info << ", mode: ";
+		bool needsPipe = false;
+		if(r.mode & RenderStepMode::SHAPE) {
+			needsPipe = true;
+			output << "RenderStepMode::SHAPE";
+		}
+		if(r.mode & RenderStepMode::TEXTURE) {
+			if(needsPipe) {
+				output << "|";
+			} else {
+				needsPipe = true;
+			}
+			output << "RenderStepMode::TEXTURE";
+		}
+		if(r.mode & RenderStepMode::COLOR) {
+			if(needsPipe) {
+				output << "|";
+			}
+			output << "RenderStepMode::COLOR";
+		}
+		output << ", vertices: " << r.vertices << ", useSinceEpoch: " <<
+		((r.useSinceEpoch)?("true"):("false")) << ", deleteVerticesGroup: " <<
+		((r.deleteVerticesGroup)?("true"):("false")) << ", lastFrameChange: " <<
+		r.lastFrameChange << ", currentAnimation: \"" << r.currentAnimation <<
+		", isPaused: " << ((r.isPaused)?("true"):("false")) <<
+		", pauseFrameRemain: " << r.pauseFrameRemain << "}";
+		return output;
+	}
+}
