@@ -103,7 +103,6 @@
 		51CF8DBD12DF60E1003FBBAD /* MathHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D6712DF60E0003FBBAD /* MathHelper.h */; };
 		51CF8DBE12DF60E1003FBBAD /* Random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D6812DF60E0003FBBAD /* Random.cpp */; };
 		51CF8DBF12DF60E1003FBBAD /* Random.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D6912DF60E0003FBBAD /* Random.h */; };
-		51CF8DC012DF60E1003FBBAD /* ResourceHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D6A12DF60E0003FBBAD /* ResourceHelper.h */; };
 		51CF8DC112DF60E1003FBBAD /* StringHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D6B12DF60E0003FBBAD /* StringHelper.cpp */; };
 		51CF8DC212DF60E1003FBBAD /* StringHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D6C12DF60E0003FBBAD /* StringHelper.h */; };
 		51CF8DC312DF60E1003FBBAD /* TimeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D6D12DF60E0003FBBAD /* TimeHelper.cpp */; };
@@ -216,7 +215,6 @@
 		51CF8D6712DF60E0003FBBAD /* MathHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathHelper.h; sourceTree = "<group>"; };
 		51CF8D6812DF60E0003FBBAD /* Random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Random.cpp; sourceTree = "<group>"; };
 		51CF8D6912DF60E0003FBBAD /* Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Random.h; sourceTree = "<group>"; };
-		51CF8D6A12DF60E0003FBBAD /* ResourceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceHelper.h; sourceTree = "<group>"; };
 		51CF8D6B12DF60E0003FBBAD /* StringHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringHelper.cpp; sourceTree = "<group>"; };
 		51CF8D6C12DF60E0003FBBAD /* StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringHelper.h; sourceTree = "<group>"; };
 		51CF8D6D12DF60E0003FBBAD /* TimeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimeHelper.cpp; sourceTree = "<group>"; };
@@ -522,7 +520,6 @@
 				51CF8D6712DF60E0003FBBAD /* MathHelper.h */,
 				51CF8D6812DF60E0003FBBAD /* Random.cpp */,
 				51CF8D6912DF60E0003FBBAD /* Random.h */,
-				51CF8D6A12DF60E0003FBBAD /* ResourceHelper.h */,
 				51CF8D6B12DF60E0003FBBAD /* StringHelper.cpp */,
 				51CF8D6C12DF60E0003FBBAD /* StringHelper.h */,
 				51CF8D6D12DF60E0003FBBAD /* TimeHelper.cpp */,
@@ -841,7 +838,6 @@
 				51CF8DB912DF60E1003FBBAD /* Factory.h in Headers */,
 				51CF8DBD12DF60E1003FBBAD /* MathHelper.h in Headers */,
 				51CF8DBF12DF60E1003FBBAD /* Random.h in Headers */,
-				51CF8DC012DF60E1003FBBAD /* ResourceHelper.h in Headers */,
 				51CF8DC212DF60E1003FBBAD /* StringHelper.h in Headers */,
 				51CF8DC412DF60E1003FBBAD /* TimeHelper.h in Headers */,
 				51CF8DC612DF60E1003FBBAD /* Accelerometer.h in Headers */,
