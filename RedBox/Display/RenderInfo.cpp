@@ -229,33 +229,35 @@ void RenderInfo::incrementFrame() {
 	else ++currentFrame;
 }
 
-std::ostream& RedBox::operator<<(std::ostream& output, const RenderInfo& r) {
-	output << "{color: [" << r.color[0] << ", " << r.color[1] << ", " <<
-	r.color[2] << ", " << r.color[3] << "], texInfo: " << r.texInfo << "(" << 
-	(*(r.texInfo)) << "), texCoords: [";
-	
-	for(std::vector< std::vector<float> >::const_iterator i = r.texCoords.begin(); i != r.texCoords.end(); i++) {
-		if(i != r.texCoords.begin()) {
-			output << ", ";
-		}
-		output << "[";
-		for(std::vector<float>::const_iterator j = i->begin(); j != i->end(); j++) {
-			if(j != i->begin()) {
+namespace RedBox {
+	std::ostream& operator<<(std::ostream& output, const RenderInfo& r) {
+		output << "{color: [" << r.color[0] << ", " << r.color[1] << ", " <<
+		r.color[2] << ", " << r.color[3] << "], texInfo: " << r.texInfo << "(" << 
+		(*(r.texInfo)) << "), texCoords: [";
+		
+		for(std::vector< std::vector<float> >::const_iterator i = r.texCoords.begin(); i != r.texCoords.end(); i++) {
+			if(i != r.texCoords.begin()) {
 				output << ", ";
 			}
-			output << *j;
+			output << "[";
+			for(std::vector<float>::const_iterator j = i->begin(); j != i->end(); j++) {
+				if(j != i->begin()) {
+					output << ", ";
+				}
+				output << *j;
+			}
+			output << "]";
 		}
-		output << "]";
-	}
-	
-	output << "], currentFrame: " << r.currentFrame << ", animations: [";
-	
-	for(std::map<std::string, AnimationParameters>::const_iterator i = r.animations.begin(); i != r.animations.end(); i++) {
-		if(i != r.animations.begin()) {
-			output << ", ";
+		
+		output << "], currentFrame: " << r.currentFrame << ", animations: [";
+		
+		for(std::map<std::string, AnimationParameters>::const_iterator i = r.animations.begin(); i != r.animations.end(); i++) {
+			if(i != r.animations.begin()) {
+				output << ", ";
+			}
+			output << "{first: " << i->first << ", second: " << i->second << "}";
 		}
-		output << "{first: " << i->first << ", second: " << i->second << "}";
+		output << "]}";
+		return output;
 	}
-	output << "]}";
-	return output;
 }

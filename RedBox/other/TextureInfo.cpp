@@ -14,8 +14,8 @@ using namespace RedBox;
 TextureInfo::TextureInfo(): textureId(0), imageWidth(0), imageHeight(0) {
 }
 TextureInfo::TextureInfo(unsigned int newTextureId,
-			unsigned int newImageWidth,
-			unsigned int newImageHeight): textureId(newTextureId),
+						 unsigned int newImageWidth,
+						 unsigned int newImageHeight): textureId(newTextureId),
 imageWidth(newImageWidth), imageHeight(newImageHeight) {
 }
 #else
@@ -27,12 +27,14 @@ imageHeight(newImageHeight) {
 }
 #endif
 
-std::ostream& RedBox::operator<<(std::ostream& output, const TextureInfo& t) {
-	output << "{";
+namespace RedBox {
+	std::ostream& operator<<(std::ostream& output, const TextureInfo& t) {
+		output << "{";
 #ifdef RB_OPENGL
-	output << "textureId: " << t.textureId << ", ";
+		output << "textureId: " << t.textureId << ", ";
 #endif
-	output<< "imageWidth: " << t.imageWidth << ", imageHeight: " << 
-	t.imageHeight << "}";
-	return output;
+		output<< "imageWidth: " << t.imageWidth << ", imageHeight: " << 
+		t.imageHeight << "}";
+		return output;
+	}
 }

@@ -21,7 +21,6 @@ namespace RedBox {
      * @ingroup Display
      */
     class RenderInfo {
-	public:
         /**
          * Outputs the RenderInfo's content.
          * @param output The ostream in which RenderInfo is output.
@@ -30,6 +29,7 @@ namespace RedBox {
          */
 		friend std::ostream& operator<<(std::ostream& output,
 										const RenderInfo& r);
+	public:
         /**
          * Default constructor.
          */

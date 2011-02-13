@@ -19,12 +19,13 @@ frontMaxAngle(newFrontMaxAngle), frontMinAngle(newFrontMinAngle),
 backMaxAngle(newBackMaxAngle), backMinAngle(newBackMinAngle) {
 }
 
-std::ostream& RedBox::operator<<(std::ostream& output, const LinkData& l) {
-	output << "{length: " << l.length << "f, frontMaxAngle: " << 
-	l.frontMaxAngle << "f, frontMinAngle: " << l.frontMinAngle << 
-	"f, backMaxAngle: " << l.backMaxAngle << "f, backMinAngle: " << 
-	l.backMinAngle << "f}";
-	return output;
+namespace RedBox {
+	std::ostream& operator<<(std::ostream& output, const LinkData& l) {
+		output << "{length: " << l.length << "f, frontMaxAngle: " << 
+		l.frontMaxAngle << "f, frontMinAngle: " << l.frontMinAngle << 
+		"f, backMaxAngle: " << l.backMaxAngle << "f, backMinAngle: " << 
+		l.backMinAngle << "f}";
+		return output;
+	}
 }
-
 #endif

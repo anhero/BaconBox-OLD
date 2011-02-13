@@ -54,15 +54,17 @@ bool Link::containsVertex(Vertex* vertex) {
     return !notFound;
 }
 
-std::ostream& RedBox::operator<<(std::ostream& output, const Link& l) {
-	output << "{info: " << l.info << ", vertices: [";
-	for(std::list<Vertex*>::const_iterator i = l.vertices.begin(); i != l.vertices.end(); i++) {
-		if(i != l.vertices.begin()) {
-			output << ", ";
+namespace RedBox {
+	std::ostream& operator<<(std::ostream& output, const Link& l) {
+		output << "{info: " << l.info << ", vertices: [";
+		for(std::list<Vertex*>::const_iterator i = l.vertices.begin(); i != l.vertices.end(); i++) {
+			if(i != l.vertices.begin()) {
+				output << ", ";
+			}
+			output << *i;
 		}
-		output << *i;
+		output << "]}";
+		return output;
 	}
-	output << "]}";
-	return output;
 }
 #endif
