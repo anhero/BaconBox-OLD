@@ -13,6 +13,12 @@ double RedBoxEngine::lastRender = 0.0;
 double RedBoxEngine::deltaRatio = 0.0;
 
 State* RedBoxEngine::addState(State* newState) {
+	if(newState) {
+		if(states.empty()) {
+			currentState = newState;
+		}
+		states.insert(std::pair<std::string, State*>(newState->getName(), newState));
+	}
 	return newState;
 }
 

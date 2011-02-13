@@ -34,6 +34,16 @@ namespace RedBox {
          * Deletes, Updates and moves all concerns objects.
          */
         virtual void update();
+		/**
+		 * Gets the state's name.
+		 * @return State's name.
+		 */
+		const std::string& getName() const;
+		/**
+		 * Sets the state's name.
+		 * @param newName State's new name.
+		 */
+		void setName(const std::string& newName);
 	private:
 		/// Temporarily stores the renderable objects to be deleted.
         std::list<Renderable*> toDelete;
@@ -41,7 +51,7 @@ namespace RedBox {
         std::list<Renderable*> zChange;
 		/// Stores all the renderables active renderables objects.
         std::multimap<int, Renderable*> renderables;
-		/// The name of the state.
+		/// State's name, used as an identifier.
         std::string name;
 	};
 }

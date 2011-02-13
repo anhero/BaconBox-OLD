@@ -70,3 +70,11 @@ void State::update() {
 	}
 	zChange.clear();
 }
+
+const std::string& State::getName() const {
+	return name;
+}
+
+void State::setName(const std::string& newName) {
+	name = newName;
+}
