@@ -7,7 +7,7 @@
 #include <map>
 #include <list>
 #include <string>
-
+#include "Camera.h"
 #include "Renderable.h"
 
 namespace RedBox {
@@ -53,6 +53,9 @@ namespace RedBox {
         std::multimap<int, Renderable*> renderables;
 		/// State's name, used as an identifier.
         std::string name;
+		
+		///The camera object which prepare the scene before rendering any object.
+		Camera camera;
 	};
 }
 #endif

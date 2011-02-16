@@ -18,6 +18,8 @@ void State::addRenderable(Renderable* aRenderable) {
 
 
 void State::render() {
+	camera.render();
+	
     for(std::multimap<int, Renderable*>::iterator i=renderables.begin();
 		i !=renderables.end();
 		i++) {
