@@ -54,6 +54,16 @@ namespace RedBox{
 		 */
 		static void prepareScene(int xTranslation, int yTranslation, int angle, float zoom);
 
+		/**
+		 * Initialize the drawing backend an prepare the coordinate system with the given
+		 * screen size.
+		 * @param screenWidth Width of the screen. A camera with a zoom factor of 1, will
+		 * show "screenWidth" pixels in width
+		 * @param screenHeight Height of the screen. A camera with a zoom factor of 1, will
+		 * show "screenHeight" pixels in height
+		 */
+		static void initializeDrawer(int screenWidth, int screenHeight);
+
 	private:
 	};
 	

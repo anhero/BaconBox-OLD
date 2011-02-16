@@ -34,3 +34,10 @@ void Drawer::prepareScene(int xTranslation, int yTranslation, int angle, float z
 #endif
 
 }
+
+
+void Drawer::initializeDrawer(int screenWidth, int screenHeight) {
+#ifdef RB_OPENGL
+	OpenGLDrawer::initializeDrawer(screenWidth, screenHeight);
+#endif
+}
