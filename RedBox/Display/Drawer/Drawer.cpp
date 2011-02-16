@@ -25,3 +25,12 @@ void Drawer::drawShapeWithTexture(VerticesGroup* vertices,
 										   nbVertices);
 #endif
 }
+
+
+void Drawer::prepareScene(int xTranslation, int yTranslation, int angle, float zoom){
+
+#ifdef RB_OPENGL
+	OpenGLDrawer::prepareScene(xTranslation, yTranslation, angle, zoom);
+#endif
+
+}
