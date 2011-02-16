@@ -55,3 +55,18 @@ void OpenGLDrawer::prepareScene(int xTranslation, int yTranslation, int angle, f
 
 }
 
+void OpenGLDrawer::initializeDrawer(int screenWidth, int screenHeight) {
+	glViewport(0,0,screenWidth, screenHeight);
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+#ifdef RB_IPHONE_PLATFORM
+	glOrthof(0, screenWidth, 0, screenHeight, -1, 1);
+#else
+	glOrtho(0, screenWidth, 0, screenHeight, -1, 1);
+#endif
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+}
+
+
