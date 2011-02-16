@@ -51,6 +51,19 @@ namespace RedBox{
 		static void drawShapeWithTexture(GLfloat* vertices,
 												RenderInfo& renderingInfo,
 												unsigned int nbVertices);
+		
+		/**
+		 * Prepare the scene before rendering object.
+		 * It clear the draw buffer and reset the transformation matrix with the given
+		 * parameters.
+		 * @param xTranslation Shift the matrix on the x axis.
+		 * @param yTranslation Shift the matrix on the y axis.
+		 * @param angle Apply a rotation to the matrix in degree.
+		 * @param Apply a scale factor to the matrix. 1 is unchanged, less than 1 zoom out, 
+		 * more than 1 zoom in.
+		 */
+		static void prepareScene(int xTranslation, int yTranslation, int angle, float zoom);
+
 	private:
 	};
 }

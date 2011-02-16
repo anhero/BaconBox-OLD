@@ -40,3 +40,18 @@ void OpenGLDrawer::drawShapeWithTexture(GLfloat* vertices,
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
+
+
+void OpenGLDrawer::prepareScene(int xTranslation, int yTranslation, int angle, float zoom) {
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear( GL_COLOR_BUFFER_BIT);
+	
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	
+	glRotatef(angle, 0, 0, 1);
+	glTranslatef(xTranslation, xTranslation, 0);
+	glScalef(zoom, zoom, 1);
+
+}
+
