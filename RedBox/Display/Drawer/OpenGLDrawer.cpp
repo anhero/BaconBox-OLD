@@ -61,9 +61,9 @@ void OpenGLDrawer::initializeDrawer(int screenWidth, int screenHeight) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 #ifdef RB_IPHONE_PLATFORM
-	glOrthof(0, screenWidth, 0, screenHeight, -1, 1);
+	glOrthof(0, screenWidth, screenHeight, 0, -1, 1);
 #else
-	glOrtho(0, screenWidth, 0, screenHeight, -1, 1);
+	glOrtho(0, screenWidth, screenHeight, 0, -1, 1);
 #endif
 
 }
