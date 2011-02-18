@@ -65,8 +65,7 @@ void OpenGLDrawer::initializeDrawer(int screenWidth, int screenHeight) {
 #else
 	glOrtho(0, screenWidth, 0, screenHeight, -1, 1);
 #endif
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 }
 
 

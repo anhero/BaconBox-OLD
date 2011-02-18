@@ -27,6 +27,9 @@ TextureInfo* ResourceLoader::loadTexture(const std::string& filePath, const std:
 		glBindTexture(GL_TEXTURE_2D, texInfo->textureId);
 		siTexImagePNG(GL_TEXTURE_2D, GL_RGBA, filePath.c_str(), &(texInfo->imageWidth), &(texInfo->imageHeight));
 		textures.insert(std::pair<std::string, TextureInfo*>(key, texInfo));
+		
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 #endif
 	}
 	else {
