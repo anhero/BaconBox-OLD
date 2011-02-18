@@ -60,6 +60,8 @@
 		512B7E2F12DF67B1002E9698 /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 512B7E2D12DF67B0002E9698 /* Edge.cpp */; };
 		512B7E3012DF67B1002E9698 /* Edge.h in Headers */ = {isa = PBXBuildFile; fileRef = 512B7E2E12DF67B1002E9698 /* Edge.h */; };
 		5132439D12FB4AAC00C297F9 /* RBString32.h in Headers */ = {isa = PBXBuildFile; fileRef = 5132439C12FB4AAC00C297F9 /* RBString32.h */; };
+		515E396113066215006E85AC /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515E395F13066215006E85AC /* Camera.cpp */; };
+		515E396213066215006E85AC /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 515E396013066215006E85AC /* Camera.h */; };
 		5192780D11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 5192780C11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch */; };
 		51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A9351410E8934500D144F4 /* AudioToolbox.framework */; };
 		51927C0711D5EA3E00C65B15 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5102AA7A10F547D300585718 /* AVFoundation.framework */; };
@@ -180,6 +182,8 @@
 		512B7E2E12DF67B1002E9698 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Edge.h; path = ../../RedBox/other/Edge.h; sourceTree = SOURCE_ROOT; };
 		512D586C109B6D45009D504E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5132439C12FB4AAC00C297F9 /* RBString32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBString32.h; sourceTree = "<group>"; };
+		515E395F13066215006E85AC /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		515E396013066215006E85AC /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		515EB50512FF34AA004FB469 /* libRedBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRedBox.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		515EB50612FF34AA004FB469 /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		515EB50712FF34AA004FB469 /* libsimple-image.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libsimple-image.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -501,6 +505,8 @@
 		51CF8D3512DF60E0003FBBAD /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				515E395F13066215006E85AC /* Camera.cpp */,
+				515E396013066215006E85AC /* Camera.h */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -877,6 +883,7 @@
 				51A80F6E12FDC23F00AD6878 /* UTFConvert.h in Headers */,
 				242F209E1301AC0200494000 /* ResourcePathHandler.h in Headers */,
 				24BAE0A5130472EF00474828 /* SpriteEmitter.h in Headers */,
+				515E396213066215006E85AC /* Camera.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,6 +1047,7 @@
 				51A80F6D12FDC23F00AD6878 /* UTFConvert.cpp in Sources */,
 				242F209D1301AC0200494000 /* ResourcePathHandler.cpp in Sources */,
 				24BAE0A4130472EF00474828 /* SpriteEmitter.cpp in Sources */,
+				515E396113066215006E85AC /* Camera.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
