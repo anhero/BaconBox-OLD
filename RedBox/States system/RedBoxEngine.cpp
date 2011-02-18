@@ -1,6 +1,7 @@
 #include "RedBoxEngine.h"
 
 #include "TimeHelper.h"
+#include "Drawer.h"
 
 using namespace RedBox;
 
@@ -97,4 +98,8 @@ void RedBoxEngine::pulse() {
 	if(AudioEngine::getMusicEngine()) {
 		AudioEngine::getMusicEngine()->update();
 	}
+}
+
+void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight){
+	Drawer::initializeDrawer(screenWidth, screenHeight);
 }

@@ -74,6 +74,10 @@ namespace RedBox {
 		 * on the current state.
 		 */
 		static void pulse();
+		/**
+		 * Initialize the different parts of the engine (drawer, audio engine, etc.)
+		 */
+		static void initializeEngine(int screenWidth, int screenHeight);
 	private:
 		/// Map of states in the engine.
 		static std::map<std::string, State*> states;
