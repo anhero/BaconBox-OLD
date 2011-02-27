@@ -79,9 +79,9 @@ void RedBoxEngine::pulse() {
 			// We update the delta ratio.
 			deltaRatio = 1.0 + (TimeHelper::getSinceEpoch() - 
 						  (lastUpdate + updateDelay)) / updateDelay;
+			currentState->update();
 			// We take note of the time.
 			lastUpdate = TimeHelper::getSinceEpoch();
-			currentState->update();
 		}
 		// We check that the delay between renders doesn't go too high or that
 		// the updates aren't lagging behind.
@@ -102,4 +102,8 @@ void RedBoxEngine::pulse() {
 
 void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight){
 	Drawer::initializeDrawer(screenWidth, screenHeight);
+}
+
+double RedBoxEngine::getUpdateDelta() {
+	return TimeHelper::getSinceEpoch() - lastUpdate;
 }

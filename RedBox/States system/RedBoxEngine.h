@@ -78,6 +78,11 @@ namespace RedBox {
 		 * Initialize the different parts of the engine (drawer, audio engine, etc.)
 		 */
 		static void initializeEngine(int screenWidth, int screenHeight);
+		/**
+		 * Gets the time elapsed since the last update called on a state.
+		 * @return Time in seconds since the last update called on a state.
+		 */
+		static double getUpdateDelta();
 	private:
 		/// Map of states in the engine.
 		static std::map<std::string, State*> states;
