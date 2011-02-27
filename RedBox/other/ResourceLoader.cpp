@@ -18,11 +18,45 @@ std::map<std::string, TextureInfo*> ResourceLoader::textures = std::map<std::str
 std::map<std::string, SoundFX*> ResourceLoader::sounds = std::map<std::string, SoundFX*>();
 std::map<std::string, BackgroundMusic*> ResourceLoader::musics = std::map<std::string, BackgroundMusic*>();
 
+TextureInfo* ResourceLoader::addTexture(const std::string& key, unsigned char * bitmap, int width, int height){
+	TextureInfo* texInfo = NULL;
+	if (textures.find(key) ==  textures.end()) {
+		texInfo = new TextureInfo();
+#ifdef RB_OPENGL
+		glGenTextures(1, &(texInfo->textureId));
+		glBindTexture(GL_TEXTURE_2D, texInfo->textureId);
+		
+		texInfo->imageWidth = width;
+		texInfo->imageHeight = height;
+		
+		glTexImage2D(GL_TEXTURE_2D,
+					 0,
+					 GL_RGBA,
+					 width,
+					 height,
+					 0,
+					 GL_RGBA,
+					 GL_UNSIGNED_BYTE,
+					 bitmap);
+		
+		textures.insert(std::pair<std::string, TextureInfo*>(key, texInfo));
+		
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+#endif
+	}
+	else {
+		$ECHO("Can't load texture with key: " << key << " texture is already loaded");
+	}
+	return texInfo;
+}
+
+
 TextureInfo* ResourceLoader::loadTexture(const std::string& filePath, const std::string& key) {
 	TextureInfo* texInfo = NULL;
 	if (textures.find(key) ==  textures.end()) {
-#ifdef RB_OPENGL
 		texInfo = new TextureInfo();
+#ifdef RB_OPENGL
 		glGenTextures(1, &(texInfo->textureId));
 		glBindTexture(GL_TEXTURE_2D, texInfo->textureId);
 		siTexImagePNG(GL_TEXTURE_2D, GL_RGBA, filePath.c_str(), &(texInfo->imageWidth), &(texInfo->imageHeight));

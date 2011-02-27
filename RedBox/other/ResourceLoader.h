@@ -22,6 +22,8 @@ namespace RedBox {
 	 */
 	class ResourceLoader {
 	public:
+		
+		static TextureInfo* addTexture(const std::string& key, unsigned char * bitmap, int width, int height);
 		/**
 		 * Loads a texture from a file and assigns a representative key to it.
 		 * @param filePath Path to the file containing the texture.
