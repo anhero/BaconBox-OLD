@@ -27,6 +27,8 @@
 		24BAE0A5130472EF00474828 /* SpriteEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 24BAE0A3130472EF00474828 /* SpriteEmitter.h */; };
 		24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24F0335012F1C59500BD5409 /* AudioEngine.cpp */; };
 		24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24F0335112F1C59500BD5409 /* AudioEngine.h */; };
+		51140FB5130B3C5300D05386 /* Glyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51140FB3130B3C5300D05386 /* Glyph.cpp */; };
+		51140FB6130B3C5300D05386 /* Glyph.h in Headers */ = {isa = PBXBuildFile; fileRef = 51140FB4130B3C5300D05386 /* Glyph.h */; };
 		512B7DB612DF6103002E9698 /* Finch.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8DD912DF60ED003FBBAD /* Finch.h */; };
 		512B7DB712DF6104002E9698 /* Finch.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8DDA12DF60ED003FBBAD /* Finch.m */; };
 		512B7DB812DF6105002E9698 /* RevolverSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8DDB12DF60ED003FBBAD /* RevolverSound.h */; };
@@ -131,6 +133,8 @@
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		51140FB3130B3C5300D05386 /* Glyph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Glyph.cpp; sourceTree = "<group>"; };
+		51140FB4130B3C5300D05386 /* Glyph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Glyph.h; sourceTree = "<group>"; };
 		512B7E2D12DF67B0002E9698 /* Edge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Edge.cpp; path = ../../RedBox/other/Edge.cpp; sourceTree = SOURCE_ROOT; };
 		512B7E2E12DF67B1002E9698 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Edge.h; path = ../../RedBox/other/Edge.h; sourceTree = SOURCE_ROOT; };
 		512D586C109B6D45009D504E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -352,6 +356,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		51140FB1130B3C3100D05386 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				51140FB3130B3C5300D05386 /* Glyph.cpp */,
+				51140FB4130B3C5300D05386 /* Glyph.h */,
+			);
+			path = Text;
+			sourceTree = "<group>";
+		};
 		51B4C073130ADB8D008C36CD /* simple-image */ = {
 			isa = PBXGroup;
 			children = (
@@ -478,6 +491,7 @@
 		51CF8D3F12DF60E0003FBBAD /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				51140FB1130B3C3100D05386 /* Text */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -780,6 +794,7 @@
 				242F209E1301AC0200494000 /* ResourcePathHandler.h in Headers */,
 				24BAE0A5130472EF00474828 /* SpriteEmitter.h in Headers */,
 				515E396213066215006E85AC /* Camera.h in Headers */,
+				51140FB6130B3C5300D05386 /* Glyph.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -871,6 +886,7 @@
 				242F209D1301AC0200494000 /* ResourcePathHandler.cpp in Sources */,
 				24BAE0A4130472EF00474828 /* SpriteEmitter.cpp in Sources */,
 				515E396113066215006E85AC /* Camera.cpp in Sources */,
+				51140FB5130B3C5300D05386 /* Glyph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
