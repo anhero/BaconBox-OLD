@@ -10,6 +10,7 @@
 
 #include "Renderable.h"
 #include "Sprite.h"
+#include "Random.h"
 
 namespace RedBox {
 	/**
@@ -153,20 +154,62 @@ namespace RedBox {
 		void setNbMaxParticles(unsigned int newNbMaxParticles,
 							   Sprite* baseSprite = NULL);
 	private:
+		/**
+		 * Represents a particle the sprite emitter will shoot.
+		 */
 		struct Particle {
-			Particle():sprite(NULL), lifeSpan(0.0f) {};
+			/**
+			 * Default constructor.
+			 */
+			Particle():sprite(NULL), lifeSpan(0.0) {};
+			/**
+			 * Parameterized constructor.
+			 * @param newSprite Pointer to the graphic used for the particle.
+			 * @param newLifespan Time remaining for the sprite to be shown.
+			 */
+			Particle(Sprite* newSprite, double newLifeSpan):sprite(newSprite),
+			lifeSpan(newLifeSpan) {}
 			Sprite* sprite;
-			float lifeSpan;
+			double lifeSpan;
 		};
+		/// Vector containing the particles to shoot.
 		std::vector<Particle> particles;
+		int nbParticles;
+		/// Angle at which to shoot the particles.
 		float angle;
+		/// Angle variance at which the particles will be shot.
 		float angleVariance;
+		/// Force at which the particles will be shot.
 		float force;
+		/// Force variance at which the particles will be shot.
 		float forceVariance;
-		float lifespan;
-		float lifespanVariance;
+		/// Rate at which the particles are emitted.
+		double emitRate;
+		/// Counter used to control the emission rate.
+		double emitCounter;
+		/** 
+		 * Time in seconds before the sprite emitter stops. -1.0 for ininite
+		 * life span.
+		 */
+		double lifeSpan;
+		/// Time elapsed since the sprite emitter was started.
+		double elapsedTime;
+		/// Average life span for a particle.
+		double particlesLifeSpan;
+		/// Variance for the life span of a particle.
+		double particlesLifeSpanVariance;
+		/** 
+		 * Number of particles to shoot before stopping. -1 means it will shoot
+		 * indefinitely.
+		 */
 		int nbParticlesToShoot;
+		/// Set to true if the sprite emitter is active, false if not.
 		bool isActive;
+		/**
+		 * Shoots a particle.
+		 * @return True if the particle was successfully shot, false if not.
+		 */
+		bool shootParticle();
 		/**
 		 * Cleans and resets the SpriteEmitter.
 		 */
