@@ -9,7 +9,7 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 #include "simple-image.h"
-
+#include <utility>
 #include "Debug.h"
 
 using namespace RedBox;
@@ -206,6 +206,40 @@ void ResourceLoader::removeBackgroundMusic(const std::string& name) {
 	}
 }
 
+Font* ResourceLoader::loadFont(std::string & name, std::string & path){
+	
+	Font * aFont = new Font(name,path);
+	// If there is already a font with the specified name in the map,
+	// we delete it before we insert the new one 
+	std::map<std::string, Font*>::iterator i = fonts.find(name);
+	if (i != fonts.end()){
+		delete (*i).second;
+		(*i).second = aFont;
+	}
+	else{
+		fonts.insert(std::pair<std::string, Font*>(name, aFont));
+	}
+	return aFont;
+}
+
+Font* ResourceLoader::getFont(std::string & name){
+	std::map<std::string, Font*>::iterator i = fonts.find(name);
+	if (i != fonts.end()){
+		return (*i).second;
+	}
+	else {
+		return NULL;
+	}
+}
+
+void ResourceLoader::removeFont(std::string & name){
+	std::map<std::string, Font*>::iterator i = fonts.find(name);
+	if (i != fonts.end()){
+		delete (*i).second;
+	}
+	fonts.erase(i);
+}
+
 void ResourceLoader::unloadAll() {
 	// We unload the textures.
 	for(std::map<std::string, TextureInfo*>::iterator i = textures.begin();
@@ -228,4 +262,13 @@ void ResourceLoader::unloadAll() {
 		delete i->second;
 	}
 	musics.clear();
+	
+	// We unload the fonts.
+	for(std::map<std::string, Font*>::iterator i = fonts.begin();
+		i != fonts.end();
+		i++) {
+		delete i->second;
+	}
+	fonts.clear();
 }
+

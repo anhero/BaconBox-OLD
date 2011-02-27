@@ -12,6 +12,7 @@
 #include "Debug.h"
 #include "TextureInfo.h"
 #include "AudioEngine.h"
+#include "Font.h"
 
 namespace RedBox {
 	class SoundFX;
@@ -97,6 +98,27 @@ namespace RedBox {
 		 * @param name Name of the background music to unload.
 		 */
 		static void removeBackgroundMusic(const std::string& name);
+		
+		/**
+		 * Load the fond at the specified path and put it in the fonts' map.
+		 * @param name Name of the font, it will be the key of the fonts' map.
+		 * @param path Path of the font.
+		 */
+		static Font* loadFont(std::string & name, std::string & path);
+		
+		/**
+		 * Return a pointer to the font specified by the given name. 
+		 * @param name Name of the font.
+		 * @return Return a pointer to the specified font or NULL if no font is found.
+		 */
+		static Font* getFont(std::string & name);
+		
+		
+		/**
+		 * Remove the specified font from the fonts' map.
+		 */
+		static void removeFont(std::string & name);
+		
 		/**
 		 * Unloads everything in the ResourceLoader.
 		 */
@@ -108,6 +130,8 @@ namespace RedBox {
 		static std::map<std::string, SoundFX*> sounds;
 		/// Map associating the musics' names and their information.
 		static std::map<std::string, BackgroundMusic*> musics;
+		/// Map  associating the fonts' names and their information.
+		static std::map<std::string, Font*> fonts;
 	};
 }
 
