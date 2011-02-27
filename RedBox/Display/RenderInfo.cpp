@@ -76,13 +76,13 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 					// Upper left corner.
 					(*i)[0] = (MathHelper::modFloat(currentFrame, nbFramesHorMax) * widthHeight.first) / imgWidth;
 					// Here we do not forget to add the vertical offset.
-					(*i)[1] = (floor(floor(currentFrame) / nbFramesHorMax) * widthHeight.second + offsetY) / imgHeight;
+					(*i)[1] =  1.0 - ((floor(floor(currentFrame) / nbFramesHorMax) * widthHeight.second + offsetY) / imgHeight);
 					// Upper right corner.
 					(*i)[2] = (*i)[0] + widthHeight.first / imgWidth;
 					(*i)[3] = (*i)[1];
 					// Lower right corner.
 					(*i)[4] = (*i)[2];
-					(*i)[5] = (*i)[1] + widthHeight.second / imgHeight;
+					(*i)[5] = (*i)[1] - widthHeight.second / imgHeight;
 					// Lower left corner.
 					(*i)[6] = (*i)[0];
 					(*i)[7] = (*i)[5];

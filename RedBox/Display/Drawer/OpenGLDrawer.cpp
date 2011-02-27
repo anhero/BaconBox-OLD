@@ -31,7 +31,7 @@ void OpenGLDrawer::drawShapeWithTexture(GLfloat* vertices,
 	
 	
 	
-	glTexCoordPointer(2, GL_FLOAT, 0, &(*(renderingInfo.getTexCoords().begin())));
+	glTexCoordPointer(2, GL_FLOAT, 0, &(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0]));
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 	glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
