@@ -29,6 +29,9 @@
 		24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24F0335112F1C59500BD5409 /* AudioEngine.h */; };
 		51140FB5130B3C5300D05386 /* Glyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51140FB3130B3C5300D05386 /* Glyph.cpp */; };
 		51140FB6130B3C5300D05386 /* Glyph.h in Headers */ = {isa = PBXBuildFile; fileRef = 51140FB4130B3C5300D05386 /* Glyph.h */; };
+		511AA3D6130D731B006F7B11 /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511AA3D4130D731B006F7B11 /* Font.cpp */; };
+		511AA3D7130D731B006F7B11 /* Font.h in Headers */ = {isa = PBXBuildFile; fileRef = 511AA3D5130D731B006F7B11 /* Font.h */; };
+		511AA3D9130D753E006F7B11 /* libfreetypeuniversal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51CF8E3B12DF60ED003FBBAD /* libfreetypeuniversal.a */; };
 		512B7DB612DF6103002E9698 /* Finch.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8DD912DF60ED003FBBAD /* Finch.h */; };
 		512B7DB712DF6104002E9698 /* Finch.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8DDA12DF60ED003FBBAD /* Finch.m */; };
 		512B7DB812DF6105002E9698 /* RevolverSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8DDB12DF60ED003FBBAD /* RevolverSound.h */; };
@@ -135,6 +138,8 @@
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		51140FB3130B3C5300D05386 /* Glyph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Glyph.cpp; sourceTree = "<group>"; };
 		51140FB4130B3C5300D05386 /* Glyph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Glyph.h; sourceTree = "<group>"; };
+		511AA3D4130D731B006F7B11 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Font.cpp; sourceTree = "<group>"; };
+		511AA3D5130D731B006F7B11 /* Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Font.h; sourceTree = "<group>"; };
 		512B7E2D12DF67B0002E9698 /* Edge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Edge.cpp; path = ../../RedBox/other/Edge.cpp; sourceTree = SOURCE_ROOT; };
 		512B7E2E12DF67B1002E9698 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Edge.h; path = ../../RedBox/other/Edge.h; sourceTree = SOURCE_ROOT; };
 		512D586C109B6D45009D504E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -292,9 +297,6 @@
 		51CF8E3412DF60ED003FBBAD /* tttags.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tttags.h; sourceTree = "<group>"; };
 		51CF8E3512DF60ED003FBBAD /* ttunpat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ttunpat.h; sourceTree = "<group>"; };
 		51CF8E3612DF60ED003FBBAD /* ft2build.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ft2build.h; sourceTree = "<group>"; };
-		51CF8E3812DF60ED003FBBAD /* freetype.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = freetype.lib; sourceTree = "<group>"; };
-		51CF8E3912DF60ED003FBBAD /* freetype6.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = freetype6.dll; sourceTree = "<group>"; };
-		51CF8E3A12DF60ED003FBBAD /* libFreeType_iphone_universal.a.bak */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFreeType_iphone_universal.a.bak; sourceTree = "<group>"; };
 		51CF8E3B12DF60ED003FBBAD /* libfreetypeuniversal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreetypeuniversal.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -303,6 +305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				511AA3D9130D753E006F7B11 /* libfreetypeuniversal.a in Frameworks */,
 				51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */,
 				51927C0711D5EA3E00C65B15 /* AVFoundation.framework in Frameworks */,
 				51927C0811D5EA4200C65B15 /* libz.dylib in Frameworks */,
@@ -361,6 +364,8 @@
 			children = (
 				51140FB3130B3C5300D05386 /* Glyph.cpp */,
 				51140FB4130B3C5300D05386 /* Glyph.h */,
+				511AA3D4130D731B006F7B11 /* Font.cpp */,
+				511AA3D5130D731B006F7B11 /* Font.h */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -733,9 +738,6 @@
 		51CF8E3712DF60ED003FBBAD /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				51CF8E3812DF60ED003FBBAD /* freetype.lib */,
-				51CF8E3912DF60ED003FBBAD /* freetype6.dll */,
-				51CF8E3A12DF60ED003FBBAD /* libFreeType_iphone_universal.a.bak */,
 				51CF8E3B12DF60ED003FBBAD /* libfreetypeuniversal.a */,
 			);
 			path = lib;
@@ -795,6 +797,7 @@
 				24BAE0A5130472EF00474828 /* SpriteEmitter.h in Headers */,
 				515E396213066215006E85AC /* Camera.h in Headers */,
 				51140FB6130B3C5300D05386 /* Glyph.h in Headers */,
+				511AA3D7130D731B006F7B11 /* Font.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,6 +890,7 @@
 				24BAE0A4130472EF00474828 /* SpriteEmitter.cpp in Sources */,
 				515E396113066215006E85AC /* Camera.cpp in Sources */,
 				51140FB5130B3C5300D05386 /* Glyph.cpp in Sources */,
+				511AA3D6130D731B006F7B11 /* Font.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -906,6 +910,7 @@
 					"\"$(SRCROOT)/../../../..\"",
 					"\"$(SRCROOT)/../../libraries/simple-image/osx:iphone\"",
 					"\"$(SRCROOT)/../../libraries/libpng/osx:iphone\"",
+					"\"$(SRCROOT)/../../libraries/freetype/lib\"",
 				);
 				PREBINDING = NO;
 				PRIVATE_HEADERS_FOLDER_PATH = /private_include;
@@ -928,6 +933,7 @@
 					"\"$(SRCROOT)/../../../..\"",
 					"\"$(SRCROOT)/../../libraries/simple-image/osx:iphone\"",
 					"\"$(SRCROOT)/../../libraries/libpng/osx:iphone\"",
+					"\"$(SRCROOT)/../../libraries/freetype/lib\"",
 				);
 				PREBINDING = NO;
 				PRIVATE_HEADERS_FOLDER_PATH = /private_include;

@@ -2,6 +2,7 @@
 
 #include "TimeHelper.h"
 #include "Drawer.h"
+#include "Font.h"
 
 using namespace RedBox;
 
@@ -102,6 +103,7 @@ void RedBoxEngine::pulse() {
 
 void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight){
 	Drawer::initializeDrawer(screenWidth, screenHeight);
+	Font::initializeFontRenderer();
 }
 
 double RedBoxEngine::getUpdateDelta() {
