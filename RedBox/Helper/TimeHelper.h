@@ -49,7 +49,11 @@ namespace RedBox {
 		static double epoch;
 		/// Time in seconds since the game started.
 		static double sinceStart;
-		/// Time scaling. Higher means slower.
+		/**
+		 * Used to scale at which speed the time since the game was started is
+		 * going. For example, if timeScale is set at 0.5, sinceStart will
+		 * increment two times slower than usual.
+		 */
 		static double timeScale;
 		/// Boolean indicating if the game is paused.
 		static bool paused;
