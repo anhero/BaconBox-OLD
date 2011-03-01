@@ -55,15 +55,19 @@ namespace RedBox {
 				   float offsetY = 0.0f,
 				   int* newColor = NULL);
 		/**
-		 * Loads the texture coordinates.
+		 * Loads the texture coordinates. Used to determine what information
+		 * needs to be read in the image to show on screen. The upper left
+		 * corner of the image is at coordinates (0, 0), and the lower right
+		 * corner is at (1, 1). Proportions are used to convert the pixels
+		 * recieved in the offsets to determine their positions.
 		 * @param vertices Vertices making up the shape to use for each frame.
 		 * @param nbFrames Number of frames of texture coordinates to generate.
 		 * @param factor Size factor between the shape and the size of the 
 		 * texture coordinates to take.
 		 * @param offsetX Horizontal offset from where the texture coordinates
-		 * will start loading.
+		 * will start loading, in pixels.
 		 * @param offsetY Vertical offset from where the texture coordinates
-		 * will start loading.
+		 * will start loading, in pixels.
 		 * @param newTexInfo Pointer to the information about the texture.
 		 */
 		void loadTexCoords(VerticesGroup* vertices,
