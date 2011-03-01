@@ -78,7 +78,7 @@ namespace RedBox {
 					// We update the sprite.
 					i->renderable->update();
 					// We update the lifespan.
-					i->lifeSpan -= RedBoxEngine::getUpdateDelta();
+					i->timeLeft -= RedBoxEngine::getUpdateDelta();
 				}
 			}
 		}
@@ -116,8 +116,8 @@ namespace RedBox {
 			// We make sure to free the memory if we reduce the number of
 			// maximum particles.
 			for(unsigned int i = particles.size() - 1; i >= newNbMaxParticles; i--) {
-				if(particles[i]->renderable) {
-					delete particles[i]->renderable;
+				if(particles[i].renderable) {
+					delete particles[i].renderable;
 				}
 			}
 			particles.resize(newNbMaxParticles);
