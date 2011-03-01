@@ -52,22 +52,30 @@ TextureInfo* ResourceLoader::addTexture(const std::string& key, unsigned char * 
 }
 
 
-TextureInfo* ResourceLoader::loadTexture(const std::string& filePath, const std::string& key) {
+TextureInfo* ResourceLoader::loadTexture(const std::string& filePath,
+										 const std::string& key,
+										 bool overwrite) {
 	TextureInfo* texInfo = NULL;
-	if (textures.find(key) ==  textures.end()) {
-		texInfo = new TextureInfo();
-#ifdef RB_OPENGL
-		glGenTextures(1, &(texInfo->textureId));
-		glBindTexture(GL_TEXTURE_2D, texInfo->textureId);
-		siTexImagePNG(GL_TEXTURE_2D, GL_RGBA, filePath.c_str(), &(texInfo->imageWidth), &(texInfo->imageHeight));
+	// We check if there is already a texture with this name.
+	if(textures.find(key) != textures.end()) {
+		// We check if we overwrite the existing texture or not.
+		if(overwrite) {
+			// We free the allocated memory.
+			texInfo = textures[key];
+			if(texInfo) {
+				delete texInfo;
+			}
+			// We load the new texture.
+			texInfo = textures[key] = loadTexture(filePath);
+			$ECHO("Overwrote the existing texture named " << key << ".");
+		} else {
+			$ECHO("Can't load texture with key: " << key <<
+				  " texture is already loaded");
+		}
+	} else {
+		// We load the new texture and add it to the map.
+		texInfo = loadTexture(filePath);
 		textures.insert(std::pair<std::string, TextureInfo*>(key, texInfo));
-		
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-#endif
-	}
-	else {
-		$ECHO("Can't load texture with key: " << key << " texture is already loaded");
 	}
 	return texInfo;
 }
@@ -87,12 +95,30 @@ BackgroundMusic* ResourceLoader::getBackgroundMusic(const std::string& key) {
 }
 
 SoundFX* ResourceLoader::loadSoundFX(const std::string& filePath,
-									 const std::string& key) {
+									 const std::string& key,
+									 bool overwrite) {
 	SoundFX* newSnd = NULL;
 	// We make sure the sound engine is loaded and that there already isn't 
 	// any sound effect with the same name.
 	if(AudioEngine::getSoundEngine()) {
-		if(sounds.find(key) == sounds.end()) {
+		if(sounds.find(key) != sounds.end()) {
+			if(overwrite) {
+				// We delete the existing sound effect.
+				newSnd = sounds[key];
+				if(newSnd) {
+					delete newSnd;
+				}
+				// We load the sound effect and we overwrite the existing sound
+				// effect.
+				newSnd = sounds[key] = AudioEngine::getSoundEngine()->loadSoundFX(filePath);
+				$ECHO("Overwrote the existing sound effect named " << key <<
+					  ".");
+			} else {
+				$ECHO("Couldn't load the sound effect named " << key << 
+					  " found at " << filePath <<
+					  " because a sound with that name already exists.");
+			}
+		} else {
 			// We load the sound effect.
 			newSnd = AudioEngine::getSoundEngine()->loadSoundFX(filePath);
 			// If it was loaded correctly.
@@ -101,79 +127,128 @@ SoundFX* ResourceLoader::loadSoundFX(const std::string& filePath,
 				// corresponding key.
 				sounds.insert(std::pair<std::string, SoundFX*>(key, newSnd));
 			}
-		} else {
-			$ECHO("Couldn't load the sound effect named " << key << " found at " << filePath << " because a sound with that name already exists.");
 		}
 	} else {
-		$ECHO("Couldn't load the sound effect named " << key << " found at " << filePath << " because the sound engine couldn't be loaded.");
+		$ECHO("Couldn't load the sound effect named " << key << " found at " <<
+			  filePath << " because the sound engine couldn't be loaded.");
 	}
 	return newSnd;
 }
 
-SoundFX* ResourceLoader::loadSoundFX(const SoundInfo& info) {
+SoundFX* ResourceLoader::loadSoundFX(const SoundInfo& info, bool overwrite) {
 	SoundFX* newSnd = NULL;
 	// We make sure the sound engine is loaded and that there already isn't 
 	// any sound effect with the same name.
 	if(AudioEngine::getSoundEngine()) {
-		if(sounds.find(info.name) == sounds.end()) {
+		if(sounds.find(info.name) != sounds.end()) {
+			if(overwrite) {
+				// We delete the existing sound effect.
+				newSnd = sounds[info.name];
+				if(newSnd) {
+					delete newSnd;
+				}
+				// We load the sound effect and we overwrite the existing sound
+				// effect.
+				newSnd = sounds[info.name] = AudioEngine::getSoundEngine()->loadSoundFX(info);
+				$ECHO("Overwrote the existing sound effect named " <<
+					  info.name << ".");
+			} else {
+				$ECHO("Couldn't load the sound effect named " << info.name << 
+					  " because a sound with that name already exists.");
+			}
+		} else {
 			// We load the sound effect.
 			newSnd = AudioEngine::getSoundEngine()->loadSoundFX(info);
 			// If it was loaded correctly.
 			if(newSnd) {
 				// We insert it into the map of sound effects with its
 				// corresponding key.
-				sounds.insert(std::pair<std::string, SoundFX*>(info.name, newSnd));
+				sounds.insert(std::pair<std::string, SoundFX*>(info.name,
+															   newSnd));
 			}
-		} else {
-			$ECHO("Couldn't load the sound effect named " << info.name << " because a sound with that name already exists.");
 		}
 	} else {
-		$ECHO("Couldn't load the sound effect named " << info.name << " because the sound engine couldn't be loaded.");
+		$ECHO("Couldn't load the sound effect named " << info.name <<
+			  " because the sound engine couldn't be loaded.");
 	}
 	return newSnd;
 }
 
 BackgroundMusic* ResourceLoader::loadBackgroundMusic(const std::string& filePath,
-													 const std::string& key) {
+													 const std::string& key,
+													 bool overwrite) {
 	BackgroundMusic* newBgm = NULL;
-	// We make sure the music engine is loaded and that there already isn't
+	// We make sure the sound engine is loaded and that there already isn't 
 	// any music with the same name.
 	if(AudioEngine::getMusicEngine()) {
-		if(musics.find(key) == musics.end()) {
-			// We load the music.
-			newBgm = AudioEngine::getMusicEngine()->loadBackgroundMusic(filePath);
-			// If it was successfully loaded.
-			if(newBgm) {
-				// We insert it into the map of musics with its corresponding key.
-				musics.insert(std::pair<std::string, BackgroundMusic*>(key, newBgm));
+		if(musics.find(key) != musics.end()) {
+			if(overwrite) {
+				// We delete the existing music.
+				newBgm = musics[key];
+				if(newBgm) {
+					delete newBgm;
+				}
+				// We load the music and we overwrite the existing music.
+				newBgm = musics[key] = AudioEngine::getMusicEngine()->loadBackgroundMusic(filePath);
+				$ECHO("Overwrote the existing music named " << key <<
+					  ".");
+			} else {
+				$ECHO("Couldn't load the music named " << key << 
+					  " found at " << filePath <<
+					  " because a music with that name already exists.");
 			}
 		} else {
-			$ECHO("Couldn't load the music named " << key << " because a music with that name already exists.");
+			// We load the music.
+			newBgm = AudioEngine::getMusicEngine()->loadBackgroundMusic(filePath);
+			// If it was loaded correctly.
+			if(newBgm) {
+				// We insert it into the map of musics with its corresponding
+				// key.
+				musics.insert(std::pair<std::string, BackgroundMusic*>(key, newBgm));
+			}
 		}
 	} else {
-		$ECHO("Couldn't load the music named " << key << " because the sound engine couldn't be loaded.");
+		$ECHO("Couldn't load the music named " << key << " found at " <<
+			  filePath << " because the sound engine couldn't be loaded.");
 	}
 	return newBgm;
 }
 
-BackgroundMusic* ResourceLoader::loadBackgroundMusic(const MusicInfo& info) {
+BackgroundMusic* ResourceLoader::loadBackgroundMusic(const MusicInfo& info,
+													 bool overwrite) {
 	BackgroundMusic* newBgm = NULL;
-	// We make sure the music engine is loaded and that there already isn't
+	// We make sure the sound engine is loaded and that there already isn't 
 	// any music with the same name.
 	if(AudioEngine::getMusicEngine()) {
-		if(musics.find(info.name) == musics.end()) {
-			// We load the music.
-			newBgm = AudioEngine::getMusicEngine()->loadBackgroundMusic(info);
-			// If it was successfully loaded.
-			if(newBgm) {
-				// We insert it into the map of musics with its corresponding key.
-				musics.insert(std::pair<std::string, BackgroundMusic*>(info.name, newBgm));
+		if(musics.find(info.name) != musics.end()) {
+			if(overwrite) {
+				// We delete the existing music.
+				newBgm = musics[info.name];
+				if(newBgm) {
+					delete newBgm;
+				}
+				// We load the music and we overwrite the existing music.
+				newBgm = musics[info.name] =
+				AudioEngine::getMusicEngine()->loadBackgroundMusic(info);
+				$ECHO("Overwrote the existing music named " << info.name <<
+					  ".");
+			} else {
+				$ECHO("Couldn't load the music named " << info.name << 
+					  " because a music with that name already exists.");
 			}
 		} else {
-			$ECHO("Couldn't load the music named " << info.name << " because a music with that name already exists.");
+			// We load the music.
+			newBgm = AudioEngine::getMusicEngine()->loadBackgroundMusic(info);
+			// If it was loaded correctly.
+			if(newBgm) {
+				// We insert it into the map of musics with its corresponding
+				// key.
+				musics.insert(std::pair<std::string, BackgroundMusic*>(info.name, newBgm));
+			}
 		}
 	} else {
-		$ECHO("Couldn't load the music named " << info.name << " because the sound engine couldn't be loaded.");
+		$ECHO("Couldn't load the music named " << info.name <<
+			  " because the sound engine couldn't be loaded.");
 	}
 	return newBgm;
 }
@@ -270,5 +345,19 @@ void ResourceLoader::unloadAll() {
 		delete i->second;
 	}
 	fonts.clear();
+}
+
+TextureInfo* ResourceLoader::loadTexture(const std::string& filePath) {
+	TextureInfo* texInfo = NULL;
+#ifdef RB_OPENGL
+	texInfo = new TextureInfo();
+	glGenTextures(1, &(texInfo->textureId));
+	glBindTexture(GL_TEXTURE_2D, texInfo->textureId);
+	siTexImagePNG(GL_TEXTURE_2D, GL_RGBA, filePath.c_str(), &(texInfo->imageWidth), &(texInfo->imageHeight));
+	
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+#endif
+	return texInfo;
 }
 

@@ -30,7 +30,9 @@ namespace RedBox {
 		 * @param filePath Path to the file containing the texture.
 		 * @param key Key used to identify this new texture.
 		 */
-		static TextureInfo* loadTexture(const std::string& filePath, const std::string& key);
+		static TextureInfo* loadTexture(const std::string& filePath,
+										const std::string& key,
+										bool overwrite = false);
 		/**
 		 * Gets the information about the asked texture. Uses the texture's key
 		 * to find it.
@@ -59,7 +61,8 @@ namespace RedBox {
 		 * loading failed.
 		 */
 		static SoundFX* loadSoundFX(const std::string& filePath,
-									const std::string& key);
+									const std::string& key,
+									bool overwrite = false);
 		/**
 		 * Loads a sound effect.
 		 * @param info Information in a struct about the sound effect to load.
@@ -68,7 +71,8 @@ namespace RedBox {
 		 * @return Pointer to the loaded sound effect. Returns NULL if the
 		 * loading failed.
 		 */
-		static SoundFX* loadSoundFX(const SoundInfo& info);
+		static SoundFX* loadSoundFX(const SoundInfo& info,
+									bool overwrite = false);
 		/**
 		 * Loads a background music.
 		 * @param name Name to give to the background music.
@@ -78,7 +82,8 @@ namespace RedBox {
 		 * loading failed.
 		 */
 		static BackgroundMusic* loadBackgroundMusic(const std::string& filePath,
-													const std::string& key);
+													const std::string& key,
+													bool overwrite = false);
 		/**
 		 * Loads a background music.
 		 * @param info Information in a struct about the sound effect to load.
@@ -87,7 +92,8 @@ namespace RedBox {
 		 * @return Pointer to the loaded sound effect. Returns NULL if the
 		 * loading failed.
 		 */
-		static BackgroundMusic* loadBackgroundMusic(const MusicInfo& info);
+		static BackgroundMusic* loadBackgroundMusic(const MusicInfo& info,
+													bool overwrite = true);
 		/**
 		 * Removes and unloads a sound effect.
 		 * @param name Name of the sound effect to unload.
@@ -124,6 +130,7 @@ namespace RedBox {
 		 */
 		static void unloadAll();
 	private:
+		static TextureInfo* loadTexture(const std::string& filePath);
 		/// Map associating the textures' keys and their information.
 		static std::map<std::string, TextureInfo*> textures;
 		/// Map associating the sound effects' names and their information.
