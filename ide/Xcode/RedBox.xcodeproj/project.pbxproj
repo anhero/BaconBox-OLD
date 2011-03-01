@@ -14,6 +14,7 @@
 		2447361212EF44550085668B /* Drawer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361012EF44550085668B /* Drawer.h */; };
 		2447361912EF46030085668B /* PlatformFlagger.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361812EF46030085668B /* PlatformFlagger.h */; };
 		2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2480744F12E0A3F800F49E74 /* RenderInfo.h */; };
+		24998223131AE22700B856B7 /* WavHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 24998222131AE22700B856B7 /* WavHeader.h */; };
 		249C90B612ECFFB9000AF0DC /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */; };
 		249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		24B320111316CC9D00D7002B /* OpenALEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B3200F1316CC9D00D7002B /* OpenALEngine.cpp */; };
@@ -133,6 +134,7 @@
 		2447361012EF44550085668B /* Drawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drawer.h; sourceTree = "<group>"; };
 		2447361812EF46030085668B /* PlatformFlagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlagger.h; sourceTree = "<group>"; };
 		2480744F12E0A3F800F49E74 /* RenderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderInfo.h; sourceTree = "<group>"; };
+		24998222131AE22700B856B7 /* WavHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WavHeader.h; sourceTree = "<group>"; };
 		249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedBoxEngine.cpp; sourceTree = "<group>"; };
 		249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
 		24B3200F1316CC9D00D7002B /* OpenALEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALEngine.cpp; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 		24B3200E1316CC9D00D7002B /* OpenAL */ = {
 			isa = PBXGroup;
 			children = (
+				24998222131AE22700B856B7 /* WavHeader.h */,
 				24C7F85E13182AFA00822753 /* OpenALSoundFX.cpp */,
 				24C7F85F13182AFA00822753 /* OpenALSoundFX.h */,
 				24B3200F1316CC9D00D7002B /* OpenALEngine.cpp */,
@@ -860,6 +863,7 @@
 				24B320121316CC9D00D7002B /* OpenALEngine.h in Headers */,
 				24B320171316EBAC00D7002B /* BitHelper.h in Headers */,
 				24C7F86113182AFA00822753 /* OpenALSoundFX.h in Headers */,
+				24998223131AE22700B856B7 /* WavHeader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
