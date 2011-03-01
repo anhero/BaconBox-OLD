@@ -15,6 +15,12 @@
 		2447361912EF46030085668B /* PlatformFlagger.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361812EF46030085668B /* PlatformFlagger.h */; };
 		2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2480744F12E0A3F800F49E74 /* RenderInfo.h */; };
 		24998223131AE22700B856B7 /* WavHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 24998222131AE22700B856B7 /* WavHeader.h */; };
+		2499822E131AE63600B856B7 /* config_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 24998227131AE63600B856B7 /* config_types.h */; };
+		2499822F131AE63600B856B7 /* ivorbiscodec.h in Headers */ = {isa = PBXBuildFile; fileRef = 24998228131AE63600B856B7 /* ivorbiscodec.h */; };
+		24998230131AE63600B856B7 /* ivorbisfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 24998229131AE63600B856B7 /* ivorbisfile.h */; };
+		24998231131AE63600B856B7 /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = 2499822A131AE63600B856B7 /* ogg.h */; };
+		24998232131AE63600B856B7 /* os_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 2499822B131AE63600B856B7 /* os_types.h */; };
+		24998235131AE65E00B856B7 /* libvorbisdec-iphone-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24998234131AE65E00B856B7 /* libvorbisdec-iphone-universal.a */; };
 		249C90B612ECFFB9000AF0DC /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */; };
 		249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		24B320111316CC9D00D7002B /* OpenALEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B3200F1316CC9D00D7002B /* OpenALEngine.cpp */; };
@@ -135,6 +141,12 @@
 		2447361812EF46030085668B /* PlatformFlagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlagger.h; sourceTree = "<group>"; };
 		2480744F12E0A3F800F49E74 /* RenderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderInfo.h; sourceTree = "<group>"; };
 		24998222131AE22700B856B7 /* WavHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WavHeader.h; sourceTree = "<group>"; };
+		24998227131AE63600B856B7 /* config_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config_types.h; sourceTree = "<group>"; };
+		24998228131AE63600B856B7 /* ivorbiscodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivorbiscodec.h; sourceTree = "<group>"; };
+		24998229131AE63600B856B7 /* ivorbisfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivorbisfile.h; sourceTree = "<group>"; };
+		2499822A131AE63600B856B7 /* ogg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
+		2499822B131AE63600B856B7 /* os_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
+		24998234131AE65E00B856B7 /* libvorbisdec-iphone-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libvorbisdec-iphone-universal.a"; path = "osx:iphone/libvorbisdec-iphone-universal.a"; sourceTree = "<group>"; };
 		249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedBoxEngine.cpp; sourceTree = "<group>"; };
 		249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
 		24B3200F1316CC9D00D7002B /* OpenALEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALEngine.cpp; sourceTree = "<group>"; };
@@ -345,6 +357,7 @@
 				51927C1011D5EA5100C65B15 /* UIKit.framework in Frameworks */,
 				51B4C079130ADB8D008C36CD /* libsimpleimage.a in Frameworks */,
 				51B4C082130ADB95008C36CD /* libpng.a in Frameworks */,
+				24998235131AE65E00B856B7 /* libvorbisdec-iphone-universal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +370,27 @@
 				515EB50512FF34AA004FB469 /* libRedBox.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		24998225131AE63600B856B7 /* libvorbis-tremor */ = {
+			isa = PBXGroup;
+			children = (
+				24998234131AE65E00B856B7 /* libvorbisdec-iphone-universal.a */,
+				24998226131AE63600B856B7 /* include */,
+			);
+			path = "libvorbis-tremor";
+			sourceTree = "<group>";
+		};
+		24998226131AE63600B856B7 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				24998227131AE63600B856B7 /* config_types.h */,
+				24998228131AE63600B856B7 /* ivorbiscodec.h */,
+				24998229131AE63600B856B7 /* ivorbisfile.h */,
+				2499822A131AE63600B856B7 /* ogg.h */,
+				2499822B131AE63600B856B7 /* os_types.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 		24B3200E1316CC9D00D7002B /* OpenAL */ = {
@@ -641,6 +675,7 @@
 		51CF8DD712DF60ED003FBBAD /* libraries */ = {
 			isa = PBXGroup;
 			children = (
+				24998225131AE63600B856B7 /* libvorbis-tremor */,
 				51B4C07A130ADB95008C36CD /* libpng */,
 				51B4C073130ADB8D008C36CD /* simple-image */,
 				51CF8DD812DF60ED003FBBAD /* Finch */,
@@ -864,6 +899,11 @@
 				24B320171316EBAC00D7002B /* BitHelper.h in Headers */,
 				24C7F86113182AFA00822753 /* OpenALSoundFX.h in Headers */,
 				24998223131AE22700B856B7 /* WavHeader.h in Headers */,
+				2499822E131AE63600B856B7 /* config_types.h in Headers */,
+				2499822F131AE63600B856B7 /* ivorbiscodec.h in Headers */,
+				24998230131AE63600B856B7 /* ivorbisfile.h in Headers */,
+				24998231131AE63600B856B7 /* ogg.h in Headers */,
+				24998232131AE63600B856B7 /* os_types.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -983,6 +1023,7 @@
 					"\"$(SRCROOT)/../../libraries/simple-image/osx:iphone\"",
 					"\"$(SRCROOT)/../../libraries/libpng/osx:iphone\"",
 					"\"$(SRCROOT)/../../libraries/freetype/lib\"",
+					"\"$(SRCROOT)/../../libraries/libvorbis-tremor/osx:iphone\"",
 				);
 				PREBINDING = NO;
 				PRIVATE_HEADERS_FOLDER_PATH = /private_include;
@@ -1006,6 +1047,7 @@
 					"\"$(SRCROOT)/../../libraries/simple-image/osx:iphone\"",
 					"\"$(SRCROOT)/../../libraries/libpng/osx:iphone\"",
 					"\"$(SRCROOT)/../../libraries/freetype/lib\"",
+					"\"$(SRCROOT)/../../libraries/libvorbis-tremor/osx:iphone\"",
 				);
 				PREBINDING = NO;
 				PRIVATE_HEADERS_FOLDER_PATH = /private_include;
