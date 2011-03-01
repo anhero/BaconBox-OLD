@@ -69,6 +69,16 @@ namespace RedBox {
 		 */
 		void startParticle(Sprite*& renderable);
 		/**
+		 * Updates the particle.
+		 * @param renderable Pointer to the sprite to update.
+		 */
+		void updateParticle(Sprite* renderable);
+		/**
+		 * Renders the particle.
+		 * @param renderable Pointer to the sprite to render.
+		 */
+		void renderParticle(Sprite* renderable);
+		/**
 		 * Cleans and resets the SpriteEmitter.
 		 */
 		void clean();

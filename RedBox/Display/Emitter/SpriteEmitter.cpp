@@ -1,5 +1,7 @@
 #include "SpriteEmitter.h"
 
+#include <cassert>
+
 using namespace RedBox;
 
 SpriteEmitter::SpriteEmitter(): Emitter<Sprite>() {
@@ -41,4 +43,14 @@ void SpriteEmitter::clean() {
 void SpriteEmitter::copyFrom(const SpriteEmitter& src) {
 	if(this != &src && &src) {
 	}
+}
+
+void SpriteEmitter::updateParticle(Sprite* renderable) {
+	assert(renderable);
+	renderable->render();
+}
+
+void SpriteEmitter::renderParticle(Sprite* renderable) {
+	assert(renderable);
+	renderable->update();
 }

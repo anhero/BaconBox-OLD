@@ -150,6 +150,18 @@ namespace RedBox {
 		 * the right direction with the right force.
 		 */
 		virtual void startParticle(T*& renderable)=0;
+		/**
+		 * Updates the particle. If the pointer recieved is null, the method
+		 * will not do anything.
+		 * @param renderable Pointer to the renderable to update.
+		 */
+		virtual void updateParticle(T* renderable)=0;
+		/**
+		 * Renders the particle. If the pointer recieved is null, the method
+		 * will not do anything.
+		 * @param renderable Pointer to the renderable to render.
+		 */
+		virtual void renderParticle(T* renderable)=0;
 	private:
 		/**
 		 * Represents a particle the sprite emitter will shoot.
