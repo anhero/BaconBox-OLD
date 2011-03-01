@@ -4,7 +4,6 @@
  */
 #ifndef RB_WAV_HEADER_H
 #define RB_WAV_HEADER_H
-#include <cstdint>
 namespace RedBox {
 #pragma pack(1)
 	/**

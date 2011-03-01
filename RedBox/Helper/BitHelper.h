@@ -5,8 +5,6 @@
 #ifndef RB_BIT_HELPER_H
 #define RB_BIT_HELPER_H
 
-#include <cstdint>
-
 namespace RedBox {
 	/**
 	 * Contains functions related to bits and bytes.
