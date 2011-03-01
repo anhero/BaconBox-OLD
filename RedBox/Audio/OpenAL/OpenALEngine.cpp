@@ -1,16 +1,20 @@
 #include "OpenALEngine.h"
 
+#include <cstring>
+
 #include "Debug.h"
 
 #include "OpenALSoundFX.h"
 
 using namespace RedBox;
 
-ALCchar* OpenALEngine::defaultDevice = NULL;
+std::string OpenALEngine::defaultDevice = "";
+std::vector<std::string> OpenALEngine::deviceList = std::vector<std::string>();
+
 
 void OpenALEngine::init() {
 	// We open the device.
-	ALCdevice* device = alcOpenDevice(OpenALEngine::defaultDevice);
+	ALCdevice* device = alcOpenDevice(OpenALEngine::defaultDevice.c_str());
 	if(device) {
 		// We create the context.
 		ALCcontext* context = alcCreateContext(device, NULL);
@@ -39,8 +43,21 @@ void OpenALEngine::init() {
 void OpenALEngine::update() {
 }
 
-void OpenALEngine::setDefaultDevice(ALCchar* newDevice) {
+void OpenALEngine::setDefaultDevice(const std::string& newDevice) {
 	defaultDevice = newDevice;
+}
+
+const std::vector<std::string>& OpenALEngine::getDeviceList() {
+	if(deviceList.size() == 0) {
+		const ALchar* devices = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+		if(devices) {
+			while(strlen(devices) > 0) {
+				deviceList.push_back(devices);
+				devices += strlen(devices) + 1;
+			}
+		}
+	}
+	return deviceList;
 }
 
 OpenALEngine::OpenALEngine(): AudioEngine() {

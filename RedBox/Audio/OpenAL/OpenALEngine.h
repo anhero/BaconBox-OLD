@@ -9,6 +9,7 @@
 #include <OpenAL/alc.h>
 
 #include <string>
+#include <vector>
 
 #include "AudioEngine.h"
 
@@ -31,11 +32,19 @@ namespace RedBox {
 		/**
 		 * Sets the default device to use for audio output. Must be called
 		 * before initializing the engine.
+		 * @param newDevice Name of the device to set as the default device.
 		 */
-		static void setDefaultDevice(ALCchar* newDevice);
+		static void setDefaultDevice(const std::string& newDevice);
+		/**
+		 * Gets the list of available auio devices on the system.
+		 * @return Vector containing the device names.
+		 */
+		static const std::vector<std::string>& getDeviceList();
 	private:
 		/// Device to load.
-		static ALCchar* defaultDevice;
+		static std::string defaultDevice;
+		/// List of devices available.
+		static std::vector<std::string> deviceList;
 		/**
 		 * Default constructor.
 		 */
