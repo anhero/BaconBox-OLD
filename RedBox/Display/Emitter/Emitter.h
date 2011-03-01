@@ -10,6 +10,7 @@
 #include "IEmitter.h"
 #include "ParticleState.h"
 #include "RedBoxEngine.h"
+#include "Random.h"
 
 namespace RedBox {
 	/**
@@ -56,14 +57,12 @@ namespace RedBox {
 				float rate = 1.0 / emitRate;
 				emitCounter += RedBoxEngine::getUpdateDelta();
 				// We try to shoot particles as long as the emission rate lets us.
-				// TODO: initParticle isn't supposed to be used like this and 
-				// this code doesn't eve work.
-				while(emitCounter > rate && initParticle()) {
+				while(emitCounter > rate && shootParticle()) {
 					emitCounter -= rate;
 				}
-				// We check if we have to count the sprite emitter's life span.
+				// We check if we have to count the emitter's life span.
 				if(lifeSpan != -1.0) {
-					// We update the elapsed time for the sprite emitter.
+					// We update the emitter's elapsed time.
 					elapsedTime += RedBoxEngine::getUpdateDelta();
 					if(lifeSpan < elapsedTime) {
 						deactivate();
@@ -79,6 +78,37 @@ namespace RedBox {
 					i->renderable->update();
 					// We update the lifespan.
 					i->timeLeft -= RedBoxEngine::getUpdateDelta();
+					// We update the particles depending on their phase.
+					switch (i->state) {
+						case ParticleState::BIRTH:
+							updateAlpha(RedBoxEngine::getUpdateDelta() * birthPhase.alphaPerSecond, i->renderable);
+							updateScaling(RedBoxEngine::getUpdateDelta() * birthPhase.scalingPerSecond, i->renderable);
+							if(i->timeLeft <= 0.0) {
+								i->state = ParticleState::LIFE;
+								i->timeLeft = lifePhase.phaseDuration + Random::getRandomDouble(0.0, lifePhase.phaseDurationVariance);
+							}
+							break;
+						case ParticleState::LIFE:
+							updateAlpha(RedBoxEngine::getUpdateDelta() * lifePhase.alphaPerSecond, i->renderable);
+							updateScaling(RedBoxEngine::getUpdateDelta() * lifePhase.scalingPerSecond, i->renderable);
+							if(i->timeLeft <= 0.0) {
+								i->state = ParticleState::DYING;
+								i->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
+							}
+							break;
+						case ParticleState::DYING:
+							updateAlpha(RedBoxEngine::getUpdateDelta() * dyingPhase.alphaPerSecond, i->renderable);
+							updateScaling(RedBoxEngine::getUpdateDelta() * dyingPhase.scalingPerSecond, i->renderable);
+							if(i->timeLeft <= 0.0) {
+								i->state = ParticleState::DEAD;
+								i->timeLeft = 0.0;
+								// We reduce the number of active particles.
+								--nbParticles;
+							}
+							break;
+						default:
+							break;
+					}
 				}
 			}
 		}
@@ -251,6 +281,40 @@ namespace RedBox {
 		/// Vector containing the particles used to shoot.
 		std::vector<Particle> particles;
 		
+		typename std::vector<Particle>::iterator findFirstDeadParticle() {
+			if(nbParticles >= particles.size()) {
+				return particles.end();
+			} else {
+				bool notFound = true;
+				typename std::vector<Particle>::iterator i = particles.begin();
+				// We look for the first particle that is dead.
+				while (notFound && i != particles.end()) {
+					if (i->state == ParticleState::DEAD) {
+						notFound = false;
+					} else {
+						i++;
+					}
+				}
+				return i;
+			}
+		}
+		
+		bool shootParticle() {
+			// We try to get a dead particle.
+			typename std::vector<Particle>::iterator deadParticle = findFirstDeadParticle();
+			// If it's dead, we start it.
+			if(deadParticle != particles.end()) {
+				startParticle(deadParticle->renderable);
+				++nbParticles;
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		ParticlePhase& getCurrentPhase(const Particle& particle) {
+			return birthPhase;
+		}
 		/**
 		 * Resets the emitter.
 		 */
