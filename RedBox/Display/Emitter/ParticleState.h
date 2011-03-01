@@ -11,10 +11,10 @@ namespace RedBox {
 		 * @ingroup Display
 		 */
 		enum Enum {
+			DEAD,
 			BIRTH,
 			LIFE,
-			DYING,
-			DEAD
+			DYING
 		};
 	}
 }
