@@ -17,6 +17,7 @@ using namespace RedBox;
 std::map<std::string, TextureInfo*> ResourceLoader::textures = std::map<std::string, TextureInfo*>();
 std::map<std::string, SoundFX*> ResourceLoader::sounds = std::map<std::string, SoundFX*>();
 std::map<std::string, BackgroundMusic*> ResourceLoader::musics = std::map<std::string, BackgroundMusic*>();
+std::map<std::string, Font*> ResourceLoader::fonts = std::map<std::string, Font*>();
 
 TextureInfo* ResourceLoader::addTexture(const std::string& key, unsigned char * bitmap, int width, int height){
 	TextureInfo* texInfo = NULL;
