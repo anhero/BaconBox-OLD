@@ -74,7 +74,7 @@ namespace RedBox {
 			for(typename std::vector<Particle>::iterator i = particles.begin();
 				i != particles.end(); i++) {
 				// We check if it is still alive.
-				if (i->lifeSpan > 0.0) {
+				if (i->timeLeft > 0.0) {
 					// We update the sprite.
 					i->renderable->update();
 					// We update the lifespan.
@@ -91,7 +91,7 @@ namespace RedBox {
 			if(isActive) {
 				for(typename std::vector<Particle>::iterator i = particles.begin();
 					i != particles.end(); i++) {
-					if(i->lifeSpan > 0.0) {
+					if(i->timeLeft > 0.0) {
 						i->renderable->render();
 					}
 				}
@@ -133,7 +133,7 @@ namespace RedBox {
 		/**
 		 * Updates the renderable's size using the given scaling value to add
 		 * to the renderable's size scaling.
-		 * @param deltaScaling Scaling value to ad to the renderable's size.
+		 * @param deltaScaling Scaling value to add to the renderable's size.
 		 * @param renderable Renderable to have its size updated.
 		 */
 		virtual void updateScaling(float deltaScaling, T* renderable)=0;
