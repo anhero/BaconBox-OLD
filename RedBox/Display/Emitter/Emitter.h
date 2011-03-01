@@ -8,32 +8,15 @@
 #include <vector>
 
 #include "Renderable.h"
+#include "ParticleState.h"
+#include "ParticlePhase.h"
 
 namespace RedBox {
-	namespace ParticleState {
-		enum Enum {
-			BIRTH,
-			LIFE,
-			DYING,
-			DEAD
-		};
-	}
 	/**
 	 * @ingroup Display
 	 */
 	class Emitter: public Renderable {
 	public:
-		struct ParticlePhase {
-			ParticlePhase();
-			ParticlePhase(double newPhaseDuration,
-						  double newPhaseDurationVariance,
-						  float newAlphaPerSecond,
-						  float newScalingPerSecond);
-			double phaseDuration;
-			double phaseDurationVariance;
-			float alphaPerSecond;
-			float scalingPerSecond;
-		};
 		Emitter();
 		Emitter(const Emitter& src);
 		~Emitter();
