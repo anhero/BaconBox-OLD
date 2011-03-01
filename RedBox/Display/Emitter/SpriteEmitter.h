@@ -41,13 +41,13 @@ namespace RedBox {
 		 */
 		SpriteEmitter& operator=(const SpriteEmitter& src);
 		/**
-		 * Renders the SpriteEmitter and its particles.
-		 */
-		void render();
-		/**
 		 * Updates the SpriteEmitter and its particles.
 		 */
 		void update();
+		/**
+		 * Renders the SpriteEmitter and its particles.
+		 */
+		void render();
 		/**
 		 * Gets the angle.
 		 * @return Floating point number containing the sprite emitter's angle.

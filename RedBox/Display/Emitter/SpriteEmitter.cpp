@@ -18,18 +18,6 @@ SpriteEmitter& SpriteEmitter::operator=(const SpriteEmitter& src) {
 	return *this;
 }
 
-void SpriteEmitter::render() {
-	// We check that the sprite emitter is active.
-	if(isActive) {
-		for(std::vector<Particle>::iterator i = particles.begin();
-			i != particles.end(); i++) {
-			if(i->lifeSpan > 0.0) {
-				i->sprite->render();
-			}
-		}
-	}
-}
-
 void SpriteEmitter::update() {
 	// We make sure that the sprite emitter is active and has a valid emitRate.
 	if(isActive && emitRate > 0.0) {
@@ -57,6 +45,18 @@ void SpriteEmitter::update() {
 			i->sprite->update();
 			// We update the lifespan.
 			i->lifeSpan -= RedBoxEngine::getUpdateDelta();
+		}
+	}
+}
+
+void SpriteEmitter::render() {
+	// We check that the sprite emitter is active.
+	if(isActive) {
+		for(std::vector<Particle>::iterator i = particles.begin();
+			i != particles.end(); i++) {
+			if(i->lifeSpan > 0.0) {
+				i->sprite->render();
+			}
 		}
 	}
 }
