@@ -18,6 +18,8 @@
 		249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		24B320111316CC9D00D7002B /* OpenALEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B3200F1316CC9D00D7002B /* OpenALEngine.cpp */; };
 		24B320121316CC9D00D7002B /* OpenALEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B320101316CC9D00D7002B /* OpenALEngine.h */; };
+		24B320161316EBAC00D7002B /* BitHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B320141316EBAC00D7002B /* BitHelper.cpp */; };
+		24B320171316EBAC00D7002B /* BitHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B320151316EBAC00D7002B /* BitHelper.h */; };
 		24B86B5412F319620071930C /* MusicInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B86B5012F319620071930C /* MusicInfo.cpp */; };
 		24B86B5512F319620071930C /* MusicInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B86B5112F319620071930C /* MusicInfo.h */; };
 		24B86B5612F319620071930C /* SoundInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B86B5212F319620071930C /* SoundInfo.cpp */; };
@@ -133,6 +135,8 @@
 		249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
 		24B3200F1316CC9D00D7002B /* OpenALEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALEngine.cpp; sourceTree = "<group>"; };
 		24B320101316CC9D00D7002B /* OpenALEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenALEngine.h; sourceTree = "<group>"; };
+		24B320141316EBAC00D7002B /* BitHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BitHelper.cpp; sourceTree = "<group>"; };
+		24B320151316EBAC00D7002B /* BitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitHelper.h; sourceTree = "<group>"; };
 		24B86B5012F319620071930C /* MusicInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicInfo.cpp; sourceTree = "<group>"; };
 		24B86B5112F319620071930C /* MusicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicInfo.h; sourceTree = "<group>"; };
 		24B86B5212F319620071930C /* SoundInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundInfo.cpp; sourceTree = "<group>"; };
@@ -547,6 +551,8 @@
 		51CF8D6312DF60E0003FBBAD /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				24B320141316EBAC00D7002B /* BitHelper.cpp */,
+				24B320151316EBAC00D7002B /* BitHelper.h */,
 				242F209B1301AC0200494000 /* ResourcePathHandler.cpp */,
 				242F209C1301AC0200494000 /* ResourcePathHandler.h */,
 				51CF8D6612DF60E0003FBBAD /* MathHelper.cpp */,
@@ -846,6 +852,7 @@
 				24D0D4E41314507D007A5629 /* ParticleState.h in Headers */,
 				24D0D4E61314507D007A5629 /* SpriteEmitter.h in Headers */,
 				24B320121316CC9D00D7002B /* OpenALEngine.h in Headers */,
+				24B320171316EBAC00D7002B /* BitHelper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -943,6 +950,7 @@
 				24D0D4E21314507D007A5629 /* ParticlePhase.cpp in Sources */,
 				24D0D4E51314507D007A5629 /* SpriteEmitter.cpp in Sources */,
 				24B320111316CC9D00D7002B /* OpenALEngine.cpp in Sources */,
+				24B320161316EBAC00D7002B /* BitHelper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
