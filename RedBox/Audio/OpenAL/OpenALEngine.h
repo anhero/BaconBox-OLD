@@ -6,7 +6,7 @@
 #define RB_OPENAL_ENGINE_H
 
 #include <OpenAL/al.h>
-#include <OpenAl/alc.h>
+#include <OpenAL/alc.h>
 
 #include <string>
 
@@ -18,6 +18,7 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	class OpenALEngine: public AudioEngine {
+		friend class AudioEngine;
 	public:
 		/**
 		 * Initializes OpenAL.
