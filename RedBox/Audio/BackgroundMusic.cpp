@@ -4,3 +4,6 @@ using namespace RedBox;
 
 BackgroundMusic::BackgroundMusic() {
 }
+
+BackgroundMusic::~BackgroundMusic() {
+}

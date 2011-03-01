@@ -4,3 +4,6 @@ using namespace RedBox;
 
 SoundFX::SoundFX() {
 }
+
+SoundFX::~SoundFX() {
+}
