@@ -23,8 +23,15 @@
 		24B9BD7D12E1279E00057BB1 /* RenderStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B9BD7A12E1279E00057BB1 /* RenderStep.cpp */; };
 		24B9BD7E12E1279E00057BB1 /* RenderStep.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B9BD7B12E1279E00057BB1 /* RenderStep.h */; };
 		24B9BD7F12E1279E00057BB1 /* RenderStepMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B9BD7C12E1279E00057BB1 /* RenderStepMode.h */; };
-		24BAE0A4130472EF00474828 /* SpriteEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24BAE0A2130472EF00474828 /* SpriteEmitter.cpp */; };
-		24BAE0A5130472EF00474828 /* SpriteEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 24BAE0A3130472EF00474828 /* SpriteEmitter.h */; };
+		24D0D4DE1314507D007A5629 /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D0D4D51314507D007A5629 /* Emitter.cpp */; };
+		24D0D4DF1314507D007A5629 /* Emitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4D61314507D007A5629 /* Emitter.h */; };
+		24D0D4E01314507D007A5629 /* IEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D0D4D71314507D007A5629 /* IEmitter.cpp */; };
+		24D0D4E11314507D007A5629 /* IEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4D81314507D007A5629 /* IEmitter.h */; };
+		24D0D4E21314507D007A5629 /* ParticlePhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D0D4D91314507D007A5629 /* ParticlePhase.cpp */; };
+		24D0D4E31314507D007A5629 /* ParticlePhase.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4DA1314507D007A5629 /* ParticlePhase.h */; };
+		24D0D4E41314507D007A5629 /* ParticleState.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4DB1314507D007A5629 /* ParticleState.h */; };
+		24D0D4E51314507D007A5629 /* SpriteEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D0D4DC1314507D007A5629 /* SpriteEmitter.cpp */; };
+		24D0D4E61314507D007A5629 /* SpriteEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4DD1314507D007A5629 /* SpriteEmitter.h */; };
 		24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24F0335012F1C59500BD5409 /* AudioEngine.cpp */; };
 		24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24F0335112F1C59500BD5409 /* AudioEngine.h */; };
 		51140FB5130B3C5300D05386 /* Glyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51140FB3130B3C5300D05386 /* Glyph.cpp */; };
@@ -129,8 +136,15 @@
 		24B9BD7A12E1279E00057BB1 /* RenderStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderStep.cpp; sourceTree = "<group>"; };
 		24B9BD7B12E1279E00057BB1 /* RenderStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderStep.h; sourceTree = "<group>"; };
 		24B9BD7C12E1279E00057BB1 /* RenderStepMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderStepMode.h; sourceTree = "<group>"; };
-		24BAE0A2130472EF00474828 /* SpriteEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteEmitter.cpp; sourceTree = "<group>"; };
-		24BAE0A3130472EF00474828 /* SpriteEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteEmitter.h; sourceTree = "<group>"; };
+		24D0D4D51314507D007A5629 /* Emitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Emitter.cpp; sourceTree = "<group>"; };
+		24D0D4D61314507D007A5629 /* Emitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emitter.h; sourceTree = "<group>"; };
+		24D0D4D71314507D007A5629 /* IEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEmitter.cpp; sourceTree = "<group>"; };
+		24D0D4D81314507D007A5629 /* IEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEmitter.h; sourceTree = "<group>"; };
+		24D0D4D91314507D007A5629 /* ParticlePhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticlePhase.cpp; sourceTree = "<group>"; };
+		24D0D4DA1314507D007A5629 /* ParticlePhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticlePhase.h; sourceTree = "<group>"; };
+		24D0D4DB1314507D007A5629 /* ParticleState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleState.h; sourceTree = "<group>"; };
+		24D0D4DC1314507D007A5629 /* SpriteEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteEmitter.cpp; sourceTree = "<group>"; };
+		24D0D4DD1314507D007A5629 /* SpriteEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteEmitter.h; sourceTree = "<group>"; };
 		24F0335012F1C59500BD5409 /* AudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEngine.cpp; sourceTree = "<group>"; };
 		24F0335112F1C59500BD5409 /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -331,6 +345,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		24D0D4D41314507D007A5629 /* Emitter */ = {
+			isa = PBXGroup;
+			children = (
+				24D0D4D51314507D007A5629 /* Emitter.cpp */,
+				24D0D4D61314507D007A5629 /* Emitter.h */,
+				24D0D4D71314507D007A5629 /* IEmitter.cpp */,
+				24D0D4D81314507D007A5629 /* IEmitter.h */,
+				24D0D4D91314507D007A5629 /* ParticlePhase.cpp */,
+				24D0D4DA1314507D007A5629 /* ParticlePhase.h */,
+				24D0D4DB1314507D007A5629 /* ParticleState.h */,
+				24D0D4DC1314507D007A5629 /* SpriteEmitter.cpp */,
+				24D0D4DD1314507D007A5629 /* SpriteEmitter.h */,
+			);
+			path = Emitter;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -447,6 +477,7 @@
 		51CF8D3212DF60E0003FBBAD /* Display */ = {
 			isa = PBXGroup;
 			children = (
+				24D0D4D41314507D007A5629 /* Emitter */,
 				51CF8D3312DF60E0003FBBAD /* AnimationParameters.cpp */,
 				51CF8D3412DF60E0003FBBAD /* AnimationParameters.h */,
 				51CF8D3512DF60E0003FBBAD /* Camera */,
@@ -462,8 +493,6 @@
 				51CF8D5D12DF60E0003FBBAD /* Renderable.h */,
 				51CF8D5E12DF60E0003FBBAD /* Sprite.cpp */,
 				51CF8D5F12DF60E0003FBBAD /* Sprite.h */,
-				24BAE0A2130472EF00474828 /* SpriteEmitter.cpp */,
-				24BAE0A3130472EF00474828 /* SpriteEmitter.h */,
 				241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */,
 				2480744F12E0A3F800F49E74 /* RenderInfo.h */,
 				24B9BD7A12E1279E00057BB1 /* RenderStep.cpp */,
@@ -794,10 +823,14 @@
 				51A80F6C12FDC23F00AD6878 /* Parser.h in Headers */,
 				51A80F6E12FDC23F00AD6878 /* UTFConvert.h in Headers */,
 				242F209E1301AC0200494000 /* ResourcePathHandler.h in Headers */,
-				24BAE0A5130472EF00474828 /* SpriteEmitter.h in Headers */,
 				515E396213066215006E85AC /* Camera.h in Headers */,
 				51140FB6130B3C5300D05386 /* Glyph.h in Headers */,
 				511AA3D7130D731B006F7B11 /* Font.h in Headers */,
+				24D0D4DF1314507D007A5629 /* Emitter.h in Headers */,
+				24D0D4E11314507D007A5629 /* IEmitter.h in Headers */,
+				24D0D4E31314507D007A5629 /* ParticlePhase.h in Headers */,
+				24D0D4E41314507D007A5629 /* ParticleState.h in Headers */,
+				24D0D4E61314507D007A5629 /* SpriteEmitter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,10 +920,13 @@
 				51A80F6B12FDC23F00AD6878 /* Parser.cpp in Sources */,
 				51A80F6D12FDC23F00AD6878 /* UTFConvert.cpp in Sources */,
 				242F209D1301AC0200494000 /* ResourcePathHandler.cpp in Sources */,
-				24BAE0A4130472EF00474828 /* SpriteEmitter.cpp in Sources */,
 				515E396113066215006E85AC /* Camera.cpp in Sources */,
 				51140FB5130B3C5300D05386 /* Glyph.cpp in Sources */,
 				511AA3D6130D731B006F7B11 /* Font.cpp in Sources */,
+				24D0D4DE1314507D007A5629 /* Emitter.cpp in Sources */,
+				24D0D4E01314507D007A5629 /* IEmitter.cpp in Sources */,
+				24D0D4E21314507D007A5629 /* ParticlePhase.cpp in Sources */,
+				24D0D4E51314507D007A5629 /* SpriteEmitter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
