@@ -83,12 +83,12 @@ namespace RedBox {
 		 * @return Pointer to the loaded music.
 		 */
 		virtual BackgroundMusic* loadBackgroundMusic(const MusicInfo& info) = 0;
-	private:
 		/**
 		 * Destructor. The audio engine can only be destroyed by the resource
 		 * loader.
 		 */
 		virtual ~AudioEngine() = 0;
+	private:
 		static AudioEngine* soundEngine;
 		static AudioEngine* musicEngine;
 	};
