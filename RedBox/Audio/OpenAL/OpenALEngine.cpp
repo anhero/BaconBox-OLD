@@ -2,6 +2,8 @@
 
 #include "Debug.h"
 
+#include "OpenALSoundFX.h"
+
 using namespace RedBox;
 
 ALCchar* OpenALEngine::defaultDevice = NULL;
@@ -45,11 +47,23 @@ OpenALEngine::OpenALEngine(): AudioEngine() {
 }
 
 SoundFX* OpenALEngine::loadSoundFX(const std::string& filePath) {
-	return NULL;
+	SoundInfo snd;
+	snd.path = filePath;
+	return loadSoundFX(snd);
 }
 
 SoundFX* OpenALEngine::loadSoundFX(const SoundInfo& info) {
-	return NULL;
+	// We allocate a new sound effect.
+	OpenALSoundFX* snd = new OpenALSoundFX();
+	// We check if it was correctly created.
+	if(snd) {
+		// We attempt to load the sound effect and delete it if it didn't work.
+		if(!snd->load(info.path)) {
+			delete snd;
+			snd = NULL;
+		}
+	}
+	return snd;
 }
 
 BackgroundMusic* OpenALEngine::loadBackgroundMusic(const std::string& filePath) {

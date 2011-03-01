@@ -9,6 +9,7 @@
 #include <OpenAL/alc.h>
 #include <vector>
 
+#include "OpenALEngine.h"
 #include "SoundFX.h"
 
 namespace RedBox {
@@ -17,6 +18,7 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	class OpenALSoundFX: public SoundFX {
+		friend class OpenALEngine;
 	public:
 		/**
 		 * Plays the sound effect a given number of times.
@@ -37,6 +39,7 @@ namespace RedBox {
 		ALsizei freq;
 		/// Sound buffer data.
 		std::vector<char> bufferData;
+		
 		/**
 		 * Default constructor.
 		 */
@@ -45,6 +48,11 @@ namespace RedBox {
 		 * Destructor.
 		 */
 		~OpenALSoundFX();
+		/**
+		 * Loads a sound effect from a file.
+		 * @param filePath Path to the file to load.
+		 */
+		bool load(const std::string& filePath);
 	};
 }
 

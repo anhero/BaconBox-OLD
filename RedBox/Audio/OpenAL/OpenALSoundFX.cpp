@@ -11,3 +11,8 @@ format(0), freq(0) {
 
 OpenALSoundFX::~OpenALSoundFX() {
 }
+
+bool OpenALSoundFX::load(const std::string& filePath) {
+	return false;
+}
+

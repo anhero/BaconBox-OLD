@@ -5,7 +5,9 @@
  
 #ifndef RB_SOUND_INFO_H
 #define RB_SOUND_INFO_H
- 
+
+#include "PlatformFlagger.h"
+
 #include <string>
 
 namespace RedBox {
@@ -16,6 +18,9 @@ namespace RedBox {
 	struct SoundInfo {
 		/// Name used by the ResourceLoader.
 		std::string name;
+#ifdef RB_OPENAL
+		std::string path;
+#endif
 	};
 }
  
