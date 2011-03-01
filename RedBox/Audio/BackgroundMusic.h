@@ -47,12 +47,11 @@ namespace RedBox {
 		 * loader or the audio engine.
 		 */
 		BackgroundMusic();
-	private:
 		/**
 		 * Destructor. Musics can only be destroyed by the resource loader or
 		 * audio engine.
 		 */
-		virtual ~BackgroundMusic() = 0;
+		virtual ~BackgroundMusic();
 	};
 }
 

@@ -52,10 +52,10 @@ SoundFX* OpenALEngine::loadSoundFX(const SoundInfo& info) {
 	return NULL;
 }
 
-BackgroundMusic* loadBackgroundMusic(const std::string& filePath) {
+BackgroundMusic* OpenALEngine::loadBackgroundMusic(const std::string& filePath) {
 	return NULL;
 }
-BackgroundMusic* loadBackgroundMusic(const MusicInfo& info) {
+BackgroundMusic* OpenALEngine::loadBackgroundMusic(const MusicInfo& info) {
 	return NULL;
 }
 

@@ -33,12 +33,11 @@ namespace RedBox {
 		 * audio engine.
 		 */
 		SoundFX();
-	private:
 		/**
 		 * Destructor. Sound effects can only be destroyed by the resource
 		 * loader or the audio engine.
 		 */
-		virtual ~SoundFX() = 0;
+		virtual ~SoundFX();
 	};
 }
 

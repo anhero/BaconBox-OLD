@@ -45,3 +45,6 @@ AudioEngine* AudioEngine::getMusicEngine() {
 
 AudioEngine::AudioEngine() {
 }
+
+AudioEngine::~AudioEngine() {
+}

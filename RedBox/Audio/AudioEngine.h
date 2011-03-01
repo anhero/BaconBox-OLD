@@ -87,7 +87,7 @@ namespace RedBox {
 		 * Destructor. The audio engine can only be destroyed by the resource
 		 * loader.
 		 */
-		virtual ~AudioEngine() = 0;
+		virtual ~AudioEngine();
 	private:
 		static AudioEngine* soundEngine;
 		static AudioEngine* musicEngine;
