@@ -1,6 +1,17 @@
 #ifndef RB_PLATFORM_FLAGGER_H
 #define RB_PLATFORM_FLAGGER_H
 
+#ifdef _WIN32
+#include <sdkddkver.h>
+
+#ifdef _WIN32_WINNT_VISTA
+	#define _WIN32_WINNT _WIN32_WINNT_VISTA
+#else
+	#define _WIN32_WINNT _WIN32_WINNT_WIN2K
+#endif // _WIN32_WINNT_VISTA
+
+#endif
+
 #ifdef __APPLE__
 
 #include "TargetConditionals.h"

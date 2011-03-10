@@ -101,7 +101,8 @@ void RedBoxEngine::pulse() {
 	}
 }
 
-void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight){
+void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight) {
+	TimeHelper::init();
 	Drawer::initializeDrawer(screenWidth, screenHeight);
 	Font::initializeFontRenderer();
 }
