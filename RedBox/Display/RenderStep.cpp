@@ -61,22 +61,27 @@ RenderStep::~RenderStep() {
 }
 
 void RenderStep::render() {
-	if(vertices) {
+	if(verticesPtr.size() > 0) {
+		updateVerticesData();
 		// We use the bitwise inclusive OR to combine different modes.
 		if(mode == (RenderStepMode::SHAPE | RenderStepMode::TEXTURE | RenderStepMode::COLOR)) {
-			Drawer::drawShapeWithTextureAndColor(vertices, info, vertices->getVertices().size());
+			Drawer::drawShapeWithTextureAndColor(verticesData, info,
+												 vertices->getVertices().size());
 		} else if(mode == (RenderStepMode::SHAPE | RenderStepMode::TEXTURE)) {
-			Drawer::drawShapeWithTexture(vertices, info, vertices->getVertices().size());
+			Drawer::drawShapeWithTexture(verticesData, info,
+										 vertices->getVertices().size());
 		}
 	}
 }
 
 void RenderStep::update() {
-	if(info.isAnimated() && !isPaused) {
-		AnimationParameters* anim = info.getAnimationParameters(currentAnimation);
-		if(anim) {
-			if(((useSinceEpoch)?(TimeHelper::getSinceEpoch()):(TimeHelper::getSinceStart())) >= lastFrameChange + anim->timePerFrame) {
-				info.incrementFrame();
+	if(!isPaused) {
+		if(info.isAnimated()) {
+			AnimationParameters* anim = info.getAnimationParameters(currentAnimation);
+			if(anim) {
+				if(((useSinceEpoch)?(TimeHelper::getSinceEpoch()):(TimeHelper::getSinceStart())) >= lastFrameChange + anim->timePerFrame) {
+					info.incrementFrame();
+				}
 			}
 		}
 	}
@@ -169,6 +174,49 @@ void RenderStep::clean() {
     if(deleteVerticesGroup && vertices) {
         delete vertices;
     }
+}
+
+void RenderStep::updateVerticesData() {
+	if(vertices) {
+		vertices->updateDataFromVertices(verticesData);
+	} else {
+		// We make sure that verticesData has the correct size.
+		if(verticesData.size() != verticesPtr.size() * 2) {
+			verticesData.resize(verticesPtr.size() * 2);
+		}
+		// We set all the verticesData's correct values.
+		std::vector<float>::iterator data = verticesData.begin();
+		for (std::list<Vertex*>::iterator i = verticesPtr.begin();
+			 i != verticesPtr.end(); i++) {
+			*data = (*i)->getXPosition();
+			++data;
+			*data = (*i)->getYPosition();
+		}
+	}
+}
+
+void RenderStep::addVertexPtr(Vertex* vertexPtr) {
+	verticesPtr.push_back(vertexPtr);
+}
+
+void RenderStep::addVerticesPtr(std::list<Vertex*>::iterator first,
+								std::list<Vertex*>::iterator last) {
+	verticesPtr.insert(verticesPtr.end(), first, last);
+}
+
+void RenderStep::addVerticesPtr(unsigned int nbVerticesPtr, ...) {
+	if(nbVerticesPtr) {
+		va_list lstPtr;
+		va_start(lstPtr, nbVerticesPtr);
+		for(unsigned int i = 0; i < nbVerticesPtr; i++) {
+			addVertexPtr(va_arg(lstPtr, Vertex*));
+		}
+		va_end(lstPtr);
+	}
+}
+
+void RenderStep::removeVertexPtr(Vertex* vertexPtr) {
+	verticesPtr.remove(vertexPtr);
 }
 
 void RenderStep::copyFrom(const RenderStep &src) {

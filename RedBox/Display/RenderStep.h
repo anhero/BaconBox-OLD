@@ -7,7 +7,9 @@
 #define RB_RENDER_STEP_H
 
 #include <vector>
+#include <list>
 #include <string>
+#include <cstdarg>
 
 #include "Renderable.h"
 #include "VerticesGroup.h"
@@ -187,6 +189,38 @@ namespace RedBox {
 		 * @return Name of the current animation being played.
 		 */
 		const std::string& getCurrentAnimation() const;
+		
+		/**
+		 * Synchronizes the vertices data with their respective vertices. To be
+		 * called at each sprite update or each time a sprite is moved.
+		 */
+		void updateVerticesData();
+		
+		/**
+		 * Adds a vertex pointer to the render step. Only useful if the instance
+		 * is a secondary render step.
+		 * @param vertexPtr Pointer to add to the list.
+		 */
+		void addVertexPtr(Vertex* vertexPtr);
+		/**
+		 * Adds vertices to the list that the render step needs to keep
+		 * synchronized with.
+		 * @param first Iterator to the first vertex to add.
+		 * @param last Iterator to the last vertex to add.
+		 */
+		void addVerticesPtr(std::list<Vertex*>::iterator first,
+							std::list<Vertex*>::iterator last);
+		/**
+		 * Adds vertices to the list that the render step needs to keep
+		 * synchronized with. Takes a variable number of arguments.
+		 * @param nbVerticesPtr Number of vertices pointers to add.
+		 */
+		void addVerticesPtr(unsigned int nbVerticesPtr, ...);
+		/**
+		 * Removes a vertex pointer from the render step's list.
+		 * @param vertexPtr Pointer to remove from the list.
+		 */
+		void removeVertexPtr(Vertex* vertexPtr);
     private:
         /// Information on the render. Includes the color and the texture ID.
         RenderInfo info;
@@ -195,8 +229,22 @@ namespace RedBox {
          * combined with the bitwise inclusive OR.
          */
 		RenderStepMode::Enum mode;
-        /// Vertices to be rendered in this step.
+        /**
+		 * Pointer to the vertices group that contains the vertices this render
+		 * step has to keep its vertices data synchronized with. Is set to NULL
+		 * if the render step is instead synchronized with a few specific
+		 * vertices. In this case, verticesPtr is used.
+		 */
         VerticesGroup* vertices;
+		/**
+		 * Data about the vertices' coordinates.
+		 */
+		std::vector<float> verticesData;
+		/**
+		 * Contains a list of pointers to the vertices this render step has to
+		 * keep its vertices data synchronized with.
+		 */
+		std::list<Vertex*> verticesPtr;
 		/**
 		 * Wether to use the epoch time or not for animations. If it doesn't, it 
 		 * uses the time since the game was started. Useful for RenderSteps with

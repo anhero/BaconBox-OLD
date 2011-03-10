@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "PlatformFlagger.h"
+#include "RenderInfo.h"
 
 namespace RedBox{
     /**
