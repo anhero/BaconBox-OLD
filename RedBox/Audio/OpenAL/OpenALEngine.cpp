@@ -85,20 +85,16 @@ const std::vector<std::string>& OpenALEngine::getDeviceList() {
 	return deviceList;
 }
 
-void OpenALEngine::addSource(ALuint newSource) {
-	sources.push_back(newSource);
-}
-
 void OpenALEngine::deleteBufferSources(ALuint buffer) {
 	ALint tmpBuffer;
-	for(std::list<ALuint>::iterator i = sources.begin(); i != sources.end(); i++) {
-		alGetSourcei(*i, AL_BUFFER, &tmpBuffer);
+	for(std::list<OpenALSoundFX>::iterator i = sources.begin();
+		i != sources.end(); i++) {
+		alGetSourcei(i->getSourceId(), AL_BUFFER, &tmpBuffer);
 		if (tmpBuffer == buffer) {
-			alDeleteSources(1, &(*i));
+			alDeleteSources(1, &(i->getSourceId()));
 			sources.erase(i);
 		}
 	}
-	
 }
 
 OpenALEngine* OpenALEngine::getInstance() {
@@ -168,36 +164,73 @@ void OpenALEngine::loadWav(const std::string& filePath,
 	}
 }
 
+SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
+	SoundInfo* sndInfo = ResourceManager::getSound(key);
+	if(sndInfo) {
+		sources.push_back(OpenALSoundFX());
+		sources.back().load(sndInfo->bufferId, sndInfo->bufferData);
+		return &(sources.back());
+	} else {
+		return NULL;
+	}
+}
+
+BackgroundMusic* OpenALEngine::getBackgroundMusic(const std::string& key) {
+	return NULL;
+}
+
 OpenALEngine::OpenALEngine(): AudioEngine() {
 	assert(!OpenALEngine::instance);
 	OpenALEngine::instance = this;
 }
 
-SoundFX* OpenALEngine::loadSoundFX(const std::string& filePath) {
-	SoundParameters snd;
-	snd.path = filePath;
-	return loadSoundFX(snd);
-}
-
-SoundFX* OpenALEngine::loadSoundFX(const SoundParameters& info) {
-	// We allocate a new sound effect.
-	OpenALSoundFX* snd = new OpenALSoundFX();
-	// We check if it was correctly created.
-	if(snd) {
-		// We attempt to load the sound effect and delete it if it didn't work.
-		if(!snd->load(info.path)) {
-			delete snd;
-			snd = NULL;
+SoundInfo* OpenALEngine::loadSound(const std::string& filePath) {
+	SoundInfo* newSnd = new SoundInfo();
+	if(newSnd) {
+		ALenum format;
+		ALsizei bufferSize, freq;
+		// We load the wav file.
+		OpenALEngine::loadWav(filePath, newSnd->bufferData, bufferSize, format,
+							  freq);
+		// We check that the buffer was loaded correctly.
+		if(newSnd->bufferData) {
+			alGenBuffers(1, &(newSnd->bufferId));
+			alBufferData(newSnd->bufferId, format, newSnd->bufferData,
+						 bufferSize, freq);
+		} else {
+			delete newSnd;
+			newSnd = NULL;
 		}
 	}
-	return snd;
+	return newSnd;
 }
 
-BackgroundMusic* OpenALEngine::loadBackgroundMusic(const std::string& filePath) {
+SoundInfo* OpenALEngine::loadSound(const SoundParameters& params) {
+	return loadSound(params.path);
+}
+
+MusicInfo* OpenALEngine::loadMusic(const std::string& filePath) {
 	return NULL;
 }
-BackgroundMusic* OpenALEngine::loadBackgroundMusic(const MusicParameters& info) {
+MusicInfo* OpenALEngine::loadMusic(const MusicParameters& params) {
 	return NULL;
+}
+
+bool OpenALEngine::unloadSound(SoundInfo* sound) {
+	// We release the buffer name.
+	alDeleteBuffers(1, &sound->bufferId);
+	// We check if it was released succesfully.
+	bool failure = alIsBuffer(sound->bufferId);
+	// We delete the buffer data.
+	if (!failure && sound->bufferData) {
+		delete[] sound->bufferData;
+	}
+	return failure;
+}
+
+bool OpenALEngine::unloadMusic(MusicInfo* music) {
+	// We always return false because it shouln't even be called.
+	return false
 }
 
 OpenALEngine::~OpenALEngine() {

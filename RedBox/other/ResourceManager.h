@@ -109,11 +109,10 @@ namespace RedBox {
 		/**
 		 * Return a pointer to the font specified by the given name. 
 		 * @param name Name of the font.
-		 * @return Return a pointer to the specified font or NULL if no font is found.
+		 * @return Return a pointer to the specified font or NULL if no font is
+		 * found.
 		 */
 		static Font* getFont(std::string & name);
-		
-		
 		/**
 		 * Remove the specified font from the fonts' map.
 		 */

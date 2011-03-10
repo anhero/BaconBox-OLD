@@ -1,5 +1,7 @@
 #include "OpenALSoundFX.h"
 
+#include "OpenALEngine.h"
+
 #include <cassert>
 
 using namespace RedBox;
@@ -35,33 +37,28 @@ void OpenALSoundFX::play(int nbTimes) {
 	}
 }
 
-OpenALSoundFX::OpenALSoundFX(): SoundFX(), bufferId(0), bufferData(NULL) {
+bool OpenALSoundFX::getSurvives() const {
+	return survives;
+}
+
+void OpenALSoundFX::setSurvives(bool newSurvives) {
+	survives = newSurvives;
+}
+
+ALuint& OpenALSoundFX::getSourceId() {
+	return sourceId;
+}
+
+OpenALSoundFX::OpenALSoundFX(): SoundFX(), sourceId(0), survives(false) {
 }
 
 OpenALSoundFX::~OpenALSoundFX() {
-	assert(OpenALEngine::getInstance());
-	// We delete the buffer's sources still playing, else we can't delete the
-	// buffer.
-	OpenALEngine::getInstance()->deleteBufferSources(bufferId);
-	// We delete the buffer from OpenAL.
-	alDeleteBuffers(1, &bufferId);
-	if(bufferData) {
-		delete[] bufferData;
-	}
 }
 
-bool OpenALSoundFX::load(const std::string& filePath) {
+void OpenALSoundFX::load(ALuint bufferId, char* bufferData) {
 	assert(OpenALEngine::getInstance());
-	ALenum format;
-	ALsizei bufferSize, freq;
-	OpenALEngine::loadWav(filePath, bufferData, bufferSize, format, freq);
-	// We check that the buffer was loaded correctly.
-	if(bufferData) {
-		alGenBuffers(1, &bufferId);
-		alBufferData(bufferId, format, bufferData, bufferSize, freq);
-		return true;
-	} else {
-		return false;
-	}
+	alGenSources(1, &sourceId);
+	alSource3f(sourceId, AL_POSITION, 0.0f, 0.0f, 0.0f);
+	alSourcei(sourceId, AL_BUFFER, bufferId);
 }
 

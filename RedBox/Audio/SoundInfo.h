@@ -8,6 +8,11 @@
 
 #include "PlatformFlagger.h"
 
+#ifdef RB_OPENAL
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#endif
+
 #include <string>
 
 namespace RedBox {
@@ -16,6 +21,12 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	struct SoundInfo {
+#ifdef RB_OPENAL
+		/// OpenAL sound buffer ID.
+		ALuint bufferId;
+		/// Sound buffer data.
+		char* bufferData;
+#endif
 	};
 }
  

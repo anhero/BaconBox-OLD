@@ -13,6 +13,7 @@
 #include <list>
 
 #include "AudioEngine.h"
+#include "OpenaLSoundFX.h"
 
 namespace RedBox {
 	/**
@@ -42,12 +43,6 @@ namespace RedBox {
 		 */
 		const std::vector<std::string>& getDeviceList();
 		/**
-		 * Adds a source being played. Sources added will be deleted once the
-		 * sound is done playing.
-		 * @param newSource ID of the source to add.
-		 */
-		void addSource(ALuint newSource);
-		/**
 		 * Deletes all sources using a specific buffer.
 		 */
 		void deleteBufferSources(ALuint buffer);
@@ -69,6 +64,22 @@ namespace RedBox {
 							ALsizei& bufferSize,
 							ALenum& format,
 							ALsizei& freq);
+		/**
+		 * Gets a sound effect. Initializes a sound effect from already loaded
+		 * sound effect data.
+		 * @param key Key to the sound effect data to use for the sound effect.
+		 * @param survive True if the user wants to manage the sound effect by
+		 * himself. False if he doesn't want to have to delete the sound
+		 * effect after he has started playing it.
+		 */
+		SoundFX* getSoundFX(const std::string& key, bool survive);
+		/**
+		 * Gets a background music. Initializes a music from already loaded
+		 * music data. The user has to take care of deleting the background
+		 * music's instance after he recieves it.
+		 * @param key Key to the music data to use for the background music.
+		 */
+		BackgroundMusic* getBackgroundMusic(const std::string& key);
 	private:
 		/// OpenALEngine's main instance.
 		static OpenALEngine* instance;
@@ -77,7 +88,7 @@ namespace RedBox {
 		/// List of devices available.
 		std::vector<std::string> deviceList;
 		/// Sources being played.
-		std::list<ALuint> sources;
+		std::list<OpenALSoundFX> sources;
 		/**
 		 * Default constructor.
 		 */
@@ -88,26 +99,43 @@ namespace RedBox {
 		 * @return Pointer to the loaded sound effect.
 		 Null if the loading failed.
 		 */
-		SoundFX* loadSoundFX(const std::string& filePath);
+		SoundInfo* loadSound(const std::string& filePath);
 		/**
 		 * Loads a sound effect from information.
 		 * @param info Information about the sound effect to load.
 		 * @return Pointer to the loaded sound effect. Null if the loading
 		 * failed.
 		 */
-		SoundFX* loadSoundFX(const SoundParameters& info);
+		SoundInfo* loadSound(const SoundParameters& params);
 		/**
 		 * Loads a background music from a file. For now, it must be a wav file.
 		 * @param filePath Path to the music's file.
 		 * @return Pointer to loaded music. Null if the loading failed.
 		 */
-		BackgroundMusic* loadBackgroundMusic(const std::string& filePath);
+		MusicInfo* loadMusic(const std::string& filePath);
 		/**
 		 * Loads a background music from information.
 		 * @param info Information about the music to load.
 		 * @return Pointer to the loaded music. Null if the loading failed.
 		 */
-		BackgroundMusic* loadBackgroundMusic(const MusicParameters& info);
+		MusicInfo* loadMusic(const MusicParameters& params);
+		/**
+		 * Unloads sound data. Called by the resource loader either by demand
+		 * of the user or when it is unloading everything before unloading the
+		 * audio engine. Will not succeed if there are still sources using the
+		 * buffer.
+		 * @param sound Sound data to unload.
+		 * @return True if the unloading was done correctly, false if not.
+		 */
+		bool unloadSound(SoundInfo* sound);
+		/**
+		 * Unloads data of a music. Called by the resource loader either by
+		 * demand of the user or when it is unloading everything before
+		 * unloading the audio engine. Does nothing in OpenAL's case.
+		 * @param sound Music data to unload.
+		 * @return True if the unloading was done correctly, false if not.
+		 */
+		bool unloadMusic(MusicInfo* music);
 		/**
 		 * Destructor, closes OpenAL.
 		 */
