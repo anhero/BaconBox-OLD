@@ -8,10 +8,6 @@
 
 using namespace RedBox;
 
-std::string OpenALEngine::defaultDevice = "";
-std::vector<std::string> OpenALEngine::deviceList = std::vector<std::string>();
-
-
 void OpenALEngine::init() {
 	// We open the device.
 	ALCdevice* device = alcOpenDevice(OpenALEngine::defaultDevice.c_str());

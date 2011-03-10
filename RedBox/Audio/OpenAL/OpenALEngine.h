@@ -34,17 +34,17 @@ namespace RedBox {
 		 * before initializing the engine.
 		 * @param newDevice Name of the device to set as the default device.
 		 */
-		static void setDefaultDevice(const std::string& newDevice);
+		void setDefaultDevice(const std::string& newDevice);
 		/**
 		 * Gets the list of available auio devices on the system.
 		 * @return Vector containing the device names.
 		 */
-		static const std::vector<std::string>& getDeviceList();
+		const std::vector<std::string>& getDeviceList();
 	private:
 		/// Device to load.
-		static std::string defaultDevice;
+		std::string defaultDevice;
 		/// List of devices available.
-		static std::vector<std::string> deviceList;
+		std::vector<std::string> deviceList;
 		/**
 		 * Default constructor.
 		 */
