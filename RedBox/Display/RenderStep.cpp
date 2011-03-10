@@ -19,10 +19,20 @@ RenderStep::RenderStep(TextureInfo* newTexInfo,
 					   float offsetY,
 					   int* newColor,
 					   bool newDeleteVerticesGroup): Renderable(),
-vertices(newVertices), deleteVerticesGroup(newDeleteVerticesGroup),
-info(RenderInfo(newTexInfo, newVertices, nbFrames, factor, offsetX, offsetY, newColor)),
-mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE), useSinceEpoch(false),
-lastFrameChange(0.0), currentAnimation(""), isPaused(false),
+vertices(newVertices),
+deleteVerticesGroup(newDeleteVerticesGroup),
+info(RenderInfo(newTexInfo,
+				newVertices,
+				nbFrames,
+				factor,
+				offsetX,
+				offsetY,
+				newColor)),
+mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE),
+useSinceEpoch(false),
+lastFrameChange(0.0),
+currentAnimation(""),
+isPaused(false),
 pauseFrameRemain(0.0) {
 	if(newColor) {
 		mode |= RenderStepMode::COLOR;
@@ -61,8 +71,8 @@ RenderStep::~RenderStep() {
 }
 
 void RenderStep::render() {
-	if(verticesPtr.size() > 0) {
-		updateVerticesData();
+	updateVerticesData();
+	if(verticesData.size()) {
 		// We use the bitwise inclusive OR to combine different modes.
 		if(mode == (RenderStepMode::SHAPE | RenderStepMode::TEXTURE | RenderStepMode::COLOR)) {
 			Drawer::drawShapeWithTextureAndColor(verticesData, info,

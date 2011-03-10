@@ -218,14 +218,37 @@ void VerticesGroup::updateDataFromVertices(std::vector<float>& verticesData) {
 	assert(verticesData.size() % 2 == 0);
 	// We make sure the sizes are different.
 	if (vertices.size() * 2 != verticesData.size()) {
-		// We initialize the temporary data vector.
+		// First, we make a temporary copy of the vertices data.
 		std::vector<float> tmpData(vertices.size() * 2, 0.0f);
 		std::vector<float>& shortest = (verticesData.size() < tmpData.size()) ? (verticesData) : (tmpData);
 		std::vector<float>::iterator srcData = verticesData.begin();
 		std::vector<float>::iterator dstData = tmpData.begin();
-		for(unsigned int i = 0; i >= shortest.size(); ++i) {
+		std::list<Vertex>::iterator srcVertex = vertices.begin();
+		for(unsigned int i = 0; i < shortest.size(); ++i) {
 			*dstData = *srcData;
 			++srcData;
+			++dstData;
+			if(i % 2 == 1) {
+				++srcVertex;
+			}
+		}
+		// Next, if the vertices data became larger, we finish filling it up.
+		while (dstData != tmpData.end()) {
+			*dstData = srcVertex->getXPosition();
+			++dstData;
+			*dstData = srcVertex->getYPosition();
+			++dstData;
+			++srcVertex;
+		}
+		// We copy the temporary values in the real vertices data.
+		verticesData = tmpData;
+		// We synchronize the vertices with the data.
+		dstData = verticesData.begin();
+		for(srcVertex = vertices.begin(); srcVertex != vertices.end();
+			srcVertex++) {
+			srcVertex->getPosition().setXPtr(&(*dstData));
+			++dstData;
+			srcVertex->getPosition().setYPtr(&(*dstData));
 			++dstData;
 		}
 	}
