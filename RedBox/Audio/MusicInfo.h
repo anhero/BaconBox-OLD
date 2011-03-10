@@ -10,12 +10,10 @@
 
 namespace RedBox {
 	/**
-	 * Contains engine specific information about the music.
+	 * Contains the data about a sound that can be played.
 	 * @ingroup Audio
 	 */
 	struct MusicInfo {
-		/// Name used by the ResourceManager.
-		std::string name;
 	};
 }
  
