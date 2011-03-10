@@ -6,21 +6,21 @@
 
 using namespace RedBox;
 
-void Drawer::drawShapeWithTextureAndColor(VerticesGroup* vertices,
+void Drawer::drawShapeWithTextureAndColor(std::vector<float>& vertices,
 										  RenderInfo& renderingInfo,
 										  unsigned int nbVertices) {
 #ifdef RB_OPENGL
-		OpenGLDrawer::drawShapeWithTextureAndColor(&(*(vertices->getVerticesData().begin())),
+	OpenGLDrawer::drawShapeWithTextureAndColor(&(*(vertices.begin())),
 												   renderingInfo,
 												   nbVertices);
 #endif
 }
 
-void Drawer::drawShapeWithTexture(VerticesGroup* vertices,
+void Drawer::drawShapeWithTexture(std::vector<float>& vertices,
 								  RenderInfo& renderingInfo,
 								  unsigned int nbVertices) {
 #ifdef RB_OPENGL
-		OpenGLDrawer::drawShapeWithTexture(&(*(vertices->getVerticesData().begin())),
+		OpenGLDrawer::drawShapeWithTexture(&(*(vertices.begin())),
 										   renderingInfo,
 										   nbVertices);
 #endif

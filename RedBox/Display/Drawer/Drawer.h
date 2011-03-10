@@ -5,8 +5,9 @@
 #ifndef RB_DRAWER_H
 #define RB_DRAWER_H
 
+#include <vector>
+
 #include "PlatformFlagger.h"
-#include "VerticesGroup.h"
 
 namespace RedBox{
     /**
@@ -26,7 +27,7 @@ namespace RedBox{
          * @param renderingInfo Object of type RenderInfo, containing colors array and textureID
          * @param nbVertices Number equal to the number of vertices to draw
          */
-		static void drawShapeWithTextureAndColor(VerticesGroup* vertices, 
+		static void drawShapeWithTextureAndColor(std::vector<float>& vertices, 
 												 RenderInfo& renderingInfo,
 												 unsigned int nbVertices);
         /**
@@ -38,7 +39,7 @@ namespace RedBox{
          * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
          * @param nbVertices Number equal to the number of vertices to draw.
          */
-		static void drawShapeWithTexture(VerticesGroup* vertices,
+		static void drawShapeWithTexture(std::vector<float>& vertices,
 										 RenderInfo& renderingInfo,
 										 unsigned int nbVertices);
 		
