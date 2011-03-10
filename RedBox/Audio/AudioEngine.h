@@ -47,6 +47,11 @@ namespace RedBox {
 		 */
 		static AudioEngine* getMusicEngine();
 		/**
+		 * Unloads the audio engines. Must be called after the resource manager
+		 * has unloaded everything related to the audio engine.
+		 */
+		static void unloadAudioEngines();
+		/**
 		 * Initializes the audio engine.
 		 */
 		virtual void init() = 0;

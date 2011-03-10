@@ -49,6 +49,17 @@ AudioEngine* AudioEngine::getMusicEngine() {
 	return musicEngine;
 }
 
+void AudioEngine::unloadAudioEngines() {
+	if(soundEngine) {
+		delete soundEngine;
+		soundEngine = NULL;
+	}
+	if(musicEngine) {
+		delete musicEngine;
+		musicEngine = NULL;
+	}
+}
+
 AudioEngine::AudioEngine() {
 }
 
