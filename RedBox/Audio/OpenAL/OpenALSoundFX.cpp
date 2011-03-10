@@ -32,7 +32,12 @@ void OpenALSoundFX::pause() {
 }
 
 void OpenALSoundFX::resume() {
-	alSourcePlay(sourceId);
+	ALint state;
+	alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
+	// We only want to resume if the sound was actually paused.
+	if(state == AL_PAUSED) {
+		alSourcePlay(sourceId);
+	}
 }
 
 OpenALSoundFX::OpenALSoundFX(): SoundFX(), sourceId(0), survives(false), 
@@ -44,7 +49,6 @@ OpenALSoundFX::~OpenALSoundFX() {
 }
 
 void OpenALSoundFX::load(ALuint bufferId) {
-	assert(OpenALEngine::getInstance());
 	alGenSources(1, &sourceId);
 	alSource3f(sourceId, AL_POSITION, 0.0f, 0.0f, 0.0f);
 	alSourcei(sourceId, AL_BUFFER, bufferId);
