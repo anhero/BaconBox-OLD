@@ -174,12 +174,12 @@ OpenALEngine::OpenALEngine(): AudioEngine() {
 }
 
 SoundFX* OpenALEngine::loadSoundFX(const std::string& filePath) {
-	SoundInfo snd;
+	SoundParameters snd;
 	snd.path = filePath;
 	return loadSoundFX(snd);
 }
 
-SoundFX* OpenALEngine::loadSoundFX(const SoundInfo& info) {
+SoundFX* OpenALEngine::loadSoundFX(const SoundParameters& info) {
 	// We allocate a new sound effect.
 	OpenALSoundFX* snd = new OpenALSoundFX();
 	// We check if it was correctly created.
@@ -196,7 +196,7 @@ SoundFX* OpenALEngine::loadSoundFX(const SoundInfo& info) {
 BackgroundMusic* OpenALEngine::loadBackgroundMusic(const std::string& filePath) {
 	return NULL;
 }
-BackgroundMusic* OpenALEngine::loadBackgroundMusic(const MusicInfo& info) {
+BackgroundMusic* OpenALEngine::loadBackgroundMusic(const MusicParameters& info) {
 	return NULL;
 }
 

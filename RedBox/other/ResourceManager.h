@@ -71,7 +71,7 @@ namespace RedBox {
 		 * @return Pointer to the loaded sound effect. Returns NULL if the
 		 * loading failed.
 		 */
-		static SoundFX* loadSoundFX(const SoundInfo& info,
+		static SoundFX* loadSoundFX(const SoundParameters& info,
 									bool overwrite = false);
 		/**
 		 * Loads a background music.
@@ -92,7 +92,7 @@ namespace RedBox {
 		 * @return Pointer to the loaded sound effect. Returns NULL if the
 		 * loading failed.
 		 */
-		static BackgroundMusic* loadBackgroundMusic(const MusicInfo& info,
+		static BackgroundMusic* loadBackgroundMusic(const MusicParameters& info,
 													bool overwrite = true);
 		/**
 		 * Removes and unloads a sound effect.

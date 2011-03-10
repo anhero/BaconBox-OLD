@@ -136,7 +136,7 @@ SoundFX* ResourceManager::loadSoundFX(const std::string& filePath,
 	return newSnd;
 }
 
-SoundFX* ResourceManager::loadSoundFX(const SoundInfo& info, bool overwrite) {
+SoundFX* ResourceManager::loadSoundFX(const SoundParameters& info, bool overwrite) {
 	SoundFX* newSnd = NULL;
 	// We make sure the sound engine is loaded and that there already isn't 
 	// any sound effect with the same name.
@@ -215,7 +215,7 @@ BackgroundMusic* ResourceManager::loadBackgroundMusic(const std::string& filePat
 	return newBgm;
 }
 
-BackgroundMusic* ResourceManager::loadBackgroundMusic(const MusicInfo& info,
+BackgroundMusic* ResourceManager::loadBackgroundMusic(const MusicParameters& info,
 													 bool overwrite) {
 	BackgroundMusic* newBgm = NULL;
 	// We make sure the sound engine is loaded and that there already isn't 

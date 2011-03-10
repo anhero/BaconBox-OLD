@@ -95,7 +95,7 @@ namespace RedBox {
 		 * @return Pointer to the loaded sound effect. Null if the loading
 		 * failed.
 		 */
-		SoundFX* loadSoundFX(const SoundInfo& info);
+		SoundFX* loadSoundFX(const SoundParameters& info);
 		/**
 		 * Loads a background music from a file. For now, it must be a wav file.
 		 * @param filePath Path to the music's file.
@@ -107,7 +107,7 @@ namespace RedBox {
 		 * @param info Information about the music to load.
 		 * @return Pointer to the loaded music. Null if the loading failed.
 		 */
-		BackgroundMusic* loadBackgroundMusic(const MusicInfo& info);
+		BackgroundMusic* loadBackgroundMusic(const MusicParameters& info);
 		/**
 		 * Destructor, closes OpenAL.
 		 */

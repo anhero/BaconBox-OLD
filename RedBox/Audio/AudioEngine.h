@@ -5,8 +5,8 @@
 #ifndef RB_AUDIO_ENGINE_H
 #define RB_AUDIO_ENGINE_H
 
-#include "SoundInfo.h"
-#include "MusicInfo.h"
+#include "SoundParameters.h"
+#include "MusicParameters.h"
 #include "SoundFX.h"
 #include "BackgroundMusic.h"
 #include "ResourceManager.h"
@@ -69,7 +69,7 @@ namespace RedBox {
 		 * the sound effect to load.
 		 * @return Pointer to the loaded sound effect.
 		 */
-		virtual SoundFX* loadSoundFX(const SoundInfo& info) = 0;
+		virtual SoundFX* loadSoundFX(const SoundParameters& info) = 0;
 		/**
 		 * Loads a music using a file path.
 		 * @param filePath Path to the music file to load.
@@ -82,7 +82,7 @@ namespace RedBox {
 		 * the music to load.
 		 * @return Pointer to the loaded music.
 		 */
-		virtual BackgroundMusic* loadBackgroundMusic(const MusicInfo& info) = 0;
+		virtual BackgroundMusic* loadBackgroundMusic(const MusicParameters& info) = 0;
 		/**
 		 * Destructor. The audio engine can only be destroyed by the resource
 		 * loader.
