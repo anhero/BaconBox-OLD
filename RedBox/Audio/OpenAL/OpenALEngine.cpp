@@ -1,6 +1,7 @@
 #include "OpenALEngine.h"
 
 #include <cstring>
+#include <cassert>
 
 #include "Debug.h"
 
@@ -11,14 +12,25 @@ using namespace RedBox;
 OpenALEngine* OpenALEngine::instance = NULL;
 
 void OpenALEngine::init() {
+	ALCdevice* device = NULL;
 	// We open the device.
-	ALCdevice* device = alcOpenDevice(OpenALEngine::defaultDevice.c_str());
+	if(defaultDevice.empty()) {
+		// If no default device to load is specified, we let OpenAL find the
+		// default one.
+		device = alcOpenDevice(NULL);
+	} else {
+		// If the user has specified a default device, we use it.
+		device = alcOpenDevice(OpenALEngine::defaultDevice.c_str());
+	}
 	if(device) {
 		// We create the context.
 		ALCcontext* context = alcCreateContext(device, NULL);
 		if(context) {
 			// We activate the context.
-			if(!alcMakeContextCurrent(context)) {
+			if(alcMakeContextCurrent(context)) {
+				// We set the listener's position.
+				alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
+			} else {
 				$ECHO("Failed to activate the OpenAL context.");
 				// We close the device here because the destructor does not
 				// close the device if no context was created.
@@ -39,6 +51,15 @@ void OpenALEngine::init() {
 }
 
 void OpenALEngine::update() {
+	// We delete the sources of stopped sounds.
+	ALint state;
+	for (std::list<ALuint>::iterator i = sources.begin(); i != sources.end(); i++) {
+		alGetSourcei(*i, AL_SOURCE_STATE, &state);
+		if (state == AL_STOPPED) {
+			alDeleteSources(1, &(*i));
+			sources.erase(i);
+		}
+	}
 }
 
 void OpenALEngine::setDefaultDevice(const std::string& newDevice) {
@@ -46,7 +67,9 @@ void OpenALEngine::setDefaultDevice(const std::string& newDevice) {
 }
 
 const std::vector<std::string>& OpenALEngine::getDeviceList() {
+	// We only fill the list if it hasn't been filled yet.
 	if(deviceList.size() == 0) {
+		// Gets the list of all devices.
 		const ALchar* devices = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
 		if(devices) {
 			while(strlen(devices) > 0) {
@@ -58,11 +81,28 @@ const std::vector<std::string>& OpenALEngine::getDeviceList() {
 	return deviceList;
 }
 
+void OpenALEngine::addSource(ALuint newSource) {
+	sources.push_back(newSource);
+}
+
+void OpenALEngine::deleteBufferSources(ALuint buffer) {
+	ALint tmpBuffer;
+	for(std::list<ALuint>::iterator i = sources.begin(); i != sources.end(); i++) {
+		alGetSourcei(*i, AL_BUFFER, &tmpBuffer);
+		if (tmpBuffer == buffer) {
+			alDeleteSources(1, &(*i));
+			sources.erase(i);
+		}
+	}
+	
+}
+
 OpenALEngine* OpenALEngine::getInstance() {
 	return instance;
 }
 
 OpenALEngine::OpenALEngine(): AudioEngine() {
+	assert(!OpenALEngine::instance);
 	OpenALEngine::instance = this;
 }
 
@@ -94,6 +134,11 @@ BackgroundMusic* OpenALEngine::loadBackgroundMusic(const MusicInfo& info) {
 }
 
 OpenALEngine::~OpenALEngine() {
+	// We delete all the sources.
+	for(std::list<ALuint>::iterator i = sources.begin(); i != sources.end(); i++) {
+		alDeleteSources(1, &(*i));
+	}
+	sources.clear();
 	// We get the current context.
 	ALCcontext* context = alcGetCurrentContext();
 	// We check if it is valid.

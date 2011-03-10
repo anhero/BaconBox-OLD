@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 
 #include "AudioEngine.h"
 
@@ -41,6 +42,16 @@ namespace RedBox {
 		 */
 		const std::vector<std::string>& getDeviceList();
 		/**
+		 * Adds a source being played. Sources added will be deleted once the
+		 * sound is done playing.
+		 * @param newSource ID of the source to add.
+		 */
+		void addSource(ALuint newSource);
+		/**
+		 * Deletes all sources using a specific buffer.
+		 */
+		void deleteBufferSources(ALuint buffer);
+		/**
 		 * Gets OpenALEngine's instance. Retuns NULL if it isn't constructed.
 		 */
 		static OpenALEngine* getInstance();
@@ -51,6 +62,8 @@ namespace RedBox {
 		std::string defaultDevice;
 		/// List of devices available.
 		std::vector<std::string> deviceList;
+		/// Sources being played.
+		std::list<ALuint> sources;
 		/**
 		 * Default constructor.
 		 */

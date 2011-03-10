@@ -23,9 +23,9 @@
 #ifdef RB_IPHONE_PLATFORM
 	#define RB_OPENAL
 	#define RB_SOUND_ENGINE new OpenALEngine()
-	#define RB_MUSIC_ENGINE new OpenALEngine()
+	#define RB_MUSIC_ENGINE NULL
 	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-	#define RB_MUSIC_ENGINE_INCLUDE "OpenALEngine.h"
+	//#define RB_MUSIC_ENGINE_INCLUDE "OpenALEngine.h"
 	// Example of the 4 defines needed for the audio engine.
 	//#define RB_SOUND_ENGINE new OpenALEngine()
 	//#define RB_MUSIC_ENGINE new OpenALEngine()
