@@ -16,7 +16,7 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	struct SoundInfo {
-		/// Name used by the ResourceLoader.
+		/// Name used by the ResourceManager.
 		std::string name;
 #ifdef RB_OPENAL
 		std::string path;

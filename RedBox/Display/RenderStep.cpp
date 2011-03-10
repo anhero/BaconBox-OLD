@@ -1,6 +1,6 @@
 #include "RenderStep.h"
 
-#include "ResourceLoader.h"
+#include "ResourceManager.h"
 #include "TimeHelper.h"
 #include "AnimationParameters.h"
 #include "Debug.h"
@@ -37,7 +37,7 @@ RenderStep::RenderStep(const std::string& key,
 					   float offsetY,
 					   bool newDeleteVerticesGroup): Renderable(),
 vertices(newVertices), deleteVerticesGroup(newDeleteVerticesGroup),
-info(RenderInfo(ResourceLoader::getTexture(key), newVertices, nbFrames, factor, offsetX, offsetY)),
+info(RenderInfo(ResourceManager::getTexture(key), newVertices, nbFrames, factor, offsetX, offsetY)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE), useSinceEpoch(false),
 lastFrameChange(0.0), currentAnimation(""), isPaused(false),
 pauseFrameRemain(0.0) {

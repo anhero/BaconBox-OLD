@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-#include "ResourceLoader.h"
+#include "ResourceManager.h"
 #include "Debug.h"
 
 using namespace RedBox;
@@ -22,7 +22,7 @@ Sprite::Sprite(const std::string& imageKey, GraphicBody* parentBody): Renderable
 Sprite::Sprite(const std::string& imageKey): Renderable()
 #endif
 {
-	TextureInfo* texInfo = ResourceLoader::getTexture(imageKey);
+	TextureInfo* texInfo = ResourceManager::getTexture(imageKey);
 	if(texInfo) {
 		construct(texInfo,
 				  static_cast<float>(texInfo->imageWidth),
@@ -75,7 +75,7 @@ Sprite::Sprite(const std::string& imageKey,
 float offsetY): Renderable()
 #endif
 {
-	construct(ResourceLoader::getTexture(imageKey),
+	construct(ResourceManager::getTexture(imageKey),
 			  frameWidth,
 			  frameHeight,
 			  nbFrames,

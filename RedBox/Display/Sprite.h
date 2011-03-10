@@ -34,8 +34,8 @@ namespace RedBox {
 #ifdef RB_PHYSICS_ENABLED
 		/**
 		 * Parameterized constructor. Loads a sprite using the image in the
-		 * ResourceLoader with the corresponding key.
-		 * @param imageKey Image's key in the ResourceLoader to use for the
+		 * ResourceManager with the corresponding key.
+		 * @param imageKey Image's key in the ResourceManager to use for the
 		 * constructed sprite.
 		 * @param parentBody Parent graphic body, if there is one. Only exists
 		 * if the Physics engine is enabled.
@@ -47,7 +47,7 @@ namespace RedBox {
 #ifdef RB_PHYSICS_ENABLED
 		/**
 		 * Parameterized constructor. Loads a sprite using the image in the
-		 * ResourceLoader with the corresponding key.
+		 * ResourceManager with the corresponding key.
 		 * @param texInfo TextureInfo to load the sprite from.
 		 * @param parentBody Parent graphic body, if there is one. Only exists
 		 * if the Physics engine is enabled.
@@ -58,11 +58,11 @@ namespace RedBox {
 #endif
 		/**
 		 * Parameterized constructor. Loads a sprite using the image in the 
-		 * ResourceLoader with the corresponding key. Only takes the asked
+		 * ResourceManager with the corresponding key. Only takes the asked
 		 * part of the image with the given width and height. Using the offsets,
 		 * can also take a part of the image that is not at the upper left
 		 * corner.
-		 * @param imageKey Image's key in the ResourceLoader to use for the
+		 * @param imageKey Image's key in the ResourceManager to use for the
 		 * constructed sprite.
 		 * @param frameWidth Width (in pixels) of the image to use.
 		 * @param frameHeight Height (in pixels) of the image to use.

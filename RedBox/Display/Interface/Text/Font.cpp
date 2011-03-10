@@ -1,6 +1,6 @@
 #include "Font.h"
 #include "Debug.h"
-#include "ResourceLoader.h"
+#include "ResourceManager.h"
 #include "MathHelper.h"
 #include <sstream>
 using namespace RedBox;
@@ -76,7 +76,7 @@ Glyph * Font::getGlyph(RB_Char32 unicodeValue){
 		aGlyph = new Glyph();
 		std::stringstream key;
 		key << name << "-" << size << "-" << unicodeValue;
-		aGlyph->setTextureInfo(*ResourceLoader::addTexture(key.str(),poweredTo2Buffer, widthPoweredToTwo, heightPoweredToTwo));
+		aGlyph->setTextureInfo(*ResourceManager::addTexture(key.str(),poweredTo2Buffer, widthPoweredToTwo, heightPoweredToTwo));
 		aGlyph->setHoriAdvance(font->glyph->advance.x >> 6);
 		
 		

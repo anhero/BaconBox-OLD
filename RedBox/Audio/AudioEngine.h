@@ -9,7 +9,7 @@
 #include "MusicInfo.h"
 #include "SoundFX.h"
 #include "BackgroundMusic.h"
-#include "ResourceLoader.h"
+#include "ResourceManager.h"
 
 namespace RedBox {
 	class SoundFX;
@@ -20,7 +20,7 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	class AudioEngine {
-		friend class ResourceLoader;
+		friend class ResourceManager;
 	public:
 		/**
 		 * Loads the sound and the music engine.
