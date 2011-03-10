@@ -4,11 +4,11 @@
  * @ingroup Physics
  */
 
-#ifndef __VERTICES_GROUP_H
-#define __VERTICES_GROUP_H
+#ifndef RB_VERTICES_GROUP_H
+#define RB_VERTICES_GROUP_H
 
-#include <vector>
 #include <list>
+#include <vector>
 #include <iostream>
 #include <utility>
 #include <cstdarg>
@@ -87,11 +87,6 @@ namespace RedBox {
          */
         std::list<Vertex>& getVertices();
         /**
-         * Gets the vertices.
-         * @return Dynamic array containing the vertices.
-         */
-        std::vector<float>& getVerticesData();
-        /**
          * Checks if the vertices are from the instance.
          * @param firstVertex First vertex to check for.
          * @param secondVertex Second vertex to check for.
@@ -133,12 +128,34 @@ namespace RedBox {
 		 * @param parentSprite Pointer to the new parent graphic body.
 		 */
 		void setParentGraphicBody(GraphicBody* parentGraphicBody);
+		/**
+		 * Updates the instance's vertices from the veritcesData.
+		 * @param verticesData Data about the vertices' coordinates.
+		 * @param sprite Pointer to the parent sprite to use if this function
+		 * is used on an empty VerticesGroup.
+		 * @param graphicBody Pointer to the parent graphic body to use if this
+		 * function is used on an empty VerticesGroup.
+		 */
+		void updateVerticesFromData(std::vector<float>& verticesData, Sprite* sprite = NULL, GraphicBody* graphicBody = NULL);
+#else
+		/**
+		 * Updates the instance's vertices from the veritcesData.
+		 * @param verticesData Data about the vertices' coordinates.
+		 * @param sprite Pointer to the parent sprite to use if this function
+		 * is used on an empty VerticesGroup.
+		 */
+		void updateVerticesFromData(std::vector<float>& verticesData, Sprite* sprite = NULL);
 #endif
+		/**
+		 * Updates the verticesData from the instance's vertices. Will not do
+		 * anything if the list of vertices has the same number of vertices as
+		 * the vertices data contains.
+		 * @param verticesData Data about the vertices' coordinates to update.
+		 */
+		void updateDataFromVertices(std::vector<float>& verticesData);
 	private:
 		/// Dynamic array containing the vertexes pointing to the vertexes' data.
 		std::list<Vertex> vertices;
-		/// Array containing the vertexes' data.
-        std::vector<float> verticesData;
 		/**
 		 * Goes through all the vertices and re-sets their pointers to floats
 		 * correctly.

@@ -3,6 +3,7 @@
 #include "Debug.h"
 
 #include <cfloat>
+#include <cassert>
 
 using namespace RedBox;
 
@@ -28,14 +29,6 @@ void VerticesGroup::addVertex(float x, float y, Sprite* sprite,
 void VerticesGroup::addVertex(float x, float y, Sprite* sprite)
 #endif
 {
-	// We resize the verticesData and add its new floats.
-    verticesData.resize(verticesData.size() + 2);
-    verticesData[verticesData.size()-1] = y;
-    verticesData[verticesData.size()-2] = x;
-    
-	// We reset the pointers correctly.
-	resetPointers();
-	
 	if(vertices.size() > 1) {
 		sprite = vertices.front().getParentSprite();
 #ifdef RB_PHYSICS_ENABLED
@@ -43,47 +36,31 @@ void VerticesGroup::addVertex(float x, float y, Sprite* sprite)
 #endif
 	}
 	// We add the new vertex to the list.
-	vertices.push_back(Vertex());
-	vertices.back().getPosition().setIsPtr(true);
-	vertices.back().getPosition().setXPtr(&(verticesData[verticesData.size()-2]));
-	vertices.back().getPosition().setYPtr(&(verticesData[verticesData.size()-1]));
-	vertices.back().setParentSprite(sprite);
 #ifdef RB_PHYSICS_ENABLED
-	vertices.back().setParentGraphicBody(graphicBody);
+	vertices.push_back(Vertex(x, y, sprite, graphicBody));
+#else
+	vertices.push_back(Vertex(x, y, sprite));
 #endif
 }
 
 void VerticesGroup::addVertices(unsigned int nbVertices, ...) {
-	va_list verticesCoords;
-	va_start(verticesCoords, nbVertices);
-	// We resize the verticesData vector.
-	unsigned int initialSize = verticesData.size();
-	verticesData.resize(verticesData.size() + nbVertices * 2);
-	for(unsigned int i = 0; i < nbVertices; i++) {
-		verticesData[i * 2 + initialSize] = static_cast<float>(va_arg(verticesCoords, double));
-		verticesData[i * 2 + 1 + initialSize] = static_cast<float>(va_arg(verticesCoords, double));
+	if (nbVertices) {
+		va_list verticesCoords;
+		va_start(verticesCoords, nbVertices);
+		Sprite* parentSprite = ((vertices.size()) ? (vertices.front().getParentSprite()):(NULL));
+#ifdef RB_PHYSICS_ENABLED
+		GraphicBody* parentGraphicBody = ((vertices.size()) ? (vertices.front().getParentGraphicBody()):(NULL));
+#endif
+		for(unsigned int i = 0; i < nbVertices; i++) {
+#ifdef RB_PHYSICS_ENABLED
+			vertices.push_back(Vertex(static_cast<float>(va_arg(verticesCoords, double)), static_cast<float>(va_arg(verticesCoords, double)), parentSprite, parentGraphicBody));
+#else
+			vertices.push_back(Vertex(static_cast<float>(va_arg(verticesCoords, double)), static_cast<float>(va_arg(verticesCoords, double)), parentSprite));
+#endif
+		}
+		va_end(verticesCoords);
 	}
-	va_end(verticesCoords);
-	
-	// We reset the pointers correctly.
-	resetPointers();
-	
-	Sprite* parentSprite = ((vertices.size()) ? (vertices.front().getParentSprite()):(NULL));
-#ifdef RB_PHYSICS_ENABLED
-	GraphicBody* parentGraphicBody = ((vertices.size()) ? (vertices.front().getParentGraphicBody()):(NULL));
-#endif
-	for(unsigned int i = 0; i < nbVertices; i++) {
-		vertices.push_back(Vertex());
-		vertices.back().getPosition().setIsPtr(true);
-		vertices.back().getPosition().setXPtr(&(verticesData[i * 2 + initialSize]));
-		vertices.back().getPosition().setYPtr(&(verticesData[i * 2 + 1 + initialSize]));
-		vertices.back().setParentSprite(parentSprite);
-#ifdef RB_PHYSICS_ENABLED
-		vertices.back().setParentGraphicBody(parentGraphicBody);
-#endif
-	}	
 }
-
 
 void VerticesGroup::deleteVertex(Vertex* vertexToDelete) {
 	// We remove the vertex from the list, but we take note of its pointer to
@@ -99,25 +76,10 @@ void VerticesGroup::deleteVertex(Vertex* vertexToDelete) {
 			itr++;
 		}
 	}
-	// We remove the vertex's data from the vector.
-	if(xPtr != NULL) {
-		std::vector<float>::iterator i = verticesData.begin();
-		while(i != verticesData.end()) {
-			if(xPtr == &(*i)) {
-				i = verticesData.erase(i);
-				verticesData.erase(i);
-			}
-		}
-	}
-	// We re-set the pointers.
-	resetPointers();
 }
 
 std::list<Vertex>& VerticesGroup::getVertices() {
     return vertices;
-}
-std::vector<float>& VerticesGroup::getVerticesData() {
-    return verticesData;
 }
 
 bool VerticesGroup::containsVertices(Vertex* firstVertex, Vertex* secondVertex) {
@@ -219,38 +181,68 @@ void VerticesGroup::setParentGraphicBody(GraphicBody* body) {
 }
 #endif
 
+#ifdef RB_PHYSICS_ENABLED
+void VerticesGroup::updateVerticesFromData(std::vector<float>& verticesData, Sprite* sprite, GraphicBody* graphicBody)
+#else
+void VerticesGroup::updateVerticesFromData(std::vector<float>& verticesData, Sprite* sprite)
+#endif
+{
+	std::vector<float>::iterator data = verticesData.begin();
+	std::list<Vertex>::iterator vertex = vertices.begin();
+	if(!vertices.empty()) {
+		sprite = vertices.front().getParentSprite();
+#ifdef RB_PHYSICS_ENABLED
+		graphicBody = vertices.front().getParentGraphicBody();
+#endif
+	}
+	while (data != verticesData.end()) {
+		if (vertex != vertices.end()) {
+			vertex->getPosition().setXPtr(&(*data));
+			++data;
+			if(data != verticesData.end()) {
+				vertex->getPosition().setYPtr(&(*data));
+			} else {
+				$ECHO("Tried to update vertices from vertices data with an incorrect number of vertices data.");
+			}
+		} else {
+#ifdef RB_PHYSICS_ENABLED
+			vertices.push_back(Vertex(&(*data), &(*(++data)), sprite, graphicBody));
+#else
+			vertices.push_back(Vertex(&(*data), &(*(++data)), sprite));
+#endif
+		}
+	}
+}
+
+void VerticesGroup::updateDataFromVertices(std::vector<float>& verticesData) {
+	assert(verticesData.size() % 2 == 0);
+	// We make sure the sizes are different.
+	if (vertices.size() * 2 != verticesData.size()) {
+		// We initialize the temporary data vector.
+		std::vector<float> tmpData(vertices.size() * 2, 0.0f);
+		std::vector<float>& shortest = (verticesData.size() < tmpData.size()) ? (verticesData) : (tmpData);
+		std::vector<float>::iterator srcData = verticesData.begin();
+		std::vector<float>::iterator dstData = tmpData.begin();
+		for(unsigned int i = 0; i >= shortest.size(); ++i) {
+			*dstData = *srcData;
+			++srcData;
+			++dstData;
+		}
+	}
+}
+
 void VerticesGroup::resetPointers() {
     // We reset the vertices' pointers to the correct new floats.
-	int i = 0;
-	std::list<Vertex>::iterator itr = vertices.begin();
-	while(i < vertices.size() && itr != vertices.end()) {
-        itr->getPosition().setIsPtr(true);
-        itr->getPosition().setYPtr(&(verticesData[i*2+1]));
-        itr->getPosition().setXPtr(&(verticesData[i*2]));
-		i++;
-		itr++;
-	}
 }
 
 void VerticesGroup::copyFrom(const VerticesGroup& src) {
     // We make sure the recieved VertexGroup isn't the instance and isn't null.
 	if(this != &src && &src) {
-        // Free all of the instance's allocated memory.
-        clean();
-        verticesData = src.verticesData;
-        vertices.resize(src.vertices.size());
-		int i = 0;
-		for(std::list<Vertex>::iterator itr = vertices.begin(); itr != vertices.end(); i++) {
-			itr->getPosition().setIsPtr(true);
-			itr->getPosition().setYPtr(&(verticesData[i*2+1]));
-			itr->getPosition().setXPtr(&(verticesData[i*2]));
-			i++;
-		}
+		vertices = src.vertices;
 	}
 }
 
 void VerticesGroup::clean() {
-    verticesData.clear();
     vertices.clear();
 }
 
@@ -261,15 +253,6 @@ namespace RedBox {
 			i != v.vertices.end();
 			i++) {
 			if(i != v.vertices.begin()) {
-				output << ", ";
-			}
-			output << *i;
-		}
-		output << "], verticesData: [";
-		for(std::vector<float>::const_iterator i = v.verticesData.begin();
-			i != v.verticesData.end();
-			i++) {
-			if(i != v.verticesData.begin()) {
 				output << ", ";
 			}
 			output << *i;
