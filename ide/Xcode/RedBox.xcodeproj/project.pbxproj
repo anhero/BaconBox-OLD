@@ -79,8 +79,6 @@
 		51927C0E11D5EA5000C65B15 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		51927C0F11D5EA5000C65B15 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		51927C1011D5EA5100C65B15 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		519313ED12ED62D5008B3AFB /* ResourceLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 519313EB12ED62D5008B3AFB /* ResourceLoader.cpp */; };
-		519313EE12ED62D5008B3AFB /* ResourceLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 519313EC12ED62D5008B3AFB /* ResourceLoader.h */; };
 		519313F212ED62E1008B3AFB /* TextureInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 519313F012ED62E1008B3AFB /* TextureInfo.cpp */; };
 		519313F312ED62E1008B3AFB /* TextureInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 519313F112ED62E1008B3AFB /* TextureInfo.h */; };
 		51A80F6B12FDC23F00AD6878 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A80F6712FDC23F00AD6878 /* Parser.cpp */; };
@@ -202,8 +200,6 @@
 		517BDCDD11B04CA80095F001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		517D7C3210F87AB10022BBF2 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		5192780C11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedboxEngine_Prefix.pch; sourceTree = "<group>"; };
-		519313EB12ED62D5008B3AFB /* ResourceLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceLoader.cpp; sourceTree = "<group>"; };
-		519313EC12ED62D5008B3AFB /* ResourceLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceLoader.h; sourceTree = "<group>"; };
 		519313F012ED62E1008B3AFB /* TextureInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureInfo.cpp; sourceTree = "<group>"; };
 		519313F112ED62E1008B3AFB /* TextureInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureInfo.h; sourceTree = "<group>"; };
 		51A80F6712FDC23F00AD6878 /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
@@ -662,8 +658,6 @@
 			children = (
 				519313F012ED62E1008B3AFB /* TextureInfo.cpp */,
 				519313F112ED62E1008B3AFB /* TextureInfo.h */,
-				519313EB12ED62D5008B3AFB /* ResourceLoader.cpp */,
-				519313EC12ED62D5008B3AFB /* ResourceLoader.h */,
 				24B6826E131FEB420007637C /* ResourceManager.cpp */,
 				24B6826F131FEB420007637C /* ResourceManager.h */,
 				512B7E2D12DF67B0002E9698 /* Edge.cpp */,
@@ -894,7 +888,6 @@
 				2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */,
 				24B9BD7E12E1279E00057BB1 /* RenderStep.h in Headers */,
 				24B9BD7F12E1279E00057BB1 /* RenderStepMode.h in Headers */,
-				519313EE12ED62D5008B3AFB /* ResourceLoader.h in Headers */,
 				519313F312ED62E1008B3AFB /* TextureInfo.h in Headers */,
 				2447361212EF44550085668B /* Drawer.h in Headers */,
 				2447361912EF46030085668B /* PlatformFlagger.h in Headers */,
@@ -1004,7 +997,6 @@
 				512B7E2F12DF67B1002E9698 /* Edge.cpp in Sources */,
 				24B9BD7D12E1279E00057BB1 /* RenderStep.cpp in Sources */,
 				249C90B612ECFFB9000AF0DC /* RedBoxEngine.cpp in Sources */,
-				519313ED12ED62D5008B3AFB /* ResourceLoader.cpp in Sources */,
 				519313F212ED62E1008B3AFB /* TextureInfo.cpp in Sources */,
 				2447361112EF44550085668B /* Drawer.cpp in Sources */,
 				24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */,
