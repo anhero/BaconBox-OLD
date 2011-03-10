@@ -40,7 +40,13 @@ namespace RedBox {
 		 * @return Vector containing the device names.
 		 */
 		const std::vector<std::string>& getDeviceList();
+		/**
+		 * Gets OpenALEngine's instance. Retuns NULL if it isn't constructed.
+		 */
+		static OpenALEngine* getInstance();
 	private:
+		/// OpenALEngine's main instance.
+		static OpenALEngine* instance;
 		/// Device to load.
 		std::string defaultDevice;
 		/// List of devices available.

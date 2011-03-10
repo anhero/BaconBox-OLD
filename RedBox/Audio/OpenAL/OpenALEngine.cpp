@@ -8,6 +8,8 @@
 
 using namespace RedBox;
 
+OpenALEngine* OpenALEngine::instance = NULL;
+
 void OpenALEngine::init() {
 	// We open the device.
 	ALCdevice* device = alcOpenDevice(OpenALEngine::defaultDevice.c_str());
@@ -56,7 +58,12 @@ const std::vector<std::string>& OpenALEngine::getDeviceList() {
 	return deviceList;
 }
 
+OpenALEngine* OpenALEngine::getInstance() {
+	return instance;
+}
+
 OpenALEngine::OpenALEngine(): AudioEngine() {
+	OpenALEngine::instance = this;
 }
 
 SoundFX* OpenALEngine::loadSoundFX(const std::string& filePath) {
