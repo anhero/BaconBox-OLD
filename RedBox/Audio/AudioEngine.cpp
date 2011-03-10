@@ -23,11 +23,17 @@ void AudioEngine::loadAudioEngine() {
 void AudioEngine::loadSoundEngine() {
 	if(soundEngine == NULL) {
 		soundEngine = RB_SOUND_ENGINE;
+		if(soundEngine) {
+			soundEngine->init();
+		}
 	}
 }
 void AudioEngine::loadMusicEngine() {
 	if(musicEngine == NULL) {
 		musicEngine = RB_MUSIC_ENGINE;
+		if(musicEngine) {
+			musicEngine->init();
+		}
 	}
 }
 AudioEngine* AudioEngine::getSoundEngine() {
