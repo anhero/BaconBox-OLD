@@ -58,7 +58,7 @@ namespace RedBox {
 		 * Loads a sound effect from a file.
 		 * @param filePath Path to the file to load.
 		 */
-		void load(ALuint bufferId, char* bufferData);
+		void load(ALuint bufferId);
 	};
 }
 

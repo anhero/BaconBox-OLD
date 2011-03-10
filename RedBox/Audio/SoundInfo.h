@@ -24,8 +24,6 @@ namespace RedBox {
 #ifdef RB_OPENAL
 		/// OpenAL sound buffer ID.
 		ALuint bufferId;
-		/// Sound buffer data.
-		char* bufferData;
 #endif
 	};
 }

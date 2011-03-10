@@ -43,7 +43,7 @@ OpenALSoundFX::~OpenALSoundFX() {
 	alDeleteSources(1, &sourceId);
 }
 
-void OpenALSoundFX::load(ALuint bufferId, char* bufferData) {
+void OpenALSoundFX::load(ALuint bufferId) {
 	assert(OpenALEngine::getInstance());
 	alGenSources(1, &sourceId);
 	alSource3f(sourceId, AL_POSITION, 0.0f, 0.0f, 0.0f);

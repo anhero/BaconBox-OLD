@@ -174,7 +174,7 @@ SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
 	SoundInfo* sndInfo = ResourceManager::getSound(key);
 	if(sndInfo) {
 		sources.push_back(new OpenALSoundFX());
-		sources.back()->load(sndInfo->bufferId, sndInfo->bufferData);
+		sources.back()->load(sndInfo->bufferId);
 		return sources.back();
 	} else {
 		return NULL;
@@ -195,14 +195,15 @@ SoundInfo* OpenALEngine::loadSound(const std::string& filePath) {
 	if(newSnd) {
 		ALenum format;
 		ALsizei bufferSize, freq;
+		char* bufferData;
 		// We load the wav file.
-		OpenALEngine::loadWav(filePath, newSnd->bufferData, bufferSize, format,
+		OpenALEngine::loadWav(filePath, bufferData, bufferSize, format,
 							  freq);
 		// We check that the buffer was loaded correctly.
-		if(newSnd->bufferData) {
+		if(bufferData) {
 			alGenBuffers(1, &(newSnd->bufferId));
-			alBufferData(newSnd->bufferId, format, newSnd->bufferData,
-						 bufferSize, freq);
+			alBufferData(newSnd->bufferId, format, bufferData, bufferSize,
+						 freq);
 		} else {
 			delete newSnd;
 			newSnd = NULL;
@@ -226,12 +227,7 @@ bool OpenALEngine::unloadSound(SoundInfo* sound) {
 	// We release the buffer name.
 	alDeleteBuffers(1, &sound->bufferId);
 	// We check if it was released succesfully.
-	bool failure = alIsBuffer(sound->bufferId);
-	// We delete the buffer data.
-	if (!failure && sound->bufferData) {
-		delete[] sound->bufferData;
-	}
-	return failure;
+	return !alIsBuffer(sound->bufferId);
 }
 
 bool OpenALEngine::unloadMusic(MusicInfo* music) {
