@@ -57,14 +57,20 @@ void OpenALEngine::init() {
 void OpenALEngine::update() {
 	// We delete the sources of stopped sounds that must not survive.
 	ALint state;
+	// For each sound effect.
 	for (std::list<OpenALSoundFX*>::iterator i = sources.begin();
 		 i != sources.end(); i++) {
+		// We get its current state.
 		alGetSourcei((*i)->sourceId, AL_SOURCE_STATE, &state);
+		// We check if it is not being played.
 		if (state == AL_STOPPED) {
+			// If we have to decrease its number of times left.
 			if((*i)->nbTimesLeft > 0) {
+				// We decrease it and replay it.
 				--(*i)->nbTimesLeft;
 				alSourcePlay((*i)->sourceId);
 			} else if(!(*i)->survives) {
+				// We delete the sound.
 				alDeleteSources(1, &((*i)->sourceId));
 				sources.erase(i);
 			}

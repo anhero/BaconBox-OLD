@@ -77,7 +77,7 @@ namespace RedBox {
 		virtual BackgroundMusic* getBackgroundMusic(const std::string& key) = 0;
 	protected:
 		/**
-		 * Default constructor. Can only be called by the resource loader.
+		 * Default constructor. Only called by its children's constructors.
 		 */
 		AudioEngine();
 		/**

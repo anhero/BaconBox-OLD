@@ -44,6 +44,10 @@ namespace RedBox {
 		ALuint sourceId;
 		/// Used to know if the engine deletes the sound effect when done.
 		bool survives;
+		/**
+		 * Number of times left to play. It's used for counting the number of
+		 * loops.
+		 */
 		int nbTimesLeft;
 		
 		/**
@@ -55,8 +59,8 @@ namespace RedBox {
 		 */
 		~OpenALSoundFX();
 		/**
-		 * Loads a sound effect from a file.
-		 * @param filePath Path to the file to load.
+		 * Loads a sound effect from a buffer.
+		 * @param bufferId ID of the buffer to play.
 		 */
 		void load(ALuint bufferId);
 	};
