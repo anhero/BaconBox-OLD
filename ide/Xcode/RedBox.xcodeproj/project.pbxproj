@@ -15,6 +15,8 @@
 		2447361912EF46030085668B /* PlatformFlagger.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361812EF46030085668B /* PlatformFlagger.h */; };
 		2475DA93131D9DB5006A5CAF /* SoundParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2475DA91131D9DB5006A5CAF /* SoundParameters.cpp */; };
 		2475DA94131D9DB5006A5CAF /* SoundParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 2475DA92131D9DB5006A5CAF /* SoundParameters.h */; };
+		2475DA98131DA01C006A5CAF /* MusicParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2475DA96131DA01B006A5CAF /* MusicParameters.cpp */; };
+		2475DA99131DA01C006A5CAF /* MusicParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 2475DA97131DA01B006A5CAF /* MusicParameters.h */; };
 		2480745012E0A3F800F49E74 /* RenderInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2480744F12E0A3F800F49E74 /* RenderInfo.h */; };
 		24998223131AE22700B856B7 /* WavHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 24998222131AE22700B856B7 /* WavHeader.h */; };
 		2499822E131AE63600B856B7 /* config_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 24998227131AE63600B856B7 /* config_types.h */; };
@@ -143,6 +145,8 @@
 		2447361812EF46030085668B /* PlatformFlagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlagger.h; sourceTree = "<group>"; };
 		2475DA91131D9DB5006A5CAF /* SoundParameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundParameters.cpp; sourceTree = "<group>"; };
 		2475DA92131D9DB5006A5CAF /* SoundParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundParameters.h; sourceTree = "<group>"; };
+		2475DA96131DA01B006A5CAF /* MusicParameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicParameters.cpp; sourceTree = "<group>"; };
+		2475DA97131DA01B006A5CAF /* MusicParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicParameters.h; sourceTree = "<group>"; };
 		2480744F12E0A3F800F49E74 /* RenderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderInfo.h; sourceTree = "<group>"; };
 		24998222131AE22700B856B7 /* WavHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WavHeader.h; sourceTree = "<group>"; };
 		24998227131AE63600B856B7 /* config_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config_types.h; sourceTree = "<group>"; };
@@ -525,6 +529,8 @@
 				24B86B5112F319620071930C /* MusicInfo.h */,
 				24B86B5212F319620071930C /* SoundInfo.cpp */,
 				24B86B5312F319620071930C /* SoundInfo.h */,
+				2475DA96131DA01B006A5CAF /* MusicParameters.cpp */,
+				2475DA97131DA01B006A5CAF /* MusicParameters.h */,
 				2475DA91131D9DB5006A5CAF /* SoundParameters.cpp */,
 				2475DA92131D9DB5006A5CAF /* SoundParameters.h */,
 				24F0335012F1C59500BD5409 /* AudioEngine.cpp */,
@@ -911,6 +917,7 @@
 				24998231131AE63600B856B7 /* ogg.h in Headers */,
 				24998232131AE63600B856B7 /* os_types.h in Headers */,
 				2475DA94131D9DB5006A5CAF /* SoundParameters.h in Headers */,
+				2475DA99131DA01C006A5CAF /* MusicParameters.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1011,6 +1018,7 @@
 				24B320161316EBAC00D7002B /* BitHelper.cpp in Sources */,
 				24C7F86013182AFA00822753 /* OpenALSoundFX.cpp in Sources */,
 				2475DA93131D9DB5006A5CAF /* SoundParameters.cpp in Sources */,
+				2475DA98131DA01C006A5CAF /* MusicParameters.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
