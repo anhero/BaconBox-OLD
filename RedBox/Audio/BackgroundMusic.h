@@ -7,6 +7,7 @@
 
 #include "AudioEngine.h"
 #include "ResourceManager.h"
+#include "AudioState.h"
 
 namespace RedBox {
 	class AudioEngine;
@@ -41,6 +42,18 @@ namespace RedBox {
 		 * Resumes the music. Will only resume if the music has been paused.
 		 */
 		virtual void resume() = 0;
+		/**
+		 * Checks if the music is currently playing infinitely.
+		 * @return True if the sound effect is currently playing.
+		 */
+		virtual bool isLooping() = 0;
+		/**
+		 * Gets the music's current state. Used to know if it is at its initial
+		 * state, currently playing, paused or stopped.
+		 * @see RedBox::AudioState::Enum
+		 * @return Music's current state.
+		 */
+		virtual AudioState::Enum getCurrentState() = 0;
 	protected:
 		/**
 		 * Default constructor. Musics can only be created by the resource
