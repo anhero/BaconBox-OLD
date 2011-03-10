@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		241F18CD12F4A2D2002F3247 /* RenderInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */; };
+		242A04C9132828C900666FB6 /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242A04C5132828C900666FB6 /* RedBoxEngine.cpp */; };
+		242A04CA132828C900666FB6 /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 242A04C6132828C900666FB6 /* RedBoxEngine.h */; };
+		242A04CB132828C900666FB6 /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242A04C7132828C900666FB6 /* State.cpp */; };
+		242A04CC132828C900666FB6 /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 242A04C8132828C900666FB6 /* State.h */; };
 		242F209D1301AC0200494000 /* ResourcePathHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242F209B1301AC0200494000 /* ResourcePathHandler.cpp */; };
 		242F209E1301AC0200494000 /* ResourcePathHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 242F209C1301AC0200494000 /* ResourcePathHandler.h */; };
 		2447361112EF44550085668B /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2447360F12EF44550085668B /* Drawer.cpp */; };
@@ -25,8 +29,6 @@
 		24998231131AE63600B856B7 /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = 2499822A131AE63600B856B7 /* ogg.h */; };
 		24998232131AE63600B856B7 /* os_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 2499822B131AE63600B856B7 /* os_types.h */; };
 		24998235131AE65E00B856B7 /* libvorbisdec-iphone-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24998234131AE65E00B856B7 /* libvorbisdec-iphone-universal.a */; };
-		249C90B612ECFFB9000AF0DC /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */; };
-		249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		24B320111316CC9D00D7002B /* OpenALEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B3200F1316CC9D00D7002B /* OpenALEngine.cpp */; };
 		24B320121316CC9D00D7002B /* OpenALEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B320101316CC9D00D7002B /* OpenALEngine.h */; };
 		24B320161316EBAC00D7002B /* BitHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B320141316EBAC00D7002B /* BitHelper.cpp */; };
@@ -131,14 +133,16 @@
 		51CF8DCF12DF60E1003FBBAD /* VerticesGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D7D12DF60E0003FBBAD /* VerticesGroup.cpp */; };
 		51CF8DD012DF60E1003FBBAD /* VerticesGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D7E12DF60E0003FBBAD /* VerticesGroup.h */; };
 		51CF8DD212DF60E1003FBBAD /* RedBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D8012DF60E0003FBBAD /* RedBox.h */; };
-		51CF8DD512DF60E1003FBBAD /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D8412DF60E0003FBBAD /* State.cpp */; };
-		51CF8DD612DF60E1003FBBAD /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D8512DF60E0003FBBAD /* State.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderInfo.cpp; sourceTree = "<group>"; };
+		242A04C5132828C900666FB6 /* RedBoxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedBoxEngine.cpp; sourceTree = "<group>"; };
+		242A04C6132828C900666FB6 /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
+		242A04C7132828C900666FB6 /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
+		242A04C8132828C900666FB6 /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		242F209B1301AC0200494000 /* ResourcePathHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourcePathHandler.cpp; sourceTree = "<group>"; };
 		242F209C1301AC0200494000 /* ResourcePathHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcePathHandler.h; sourceTree = "<group>"; };
 		2447360F12EF44550085668B /* Drawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawer.cpp; sourceTree = "<group>"; };
@@ -156,8 +160,6 @@
 		2499822A131AE63600B856B7 /* ogg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
 		2499822B131AE63600B856B7 /* os_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
 		24998234131AE65E00B856B7 /* libvorbisdec-iphone-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libvorbisdec-iphone-universal.a"; path = "osx:iphone/libvorbisdec-iphone-universal.a"; sourceTree = "<group>"; };
-		249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedBoxEngine.cpp; sourceTree = "<group>"; };
-		249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
 		24B3200F1316CC9D00D7002B /* OpenALEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALEngine.cpp; sourceTree = "<group>"; };
 		24B320101316CC9D00D7002B /* OpenALEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenALEngine.h; sourceTree = "<group>"; };
 		24B320141316EBAC00D7002B /* BitHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BitHelper.cpp; sourceTree = "<group>"; };
@@ -257,8 +259,6 @@
 		51CF8D7D12DF60E0003FBBAD /* VerticesGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VerticesGroup.cpp; sourceTree = "<group>"; };
 		51CF8D7E12DF60E0003FBBAD /* VerticesGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticesGroup.h; sourceTree = "<group>"; };
 		51CF8D8012DF60E0003FBBAD /* RedBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBox.h; sourceTree = "<group>"; };
-		51CF8D8412DF60E0003FBBAD /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
-		51CF8D8512DF60E0003FBBAD /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		51CF8DD912DF60ED003FBBAD /* Finch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Finch.h; sourceTree = "<group>"; };
 		51CF8DDA12DF60ED003FBBAD /* Finch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Finch.m; sourceTree = "<group>"; };
 		51CF8DDB12DF60ED003FBBAD /* RevolverSound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RevolverSound.h; sourceTree = "<group>"; };
@@ -380,6 +380,17 @@
 				515EB50512FF34AA004FB469 /* libRedBox.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		242A04C4132828C900666FB6 /* StatesSystem */ = {
+			isa = PBXGroup;
+			children = (
+				242A04C5132828C900666FB6 /* RedBoxEngine.cpp */,
+				242A04C6132828C900666FB6 /* RedBoxEngine.h */,
+				242A04C7132828C900666FB6 /* State.cpp */,
+				242A04C8132828C900666FB6 /* State.h */,
+			);
+			path = StatesSystem;
 			sourceTree = "<group>";
 		};
 		24998225131AE63600B856B7 /* libvorbis-tremor */ = {
@@ -508,6 +519,7 @@
 		51CF8D2712DF60E0003FBBAD /* RedBox */ = {
 			isa = PBXGroup;
 			children = (
+				242A04C4132828C900666FB6 /* StatesSystem */,
 				51CF8D2812DF60E0003FBBAD /* Audio */,
 				51CF8D3112DF60E0003FBBAD /* Debug.h */,
 				51CF8D3212DF60E0003FBBAD /* Display */,
@@ -517,7 +529,6 @@
 				51CF8D7612DF60E0003FBBAD /* other */,
 				51CF8D8012DF60E0003FBBAD /* RedBox.h */,
 				2447361812EF46030085668B /* PlatformFlagger.h */,
-				51CF8D8112DF60E0003FBBAD /* States system */,
 			);
 			name = RedBox;
 			path = ../../RedBox;
@@ -674,17 +685,6 @@
 				5132439C12FB4AAC00C297F9 /* RBString32.h */,
 			);
 			path = other;
-			sourceTree = "<group>";
-		};
-		51CF8D8112DF60E0003FBBAD /* States system */ = {
-			isa = PBXGroup;
-			children = (
-				249C90B412ECFFB9000AF0DC /* RedBoxEngine.cpp */,
-				249C90B512ECFFB9000AF0DC /* RedBoxEngine.h */,
-				51CF8D8412DF60E0003FBBAD /* State.cpp */,
-				51CF8D8512DF60E0003FBBAD /* State.h */,
-			);
-			path = "States system";
 			sourceTree = "<group>";
 		};
 		51CF8DD712DF60ED003FBBAD /* libraries */ = {
@@ -858,8 +858,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51CF8DD612DF60E1003FBBAD /* State.h in Headers */,
-				249C90B712ECFFB9000AF0DC /* RedBoxEngine.h in Headers */,
 				5192780D11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch in Headers */,
 				51CF8D8712DF60E0003FBBAD /* BackgroundMusic.h in Headers */,
 				51CF8D8812DF60E0003FBBAD /* RBIPhoneBackgroundMusic.h in Headers */,
@@ -922,6 +920,8 @@
 				2475DA99131DA01C006A5CAF /* MusicParameters.h in Headers */,
 				24B68271131FEB420007637C /* ResourceManager.h in Headers */,
 				24C141891326D39B003076E5 /* AudioState.h in Headers */,
+				242A04CA132828C900666FB6 /* RedBoxEngine.h in Headers */,
+				242A04CC132828C900666FB6 /* State.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,13 +994,11 @@
 				51CF8DCB12DF60E1003FBBAD /* Vec2.cpp in Sources */,
 				51CF8DCD12DF60E1003FBBAD /* Vertex.cpp in Sources */,
 				51CF8DCF12DF60E1003FBBAD /* VerticesGroup.cpp in Sources */,
-				51CF8DD512DF60E1003FBBAD /* State.cpp in Sources */,
 				512B7DB712DF6104002E9698 /* Finch.m in Sources */,
 				512B7DB912DF6105002E9698 /* RevolverSound.m in Sources */,
 				512B7DBA12DF6106002E9698 /* Sound.m in Sources */,
 				512B7E2F12DF67B1002E9698 /* Edge.cpp in Sources */,
 				24B9BD7D12E1279E00057BB1 /* RenderStep.cpp in Sources */,
-				249C90B612ECFFB9000AF0DC /* RedBoxEngine.cpp in Sources */,
 				519313F212ED62E1008B3AFB /* TextureInfo.cpp in Sources */,
 				2447361112EF44550085668B /* Drawer.cpp in Sources */,
 				24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */,
@@ -1023,6 +1021,8 @@
 				2475DA93131D9DB5006A5CAF /* SoundParameters.cpp in Sources */,
 				2475DA98131DA01C006A5CAF /* MusicParameters.cpp in Sources */,
 				24B68270131FEB420007637C /* ResourceManager.cpp in Sources */,
+				242A04C9132828C900666FB6 /* RedBoxEngine.cpp in Sources */,
+				242A04CB132828C900666FB6 /* State.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
