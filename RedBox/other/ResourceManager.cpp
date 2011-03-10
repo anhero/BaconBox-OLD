@@ -259,12 +259,15 @@ void ResourceManager::removeSound(const std::string& name) {
 	std::map<std::string, SoundInfo*>::iterator snd = sounds.find(name);
 	// We check if the sound effect asked exists and we ask the sound engine to
 	// unload the data.
-	if(snd != sounds.end() &&
-	   AudioEngine::getSoundEngine()->unloadSound(snd->second)) {
-		// We delete it.
-		delete (snd->second);
-		// We remove it from the map.
-		sounds.erase(snd);
+	if(snd != sounds.end()) {
+		if(AudioEngine::getSoundEngine()->unloadSound(snd->second)) {
+			// We delete it.
+			delete (snd->second);
+			// We remove it from the map.
+			sounds.erase(snd);
+		} else {
+			$ECHO("The sound effect named " << name << " could not be removed because the audio engine failed to unload it.");
+		}
 	} else {
 		$ECHO("The sound effect named " << name << " could not be removed because it doesn't exist.");
 	}
@@ -275,12 +278,15 @@ void ResourceManager::removeMusic(const std::string& name) {
 	std::map<std::string, MusicInfo*>::iterator music = musics.find(name);
 	// We check if the music asked exists and we ask the music engine to
 	// unload the data.
-	if(music != musics.end() &&
-	   AudioEngine::getMusicEngine()->unloadMusic(music->second)) {
-		// We delete it.
-		delete (music->second);
-		// We remove it from the map.
-		musics.erase(music);
+	if(music != musics.end()) {
+		if(AudioEngine::getMusicEngine()->unloadMusic(music->second)) {
+			// We delete it.
+			delete (music->second);
+			// We remove it from the map.
+			musics.erase(music);
+		} else {
+			$ECHO("The music named " << name << " could not be removed because the audio engine failed to unload it.");
+		}
 	} else {
 		$ECHO("The music named " << name << " could not be removed because it doesn't exist.");
 	}
@@ -332,6 +338,7 @@ void ResourceManager::unloadAll() {
 	for(std::map<std::string, SoundFX*>::iterator i = sounds.begin();
 		i != sounds.end();
 		i++) {
+		AudioEngine::getSoundEngine()->unloadSound(i->second)
 		delete i->second;
 	}
 	sounds.clear();
@@ -339,6 +346,7 @@ void ResourceManager::unloadAll() {
 	for(std::map<std::string, BackgroundMusic*>::iterator i = musics.begin();
 		i != musics.end();
 		i++) {
+		AudioEngine::getMusicEngine()->unloadMusic(i->second)
 		delete i->second;
 	}
 	musics.clear();
