@@ -44,14 +44,14 @@ namespace RedBox {
 		 * @param key Name of the sound effect to get a pointer of.
 		 * @return Pointer to the asked sound effect, NULL if it doesn't exist.
 		 */
-		static SoundFX* getSoundFX(const std::string& key);
+		static SoundInfo* getSound(const std::string& key);
 		/**
 		 * Gets a pointer to the asked background music.
 		 * @param key Name of the background music to get a pointer of.
 		 * @return Pointer to the asked background music, NULL if it doesn't
 		 * exist.
 		 */
-		static BackgroundMusic* getBackgroundMusic(const std::string& key);
+		static MusicInfo* getMusic(const std::string& key);
 		/**
 		 * Loads a sound effect.
 		 * @param name Name to give to the sound effect.
@@ -60,7 +60,7 @@ namespace RedBox {
 		 * @return Pointer to the loaded sound effect. Returns NULL if the
 		 * loading failed.
 		 */
-		static SoundFX* loadSoundFX(const std::string& filePath,
+		static SoundInfo* loadSound(const std::string& filePath,
 									const std::string& key,
 									bool overwrite = false);
 		/**
@@ -68,42 +68,36 @@ namespace RedBox {
 		 * @param info Information in a struct about the sound effect to load.
 		 * Let's the developer specify more precise parameters for specific
 		 * engines.
-		 * @return Pointer to the loaded sound effect. Returns NULL if the
-		 * loading failed.
 		 */
-		static SoundFX* loadSoundFX(const SoundParameters& info,
-									bool overwrite = false);
+		static SoundInfo* loadSound(const SoundParameters& info,
+							  bool overwrite = false);
 		/**
 		 * Loads a background music.
 		 * @param name Name to give to the background music.
 		 * @param info Information needed to load the background music. Audio
 		 * Engine dependant.
-		 * @return Pointer to the loaded background music. Returns NULL if the
-		 * loading failed.
 		 */
-		static BackgroundMusic* loadBackgroundMusic(const std::string& filePath,
-													const std::string& key,
-													bool overwrite = false);
+		static MusicInfo* loadMusic(const std::string& filePath,
+									const std::string& key,
+									bool overwrite = false);
 		/**
 		 * Loads a background music.
 		 * @param info Information in a struct about the sound effect to load.
 		 * Let's the developer specify more precise parameters for specific
 		 * engines.
-		 * @return Pointer to the loaded sound effect. Returns NULL if the
-		 * loading failed.
 		 */
-		static BackgroundMusic* loadBackgroundMusic(const MusicParameters& info,
-													bool overwrite = true);
+		static MusicInfo* loadMusic(const MusicParameters& info,
+									bool overwrite = true);
 		/**
 		 * Removes and unloads a sound effect.
 		 * @param name Name of the sound effect to unload.
 		 */
-		static void removeSoundFX(const std::string& name);
+		static void removeSound(const std::string& name);
 		/**
 		 * Removes and unloads a background music.
 		 * @param name Name of the background music to unload.
 		 */
-		static void removeBackgroundMusic(const std::string& name);
+		static void removeMusic(const std::string& name);
 		
 		/**
 		 * Load the fond at the specified path and put it in the fonts' map.
@@ -134,9 +128,9 @@ namespace RedBox {
 		/// Map associating the textures' keys and their information.
 		static std::map<std::string, TextureInfo*> textures;
 		/// Map associating the sound effects' names and their information.
-		static std::map<std::string, SoundFX*> sounds;
+		static std::map<std::string, SoundInfo*> sounds;
 		/// Map associating the musics' names and their information.
-		static std::map<std::string, BackgroundMusic*> musics;
+		static std::map<std::string, MusicInfo*> musics;
 		/// Map  associating the fonts' names and their information.
 		static std::map<std::string, Font*> fonts;
 	};

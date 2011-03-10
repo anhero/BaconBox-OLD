@@ -7,6 +7,8 @@
 
 #include "SoundParameters.h"
 #include "MusicParameters.h"
+#include "SoundInfo.h"
+#include "MusicInfo.h"
 #include "SoundFX.h"
 #include "BackgroundMusic.h"
 #include "ResourceManager.h"
@@ -62,27 +64,27 @@ namespace RedBox {
 		 * @param filePath Path to the file to load.
 		 * @return Pointer to the loaded sound effect.
 		 */
-		virtual SoundFX* loadSoundFX(const std::string& filePath) = 0;
+		virtual SoundInfo* loadSound(const std::string& filePath) = 0;
 		/**
 		 * Loads a sound effect using specific parameters.
 		 * @param info Struct containing platform dependant information about
 		 * the sound effect to load.
 		 * @return Pointer to the loaded sound effect.
 		 */
-		virtual SoundFX* loadSoundFX(const SoundParameters& info) = 0;
+		virtual SoundInfo* loadSound(const SoundParameters& info) = 0;
 		/**
 		 * Loads a music using a file path.
 		 * @param filePath Path to the music file to load.
 		 * @return Pointer to the loaded music.
 		 */
-		virtual BackgroundMusic* loadBackgroundMusic(const std::string& filePath) = 0;
+		virtual MusicInfo* loadMusic(const std::string& filePath) = 0;
 		/**
 		 * Loads a music using specific parameters.
 		 * @param info Struct containing platform dependant information about
 		 * the music to load.
 		 * @return Pointer to the loaded music.
 		 */
-		virtual BackgroundMusic* loadBackgroundMusic(const MusicParameters& info) = 0;
+		virtual MusicInfo* loadMusic(const MusicParameters& info) = 0;
 		/**
 		 * Destructor. The audio engine can only be destroyed by the resource
 		 * loader.
