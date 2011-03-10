@@ -40,6 +40,7 @@
 		24B9BD7D12E1279E00057BB1 /* RenderStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B9BD7A12E1279E00057BB1 /* RenderStep.cpp */; };
 		24B9BD7E12E1279E00057BB1 /* RenderStep.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B9BD7B12E1279E00057BB1 /* RenderStep.h */; };
 		24B9BD7F12E1279E00057BB1 /* RenderStepMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B9BD7C12E1279E00057BB1 /* RenderStepMode.h */; };
+		24C141891326D39B003076E5 /* AudioState.h in Headers */ = {isa = PBXBuildFile; fileRef = 24C141881326D39A003076E5 /* AudioState.h */; };
 		24C7F86013182AFA00822753 /* OpenALSoundFX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24C7F85E13182AFA00822753 /* OpenALSoundFX.cpp */; };
 		24C7F86113182AFA00822753 /* OpenALSoundFX.h in Headers */ = {isa = PBXBuildFile; fileRef = 24C7F85F13182AFA00822753 /* OpenALSoundFX.h */; };
 		24D0D4DE1314507D007A5629 /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D0D4D51314507D007A5629 /* Emitter.cpp */; };
@@ -170,6 +171,7 @@
 		24B9BD7A12E1279E00057BB1 /* RenderStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderStep.cpp; sourceTree = "<group>"; };
 		24B9BD7B12E1279E00057BB1 /* RenderStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderStep.h; sourceTree = "<group>"; };
 		24B9BD7C12E1279E00057BB1 /* RenderStepMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderStepMode.h; sourceTree = "<group>"; };
+		24C141881326D39A003076E5 /* AudioState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioState.h; sourceTree = "<group>"; };
 		24C7F85E13182AFA00822753 /* OpenALSoundFX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALSoundFX.cpp; sourceTree = "<group>"; };
 		24C7F85F13182AFA00822753 /* OpenALSoundFX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenALSoundFX.h; sourceTree = "<group>"; };
 		24D0D4D51314507D007A5629 /* Emitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Emitter.cpp; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				24B3200E1316CC9D00D7002B /* OpenAL */,
+				24C141881326D39A003076E5 /* AudioState.h */,
 				24B86B5012F319620071930C /* MusicInfo.cpp */,
 				24B86B5112F319620071930C /* MusicInfo.h */,
 				24B86B5212F319620071930C /* SoundInfo.cpp */,
@@ -918,6 +921,7 @@
 				2475DA94131D9DB5006A5CAF /* SoundParameters.h in Headers */,
 				2475DA99131DA01C006A5CAF /* MusicParameters.h in Headers */,
 				24B68271131FEB420007637C /* ResourceManager.h in Headers */,
+				24C141891326D39B003076E5 /* AudioState.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
