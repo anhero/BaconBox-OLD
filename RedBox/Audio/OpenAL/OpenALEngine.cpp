@@ -60,11 +60,11 @@ void OpenALEngine::update() {
 	for (std::list<OpenALSoundFX*>::iterator i = sources.begin();
 		 i != sources.end(); i++) {
 		alGetSourcei((*i)->sourceId, AL_SOURCE_STATE, &state);
-		if (state == AL_STOPPED && !(*i)->survives) {
+		if (state == AL_STOPPED) {
 			if((*i)->nbTimesLeft > 0) {
 				--(*i)->nbTimesLeft;
 				alSourcePlay((*i)->sourceId);
-			} else {
+			} else if(!(*i)->survives) {
 				alDeleteSources(1, &((*i)->sourceId));
 				sources.erase(i);
 			}
