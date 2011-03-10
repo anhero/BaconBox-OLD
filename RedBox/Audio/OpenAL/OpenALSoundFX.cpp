@@ -7,52 +7,48 @@
 using namespace RedBox;
 
 void OpenALSoundFX::play(int nbTimes) {
+	ALint bufferId;
 	if(nbTimes != 0) {
 		// We make sure the OpenALEngine is initialized.
 		assert(OpenALEngine::getInstance());
-		ALuint source;
-		alGenSources(1, &source);
-		alSource3f(source, AL_POSITION, 0.0f, 0.0f, 0.0f);
 		// We take care to set the looping.
 		if(nbTimes > 1) {
 			// We generate a queue of buffer id's to loop.
 			ALuint* queue = new ALuint[nbTimes];
 			for(int i = nbTimes - 1; i >= 0; --i) {
-				queue[i] = bufferId;
+				alGetSourcei(sourceId, AL_BUFFER, &bufferId);
+				queue[i] = static_cast<ALuint>(bufferId);
 			}
-			alSourceQueueBuffers(source, static_cast<ALsizei>(nbTimes), queue);
+			alSourceQueueBuffers(sourceId, static_cast<ALsizei>(nbTimes), queue);
 			delete[] queue;
+		// If infinite looping was specified.
+		} else if(nbTimes < 0) {
+			alSourcei(sourceId, AL_LOOPING, 1);
 		} else {
-			// If infinite looping was specified.
-			if(nbTimes < 0) {
-				alSourcei(source, AL_LOOPING, 1);
-			}
-			// We set the buffer for the source.
-			alSourcei(source, AL_BUFFER, bufferId);
+			alSourcei(sourceId, AL_LOOPING, 0);
 		}
 		// We start playing the sound.
-		alSourcePlay(source);
-		// We add the source to the OpenALEngine.
-		OpenALEngine::getInstance()->addSource(source);
+		alSourcePlay(sourceId);
 	}
 }
 
-bool OpenALSoundFX::getSurvives() const {
-	return survives;
+void OpenALSoundFX::stop() {
+	alSourceStop(sourceId);
 }
 
-void OpenALSoundFX::setSurvives(bool newSurvives) {
-	survives = newSurvives;
+void OpenALSoundFX::pause() {
+	alSourcePause(sourceId);
 }
 
-ALuint& OpenALSoundFX::getSourceId() {
-	return sourceId;
+void OpenALSoundFX::resume() {
+	alSourcePlay(sourceId);
 }
 
 OpenALSoundFX::OpenALSoundFX(): SoundFX(), sourceId(0), survives(false) {
 }
 
 OpenALSoundFX::~OpenALSoundFX() {
+	alDeleteSources(1, &sourceId);
 }
 
 void OpenALSoundFX::load(ALuint bufferId, char* bufferData) {

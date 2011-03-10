@@ -86,12 +86,12 @@ TextureInfo* ResourceManager::getTexture(const std::string& key){
 }
 
 SoundInfo* ResourceManager::getSound(const std::string& key) {
-	std::map<std::string, SoundFX*>::iterator itr = sounds.find(key);
+	std::map<std::string, SoundInfo*>::iterator itr = sounds.find(key);
 	return (itr != sounds.end())?(itr->second):(NULL);
 }
 
 MusicInfo* ResourceManager::getMusic(const std::string& key) {
-	std::map<std::string, BackgroundMusic*>::iterator itr = musics.find(key);
+	std::map<std::string, MusicInfo*>::iterator itr = musics.find(key);
 	return (itr != musics.end())?(itr->second):(NULL);
 }
 
@@ -335,18 +335,18 @@ void ResourceManager::unloadAll() {
 	}
 	textures.clear();
 	// We unload the sound effects.
-	for(std::map<std::string, SoundFX*>::iterator i = sounds.begin();
+	for(std::map<std::string, SoundInfo*>::iterator i = sounds.begin();
 		i != sounds.end();
 		i++) {
-		AudioEngine::getSoundEngine()->unloadSound(i->second)
+		AudioEngine::getSoundEngine()->unloadSound(i->second);
 		delete i->second;
 	}
 	sounds.clear();
 	// We unload the musics.
-	for(std::map<std::string, BackgroundMusic*>::iterator i = musics.begin();
+	for(std::map<std::string, MusicInfo*>::iterator i = musics.begin();
 		i != musics.end();
 		i++) {
-		AudioEngine::getMusicEngine()->unloadMusic(i->second)
+		AudioEngine::getMusicEngine()->unloadMusic(i->second);
 		delete i->second;
 	}
 	musics.clear();

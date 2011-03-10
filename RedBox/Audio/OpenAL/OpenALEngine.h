@@ -88,7 +88,7 @@ namespace RedBox {
 		/// List of devices available.
 		std::vector<std::string> deviceList;
 		/// Sources being played.
-		std::list<OpenALSoundFX> sources;
+		std::list<OpenALSoundFX*> sources;
 		/**
 		 * Default constructor.
 		 */

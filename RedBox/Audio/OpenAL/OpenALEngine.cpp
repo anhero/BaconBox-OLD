@@ -55,12 +55,13 @@ void OpenALEngine::init() {
 }
 
 void OpenALEngine::update() {
-	// We delete the sources of stopped sounds.
+	// We delete the sources of stopped sounds that must not survive.
 	ALint state;
-	for (std::list<ALuint>::iterator i = sources.begin(); i != sources.end(); i++) {
-		alGetSourcei(*i, AL_SOURCE_STATE, &state);
-		if (state == AL_STOPPED) {
-			alDeleteSources(1, &(*i));
+	for (std::list<OpenALSoundFX*>::iterator i = sources.begin();
+		 i != sources.end(); i++) {
+		alGetSourcei((*i)->sourceId, AL_SOURCE_STATE, &state);
+		if (state == AL_STOPPED && !(*i)->survives) {
+			alDeleteSources(1, &((*i)->sourceId));
 			sources.erase(i);
 		}
 	}
@@ -87,11 +88,11 @@ const std::vector<std::string>& OpenALEngine::getDeviceList() {
 
 void OpenALEngine::deleteBufferSources(ALuint buffer) {
 	ALint tmpBuffer;
-	for(std::list<OpenALSoundFX>::iterator i = sources.begin();
+	for(std::list<OpenALSoundFX*>::iterator i = sources.begin();
 		i != sources.end(); i++) {
-		alGetSourcei(i->getSourceId(), AL_BUFFER, &tmpBuffer);
+		alGetSourcei((*i)->sourceId, AL_BUFFER, &tmpBuffer);
 		if (tmpBuffer == buffer) {
-			alDeleteSources(1, &(i->getSourceId()));
+			alDeleteSources(1, &((*i)->sourceId));
 			sources.erase(i);
 		}
 	}
@@ -167,9 +168,9 @@ void OpenALEngine::loadWav(const std::string& filePath,
 SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
 	SoundInfo* sndInfo = ResourceManager::getSound(key);
 	if(sndInfo) {
-		sources.push_back(OpenALSoundFX());
-		sources.back().load(sndInfo->bufferId, sndInfo->bufferData);
-		return &(sources.back());
+		sources.push_back(new OpenALSoundFX());
+		sources.back()->load(sndInfo->bufferId, sndInfo->bufferData);
+		return sources.back();
 	} else {
 		return NULL;
 	}
@@ -230,13 +231,26 @@ bool OpenALEngine::unloadSound(SoundInfo* sound) {
 
 bool OpenALEngine::unloadMusic(MusicInfo* music) {
 	// We always return false because it shouln't even be called.
-	return false
+	return false;
 }
 
 OpenALEngine::~OpenALEngine() {
 	// We delete all the sources.
-	for(std::list<ALuint>::iterator i = sources.begin(); i != sources.end(); i++) {
-		alDeleteSources(1, &(*i));
+	ALint bufferId;
+	ALuint tmp;
+	for(std::list<OpenALSoundFX*>::iterator i = sources.begin(); i != sources.end(); i++) {
+		// We make sure the source hasn't already been released.
+		if (alIsSource((*i)->sourceId)) {
+			// We make sure its buffer will be deleted.
+			alGetSourcei((*i)->sourceId, AL_BUFFER, &bufferId);
+			// We delete de source.
+			alDeleteSources(1, &((*i)->sourceId));
+			// We delete its buffer, if possible.
+			if(bufferId != AL_NONE) {
+				tmp = static_cast<ALuint>(bufferId);
+				alDeleteBuffers(1, &tmp);
+			}
+		}
 	}
 	sources.clear();
 	// We get the current context.

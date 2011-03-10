@@ -39,22 +39,6 @@ namespace RedBox {
 		 * Resumes the sound. Will only resume if the sound has been paused.
 		 */
 		void resume();
-		/**
-		 * Gets if the sound effect needs to survive after being played.
-		 * @return True if it needs to survive, false if not.
-		 */
-		bool getSurvives() const;
-		/**
-		 * Sets if the sound effect needs to survive after being played.
-		 * @param newSurvives New value, true if it needs to survive, false if
-		 * not.
-		 */
-		void setSurvives(bool newSurvives);
-		/**
-		 * Get the sound effect's assigned source ID.
-		 * @return Sound effect's assigned source ID.
-		 */
-		ALuint& getSourceId();
 	private:
 		/// OpenAL ID of the sound source.
 		ALuint sourceId;
