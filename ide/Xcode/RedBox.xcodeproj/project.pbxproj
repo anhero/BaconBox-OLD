@@ -31,6 +31,8 @@
 		24B320121316CC9D00D7002B /* OpenALEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B320101316CC9D00D7002B /* OpenALEngine.h */; };
 		24B320161316EBAC00D7002B /* BitHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B320141316EBAC00D7002B /* BitHelper.cpp */; };
 		24B320171316EBAC00D7002B /* BitHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B320151316EBAC00D7002B /* BitHelper.h */; };
+		24B68270131FEB420007637C /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B6826E131FEB420007637C /* ResourceManager.cpp */; };
+		24B68271131FEB420007637C /* ResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B6826F131FEB420007637C /* ResourceManager.h */; };
 		24B86B5412F319620071930C /* MusicInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B86B5012F319620071930C /* MusicInfo.cpp */; };
 		24B86B5512F319620071930C /* MusicInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B86B5112F319620071930C /* MusicInfo.h */; };
 		24B86B5612F319620071930C /* SoundInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B86B5212F319620071930C /* SoundInfo.cpp */; };
@@ -161,6 +163,8 @@
 		24B320101316CC9D00D7002B /* OpenALEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenALEngine.h; sourceTree = "<group>"; };
 		24B320141316EBAC00D7002B /* BitHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BitHelper.cpp; sourceTree = "<group>"; };
 		24B320151316EBAC00D7002B /* BitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitHelper.h; sourceTree = "<group>"; };
+		24B6826E131FEB420007637C /* ResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceManager.cpp; sourceTree = "<group>"; };
+		24B6826F131FEB420007637C /* ResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManager.h; sourceTree = "<group>"; };
 		24B86B5012F319620071930C /* MusicInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicInfo.cpp; sourceTree = "<group>"; };
 		24B86B5112F319620071930C /* MusicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicInfo.h; sourceTree = "<group>"; };
 		24B86B5212F319620071930C /* SoundInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundInfo.cpp; sourceTree = "<group>"; };
@@ -660,6 +664,8 @@
 				519313F112ED62E1008B3AFB /* TextureInfo.h */,
 				519313EB12ED62D5008B3AFB /* ResourceLoader.cpp */,
 				519313EC12ED62D5008B3AFB /* ResourceLoader.h */,
+				24B6826E131FEB420007637C /* ResourceManager.cpp */,
+				24B6826F131FEB420007637C /* ResourceManager.h */,
 				512B7E2D12DF67B0002E9698 /* Edge.cpp */,
 				512B7E2E12DF67B1002E9698 /* Edge.h */,
 				51CF8D7912DF60E0003FBBAD /* Vec2.cpp */,
@@ -918,6 +924,7 @@
 				24998232131AE63600B856B7 /* os_types.h in Headers */,
 				2475DA94131D9DB5006A5CAF /* SoundParameters.h in Headers */,
 				2475DA99131DA01C006A5CAF /* MusicParameters.h in Headers */,
+				24B68271131FEB420007637C /* ResourceManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1019,6 +1026,7 @@
 				24C7F86013182AFA00822753 /* OpenALSoundFX.cpp in Sources */,
 				2475DA93131D9DB5006A5CAF /* SoundParameters.cpp in Sources */,
 				2475DA98131DA01C006A5CAF /* MusicParameters.cpp in Sources */,
+				24B68270131FEB420007637C /* ResourceManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
