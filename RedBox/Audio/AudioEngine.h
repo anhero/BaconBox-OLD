@@ -102,6 +102,22 @@ namespace RedBox {
 		 */
 		virtual MusicInfo* loadMusic(const MusicParameters& info) = 0;
 		/**
+		 * Unloads sound data. Called by the resource loader either by demand
+		 * of the user or when it is unloading everything before unloading the
+		 * audio engine.
+		 * @param sound Sound data to unload.
+		 * @return True if the unloading was done correctly, false if not.
+		 */
+		virtual bool unloadSound(SoundInfo* sound) = 0;
+		/**
+		 * Unloads data of a music. Called by the resource loader either by
+		 * demand of the user or when it is unloading everything before
+		 * unloading the audio engine.
+		 * @param sound Music data to unload.
+		 * @return True if the unloading was done correctly, false if not.
+		 */
+		virtual bool unloadMusic(MusicInfo* music) = 0;
+		/**
 		 * Destructor. The audio engine can only be destroyed by the resource
 		 * loader.
 		 */
