@@ -54,6 +54,22 @@ namespace RedBox {
 		 * Updates the necessary informations for the audio engine.
 		 */
 		virtual void update() = 0;
+		/**
+		 * Gets a sound effect. Initializes a sound effect from already loaded
+		 * sound effect data.
+		 * @param key Key to the sound effect data to use for the sound effect.
+		 * @param survive True if the user wants to manage the sound effect by
+		 * himself. False if he doesn't want to have to delete the sound
+		 * effect after he has started playing it.
+		 */
+		virtual SoundFX* getSoundFX(const std::string& key, bool survive) = 0;
+		/**
+		 * Gets a background music. Initializes a music from already loaded
+		 * music data. The user has to take care of deleting the background
+		 * music's instance after he recieves it.
+		 * @param key Key to the music data to use for the background music.
+		 */
+		virtual BackgroundMusic* getBackgroundMusic(const std::string& key) = 0;
 	protected:
 		/**
 		 * Default constructor. Can only be called by the resource loader.
