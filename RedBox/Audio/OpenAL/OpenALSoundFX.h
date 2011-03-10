@@ -22,23 +22,15 @@ namespace RedBox {
 	public:
 		/**
 		 * Plays the sound effect a given number of times.
-		 * @param nbTimes Number of times to play the sound effect. -1 for 
-		 * infinite playing.
+		 * @param nbTimes Number of times to play the sound effect. Negative
+		 * number for infinite playing.
 		 */
 		void play(int nbTimes = 1);
 	private:
-		/// State of the sound source.
-		ALint state;
 		/// OpenAL sound buffer ID.
 		ALuint bufferId;
-		/// OpenAL sound source.
-		ALuint sourceId;
-		/// Sound data format.
-		ALenum format;
-		/// Frequency of the sound data.
-		ALsizei freq;
 		/// Sound buffer data.
-		std::vector<char> bufferData;
+		char* bufferData;
 		
 		/**
 		 * Default constructor.

@@ -24,7 +24,7 @@ namespace RedBox {
 		 * Plays the sound effect. Will make the necessary calls itself to the
 		 * engine.
 		 * @param nbTimes Number of times the sound effect will be played in
-		 * loop. -1 is for infinite looping.
+		 * loop. A negative number is for infinite looping.
 		 */
 		virtual void play(int nbTimes = 1) = 0;
 	protected:
