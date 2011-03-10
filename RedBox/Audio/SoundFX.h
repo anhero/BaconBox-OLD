@@ -27,6 +27,20 @@ namespace RedBox {
 		 * loop. A negative number is for infinite looping.
 		 */
 		virtual void play(int nbTimes = 1) = 0;
+		/**
+		 * Stops the sound. Cannot be resumed and next time it will be played
+		 * it will start from the beginning.
+		 */
+		virtual void stop() = 0;
+		/**
+		 * Pauses the sound. Remembers where it was paused so it can resume when
+		 * calling the resume method.
+		 */
+		virtual void pause() = 0;
+		/**
+		 * Resumes the sound. Will only resume if the sound has been paused.
+		 */
+		virtual void resume() = 0;
 	protected:
 		/**
 		 * Default constructor. Can only be called by the resource loader or the
