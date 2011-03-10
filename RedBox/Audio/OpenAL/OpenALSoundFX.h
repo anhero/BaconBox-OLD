@@ -39,6 +39,18 @@ namespace RedBox {
 		 * Resumes the sound. Will only resume if the sound has been paused.
 		 */
 		void resume();
+		/**
+		 * Checks if the sound effect is currently looping.
+		 * @return Sound source's looping property (true if looping, false if
+		 * not).
+		 */
+		bool isLooping();
+		/**
+		 * Gets the sound effect's current state. Queries OpenAL for the sound's
+		 * current state.
+		 * @return Sound effect's current state.
+		 */
+		AudioState::Enum getCurrentState();
 	private:
 		/// OpenAL ID of the sound source.
 		ALuint sourceId;

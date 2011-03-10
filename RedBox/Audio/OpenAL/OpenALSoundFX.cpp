@@ -40,6 +40,33 @@ void OpenALSoundFX::resume() {
 	}
 }
 
+bool OpenALSoundFX::isLooping() {
+	ALint looping;
+	alGetSourcei(sourceId, AL_LOOPING, &looping);
+	return static_cast<bool>(looping);
+}
+
+AudioState::Enum OpenALSoundFX::getCurrentState() {
+	ALint state;
+	AudioState::Enum result;
+	alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
+	switch (state) {
+		case AL_INITIAL:
+			result = AudioState::INITIAL;
+			break;
+		case AL_PLAYING:
+			result = AudioState::PLAYING;
+			break;
+		case AL_PAUSED:
+			result = AudioState::PAUSED;
+			break;
+		default:
+			result = AudioState::STOPPED;
+			break;
+	}
+	return result;
+}
+
 OpenALSoundFX::OpenALSoundFX(): SoundFX(), sourceId(0), survives(false), 
 nbTimesLeft(0){
 }
