@@ -23,6 +23,7 @@ namespace RedBox {
 	 */
 	class AudioEngine {
 		friend class ResourceManager;
+		friend class RedBoxEngine;
 	public:
 		/**
 		 * Loads the sound and the music engine.
@@ -52,14 +53,6 @@ namespace RedBox {
 		 */
 		static void unloadAudioEngines();
 		/**
-		 * Initializes the audio engine.
-		 */
-		virtual void init() = 0;
-		/**
-		 * Updates the necessary informations for the audio engine.
-		 */
-		virtual void update() = 0;
-		/**
 		 * Gets a sound effect. Initializes a sound effect from already loaded
 		 * sound effect data.
 		 * @param key Key to the sound effect data to use for the sound effect.
@@ -80,6 +73,14 @@ namespace RedBox {
 		 * Default constructor. Only called by its children's constructors.
 		 */
 		AudioEngine();
+		/**
+		 * Initializes the audio engine.
+		 */
+		virtual void init() = 0;
+		/**
+		 * Updates the necessary informations for the audio engine.
+		 */
+		virtual void update() = 0;
 		/**
 		 * Loads a sound effect using a file path.
 		 * @param filePath Path to the file to load.

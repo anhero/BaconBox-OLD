@@ -24,14 +24,6 @@ namespace RedBox {
 		friend class AudioEngine;
 	public:
 		/**
-		 * Initializes OpenAL.
-		 */
-		void init();
-		/**
-		 * Updates OpenAL.
-		 */
-		void update();
-		/**
 		 * Sets the default device to use for audio output. Must be called
 		 * before initializing the engine.
 		 * @param newDevice Name of the device to set as the default device.
@@ -43,27 +35,9 @@ namespace RedBox {
 		 */
 		const std::vector<std::string>& getDeviceList();
 		/**
-		 * Deletes all sources using a specific buffer.
-		 */
-		void deleteBufferSources(ALuint buffer);
-		/**
 		 * Gets OpenALEngine's instance. Retuns NULL if it isn't constructed.
 		 */
 		static OpenALEngine* getInstance();
-		/**
-		 * Loads data from a wav file.
-		 * @param fileName Path to the file to load.
-		 * @param bufferData Array containing the buffer data of the loaded wav
-		 * file.
-		 * @param bufferSize Will contain the size of the loaded buffer.
-		 * @param format Loaded audio's format.
-		 * @param freq Loaded audio's frequency.
-		 */
-		static void loadWav(const std::string& filePath,
-							char*& bufferData,
-							ALsizei& bufferSize,
-							ALenum& format,
-							ALsizei& freq);
 		/**
 		 * Gets a sound effect. Initializes a sound effect from already loaded
 		 * sound effect data.
@@ -93,6 +67,14 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		OpenALEngine();
+		/**
+		 * Initializes OpenAL.
+		 */
+		void init();
+		/**
+		 * Updates OpenAL.
+		 */
+		void update();
 		/**
 		 * Loads a sound effect from a file. For now, it must be a wav file.
 		 * @param filePath Path to the sound effect's file.
@@ -140,6 +122,25 @@ namespace RedBox {
 		 * Destructor, closes OpenAL.
 		 */
 		~OpenALEngine();
+		/**
+		 * Deletes all sources using a specific buffer.
+		 * @param buffer ID of the buffer.
+		 */
+		void deleteBufferSources(ALuint buffer);
+		/**
+		 * Loads data from a wav file.
+		 * @param fileName Path to the file to load.
+		 * @param bufferData Array containing the buffer data of the loaded wav
+		 * file.
+		 * @param bufferSize Will contain the size of the loaded buffer.
+		 * @param format Loaded audio's format.
+		 * @param freq Loaded audio's frequency.
+		 */
+		static void loadWav(const std::string& filePath,
+							char*& bufferData,
+							ALsizei& bufferSize,
+							ALenum& format,
+							ALsizei& freq);
 	};
 }
 
