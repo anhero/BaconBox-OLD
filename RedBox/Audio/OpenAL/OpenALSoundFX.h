@@ -44,6 +44,7 @@ namespace RedBox {
 		ALuint sourceId;
 		/// Used to know if the engine deletes the sound effect when done.
 		bool survives;
+		int nbTimesLeft;
 		
 		/**
 		 * Default constructor.

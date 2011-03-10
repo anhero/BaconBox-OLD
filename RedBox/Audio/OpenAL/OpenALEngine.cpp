@@ -61,8 +61,13 @@ void OpenALEngine::update() {
 		 i != sources.end(); i++) {
 		alGetSourcei((*i)->sourceId, AL_SOURCE_STATE, &state);
 		if (state == AL_STOPPED && !(*i)->survives) {
-			alDeleteSources(1, &((*i)->sourceId));
-			sources.erase(i);
+			if((*i)->nbTimesLeft > 0) {
+				--(*i)->nbTimesLeft;
+				alSourcePlay((*i)->sourceId);
+			} else {
+				alDeleteSources(1, &((*i)->sourceId));
+				sources.erase(i);
+			}
 		}
 	}
 }
