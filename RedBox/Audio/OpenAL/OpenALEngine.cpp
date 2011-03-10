@@ -1,11 +1,15 @@
 #include "OpenALEngine.h"
 
+#include <fstream>
+
 #include <cstring>
 #include <cassert>
 
 #include "Debug.h"
 
 #include "OpenALSoundFX.h"
+#include "BitHelper.h"
+#include "WavHeader.h"
 
 using namespace RedBox;
 
@@ -99,6 +103,69 @@ void OpenALEngine::deleteBufferSources(ALuint buffer) {
 
 OpenALEngine* OpenALEngine::getInstance() {
 	return instance;
+}
+
+void OpenALEngine::loadWav(const std::string& filePath,
+						   char*& bufferData,
+						   ALsizei& bufferSize,
+						   ALenum& format,
+						   ALsizei& freq) {
+	// We open the wav file.
+	std::fstream binFile(filePath.c_str(), std::ios::binary|std::ios::in);
+	// We check if the file is correctly opened.
+	if (binFile.is_open() && binFile.good()) {
+		// We get the file's starting position.
+		long begin = binFile.tellg();
+		// We move at the end of the file.
+		binFile.seekg(0, std::ios::end);
+		// We get the last byte's position.
+		long end = binFile.tellg();
+		// We go back to the start of the file.
+		binFile.seekg(0, std::ios::beg);
+		// Will contain the wav header information.
+		WavHeader wav;
+		// We read the wav header information from the file and put it in the
+		// wav variable.
+		binFile.read(reinterpret_cast<char*>(&wav), sizeof(wav));
+		
+		// We swap the endian for the header informations that are in big
+		// endian.
+		BitHelper::endianSwap(wav.chunkId);
+		BitHelper::endianSwap(wav.format);
+		BitHelper::endianSwap(wav.subchunk1Id);
+		BitHelper::endianSwap(wav.subchunk2Id);
+		
+		// We get the number of channels.
+		if(wav.nbChannels == 1) {
+			format = AL_FORMAT_MONO16;
+		} else {
+			format = AL_FORMAT_STEREO16;
+		}
+		
+		// We get the sample rate.
+		freq = wav.sampleRate;
+		
+		// We check to calculate the buffer size. The information in the header
+		// can sometimes be wrong, so we can calculate it using the file's size
+		// and substracting the header's size to it.
+		bufferSize = end - begin - sizeof(wav);
+		// We allocate memory for the buffe data.
+		bufferData = new char[bufferSize];
+		// We read the data from the file.
+		binFile.read(bufferData, bufferSize);
+		// If there was an error while loading the buffer.
+		if(binFile.rdstate()) {
+			// We delete the buffer and set it to NULL.
+			delete[] bufferData;
+			bufferData = NULL;
+			$ECHO("Failed to read the buffer data from the wave file: " <<
+				  filePath);
+		}
+		// We close the file.
+		binFile.close();
+	} else {
+		$ECHO("Failed to open the file: " << filePath);
+	}
 }
 
 OpenALEngine::OpenALEngine(): AudioEngine() {

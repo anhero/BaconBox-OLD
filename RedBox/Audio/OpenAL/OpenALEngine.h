@@ -55,6 +55,20 @@ namespace RedBox {
 		 * Gets OpenALEngine's instance. Retuns NULL if it isn't constructed.
 		 */
 		static OpenALEngine* getInstance();
+		/**
+		 * Loads data from a wav file.
+		 * @param fileName Path to the file to load.
+		 * @param bufferData Array containing the buffer data of the loaded wav
+		 * file.
+		 * @param bufferSize Will contain the size of the loaded buffer.
+		 * @param format Loaded audio's format.
+		 * @param freq Loaded audio's frequency.
+		 */
+		static void loadWav(const std::string& filePath,
+							char*& bufferData,
+							ALsizei& bufferSize,
+							ALenum& format,
+							ALsizei& freq);
 	private:
 		/// OpenALEngine's main instance.
 		static OpenALEngine* instance;
