@@ -31,7 +31,11 @@
 	#define RB_IPHONE_DEVICE_PLATFORM
 #endif // TARGET_OS_IPHONE
 
-#ifdef RB_IPHONE_PLATFORM
+#ifdef TARGET_OS_MAC
+	#define RB_MAC_PLATFORM
+#endif
+
+#if defined(RB_IPHONE_PLATFORM) || defined(RB_MAC_PLATFORM)
 	#define RB_OPENAL
 	#define RB_SOUND_ENGINE new OpenALEngine()
 	#define RB_MUSIC_ENGINE NULL
