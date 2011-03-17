@@ -1,12 +1,14 @@
 #include "TimeHelper.h"
-//Pour linux et POSIX en général:
-#ifdef LINUX
+
+#include "PlatformFlagger.h"
+
+#ifdef RB_LINUX
 #include <sys/time.h>
 #endif
 
-#ifdef _WIN32 // Defined by all Windows 32 compilers, but not by any others.
+#ifdef RB_WIN32
 #include <windows.h>
-#endif //_WIN32
+#endif // RB_WIN32
 
 using namespace RedBox;
 
@@ -80,7 +82,7 @@ double TimeHelper::getRealEpoch() {
 	result += (currTime.tv_nsec)/1000000000.0;
 #endif //LINUX
 	
-#ifdef _WIN32
+#ifdef RB_WIN32
 	static const double NB_SECS_MILLISECOND = 0.001;
 #if 0
 	static const double NB_SECS_YEAR = 31536000.0;
@@ -133,7 +135,7 @@ double TimeHelper::getRealEpoch() {
 	// We convert the milliseconds in the format we want.
 	result = static_cast<double>(ticks / 1000) + static_cast<double>(ticks % 1000) * NB_SECS_MILLISECOND;
 #endif // #if 0
-#endif //_WIN32
+#endif // RB_WIN32
 	return result;
 }
 

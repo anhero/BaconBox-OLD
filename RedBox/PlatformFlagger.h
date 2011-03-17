@@ -1,8 +1,16 @@
 #ifndef RB_PLATFORM_FLAGGER_H
 #define RB_PLATFORM_FLAGGER_H
 
+#ifdef LINUX
+
+#define RB_LINUX
+
+#endif // LINUX
+
 #ifdef _WIN32
 #include <sdkddkver.h>
+
+#define RB_WIN32
 
 #ifdef _WIN32_WINNT_VISTA
 	#define _WIN32_WINNT _WIN32_WINNT_VISTA
@@ -10,7 +18,7 @@
 	#define _WIN32_WINNT _WIN32_WINNT_WIN2K
 #endif // _WIN32_WINNT_VISTA
 
-#endif
+#endif // _WIN32
 
 #ifdef QT
 #define RB_QT
