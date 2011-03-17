@@ -150,5 +150,16 @@
 	[self resume];
 }
 
+- (BOOL)isLooping{
+	return BGMusic.numberOfLoops == -1;
+}
+
+- (BOOL)isPaused{
+	return !BGMusic.playing && BGMusic.currentTime != 0.0;
+}
+
+- (BOOL)isStopped{
+	return !BGMusic.playing && BGMusic.currentTime == 0.0;
+}
 
 @end

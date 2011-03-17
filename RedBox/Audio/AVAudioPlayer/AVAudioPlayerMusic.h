@@ -7,6 +7,10 @@
 
 #include <string>
 
+#include "AVAudioPlayerMusicDelegate.h"
+#include <Foundation/Foundation.h>
+
+#include "AudioState.h"
 #include "BackgroundMusic.h"
 
 namespace RedBox {
@@ -25,19 +29,39 @@ namespace RedBox {
 		 */
 		void play(int nbTimes = -1);
 		/**
+		 * Same as the usual play method, but with a fade in effect.
+		 * @param fadeIn Time the fade in effect will last (in seconds).
+		 */
+		void play(int nbTimes, double fadeIn);
+		/**
 		 * Stops the music. Cannot be resumed and next time it will be played
 		 * it will start from the beginning.
 		 */
 		void stop();
+		/**
+		 * Same as the usual stop method, but with a fade out effect.
+		 * @param fadeOut Time the fade out effect will last (in seconds).
+		 */
+		void stop(double fadeOut);
 		/**
 		 * Pauses the music. Remembers where it was paused so it can resume when
 		 * calling the resume method.
 		 */
 		void pause();
 		/**
+		 * Same as the usual pause method, but with a fade out effect.
+		 * @param fadeOut Time the fade out effect will last (in seconds).
+		 */
+		void pause(double fadeOut);
+		/**
 		 * Resumes the music. Will only resume if the music has been paused.
 		 */
 		void resume();
+		/**
+		 * Same as the usual resume method, but with a fade in effect.
+		 * @param fadeIn Time the fade in effect will last (in seconds).
+		 */
+		void resume(double fadeIn);
 		/**
 		 * Checks if the music is currently playing infinitely.
 		 * @return True if the music is currently looping infinitely.
@@ -57,6 +81,10 @@ namespace RedBox {
 		 */
 		~AVAudioPlayerMusic();
 	private:
+		/// Pointer to the objective-C background music.
+		AVAudioPlayerMusicDelegate* bgm;
+		/// Used to keep track if the music is at the INITIAL state.
+		bool playedOnce;
 		/**
 		 * Default constructor. Can only be called by the audio engine.
 		 */

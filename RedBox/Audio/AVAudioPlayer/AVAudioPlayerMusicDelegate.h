@@ -35,6 +35,9 @@ typedef enum {
 - (void)fadeInPlay;
 - (void)fadeInResume:(float)time;
 - (void)fadeInResume;
+- (BOOL)isLooping;
+- (BOOL)isPaused;
+- (BOOL)isStopped;
 
 @end
 #endif
