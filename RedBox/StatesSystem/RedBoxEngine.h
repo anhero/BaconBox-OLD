@@ -3,14 +3,13 @@
  * @ingroup StateMachine
  */
 
-#ifndef __RED_BOX_ENGINE_H
-#define __RED_BOX_ENGINE_H
+#ifndef RB_RED_BOX_ENGINE_H
+#define RB_RED_BOX_ENGINE_H
 
 #include <map>
 #include <string>
 
 #include "State.h"
-#include "AudioEngine.h"
 
 namespace RedBox {
 	/**

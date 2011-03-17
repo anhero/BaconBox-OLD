@@ -2,8 +2,8 @@
 
 using namespace RedBox;
 
-BackgroundMusic::BackgroundMusic() {
+BackgroundMusic::~BackgroundMusic() {
 }
 
-BackgroundMusic::~BackgroundMusic() {
+BackgroundMusic::BackgroundMusic(): Sound() {
 }

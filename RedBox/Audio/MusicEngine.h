@@ -20,6 +20,7 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	class MusicEngine : public AudioEngine {
+		friend class ResourceManager;
 	public:
 		/**
 		 * Constructs a background music. Gets the music's data associated with
@@ -35,8 +36,8 @@ namespace RedBox {
 		 * be automatically destroyed once the music's state is at STOPPED. The
 		 * background music returned is at the INITIAL state.
 		 */
-		BackgroundMusic* getBackgroundMusic(const std::string& key,
-											bool survive) = 0;
+		virtual BackgroundMusic* getBackgroundMusic(const std::string& key, 
+													bool survive) = 0;
 	protected:
 		/**
 		 * Default constructor. Engine initialization is specifically done in

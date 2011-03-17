@@ -67,12 +67,12 @@ AudioState::Enum OpenALSoundFX::getCurrentState() {
 	return result;
 }
 
-OpenALSoundFX::OpenALSoundFX(): SoundFX(), sourceId(0), survives(false), 
-nbTimesLeft(0){
-}
-
 OpenALSoundFX::~OpenALSoundFX() {
 	alDeleteSources(1, &sourceId);
+}
+
+OpenALSoundFX::OpenALSoundFX(): SoundFX(), sourceId(0), survives(false), 
+nbTimesLeft(0){
 }
 
 void OpenALSoundFX::load(ALuint bufferId) {

@@ -10,6 +10,14 @@
 #include "simple-image.h"
 #include <utility>
 #include "Debug.h"
+#include "SoundFX.h"
+#include "BackgroundMusic.h"
+#include "SoundInfo.h"
+#include "MusicInfo.h"
+#include "TextureInfo.h"
+#include "AudioEngine.h"
+#include "SoundEngine.h"
+#include "MusicEngine.h"
 
 using namespace RedBox;
 
@@ -18,7 +26,7 @@ std::map<std::string, SoundInfo*> ResourceManager::sounds = std::map<std::string
 std::map<std::string, MusicInfo*> ResourceManager::musics = std::map<std::string, MusicInfo*>();
 std::map<std::string, Font*> ResourceManager::fonts = std::map<std::string, Font*>();
 
-TextureInfo* ResourceManager::addTexture(const std::string& key, unsigned char * bitmap, int width, int height){
+TextureInfo* ResourceManager::addTexture(const std::string& key, unsigned char * bitmap, int width, int height) {
 	TextureInfo* texInfo = NULL;
 	if (textures.find(key) ==  textures.end()) {
 		texInfo = new TextureInfo();

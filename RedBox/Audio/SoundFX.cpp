@@ -2,8 +2,8 @@
 
 using namespace RedBox;
 
-SoundFX::SoundFX() {
+SoundFX::~SoundFX() {
 }
 
-SoundFX::~SoundFX() {
+SoundFX::SoundFX(): Sound() {
 }

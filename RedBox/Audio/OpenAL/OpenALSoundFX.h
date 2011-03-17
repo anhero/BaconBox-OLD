@@ -51,6 +51,10 @@ namespace RedBox {
 		 * @return Sound effect's current state.
 		 */
 		AudioState::Enum getCurrentState();
+		/**
+		 * Destructor.
+		 */
+		~OpenALSoundFX();
 	private:
 		/// OpenAL ID of the sound source.
 		ALuint sourceId;
@@ -66,10 +70,6 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		OpenALSoundFX();
-		/**
-		 * Destructor.
-		 */
-		~OpenALSoundFX();
 		/**
 		 * Loads a sound effect from a buffer.
 		 * @param bufferId ID of the buffer to play.

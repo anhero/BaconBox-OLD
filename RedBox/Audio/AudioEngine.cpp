@@ -2,6 +2,9 @@
 
 #include "PlatformFlagger.h"
 
+#include "SoundEngine.h"
+#include "MusicEngine.h"
+
 #ifdef RB_SOUND_ENGINE_INCLUDE
 #include RB_SOUND_ENGINE_INCLUDE
 #endif
@@ -13,8 +16,8 @@
 
 using namespace RedBox;
 
-AudioEngine* AudioEngine::soundEngine = NULL;
-AudioEngine* AudioEngine::musicEngine = NULL;
+SoundEngine* AudioEngine::soundEngine = NULL;
+MusicEngine* AudioEngine::musicEngine = NULL;
 
 void AudioEngine::loadAudioEngine() {
 	loadSoundEngine();
@@ -36,13 +39,13 @@ void AudioEngine::loadMusicEngine() {
 		}
 	}
 }
-AudioEngine* AudioEngine::getSoundEngine() {
+SoundEngine* AudioEngine::getSoundEngine() {
 	if(!soundEngine) {
 		loadSoundEngine();
 	}
 	return soundEngine;
 }
-AudioEngine* AudioEngine::getMusicEngine() {
+MusicEngine* AudioEngine::getMusicEngine() {
 	if(!musicEngine) {
 		loadMusicEngine();
 	}

@@ -14,15 +14,18 @@
 #include <vector>
 #include <list>
 
-#include "AudioEngine.h"
 #include "OpenaLSoundFX.h"
+#include "SoundEngine.h"
+#include "SoundParameters.h"
 
 namespace RedBox {
+	class SoundFX;
+	class SoundInfo;
 	/**
 	 * Audio engine using OpenAL to play the sounds.
 	 * @ingroup Audio
 	 */
-	class OpenALEngine: public AudioEngine {
+	class OpenALEngine: public SoundEngine {
 		friend class AudioEngine;
 	public:
 		/**
@@ -49,13 +52,6 @@ namespace RedBox {
 		 * effect after he has started playing it.
 		 */
 		SoundFX* getSoundFX(const std::string& key, bool survive);
-		/**
-		 * Gets a background music. Initializes a music from already loaded
-		 * music data. The user has to take care of deleting the background
-		 * music's instance after he recieves it.
-		 * @param key Key to the music data to use for the background music.
-		 */
-		BackgroundMusic* getBackgroundMusic(const std::string& key);
 	private:
 		/// OpenALEngine's main instance.
 		static OpenALEngine* instance;
@@ -69,6 +65,10 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		OpenALEngine();
+		/**
+		 * Destructor, closes OpenAL.
+		 */
+		~OpenALEngine();
 		/**
 		 * Initializes OpenAL.
 		 */
@@ -92,18 +92,6 @@ namespace RedBox {
 		 */
 		SoundInfo* loadSound(const SoundParameters& params);
 		/**
-		 * Loads a background music from a file. For now, it must be a wav file.
-		 * @param filePath Path to the music's file.
-		 * @return Pointer to loaded music. Null if the loading failed.
-		 */
-		MusicInfo* loadMusic(const std::string& filePath);
-		/**
-		 * Loads a background music from information.
-		 * @param info Information about the music to load.
-		 * @return Pointer to the loaded music. Null if the loading failed.
-		 */
-		MusicInfo* loadMusic(const MusicParameters& params);
-		/**
 		 * Unloads sound data. Called by the resource loader either by demand
 		 * of the user or when it is unloading everything before unloading the
 		 * audio engine. Will not succeed if there are still sources using the
@@ -112,18 +100,6 @@ namespace RedBox {
 		 * @return True if the unloading was done correctly, false if not.
 		 */
 		bool unloadSound(SoundInfo* sound);
-		/**
-		 * Unloads data of a music. Called by the resource loader either by
-		 * demand of the user or when it is unloading everything before
-		 * unloading the audio engine. Does nothing in OpenAL's case.
-		 * @param sound Music data to unload.
-		 * @return True if the unloading was done correctly, false if not.
-		 */
-		bool unloadMusic(MusicInfo* music);
-		/**
-		 * Destructor, closes OpenAL.
-		 */
-		~OpenALEngine();
 		/**
 		 * Deletes all sources using a specific buffer.
 		 * @param buffer ID of the buffer.

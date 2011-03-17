@@ -49,17 +49,16 @@ namespace RedBox {
 		 * @see RedBox::AudioState::Enum
 		 */
 		virtual AudioState::Enum getCurrentState() = 0;
+		/**
+		 * Destructor. Does not delete the sound data, only the sound source.
+		 */
+		virtual ~Sound();
 	protected:
 		/**
 		 * Default constructor. Can only be called by the resource manager or
 		 * the audio engine.
 		 */
 		Sound();
-		/**
-		 * Destructor. Sound effects can only be destroyed by the resource
-		 * loader or the audio engine.
-		 */
-		virtual ~Sound();
 	};
 }
 

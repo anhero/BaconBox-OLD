@@ -9,14 +9,16 @@
 #include <string>
 #include <map>
 
-#include "Debug.h"
-#include "TextureInfo.h"
-#include "AudioEngine.h"
+#include "SoundParameters.h"
+#include "MusicParameters.h"
 #include "Font.h"
 
 namespace RedBox {
 	class SoundFX;
 	class BackgroundMusic;
+	class SoundInfo;
+	class MusicInfo;
+	class TextureInfo;
 	/**
 	 * Class that manages resources like textures and audio.
 	 * @ingroup Display

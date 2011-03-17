@@ -20,6 +20,7 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	class SoundEngine : public AudioEngine {
+		friend class ResourceManager;
 	public:
 		/**
 		 * Constructs a sound effect. Gets the sound's data associated with the
@@ -36,7 +37,7 @@ namespace RedBox {
 		 * automatically destroyed once the sound's state is at STOPPED. The
 		 * sound effect returned is at the INITIAL state.
 		 */
-		SoundFX* getSoundFX(const std::string& key, bool survive) = 0;
+		virtual SoundFX* getSoundFX(const std::string& key, bool survive) = 0;
 	protected:
 		/**
 		 * Default constructor. Engine initialization is specifically done in

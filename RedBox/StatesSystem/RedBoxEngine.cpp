@@ -3,6 +3,9 @@
 #include "TimeHelper.h"
 #include "Drawer.h"
 #include "Font.h"
+#include "AudioEngine.h"
+#include "SoundEngine.h"
+#include "MusicEngine.h"
 
 using namespace RedBox;
 
