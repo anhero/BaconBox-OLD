@@ -1,11 +1,12 @@
 #include "Renderable.h"
 
 using namespace RedBox;
-Renderable::Renderable(): z(0), toBeDeleted(false), zChanged(false) {
+Renderable::Renderable(): z(0), toBeDeleted(false), zChanged(false),
+isInState(false){
 }
 
 Renderable::Renderable(const Renderable& src): z(src.z), 
-toBeDeleted(src.toBeDeleted), zChanged(src.zChanged) {
+toBeDeleted(src.toBeDeleted), zChanged(src.zChanged), isInState(false) {
 }
 
 Renderable::~Renderable() {

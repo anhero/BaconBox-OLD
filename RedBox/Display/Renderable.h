@@ -12,6 +12,7 @@ namespace RedBox {
      * @ingroup Display
 	 */
 	class Renderable {
+		friend class State;
 	public:
 		/**
 		 * The default constructor.
@@ -73,6 +74,8 @@ namespace RedBox {
 		bool toBeDeleted;
 		/// Used to know if the z changed.
 		bool zChanged;
+		/// Used to know if the renderable is in a state's list of renderables.
+		bool isInState;
 		/**
 		 * Copies another renderable.
 		 * Makes the current instance a copy of the renderable received.

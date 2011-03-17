@@ -10,7 +10,14 @@ State::State() {
 void State::addRenderable(Renderable* aRenderable) {
 	if(aRenderable) {
 		aRenderable->resetZChanged();
-		renderables.insert(std::pair<int, Renderable*>(aRenderable->getZ(), aRenderable));
+		if(!aRenderable->isInState) {
+			aRenderable->resetZChanged();
+			renderables.insert(std::pair<int, Renderable*>(aRenderable->getZ(),
+														   aRenderable));
+			aRenderable->isInState = true;
+		} else {
+			$ECHO("Tried to add a renderable that is already in a state.");
+		}
 	} else {
 		$ECHO("Tried to add an invalid renderable (" << aRenderable << ") to the state.");
 	}
