@@ -22,8 +22,12 @@ namespace RedBox {
 		 */
 		State();
 		/**
-         * Adds a renderable object to the multimap to begin rendering and updating it.
-         * @param aRenderable the object to be rendered.
+         * Adds a renderable object to the multimap to begin rendering and
+		 * updating it. Once a renderable is added with this function, it is
+		 * added in a temporary list of renderables that will be added on the
+		 * next update. The renderable's destruction is managed by the state.
+         * @param aRenderable Pointer to the renderable to add to the state's
+		 * renderables.
          */
 		void addRenderable(Renderable* aRenderable);
 		/**
@@ -47,6 +51,8 @@ namespace RedBox {
 	private:
 		/// Temporarily stores the renderable objects to be deleted.
         std::list<Renderable*> toDelete;
+		/// Temporarily stores the renderable objects to be added.
+		std::list<Renderable*> toAdd;
 		/// Temporarily stores the renderable objects that need to change their Z value.
         std::list<Renderable*> zChange;
 		/// Stores all the renderables active renderables objects.
@@ -56,6 +62,12 @@ namespace RedBox {
 		
 		///The camera object which prepare the scene before rendering any object.
 		Camera camera;
+		/**
+		 * Adds a renderable in the multimap of renderables. It will then be
+		 * able to be updated and rendered correctly.
+		 * @param aRenderable Pointer to the renderable to add.
+		 */
+		void addRenderableDirect(Renderable* aRenderable);
 	};
 }
 #endif

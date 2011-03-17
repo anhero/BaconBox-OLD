@@ -1,5 +1,7 @@
 #include "State.h"
 
+#include <cassert>
+
 #include "Debug.h"
 
 using namespace RedBox;
@@ -9,12 +11,8 @@ State::State() {
 
 void State::addRenderable(Renderable* aRenderable) {
 	if(aRenderable) {
-		aRenderable->resetZChanged();
 		if(!aRenderable->isInState) {
-			aRenderable->resetZChanged();
-			renderables.insert(std::pair<int, Renderable*>(aRenderable->getZ(),
-														   aRenderable));
-			aRenderable->isInState = true;
+			toAdd.push_back(aRenderable);
 		} else {
 			$ECHO("Tried to add a renderable that is already in a state.");
 		}
@@ -35,6 +33,12 @@ void State::render() {
 }
 
 void State::update() {
+	// We add the renderables to the multimap.
+	for(std::list<Renderable*>::iterator i = toAdd.begin(); i != toAdd.end();
+		i++) {
+		addRenderableDirect(*i);
+	}
+	toAdd.clear();
 	// We loop through each of the renderables to update them.
 	for(std::multimap<int, Renderable*>::iterator i = renderables.begin();
 		i != renderables.end();
@@ -86,4 +90,16 @@ const std::string& State::getName() const {
 
 void State::setName(const std::string& newName) {
 	name = newName;
+}
+
+void State::addRenderableDirect(Renderable* aRenderable) {
+	assert(aRenderable);
+	if(!aRenderable->isInState) {
+		aRenderable->resetZChanged();
+		renderables.insert(std::pair<int, Renderable*>(aRenderable->getZ(),
+													   aRenderable));
+		aRenderable->isInState = true;
+	} else {
+		$ECHO("Tried to add a renderable that is already in a state.");
+	}
 }
