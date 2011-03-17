@@ -18,7 +18,9 @@ namespace RedBox {
 			INITIAL,
 			PLAYING,
 			PAUSED,
-			STOPPED
+			STOPPED,
+			FADING_IN,
+			FADING_OUT
 		};
 	}
 }
