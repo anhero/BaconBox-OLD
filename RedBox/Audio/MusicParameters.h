@@ -7,7 +7,9 @@
 
 #include "PlatformFlagger.h"
 
+#ifdef RB_AV_AUDIO_PLAYER
 #include <string>
+#endif
 
 namespace RedBox {
 	/**
@@ -20,6 +22,10 @@ namespace RedBox {
 	struct MusicParameters {
 		/// Name used by the ResourceManager.
 		std::string name;
+#ifdef RB_AV_AUDIO_PLAYER
+		/// Path to the music to load.
+		std::string filePath;
+#endif
 	};
 }
 

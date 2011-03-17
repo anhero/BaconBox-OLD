@@ -149,6 +149,7 @@ void OpenALEngine::update() {
 			} else if(!(*i)->survives) {
 				// We delete the sound.
 				alDeleteSources(1, &((*i)->sourceId));
+				delete *i;
 				sources.erase(i);
 			}
 		}

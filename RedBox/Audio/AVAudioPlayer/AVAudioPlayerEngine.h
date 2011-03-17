@@ -6,12 +6,14 @@
 #define RB_AV_AUDIO_PLAYER_ENGINE_H
 
 #include <string>
+#include <list>
 
 #include "MusicEngine.h"
 
 namespace RedBox {
 	class BackgroundMusic;
 	struct MusicInfo;
+	class AVAudioPlayerMusic;
 	/**
 	 * Music engine implementation for iOS.
 	 * @ingroup Audio
@@ -35,8 +37,10 @@ namespace RedBox {
 		 * be automatically destroyed once the music's state is at STOPPED. The
 		 * background music returned is at the INITIAL state.
 		 */
-		BackgroundMusic* getBackgroundMusic(const std::string& key, bool survive);
+		BackgroundMusic* getBackgroundMusic(const std::string& key,
+											bool survive);
 	private:
+		std::list<AVAudioPlayerMusic*> managedMusics;
 		/**
 		 * Default constructor.
 		 */

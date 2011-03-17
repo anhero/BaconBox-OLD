@@ -6,7 +6,11 @@
 #ifndef RB_MUSIC_INF0_H
 #define RB_MUSIC_INFO_H
 
+#include "PlatformFlagger.h"
+
+#ifdef RB_AV_AUDIO_PLAYER
 #include <string>
+#endif
 
 namespace RedBox {
 	/**
@@ -15,6 +19,10 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	struct MusicInfo {
+#ifdef RB_AV_AUDIO_PLAYER
+		/// Path to the music file.
+		std::string filePath;
+#endif
 	};
 }
  

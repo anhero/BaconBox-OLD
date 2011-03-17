@@ -56,8 +56,7 @@ namespace RedBox {
 		virtual ~Sound();
 	protected:
 		/**
-		 * Default constructor. Can only be called by the resource manager or
-		 * the audio engine.
+		 * Default constructor. Can only be called by the audio engine.
 		 */
 		Sound();
 	};

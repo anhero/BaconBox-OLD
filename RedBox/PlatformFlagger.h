@@ -50,10 +50,11 @@
 
 #if defined(RB_IPHONE_PLATFORM) || defined(RB_MAC_PLATFORM)
 	#define RB_OPENAL
+	#define RB_AV_AUDIO_PLAYER
 	#define RB_SOUND_ENGINE new OpenALEngine()
-	#define RB_MUSIC_ENGINE NULL
+	#define RB_MUSIC_ENGINE new AVAudioPlayerEngine();
 	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-	//#define RB_MUSIC_ENGINE_INCLUDE "OpenALEngine.h"
+	#define RB_MUSIC_ENGINE_INCLUDE "AVAudioPlayerEngine.h"
 	// Example of the 4 defines needed for the audio engine.
 	//#define RB_SOUND_ENGINE new OpenALEngine()
 	//#define RB_MUSIC_ENGINE new OpenALEngine()
