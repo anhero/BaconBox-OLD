@@ -9,6 +9,7 @@
 
 #include <list>
 #include <string>
+#include <utility>
 
 #include "TextureInfo.h"
 #include "Renderable.h"
@@ -145,6 +146,67 @@ namespace RedBox {
 		 * @param parentBody
          */
         void createVertex(float x, float y);
+		/**
+		 * Gets the sprite's horizontal position.
+		 * @return Horizontal position (in pixels). Lower value means more to
+		 * the left.
+		 */
+		float getXPosition() const;
+		/**
+		 * Gets the sprite's vertical position.
+		 * @return Vertical position (in pixels). Lower value means more at the
+		 * top.
+		 */
+		float getYPosition() const;
+		/**
+		 * Gets the sprite's horizontal and vertical position.
+		 * @return Horizontal and vertical position (in pixels).
+		 */
+		std::pair<float, float> getPosition() const;
+		/**
+		 * Sets the sprite's horizontal position.
+		 * @param x New horizontal position (in pixels). Lower value means more
+		 * to the left.
+		 */
+		void setXPosition(float x);
+		/**
+		 * Sets the sprite's horizontal position.
+		 * @param y New vertical position (in pixels). Lower value means more at
+		 * the top.
+		 */
+		void setYPosition(float y);
+		/**
+		 * Sets the sprite's horizontal and vertical position.
+		 * @param x New horizontal position (in pixels). Lower value means more
+		 * to the left.
+		 * @param y New vertical position (in pixels). Lower value means more at
+		 * the top.
+		 */
+		void setPosition(float x, float y);
+		/**
+		 * Moves the sprite horizontally.
+		 * @param deltaX Value to add to the sprite's horizontal position (in
+		 * pixels). Positive value moves the sprite to the right and a negative
+		 * value moves the sprite to the left.
+		 */
+		void moveX(float deltaX);
+		/**
+		 * Moves the sprite vertically.
+		 * @param deltaY Value to add to the sprite's vertical position (in
+		 * pixels). Positive value moves the sprite down and a negative value
+		 * moves the sprite up.
+		 */
+		void moveY(float deltaY);
+		/**
+		 * Moves the sprite horizontally and vertically.
+		 * @param deltaX Value to add to the sprite's horizontal position (in
+		 * pixels). Positive value moves the sprite to the right and a negative
+		 * value moves the sprite to the left.
+		 * @param deltaY Value to add to the sprite's vertical position (in
+		 * pixels). Positive value moves the sprite down and a negative value
+		 * moves the sprite up.
+		 */
+		void move(float deltaX, float deltaY);
         /**
          * Warns the vertices not to delete their links on their destruction.
          */

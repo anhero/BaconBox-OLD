@@ -164,6 +164,34 @@ void Sprite::createVertex(float x, float y) {
 	vertices.addVertex(x, y, this);
 }
 
+float Sprite::getXPosition() const {
+	return vertices.getXPosition();
+}
+float Sprite::getYPosition() const {
+	return vertices.getYPosition();
+}
+std::pair<float, float> Sprite::getPosition() const {
+	return vertices.getPosition();
+}
+void Sprite::setXPosition(float x) {
+	vertices.setXPosition(x);
+}
+void Sprite::setYPosition(float y) {
+	vertices.setYPosition(y);
+}
+void Sprite::setPosition(float x, float y) {
+	vertices.setPosition(x, y);
+}
+void Sprite::moveX(float deltaX) {
+	vertices.moveX(deltaX);
+}
+void Sprite::moveY(float deltaY) {
+	vertices.moveY(deltaY);
+}
+void Sprite::move(float deltaX, float deltaY) {
+	vertices.move(deltaX, deltaY);
+}
+
 void Sprite::warnVerticesOfDeletion() {
     vertices.warnVerticesOfDeletion();
 }
