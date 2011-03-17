@@ -1,7 +1,5 @@
 #import "RBAudioPlayerMusicDelegate.h"
 
-#import <stdio.h>
-
 @implementation RBAudioPlayerMusicDelegate
 
 - (id)initWithPath:(NSString *)path{
@@ -101,8 +99,6 @@
 				[BGMusic play];
 			}
 			fadeDelta = realVolume / (time / FADE_TICK_TIME);
-			printf("fadeDelta: %f\n", fadeDelta);
-			printf("BGMusic.volume: %f\n", BGMusic.volume);
 			[self fadeInPlay];
 		}
 	}
@@ -110,7 +106,6 @@
 
 - (void)fadeInPlay {
 	if(fading == FADING_IN_PLAY && BGMusic.volume < realVolume) {
-		printf("BGMusic.volume: %f\n", BGMusic.volume);
 		BGMusic.volume = (BGMusic.volume + fadeDelta > realVolume) ? (realVolume) : (BGMusic.volume + fadeDelta);
 		[self performSelector:@selector(fadeInPlay) withObject:nil afterDelay: FADE_TICK_TIME];
 	}
