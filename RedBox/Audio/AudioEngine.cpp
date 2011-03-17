@@ -52,6 +52,12 @@ MusicEngine* AudioEngine::getMusicEngine() {
 	return musicEngine;
 }
 
+AudioEngine::AudioEngine() {
+}
+
+AudioEngine::~AudioEngine() {
+}
+
 void AudioEngine::unloadAudioEngines() {
 	if(soundEngine) {
 		delete soundEngine;
@@ -63,8 +69,3 @@ void AudioEngine::unloadAudioEngines() {
 	}
 }
 
-AudioEngine::AudioEngine() {
-}
-
-AudioEngine::~AudioEngine() {
-}

@@ -43,11 +43,6 @@ namespace RedBox {
 		 * @return Pointer to the music engine. Loads it if needed.
 		 */
 		static MusicEngine* getMusicEngine();
-		/**
-		 * Unloads the audio engines. Must be called after the resource manager
-		 * has unloaded everything related to the audio engine.
-		 */
-		static void unloadAudioEngines();
 	protected:
 		/**
 		 * Default constructor.
@@ -72,6 +67,11 @@ namespace RedBox {
 		static SoundEngine* soundEngine;
 		/// Pointer to the music engine singleton.
 		static MusicEngine* musicEngine;
+		/**
+		 * Unloads the audio engines. Must be called after the resource manager
+		 * has unloaded everything related to the audio engine.
+		 */
+		static void unloadAudioEngines();
 	};
 }
 
