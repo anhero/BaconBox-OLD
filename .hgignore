@@ -47,3 +47,8 @@ Release
 .svn
 
 
+#Mercurial mq reject files
+*.rej
+
+#.a libraries
+*.a
