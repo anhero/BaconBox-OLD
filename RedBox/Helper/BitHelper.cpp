@@ -29,3 +29,18 @@ void BitHelper::endianSwap(uint64_t& x) {
 	((x>>40) & 0x000000000000FF00ULL) |
 	(x<<56);
 }
+
+uint16_t BitHelper::otherEndian(uint16_t x) {
+	BitHelper::endianSwap(x);
+	return x;
+}
+
+uint32_t BitHelper::otherEndian(uint32_t x) {
+	BitHelper::endianSwap(x);
+	return x;
+}
+
+uint64_t BitHelper::otherEndian(uint64_t x) {
+	BitHelper::endianSwap(x);
+	return x;
+}

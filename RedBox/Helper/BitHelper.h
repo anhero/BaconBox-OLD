@@ -33,6 +33,24 @@ namespace RedBox {
 		 * @param x Variable to have its endian swapped.
 		 */
 		static void endianSwap(uint64_t& x);
+		/**
+		 * Gets the variable's value with its endian swapped.
+		 * @param x Variable to have its endian swapped.
+		 * @return Endian swapped value.
+		 */
+		static uint16_t otherEndian(uint16_t x);
+		/**
+		 * Gets the variable's value with its endian swapped.
+		 * @param x Variable to have its endian swapped.
+		 * @return Endian swapped value.
+		 */
+		static uint32_t otherEndian(uint32_t x);
+		/**
+		 * Gets the variable's value with its endian swapped.
+		 * @param x Variable to have its endian swapped.
+		 * @return Endian swapped value.
+		 */
+		static uint64_t otherEndian(uint64_t x);
 	};
 }
 #endif
