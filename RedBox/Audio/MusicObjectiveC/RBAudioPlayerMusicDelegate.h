@@ -3,7 +3,6 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-#import <AudioToolbox/AudioToolbox.h>
 
 typedef enum {
 	NOT_FADING,
@@ -13,14 +12,15 @@ typedef enum {
 	FADING_OUT_PAUSE
 } FadingState;
 
-@interface AVAudioPlayerMusicDelegate : NSObject <AVAudioPlayerDelegate> {
+#define FADE_TICK_TIME 0.1f
+
+@interface RBAudioPlayerMusicDelegate : NSObject <AVAudioPlayerDelegate> {
 	@private
 	AVAudioPlayer* BGMusic;
 	float fadeDelta;
 	float realVolume;
 	FadingState fading;
 }
-@property (readwrite, assign) float fadeDelta;
 - (id)initWithPath:(NSString *)path;
 - (void)stopFading;
 - (void)play:(int)nbLoops;

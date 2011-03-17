@@ -1,15 +1,15 @@
-#include "AVAudioPlayerMusic.h"
+#include "RBAudioPlayerMusic.h"
 
 #include "Debug.h"
 #include <cassert>
 
 using namespace RedBox;
 
-void AVAudioPlayerMusic::play(int nbTimes) {
+void RBAudioPlayerMusic::play(int nbTimes) {
 	play(nbTimes, 0.0);
 }
 
-void AVAudioPlayerMusic::play(int nbTimes, double fadeIn) {
+void RBAudioPlayerMusic::play(int nbTimes, double fadeIn) {
 	assert(bgm);
 	if(nbTimes != 0) {
 		if (nbTimes > 0) {
@@ -25,11 +25,11 @@ void AVAudioPlayerMusic::play(int nbTimes, double fadeIn) {
 	}
 }
 
-void AVAudioPlayerMusic::stop() {
+void RBAudioPlayerMusic::stop() {
 	stop(0.0);
 }
 
-void AVAudioPlayerMusic::stop(double fadeOut) {
+void RBAudioPlayerMusic::stop(double fadeOut) {
 	assert(bgm);
 	if(fadeOut >= 0.0) {
 		[bgm fadeOutStop:static_cast<float>(fadeOut)];
@@ -39,11 +39,11 @@ void AVAudioPlayerMusic::stop(double fadeOut) {
 	}
 }
 
-void AVAudioPlayerMusic::pause() {
+void RBAudioPlayerMusic::pause() {
 	pause(0.0);
 }
 
-void AVAudioPlayerMusic::pause(double fadeOut) {
+void RBAudioPlayerMusic::pause(double fadeOut) {
 	assert(bgm);
 	if(fadeOut >= 0.0) {
 		[bgm fadeOutPause:static_cast<float>(fadeOut)];
@@ -53,11 +53,11 @@ void AVAudioPlayerMusic::pause(double fadeOut) {
 	}
 }
 
-void AVAudioPlayerMusic::resume() {
+void RBAudioPlayerMusic::resume() {
 	resume(0.0);
 }
 
-void AVAudioPlayerMusic::resume(double fadeIn) {
+void RBAudioPlayerMusic::resume(double fadeIn) {
 	assert(bgm);
 	if(fadeIn >= 0.0) {
 		[bgm fadeInResume:static_cast<float>(fadeIn)];
@@ -68,11 +68,11 @@ void AVAudioPlayerMusic::resume(double fadeIn) {
 	}
 }
 
-bool AVAudioPlayerMusic::isLooping() {
+bool RBAudioPlayerMusic::isLooping() {
 	return [bgm isLooping];
 }
 
-AudioState::Enum AVAudioPlayerMusic::getCurrentState() {
+AudioState::Enum RBAudioPlayerMusic::getCurrentState() {
 	if(!playedOnce) {
 		return AudioState::INITIAL;
 	} else if([bgm isStopped]) {
@@ -84,16 +84,16 @@ AudioState::Enum AVAudioPlayerMusic::getCurrentState() {
 	}
 }
 
-AVAudioPlayerMusic::~AVAudioPlayerMusic() {
+RBAudioPlayerMusic::~RBAudioPlayerMusic() {
 }
 
-AVAudioPlayerMusic::AVAudioPlayerMusic(): BackgroundMusic(), bgm(NULL),
+RBAudioPlayerMusic::RBAudioPlayerMusic(): BackgroundMusic(), bgm(NULL),
 playedOnce(false) {
 }
 
-void AVAudioPlayerMusic::load(std::string const& filePath) {
+void RBAudioPlayerMusic::load(std::string const& filePath) {
 	if(!bgm) {
 		const char* tmp = filePath.c_str();
-		bgm = [[AVAudioPlayerMusicDelegate alloc] initWithPath:[NSString stringWithCString:tmp]];
+		bgm = [[RBAudioPlayerMusicDelegate alloc] initWithPath:[NSString stringWithCString:tmp]];
 	}
 }

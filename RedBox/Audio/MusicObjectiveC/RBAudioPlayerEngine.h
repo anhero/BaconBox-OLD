@@ -2,8 +2,8 @@
  * @file
  * @ingroup Audio
  */
-#ifndef RB_AV_AUDIO_PLAYER_ENGINE_H
-#define RB_AV_AUDIO_PLAYER_ENGINE_H
+#ifndef RB_RB_AUDIO_PLAYER_ENGINE_H
+#define RB_RB_AUDIO_PLAYER_ENGINE_H
 
 #include <string>
 #include <list>
@@ -13,12 +13,12 @@
 namespace RedBox {
 	class BackgroundMusic;
 	struct MusicInfo;
-	class AVAudioPlayerMusic;
+	class RBAudioPlayerMusic;
 	/**
 	 * Music engine implementation for iOS.
 	 * @ingroup Audio
 	 */
-	class AVAudioPlayerEngine : public MusicEngine {
+	class RBAudioPlayerEngine : public MusicEngine {
 		friend class AudioEngine;
 		friend class ResourceManager;
 	public:
@@ -38,17 +38,17 @@ namespace RedBox {
 		 * background music returned is at the INITIAL state.
 		 */
 		BackgroundMusic* getBackgroundMusic(const std::string& key,
-											bool survive);
+											bool survive = true);
 	private:
-		std::list<AVAudioPlayerMusic*> managedMusics;
+		std::list<RBAudioPlayerMusic*> managedMusics;
 		/**
 		 * Default constructor.
 		 */
-		AVAudioPlayerEngine();
+		RBAudioPlayerEngine();
 		/**
 		 * Destructor.
 		 */
-		~AVAudioPlayerEngine();
+		~RBAudioPlayerEngine();
 		/**
 		 * Initializes the audio engine. Called by the static functions that
 		 * load the audio engines.

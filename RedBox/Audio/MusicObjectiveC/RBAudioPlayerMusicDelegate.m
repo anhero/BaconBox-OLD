@@ -1,11 +1,8 @@
+#import "RBAudioPlayerMusicDelegate.h"
 
+#import <stdio.h>
 
-#import "AVAudioPlayerMusicDelegate.h"
-
-
-@implementation AVAudioPlayerMusicDelegate
-
-@synthesize fadeDelta;
+@implementation RBAudioPlayerMusicDelegate
 
 - (id)initWithPath:(NSString *)path{
 	[super init];
@@ -17,7 +14,7 @@
 	realVolume = BGMusic.volume;
 	
 	return self;
-	}
+}
 
 - (void)stopFading {
 	fading = NOT_FADING;
@@ -54,7 +51,7 @@
 		[self stop];
 	} else {
 		fading = FADING_OUT_STOP;
-		fadeDelta = realVolume / time;
+		fadeDelta = realVolume / (time / FADE_TICK_TIME);
 		[self fadeOutStop];
 	}
 }
@@ -65,7 +62,7 @@
 			[self stop];
 		} else {
 			BGMusic.volume = (BGMusic.volume - fadeDelta < 0.0) ? (0.0) : (BGMusic.volume - fadeDelta);
-			[self performSelector:@selector(fadeOutStop) withObject:nil afterDelay: .1];
+			[self performSelector:@selector(fadeOutStop) withObject:nil afterDelay: FADE_TICK_TIME];
 		}
 	}
 }
@@ -75,7 +72,7 @@
 		[self pause];
 	} else {
 		fading = FADING_OUT_PAUSE;
-		fadeDelta = realVolume / time;
+		fadeDelta = realVolume / (time / FADE_TICK_TIME);
 		[self fadeOutPause];
 	}
 }
@@ -86,7 +83,7 @@
 			[self pause];
 		} else {
 			BGMusic.volume = (BGMusic.volume - fadeDelta < 0.0) ? (0.0) : (BGMusic.volume - fadeDelta);
-			[self performSelector:@selector(fadeOutPause) withObject:nil afterDelay: .1];
+			[self performSelector:@selector(fadeOutPause) withObject:nil afterDelay: FADE_TICK_TIME];
 		}
 	}
 }
@@ -103,7 +100,9 @@
 				[BGMusic stop];
 				[BGMusic play];
 			}
-			fadeDelta = realVolume / time;
+			fadeDelta = realVolume / (time / FADE_TICK_TIME);
+			printf("fadeDelta: %f\n", fadeDelta);
+			printf("BGMusic.volume: %f\n", BGMusic.volume);
 			[self fadeInPlay];
 		}
 	}
@@ -111,8 +110,9 @@
 
 - (void)fadeInPlay {
 	if(fading == FADING_IN_PLAY && BGMusic.volume < realVolume) {
+		printf("BGMusic.volume: %f\n", BGMusic.volume);
 		BGMusic.volume = (BGMusic.volume + fadeDelta > realVolume) ? (realVolume) : (BGMusic.volume + fadeDelta);
-		[self performSelector:@selector(fadeInResume) withObject:nil afterDelay: .1];
+		[self performSelector:@selector(fadeInPlay) withObject:nil afterDelay: FADE_TICK_TIME];
 	}
 }
 
@@ -126,7 +126,7 @@
 				BGMusic.volume = 0.0;
 				[BGMusic play];
 			}
-			fadeDelta = realVolume / time;
+			fadeDelta = realVolume / (time / FADE_TICK_TIME);
 			[self fadeInResume];
 		}
 	}
@@ -135,19 +135,8 @@
 - (void)fadeInResume{
 	if(fading == FADING_IN_RESUME && BGMusic.volume < realVolume) {
 		BGMusic.volume = (BGMusic.volume + fadeDelta > realVolume) ? (realVolume) : (BGMusic.volume + fadeDelta);
-		[self performSelector:@selector(fadeInResume) withObject:nil afterDelay: .1];
+		[self performSelector:@selector(fadeInResume) withObject:nil afterDelay: FADE_TICK_TIME];
 	}
-}
-
-#pragma mark BGMusic delegate methode
-
-
-- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player{
-	[self pause];
-}
-
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player{
-	[self resume];
 }
 
 - (BOOL)isLooping{
@@ -160,6 +149,16 @@
 
 - (BOOL)isStopped{
 	return !BGMusic.playing && BGMusic.currentTime == 0.0;
+}
+
+#pragma mark BGMusic delegate methode
+
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player{
+	[self pause];
+}
+
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player{
+	[self resume];
 }
 
 @end

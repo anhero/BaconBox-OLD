@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "AVAudioPlayerMusicDelegate.h"
+#include "RBAudioPlayerMusicDelegate.h"
 #include <Foundation/Foundation.h>
 
 #include "AudioState.h"
@@ -19,8 +19,8 @@ namespace RedBox {
 	 * BackgroundMusic for iOS.
 	 * @ingroup Audio
 	 */
-	class AVAudioPlayerMusic : public BackgroundMusic {
-		friend class AVAudioPlayerEngine;
+	class RBAudioPlayerMusic : public BackgroundMusic {
+		friend class RBAudioPlayerEngine;
 	public:
 		/**
 		 * Plays the music a given number of times.
@@ -32,7 +32,7 @@ namespace RedBox {
 		 * Same as the usual play method, but with a fade in effect.
 		 * @param fadeIn Time the fade in effect will last (in seconds).
 		 */
-		void play(int nbTimes, double fadeIn);
+		void play(int nbTimes, double fadeIn = 0.0);
 		/**
 		 * Stops the music. Cannot be resumed and next time it will be played
 		 * it will start from the beginning.
@@ -79,16 +79,16 @@ namespace RedBox {
 		 * This is done to be able to have many musics playing the same
 		 * music without having it loaded many times in memory.
 		 */
-		~AVAudioPlayerMusic();
+		~RBAudioPlayerMusic();
 	private:
 		/// Pointer to the objective-C background music.
-		AVAudioPlayerMusicDelegate* bgm;
+		RBAudioPlayerMusicDelegate* bgm;
 		/// Used to keep track if the music is at the INITIAL state.
 		bool playedOnce;
 		/**
 		 * Default constructor. Can only be called by the audio engine.
 		 */
-		AVAudioPlayerMusic();
+		RBAudioPlayerMusic();
 		/**
 		 * Loads a background music.
 		 * @param filePath Path to the music file to load.

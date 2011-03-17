@@ -21,7 +21,7 @@ namespace RedBox {
 		 * @param nbTimes Number of times the sound will be played in loop. A
 		 * negative number is for infinite looping.
 		 */
-		virtual void play(int nbTimes) = 0;
+		virtual void play(int nbTimes = 1) = 0;
 		/**
 		 * Stops the sound. Cannot be resumed and next time it will be played
 		 * it will start from the beginning.

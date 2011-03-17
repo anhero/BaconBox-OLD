@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		241F18CD12F4A2D2002F3247 /* RenderInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */; };
-		2426871713316DCC00BA62DC /* AVAudioPlayerEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2426871313316DCC00BA62DC /* AVAudioPlayerEngine.cpp */; };
-		2426871813316DCC00BA62DC /* AVAudioPlayerEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2426871413316DCC00BA62DC /* AVAudioPlayerEngine.h */; };
-		2426871913316DCC00BA62DC /* AVAudioPlayerMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2426871513316DCC00BA62DC /* AVAudioPlayerMusic.cpp */; };
-		2426871A13316DCC00BA62DC /* AVAudioPlayerMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 2426871613316DCC00BA62DC /* AVAudioPlayerMusic.h */; };
 		242A04C9132828C900666FB6 /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242A04C5132828C900666FB6 /* RedBoxEngine.cpp */; };
 		242A04CA132828C900666FB6 /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 242A04C6132828C900666FB6 /* RedBoxEngine.h */; };
 		242A04CB132828C900666FB6 /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242A04C7132828C900666FB6 /* State.cpp */; };
@@ -49,6 +45,12 @@
 		24C141891326D39B003076E5 /* AudioState.h in Headers */ = {isa = PBXBuildFile; fileRef = 24C141881326D39A003076E5 /* AudioState.h */; };
 		24C7F86013182AFA00822753 /* OpenALSoundFX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24C7F85E13182AFA00822753 /* OpenALSoundFX.cpp */; };
 		24C7F86113182AFA00822753 /* OpenALSoundFX.h in Headers */ = {isa = PBXBuildFile; fileRef = 24C7F85F13182AFA00822753 /* OpenALSoundFX.h */; };
+		24CADE9813326A2700081862 /* RBAudioPlayerEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24CADE9213326A2700081862 /* RBAudioPlayerEngine.cpp */; };
+		24CADE9913326A2700081862 /* RBAudioPlayerEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24CADE9313326A2700081862 /* RBAudioPlayerEngine.h */; };
+		24CADE9A13326A2700081862 /* RBAudioPlayerMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24CADE9413326A2700081862 /* RBAudioPlayerMusic.cpp */; };
+		24CADE9B13326A2700081862 /* RBAudioPlayerMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 24CADE9513326A2700081862 /* RBAudioPlayerMusic.h */; };
+		24CADE9C13326A2700081862 /* RBAudioPlayerMusicDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 24CADE9613326A2700081862 /* RBAudioPlayerMusicDelegate.h */; };
+		24CADE9D13326A2700081862 /* RBAudioPlayerMusicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CADE9713326A2700081862 /* RBAudioPlayerMusicDelegate.m */; };
 		24D0D4DE1314507D007A5629 /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D0D4D51314507D007A5629 /* Emitter.cpp */; };
 		24D0D4DF1314507D007A5629 /* Emitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4D61314507D007A5629 /* Emitter.h */; };
 		24D0D4E01314507D007A5629 /* IEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D0D4D71314507D007A5629 /* IEmitter.cpp */; };
@@ -58,8 +60,6 @@
 		24D0D4E41314507D007A5629 /* ParticleState.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4DB1314507D007A5629 /* ParticleState.h */; };
 		24D0D4E51314507D007A5629 /* SpriteEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D0D4DC1314507D007A5629 /* SpriteEmitter.cpp */; };
 		24D0D4E61314507D007A5629 /* SpriteEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4DD1314507D007A5629 /* SpriteEmitter.h */; };
-		24E3EA59133029DC00608A9B /* AVAudioPlayerMusicDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 24E3EA57133029DC00608A9B /* AVAudioPlayerMusicDelegate.h */; };
-		24E3EA5A133029DC00608A9B /* AVAudioPlayerMusicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E3EA58133029DC00608A9B /* AVAudioPlayerMusicDelegate.m */; };
 		24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24F0335012F1C59500BD5409 /* AudioEngine.cpp */; };
 		24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24F0335112F1C59500BD5409 /* AudioEngine.h */; };
 		51140FB5130B3C5300D05386 /* Glyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51140FB3130B3C5300D05386 /* Glyph.cpp */; };
@@ -136,10 +136,6 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderInfo.cpp; sourceTree = "<group>"; };
-		2426871313316DCC00BA62DC /* AVAudioPlayerEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AVAudioPlayerEngine.cpp; path = AVAudioPlayer/AVAudioPlayerEngine.cpp; sourceTree = "<group>"; };
-		2426871413316DCC00BA62DC /* AVAudioPlayerEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVAudioPlayerEngine.h; path = AVAudioPlayer/AVAudioPlayerEngine.h; sourceTree = "<group>"; };
-		2426871513316DCC00BA62DC /* AVAudioPlayerMusic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AVAudioPlayerMusic.cpp; path = AVAudioPlayer/AVAudioPlayerMusic.cpp; sourceTree = "<group>"; };
-		2426871613316DCC00BA62DC /* AVAudioPlayerMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVAudioPlayerMusic.h; path = AVAudioPlayer/AVAudioPlayerMusic.h; sourceTree = "<group>"; };
 		242A04C5132828C900666FB6 /* RedBoxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedBoxEngine.cpp; sourceTree = "<group>"; };
 		242A04C6132828C900666FB6 /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
 		242A04C7132828C900666FB6 /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
@@ -177,6 +173,12 @@
 		24C141881326D39A003076E5 /* AudioState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioState.h; sourceTree = "<group>"; };
 		24C7F85E13182AFA00822753 /* OpenALSoundFX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALSoundFX.cpp; sourceTree = "<group>"; };
 		24C7F85F13182AFA00822753 /* OpenALSoundFX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenALSoundFX.h; sourceTree = "<group>"; };
+		24CADE9213326A2700081862 /* RBAudioPlayerEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBAudioPlayerEngine.cpp; sourceTree = "<group>"; };
+		24CADE9313326A2700081862 /* RBAudioPlayerEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerEngine.h; sourceTree = "<group>"; };
+		24CADE9413326A2700081862 /* RBAudioPlayerMusic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBAudioPlayerMusic.cpp; sourceTree = "<group>"; };
+		24CADE9513326A2700081862 /* RBAudioPlayerMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerMusic.h; sourceTree = "<group>"; };
+		24CADE9613326A2700081862 /* RBAudioPlayerMusicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerMusicDelegate.h; sourceTree = "<group>"; };
+		24CADE9713326A2700081862 /* RBAudioPlayerMusicDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBAudioPlayerMusicDelegate.m; sourceTree = "<group>"; };
 		24D0D4D51314507D007A5629 /* Emitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Emitter.cpp; sourceTree = "<group>"; };
 		24D0D4D61314507D007A5629 /* Emitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emitter.h; sourceTree = "<group>"; };
 		24D0D4D71314507D007A5629 /* IEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEmitter.cpp; sourceTree = "<group>"; };
@@ -186,8 +188,6 @@
 		24D0D4DB1314507D007A5629 /* ParticleState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleState.h; sourceTree = "<group>"; };
 		24D0D4DC1314507D007A5629 /* SpriteEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteEmitter.cpp; sourceTree = "<group>"; };
 		24D0D4DD1314507D007A5629 /* SpriteEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteEmitter.h; sourceTree = "<group>"; };
-		24E3EA57133029DC00608A9B /* AVAudioPlayerMusicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVAudioPlayerMusicDelegate.h; path = AVAudioPlayer/AVAudioPlayerMusicDelegate.h; sourceTree = "<group>"; };
-		24E3EA58133029DC00608A9B /* AVAudioPlayerMusicDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVAudioPlayerMusicDelegate.m; path = AVAudioPlayer/AVAudioPlayerMusicDelegate.m; sourceTree = "<group>"; };
 		24F0335012F1C59500BD5409 /* AudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEngine.cpp; sourceTree = "<group>"; };
 		24F0335112F1C59500BD5409 /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -314,6 +314,19 @@
 			path = OpenAL;
 			sourceTree = "<group>";
 		};
+		24CADE9113326A2700081862 /* MusicObjectiveC */ = {
+			isa = PBXGroup;
+			children = (
+				24CADE9213326A2700081862 /* RBAudioPlayerEngine.cpp */,
+				24CADE9313326A2700081862 /* RBAudioPlayerEngine.h */,
+				24CADE9413326A2700081862 /* RBAudioPlayerMusic.cpp */,
+				24CADE9513326A2700081862 /* RBAudioPlayerMusic.h */,
+				24CADE9613326A2700081862 /* RBAudioPlayerMusicDelegate.h */,
+				24CADE9713326A2700081862 /* RBAudioPlayerMusicDelegate.m */,
+			);
+			path = MusicObjectiveC;
+			sourceTree = "<group>";
+		};
 		24D0D4D41314507D007A5629 /* Emitter */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,19 +341,6 @@
 				24D0D4DD1314507D007A5629 /* SpriteEmitter.h */,
 			);
 			path = Emitter;
-			sourceTree = "<group>";
-		};
-		24E3EA55133028C800608A9B /* AVAudioPlayer */ = {
-			isa = PBXGroup;
-			children = (
-				2426871313316DCC00BA62DC /* AVAudioPlayerEngine.cpp */,
-				2426871413316DCC00BA62DC /* AVAudioPlayerEngine.h */,
-				2426871513316DCC00BA62DC /* AVAudioPlayerMusic.cpp */,
-				2426871613316DCC00BA62DC /* AVAudioPlayerMusic.h */,
-				24E3EA57133029DC00608A9B /* AVAudioPlayerMusicDelegate.h */,
-				24E3EA58133029DC00608A9B /* AVAudioPlayerMusicDelegate.m */,
-			);
-			name = AVAudioPlayer;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -403,7 +403,7 @@
 		51CF8D2812DF60E0003FBBAD /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				24E3EA55133028C800608A9B /* AVAudioPlayer */,
+				24CADE9113326A2700081862 /* MusicObjectiveC */,
 				24B3200E1316CC9D00D7002B /* OpenAL */,
 				242A67E2132C0F5400CD667C /* MusicEngine.cpp */,
 				242A67E3132C0F5400CD667C /* MusicEngine.h */,
@@ -631,9 +631,9 @@
 				242A67E9132C0F5600CD667C /* MusicEngine.h in Headers */,
 				242A67EB132C0F5600CD667C /* Sound.h in Headers */,
 				242A67ED132C0F5600CD667C /* SoundEngine.h in Headers */,
-				24E3EA59133029DC00608A9B /* AVAudioPlayerMusicDelegate.h in Headers */,
-				2426871813316DCC00BA62DC /* AVAudioPlayerEngine.h in Headers */,
-				2426871A13316DCC00BA62DC /* AVAudioPlayerMusic.h in Headers */,
+				24CADE9913326A2700081862 /* RBAudioPlayerEngine.h in Headers */,
+				24CADE9B13326A2700081862 /* RBAudioPlayerMusic.h in Headers */,
+				24CADE9C13326A2700081862 /* RBAudioPlayerMusicDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -733,9 +733,9 @@
 				242A67E8132C0F5600CD667C /* MusicEngine.cpp in Sources */,
 				242A67EA132C0F5600CD667C /* Sound.cpp in Sources */,
 				242A67EC132C0F5600CD667C /* SoundEngine.cpp in Sources */,
-				24E3EA5A133029DC00608A9B /* AVAudioPlayerMusicDelegate.m in Sources */,
-				2426871713316DCC00BA62DC /* AVAudioPlayerEngine.cpp in Sources */,
-				2426871913316DCC00BA62DC /* AVAudioPlayerMusic.cpp in Sources */,
+				24CADE9813326A2700081862 /* RBAudioPlayerEngine.cpp in Sources */,
+				24CADE9A13326A2700081862 /* RBAudioPlayerMusic.cpp in Sources */,
+				24CADE9D13326A2700081862 /* RBAudioPlayerMusicDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

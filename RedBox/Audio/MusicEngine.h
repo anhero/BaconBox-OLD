@@ -37,7 +37,7 @@ namespace RedBox {
 		 * background music returned is at the INITIAL state.
 		 */
 		virtual BackgroundMusic* getBackgroundMusic(const std::string& key, 
-													bool survive) = 0;
+													bool survive = true) = 0;
 	protected:
 		/**
 		 * Default constructor. Engine initialization is specifically done in

@@ -26,25 +26,25 @@ namespace RedBox {
 		 * value for infinite looping.
 		 * @param fadeIn Time the fade in effect will last (in seconds).
 		 */
-		virtual void play(int nbTimes, double fadeIn) = 0;
+		virtual void play(int nbTimes = -1, double fadeIn = 0.0) = 0;
 		/**
 		 * Stops the music with a fade out effect. Cannot be resumed and next
 		 * time it will be played it will start from the beginning.
 		 * @param fadeOut Time the fade out effect will last (in seconds).
 		 */
-		virtual void stop(double fadeOut) = 0;
+		virtual void stop(double fadeOut = 0.0) = 0;
 		/**
 		 * Pauses the music with a fade out effect. Remembers where it was
 		 * paused so it can resume when calling the resume method.
 		 * @param fadeOut Time the fade out effect will last (in seconds).
 		 */
-		virtual void pause(double fadeOut) = 0;
+		virtual void pause(double fadeOut = 0.0) = 0;
 		/**
 		 * Resumes the music with a fade in effect. Will only resume if the
 		 * sound has been paused.
 		 * @param fadeOut Time the fade in effect will last (in seconds).
 		 */
-		virtual void resume(double fadeIn) = 0;
+		virtual void resume(double fadeIn = 0.0) = 0;
 	protected:
 		/**
 		 * Default constructor. Musics can only be created by the resource
