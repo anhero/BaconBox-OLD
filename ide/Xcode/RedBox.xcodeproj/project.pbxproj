@@ -54,6 +54,8 @@
 		24D0D4E41314507D007A5629 /* ParticleState.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4DB1314507D007A5629 /* ParticleState.h */; };
 		24D0D4E51314507D007A5629 /* SpriteEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D0D4DC1314507D007A5629 /* SpriteEmitter.cpp */; };
 		24D0D4E61314507D007A5629 /* SpriteEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4DD1314507D007A5629 /* SpriteEmitter.h */; };
+		24E3EA59133029DC00608A9B /* AVAudioPlayerMusicDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 24E3EA57133029DC00608A9B /* AVAudioPlayerMusicDelegate.h */; };
+		24E3EA5A133029DC00608A9B /* AVAudioPlayerMusicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E3EA58133029DC00608A9B /* AVAudioPlayerMusicDelegate.m */; };
 		24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24F0335012F1C59500BD5409 /* AudioEngine.cpp */; };
 		24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24F0335112F1C59500BD5409 /* AudioEngine.h */; };
 		51140FB5130B3C5300D05386 /* Glyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51140FB3130B3C5300D05386 /* Glyph.cpp */; };
@@ -83,8 +85,6 @@
 		51A80F6E12FDC23F00AD6878 /* UTFConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A80F6A12FDC23F00AD6878 /* UTFConvert.h */; };
 		51CF8D8612DF60E0003FBBAD /* BackgroundMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D2912DF60E0003FBBAD /* BackgroundMusic.cpp */; };
 		51CF8D8712DF60E0003FBBAD /* BackgroundMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D2A12DF60E0003FBBAD /* BackgroundMusic.h */; };
-		51CF8D8812DF60E0003FBBAD /* RBIPhoneBackgroundMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D2B12DF60E0003FBBAD /* RBIPhoneBackgroundMusic.h */; };
-		51CF8D8912DF60E0003FBBAD /* RBIPhoneBackgroundMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D2C12DF60E0003FBBAD /* RBIPhoneBackgroundMusic.m */; };
 		51CF8D8C12DF60E0003FBBAD /* SoundFX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D2F12DF60E0003FBBAD /* SoundFX.cpp */; };
 		51CF8D8D12DF60E0003FBBAD /* SoundFX.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D3012DF60E0003FBBAD /* SoundFX.h */; };
 		51CF8D8E12DF60E0003FBBAD /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D3112DF60E0003FBBAD /* Debug.h */; };
@@ -178,6 +178,8 @@
 		24D0D4DB1314507D007A5629 /* ParticleState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleState.h; sourceTree = "<group>"; };
 		24D0D4DC1314507D007A5629 /* SpriteEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteEmitter.cpp; sourceTree = "<group>"; };
 		24D0D4DD1314507D007A5629 /* SpriteEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteEmitter.h; sourceTree = "<group>"; };
+		24E3EA57133029DC00608A9B /* AVAudioPlayerMusicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVAudioPlayerMusicDelegate.h; path = AVAudioPlayer/AVAudioPlayerMusicDelegate.h; sourceTree = "<group>"; };
+		24E3EA58133029DC00608A9B /* AVAudioPlayerMusicDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVAudioPlayerMusicDelegate.m; path = AVAudioPlayer/AVAudioPlayerMusicDelegate.m; sourceTree = "<group>"; };
 		24F0335012F1C59500BD5409 /* AudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEngine.cpp; sourceTree = "<group>"; };
 		24F0335112F1C59500BD5409 /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -206,8 +208,6 @@
 		51A9351410E8934500D144F4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		51CF8D2912DF60E0003FBBAD /* BackgroundMusic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BackgroundMusic.cpp; sourceTree = "<group>"; };
 		51CF8D2A12DF60E0003FBBAD /* BackgroundMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundMusic.h; sourceTree = "<group>"; };
-		51CF8D2B12DF60E0003FBBAD /* RBIPhoneBackgroundMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBIPhoneBackgroundMusic.h; sourceTree = "<group>"; };
-		51CF8D2C12DF60E0003FBBAD /* RBIPhoneBackgroundMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIPhoneBackgroundMusic.m; sourceTree = "<group>"; };
 		51CF8D2F12DF60E0003FBBAD /* SoundFX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundFX.cpp; sourceTree = "<group>"; };
 		51CF8D3012DF60E0003FBBAD /* SoundFX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundFX.h; sourceTree = "<group>"; };
 		51CF8D3112DF60E0003FBBAD /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
@@ -322,6 +322,15 @@
 			path = Emitter;
 			sourceTree = "<group>";
 		};
+		24E3EA55133028C800608A9B /* AVAudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				24E3EA57133029DC00608A9B /* AVAudioPlayerMusicDelegate.h */,
+				24E3EA58133029DC00608A9B /* AVAudioPlayerMusicDelegate.m */,
+			);
+			name = AVAudioPlayer;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,6 +391,7 @@
 		51CF8D2812DF60E0003FBBAD /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				24E3EA55133028C800608A9B /* AVAudioPlayer */,
 				24B3200E1316CC9D00D7002B /* OpenAL */,
 				242A67E2132C0F5400CD667C /* MusicEngine.cpp */,
 				242A67E3132C0F5400CD667C /* MusicEngine.h */,
@@ -402,8 +412,6 @@
 				24F0335112F1C59500BD5409 /* AudioEngine.h */,
 				51CF8D2912DF60E0003FBBAD /* BackgroundMusic.cpp */,
 				51CF8D2A12DF60E0003FBBAD /* BackgroundMusic.h */,
-				51CF8D2B12DF60E0003FBBAD /* RBIPhoneBackgroundMusic.h */,
-				51CF8D2C12DF60E0003FBBAD /* RBIPhoneBackgroundMusic.m */,
 				51CF8D2F12DF60E0003FBBAD /* SoundFX.cpp */,
 				51CF8D3012DF60E0003FBBAD /* SoundFX.h */,
 			);
@@ -556,7 +564,6 @@
 			files = (
 				5192780D11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch in Headers */,
 				51CF8D8712DF60E0003FBBAD /* BackgroundMusic.h in Headers */,
-				51CF8D8812DF60E0003FBBAD /* RBIPhoneBackgroundMusic.h in Headers */,
 				51CF8D8D12DF60E0003FBBAD /* SoundFX.h in Headers */,
 				51CF8D8E12DF60E0003FBBAD /* Debug.h in Headers */,
 				51CF8D9012DF60E0003FBBAD /* AnimationParameters.h in Headers */,
@@ -612,6 +619,7 @@
 				242A67E9132C0F5600CD667C /* MusicEngine.h in Headers */,
 				242A67EB132C0F5600CD667C /* Sound.h in Headers */,
 				242A67ED132C0F5600CD667C /* SoundEngine.h in Headers */,
+				24E3EA59133029DC00608A9B /* AVAudioPlayerMusicDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,7 +673,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				51CF8D8612DF60E0003FBBAD /* BackgroundMusic.cpp in Sources */,
-				51CF8D8912DF60E0003FBBAD /* RBIPhoneBackgroundMusic.m in Sources */,
 				51CF8D8C12DF60E0003FBBAD /* SoundFX.cpp in Sources */,
 				51CF8D8F12DF60E0003FBBAD /* AnimationParameters.cpp in Sources */,
 				51CF8D9512DF60E0003FBBAD /* OpenGLDrawer.cpp in Sources */,
@@ -712,6 +719,7 @@
 				242A67E8132C0F5600CD667C /* MusicEngine.cpp in Sources */,
 				242A67EA132C0F5600CD667C /* Sound.cpp in Sources */,
 				242A67EC132C0F5600CD667C /* SoundEngine.cpp in Sources */,
+				24E3EA5A133029DC00608A9B /* AVAudioPlayerMusicDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
