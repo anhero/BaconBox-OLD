@@ -144,6 +144,27 @@ namespace RedBox {
 		 * position (in that order).
 		 */
 		std::pair<float, float> getPosition() const;
+		
+		/**
+		 * Sets the horizontal position.
+		 * @param x New horizontal position, corresponds to the vertices group's
+		 * new left position (in pixels).
+		 */
+		void setXPosition(float x);
+		/**
+		 * Sets the vertical position.
+		 * @param y New vertical position, corresponds to the verices group's
+		 * new top position (in pixels).
+		 */
+		void setYPosition(float y);
+		/**
+		 * Sets the horizontal and vertical position.
+		 * @param x New horizontal position, corresponds to the vertices group's
+		 * new left position (in pixels).
+		 * @param y New vertical position, corresponds to the verices group's
+		 * new top position (in pixels).
+		 */
+		void setPosition(float x, float y);
 #ifdef RB_PHYSICS_ENABLED
 		/**
 		 * Sets the vertices' parent graphic body. Loops through the vertices

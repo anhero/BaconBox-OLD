@@ -229,6 +229,46 @@ std::pair<float, float> VerticesGroup::getPosition() const {
 	return result;
 }
 
+void VerticesGroup::setXPosition(float x) {
+	if(vertices.empty()) {
+		$ECHO("Tried to set the horizontal position of an empty VerticesGroup.");
+	}
+	// We calculate the vector we'll add to every vertices.
+	Vec2 positionModifier(x - getXPosition(), 0.0f);
+	// We move all the vertices.
+	for(std::list<Vertex>::iterator i = vertices.begin();
+		i != vertices.begin(); i++) {
+		i->getPosition() += positionModifier;
+	}
+}
+
+void VerticesGroup::setYPosition(float y) {
+	if(vertices.empty()) {
+		$ECHO("Tried to set the vertical position of an empty VerticesGroup.");
+	}
+	// We calculate the vector we'll add to every vertices.
+	Vec2 positionModifier(0.0f, y - getYPosition());
+	// We move all the vertices.
+	for(std::list<Vertex>::iterator i = vertices.begin();
+		i != vertices.begin(); i++) {
+		i->getPosition() += positionModifier;
+	}
+}
+
+void VerticesGroup::setPosition(float x, float y) {
+	if(vertices.empty()) {
+		$ECHO("Tried to set the position of an empty VerticesGroup.");
+	}
+	// We calculate the vector we'll add to every vertices.
+	std::pair<float, float> position = getPosition();
+	Vec2 positionModifier(x - position.first, y - position.second);
+	// We move all the vertices.
+	for(std::list<Vertex>::iterator i = vertices.begin();
+		i != vertices.begin(); i++) {
+		i->getPosition() += positionModifier;
+	}
+}
+
 #ifdef RB_PHYSICS_ENABLED
 void VerticesGroup::setParentGraphicBody(GraphicBody* body) {
     for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
