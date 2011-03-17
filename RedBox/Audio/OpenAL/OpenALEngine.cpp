@@ -184,6 +184,12 @@ SoundInfo* OpenALEngine::loadSound(const SoundParameters& params) {
 bool OpenALEngine::unloadSound(SoundInfo* sound) {
 	// We release the buffer name.
 	alDeleteBuffers(1, &sound->bufferId);
+	// We check if there are still sources using this buffer.
+	if(alGetError() == AL_INVALID_NAME) {
+		// If so, we delete its sources and re-try to release the buffer.
+		deleteBufferSources(sound->bufferId);
+		alDeleteBuffers(1, &sound->bufferId);
+	}
 	// We check if it was released succesfully.
 	return !alIsBuffer(sound->bufferId);
 }
