@@ -12,6 +12,11 @@
 
 #endif
 
+#ifdef QT
+#define RB_QT
+#include "RedBox_global.h"
+#endif
+
 #ifdef __APPLE__
 
 #include "TargetConditionals.h"
@@ -21,17 +26,17 @@
 #define RB_APPLE_PLATFORM
 #define RB_OPENGL
 
-#ifdef TARGET_IPHONE_SIMULATOR 
+#if TARGET_IPHONE_SIMULATOR
 	#define RB_IPHONE_PLATFORM
 	#define RB_IPHONE_SIMULATOR_PLATFORM
 #endif // TARGET_IPHONE_SIMULATOR
 
-#ifdef TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 	#define RB_IPHONE_PLATFORM
 	#define RB_IPHONE_DEVICE_PLATFORM
 #endif // TARGET_OS_IPHONE
 
-#ifdef TARGET_OS_MAC
+#if TARGET_OS_MAC
 	#define RB_MAC_PLATFORM
 #endif
 

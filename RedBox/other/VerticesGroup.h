@@ -13,9 +13,14 @@
 #include <utility>
 #include <cstdarg>
 
+#include "PlatformFlagger.h"
 #include "Vertex.h"
 
 namespace RedBox {
+#ifdef RB_PHYSICS_ENABLED
+	class GraphicBody;
+#endif
+	class Sprite;
 	/**
 	 * Group of Vertex for OpenGL and RedBox. Represents a group of vertex
 	 * with information accessible for OpenGL and RedBox.
@@ -172,7 +177,5 @@ namespace RedBox {
         void clean();
 	};
 }
-
-#include "RenderStep.h"
 
 #endif

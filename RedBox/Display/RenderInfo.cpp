@@ -2,9 +2,10 @@
 
 #include <cmath>
 
+#include "TextureInfo.h"
+#include "VerticesGroup.h"
 #include "Debug.h"
 #include "MathHelper.h"
-#include "VerticesGroup.h"
 
 using namespace RedBox;
 
@@ -22,7 +23,7 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
 					   float offsetX,
 					   float offsetY,
 					   int* newColor):
-texCoords(std::vector< std::vector<float> >(nbFrames)), texInfo(newTexInfo),
+texInfo(newTexInfo), texCoords(std::vector< std::vector<float> >(nbFrames)),
 currentFrame(0) {
 	if(newColor) {
 		color[0] = newColor[0];

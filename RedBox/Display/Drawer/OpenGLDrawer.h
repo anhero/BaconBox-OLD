@@ -2,18 +2,20 @@
  * @file
  * @ingroup Drawer
  */
-
-
 #ifndef RB_OPENGLDRAWER
 #define RB_OPENGLDRAWER
 
-#ifdef RB_IPHONE_PLATFORM
+#include "PlatformFlagger.h"
+
+#if defined(RB_IPHONE_PLATFORM)
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
+#elif defined(RB_QT)
+#include <QtOpenGL>
 #endif
 
-#include "RenderInfo.h"
-namespace RedBox{
+namespace RedBox {
+	class RenderInfo;
     /** 
      * @class OpenGLDrawer
      * @ingroup Drawer
@@ -80,4 +82,3 @@ namespace RedBox{
 
 #endif
 
-/** @} */

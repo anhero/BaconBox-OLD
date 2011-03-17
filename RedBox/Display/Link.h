@@ -15,8 +15,13 @@
 
 #include "LinkData.h"
 #include "GraphicBody.h"
+#include "Vertex.h"
+#include "Sprite.h"
 
 namespace RedBox {
+	class Vertex;
+	class Sprite;
+	class GraphicBody;
     /** 
      * Links tie sprites together inside a GraphicBody
      * @ingroup Display

@@ -4,22 +4,22 @@
  * @ingroup Display
  */
 
-#ifndef __VERTEX_H__
-#define __VERTEX_H__
+#ifndef RB_VERTEX_H
+#define RB_VERTEX_H
 
 #include <iostream>
 #include <vector>
 
+#include "PlatformFlagger.h"
+
 #include "Vec2.h"
-#ifdef RB_PHYSICS_ENABLED
-#include "Edge.h"
-#endif
 
 namespace RedBox{
 	class Sprite;
 	class RenderStep;
 #ifdef RB_PHYSICS_ENABLED
 	class GraphicBody;
+	class Edge;
 	class Link;
 #endif
     /**
@@ -198,5 +198,4 @@ namespace RedBox{
     };
 }
 
-#include "VerticesGroup.h"
 #endif

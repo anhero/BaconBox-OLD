@@ -1,7 +1,12 @@
 #include "Sprite.h"
 
+#include "TextureInfo.h"
+#include "RenderStep.h"
+#include "GraphicBody.h"
 #include "ResourceManager.h"
 #include "Debug.h"
+#include "Edge.h"
+#include "VerticesGroup.h"
 
 using namespace RedBox;
 
@@ -114,11 +119,10 @@ float offsetY): Renderable()
 }
 
 #ifdef RB_PHYSICS_ENABLED
-Sprite::Sprite(const Sprite& src):Renderable(src), edges(src.edges), 
-vertices(src.vertices), renderSteps(src.renderSteps) 
+Sprite::Sprite(const Sprite& src):Renderable(src), renderSteps(src.renderSteps),
+vertices(src.vertices), edges(src.edges)
 #else
-Sprite::Sprite(const Sprite& src):Renderable(src), vertices(src.vertices), 
-renderSteps(src.renderSteps) 
+Sprite::Sprite(const Sprite& src):Renderable(src), renderSteps(src.renderSteps), vertices(src.vertices)
 #endif
 {
     //copyFrom(src);

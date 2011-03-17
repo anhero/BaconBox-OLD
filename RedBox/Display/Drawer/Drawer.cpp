@@ -1,8 +1,9 @@
+#include "Drawer.h"
+
+#include "RenderInfo.h"
 #ifdef RB_OPENGL
 #include "OpenGLDrawer.h"
 #endif
-
-#include "Drawer.h"
 
 using namespace RedBox;
 

@@ -5,6 +5,8 @@
 #ifndef RB_OPENAL_ENGINE_H
 #define RB_OPENAL_ENGINE_H
 
+#include "PlatformFlagger.h"
+
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 

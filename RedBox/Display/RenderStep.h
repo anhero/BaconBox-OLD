@@ -11,14 +11,14 @@
 #include <string>
 #include <cstdarg>
 
-#include "Renderable.h"
-#include "VerticesGroup.h"
-#include "RenderInfo.h"
-#include "RenderStepMode.h"
-#include "Drawer.h"
 #include "TextureInfo.h"
+#include "RenderInfo.h"
+#include "Renderable.h"
+#include "RenderStepMode.h"
 
 namespace RedBox {
+	class VerticesGroup;
+	class Vertex;
     /**
      * Definition of a specific render step.
      * @ingroup Display
@@ -282,7 +282,5 @@ namespace RedBox {
         void copyFrom(const RenderStep& src);
     };
 }
-
-#include "Sprite.h"
 
 #endif

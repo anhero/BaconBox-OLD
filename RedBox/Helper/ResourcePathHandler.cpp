@@ -3,11 +3,12 @@
 using namespace RedBox;
 
 std::string ResourcePathHandler::getResourcePathFor(const std::string& item) {
+	std::string path;
 #if defined(TARGET_IPHONE_SIMULATOR) || defined(TARGET_OS_IPHONE)
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	
 	NSString *resourceDirectory = [[NSBundle mainBundle] resourcePath];
-	std::string path = ((std::string)[resourceDirectory cStringUsingEncoding:NSASCIIStringEncoding] + "/" + item );
+	path = ((std::string)[resourceDirectory cStringUsingEncoding:NSASCIIStringEncoding] + "/" + item );
 	[pool release];
 #endif
 	return path;

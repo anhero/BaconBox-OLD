@@ -5,6 +5,11 @@
 #include <cfloat>
 #include <cassert>
 
+#include "Sprite.h"
+#ifdef RB_PHYSICS_ENABLED
+#include "GraphicBody.h"
+#endif
+
 using namespace RedBox;
 
 VerticesGroup::VerticesGroup() {

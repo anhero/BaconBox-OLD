@@ -10,13 +10,19 @@
 #include <list>
 #include <string>
 
+#include "TextureInfo.h"
 #include "Renderable.h"
-#include "RenderStep.h"
+#include "VerticesGroup.h"
 
 #ifdef RB_PHYSICS_ENABLED
-#include "GraphicBody.h"
+#include "Edge.h"
 #endif
+
 namespace RedBox {
+	class RenderStep;
+#ifdef RB_PHYSICS_ENABLED
+	class GraphicBody;
+#endif
     /** 
      * Represents a sprite.
      * @ingroup Display
@@ -238,7 +244,5 @@ namespace RedBox {
 		void clearRenderSteps();
     };
 }
-
-#include "GraphicBody.h"
 
 #endif // RB_SPRITE_H

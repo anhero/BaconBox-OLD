@@ -42,6 +42,7 @@ SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
 	SoundInfo* sndInfo = ResourceManager::getSound(key);
 	if(sndInfo) {
 		sources.push_back(new OpenALSoundFX());
+		sources.back()->survives = survive;
 		sources.back()->load(sndInfo->bufferId);
 		return sources.back();
 	} else {
@@ -203,7 +204,7 @@ void OpenALEngine::deleteBufferSources(ALuint buffer) {
 	for(std::list<OpenALSoundFX*>::iterator i = sources.begin();
 		i != sources.end(); i++) {
 		alGetSourcei((*i)->sourceId, AL_BUFFER, &tmpBuffer);
-		if (tmpBuffer == buffer) {
+		if (static_cast<ALuint>(tmpBuffer) == buffer) {
 			alDeleteSources(1, &((*i)->sourceId));
 			sources.erase(i);
 		}

@@ -1,13 +1,12 @@
 #include "ResourceManager.h"
 
-#ifdef RB_OPENGL
-#ifdef RB_IPHONE_PLATFORM
-
-#endif
-#endif
-
+#if defined(RB_IPHONE_PLATFORM) && defined(RB_OPENGL)
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
+#elif defined(RB_QT)
+#include <QtOpenGL>
+#endif
+
 #include "simple-image.h"
 #include <utility>
 #include "Debug.h"

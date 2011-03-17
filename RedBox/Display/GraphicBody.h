@@ -12,10 +12,12 @@
 
 #include "Renderable.h"
 #include "Sprite.h"
+#include "Link.h"
 
 
 namespace RedBox{
 	class Sprite;
+	class Link;
     /** 
      * @class GraphicBody
      * @ingroup Display
@@ -107,8 +109,6 @@ namespace RedBox{
         void copyFrom(const GraphicBody& src);
     };
 }
-
-#include "Link.h"
 
 #endif
 #endif

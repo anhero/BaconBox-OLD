@@ -5,6 +5,7 @@
 #ifndef RB_AUDIO_ENGINE_H
 #define RB_AUDIO_ENGINE_H
 
+#include "PlatformFlagger.h"
 #include "SoundParameters.h"
 #include "MusicParameters.h"
 #include "SoundInfo.h"

@@ -1,6 +1,7 @@
-
 #include "OpenGLDrawer.h"
 
+#include "RenderInfo.h"
+#include "TextureInfo.h"
 
 using namespace RedBox;
 
@@ -50,7 +51,7 @@ void OpenGLDrawer::prepareScene(int xTranslation, int yTranslation, int angle, f
 	glLoadIdentity();
 	
 	glRotatef(angle, 0, 0, 1);
-	glTranslatef(xTranslation, xTranslation, 0);
+	glTranslatef(xTranslation, yTranslation, 0);
 	glScalef(zoom, zoom, 1);
 
 }

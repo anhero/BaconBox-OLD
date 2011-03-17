@@ -1,5 +1,13 @@
 #include "Vertex.h"
 
+#include "Sprite.h"
+#include "RenderStep.h"
+#ifdef RB_PHYSICS_ENABLED
+#include "GraphicBody.h"
+#include "Edge.h"
+#include "Link.h"
+#endif
+
 using namespace RedBox;
 
 #ifdef RB_PHYSICS_ENABLED
@@ -47,13 +55,14 @@ parentSprite(newParentSprite)
 }
 
 #ifdef RB_PHYSICS_ENABLED
-Vertex::Vertex(const Vertex& src): position(src.position), 
-parentEdges(src.parentEdges), parentLinks(src.parentLinks), 
-parentRenderSteps(src.parentRenderSteps), parentSprite(src.parentSprite), 
-parentGraphicBody(src.parentGraphicBody) {
+Vertex::Vertex(const Vertex& src): position(src.position),
+parentRenderSteps(src.parentRenderSteps), parentSprite(src.parentSprite),
+parentEdges(src.parentEdges), parentLinks(src.parentLinks),
+parentGraphicBody(src.parentGraphicBody), oldPosition(src.oldPosition),
+acceleration(src.acceleration) {
 }
 #else
-Vertex::Vertex(const Vertex& src): position(src.position), 
+Vertex::Vertex(const Vertex& src): position(src.position),
 parentRenderSteps(src.parentRenderSteps), parentSprite(src.parentSprite) {
 }
 #endif

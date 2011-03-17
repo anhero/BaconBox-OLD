@@ -3,6 +3,10 @@
 #ifdef RB_PHYSICS_ENABLED
 #include "Link.h"
 
+#include "Sprite.h"
+#include "GraphicBody.h"
+#include "Vertex.h"
+
 using namespace RedBox;
 
 Link::Link():info(LinkData(0.0f,0.0f,0.0f,0.0f,0.0f)) {

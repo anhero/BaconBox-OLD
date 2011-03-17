@@ -14,6 +14,7 @@ namespace RedBox {
 	 * @ingroup Helper
 	 */
 	class SpriteFactory {
+	public:
 		/**
 		 * Constructs a polygon. The polygon will be constructed using the number of
 		 * sides and side length recieved in the parameters. The polygons

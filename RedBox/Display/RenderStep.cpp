@@ -1,14 +1,19 @@
 #include "RenderStep.h"
 
+#include "TextureInfo.h"
+#include "RenderInfo.h"
+#include "Drawer.h"
 #include "ResourceManager.h"
 #include "TimeHelper.h"
 #include "AnimationParameters.h"
 #include "Debug.h"
+#include "Vertex.h"
+#include "VerticesGroup.h"
 
 using namespace RedBox;
 
 RenderStep::RenderStep(): Renderable(), vertices(new VerticesGroup()),
-deleteVerticesGroup(true), useSinceEpoch(false) {
+useSinceEpoch(false), deleteVerticesGroup(true) {
 }
 
 RenderStep::RenderStep(TextureInfo* newTexInfo,
@@ -19,8 +24,6 @@ RenderStep::RenderStep(TextureInfo* newTexInfo,
 					   float offsetY,
 					   int* newColor,
 					   bool newDeleteVerticesGroup): Renderable(),
-vertices(newVertices),
-deleteVerticesGroup(newDeleteVerticesGroup),
 info(RenderInfo(newTexInfo,
 				newVertices,
 				nbFrames,
@@ -29,7 +32,9 @@ info(RenderInfo(newTexInfo,
 				offsetY,
 				newColor)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE),
+vertices(newVertices),
 useSinceEpoch(false),
+deleteVerticesGroup(newDeleteVerticesGroup),
 lastFrameChange(0.0),
 currentAnimation(""),
 isPaused(false),
@@ -46,16 +51,16 @@ RenderStep::RenderStep(const std::string& key,
 					   float offsetX,
 					   float offsetY,
 					   bool newDeleteVerticesGroup): Renderable(),
-vertices(newVertices), deleteVerticesGroup(newDeleteVerticesGroup),
 info(RenderInfo(ResourceManager::getTexture(key), newVertices, nbFrames, factor, offsetX, offsetY)),
-mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE), useSinceEpoch(false),
+mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE), vertices(newVertices),
+useSinceEpoch(false), deleteVerticesGroup(newDeleteVerticesGroup),
 lastFrameChange(0.0), currentAnimation(""), isPaused(false),
 pauseFrameRemain(0.0) {
 }
 
-RenderStep::RenderStep(const RenderStep& src):Renderable(src), mode(src.mode), 
-info(src.info), vertices(src.vertices),
-deleteVerticesGroup(src.deleteVerticesGroup), useSinceEpoch(src.useSinceEpoch),
+RenderStep::RenderStep(const RenderStep& src):Renderable(src), info(src.info),
+mode(src.mode), vertices(src.vertices),
+useSinceEpoch(src.useSinceEpoch), deleteVerticesGroup(src.deleteVerticesGroup),
 lastFrameChange(0.0), currentAnimation(src.currentAnimation), isPaused(false),
 pauseFrameRemain(0.0) {
 }

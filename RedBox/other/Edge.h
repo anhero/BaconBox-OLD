@@ -3,11 +3,13 @@
  * @ingroup Physics
  */
 #ifdef RB_PHYSICS_ENABLED
-#ifndef __EDGE_H
-#define __EDGE_H
+#ifndef RB_EDGE_H
+#define RB_EDGE_H
 
 #include <cmath>
 #include <iostream>
+
+#include "Vertex.h"
 
 namespace RedBox {
     class Vertex;
@@ -102,8 +104,6 @@ namespace RedBox {
         void copyFrom(const Edge& src);
     };
 }
-
-#include "Vertex.h"
 
 #endif
 #endif

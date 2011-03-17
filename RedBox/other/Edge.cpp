@@ -1,23 +1,22 @@
 #ifdef RB_PHYSICS_ENABLED
 #include "Edge.h"
-#include "Vertex.h"
 
-//using namespace RedBox;
+using namespace RedBox;
 
-RedBox::Edge::Edge(): v1(NULL), v2(NULL), distance(0.0f) {
+Edge::Edge(): distance(0.0f), v1(NULL), v2(NULL) {
 }
 
-RedBox::Edge::Edge(RedBox::Vertex* newV1, RedBox::Vertex* newV2): v1(newV1), v2(newV2) {
+Edge::Edge(Vertex* newV1, Vertex* newV2): v1(newV1), v2(newV2) {
     recalculateDistance();
 }
 
-RedBox::Edge::Edge(const RedBox::Edge& src): v1(src.v1), v2(src.v2), distance(src.distance) {
+Edge::Edge(const Edge& src): v1(src.v1), v2(src.v2), distance(src.distance) {
 }
 
-RedBox::Edge::~Edge() {
+Edge::~Edge() {
 }
 
-void RedBox::Edge::copyFrom(const RedBox::Edge& src) {
+void Edge::copyFrom(const Edge& src) {
     if(this != &src && &src) {
         distance = src.distance;
         v1 = src.v1;
@@ -25,30 +24,30 @@ void RedBox::Edge::copyFrom(const RedBox::Edge& src) {
     }
 }
 
-RedBox::Edge& RedBox::Edge::operator=(const RedBox::Edge& src) {
+Edge& Edge::operator=(const Edge& src) {
     copyFrom(src);
     return *this;
 }
 
-RedBox::Vertex* RedBox::Edge::getV1() {
+Vertex* Edge::getV1() {
     return v1;
 }
 
-RedBox::Vertex* RedBox::Edge::getV2() {
+Vertex* Edge::getV2() {
     return v2;
 }
 
-void RedBox::Edge::setV1(RedBox::Vertex* newV1) {
+void Edge::setV1(Vertex* newV1) {
     v1 = newV1;
     recalculateDistance();
 }
 
-void RedBox::Edge::setV2(RedBox::Vertex* newV2) {
+void Edge::setV2(Vertex* newV2) {
     v2 = newV2;
     recalculateDistance();
 }
 
-float RedBox::Edge::recalculateDistance() {
+float Edge::recalculateDistance() {
     // We make sure the vertices are valid.
     if(v1 != NULL && v2 != NULL) {
         // Get the horizontal and vertical distances between the two vertices.
@@ -64,12 +63,12 @@ float RedBox::Edge::recalculateDistance() {
     return distance;
 }
 
-float RedBox::Edge::getDistance() const {
+float Edge::getDistance() const {
     return distance;
 }
 
 namespace RedBox {
-	std::ostream& operator<<(std::ostream& output, const RedBox::Edge& e) {
+	std::ostream& operator<<(std::ostream& output, const Edge& e) {
 		output << "{v1: " << e.v1 << ", v2:" << e.v2 << ", distance:" <<
 		e.distance << "}";
 		return output;

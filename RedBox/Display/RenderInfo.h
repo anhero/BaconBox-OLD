@@ -11,11 +11,11 @@
 #include <cstdarg>
 #include <iostream>
 
-#include "TextureInfo.h"
 #include "AnimationParameters.h"
 
 namespace RedBox {
 	class VerticesGroup;
+	class TextureInfo;
     /**
      * Struct contaning rendering information.
      * @ingroup Display
