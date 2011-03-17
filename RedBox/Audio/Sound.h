@@ -10,7 +10,7 @@
 namespace RedBox {
 	/**
 	 * Abstract class for sounds. Sound effect and background music abstract
-	 * classes inherit from this class.
+	 * classes derive from this class.
 	 * @ingroup Audio
 	 */
 	class Sound {
@@ -18,7 +18,7 @@ namespace RedBox {
 		friend class ResourceManager;
 	public:
 		/**
-		 * Plays the sound.
+		 * Plays the sound a given number of times.
 		 * @param nbTimes Number of times the sound will be played in loop. A
 		 * negative number is for infinite looping.
 		 */
@@ -51,6 +51,8 @@ namespace RedBox {
 		virtual AudioState::Enum getCurrentState() = 0;
 		/**
 		 * Destructor. Does not delete the sound data, only the sound source.
+		 * This is done to be able to have many sound effects playing the same
+		 * sound without having it loaded many times in memory.
 		 */
 		virtual ~Sound();
 	protected:
