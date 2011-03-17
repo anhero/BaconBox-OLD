@@ -12,6 +12,12 @@
 		242A04CA132828C900666FB6 /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 242A04C6132828C900666FB6 /* RedBoxEngine.h */; };
 		242A04CB132828C900666FB6 /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242A04C7132828C900666FB6 /* State.cpp */; };
 		242A04CC132828C900666FB6 /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 242A04C8132828C900666FB6 /* State.h */; };
+		242A67E8132C0F5600CD667C /* MusicEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242A67E2132C0F5400CD667C /* MusicEngine.cpp */; };
+		242A67E9132C0F5600CD667C /* MusicEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 242A67E3132C0F5400CD667C /* MusicEngine.h */; };
+		242A67EA132C0F5600CD667C /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242A67E4132C0F5400CD667C /* Sound.cpp */; };
+		242A67EB132C0F5600CD667C /* Sound.h in Headers */ = {isa = PBXBuildFile; fileRef = 242A67E5132C0F5500CD667C /* Sound.h */; };
+		242A67EC132C0F5600CD667C /* SoundEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242A67E6132C0F5500CD667C /* SoundEngine.cpp */; };
+		242A67ED132C0F5600CD667C /* SoundEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 242A67E7132C0F5500CD667C /* SoundEngine.h */; };
 		242F209D1301AC0200494000 /* ResourcePathHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242F209B1301AC0200494000 /* ResourcePathHandler.cpp */; };
 		242F209E1301AC0200494000 /* ResourcePathHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 242F209C1301AC0200494000 /* ResourcePathHandler.h */; };
 		2447361112EF44550085668B /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2447360F12EF44550085668B /* Drawer.cpp */; };
@@ -143,6 +149,12 @@
 		242A04C6132828C900666FB6 /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
 		242A04C7132828C900666FB6 /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
 		242A04C8132828C900666FB6 /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
+		242A67E2132C0F5400CD667C /* MusicEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicEngine.cpp; sourceTree = "<group>"; };
+		242A67E3132C0F5400CD667C /* MusicEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicEngine.h; sourceTree = "<group>"; };
+		242A67E4132C0F5400CD667C /* Sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sound.cpp; sourceTree = "<group>"; };
+		242A67E5132C0F5500CD667C /* Sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sound.h; sourceTree = "<group>"; };
+		242A67E6132C0F5500CD667C /* SoundEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundEngine.cpp; sourceTree = "<group>"; };
+		242A67E7132C0F5500CD667C /* SoundEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEngine.h; sourceTree = "<group>"; };
 		242F209B1301AC0200494000 /* ResourcePathHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourcePathHandler.cpp; sourceTree = "<group>"; };
 		242F209C1301AC0200494000 /* ResourcePathHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcePathHandler.h; sourceTree = "<group>"; };
 		2447360F12EF44550085668B /* Drawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawer.cpp; sourceTree = "<group>"; };
@@ -538,6 +550,12 @@
 			isa = PBXGroup;
 			children = (
 				24B3200E1316CC9D00D7002B /* OpenAL */,
+				242A67E2132C0F5400CD667C /* MusicEngine.cpp */,
+				242A67E3132C0F5400CD667C /* MusicEngine.h */,
+				242A67E4132C0F5400CD667C /* Sound.cpp */,
+				242A67E5132C0F5500CD667C /* Sound.h */,
+				242A67E6132C0F5500CD667C /* SoundEngine.cpp */,
+				242A67E7132C0F5500CD667C /* SoundEngine.h */,
 				24C141881326D39A003076E5 /* AudioState.h */,
 				24B86B5012F319620071930C /* MusicInfo.cpp */,
 				24B86B5112F319620071930C /* MusicInfo.h */,
@@ -922,6 +940,9 @@
 				24C141891326D39B003076E5 /* AudioState.h in Headers */,
 				242A04CA132828C900666FB6 /* RedBoxEngine.h in Headers */,
 				242A04CC132828C900666FB6 /* State.h in Headers */,
+				242A67E9132C0F5600CD667C /* MusicEngine.h in Headers */,
+				242A67EB132C0F5600CD667C /* Sound.h in Headers */,
+				242A67ED132C0F5600CD667C /* SoundEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1023,6 +1044,9 @@
 				24B68270131FEB420007637C /* ResourceManager.cpp in Sources */,
 				242A04C9132828C900666FB6 /* RedBoxEngine.cpp in Sources */,
 				242A04CB132828C900666FB6 /* State.cpp in Sources */,
+				242A67E8132C0F5600CD667C /* MusicEngine.cpp in Sources */,
+				242A67EA132C0F5600CD667C /* Sound.cpp in Sources */,
+				242A67EC132C0F5600CD667C /* SoundEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
