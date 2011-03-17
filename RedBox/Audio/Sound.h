@@ -15,7 +15,6 @@ namespace RedBox {
 	 */
 	class Sound {
 		friend class AudioEngine;
-		friend class ResourceManager;
 	public:
 		/**
 		 * Plays the sound a given number of times.
