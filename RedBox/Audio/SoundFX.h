@@ -15,7 +15,6 @@ namespace RedBox {
 	 */
 	class SoundFX : public Sound {
 		friend class AudioEngine;
-		friend class ResourceManager;
 	public:
 		/**
 		 * Destructor.

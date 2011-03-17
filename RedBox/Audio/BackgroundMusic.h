@@ -15,7 +15,6 @@ namespace RedBox {
 	 */
 	class BackgroundMusic : public Sound {
 		friend class AudioEngine;
-		friend class ResourceManager;
 	public:
 		/**
 		 * Destructor.
