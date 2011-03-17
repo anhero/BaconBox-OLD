@@ -37,20 +37,20 @@ namespace RedBox {
 		 */
 		virtual void resume() = 0;
 		/**
-		 * Checks if the sound effect is currently playing infinitely.
-		 * @return True if the sound effect is currently playing.
+		 * Checks if the sound is currently playing infinitely.
+		 * @return True if the sound is currently playing infinitely.
 		 */
 		virtual bool isLooping() = 0;
 		/**
 		 * Gets the sound's current state. Used to know if it is at its initial
-		 * state, currently playing, paused or stopped.
-		 * @return Sound effect's current state.
+		 * state, currently playing, paused, etc.
+		 * @return Sound's current state.
 		 * @see RedBox::AudioState::Enum
 		 */
 		virtual AudioState::Enum getCurrentState() = 0;
 		/**
 		 * Destructor. Does not delete the sound data, only the sound source.
-		 * This is done to be able to have many sound effects playing the same
+		 * This is done to be able to have many sounds playing the same
 		 * sound without having it loaded many times in memory.
 		 */
 		virtual ~Sound();

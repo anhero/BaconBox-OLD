@@ -22,8 +22,7 @@ namespace RedBox {
 		virtual ~SoundFX();
 	protected:
 		/**
-		 * Default constructor. Can only be called by the resource manager or
-		 * the sound engine.
+		 * Default constructor. Can only be called by the sound engine.
 		 */
 		SoundFX();
 	};
