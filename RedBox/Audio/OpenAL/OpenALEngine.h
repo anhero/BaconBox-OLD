@@ -53,6 +53,8 @@ namespace RedBox {
 		 */
 		SoundFX* getSoundFX(const std::string& key, bool survive);
 	private:
+		static const uint32_t CHUNK_ID_RIFF = 1179011410;
+		static const uint32_t FORMAT_WAVE = 1163280727;
 		/// OpenALEngine's main instance.
 		static OpenALEngine* instance;
 		/// Device to load.

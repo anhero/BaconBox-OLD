@@ -222,39 +222,51 @@ void OpenALEngine::loadWav(const std::string& filePath,
 		// We read the wav header information from the file and put it in the
 		// wav variable.
 		binFile.read(reinterpret_cast<char*>(&wav), sizeof(wav));
-		
-		// We swap the endian for the header informations that are in big
-		// endian.
-		BitHelper::endianSwap(wav.chunkId);
-		BitHelper::endianSwap(wav.format);
-		BitHelper::endianSwap(wav.subchunk1Id);
-		BitHelper::endianSwap(wav.subchunk2Id);
-		
-		// We get the number of channels.
-		if(wav.nbChannels == 1) {
-			format = AL_FORMAT_MONO16;
+
+		// We check what wav we are reading.
+		if(wav.chunkId == OpenALEngine::CHUNK_ID_RIFF ||
+		   wav.chunkId == BitHelper::otherEndian(OpenALEngine::CHUNK_ID_RIFF)) {
+			// We check what format we are reading.
+			if(wav.format == OpenALEngine::FORMAT_WAVE ||
+			   wav.format == BitHelper::otherEndian(OpenALEngine::FORMAT_WAVE)) {
+				// We swap the endian for the header informations that are in big
+				// endian.
+				BitHelper::endianSwap(wav.subchunk1Id);
+				BitHelper::endianSwap(wav.subchunk2Id);
+								
+				// We get the number of channels.
+				if(wav.nbChannels == 1) {
+					format = AL_FORMAT_MONO16;
+				} else {
+					format = AL_FORMAT_STEREO16;
+				}
+				
+				// We get the sample rate.
+				freq = wav.sampleRate;
+				
+				// We check to calculate the buffer size. The information in the header
+				// can sometimes be wrong, so we can calculate it using the file's size
+				// and substracting the header's size to it.
+				bufferSize = end - begin - sizeof(wav);
+				// We allocate memory for the buffe data.
+				bufferData = new char[bufferSize];
+				// We read the data from the file.
+				binFile.read(bufferData, bufferSize);
+				// If there was an error while loading the buffer.
+				if(binFile.rdstate()) {
+					// We delete the buffer and set it to NULL.
+					delete[] bufferData;
+					bufferData = NULL;
+					$ECHO("Failed to read the buffer data from the wave file: " <<
+						  filePath);
+				}
+			} else {
+				char* format = reinterpret_cast<char*>(&wav.format);
+				$ECHO("Unknown wav format : " << format[0] << format[1] << format[2] << format[3]);
+			}
 		} else {
-			format = AL_FORMAT_STEREO16;
-		}
-		
-		// We get the sample rate.
-		freq = wav.sampleRate;
-		
-		// We check to calculate the buffer size. The information in the header
-		// can sometimes be wrong, so we can calculate it using the file's size
-		// and substracting the header's size to it.
-		bufferSize = end - begin - sizeof(wav);
-		// We allocate memory for the buffe data.
-		bufferData = new char[bufferSize];
-		// We read the data from the file.
-		binFile.read(bufferData, bufferSize);
-		// If there was an error while loading the buffer.
-		if(binFile.rdstate()) {
-			// We delete the buffer and set it to NULL.
-			delete[] bufferData;
-			bufferData = NULL;
-			$ECHO("Failed to read the buffer data from the wave file: " <<
-				  filePath);
+			char* chunkId = reinterpret_cast<char*>(&wav.chunkId);
+			$ECHO("Unknown wav chunk ID : " << chunkId[0] << chunkId[1] << chunkId[2] << chunkId[3]);
 		}
 		// We close the file.
 		binFile.close();
