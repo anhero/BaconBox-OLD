@@ -126,6 +126,24 @@ namespace RedBox {
 		 * @return Distance between the lowest and the highest vertex.
 		 */
 		float getHeight() const;
+		/**
+		 * Gets the horizontal position. Higher position value means it is more
+		 * to the right.
+		 * @return Horizontal position (in pixels).
+		 */
+		float getXPosition() const;
+		/**
+		 * Gets the vertical position. Higher position value means it is lower
+		 * on the screen.
+		 */
+		float getYPosition() const;
+		/**
+		 * Gets the vertices group's position. (0, 0) is at the upper left
+		 * corner.
+		 * @return Pair containing the horizontal position and the vertical
+		 * position (in that order).
+		 */
+		std::pair<float, float> getPosition() const;
 #ifdef RB_PHYSICS_ENABLED
 		/**
 		 * Sets the vertices' parent graphic body. Loops through the vertices

@@ -141,7 +141,7 @@ std::pair<float, float> VerticesGroup::getWidthHeight() const {
 }
 
 float VerticesGroup::getWidth() const {
-	if(vertices.size() == 0) {
+	if(vertices.empty()) {
 		$ECHO("Tried to get the width of an empty VerticesGroup.");
 		return 0.0f;
 	}
@@ -160,7 +160,7 @@ float VerticesGroup::getWidth() const {
 }
 
 float VerticesGroup::getHeight() const {
-	if(vertices.size() == 0) {
+	if(vertices.empty()) {
 		$ECHO("Tried to get the height of an empty VerticesGroup.");
 		return 0.0f;
 	}
@@ -176,6 +176,57 @@ float VerticesGroup::getHeight() const {
 	}
 	// We return their difference which results in the height.
 	return maxY - minY;
+}
+
+float VerticesGroup::getXPosition() const {
+	if(vertices.empty()) {
+		$ECHO("Tried to get the horizontal position of an empty VerticesGroup.");
+		return 0.0f;
+	}
+	float result = FLT_MAX;
+	// We find the smallest horizontal position.
+	for(std::list<Vertex>::const_iterator i = vertices.begin();
+		i != vertices.end(); i++) {
+		if(i->getXPosition() < result) {
+			result = i->getXPosition();
+		}
+	}
+	return result;
+}
+
+float VerticesGroup::getYPosition() const {
+	if(vertices.empty()) {
+		$ECHO("Tried to get the vertical position of an empty VerticesGroup.");
+		return 0.0f;
+	}
+	float result = FLT_MAX;
+	// We find the smallest vertical position.
+	for(std::list<Vertex>::const_iterator i = vertices.begin();
+		i != vertices.end(); i++) {
+		if(i->getYPosition() < result) {
+			result = i->getYPosition();
+		}
+	}
+	return result;
+}
+
+std::pair<float, float> VerticesGroup::getPosition() const {
+	if(vertices.empty()) {
+		$ECHO("Tried to get the position of an empty VerticesGroup.");
+		return std::pair<float, float>(0.0f, 0.0f);
+	}
+	std::pair<float, float> result(FLT_MAX, FLT_MAX);
+	// We find the smallest vertical and horizontal position.
+	for(std::list<Vertex>::const_iterator i = vertices.begin();
+		i != vertices.begin(); i++) {
+		if(i->getXPosition() < result.first) {
+			result.first = i->getXPosition();
+		}
+		if(i->getYPosition() < result.second) {
+			result.second = i->getYPosition();
+		}
+	}
+	return result;
 }
 
 #ifdef RB_PHYSICS_ENABLED
