@@ -230,7 +230,7 @@ void Sprite::createEdge(Vertex* firstVertex, Vertex* secondVertex) {
     // They have to be different and they have to be part of the vertices group.
     if(firstVertex != secondVertex && vertices.containsVertices(firstVertex, secondVertex)) {
         // We add the edge to the list.
-        edges.push_back(Edge(firstVertex, secondVertex));
+		edges.push_back(Edge(firstVertex, secondVertex));
     }
 }
 

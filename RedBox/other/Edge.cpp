@@ -1,5 +1,9 @@
+#include "PlatformFlagger.h"
+
 #ifdef RB_PHYSICS_ENABLED
 #include "Edge.h"
+
+#include "Vertex.h"
 
 using namespace RedBox;
 

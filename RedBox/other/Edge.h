@@ -9,8 +9,6 @@
 #include <cmath>
 #include <iostream>
 
-#include "Vertex.h"
-
 namespace RedBox {
     class Vertex;
     /**
