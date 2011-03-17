@@ -39,6 +39,9 @@ lastFrameChange(0.0),
 currentAnimation(""),
 isPaused(false),
 pauseFrameRemain(0.0) {
+	if(vertices) {
+		vertices->updateDataFromVertices(verticesData);
+	}
 	if(newColor) {
 		mode |= RenderStepMode::COLOR;
 	}
@@ -56,6 +59,9 @@ mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE), vertices(newVertices),
 useSinceEpoch(false), deleteVerticesGroup(newDeleteVerticesGroup),
 lastFrameChange(0.0), currentAnimation(""), isPaused(false),
 pauseFrameRemain(0.0) {
+	if(vertices) {
+		vertices->updateDataFromVertices(verticesData);
+	}
 }
 
 RenderStep::RenderStep(const RenderStep& src):Renderable(src), info(src.info),
@@ -63,6 +69,9 @@ mode(src.mode), vertices(src.vertices),
 useSinceEpoch(src.useSinceEpoch), deleteVerticesGroup(src.deleteVerticesGroup),
 lastFrameChange(0.0), currentAnimation(src.currentAnimation), isPaused(false),
 pauseFrameRemain(0.0) {
+	if(vertices) {
+		vertices->updateDataFromVertices(verticesData);
+	}
 }
 
 RenderStep& RenderStep::operator=(const RenderStep &src) {

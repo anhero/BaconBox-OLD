@@ -218,7 +218,7 @@ std::pair<float, float> VerticesGroup::getPosition() const {
 	std::pair<float, float> result(FLT_MAX, FLT_MAX);
 	// We find the smallest vertical and horizontal position.
 	for(std::list<Vertex>::const_iterator i = vertices.begin();
-		i != vertices.begin(); i++) {
+		i != vertices.end(); i++) {
 		if(i->getXPosition() < result.first) {
 			result.first = i->getXPosition();
 		}
@@ -258,7 +258,7 @@ void VerticesGroup::move(float deltaX, float deltaY) {
 	// We create the vector we'll add to every vertices.
 	Vec2 deltaVec(deltaX, deltaY);
 	for(std::list<Vertex>::iterator i = vertices.begin();
-		i != vertices.begin(); i++) {
+		i != vertices.end(); i++) {
 		i->getPosition() += deltaVec;
 	}
 }
@@ -287,6 +287,7 @@ void VerticesGroup::updateVerticesFromData(std::vector<float>& verticesData, Spr
 	}
 	while (data != verticesData.end()) {
 		if (vertex != vertices.end()) {
+			vertex->getPosition().setIsPtr(true);
 			vertex->getPosition().setXPtr(&(*data));
 			++data;
 			if(data != verticesData.end()) {
@@ -336,6 +337,7 @@ void VerticesGroup::updateDataFromVertices(std::vector<float>& verticesData) {
 		dstData = verticesData.begin();
 		for(srcVertex = vertices.begin(); srcVertex != vertices.end();
 			srcVertex++) {
+			srcVertex->getPosition().setIsPtr(true);
 			srcVertex->getPosition().setXPtr(&(*dstData));
 			++dstData;
 			srcVertex->getPosition().setYPtr(&(*dstData));
