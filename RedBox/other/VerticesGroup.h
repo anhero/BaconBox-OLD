@@ -165,6 +165,26 @@ namespace RedBox {
 		 * new top position (in pixels).
 		 */
 		void setPosition(float x, float y);
+		/**
+		 * Move the vertices group horizontally.
+		 * @param deltaX Adds this value to the vertices group's horizontal
+		 * position.
+		 */
+		void moveX(float deltaX);
+		/**
+		 * Move the vertices group vertically.
+		 * @param deltaY Adds this value to the vertices group's vertical
+		 * position.
+		 */
+		void moveY(float deltaX);
+		/**
+		 * Move the vertices group horizontally and vertically.
+		 * @param deltaX Adds this value to the vertices group's horizontal
+		 * position.
+		 * @param deltaY Adds this value to the vertices group's vertical
+		 * position.
+		 */
+		void move(float deltaX, float deltaY);
 #ifdef RB_PHYSICS_ENABLED
 		/**
 		 * Sets the vertices' parent graphic body. Loops through the vertices

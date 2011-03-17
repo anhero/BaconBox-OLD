@@ -230,42 +230,36 @@ std::pair<float, float> VerticesGroup::getPosition() const {
 }
 
 void VerticesGroup::setXPosition(float x) {
-	if(vertices.empty()) {
-		$ECHO("Tried to set the horizontal position of an empty VerticesGroup.");
-	}
-	// We calculate the vector we'll add to every vertices.
-	Vec2 positionModifier(x - getXPosition(), 0.0f);
-	// We move all the vertices.
-	for(std::list<Vertex>::iterator i = vertices.begin();
-		i != vertices.begin(); i++) {
-		i->getPosition() += positionModifier;
-	}
+	move(x - getXPosition(), 0.0f);
 }
 
 void VerticesGroup::setYPosition(float y) {
-	if(vertices.empty()) {
-		$ECHO("Tried to set the vertical position of an empty VerticesGroup.");
-	}
-	// We calculate the vector we'll add to every vertices.
-	Vec2 positionModifier(0.0f, y - getYPosition());
-	// We move all the vertices.
-	for(std::list<Vertex>::iterator i = vertices.begin();
-		i != vertices.begin(); i++) {
-		i->getPosition() += positionModifier;
-	}
+	move(0.0f, y - getYPosition());
 }
 
 void VerticesGroup::setPosition(float x, float y) {
-	if(vertices.empty()) {
-		$ECHO("Tried to set the position of an empty VerticesGroup.");
-	}
 	// We calculate the vector we'll add to every vertices.
 	std::pair<float, float> position = getPosition();
-	Vec2 positionModifier(x - position.first, y - position.second);
-	// We move all the vertices.
+	move(x - position.first, y - position.second);
+}
+
+void VerticesGroup::moveX(float deltaX) {
+	move(deltaX, 0.0f);
+}
+
+void VerticesGroup::moveY(float deltaY) {
+	move(0.0f, deltaY);
+}
+
+void VerticesGroup::move(float deltaX, float deltaY) {
+	if (vertices.empty()) {
+		$ECHO("Tried to move an empty vertices group.");
+	}
+	// We create the vector we'll add to every vertices.
+	Vec2 deltaVec(deltaX, deltaY);
 	for(std::list<Vertex>::iterator i = vertices.begin();
 		i != vertices.begin(); i++) {
-		i->getPosition() += positionModifier;
+		i->getPosition() += deltaVec;
 	}
 }
 
