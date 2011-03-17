@@ -1,0 +1,56 @@
+#!/bin/bash
+
+_name="simple-image"
+_license="TODO" 
+#TODO: Put license in here... and also find a use for it.
+
+_svn_rev="2748"
+_svn_url="http://onesadcookie.com/svn/SimpleImage/${_archive}"
+
+
+load_base svn.fetch
+
+function build() {
+	
+	test -z "$CC" && CC="gcc"
+	test -z "$CXX" && CXX="g++"
+
+	cp -rf "${srcdir}/${_name}" "${workdir}"
+	
+	cd "${workdir}"
+	
+	local patches_dir="${_name}.custom"
+	local patches_archive="${patches_dir}.tar.bz2"
+	
+	print_info Applying patches
+	echo "Extracting patches"
+	do_untar "${libdir}/${patches_archive}" "${srcdir}"
+	
+	echo "Applying patch"
+	cd "${workdir}/${_name}/Source/"
+	patch -p0 -i "${srcdir}/${patches_dir}/patch.all.diff"
+	echo "Copying Makefile"
+	cp "${srcdir}/${patches_dir}/Makefile" "${workdir}/${_name}/Source/"
+	
+	cd "${workdir}/${_name}/Source/"
+	echo "Removing left-over files"
+	rm simple-image.c simple-image-debug.c simple-image-debug.h simple-image-jpeg.c
+
+	print_info Compiling
+	make
+	echo "Done compiling"
+	#TODO: Check if it really works
+	
+	print_info Installing
+	mkdir -p "${builddir}/lib/"
+	mkdir -p "${builddir}/include/"
+	cp "${workdir}/${_name}/Source/lib${_name}.a" "${builddir}/lib/"
+	cp "${workdir}/${_name}/Source/${_name}.h" "${builddir}/include/"
+}
+
+function teardown() {
+	unset _svn_url
+	unset _svn_rev
+	unset _name
+	unset _license
+}

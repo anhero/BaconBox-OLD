@@ -1,0 +1,22 @@
+#!/bin/bash
+
+_name="libpng"
+_license="TODO" 
+#TODO: Put license in here... and also find a use for it.
+_version="1.5.1"
+_archive="${_name}-${_version}.tar.gz"
+_archive_url="http://downloads.sourceforge.net/sourceforge/libpng/${_archive}"
+_hash="220035f111ea045a51e290906025e8b5"
+
+function discover() {
+	#TODO: If using the system's library, include it, otherwise, locally built
+	if [ $1 == '--cflags' ]; then
+		echo -I${builddir}/include/libpng15
+	else
+		print_error Unrecognized parameter or missing parameter.
+		exit 1
+	fi
+}
+
+load_base http.fetch
+load_base configuremakemake.build

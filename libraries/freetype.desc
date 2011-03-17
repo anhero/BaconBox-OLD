@@ -1,0 +1,14 @@
+#!/bin/bash
+
+_name="freetype"
+_license="TODO" 
+#TODO: Put license in here... and also find a use for it.
+_version="2.4.4"
+_archive="${_name}-${_version}.tar.bz2"
+_archive_url="http://downloads.sourceforge.net/sourceforge/freetype/${_archive}"
+_hash="b3e2b6e2f1c3e0dffa1fd2a0f848b671"
+
+#config_cmdline=" --enable-static=yes --enable-shared=no"
+
+load_base http.fetch
+load_base configuremakemake.build

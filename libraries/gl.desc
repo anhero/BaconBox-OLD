@@ -1,0 +1,17 @@
+#!/bin/bash
+
+_name="OpenGL"
+_license="TODO" 
+
+function discover() {
+	#TODO: If using the system's library, include it, otherwise, locally built
+	if [ $1 == '--cflags' ]; then
+		if [ "$target" == "ios" ]; then
+			#Hardcoding to ES1
+			echo -I${SDK_PATH}
+		fi 
+	else
+		print_error Unrecognized parameter or missing parameter.
+		exit 1
+	fi
+}

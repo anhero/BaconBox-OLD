@@ -52,3 +52,9 @@ Release
 
 #.a libraries
 *.a
+
+
+#libbuildtool ignore rules
+libraries/build/
+libraries/workdir/
+libraries/src/

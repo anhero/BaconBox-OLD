@@ -1,0 +1,34 @@
+#!/bin/bash
+
+_name="libvorbisidec"
+_license="TODO"
+#TODO: Put license in here... and also find a use for it.
+
+_svn_rev="17374"
+_svn_url="http://svn.xiph.org/trunk/Tremor/"
+
+
+load_base svn.fetch
+
+function build() {
+	
+	cp -rf "${srcdir}/${_name}/" "${workdir}"
+
+	cd ${workdir}/
+
+	local cmdline=""
+	[[ -n $configure_host ]] && cmdline=$cmdline" --host=${configure_host}"
+
+	echo ./autogen.sh --prefix="${builddir}" ${cmdline}
+
+	./autogen.sh --prefix="${builddir}" ${cmdline} \
+	&& make \
+	&& make install
+}
+
+function teardown() {
+	unset _svn_url
+	unset _svn_rev
+	unset _name
+	unset _license
+}

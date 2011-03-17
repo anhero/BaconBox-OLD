@@ -1,0 +1,12 @@
+#!/bin/bash
+#Le she-bang est facultatif
+
+#Cet array bash comporte les librairies à builder...
+#Chacune de ces librairies nécessite un fichier .desc
+
+libraries=(
+	'freetype'
+	'libpng'
+	'simple-image'
+	'libvorbis-tremor'
+)
