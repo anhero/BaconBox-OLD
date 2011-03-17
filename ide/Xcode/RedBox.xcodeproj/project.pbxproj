@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		241F18CD12F4A2D2002F3247 /* RenderInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */; };
+		2426871713316DCC00BA62DC /* AVAudioPlayerEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2426871313316DCC00BA62DC /* AVAudioPlayerEngine.cpp */; };
+		2426871813316DCC00BA62DC /* AVAudioPlayerEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2426871413316DCC00BA62DC /* AVAudioPlayerEngine.h */; };
+		2426871913316DCC00BA62DC /* AVAudioPlayerMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2426871513316DCC00BA62DC /* AVAudioPlayerMusic.cpp */; };
+		2426871A13316DCC00BA62DC /* AVAudioPlayerMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 2426871613316DCC00BA62DC /* AVAudioPlayerMusic.h */; };
 		242A04C9132828C900666FB6 /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242A04C5132828C900666FB6 /* RedBoxEngine.cpp */; };
 		242A04CA132828C900666FB6 /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 242A04C6132828C900666FB6 /* RedBoxEngine.h */; };
 		242A04CB132828C900666FB6 /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242A04C7132828C900666FB6 /* State.cpp */; };
@@ -132,6 +136,10 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		241F18CC12F4A2D2002F3247 /* RenderInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderInfo.cpp; sourceTree = "<group>"; };
+		2426871313316DCC00BA62DC /* AVAudioPlayerEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AVAudioPlayerEngine.cpp; path = AVAudioPlayer/AVAudioPlayerEngine.cpp; sourceTree = "<group>"; };
+		2426871413316DCC00BA62DC /* AVAudioPlayerEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVAudioPlayerEngine.h; path = AVAudioPlayer/AVAudioPlayerEngine.h; sourceTree = "<group>"; };
+		2426871513316DCC00BA62DC /* AVAudioPlayerMusic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AVAudioPlayerMusic.cpp; path = AVAudioPlayer/AVAudioPlayerMusic.cpp; sourceTree = "<group>"; };
+		2426871613316DCC00BA62DC /* AVAudioPlayerMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVAudioPlayerMusic.h; path = AVAudioPlayer/AVAudioPlayerMusic.h; sourceTree = "<group>"; };
 		242A04C5132828C900666FB6 /* RedBoxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedBoxEngine.cpp; sourceTree = "<group>"; };
 		242A04C6132828C900666FB6 /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
 		242A04C7132828C900666FB6 /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
@@ -325,6 +333,10 @@
 		24E3EA55133028C800608A9B /* AVAudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				2426871313316DCC00BA62DC /* AVAudioPlayerEngine.cpp */,
+				2426871413316DCC00BA62DC /* AVAudioPlayerEngine.h */,
+				2426871513316DCC00BA62DC /* AVAudioPlayerMusic.cpp */,
+				2426871613316DCC00BA62DC /* AVAudioPlayerMusic.h */,
 				24E3EA57133029DC00608A9B /* AVAudioPlayerMusicDelegate.h */,
 				24E3EA58133029DC00608A9B /* AVAudioPlayerMusicDelegate.m */,
 			);
@@ -620,6 +632,8 @@
 				242A67EB132C0F5600CD667C /* Sound.h in Headers */,
 				242A67ED132C0F5600CD667C /* SoundEngine.h in Headers */,
 				24E3EA59133029DC00608A9B /* AVAudioPlayerMusicDelegate.h in Headers */,
+				2426871813316DCC00BA62DC /* AVAudioPlayerEngine.h in Headers */,
+				2426871A13316DCC00BA62DC /* AVAudioPlayerMusic.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,6 +734,8 @@
 				242A67EA132C0F5600CD667C /* Sound.cpp in Sources */,
 				242A67EC132C0F5600CD667C /* SoundEngine.cpp in Sources */,
 				24E3EA5A133029DC00608A9B /* AVAudioPlayerMusicDelegate.m in Sources */,
+				2426871713316DCC00BA62DC /* AVAudioPlayerEngine.cpp in Sources */,
+				2426871913316DCC00BA62DC /* AVAudioPlayerMusic.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
