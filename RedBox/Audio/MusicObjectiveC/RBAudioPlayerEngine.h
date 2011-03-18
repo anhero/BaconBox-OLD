@@ -40,6 +40,10 @@ namespace RedBox {
 		BackgroundMusic* getBackgroundMusic(const std::string& key,
 											bool survive = true);
 	private:
+		/**
+		 * List of pointers to the musics that are to be deleted automatically
+		 * once done.
+		 */		
 		std::list<RBAudioPlayerMusic*> managedMusics;
 		/**
 		 * Default constructor.

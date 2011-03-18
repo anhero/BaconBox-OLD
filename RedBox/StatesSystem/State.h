@@ -1,8 +1,8 @@
 /**
  * @file
  */
-#ifndef __STATE_H
-#define __STATE_H
+#ifndef RB_STATE_H
+#define RB_STATE_H
 
 #include <map>
 #include <list>

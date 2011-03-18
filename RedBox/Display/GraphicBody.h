@@ -19,14 +19,11 @@ namespace RedBox{
 	class Sprite;
 	class Link;
     /** 
-     * @class GraphicBody
-     * @ingroup Display
-     * 
-     *  Represent a body composed from Sprite and Link.
+     * Represent a body composed from Sprite and Link.
      * Body are used to represent entity in the game (monster, door, etc.)
      * Depending on links options and Sprite property, body can achieve a variety of effect
      * like a blob or a revolving door, etc.
-     * 
+     * @ingroup Display
      */
 	class GraphicBody : public Renderable {
     public:
