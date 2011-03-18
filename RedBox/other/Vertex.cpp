@@ -148,6 +148,10 @@ bool Vertex::containsParentLink(Link* link) {
     return !notFound;
 }
 
+Vec2& Vertex::getOldPosition() {
+	return oldPosition;
+}
+
 void Vertex::clearLinks() {
 	for(std::vector<Link*>::iterator i = parentLinks.begin(); i != parentLinks.end(); i++) {
 		if(*i)

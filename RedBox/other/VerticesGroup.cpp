@@ -230,17 +230,35 @@ std::pair<float, float> VerticesGroup::getPosition() const {
 }
 
 void VerticesGroup::setXPosition(float x) {
-	move(x - getXPosition(), 0.0f);
+	Vec2 vec(x - getXPosition(), 0.0f);
+	for (std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+		i->getPosition() += vec;
+#ifdef RB_PHYSICS_ENABLED
+		i->getOldPosition() += vec;
+#endif
+	}
 }
 
 void VerticesGroup::setYPosition(float y) {
-	move(0.0f, y - getYPosition());
+	Vec2 vec(0.0f, y - getYPosition());
+	for (std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+		i->getPosition() += vec;
+#ifdef RB_PHYSICS_ENABLED
+		i->getOldPosition() += vec;
+#endif
+	}
 }
 
 void VerticesGroup::setPosition(float x, float y) {
 	// We calculate the vector we'll add to every vertices.
 	std::pair<float, float> position = getPosition();
-	move(x - position.first, y - position.second);
+	Vec2 vec(x - position.first, y - position.second);
+	for (std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
+		i->getPosition() += vec;
+#ifdef RB_PHYSICS_ENABLED
+		i->getOldPosition() += vec;
+#endif
+	}
 }
 
 void VerticesGroup::moveX(float deltaX) {

@@ -160,6 +160,11 @@ namespace RedBox{
          * @return True if the link is a parent, false if not.
          */
         bool containsParentLink(Link* link);
+        /**
+         * Gets the old position position.
+         * @return Vec2 representing the vertex's old position.
+         */
+		Vec2& getOldPosition();
 #endif
     private:
         /// Current position. Stores X and Y as direct values or as pointers.
