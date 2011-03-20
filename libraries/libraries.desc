@@ -1,12 +1,11 @@
 #!/bin/bash
-#Le she-bang est facultatif
+#Libraries to build
 
-#Cet array bash comporte les librairies à builder...
-#Chacune de ces librairies nécessite un fichier .desc
+if [ "${MSYSTEM-}" == "MINGW32" ]; then
+	libraries=( ${libraries[@]-} 'zlib' )
+fi
+libraries=( ${libraries[@]-} 'freetype' )
+libraries=( ${libraries[@]-} 'libpng' )
+libraries=( ${libraries[@]-} 'simple-image' )
+libraries=( ${libraries[@]-} 'libvorbis-tremor' )
 
-libraries=(
-	'freetype'
-	'libpng'
-	'simple-image'
-	'libvorbis-tremor'
-)

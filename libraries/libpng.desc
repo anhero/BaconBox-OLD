@@ -4,14 +4,19 @@ _name="libpng"
 _license="TODO" 
 #TODO: Put license in here... and also find a use for it.
 _version="1.5.1"
+#_version="1.4.5"
 _archive="${_name}-${_version}.tar.gz"
 _archive_url="http://downloads.sourceforge.net/sourceforge/libpng/${_archive}"
-_hash="220035f111ea045a51e290906025e8b5"
+_hash="220035f111ea045a51e290906025e8b5" #1.5.1
+#_hash="dd4175393720ae041c67ace87cf6d212" #1.4.5
+
+#Host
+[[ -n ${configure_host-} ]] && config_cmdline="${config_cmdline} --host=${configure_host}"
 
 function discover() {
 	#TODO: If using the system's library, include it, otherwise, locally built
 	if [ $1 == '--cflags' ]; then
-		echo -I${builddir}/include/libpng15
+		echo -I${libs_builddir}/include/libpng15
 	else
 		print_error Unrecognized parameter or missing parameter.
 		exit 1

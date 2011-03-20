@@ -3,6 +3,9 @@
 _name="OpenGL"
 _license="TODO" 
 
+
+#Stub for linking OpenGL...
+
 function discover() {
 	#TODO: If using the system's library, include it, otherwise, locally built
 	if [ $1 == '--cflags' ]; then

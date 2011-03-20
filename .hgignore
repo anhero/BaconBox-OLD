@@ -55,6 +55,4 @@ Release
 
 
 #libbuildtool ignore rules
-libraries/build/
-libraries/workdir/
-libraries/src/
+regexp:^libraries/.*/.*$

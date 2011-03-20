@@ -1,0 +1,48 @@
+#!/bin/bash
+
+_name="zlib"
+_license="TODO" 
+#TODO: Put license in here... and also find a use for it.
+_version="1.2.5"
+_archive="${_name}-${_version}.tar.gz"
+_archive_url="http://downloads.sourceforge.net/sourceforge/libpng/${_archive}"
+_hash="c735eab2d659a96e5a594c9e8541ad63" #1.2.5
+
+#function discover() {
+#	#TODO: If using the system's library, include it, otherwise, locally built
+#	if [ $1 == '--cflags' ]; then
+#		echo -I${libs_builddir}/include/
+#	else
+#		print_error Unrecognized parameter or missing parameter.
+#		exit 1
+#	fi
+#}
+
+load_base http.fetch
+
+function build() {
+	cd "${lib_workdir}"
+	local cmdline=""
+	local libdir="${libs_builddir}/lib/"
+
+	cd "${lib_workdir}/${_pkgdir}/"
+
+	echo -n "Checking for Mingw... "
+
+	#Running on MINGW32?
+	if [ "${MSYSTEM-}" == "MINGW32" ]; then
+		export BINARY_PATH="${libs_builddir}/bin"
+		export INCLUDE_PATH="${libs_builddir}/include"
+		export LIBRARY_PATH="${libs_builddir}/lib"
+
+		echo Mingw found.
+		make -fwin32/makefile.gcc \
+		&& make -fwin32/makefile.gcc install
+	else
+		echo Other platform found.
+		./configure --prefix="${libs_builddir}" \
+		&& make \
+		&& make install
+	fi
+
+}
