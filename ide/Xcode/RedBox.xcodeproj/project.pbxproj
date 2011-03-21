@@ -644,6 +644,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5192776D11D5B13D00C65B15 /* Build configuration list for PBXNativeTarget "RedBox" */;
 			buildPhases = (
+				510395421336809A00B4B8C3 /* LibBuildTool */,
 				5192774311D5B0F100C65B15 /* Headers */,
 				5192774411D5B0F100C65B15 /* Sources */,
 				5192774511D5B0F100C65B15 /* Frameworks */,
@@ -680,6 +681,24 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		510395421336809A00B4B8C3 /* LibBuildTool */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = LibBuildTool;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/bin/bash --login";
+			shellScript = "[[ -d \"${SRCROOT}/../../libraries/ios/universal\" ]] && exit 0;\n\n\ncd \"${SRCROOT}/../../libraries\"\nlibbuildtool -t ios -o version=4.3 -o platform=simulator \\\n&& libbuildtool -t ios -o version=4.3 -o platform=os -o arch=armv6 \\\n&& libbuildtool -t ios -o version=4.3 -o platform=os -o arch=armv7 \\\n&& libbuildtool -t ios -o makeuniversal=true || exit 1";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5192774411D5B0F100C65B15 /* Sources */ = {
