@@ -12,15 +12,14 @@ load_base svn.fetch
 
 function build() {
 	
-	cp -rf "${lib_srcdir}/${_name}/" "${lib_workdir}"
+	cp -rf "${lib_srcdir}/${_name}" "${lib_workdir}"
 
-	cd ${lib_workdir}/
+	cd ${lib_workdir}/${_name}
 
 	local cmdline=""
 	[[ -n ${configure_host-} ]] && cmdline=$cmdline" --host=${configure_host-}"
 
-	echo ./autogen.sh --prefix="${libs_builddir}" ${cmdline}
-
+	echo Configuring with autogen, then make-ing.
 	./autogen.sh --prefix="${libs_builddir}" ${cmdline} \
 	&& make \
 	&& make install
