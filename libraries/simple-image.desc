@@ -23,14 +23,198 @@ function build() {
 	local patches_archive="${patches_dir}.tar.bz2"
 	
 	print_info Applying patches
-	echo "Extracting patches"
-	do_untar "${libs_dir}/${patches_archive}" "${lib_srcdir}"
+#	echo "Extracting patches"
+#	do_untar "${libs_dir}/${patches_archive}" "${lib_srcdir}"
 	
 	echo "Applying patch"
 	cd "${lib_workdir}/${_name}/Source/"
-	patch -p0 -i "${lib_srcdir}/${patches_dir}/patch.all.diff"
+	patch -p0 <<'PATCHEND'
+Index: simple-image.h
+===================================================================
+--- simple-image.h	(revision 2748)
++++ simple-image.h	(working copy)
+@@ -2,49 +2,34 @@
+ #define simple_image_h
+ 
+ #if defined(__APPLE__)
++#include <TargetConditionals.h>
++#if defined(TARGET_OS_IPHONE)
++#import <OpenGLES/ES1/gl.h>
++#import <OpenGLES/ES1/glext.h>
++#else
+ #include <OpenGL/gl.h>
++#endif
+ #else
++//TODO: WIN32 twistedjoe's addition to check
++#ifdef _WIN32
++#include<windows.h>
++#endif //_WIN32
+ #include <GL/gl.h>
+ #endif
+ 
++
+ #if defined(__cplusplus)
+ extern "C" {
+ #endif
+ 
+ /*
+- * If debugging is enabled, the functions below may print diagnostic
+- * messages to standard error.  Debugging is enabled by default unless
+- * this library was compiled with NDEBUG defined.
+- */
+-extern void siEnableDebug(GLboolean enable);
+-
+-/*
+- * Calls TexImage2D with the given target and internal format, a level
+- * of zero, and a width, height and pixel data from the JPEG or PNG file at
+- * the given path.  May temporarily alter pixel packing attributes.
+- * Returns FALSE if there's an error reading the file; otherwise raises
+- * errors as TexImage2D.
+- */
+-extern GLboolean siTexImageFile(
+-    GLenum target,
+-    GLenum internalFormat,
+-    const char *path);
+-
+-/*
+- * Similarly, but only works for JPEG files.
+- */
+-extern GLboolean siTexImageJPEG(
+-    GLenum target,
+-    GLenum internalFormat,
+-    const char *path);
+-
+-/*
+  * Similarly, but only works for PNG files.
+  */
+ extern GLboolean siTexImagePNG(
+     GLenum target,
+     GLenum internalFormat,
+-    const char *path);
++    const char *path,
++	unsigned int* pixelWidth, unsigned int* pixelHeight);
+ 
+ #if defined(__cplusplus)
+ }
+Index: simple-image-png.c
+===================================================================
+--- simple-image-png.c	(revision 2748)
++++ simple-image-png.c	(working copy)
+@@ -4,19 +4,18 @@
+ #include <png.h>
+ 
+ #include "simple-image.h"
+-#include "simple-image-debug.h"
+ 
+ #define PNG_HEADER_SIZE 8
+ 
+ GLboolean siTexImagePNG(
+     GLenum target,
+     GLenum internalFormat,
+-    const char *path)
++    const char *path,
++	unsigned int* pixelWidth, unsigned int* pixelHeight)
+ {
+     FILE *PNG_file = fopen(path, "rb");
+     if (PNG_file == NULL)
+     {
+-        siDebug("Can't open PNG file %s\n", path);
+         return GL_FALSE;
+     }
+     
+@@ -25,7 +24,6 @@
+     fread(PNG_header, 1, PNG_HEADER_SIZE, PNG_file);
+     if (png_sig_cmp(PNG_header, 0, PNG_HEADER_SIZE) != 0)
+     {
+-        siDebug("%s is not a PNG file\n", path);
+         return GL_FALSE;
+     }
+     
+@@ -33,7 +31,6 @@
+         = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+     if (PNG_reader == NULL)
+     {
+-        siDebug("Can't start reading PNG file %s\n", path);
+         fclose(PNG_file);
+         return GL_FALSE;
+     }
+@@ -41,7 +38,6 @@
+     png_infop PNG_info = png_create_info_struct(PNG_reader);
+     if (PNG_info == NULL)
+     {
+-        siDebug("Can't get info for PNG file %s\n", path);
+         png_destroy_read_struct(&PNG_reader, NULL, NULL);
+         fclose(PNG_file);
+         return GL_FALSE;
+@@ -50,7 +46,6 @@
+     png_infop PNG_end_info = png_create_info_struct(PNG_reader);
+     if (PNG_end_info == NULL)
+     {
+-        siDebug("Can't get end info for PNG file %s\n", path);
+         png_destroy_read_struct(&PNG_reader, &PNG_info, NULL);
+         fclose(PNG_file);
+         return GL_FALSE;
+@@ -58,7 +53,6 @@
+     
+     if (setjmp(png_jmpbuf(PNG_reader)))
+     {
+-        siDebug("Can't load PNG file %s\n", path);
+         png_destroy_read_struct(&PNG_reader, &PNG_info, &PNG_end_info);
+         fclose(PNG_file);
+         return GL_FALSE;
+@@ -84,7 +78,7 @@
+ 
+     if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8) 
+     {
+-        png_set_gray_1_2_4_to_8(PNG_reader);
++        png_set_expand_gray_1_2_4_to_8(PNG_reader);
+     }
+     
+     if (color_type == PNG_COLOR_TYPE_GRAY ||
+@@ -137,6 +131,9 @@
+         PNG_image_buffer);
+     
+     free(PNG_image_buffer);
++	
++	(* pixelWidth) = width;
++	(* pixelHeight) = height;
+     
+     return GL_TRUE;
+ }
+PATCHEND
+
 	echo "Copying Makefile"
-	cp "${lib_srcdir}/${patches_dir}/Makefile" "${lib_workdir}/${_name}/Source/"
+	#cp "${lib_srcdir}/${patches_dir}/Makefile" "${lib_workdir}/${_name}/Source/"
+	cat > "${lib_workdir}/${_name}/Source/Makefile" <<'MYMAKEFILE'
+
+ifeq ($(strip $(CC)),)
+	CC=gcc
+endif
+
+DEPS=$(shell discover-dependency --cflags libpng)
+#Finally, done in the makefile with imports...
+#DEPS+=$(shell discover-dependency --cflags gl)
+
+CFLAGS+=-c -Wall $(DEPS)
+SOURCES=simple-image-png.c
+OBJECTS=$(SOURCES:.c=.o)
+EXECUTABLE=libsimple-image.a
+
+
+all: $(SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	#libtool -o $(EXECUTABLE) -static $(OBJECTS)
+	ar rcs $@ $(OBJECTS)
+
+.c.o:
+	$(CC) -x c $(CFLAGS) $< -o $@
+
+
+clean : 
+	rm -f *.{a,o}
+
+MYMAKEFILE
 	
 	cd "${lib_workdir}/${_name}/Source/"
 	echo "Removing left-over files"
@@ -39,7 +223,6 @@ function build() {
 	print_info Compiling
 	make
 	echo "Done compiling"
-	#TODO: Check if it really works
 	
 	print_info Installing
 	mkdir -p "${libs_builddir}/lib/"
