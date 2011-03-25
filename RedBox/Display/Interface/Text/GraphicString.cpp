@@ -8,9 +8,9 @@ using namespace RedBox;
 GraphicString::GraphicString(): Renderable(), font(NULL), x(0), y(0){};
 GraphicString::GraphicString(Font * font):Renderable(), font(font), x(0), y(0){};
 
-void GraphicString::setText(RB_String32 & text){
+void GraphicString::setText(const RB_String32 & text){
 	if(font != NULL){
-		RB_String32::iterator i;;
+		RB_String32::const_iterator i;;
 		for(i = text.begin(); i != text.end(); i++){
 			Glyph * aGlyph = font->getGlyph(*i);
 			TextureInfo *  glyphTextureInfo = aGlyph->getTextureInfo();
@@ -24,7 +24,7 @@ void GraphicString::setText(RB_String32 & text){
 	}
 }
 
-void GraphicString::setText(std::string & text){
+void GraphicString::setText(const std::string & text){
 	RB_String32 textUTF32 = UTFConvert::decodeUTF8(text);
 	setText(textUTF32);
 }

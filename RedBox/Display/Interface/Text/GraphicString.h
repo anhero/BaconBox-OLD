@@ -56,13 +56,13 @@ namespace RedBox{
 		 * Set the text of the GraphicString with an
 		 * UTF8 string.
 		 */
-		void setText(std::string & text);
+		void setText(const std::string & text);
 		
 		/**
 		 * Set the text of the GraphicString with an 
 		 * UTF32 string.
 		 */
-		void setText(RB_String32 &  text);
+		void setText(const RB_String32 &  text);
 		
 		///Set the rendering direction of the string. (See the StringDirection enum)
 		void setDirection(StringDirection direction);

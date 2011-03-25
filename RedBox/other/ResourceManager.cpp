@@ -299,7 +299,7 @@ void ResourceManager::removeMusic(const std::string& name) {
 	}
 }
 
-Font* ResourceManager::loadFont(std::string & name, std::string & path){
+Font* ResourceManager::loadFont(const std::string & name, const std::string & path){
 	
 	Font * aFont = new Font(name,path);
 	// If there is already a font with the specified name in the map,
@@ -315,7 +315,7 @@ Font* ResourceManager::loadFont(std::string & name, std::string & path){
 	return aFont;
 }
 
-Font* ResourceManager::getFont(std::string & name){
+Font* ResourceManager::getFont(const std::string & name){
 	std::map<std::string, Font*>::iterator i = fonts.find(name);
 	if (i != fonts.end()){
 		return (*i).second;
@@ -325,7 +325,7 @@ Font* ResourceManager::getFont(std::string & name){
 	}
 }
 
-void ResourceManager::removeFont(std::string & name){
+void ResourceManager::removeFont(const std::string & name){
 	std::map<std::string, Font*>::iterator i = fonts.find(name);
 	if (i != fonts.end()){
 		delete (*i).second;

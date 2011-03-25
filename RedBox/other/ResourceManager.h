@@ -106,7 +106,7 @@ namespace RedBox {
 		 * @param name Name of the font, it will be the key of the fonts' map.
 		 * @param path Path of the font.
 		 */
-		static Font* loadFont(std::string & name, std::string & path);
+		static Font* loadFont(const std::string & name, const std::string & path);
 		
 		/**
 		 * Return a pointer to the font specified by the given name. 
@@ -114,11 +114,11 @@ namespace RedBox {
 		 * @return Return a pointer to the specified font or NULL if no font is
 		 * found.
 		 */
-		static Font* getFont(std::string & name);
+		static Font* getFont(const std::string & name);
 		/**
 		 * Remove the specified font from the fonts' map.
 		 */
-		static void removeFont(std::string & name);
+		static void removeFont(const std::string & name);
 		
 		/**
 		 * Unloads everything in the ResourceManager.
