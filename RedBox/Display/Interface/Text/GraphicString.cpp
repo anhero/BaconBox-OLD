@@ -14,7 +14,7 @@ void GraphicString::setText(const RB_String32 & text){
 		for(i = text.begin(); i != text.end(); i++){
 			Glyph * aGlyph = font->getGlyph(*i);
 			TextureInfo *  glyphTextureInfo = aGlyph->getTextureInfo();
-			Sprite * aSprite = new Sprite(glyphTextureInfo, glyphTextureInfo->imageWidth, glyphTextureInfo->imageHeight);
+			Sprite * aSprite = new Sprite(glyphTextureInfo, aGlyph->getWidth(), aGlyph->getHeight());
 			characters.push_back(std::pair<Glyph*, Sprite*>(aGlyph, aSprite));
 		}
 		setPosition(x, y);

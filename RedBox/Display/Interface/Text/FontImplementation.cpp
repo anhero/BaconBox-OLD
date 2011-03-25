@@ -82,6 +82,9 @@ Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
 		aGlyph->setHoriAdvance(font->glyph->advance.x >> 6);
 		
 		
+		aGlyph->setWidth(glyphWidth);
+		aGlyph->setHeight(glyphHeight);
+		
 		aGlyph->setHoriBearingX( font->glyph->bitmap_left);
 		
 		aGlyph->setHoriBearingY( font->glyph->bitmap_top);
