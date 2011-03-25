@@ -76,7 +76,7 @@ Glyph * Font::getGlyph(RB_Char32 unicodeValue){
 		aGlyph = new Glyph();
 		std::stringstream key;
 		key << name << "-" << size << "-" << unicodeValue;
-		aGlyph->setTextureInfo(*ResourceManager::addTexture(key.str(),poweredTo2Buffer, widthPoweredToTwo, heightPoweredToTwo));
+		aGlyph->setTextureInfo(*ResourceManager::addTexture(key.str(),poweredTo2Buffer, glyphWidth, glyphHeight));
 		aGlyph->setHoriAdvance(font->glyph->advance.x >> 6);
 		
 		
@@ -84,19 +84,6 @@ Glyph * Font::getGlyph(RB_Char32 unicodeValue){
 		
 		aGlyph->setHoriBearingY( font->glyph->bitmap_top);
 
-		
-		float * texCoord = aGlyph->getTextureCoordinates();
-		texCoord[0] = 0;
-		texCoord[1] = 0;
-		
-		texCoord[2] = glyphWidth / widthPoweredToTwo;
-		texCoord[3] = 0;
-		
-		texCoord[4] = 0;
-		texCoord[5] = glyphHeight / heightPoweredToTwo;
-		
-		texCoord[6] = texCoord[2];
-		texCoord[7] = texCoord[5];
 	}
 		
 	return aGlyph;

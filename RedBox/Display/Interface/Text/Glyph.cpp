@@ -28,18 +28,25 @@ int Glyph::getHoriBearingY(){
 
 }
 
-void Glyph::setTextureInfo(const TextureInfo & textureInfo){
+void Glyph::setTextureInfo( TextureInfo * textureInfo){
 	this->textureInfo = textureInfo;
 }
-TextureInfo & Glyph::getTextureInfo(){
+TextureInfo * Glyph::getTextureInfo(){
 	return textureInfo;
 }
 
-float * Glyph::getTextureCoordinates(){
-	return textureCoordinates;
+int Glyph::getHeight(){
+	return height;
 }
-void Glyph::setTextureCoordinates(const float * textureCoordinates){
-	for (int i = 0; i <8; i++) {
-		this->textureCoordinates[i] = textureCoordinates[i];
-	}
+
+void Glyph::setHeight(int height){
+	this->height = height;
+}
+
+int Glyph::getWidth(){
+	return width;
+}
+
+void Glyph::setWidth(int width){
+	this->width = width;
 }

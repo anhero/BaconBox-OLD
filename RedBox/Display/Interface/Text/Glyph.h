@@ -73,25 +73,24 @@ namespace RedBox{
 		 * Set the TextureInfo object of the glyph with the
 		 * given one.
 		 */
-		void setTextureInfo(const TextureInfo & textureInfo);
+		void setTextureInfo(TextureInfo * textureInfo);
 		
 		/**
 		 * Return the TextureInfo object of the glyph.
 		 */
-		TextureInfo & getTextureInfo();
+		TextureInfo * getTextureInfo();
 		
-		/**
-		 * Return a pointer to an array (float[8]) which contain
-		 * the texture coordinates of the glyph.
-		 */
-		float * getTextureCoordinates();
+		///Return the height of the glyph in pixels
+		int getHeight();
 		
-		/**
-		 * Set the texture coordinates with the given ones.
-		 * @param textureCoordinates An array (float[8]) containing the 
-		 * texture coordinates of the glyph.
-		 */
-		void setTextureCoordinates(const float * textureCoordinates);
+		///Set the height of the glyph in pixels 
+		void setHeight(int height);
+		
+		///Return the width of the glyph in pixels.
+		int getWidth();
+		
+		///Set the width of the glyph in pixels.
+		void setWidth(int width);
 		
 	private:
 		/**
@@ -118,11 +117,15 @@ namespace RedBox{
 		 */
 		int horiBearingX;
 		
-		///Hold the texture handle and texture size.
-		TextureInfo textureInfo;
+		///Glyph width in pixels.
+		int width;
 		
-		///Texture coordinates of the glyph.
-		float textureCoordinates[8];
+		///Glyph height in pixels
+		int height;
+		
+		///Hold the texture handle and texture size.
+		TextureInfo * textureInfo;
+
 	};
 }
 
