@@ -20,8 +20,6 @@
 		242A67ED132C0F5600CD667C /* SoundEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 242A67E7132C0F5500CD667C /* SoundEngine.h */; };
 		242F209D1301AC0200494000 /* ResourcePathHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242F209B1301AC0200494000 /* ResourcePathHandler.cpp */; };
 		242F209E1301AC0200494000 /* ResourcePathHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 242F209C1301AC0200494000 /* ResourcePathHandler.h */; };
-		2447361112EF44550085668B /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2447360F12EF44550085668B /* Drawer.cpp */; };
-		2447361212EF44550085668B /* Drawer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361012EF44550085668B /* Drawer.h */; };
 		2447361912EF46030085668B /* PlatformFlagger.h in Headers */ = {isa = PBXBuildFile; fileRef = 2447361812EF46030085668B /* PlatformFlagger.h */; };
 		2475DA93131D9DB5006A5CAF /* SoundParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2475DA91131D9DB5006A5CAF /* SoundParameters.cpp */; };
 		2475DA94131D9DB5006A5CAF /* SoundParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 2475DA92131D9DB5006A5CAF /* SoundParameters.h */; };
@@ -71,6 +69,10 @@
 		512B7E2F12DF67B1002E9698 /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 512B7E2D12DF67B0002E9698 /* Edge.cpp */; };
 		512B7E3012DF67B1002E9698 /* Edge.h in Headers */ = {isa = PBXBuildFile; fileRef = 512B7E2E12DF67B1002E9698 /* Edge.h */; };
 		5132439D12FB4AAC00C297F9 /* RBString32.h in Headers */ = {isa = PBXBuildFile; fileRef = 5132439C12FB4AAC00C297F9 /* RBString32.h */; };
+		51445D55133BCBD20071E34D /* GraphicDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51445D51133BCBD20071E34D /* GraphicDriver.cpp */; };
+		51445D56133BCBD20071E34D /* GraphicDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 51445D52133BCBD20071E34D /* GraphicDriver.h */; };
+		51445D57133BCBD20071E34D /* OpenGLDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51445D53133BCBD20071E34D /* OpenGLDriver.cpp */; };
+		51445D58133BCBD20071E34D /* OpenGLDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 51445D54133BCBD20071E34D /* OpenGLDriver.h */; };
 		515E396113066215006E85AC /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515E395F13066215006E85AC /* Camera.cpp */; };
 		515E396213066215006E85AC /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 515E396013066215006E85AC /* Camera.h */; };
 		5192780D11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 5192780C11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch */; };
@@ -100,8 +102,6 @@
 		51CF8D8E12DF60E0003FBBAD /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D3112DF60E0003FBBAD /* Debug.h */; };
 		51CF8D8F12DF60E0003FBBAD /* AnimationParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D3312DF60E0003FBBAD /* AnimationParameters.cpp */; };
 		51CF8D9012DF60E0003FBBAD /* AnimationParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D3412DF60E0003FBBAD /* AnimationParameters.h */; };
-		51CF8D9512DF60E0003FBBAD /* OpenGLDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D3B12DF60E0003FBBAD /* OpenGLDrawer.cpp */; };
-		51CF8D9612DF60E0003FBBAD /* OpenGLDrawer.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D3C12DF60E0003FBBAD /* OpenGLDrawer.h */; };
 		51CF8D9712DF60E0003FBBAD /* GraphicBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D3D12DF60E0003FBBAD /* GraphicBody.cpp */; };
 		51CF8D9812DF60E0003FBBAD /* GraphicBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CF8D3E12DF60E0003FBBAD /* GraphicBody.h */; };
 		51CF8DAF12DF60E1003FBBAD /* Link.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51CF8D5812DF60E0003FBBAD /* Link.cpp */; };
@@ -154,8 +154,6 @@
 		242A67E7132C0F5500CD667C /* SoundEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEngine.h; sourceTree = "<group>"; };
 		242F209B1301AC0200494000 /* ResourcePathHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourcePathHandler.cpp; sourceTree = "<group>"; };
 		242F209C1301AC0200494000 /* ResourcePathHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcePathHandler.h; sourceTree = "<group>"; };
-		2447360F12EF44550085668B /* Drawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawer.cpp; sourceTree = "<group>"; };
-		2447361012EF44550085668B /* Drawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drawer.h; sourceTree = "<group>"; };
 		2447361812EF46030085668B /* PlatformFlagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlagger.h; sourceTree = "<group>"; };
 		2475DA91131D9DB5006A5CAF /* SoundParameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundParameters.cpp; sourceTree = "<group>"; };
 		2475DA92131D9DB5006A5CAF /* SoundParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundParameters.h; sourceTree = "<group>"; };
@@ -209,6 +207,10 @@
 		512B7E2E12DF67B1002E9698 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Edge.h; path = ../../RedBox/other/Edge.h; sourceTree = SOURCE_ROOT; };
 		512D586C109B6D45009D504E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5132439C12FB4AAC00C297F9 /* RBString32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBString32.h; sourceTree = "<group>"; };
+		51445D51133BCBD20071E34D /* GraphicDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicDriver.cpp; sourceTree = "<group>"; };
+		51445D52133BCBD20071E34D /* GraphicDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicDriver.h; sourceTree = "<group>"; };
+		51445D53133BCBD20071E34D /* OpenGLDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLDriver.cpp; sourceTree = "<group>"; };
+		51445D54133BCBD20071E34D /* OpenGLDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLDriver.h; sourceTree = "<group>"; };
 		515E395F13066215006E85AC /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		515E396013066215006E85AC /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		515EB50512FF34AA004FB469 /* libRedBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRedBox.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -233,8 +235,6 @@
 		51CF8D3112DF60E0003FBBAD /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
 		51CF8D3312DF60E0003FBBAD /* AnimationParameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationParameters.cpp; sourceTree = "<group>"; };
 		51CF8D3412DF60E0003FBBAD /* AnimationParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationParameters.h; sourceTree = "<group>"; };
-		51CF8D3B12DF60E0003FBBAD /* OpenGLDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLDrawer.cpp; sourceTree = "<group>"; };
-		51CF8D3C12DF60E0003FBBAD /* OpenGLDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLDrawer.h; sourceTree = "<group>"; };
 		51CF8D3D12DF60E0003FBBAD /* GraphicBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicBody.cpp; sourceTree = "<group>"; };
 		51CF8D3E12DF60E0003FBBAD /* GraphicBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicBody.h; sourceTree = "<group>"; };
 		51CF8D5812DF60E0003FBBAD /* Link.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Link.cpp; sourceTree = "<group>"; };
@@ -400,6 +400,17 @@
 			path = Text;
 			sourceTree = "<group>";
 		};
+		51445D50133BCBD20071E34D /* GraphicDrivers */ = {
+			isa = PBXGroup;
+			children = (
+				51445D51133BCBD20071E34D /* GraphicDriver.cpp */,
+				51445D52133BCBD20071E34D /* GraphicDriver.h */,
+				51445D53133BCBD20071E34D /* OpenGLDriver.cpp */,
+				51445D54133BCBD20071E34D /* OpenGLDriver.h */,
+			);
+			path = GraphicDrivers;
+			sourceTree = "<group>";
+		};
 		51CF8D2712DF60E0003FBBAD /* RedBox */ = {
 			isa = PBXGroup;
 			children = (
@@ -451,11 +462,11 @@
 		51CF8D3212DF60E0003FBBAD /* Display */ = {
 			isa = PBXGroup;
 			children = (
+				51445D50133BCBD20071E34D /* GraphicDrivers */,
 				24D0D4D41314507D007A5629 /* Emitter */,
 				51CF8D3312DF60E0003FBBAD /* AnimationParameters.cpp */,
 				51CF8D3412DF60E0003FBBAD /* AnimationParameters.h */,
 				51CF8D3512DF60E0003FBBAD /* Camera */,
-				51CF8D3A12DF60E0003FBBAD /* Drawer */,
 				51CF8D3D12DF60E0003FBBAD /* GraphicBody.cpp */,
 				51CF8D3E12DF60E0003FBBAD /* GraphicBody.h */,
 				51CF8D3F12DF60E0003FBBAD /* Interface */,
@@ -483,17 +494,6 @@
 				515E396013066215006E85AC /* Camera.h */,
 			);
 			path = Camera;
-			sourceTree = "<group>";
-		};
-		51CF8D3A12DF60E0003FBBAD /* Drawer */ = {
-			isa = PBXGroup;
-			children = (
-				2447360F12EF44550085668B /* Drawer.cpp */,
-				2447361012EF44550085668B /* Drawer.h */,
-				51CF8D3B12DF60E0003FBBAD /* OpenGLDrawer.cpp */,
-				51CF8D3C12DF60E0003FBBAD /* OpenGLDrawer.h */,
-			);
-			path = Drawer;
 			sourceTree = "<group>";
 		};
 		51CF8D3F12DF60E0003FBBAD /* Interface */ = {
@@ -597,7 +597,6 @@
 				51CF8D8D12DF60E0003FBBAD /* SoundFX.h in Headers */,
 				51CF8D8E12DF60E0003FBBAD /* Debug.h in Headers */,
 				51CF8D9012DF60E0003FBBAD /* AnimationParameters.h in Headers */,
-				51CF8D9612DF60E0003FBBAD /* OpenGLDrawer.h in Headers */,
 				51CF8D9812DF60E0003FBBAD /* GraphicBody.h in Headers */,
 				51CF8DB012DF60E1003FBBAD /* Link.h in Headers */,
 				51CF8DB212DF60E1003FBBAD /* LinkData.h in Headers */,
@@ -619,7 +618,6 @@
 				24B9BD7E12E1279E00057BB1 /* RenderStep.h in Headers */,
 				24B9BD7F12E1279E00057BB1 /* RenderStepMode.h in Headers */,
 				519313F312ED62E1008B3AFB /* TextureInfo.h in Headers */,
-				2447361212EF44550085668B /* Drawer.h in Headers */,
 				2447361912EF46030085668B /* PlatformFlagger.h in Headers */,
 				24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */,
 				24B86B5512F319620071930C /* MusicInfo.h in Headers */,
@@ -655,6 +653,8 @@
 				51961AE31333BCC7003E186C /* GraphicString.h in Headers */,
 				51961AE51333BCC7003E186C /* StringFX.h in Headers */,
 				5103975E1336FCE100B4B8C3 /* FontImplementation.h in Headers */,
+				51445D56133BCBD20071E34D /* GraphicDriver.h in Headers */,
+				51445D58133BCBD20071E34D /* OpenGLDriver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,7 +729,6 @@
 				51CF8D8612DF60E0003FBBAD /* BackgroundMusic.cpp in Sources */,
 				51CF8D8C12DF60E0003FBBAD /* SoundFX.cpp in Sources */,
 				51CF8D8F12DF60E0003FBBAD /* AnimationParameters.cpp in Sources */,
-				51CF8D9512DF60E0003FBBAD /* OpenGLDrawer.cpp in Sources */,
 				51CF8D9712DF60E0003FBBAD /* GraphicBody.cpp in Sources */,
 				51CF8DAF12DF60E1003FBBAD /* Link.cpp in Sources */,
 				51CF8DB112DF60E1003FBBAD /* LinkData.cpp in Sources */,
@@ -747,7 +746,6 @@
 				512B7E2F12DF67B1002E9698 /* Edge.cpp in Sources */,
 				24B9BD7D12E1279E00057BB1 /* RenderStep.cpp in Sources */,
 				519313F212ED62E1008B3AFB /* TextureInfo.cpp in Sources */,
-				2447361112EF44550085668B /* Drawer.cpp in Sources */,
 				24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */,
 				24B86B5412F319620071930C /* MusicInfo.cpp in Sources */,
 				24B86B5612F319620071930C /* SoundInfo.cpp in Sources */,
@@ -779,6 +777,8 @@
 				51961AE21333BCC7003E186C /* GraphicString.cpp in Sources */,
 				51961AE41333BCC7003E186C /* StringFX.cpp in Sources */,
 				5103975D1336FCE100B4B8C3 /* FontImplementation.cpp in Sources */,
+				51445D55133BCBD20071E34D /* GraphicDriver.cpp in Sources */,
+				51445D57133BCBD20071E34D /* OpenGLDriver.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

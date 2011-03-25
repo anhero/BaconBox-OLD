@@ -1,20 +1,21 @@
 /**
  * @file
- * @ingroup Drawer
+ * @ingroup GraphicDrivers
  */
-#ifndef RB_DRAWER_H
-#define RB_DRAWER_H
+#ifndef RB_GRAPHICDRIVER_H
+#define RB_GRAPHICDRIVER_H
 
 #include <vector>
-
+#include "TextureInfo.h"
 namespace RedBox{
 	class RenderInfo;
     /**
      * Graphic abstraction layer.
-     * @class Drawer
-     * @ingroup Drawer
+	 * A driver must handle rendering and loading (into graphic memory) of bitmap data.
+     * @class GraphicDriver
+     * @ingroup Driver
      */
-	class Drawer {
+	class GraphicDriver {
 	public:
         /**
          * Draw a colored and textured shape with the given vertices, texture 
@@ -62,7 +63,16 @@ namespace RedBox{
 		 * @param screenHeight Height of the screen. A camera with a zoom factor of 1, will
 		 * show "screenHeight" pixels in height
 		 */
-		static void initializeDrawer(int screenWidth, int screenHeight);
+		static void initializeDriver(int screenWidth, int screenHeight);
+		
+		
+		/**
+		 * Load a RGBA texture into graphic memory.
+		 * @param pixMap An array of color component. 4 value per pixel (RGBA).
+		 * @param width Width of the buffer in pixel.
+		 * @param height Heightof the buffer in pixel.
+		 */
+		static TextureInfo * loadRGBATexture(unsigned Byte * pixMap, int width, int height);
 
 	private:
 	};

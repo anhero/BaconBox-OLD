@@ -7,9 +7,9 @@
  */
 
 /** 
- * @defgroup Drawer Drawer
+ * @defgroup GraphicDrivers GraphicDrivers
  * @ingroup Display
- * @brief Graphics backend (opengl directX or flash drawer)
+ * @brief Graphics backend (opengl directX or flash driver)
  */
 
 /**

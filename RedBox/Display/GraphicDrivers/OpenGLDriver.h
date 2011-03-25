@@ -1,9 +1,9 @@
 /**
  * @file
- * @ingroup Drawer
+ * @ingroup GraphicDrivers
  */
-#ifndef RB_OPENGLDRAWER
-#define RB_OPENGLDRAWER
+#ifndef RB_OPENGLDRIVER
+#define RB_OPENGLDRIVER
 
 #include "PlatformFlagger.h"
 
@@ -17,11 +17,11 @@
 namespace RedBox {
 	class RenderInfo;
     /** 
-     * @class OpenGLDrawer
-     * @ingroup Drawer
-     *  OpenGl graphic backend 
+     * @class OpenGLDriver
+     * @ingroup Driver
+     *  OpenGl graphic driver. 
      */
-	class OpenGLDrawer {
+	class OpenGLDriver {
 	public:
         /**
          * Draw a colored and textured shape 
@@ -74,7 +74,15 @@ namespace RedBox {
 		 * @param screenHeight Height of the screen. A camera with a zoom factor of 1, will
 		 * show "screenHeight" pixels in height
 		 */
-		static void initializeDrawer(int screenWidth, int screenHeight);
+		static void initializeDriver(int screenWidth, int screenHeight);
+		
+		/**
+		 * Load a RGBA texture into graphic memory.
+		 * @param buffer An array of color component. 4 value per pixel (RGBA).
+		 * @param width Width of the buffer in pixel.
+		 * @param height Heightof the buffer in pixel.
+		 */
+		static TextureInfo * loadRGBATexture(unsigned Byte * pixMap, int width, int height);
 
 	private:
 	};
