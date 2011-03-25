@@ -76,7 +76,7 @@ Glyph * Font::getGlyph(RB_Char32 unicodeValue){
 		aGlyph = new Glyph();
 		std::stringstream key;
 		key << name << "-" << size << "-" << unicodeValue;
-		aGlyph->setTextureInfo(*ResourceManager::addTexture(key.str(),poweredTo2Buffer, glyphWidth, glyphHeight));
+		aGlyph->setTextureInfo(ResourceManager::addTexture(key.str(),poweredTo2Buffer, glyphWidth, glyphHeight));
 		aGlyph->setHoriAdvance(font->glyph->advance.x >> 6);
 		
 		
