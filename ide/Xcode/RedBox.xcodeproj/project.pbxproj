@@ -62,6 +62,8 @@
 		24D0D4E61314507D007A5629 /* SpriteEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D0D4DD1314507D007A5629 /* SpriteEmitter.h */; };
 		24F0335212F1C59500BD5409 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24F0335012F1C59500BD5409 /* AudioEngine.cpp */; };
 		24F0335312F1C59500BD5409 /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24F0335112F1C59500BD5409 /* AudioEngine.h */; };
+		5103975D1336FCE100B4B8C3 /* FontImplementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5103975B1336FCE000B4B8C3 /* FontImplementation.cpp */; };
+		5103975E1336FCE100B4B8C3 /* FontImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5103975C1336FCE000B4B8C3 /* FontImplementation.h */; };
 		51140FB5130B3C5300D05386 /* Glyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51140FB3130B3C5300D05386 /* Glyph.cpp */; };
 		51140FB6130B3C5300D05386 /* Glyph.h in Headers */ = {isa = PBXBuildFile; fileRef = 51140FB4130B3C5300D05386 /* Glyph.h */; };
 		511AA3D6130D731B006F7B11 /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511AA3D4130D731B006F7B11 /* Font.cpp */; };
@@ -197,6 +199,8 @@
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5103975B1336FCE000B4B8C3 /* FontImplementation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontImplementation.cpp; sourceTree = "<group>"; };
+		5103975C1336FCE000B4B8C3 /* FontImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontImplementation.h; sourceTree = "<group>"; };
 		51140FB3130B3C5300D05386 /* Glyph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Glyph.cpp; sourceTree = "<group>"; };
 		51140FB4130B3C5300D05386 /* Glyph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Glyph.h; sourceTree = "<group>"; };
 		511AA3D4130D731B006F7B11 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Font.cpp; sourceTree = "<group>"; };
@@ -388,6 +392,8 @@
 				51961AE11333BCC7003E186C /* StringFX.h */,
 				51140FB3130B3C5300D05386 /* Glyph.cpp */,
 				51140FB4130B3C5300D05386 /* Glyph.h */,
+				5103975B1336FCE000B4B8C3 /* FontImplementation.cpp */,
+				5103975C1336FCE000B4B8C3 /* FontImplementation.h */,
 				511AA3D4130D731B006F7B11 /* Font.cpp */,
 				511AA3D5130D731B006F7B11 /* Font.h */,
 			);
@@ -648,6 +654,7 @@
 				24CADE9C13326A2700081862 /* RBAudioPlayerMusicDelegate.h in Headers */,
 				51961AE31333BCC7003E186C /* GraphicString.h in Headers */,
 				51961AE51333BCC7003E186C /* StringFX.h in Headers */,
+				5103975E1336FCE100B4B8C3 /* FontImplementation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,6 +778,7 @@
 				24CADE9D13326A2700081862 /* RBAudioPlayerMusicDelegate.m in Sources */,
 				51961AE21333BCC7003E186C /* GraphicString.cpp in Sources */,
 				51961AE41333BCC7003E186C /* StringFX.cpp in Sources */,
+				5103975D1336FCE100B4B8C3 /* FontImplementation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

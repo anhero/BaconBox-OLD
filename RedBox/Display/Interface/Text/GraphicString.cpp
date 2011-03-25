@@ -73,7 +73,7 @@ void GraphicString::setPosition(int x, int y){
 void GraphicString::update(){
 	std::list<std::pair<Glyph*, Sprite*> >::iterator i;
 	for(i = characters.begin(); i != characters.end(); i++){
-	//	i->second->update();
+		i->second->update();
 	}
 }
 

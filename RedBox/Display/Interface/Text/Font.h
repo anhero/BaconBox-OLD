@@ -2,19 +2,19 @@
  * @file
  * @ingroup TextDisplay
  */
-#include <ft2build.h>
-#include <freetype/freetype.h>
 #include <string>
 #include "Glyph.h"
 #include "RBString32.h"
-#include <vector>
-#include <map>
+
 #ifndef RB_FONT_H
 #define RB_FONT_H
 
 namespace RedBox{
+	
+	class FontImplementation;
+	
 	/** 
-	 *
+	 * Font use a font file (loaded by the resourceManager) to render glyphs.
      * @ingroup TextDisplay
      */
 	class Font{
@@ -31,7 +31,7 @@ namespace RedBox{
 		 * @param name Name of the font.
 		 * @param path Path of the font.
 		 */
-		Font(std::string& name, std::string path);
+		Font(const std::string& name, const std::string & path);
 		
 		/**
 		 * Return the name of the font.
@@ -60,45 +60,14 @@ namespace RedBox{
 		 */
 		void setPointSize(int pointSize, int dpi);
 	private:
-		///Name of the font
-		std::string name;
 		
 		/**
-		 * Size of the font.
-		 * It can be in pixel or in point (1/72 inch).
-		 * The size (int) is append with the unit. "px"
-		 * for pixel, "pt" for point.
-		 * Ex. "12px" or "14pt"
+		 * Private implementation of the font (pimpl idiom)
+		 * It is used to abstract/hide freetype from the engine user point of view.
+		 * If we don't do this, the user will need to specify where are the freetype's header in
+		 * is project.
 		 */
-		std::string size;
-		
-		/**
-		 * Freetype face. It contain the vector 
-		 * data of the font and function render glyphs and
-		 * retrieve glyphs' metric.
-		 */
-		FT_Face font;
-		
-		/**
-		 * Vector of texture key used by the font. 
-		 * Used to unload textures when unloading 
-		 * a font.
-		 */
-		std::vector<std::string> texturesKey;
-		
-		/**
-		 * Glyph are cached in this map by size then 
-		 * by unicode value.
-		 * The first map key is the size (Ex. "12pt"),
-		 * the value is a second map, which key is the 
-		 * unicode value and value a pointer to the glyph.
-		 *(Size, (unicode value, glyph*))
-		 */
-		std::map<std::string, std::map< RB_Char32, Glyph*> > glyphCache;
-		
-		///Global font renderer (Freetype library).
-		static FT_Library fontRenderer;
-
+		FontImplementation * fontPimpl;
 
 	};
 }
