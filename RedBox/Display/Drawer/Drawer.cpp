@@ -1,5 +1,7 @@
 #include "Drawer.h"
 
+#include "PlatformFlagger.h"
+
 #include "RenderInfo.h"
 #ifdef RB_OPENGL
 #include "OpenGLDrawer.h"
