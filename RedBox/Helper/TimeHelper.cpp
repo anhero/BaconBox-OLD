@@ -6,6 +6,10 @@
 #include <sys/time.h>
 #endif
 
+#ifdef RB_QT
+#include <QDateTime>
+#endif
+
 #ifdef RB_WIN32
 #include <windows.h>
 #endif // RB_WIN32
@@ -62,15 +66,17 @@ void TimeHelper::setTimeScale(double newTimeScale) {
 
 double TimeHelper::getRealEpoch() {
 	double result = 0.0;
-#ifdef __APPLE__
-#if defined(TARGET_IPHONE_SIMULATOR) || defined(TARGET_OS_IPHONE)
+#ifdef RB_QT
+	qint64 mSecs = QDateTime::currentMSecsSinceEpoch();
+	result = static_cast<double>(mSecs / 1000) + static_cast<double>(mSecs % 1000) / 1000.0;
+#endif
+#ifdef RB_IPHONE_PLATFORM
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	result = [[NSDate date] timeIntervalSince1970];
 	[pool release];
-#endif //Target iPhone
-#endif //__APPLE__
+#endif // RB_IPHONE_PLATFORM
 	
-#ifdef __linux__
+#ifdef RB_LINUX
 	//Defines a timespec to hold the time
 	timespec currTime;
 	//Get the time and put it in the timespec

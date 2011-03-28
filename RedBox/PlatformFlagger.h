@@ -22,7 +22,7 @@
 
 #ifdef QT
 #define RB_QT
-#include "RedBox_global.h"
+#include "redbox.h"
 #endif
 
 #ifdef __APPLE__
