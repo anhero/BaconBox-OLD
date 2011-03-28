@@ -1,5 +1,7 @@
 #include "ResourcePathHandler.h"
 
+#include "PlatformFlagger.h"
+
 using namespace RedBox;
 
 std::string ResourcePathHandler::getResourcePathFor(const std::string& item) {

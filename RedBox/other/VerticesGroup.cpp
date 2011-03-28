@@ -2,6 +2,8 @@
 
 #include "Debug.h"
 
+#include "PlatformFlagger.h"
+
 #include <cfloat>
 #include <cassert>
 

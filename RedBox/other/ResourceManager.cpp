@@ -1,5 +1,7 @@
 #include "ResourceManager.h"
 
+#include "PlatformFlagger.h"
+
 #if defined(RB_IPHONE_PLATFORM) && defined(RB_OPENGL)
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>

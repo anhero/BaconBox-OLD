@@ -1,5 +1,7 @@
 #include "OpenGLDrawer.h"
 
+#include "PlatformFlagger.h"
+
 #include "RenderInfo.h"
 #include "TextureInfo.h"
 

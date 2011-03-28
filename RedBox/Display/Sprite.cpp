@@ -1,5 +1,7 @@
 #include "Sprite.h"
 
+#include "PlatformFlagger.h"
+
 #include "TextureInfo.h"
 #include "RenderStep.h"
 #include "GraphicBody.h"
