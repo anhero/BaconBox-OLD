@@ -4,7 +4,7 @@ using namespace RedBox;
 
 std::string ResourcePathHandler::getResourcePathFor(const std::string& item) {
 	std::string path;
-#if defined(TARGET_IPHONE_SIMULATOR) || defined(TARGET_OS_IPHONE)
+#ifdef RB_IPHONE_PLATFORM
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	
 	NSString *resourceDirectory = [[NSBundle mainBundle] resourcePath];
@@ -22,14 +22,13 @@ std::string ResourcePathHandler::getDocumentPathFor(const std::string& item) {
 
 std::string ResourcePathHandler::getDocumentPath() {
 	std::string documentPath;
-#if defined(TARGET_IPHONE_SIMULATOR) || defined(TARGET_OS_IPHONE)
+#ifdef RB_IPHONE_PLATFORM
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsDirectory = [paths objectAtIndex:0];
 	documentPath = [documentsDirectory cStringUsingEncoding:NSASCIIStringEncoding];
 	[pool release];
-	
 #endif
 	return documentPath;		
 }
