@@ -87,8 +87,11 @@ TextureInfo * OpenGLDriver::loadTexture(PixMap * pixMap){
 	poweredTo2Pixmap.insertSubPixMap(pixMap);
 
 
-	texInfo->imageWidth = widthPoweredToTwo;
-	texInfo->imageHeight = heightPoweredToTwo;
+	texInfo->imageWidth = pixMap->getWidth();
+	texInfo->imageHeight = pixMap->getHeight();
+	
+	texInfo->poweredWidth = widthPoweredToTwo;
+	texInfo->poweredHeight = heightPoweredToTwo;
 	
 	GLint format;
 	

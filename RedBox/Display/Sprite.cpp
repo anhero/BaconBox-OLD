@@ -30,8 +30,8 @@ Sprite::Sprite(const std::string& imageKey): Renderable()
 	TextureInfo* texInfo = ResourceManager::getTexture(imageKey);
 	if(texInfo) {
 		construct(texInfo,
-				  static_cast<float>(texInfo->imageWidth),
-				  static_cast<float>(texInfo->imageHeight),
+				  static_cast<float>(texInfo->poweredWidth),
+				  static_cast<float>(texInfo->poweredHeight),
 				  1,
 				  0.0f,
 #ifdef RB_PHYSICS_ENABLED
@@ -53,8 +53,8 @@ Sprite::Sprite(TextureInfo* texInfo): Renderable()
 {
 	if(texInfo) {
 		construct(texInfo,
-				  static_cast<float>(texInfo->imageWidth),
-				  static_cast<float>(texInfo->imageHeight),
+				  static_cast<float>(texInfo->poweredWidth),
+				  static_cast<float>(texInfo->poweredHeight),
 				  1,
 				  0.0f,
 #ifdef RB_PHYSICS_ENABLED

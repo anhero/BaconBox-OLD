@@ -4,6 +4,8 @@
 #include "MathHelper.h"
 #include <sstream>
 #include <freetype/ftglyph.h>
+#include <algorithm>
+
 using namespace RedBox;
 
 FT_Library FontImplementation::fontRenderer = NULL;
@@ -61,28 +63,32 @@ Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
 			$ECHO("Can't load glyph");
 		}
 		
+		FT_Glyph currentGlyph;
+		if(FT_Get_Glyph( font->glyph,  &currentGlyph)){
+			$ECHO("Can't extract glyph from freetype glyph slot");
+		}
+		
+		FT_BitmapGlyph  currentBitmapGlyph = (FT_BitmapGlyph)currentGlyph;
+		
 		//We save the size of the glyph 
 		int glyphWidth = font->glyph->bitmap.width;
 		int glyphHeight = font->glyph->bitmap.rows;
-		
-		//We 
-//		int widthPoweredToTwo = MathHelper::nextPowerOf2(glyphWidth);
-//		int heightPoweredToTwo = MathHelper::nextPowerOf2(glyphHeight);
-//		unsigned char * poweredTo2Buffer =  new unsigned char [widthPoweredToTwo * heightPoweredToTwo];	
-//		
-//		for(int j = 0; j < glyphWidth; j++){
-//			for(int k = 0; k < glyphHeight; k++) {
-//				poweredTo2Buffer[k*widthPoweredToTwo + j] = font->glyph->bitmap.buffer[k* glyphWidth + j];
-//			}
-//		}
-		
 		
 		
 		aGlyph = new Glyph();
 		std::stringstream key;
 		key << name << "-" << size << "-" << unicodeValue;
 		
-		PixMap * aPixMap = new PixMap(font->glyph->bitmap.buffer, glyphWidth, glyphHeight, Alpha);
+		int bufferSize = glyphWidth*glyphHeight;
+
+//		uint8_t * reversedBuffer = new uint8_t[bufferSize];
+//		for (int i = 0; i < glyphHeight; i++) {
+//			for(int j =0; j < glyphWidth; j++){
+//				reversedBuffer[glyphWidth * i + j] = std::min((uint8_t) currentBitmapGlyph->bitmap.buffer[glyphWidth * (glyphHeight-(i+1)) + j], (uint8_t)10);
+//			}
+//		}
+//		
+		PixMap * aPixMap = new PixMap(currentBitmapGlyph->bitmap.buffer, glyphWidth, glyphHeight, Alpha);
 		aGlyph->setTextureInfo(ResourceManager::addTexture(key.str(), aPixMap));
 		aGlyph->setHoriAdvance(font->glyph->advance.x >> 6);
 		

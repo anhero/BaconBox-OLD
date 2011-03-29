@@ -79,11 +79,11 @@ void PixMap::insertSubPixMap(uint8_t * subBuffer, int width, int height, int xOf
 			pixelByteCount = 1;
 		}
 		
-		for (int i = baseX ; i <= maxX; i++){
-			for (int j = baseY; j <= maxY; j++) {
+		for (int i = baseY ; i <= maxY; i++){
+			for (int j = baseX; j <= maxX; j++) {
 				for(int k = 0 ; k < pixelByteCount; k++){
-					buffer[(currentWidth * j + i) * pixelByteCount + k] = 
-					subBuffer[(width * ( j - yOffset) + (i - xOffset)) * pixelByteCount +k];
+					buffer[(currentWidth * ( i - yOffset) + (j - xOffset)) * pixelByteCount +k] =
+					subBuffer[(width * i + j) * pixelByteCount + k];
 				}
 			}
 		}

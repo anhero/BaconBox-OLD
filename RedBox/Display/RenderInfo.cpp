@@ -56,8 +56,8 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 		// We make sure the width and the height are valid.
 		if(widthHeight.first != 0.0f && widthHeight.second != 0.0f) {
 			// We get the image width as a float and we consider the factor.
-			float imgWidth = static_cast<float>(texInfo->imageWidth) * factor, 
-			imgHeight = static_cast<float>(texInfo->imageHeight) * factor;
+			float imgWidth = static_cast<float>(texInfo->poweredWidth) * factor, 
+			imgHeight = static_cast<float>(texInfo->poweredHeight) * factor;
 			// We calculate the maximum number of frames the image can contain
 			// horizontally and vertically. We take into account the vertical
 			// offset.

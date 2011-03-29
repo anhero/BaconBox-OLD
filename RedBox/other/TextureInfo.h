@@ -45,6 +45,13 @@ namespace RedBox {
 		TextureInfo(unsigned int newImageWidth,
 					unsigned int newImageHeight);
 #endif
+		
+		///Texture width powered to 2
+		unsigned int poweredWidth;
+		
+		///Texure height powered to 2
+		unsigned int poweredHeight;
+		
 		/// Texture's image width.
 		unsigned int imageWidth;
 		/// Texture's image height.

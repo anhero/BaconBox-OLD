@@ -3,19 +3,19 @@
 using namespace RedBox;
 
 #ifdef RB_OPENGL
-TextureInfo::TextureInfo(): textureId(0), imageWidth(0), imageHeight(0) {
+TextureInfo::TextureInfo(): textureId(0), poweredWidth(0), poweredHeight(0) {
 }
 TextureInfo::TextureInfo(unsigned int newTextureId,
 						 unsigned int newImageWidth,
 						 unsigned int newImageHeight): textureId(newTextureId),
-imageWidth(newImageWidth), imageHeight(newImageHeight) {
+poweredWidth(newImageWidth), poweredHeight(newImageHeight) {
 }
 #else
-TextureInfo::TextureInfo():imageWidth(0), imageHeight(0) {
+TextureInfo::TextureInfo():poweredWidth(0), poweredHeight(0) {
 }
 TextureInfo::TextureInfo(unsigned int newImageWidth,
-						 unsigned int newImageHeight):imageWidth(newImageWidth),
-imageHeight(newImageHeight) {
+						 unsigned int newImageHeight):poweredWidth(newImageWidth),
+poweredHeight(newImageHeight) {
 }
 #endif
 
@@ -25,8 +25,9 @@ namespace RedBox {
 #ifdef RB_OPENGL
 		output << "textureId: " << t.textureId << ", ";
 #endif
-		output<< "imageWidth: " << t.imageWidth << ", imageHeight: " << 
-		t.imageHeight << "}";
+		output<< "poweredWidth: " << t.poweredWidth << ", poweredHeight: " << 
+		t.poweredHeight << ", imageWidth: " << t.poweredWidth << ", imageHeight: " << 
+		t.poweredHeight << "}";
 		return output;
 	}
 }

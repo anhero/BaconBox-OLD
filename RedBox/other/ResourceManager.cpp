@@ -349,7 +349,7 @@ void ResourceManager::unloadAll() {
 }
 
 PixMap* ResourceManager::loadPixMap(const std::string& filePath){
-	loadPixMapFromPNG(filePath);
+	return loadPixMapFromPNG(filePath);
 }
 
 PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath){
@@ -448,7 +448,7 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath){
     unsigned int row;
     for (row = 0; row < height; ++row)
     {
-        PNG_rows[height - 1 - row] = PNG_image_buffer + (row * 4 * width);
+        PNG_rows[row] = PNG_image_buffer + (row * 4 * width);
     }
     
     png_read_image(PNG_reader, PNG_rows);
