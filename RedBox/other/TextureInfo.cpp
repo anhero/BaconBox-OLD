@@ -1,5 +1,7 @@
 #include "TextureInfo.h"
 
+#include "PlatformFlagger.h"
+
 using namespace RedBox;
 
 #ifdef RB_OPENGL

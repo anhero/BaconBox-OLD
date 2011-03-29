@@ -11,6 +11,8 @@
 #include <string>
 #include <utility>
 
+#include "PlatformFlagger.h"
+
 #include "TextureInfo.h"
 #include "Renderable.h"
 #include "VerticesGroup.h"

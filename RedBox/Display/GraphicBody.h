@@ -3,7 +3,7 @@
  * @ingroup Display
  */
 
-
+#include "PlatformFlagger.h"
 #ifdef RB_PHYSICS_ENABLED
 #ifndef RB_GRAPHICBODY_H
 #define RB_GRAPHICBODY_H

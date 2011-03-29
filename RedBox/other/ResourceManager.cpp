@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+
 #include "simple-image.h"
 #include <utility>
 #include "Debug.h"

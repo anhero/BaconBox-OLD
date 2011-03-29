@@ -1,3 +1,5 @@
+#include "PlatformFlagger.h"
+
 #ifdef RB_PHYSICS_ENABLED
 #include "GraphicBody.h"
 

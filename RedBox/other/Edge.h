@@ -2,6 +2,7 @@
  * @file
  * @ingroup Physics
  */
+#include "PlatformFlagger.h"
 #ifdef RB_PHYSICS_ENABLED
 #ifndef RB_EDGE_H
 #define RB_EDGE_H

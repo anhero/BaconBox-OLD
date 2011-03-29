@@ -1,5 +1,7 @@
 #include "Vertex.h"
 
+#include "PlatformFlagger.h"
+
 #include "Sprite.h"
 #include "RenderStep.h"
 #ifdef RB_PHYSICS_ENABLED

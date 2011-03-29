@@ -21,6 +21,7 @@ namespace RedBox {
 	 */
 	class SoundEngine : public AudioEngine {
 		friend class ResourceManager;
+		friend class AudioEngine;
 	public:
 		/**
 		 * Constructs a sound effect. Gets the sound's data associated with the
