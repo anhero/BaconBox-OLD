@@ -74,6 +74,8 @@
 		51445D57133BCBD20071E34D /* OpenGLDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51445D53133BCBD20071E34D /* OpenGLDriver.cpp */; };
 		51445D58133BCBD20071E34D /* OpenGLDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 51445D54133BCBD20071E34D /* OpenGLDriver.h */; };
 		51445D68133BF0690071E34D /* ColorFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 51445D66133BF0690071E34D /* ColorFormat.h */; };
+		51445D7A133C22150071E34D /* PixMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51445D78133C22150071E34D /* PixMap.cpp */; };
+		51445D7B133C22150071E34D /* PixMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 51445D79133C22150071E34D /* PixMap.h */; };
 		515E396113066215006E85AC /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515E395F13066215006E85AC /* Camera.cpp */; };
 		515E396213066215006E85AC /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 515E396013066215006E85AC /* Camera.h */; };
 		5192780D11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 5192780C11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch */; };
@@ -213,6 +215,8 @@
 		51445D53133BCBD20071E34D /* OpenGLDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLDriver.cpp; sourceTree = "<group>"; };
 		51445D54133BCBD20071E34D /* OpenGLDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLDriver.h; sourceTree = "<group>"; };
 		51445D66133BF0690071E34D /* ColorFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorFormat.h; sourceTree = "<group>"; };
+		51445D78133C22150071E34D /* PixMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixMap.cpp; sourceTree = "<group>"; };
+		51445D79133C22150071E34D /* PixMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixMap.h; sourceTree = "<group>"; };
 		515E395F13066215006E85AC /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		515E396013066215006E85AC /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		515EB50512FF34AA004FB469 /* libRedBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRedBox.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -486,6 +490,8 @@
 				24B9BD7B12E1279E00057BB1 /* RenderStep.h */,
 				24B9BD7C12E1279E00057BB1 /* RenderStepMode.h */,
 				51445D66133BF0690071E34D /* ColorFormat.h */,
+				51445D78133C22150071E34D /* PixMap.cpp */,
+				51445D79133C22150071E34D /* PixMap.h */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -659,6 +665,7 @@
 				51445D56133BCBD20071E34D /* GraphicDriver.h in Headers */,
 				51445D58133BCBD20071E34D /* OpenGLDriver.h in Headers */,
 				51445D68133BF0690071E34D /* ColorFormat.h in Headers */,
+				51445D7B133C22150071E34D /* PixMap.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +790,7 @@
 				5103975D1336FCE100B4B8C3 /* FontImplementation.cpp in Sources */,
 				51445D55133BCBD20071E34D /* GraphicDriver.cpp in Sources */,
 				51445D57133BCBD20071E34D /* OpenGLDriver.cpp in Sources */,
+				51445D7A133C22150071E34D /* PixMap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
