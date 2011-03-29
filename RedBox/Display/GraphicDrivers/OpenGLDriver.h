@@ -14,6 +14,8 @@
 #include <QtOpenGL>
 #endif
 
+#include "GraphicDriver.h"
+
 namespace RedBox {
 	class RenderInfo;
     /** 
@@ -22,7 +24,8 @@ namespace RedBox {
      *  OpenGl graphic driver. 
      */
 	class OpenGLDriver {
-	public:
+		friend GraphicDriver;
+	private:
         /**
          * Draw a colored and textured shape 
          * with the given vertices, texture coordinate, rendering informations (colors array and textureID) and
@@ -74,17 +77,15 @@ namespace RedBox {
 		 * @param screenHeight Height of the screen. A camera with a zoom factor of 1, will
 		 * show "screenHeight" pixels in height
 		 */
-		static void initializeDriver(int screenWidth, int screenHeight);
+		static void initializeGraphicDriver(int screenWidth, int screenHeight);
 		
 		/**
-		 * Load a RGBA texture into graphic memory.
-		 * @param buffer An array of color component. 4 value per pixel (RGBA).
-		 * @param width Width of the buffer in pixel.
-		 * @param height Heightof the buffer in pixel.
+		 * Load a texture into graphic memory.
+		 * @param pixMap A pixmap object containing the buffer the driver must load.
 		 */
-		static TextureInfo * loadRGBATexture(unsigned Byte * pixMap, int width, int height);
+		static TextureInfo * loadTexture(PixMap * pixMap);
 
-	private:
+	
 	};
 }
 

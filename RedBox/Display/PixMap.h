@@ -64,7 +64,7 @@ namespace RedBox{
 		 * @param yOffset The vertical position were we want to insert the sub pixmap. (0 correspond to the top 
 		 * side of the current pixmap.)
 		 */
-		void insertSubPixMap(PixMap * subPixMap, int xOffset, int yOffset);
+		void insertSubPixMap(PixMap * subPixMap, int xOffset = 0, int yOffset = 0);
 	private:
 		/**
 		 *	Insert a sub pixmap into the current pixmap.

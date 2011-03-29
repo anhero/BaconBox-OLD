@@ -1,8 +1,8 @@
-#include "Drawer.h"
+#include "GraphicDriver.h"
 
 #include "RenderInfo.h"
 #ifdef RB_OPENGL
-#include "OpenGLDrawer.h"
+#include "OpenGLDriver.h"
 #endif
 
 using namespace RedBox;
@@ -37,15 +37,15 @@ void GraphicDriver::prepareScene(int xTranslation, int yTranslation, int angle, 
 }
 
 
-void GraphicDriver::initializeDriver(int screenWidth, int screenHeight) {
+void GraphicDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
 #ifdef RB_OPENGL
-	OpenGLDriver::initializeDriver(screenWidth, screenHeight);
+	OpenGLDriver::initializeGraphicDriver(screenWidth, screenHeight);
 #endif
 }
 
 
-TextureInfo * loadTexture(unsigned Byte * pixMap, int width, int height){
+TextureInfo * GraphicDriver::loadTexture(PixMap * pixMap){
 #ifdef RB_OPENGL
-	return OpenGLDriver::loadTexture(buffer, width, height);
+	return OpenGLDriver::loadTexture(pixMap);
 #endif
 }

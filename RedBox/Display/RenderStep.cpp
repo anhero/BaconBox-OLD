@@ -2,7 +2,7 @@
 
 #include "TextureInfo.h"
 #include "RenderInfo.h"
-#include "Drawer.h"
+#include "GraphicDriver.h"
 #include "ResourceManager.h"
 #include "TimeHelper.h"
 #include "AnimationParameters.h"
@@ -89,10 +89,10 @@ void RenderStep::render() {
 	if(verticesData.size()) {
 		// We use the bitwise inclusive OR to combine different modes.
 		if(mode == (RenderStepMode::SHAPE | RenderStepMode::TEXTURE | RenderStepMode::COLOR)) {
-			Drawer::drawShapeWithTextureAndColor(verticesData, info,
+			GraphicDriver::drawShapeWithTextureAndColor(verticesData, info,
 												 vertices->getVertices().size());
 		} else if(mode == (RenderStepMode::SHAPE | RenderStepMode::TEXTURE)) {
-			Drawer::drawShapeWithTexture(verticesData, info,
+			GraphicDriver::drawShapeWithTexture(verticesData, info,
 										 vertices->getVertices().size());
 		}
 	}

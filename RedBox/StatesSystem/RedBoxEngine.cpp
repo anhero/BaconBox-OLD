@@ -1,7 +1,7 @@
 #include "RedBoxEngine.h"
 
 #include "TimeHelper.h"
-#include "Drawer.h"
+#include "GraphicDriver.h"
 #include "Font.h"
 #include "AudioEngine.h"
 #include "SoundEngine.h"
@@ -106,7 +106,7 @@ void RedBoxEngine::pulse() {
 
 void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight) {
 	TimeHelper::init();
-	Drawer::initializeDrawer(screenWidth, screenHeight);
+	GraphicDriver::initializeGraphicDriver(screenWidth, screenHeight);
 	Font::initializeFontRenderer();
 }
 

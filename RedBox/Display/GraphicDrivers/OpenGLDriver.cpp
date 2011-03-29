@@ -1,4 +1,4 @@
-#include "OpenGLDrawer.h"
+#include "OpenGLDriver.h"
 
 #include "RenderInfo.h"
 #include "TextureInfo.h"
@@ -56,7 +56,7 @@ void OpenGLDriver::prepareScene(int xTranslation, int yTranslation, int angle, f
 
 }
 
-void OpenGLDriver::initializeDriver(int screenWidth, int screenHeight) {
+void OpenGLDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
 	glViewport(0,0,screenWidth, screenHeight);
 	
 	glMatrixMode(GL_PROJECTION);
@@ -70,7 +70,7 @@ void OpenGLDriver::initializeDriver(int screenWidth, int screenHeight) {
 }
 
 
-TextureInfo * loadRGBATexture(unsigned Byte * pixMap, int width, int height){
+TextureInfo * OpenGLDriver::loadTexture(PixMap * pixMap){
 	
 	
 	TextureInfo* texInfo = new TextureInfo();
@@ -78,34 +78,41 @@ TextureInfo * loadRGBATexture(unsigned Byte * pixMap, int width, int height){
 	glBindTexture(GL_TEXTURE_2D, texInfo->textureId);
 	
 	
+	
+	int widthPoweredToTwo = MathHelper::nextPowerOf2(pixMap->getWidth());
+	int heightPoweredToTwo = MathHelper::nextPowerOf2(pixMap->getHeight());
 
 	
-	int widthPoweredToTwo = MathHelper::nextPowerOf2(glyphWidth);
-	int heightPoweredToTwo = MathHelper::nextPowerOf2(glyphHeight);
+	PixMap poweredTo2Pixmap(widthPoweredToTwo, heightPoweredToTwo, pixMap->getColorFormat());
+	poweredTo2Pixmap.insertSubPixMap(pixMap);
 
-	unsigned char * poweredTo2RGBABuffer =  new unsigned Byte [(widthPoweredToTwo * 4)  * (heightPoweredToTwo * 4)];	
-
-	///Place small buffer in powered buffer here TODO
-	
-	
-	
 
 	texInfo->imageWidth = widthPoweredToTwo;
-	texInfo->imageWidth = heightPoweredToTwo;
+	texInfo->imageHeight = heightPoweredToTwo;
 	
+	GLint format;
+	
+	if(pixMap->getColorFormat() == RGBA){
+		format = GL_RGBA;
+	}
+	else if (pixMap->getColorFormat() == Alpha) {
+		format = GL_ALPHA;
+	}
 	
 	glTexImage2D(
 				 GL_TEXTURE_2D,
 				 0,
-				 GL_RGBA,
+				 format,
 				 widthPoweredToTwo,
 				 heightPoweredToTwo,
 				 0,
-				 GL_RGBA,
+				 format,
 				 GL_UNSIGNED_BYTE,
-				 poweredTo2RGBABuffer);
+				 poweredTo2Pixmap.getBuffer());
 	
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
+	return texInfo;
 }
 

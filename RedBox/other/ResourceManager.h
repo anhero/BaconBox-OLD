@@ -13,6 +13,8 @@
 #include "MusicParameters.h"
 #include "Font.h"
 
+#include "PixMap.h"
+
 namespace RedBox {
 	class SoundFX;
 	class BackgroundMusic;
@@ -25,12 +27,21 @@ namespace RedBox {
 	 */
 	class ResourceManager {
 	public:
-		
-		static TextureInfo* addTexture(const std::string& key, unsigned char * bitmap, int width, int height);
+		/**
+		 * Add a texture already loaded as a pixmap into the graphic memory and resource manager.
+		 * @param key Key used to identify this new texture.
+		 * @param aPixmap The pixel map you want to use as a texture
+		 * @param overwrite When set to true, it will delete any existing texture at 
+		 * the specified key. (False (default) will print an error if the key is occupied).
+		 */
+		static TextureInfo* addTexture(const std::string& key, PixMap * aPixmap,
+									   bool overwrite = false);
 		/**
 		 * Loads a texture from a file and assigns a representative key to it.
 		 * @param filePath Path to the file containing the texture.
 		 * @param key Key used to identify this new texture.
+		 * @param overwrite When set to true, it will delete any existing texture at 
+		 * the specified key. (False (default) will print an error if the key is occupied).
 		 */
 		static TextureInfo* loadTexture(const std::string& filePath,
 										const std::string& key,
@@ -125,7 +136,10 @@ namespace RedBox {
 		 */
 		static void unloadAll();
 	private:
-		static TextureInfo* loadTexture(const std::string& filePath);
+		///Create a PixMap from an image file at the given path.
+		static PixMap* loadPixMap(const std::string& filePath);
+		///Create a PixMap from a PNG file at the given path.
+		static PixMap* loadPixMapFromPNG(const std::string& filePath);
 		/// Map associating the textures' keys and their information.
 		static std::map<std::string, TextureInfo*> textures;
 		/// Map associating the sound effects' names and their information.

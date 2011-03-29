@@ -15,7 +15,7 @@ namespace RedBox{
 	enum ColorFormat{
 		RGBA,
 		Alpha
-	}
+	};
 }
 
 #endif

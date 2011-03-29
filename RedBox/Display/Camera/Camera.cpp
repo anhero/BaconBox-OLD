@@ -1,5 +1,5 @@
 #include "Camera.h"
-#include "Drawer.h"
+#include "GraphicDriver.h"
 
 using namespace RedBox;
 
@@ -56,5 +56,5 @@ void Camera::resetZoom() {
 }
 
 void Camera::render() {
-	Drawer::prepareScene(-x, -y, angle, zoomFactor);
+	GraphicDriver::prepareScene(-x, -y, angle, zoomFactor);
 }
