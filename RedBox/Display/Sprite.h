@@ -73,25 +73,23 @@ namespace RedBox {
 		 * corner.
 		 * @param imageKey Image's key in the ResourceManager to use for the
 		 * constructed sprite.
-		 * @param frameWidth Width (in pixels) of the image to use.
-		 * @param frameHeight Height (in pixels) of the image to use.
-		 * @param offsetX X position of the upper left corner of the frame to
-		 * take from the image.
-		 * @param offsetY Y position of the upper left corner of the frame to
-		 * take from the image.
+		 * @param frameWidth Width of the frames to read from the image (in 
+		 * pixels).
+		 * @param frameHeight Height of the frames to read from the image (in
+		 * pixels).
+		 * @param nbFrames Number of frames the sprite will load (for
+		 * animations)
 		 * @param parentBody Parent graphic body, if there is one. Only exists
 		 * if the Physics engine is enabled.
 		 */
 		Sprite(const std::string& imageKey,
-			   float frameWidth,
-			   float frameHeight,
-			   unsigned int nbFrames = 1,
-			   float offsetX = 0.0f,
+			   unsigned int frameWidth,
+			   unsigned int frameHeight,
+			   unsigned int nbFrames = 1
 #ifdef RB_PHYSICS_ENABLED
-			   float offsetY = 0.0f,
-			   GraphicBody* parentBody = NULL);
+			   , GraphicBody* parentBody = NULL);
 #else
-			   float offsetY = 0.0f);
+			   );
 #endif
 		/**
 		 * Parameterized constructor. Loads a sprite using a TextureInfo. Only
@@ -99,25 +97,23 @@ namespace RedBox {
 		 * Using the offsets, can also take a part of the image that is not at
 		 * the upper left corner.
 		 * @param texInfo TextureInfo to load the sprite from.
-		 * @param frameWidth Width (in pixels) of the image to use.
-		 * @param frameHeight Height (in pixels) of the image to use.
-		 * @param offsetX X position of the upper left corner of the frame to
-		 * take from the image.
-		 * @param offsetY Y position of the upper left corner of the frame to
-		 * take from the image.
+		 * @param frameWidth Width of the frames to read from the image (in 
+		 * pixels).
+		 * @param frameHeight Height of the frames to read from the image (in
+		 * pixels).
+		 * @param nbFrames Number of frames the sprite will load (for
+		 * animations).
 		 * @param parentBody Parent graphic body, if there is one. Only exists
 		 * if the Physics engine is enabled.
 		 */
 		Sprite(TextureInfo* texInfo,
-			   float frameWidth,
-			   float frameHeight,
-			   unsigned int nbFrames = 1,
-			   float offsetX = 0.0f,
+			   unsigned int frameWidth,
+			   unsigned int frameHeight,
+			   unsigned int nbFrames = 1
 #ifdef RB_PHYSICS_ENABLED
-			   float offsetY = 0.0f,
-			   GraphicBody* parentBody = NULL);
+			   , GraphicBody* parentBody = NULL);
 #else
-		float offsetY = 0.0f);
+		);
 #endif
         /**
          * Copy constructor.
@@ -282,16 +278,25 @@ namespace RedBox {
         /// Edges making up the sprite.
         std::list<Edge> edges;
 #endif //RB_PHYSICS_ENABLED
+		
+		/**
+		 * Constructs the sprite using the given info.
+		 * @param texInfo Pointer to the texture's information.
+		 * @param frameWidth Width of the frames to read from the image (in 
+		 * pixels).
+		 * @param frameHeight Height of the frames to read from the image (in
+		 * pixels).
+		 * @param nbFrames Number of frames the sprite will load (for
+		 * animations).
+		 */
 		void construct(TextureInfo* texInfo,
-					   float frameWidth,
-					   float frameHeight,
-					   unsigned int nbFrames = 1,
-					   float offsetX = 0.0f,
+					   unsigned int frameWidth,
+					   unsigned int frameHeight,
+					   unsigned int nbFrames = 1
 #ifdef RB_PHYSICS_ENABLED
-					   float offsetY = 0.0f,
-					   GraphicBody* parentBody = NULL);
+					   , GraphicBody* parentBody = NULL);
 #else
-		float offsetY = 0.0f);
+		);
 #endif
         /**
          * Resets the sprite. Also frees up all allocated memory.

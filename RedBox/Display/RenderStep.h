@@ -43,12 +43,11 @@ namespace RedBox {
 		 * initialize the render step.
 		 * @param newVertices Pointer to the vertices of the shape to take from
 		 * the image.
+		 * @param frameWidth Width of the frames to read from the image (in 
+		 * pixels).
+		 * @param frameHeight Height of the frames to read from the image (in
+		 * pixels).
 		 * @param nbFrames Number of frames of texture coordinates to generate.
-		 * @param factor Size factor between the shape and hte size of the
-		 * texxture coordinates to take.
-		 * @param offsetX Horizontal offset from where the texture coordinates
-		 * will start loading.
-		 * @param offsetY Vertical offset from where the texture coordinates
 		 * will start loading.
          * @param newColor Array to use to set the RenderInfo's color.
 		 * @param newDeleteVerticesGroup True if the RenderStep needs to delete
@@ -57,10 +56,9 @@ namespace RedBox {
 		 */
 		RenderStep(TextureInfo* newTexInfo,
 				   VerticesGroup* newVertices,
+				   unsigned int frameWidth,
+				   unsigned int frameHeight,
 				   unsigned int nbFrames = 1,
-				   float factor = 1.0f,
-				   float offsetX = 0.0f,
-				   float offsetY = 0.0f,
 				   int* newColor = NULL,
 				   bool newDeleteVerticesGroup = false);
 		/**
@@ -68,12 +66,11 @@ namespace RedBox {
 		 * @param key Name of the image to get from the resource loader.
 		 * @param newVertices Pointer to the vertices of the shape to take from
 		 * the image.
+		 * @param frameWidth Width of the frames to read from the image (in 
+		 * pixels).
+		 * @param frameHeight Height of the frames to read from the image (in
+		 * pixels).
 		 * @param nbFrames Number of frames of texture coordinates to generate.
-		 * @param factor Size factor between the shape and hte size of the
-		 * texxture coordinates to take.
-		 * @param offsetX Horizontal offset from where the texture coordinates
-		 * will start loading.
-		 * @param offsetY Vertical offset from where the texture coordinates
 		 * will start loading.
          * @param newColor Array to use to set the RenderInfo's color.
 		 * @param newDeleteVerticesGroup True if the RenderStep needs to delete
@@ -82,10 +79,9 @@ namespace RedBox {
 		 */
 		RenderStep(const std::string& key,
 				   VerticesGroup* newVertices,
+				   unsigned int frameWidth,
+				   unsigned int frameHeight,
 				   unsigned int nbFrames = 1,
-				   float factor = 1.0f,
-				   float offsetX = 0.0f,
-				   float offsetY = 0.0f,
 				   bool newDeleteVerticesGroup = false);
         /**
          * Copy constructor. Constructs a copy of the recieved RenderStep.

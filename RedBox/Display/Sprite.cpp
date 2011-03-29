@@ -32,15 +32,13 @@ Sprite::Sprite(const std::string& imageKey): Renderable()
 	TextureInfo* texInfo = ResourceManager::getTexture(imageKey);
 	if(texInfo) {
 		construct(texInfo,
-				  static_cast<float>(texInfo->poweredWidth),
-				  static_cast<float>(texInfo->poweredHeight),
-				  1,
-				  0.0f,
+				  texInfo->imageWidth,
+				  texInfo->imageHeight,
+				  1
 #ifdef RB_PHYSICS_ENABLED
-				  0.0f,
-				  parentBody);
+				  , parentBody);
 #else
-		0.0f);
+		);
 #endif
 	} else {
 		$ECHO("Tried to construct a sprite from an invalid image key: " << imageKey);
@@ -55,15 +53,13 @@ Sprite::Sprite(TextureInfo* texInfo): Renderable()
 {
 	if(texInfo) {
 		construct(texInfo,
-				  static_cast<float>(texInfo->poweredWidth),
-				  static_cast<float>(texInfo->poweredHeight),
-				  1,
-				  0.0f,
+				  texInfo->imageWidth,
+				  texInfo->imageHeight,
+				  1
 #ifdef RB_PHYSICS_ENABLED
-				  0.0f,
-				  parentBody);
+				  , parentBody);
 #else
-		0.0f);
+		);
 #endif
 	} else {
 		$ECHO("Tried to construct a sprite from an invalid texture information: " << texInfo);
@@ -71,52 +67,44 @@ Sprite::Sprite(TextureInfo* texInfo): Renderable()
 }
 
 Sprite::Sprite(const std::string& imageKey,
-			   float frameWidth,
-			   float frameHeight,
-			   unsigned int nbFrames,
-			   float offsetX,
+			   unsigned int frameWidth,
+			   unsigned int frameHeight,
+			   unsigned int nbFrames
 #ifdef RB_PHYSICS_ENABLED
-			   float offsetY,
-			   GraphicBody* parentBody): Renderable()
+			   , GraphicBody* parentBody): Renderable()
 #else
-float offsetY): Renderable()
+): Renderable()
 #endif
 {
 	construct(ResourceManager::getTexture(imageKey),
 			  frameWidth,
 			  frameHeight,
-			  nbFrames,
-			  offsetX,
+			  nbFrames
 #ifdef RB_PHYSICS_ENABLED
-			  offsetY,
-			  parentBody);
+			  , parentBody);
 #else
-	offsetY);
+	);
 #endif
 }
 
 Sprite::Sprite(TextureInfo* texInfo,
-			   float frameWidth,
-			   float frameHeight,
-			   unsigned int nbFrames,
-			   float offsetX,
+			   unsigned int frameWidth,
+			   unsigned int frameHeight,
+			   unsigned int nbFrames
 #ifdef RB_PHYSICS_ENABLED
-			   float offsetY,
-			   GraphicBody* parentBody): Renderable()
+			   , GraphicBody* parentBody): Renderable()
 #else
-float offsetY): Renderable()
+): Renderable()
 #endif
 {
 	construct(texInfo,
 			  frameWidth,
 			  frameHeight,
-			  nbFrames,
-			  offsetX,
+			  nbFrames
 #ifdef RB_PHYSICS_ENABLED
-			  offsetY,
-			  parentBody);
+			  , parentBody);
 #else
-	offsetY);
+	);
 #endif
 }
 
@@ -287,30 +275,31 @@ void Sprite::removeEdge(Edge* edge) {
 }
 #endif
 void Sprite::construct(TextureInfo* texInfo,
-					   float frameWidth,
-					   float frameHeight,
-					   unsigned int nbFrames,
-					   float offsetX,
+					   unsigned int frameWidth,
+					   unsigned int frameHeight,
+					   unsigned int nbFrames
 #ifdef RB_PHYSICS_ENABLED
-					   float offsetY,
-					   GraphicBody* parentBody)
+					   , GraphicBody* parentBody)
 #else
-float offsetY)
+)
 #endif
 {
 	if(texInfo) {
 		// Generates the square vertices from the frame width and height.
-		vertices.addVertices(4, 0.0f, 0.0f, frameWidth, 0.0f, frameWidth, frameHeight, 0.0f, frameHeight);
+		vertices.addVertices(4,
+							 0.0f, 0.0f,
+							 static_cast<float>(frameWidth), 0.0f,
+							 static_cast<float>(frameWidth), static_cast<float>(frameHeight),
+							 0.0f, static_cast<float>(frameHeight));
 		vertices.setParentSprite(this);
 #ifdef RB_PHYSICS_ENABLED
 		vertices.setParentGraphicBody(parentBody);
 #endif
 		RenderStep* initialRenderStep = new RenderStep(texInfo,
 													   &vertices,
-													   nbFrames,
-													   1.0f,
-													   offsetX,
-													   offsetY);
+													   frameWidth,
+													   frameHeight,
+													   nbFrames);
 		renderSteps.push_back(initialRenderStep);
 	} else {
 		$ECHO("Failed to load a sprite with the following texture information: " << texInfo);

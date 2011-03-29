@@ -7,6 +7,8 @@
 #define RB_PIXMAP_H
 
 #include "ColorFormat.h"
+#include <stdint.h>
+
 namespace RedBox{
 	/** 
 	 * A PixMap (pixel map) is a buffer (C array) representing a 2D graphic texture.

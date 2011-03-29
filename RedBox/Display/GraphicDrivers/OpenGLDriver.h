@@ -24,7 +24,7 @@ namespace RedBox {
      *  OpenGl graphic driver. 
      */
 	class OpenGLDriver {
-		friend GraphicDriver;
+		friend class GraphicDriver;
 	private:
         /**
          * Draw a colored and textured shape 

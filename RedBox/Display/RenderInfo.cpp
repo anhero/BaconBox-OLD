@@ -16,12 +16,11 @@ RenderInfo::RenderInfo(): texInfo(NULL), currentFrame(0) {
 	color[3] = 255;
 }
 
-RenderInfo::RenderInfo(TextureInfo* newTexInfo, 
+RenderInfo::RenderInfo(TextureInfo* newTexInfo,
 					   VerticesGroup* vertices,
+					   unsigned int frameWidth,
+					   unsigned int frameHeight,
 					   unsigned int nbFrames,
-					   float factor,
-					   float offsetX,
-					   float offsetY,
 					   int* newColor):
 texInfo(newTexInfo), texCoords(std::vector< std::vector<float> >(nbFrames)),
 currentFrame(0) {
@@ -36,59 +35,63 @@ currentFrame(0) {
 		color[2] = 255;
 		color[3] = 255;
 	}
-	loadTexCoords(vertices, nbFrames, factor, offsetX, offsetY);
+	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
 }
 
 void RenderInfo::loadTexCoords(VerticesGroup* vertices,
+							   unsigned int frameWidth,
+							   unsigned int frameHeight,
 							   unsigned int nbFrames,
-							   float factor,
-							   float offsetX,
-							   float offsetY,
 							   TextureInfo* newTexInfo) {
+	
 	// We check if we also reassign the texInfo.
 	if(newTexInfo) {
 		texInfo = newTexInfo;
 	}
+	
 	// We check if the texInfo, the vertices and the number of frames are valid.
 	if(texInfo && vertices && nbFrames > 0) {
-		// We get the width and the height of the of the vertices group.
-		std::pair<float, float> widthHeight = vertices->getWidthHeight();
-		// We make sure the width and the height are valid.
-		if(widthHeight.first != 0.0f && widthHeight.second != 0.0f) {
-			// We get the image width as a float and we consider the factor.
-			float imgWidth = static_cast<float>(texInfo->poweredWidth) * factor, 
-			imgHeight = static_cast<float>(texInfo->poweredHeight) * factor;
-			// We calculate the maximum number of frames the image can contain
-			// horizontally and vertically. We take into account the vertical
-			// offset.
-			float nbFramesHorMax = floor(imgWidth / widthHeight.first),
-			nbFramesVerMax = floor((imgHeight - offsetY) / widthHeight.second);
-
-			// We check if the number of frames asked fits within the image. We
-			// take into account the horizontal offset.
-			if(nbFrames <= floor((imgWidth - offsetX) / widthHeight.first) + nbFramesHorMax * (nbFramesVerMax - 1)) {
-				texCoords.resize(nbFrames, std::vector<float>(8, 0.0f));
-				// Calculates at which frame we start, only affected by the
-				// horizontal offset because the vertical one will be added
-				// at each frame.
-				float currentFrame = offsetX / widthHeight.first;
-				for(std::vector< std::vector<float> >::iterator i = texCoords.begin(); i != texCoords.end(); i++) {
-					i->resize(8, 0.0f);
-					// Upper left corner.
-					(*i)[0] = (MathHelper::modFloat(currentFrame, nbFramesHorMax) * widthHeight.first) / imgWidth;
-					// Here we do not forget to add the vertical offset.
-					(*i)[1] =  1.0 - ((floor(floor(currentFrame) / nbFramesHorMax) * widthHeight.second + offsetY) / imgHeight);
-					// Upper right corner.
-					(*i)[2] = (*i)[0] + widthHeight.first / imgWidth;
-					(*i)[3] = (*i)[1];
-					// Lower right corner.
-					(*i)[4] = (*i)[2];
-					(*i)[5] = (*i)[1] - widthHeight.second / imgHeight;
-					// Lower left corner.
-					(*i)[6] = (*i)[0];
-					(*i)[7] = (*i)[5];
-					// Increment the frame counter.
-					currentFrame += 1.0f;
+		
+		// We make sure the width and the height of the texture are valid.
+		if(texInfo->imageWidth && texInfo->imageHeight && texInfo->poweredWidth
+		   && texInfo->poweredHeight && frameWidth && frameHeight) {
+			unsigned int framesPerLine = texInfo->imageWidth / frameWidth;
+			
+			// We check if the image can fit enough frames.
+			if(framesPerLine * (texInfo->imageHeight / frameHeight)) {
+				
+				float realFrameWidth = static_cast<float>(frameWidth) / static_cast<float>(texInfo->poweredWidth);
+				float realFrameHeight = static_cast<float>(frameHeight) / static_cast<float>(texInfo->poweredHeight);
+				float realWidth = static_cast<float>(texInfo->imageWidth) / static_cast<float>(texInfo->poweredWidth);
+				texCoords.resize(nbFrames);
+				float offsetX = 0.0f, offsetY = 0.0f;
+				std::pair<float, float> position = vertices->getPosition();
+				// We get the width and the height of the of the vertices group.
+				std::pair<float, float> size = vertices->getWidthHeight();
+				unsigned int tmpSize = vertices->getVertices().size(), j = 0;
+				std::list<Vertex>& tmpVertices = vertices->getVertices();
+				
+				// For each frame to load.
+				for (std::vector<std::vector<float> >::iterator i = texCoords.begin();
+					 i != texCoords.end(); i++) {
+					
+					// We set the number of coordinates.
+					i->resize(tmpSize * 2);
+					j = 0;
+					
+					for (std::list<Vertex>::iterator j2 = tmpVertices.begin(); j2 != tmpVertices.end(); j2++) {
+						(*i)[j] = offsetX + (j2->getXPosition() - position.first / size.first) / static_cast<float>(texInfo->poweredWidth);
+						++j;
+						(*i)[j] = offsetY + (j2->getYPosition() - position.second / size.second) / static_cast<float>(texInfo->poweredHeight);
+						++j;
+					}
+					
+					offsetX += realFrameWidth;
+					
+					if(offsetX > realWidth) {
+						offsetX = 0.0f;
+						offsetY += realFrameHeight;
+					}
 				}
 			} else {
 				$ECHO("Attempted to construct a RenderInfo with a number of frames too high: " << nbFrames);
