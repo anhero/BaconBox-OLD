@@ -90,6 +90,9 @@ namespace RedBox{
 		void update();
 		
 	private:
+		///Free memory occupied by the sprites in the characters list and flush it.
+		void flushCharacters();
+		
 		///X position
 		int x;
 		
