@@ -46,8 +46,10 @@ namespace RedBox{
 		/**
 		 * Constructor
 		 * @param font Rendering font.
-		 * @param x X position, 0 by default.
-		 * @param y Y position, 0 by default.
+		 * @param x X position, 0 by default. WARNING! The origin of a string is not 
+		 * the top left corner, but the left tip, right tip or middle of the baseline depending on the alignment.
+		 * @param y Y position, 0 by default. WARNING! The origin of a string is not 
+		 * the top left corner, but the left tip, right tip or middle of the baseline depending on the alignment.
 		 * @param alignment Alignment of the string (left, center or right), left by default.
 		 * @param direction String direction, useful when you want to support i18n (leftToRight, rightToLeft, 
 		 * upToDown), leftToRight by default.
@@ -77,6 +79,8 @@ namespace RedBox{
 		 * Depending on the alignment,
 		 * the position will correspond to the left side, center
 		 * or right side of the string.
+		 * WARNING! The origin of a string is not 
+		 * the top left corner, but the left tip, right tip or middle of the baseline depending on the alignment.
 		 */
 		void setPosition(int x, int y);
 		
