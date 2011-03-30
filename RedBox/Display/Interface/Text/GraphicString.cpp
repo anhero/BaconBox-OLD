@@ -5,8 +5,7 @@
 
 using namespace RedBox;
 
-GraphicString::GraphicString(): Renderable(), font(NULL), x(0), y(0){};
-GraphicString::GraphicString(Font * font):Renderable(), font(font), x(0), y(0){};
+GraphicString::GraphicString(Font * font, int x, int y, Alignment alignment, StringDirection direction):Renderable(), font(font), x(x), y(y), alignment(alignment), direction(direction){};
 
 void GraphicString::setText(const RB_String32 & text){
 	if(font != NULL){
@@ -30,27 +29,37 @@ void GraphicString::setText(const std::string & text){
 }
 
 void GraphicString::setPosition(int x, int y){
+	//We set the position atribute
 	this->x = x;
 	this->y = y;
-	std::list<std::pair<Glyph*, Sprite*> >::iterator i;
-	std::list<std::pair<Glyph*, Sprite*> >::iterator begin = characters.begin();
-	std::list<std::pair<Glyph*, Sprite*> >::iterator end = characters.end();
 	
-	
+	//We check if the direction is horizontal (alignment adjustement are different for 
+	//vertical direction.
 	if(direction == leftToRight || direction == rightToLeft){
+		//If the direction is left to right we iterate to set the position (we pretend it's left align first, since we need
+		// to get the ending position to calculate the adjustment factor.
+		if(direction == leftToRight){
+			std::list<std::pair<Glyph*, Sprite*> >::iterator i;
+			std::list<std::pair<Glyph*, Sprite*> >::iterator begin = characters.begin();
+			std::list<std::pair<Glyph*, Sprite*> >::iterator end = characters.end();
+			for(i = begin; i != end; i++){
+				i->second->setPosition(x+i->first->getHoriBearingX(), y-i->first->getHoriBearingY() - i->first->getHeight());
+				x += i->first->getXAdvance();
+			}
+		}
+		//If the direction is right to left we iterate to set the position (we pretend it's left align first, since we need
+		// to get the ending position to calculate the adjustment factor.
+		else if(direction == rightToLeft){
+			std::list<std::pair<Glyph*, Sprite*> >::reverse_iterator i;
+			std::list<std::pair<Glyph*, Sprite*> >::reverse_iterator begin = characters.rbegin();
+			std::list<std::pair<Glyph*, Sprite*> >::reverse_iterator end = characters.rend();
+			for(i = begin; i != end; i++){
+				i->second->setPosition(x+i->first->getHoriBearingX(), y-i->first->getHoriBearingY() - i->first->getHeight());
+				x += i->first->getXAdvance();
+			}
+		}
 		
 		int xAdjustment;
-		
-		if(direction == rightToLeft){
-			std::list<std::pair<Glyph*, Sprite*> >::iterator temp = begin;
-			begin = end;
-			end = begin;
-		}
-		for(i = begin; i != end; i++){
-			i->second->setPosition(x+i->first->getHoriBearingX(), y+i->first->getHoriBearingY());
-			x += i->first->getXAdvance();
-		}
-		
 		
 		if(alignment == left){
 			xAdjustment = 0;
@@ -63,12 +72,14 @@ void GraphicString::setPosition(int x, int y){
 		else if(alignment == center){
 			xAdjustment = (this->x-x) * 0.5;
 		}
+		std::list<std::pair<Glyph*, Sprite*> >::iterator i;
 		for(i = characters.begin(); i != characters.end(); i++){
 			i->second->moveX(xAdjustment);
 		}
 	}
-	
 }
+
+
 
 void GraphicString::update(){
 	std::list<std::pair<Glyph*, Sprite*> >::iterator i;

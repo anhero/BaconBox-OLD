@@ -42,15 +42,17 @@ namespace RedBox{
      */
 	class GraphicString : public Renderable{
 	public:
-		/**
-		 * Default constructor
-		 * If you use the default constructor, you need
-		 * to call the setFont(Font*) function before setting any text.
-		 */
-		 GraphicString();
 		
-		///Constructor that set the rendering font with the one given in parameter.
-		GraphicString(Font * font);
+		/**
+		 * Constructor
+		 * @param font Rendering font.
+		 * @param x X position, 0 by default.
+		 * @param y Y position, 0 by default.
+		 * @param alignment Alignment of the string (left, center or right), left by default.
+		 * @param direction String direction, useful when you want to support i18n (leftToRight, rightToLeft, 
+		 * upToDown), leftToRight by default.
+		 */
+		GraphicString(Font * font, int x = 0, int y = 0, Alignment alignment = left, StringDirection direction = leftToRight);
 		
 		/**
 		 * Set the text of the GraphicString with an

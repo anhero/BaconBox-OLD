@@ -36,6 +36,8 @@ FontImplementation::FontImplementation(const std::string& name, const std::strin
 	{
 		$ECHO("Can't load font, unknow error");		
 	}
+	
+	setPixelSize(30);
 }
 
 
