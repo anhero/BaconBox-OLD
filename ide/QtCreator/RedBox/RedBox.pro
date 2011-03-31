@@ -64,25 +64,25 @@ unix:!symbian {
 	INSTALLS += target
 }
 
-
-
-
+macx {
 INCLUDEPATH += $$PWD/../../../libraries/ios/universal/include
 DEPENDPATH += $$PWD/../../../libraries/ios/universal/include
 
-macx: LIBS += -L$$PWD/../../../libraries/ios/universal/lib/ -lpng15
+LIBS += -L$$PWD/../../../libraries/ios/universal/lib/ -lpng15
 
-macx: PRE_TARGETDEPS += $$PWD/../../../libraries/ios/universal/lib/libpng15.a
+PRE_TARGETDEPS += $$PWD/../../../libraries/ios/universal/lib/libpng15.a
 
 
-macx: LIBS += -L$$PWD/../../../libraries/ios/universal/lib/ -lfreetype
+LIBS += -L$$PWD/../../../libraries/ios/universal/lib/ -lfreetype
 
-macx: PRE_TARGETDEPS += $$PWD/../../../libraries/ios/universal/lib/libfreetype.a
+PRE_TARGETDEPS += $$PWD/../../../libraries/ios/universal/lib/libfreetype.a
 
-macx: LIBS += -L$$PWD/../../../libraries/ios/universal/lib/ -lvorbisidec
+LIBS += -L$$PWD/../../../libraries/ios/universal/lib/ -lvorbisidec
 
-macx: PRE_TARGETDEPS += $$PWD/../../../libraries/ios/universal/lib/libvorbisidec.a
+PRE_TARGETDEPS += $$PWD/../../../libraries/ios/universal/lib/libvorbisidec.a
 
-mac: LIBS += -framework OpenAL
+LIBS += -framework OpenAL
 
-macx: LIBS += -lz
+LIBS += -lz
+}
+
