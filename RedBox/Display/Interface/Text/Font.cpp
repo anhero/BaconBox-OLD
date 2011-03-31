@@ -36,4 +36,15 @@ void Font::setPixelSize(int pixelSize){
 void Font::setPointSize(int pointSize, int dpi){
 	fontPimpl->setPointSize(pointSize, dpi);
 }
+int Font::getLineHeight(){
+	return fontPimpl->getLineHeight();
+}
 
+
+void Font::setManualLineHeight(int lineHeight){
+	fontPimpl->setManualLineHeight(lineHeight);
+}
+
+void Font::setAutomaticLineHeight(){
+	fontPimpl->setAutomaticLineHeight();
+}

@@ -44,6 +44,8 @@ void GraphicString::setPosition(int x, int y){
 	
 }
 void GraphicString::setPosition(){
+	
+	int lineHeight = font->getLineHeight();
 	int x = this->x;
 	int y = this->y;
 	//We check if the direction is horizontal (alignment adjustement are different for 
@@ -58,7 +60,7 @@ void GraphicString::setPosition(){
 			for(i = begin; i != end; i++){
 				//We need to check for null pointer since space does not have sprite
 				if (i->second != NULL){
-					i->second->setPosition(x+i->first->getHoriBearingX(), y-i->first->getHoriBearingY() - i->first->getHeight());
+					i->second->setPosition(x+i->first->getHoriBearingX(), y-i->first->getHoriBearingY() - i->first->getHeight()+ lineHeight);
 				}
 				x += i->first->getXAdvance();
 			}
@@ -72,7 +74,7 @@ void GraphicString::setPosition(){
 			for(i = begin; i != end; i++){
 				//We need to check for null pointer since space does not have sprite
 				if (i->second != NULL){
-					i->second->setPosition(x+i->first->getHoriBearingX(), y-i->first->getHoriBearingY() - i->first->getHeight());
+					i->second->setPosition(x+i->first->getHoriBearingX(), y-i->first->getHoriBearingY() - i->first->getHeight()+ lineHeight);
 				}
 				x += i->first->getXAdvance();
 			}
@@ -181,4 +183,14 @@ void GraphicString::setColor(int red, int green, int blue, int alpha){
 	color[2] = blue;
 	color[3] = alpha;
 	needReset = true;	
+}
+
+
+void GraphicString::setAutomaticLineHeight(){
+	font->setAutomaticLineHeight();
+	needReset = true;
+}
+void GraphicString::setManualLineHeight(int lineHeight){
+	font->setManualLineHeight(lineHeight);
+	needReset = true;
 }

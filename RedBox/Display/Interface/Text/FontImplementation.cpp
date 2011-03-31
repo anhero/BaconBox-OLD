@@ -38,6 +38,7 @@ FontImplementation::FontImplementation(const std::string& name, const std::strin
 	}
 	
 	setPixelSize(30);
+	automaticLineHeight = true;
 }
 
 
@@ -131,4 +132,19 @@ void FontImplementation::setPointSize(int pointSize, int dpi){
 	}
 	size = pointSize + "pt";
 }
+void FontImplementation::setManualLineHeight(int lineHeight){
+	this->lineHeight = lineHeight;
+	automaticLineHeight = false;
+}
+int FontImplementation::getLineHeight(){
+	if (automaticLineHeight){
+		return  font->size->metrics.height >> 6;
+	}
+	else{
+		return lineHeight;
+	}
+}
 
+void FontImplementation::setAutomaticLineHeight(){
+	automaticLineHeight = true;
+}

@@ -107,6 +107,18 @@ namespace RedBox{
 		 */
 		void setPointSize(int pointSize, int dpi);
 		
+		/**
+		 * Tell the rendering font to use automatic line height (which is not always availlable,
+		 * but it's there most of the time.
+		 */
+		void setAutomaticLineHeight();
+		
+		/**
+		 * Tell the rendering font to use the given line height and reset the string.
+		 * Call setAutomaticLineHeight() to return to the default automatic line height.
+		 */
+		void setManualLineHeight(int lineHeight);
+		
 		
 		///Set the rendering font for the string.
 		void setFont(Font * font);
