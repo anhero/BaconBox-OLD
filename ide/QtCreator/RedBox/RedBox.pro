@@ -4,9 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += opengl
+QT       += opengl core gui
 
-QT       -= gui
 
 TARGET = RedBox
 TEMPLATE = lib
@@ -16,6 +15,7 @@ CONFIG -= x86_64
 CONFIG += x86
 
 DEFINES += QT
+DEFINES += _DEBUG
 
 INCLUDEPATH += ../../../RedBox \
 	../../../RedBox/Audio \
@@ -78,14 +78,6 @@ macx: PRE_TARGETDEPS += $$PWD/../../../libraries/ios/universal/lib/libpng15.a
 macx: LIBS += -L$$PWD/../../../libraries/ios/universal/lib/ -lfreetype
 
 macx: PRE_TARGETDEPS += $$PWD/../../../libraries/ios/universal/lib/libfreetype.a
-
-
-
-macx: LIBS += -L$$PWD/../../../libraries/ios/universal/lib/ -lsimple-image
-
-macx: PRE_TARGETDEPS += $$PWD/../../../libraries/ios/universal/lib/libsimple-image.a
-
-
 
 macx: LIBS += -L$$PWD/../../../libraries/ios/universal/lib/ -lvorbisidec
 
