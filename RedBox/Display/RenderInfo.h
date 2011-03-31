@@ -115,27 +115,27 @@ namespace RedBox {
 		 * @return Array containing the RGBA values for the color. Each value
 		 * is inclusively between 1 and 255.
 		 */
-		int* getColor();
+		unsigned char* getColor();
 		/**
 		 * Gets the color's red value.
 		 * @return Color's red value. Value inclusively between 1 and 255.
 		 */
-		int getRedValue() const;
+		unsigned char getRedValue() const;
 		/**
 		 * Gets the color's green value.
 		 * @return Color's green value. Value inclusively between 1 and 255.
 		 */
-		int getGreenValue() const;
+		unsigned char getGreenValue() const;
 		/**
 		 * Gets the color's blue value.
 		 * @return Color's blue value. Value inclusively between 1 and 255.
 		 */
-		int getBlueValue() const;
+		unsigned char getBlueValue() const;
 		/**
 		 * Gets the color's alpha value.
 		 * @return Color's alpha value. Value inclusively between 1 and 255.
 		 */
-		int getAlphaValue() const;
+		unsigned char getAlphaValue() const;
 		/**
 		 * Gets the texture info. Returns the texture information pointed by
 		 * the texInfo pointer.
@@ -154,27 +154,27 @@ namespace RedBox {
 		 * @param blue Color's blue value. Value inclusively between 1 and 255.
 		 * @param alpha Color's alpha value. Value inclusively between 1 and 255.
 		 */
-		void setRGBA(int red, int green, int blue, int alpha);
+		void setRGBA(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
 		/**
 		 * Sets the color's red value.
 		 * @param red Color's red value. Value inclusively between 1 and 255.
 		 */
-		void setRedValue(int red);
+		void setRedValue(unsigned char red);
 		/**
 		 * Sets the color's green value.
 		 * @param green Color's green value. Value inclusively between 1 and 255.
 		 */
-		void setGreenValue(int green);
+		void setGreenValue(unsigned char green);
 		/**
 		 * Sets the color's blue value.
 		 * @param blue Color's blue value. Value inclusively between 1 and 255.
 		 */
-		void setBlueValue(int blue);
+		void setBlueValue(unsigned char blue);
 		/**
 		 * Sets the color's alpha value.
 		 * @param alpha Color's alpha value. Value inclusively between 1 and 255.
 		 */
-		void setAlphaValue(int alpha);
+		void setAlphaValue(unsigned char alpha);
 		/**
 		 * Sets the texture information.
 		 * @param newTexInfo Pointer to the new texture information.
@@ -217,7 +217,7 @@ namespace RedBox {
          * Color, first int is red, second is green, third is blue and last one
          * is alpha.
          */
-        int color[4];
+        unsigned char color[4];
         /// Pointer to the texture information.
         TextureInfo* texInfo;
 		/**

@@ -155,19 +155,19 @@ void RenderInfo::addAnimation(const std::string& name,
 		$ECHO("Failed to add the animation named : " << name);
 	}
 }
-int* RenderInfo::getColor() {
+unsigned char* RenderInfo::getColor() {
 	return color;
 }
-int RenderInfo::getRedValue() const {
+unsigned char RenderInfo::getRedValue() const {
 	return color[0];
 }
-int RenderInfo::getGreenValue() const {
+unsigned char RenderInfo::getGreenValue() const {
 	return color[1];
 }
-int RenderInfo::getBlueValue() const {
+unsigned char RenderInfo::getBlueValue() const {
 	return color[2];
 }
-int RenderInfo::getAlphaValue() const {
+unsigned char RenderInfo::getAlphaValue() const {
 	return color[3];
 }
 TextureInfo& RenderInfo::getTexInfo() {
@@ -176,22 +176,22 @@ TextureInfo& RenderInfo::getTexInfo() {
 std::vector<std::vector<float> >& RenderInfo::getTexCoords() {
 	return texCoords;
 }
-void RenderInfo::setRGBA(int red, int green, int blue, int alpha) {
+void RenderInfo::setRGBA(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha) {
 	color[0] = red;
 	color[1] = green;
 	color[2] = blue;
 	color[3] = alpha;
 }
-void RenderInfo::setRedValue(int red) {
+void RenderInfo::setRedValue(unsigned char red) {
 	color[0] = red;
 }
-void RenderInfo::setGreenValue(int green) {
+void RenderInfo::setGreenValue(unsigned char green) {
 	color[1] = green;
 }
-void RenderInfo::setBlueValue(int blue) {
+void RenderInfo::setBlueValue(unsigned char blue) {
 	color[2] = blue;
 }
-void RenderInfo::setAlphaValue(int alpha) {
+void RenderInfo::setAlphaValue(unsigned char alpha) {
 	color[3] = alpha;
 }
 void RenderInfo::setTexInfo(TextureInfo* newTexInfo) {

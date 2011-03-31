@@ -134,6 +134,9 @@ namespace RedBox {
          * @param New mode to add.
          */
         void addMode(RenderStepMode::Enum newMode);
+		
+		///Flip off the given flags. (You can pass more than one flag like this: (Flag1 | flag2))
+		void removeMode(RenderStepMode::Enum newMode);
         /**
          * Checks if the RenderStep needs to delete its vertices in its
          * destructor.
@@ -217,6 +220,12 @@ namespace RedBox {
 		 * @param vertexPtr Pointer to remove from the list.
 		 */
 		void removeVertexPtr(Vertex* vertexPtr);
+		/**
+		 * Set the color of in the renderInfo with the
+		 * given color components Range are from 0 to 255.
+		 * Componentes are RGBA.
+		 */
+		void setColor(int red, int green, int blue, int alpha);
     private:
         /// Information on the render. Includes the color and the texture ID.
         RenderInfo info;

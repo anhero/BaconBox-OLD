@@ -8,9 +8,13 @@ using namespace RedBox;
 void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat* vertices,
 												RenderInfo& renderingInfo,
 												unsigned int nbVertices){
-	
-	
-        glColorPointer(4, GL_UNSIGNED_BYTE, 0, renderingInfo.getColor());
+	 //@TODO: Check for possible optimizations
+	unsigned char * tempColor = renderingInfo.getColor();
+	unsigned char color[] = {tempColor[0], tempColor[1], tempColor[2],tempColor[3],
+							tempColor[0], tempColor[1], tempColor[2],tempColor[3],
+							tempColor[0], tempColor[1], tempColor[2],tempColor[3],
+		tempColor[0], tempColor[1], tempColor[2],tempColor[3],} ;
+        glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
 	glEnableClientState(GL_COLOR_ARRAY);
         drawShapeWithTexture(vertices, renderingInfo, nbVertices);
 	
@@ -57,6 +61,7 @@ void OpenGLDriver::prepareScene(int xTranslation, int yTranslation, int angle, f
 }
 
 void OpenGLDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
+	glShadeModel(GL_FLAT);
 	glViewport(0,0,screenWidth, screenHeight);
 	
 	glMatrixMode(GL_PROJECTION);

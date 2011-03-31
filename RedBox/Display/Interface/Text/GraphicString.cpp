@@ -5,9 +5,13 @@
 
 using namespace RedBox;
 
-GraphicString::GraphicString(Font * font, int x, int y, Alignment alignment, StringDirection direction):Renderable(), font(font), x(x), y(y), alignment(alignment), direction(direction){};
+GraphicString::GraphicString(Font * font, int x, int y, Alignment alignment, StringDirection direction):Renderable(), font(font), x(x), y(y), alignment(alignment), direction(direction){
+	color[0] = color[1] = color [2] = color[3]  = 0xFF;
+	needReset = false;
+};
 
 void GraphicString::setText(const RB_String32 & text){
+	internalString = text;
 	if(font != NULL){
 		flushCharacters();
 		RB_String32::const_iterator i;;
@@ -20,7 +24,7 @@ void GraphicString::setText(const RB_String32 & text){
 			}
 			characters.push_back(std::pair<Glyph*, Sprite*>(aGlyph, aSprite));
 		}
-		setPosition(x, y);
+		needReset = true;
 	}
 	else{
 		$ECHO("Trying to set text with no font loaded.");
@@ -36,7 +40,12 @@ void GraphicString::setPosition(int x, int y){
 	//We set the position atribute
 	this->x = x;
 	this->y = y;
+	needReset = true;
 	
+}
+void GraphicString::setPosition(){
+	int x = this->x;
+	int y = this->y;
 	//We check if the direction is horizontal (alignment adjustement are different for 
 	//vertical direction.
 	if(direction == leftToRight || direction == rightToLeft){
@@ -103,13 +112,24 @@ void GraphicString::update(){
 		}
 	}
 }
+void GraphicString::setPointSize(int pointSize, int dpi){
+	font->setPointSize(pointSize, dpi);
+	setText(internalString);
+}
+void GraphicString::setPixelSize(int pixelSize){
+	font->setPixelSize(pixelSize);
+	setText(internalString);
+}
 
 void GraphicString::render(){
+	if (needReset){
+		setString();
+	}
 	std::list<std::pair<Glyph*, Sprite*> >::iterator i;
 	for(i = characters.begin(); i != characters.end(); i++){
 		//We need to check for null pointer since space does not have sprite
 		if (i->second != NULL){
-		i->second->render();
+			i->second->render();
 		}
 	}
 }
@@ -118,10 +138,14 @@ void GraphicString::setFont(Font * font){
 	this->font = font;
 }
 
-
+void GraphicString::setDirection(StringDirection direction){
+	this->direction = direction;
+	needReset = true;
+}
 
 void GraphicString::setAlignment(Alignment alignment){
 	this->alignment = alignment;
+	needReset = true;
 }
 
 void GraphicString::flushCharacters(){
@@ -136,4 +160,25 @@ void GraphicString::flushCharacters(){
 		}
 	}
 	characters.clear();
+}
+void GraphicString::setString(){
+	std::list<std::pair<Glyph*, Sprite*> >::iterator i;
+	std::list<std::pair<Glyph*, Sprite*> >::iterator begin = characters.begin();
+	std::list<std::pair<Glyph*, Sprite*> >::iterator end = characters.end();
+	for(i = begin; i != end; i++){
+		//We do not delete the glyph, it would break the glyph cache.
+		//Also we must check for null pointer, since space does not have sprite
+		if(i->second != NULL){
+			i->second->setMainColor(color[0], color[1], color[2], color[3]);
+		}
+	}
+	setPosition();
+	needReset = false;
+}
+void GraphicString::setColor(int red, int green, int blue, int alpha){
+	color[0] = red;
+	color[1] = green;
+	color[2] = blue;
+	color[3] = alpha;
+	needReset = true;	
 }

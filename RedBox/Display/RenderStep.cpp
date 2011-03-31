@@ -124,6 +124,11 @@ void RenderStep::addMode(RenderStepMode::Enum newMode) {
     mode |= newMode;
 }
 
+void RenderStep::removeMode(RenderStepMode::Enum newMode) {
+	//Magic line fliping to 0 every flag passed with the newMode parameter. 
+    mode = ~(~(mode) | (newMode));
+}
+
 bool RenderStep::isDeleteVerticesGroup() const {
     return deleteVerticesGroup;
 }
@@ -251,6 +256,10 @@ void RenderStep::copyFrom(const RenderStep &src) {
     }
 }
 
+void RenderStep::setColor(int red, int green, int blue, int alpha){
+	info.setRGBA(red, green, blue, alpha);
+}
+
 namespace RedBox {
 	std::ostream& operator<<(std::ostream& output, const RenderStep& r) {
 		output << "{info: " << r.info << ", mode: ";
@@ -282,3 +291,5 @@ namespace RedBox {
 		return output;
 	}
 }
+
+

@@ -242,6 +242,13 @@ namespace RedBox {
 		 * @return List of RenderStep used by the sprite.
 		 */
 		std::list<RenderStep*>& getRenderSteps();
+		
+		/**
+		 * Set the color of the main renderStep with the
+		 * given color components Range are from 0 to 255.
+		 * Componentes are RGBA.
+		 */
+		void setMainColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
 #ifdef RB_PHYSICS_ENABLED
         /**
          * Creates an edge on the sprite. Creates an edge linking two vertices.
