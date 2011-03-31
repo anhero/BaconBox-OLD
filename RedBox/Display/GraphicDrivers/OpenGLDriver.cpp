@@ -10,10 +10,12 @@ void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat* vertices,
 												unsigned int nbVertices){
 	 //@TODO: Check for possible optimizations
 	unsigned char * tempColor = renderingInfo.getColor();
-	unsigned char color[] = {tempColor[0], tempColor[1], tempColor[2],tempColor[3],
-							tempColor[0], tempColor[1], tempColor[2],tempColor[3],
-							tempColor[0], tempColor[1], tempColor[2],tempColor[3],
-		tempColor[0], tempColor[1], tempColor[2],tempColor[3],} ;
+	unsigned char color[nbVertices];
+	int componentCount = nbVertices*4;
+	for	(int i =0; i< componentCount; i++) {
+		color[i] = tempColor[i%4];
+	}
+	
         glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
 	glEnableClientState(GL_COLOR_ARRAY);
         drawShapeWithTexture(vertices, renderingInfo, nbVertices);

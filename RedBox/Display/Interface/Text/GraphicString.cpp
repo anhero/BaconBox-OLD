@@ -138,6 +138,7 @@ void GraphicString::render(){
 
 void GraphicString::setFont(Font * font){
 	this->font = font;
+	setText(internalString);
 }
 
 void GraphicString::setDirection(StringDirection direction){
