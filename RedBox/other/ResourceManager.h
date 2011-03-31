@@ -117,7 +117,7 @@ namespace RedBox {
 		 * @param name Name of the font, it will be the key of the fonts' map.
 		 * @param path Path of the font.
 		 */
-		static Font* loadFont(const std::string & name, const std::string & path);
+		static Font* loadFont(const std::string & name, const std::string & path, bool overwrite = false);
 		
 		/**
 		 * Return a pointer to the font specified by the given name. 

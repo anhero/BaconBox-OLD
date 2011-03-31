@@ -45,6 +45,7 @@ TextureInfo* ResourceManager::addTexture(const std::string& key, PixMap * aPixma
 		} else {
 			$ECHO("Can't load texture with key: " << key <<
 				  " texture is already loaded");
+				texInfo = textures[key];
 		}
 	} else {
 		// We load the new texture and add it to the map.
@@ -107,6 +108,7 @@ SoundInfo* ResourceManager::loadSound(const std::string& filePath,
 				$ECHO("Couldn't load the sound effect named " << key << 
 					  " found at " << filePath <<
 					  " because a sound with that name already exists.");
+				newSnd = sounds[key];
 			}
 		} else {
 			// We load the sound effect.
@@ -146,6 +148,7 @@ SoundInfo* ResourceManager::loadSound(const SoundParameters& params,
 			} else {
 				$ECHO("Couldn't load the sound effect named " << params.name << 
 					  " because a sound with that name already exists.");
+				newSnd = sounds[params.name];
 			}
 		} else {
 			// We load the sound effect.
@@ -187,6 +190,7 @@ MusicInfo* ResourceManager::loadMusic(const std::string& filePath,
 				$ECHO("Couldn't load the music named " << key << 
 					  " found at " << filePath <<
 					  " because a music with that name already exists.");
+				newBgm = musics[key];
 			}
 		} else {
 			// We load the music.
@@ -225,6 +229,7 @@ MusicInfo* ResourceManager::loadMusic(const MusicParameters& params,
 			} else {
 				$ECHO("Couldn't load the music named " << params.name << 
 					  " because a music with that name already exists.");
+				newBgm = musics[params.name];
 			}
 		} else {
 			// We load the music.
@@ -281,17 +286,28 @@ void ResourceManager::removeMusic(const std::string& name) {
 	}
 }
 
-Font* ResourceManager::loadFont(const std::string & name, const std::string & path){
-	
-	Font * aFont = new Font(name,path);
-	// If there is already a font with the specified name in the map,
-	// we delete it before we insert the new one 
-	std::map<std::string, Font*>::iterator i = fonts.find(name);
-	if (i != fonts.end()){
-		delete (*i).second;
-		(*i).second = aFont;
-	}
-	else{
+Font* ResourceManager::loadFont(const std::string & name, const std::string & path, bool overwrite) {
+	Font * aFont = NULL;
+	// We check if there is already a font with this name.
+	if(fonts.find(name) != fonts.end()) {
+		// We check if we overwrite the existing font or not.
+		if(overwrite) {
+			// We free the allocated memory.
+			aFont = fonts[name];
+			if(aFont) {
+				delete aFont;
+			}
+			// We load the new font.
+			aFont = fonts[name] = new Font(name,path);
+			$ECHO("Overwrote the existing font named " << name << ".");
+		} else {
+			$ECHO("Can't load font with key: " << name <<
+				  " font is already loaded");
+			aFont = fonts[name];
+		}
+	} else {
+		// We load the new texture and add it to the map.
+		aFont = new Font(name,path);
 		fonts.insert(std::pair<std::string, Font*>(name, aFont));
 	}
 	return aFont;
