@@ -20,13 +20,13 @@ namespace RedBox {
 	class GamePad : public InputDevice {
 	public:
 		/// Signal sent when a buton is pressed down.
-		sigly::Signal1<GamePadButtonSignalData> buttonDown;
-		
-		/// Signal sent when a button is released.
-		sigly::Signal1<GamePadButtonSignalData> buttonUp;
+		sigly::Signal1<GamePadButtonSignalData> buttonPress;
 		
 		/// Signal sent when a button is being held.
 		sigly::Signal1<GamePadButtonSignalData> buttonHold;
+		
+		/// Signal sent when a button is released.
+		sigly::Signal1<GamePadButtonSignalData> butonRelease;
 		
 		/// Signal sent when a thumbstick is moved.
 		sigly::Signal1<GamePadThumbstickSignalData> thumbstickMove;
