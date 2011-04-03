@@ -1,6 +1,19 @@
 #ifndef RB_PLATFORM_FLAGGER_H
 #define RB_PLATFORM_FLAGGER_H
 
+// Defines for input, since none are implemented, they are only written here.
+#define RB_ACCELEROMETER_IMPL NULL
+//#define RB_ACCELEROMETER_INCLUDE "Accelerometer.h"
+
+#define RB_GAME_PAD_IMPL NULL
+//#define RB_GAME_PAD_INCLUDE "GamePad.h"
+
+#define RB_KEYBOARD_IMPL NULL
+//#define RB_KEYBOARD_INCLUDE "Keyboard.h"
+
+#define RB_POINTER_IMPL NULL
+//#define RB_POINTER_INCLUDE "Pointer.h"
+
 #ifdef LINUX
 
 #define RB_LINUX
