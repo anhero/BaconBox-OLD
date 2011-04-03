@@ -41,6 +41,7 @@ namespace RedBox {
 	protected:
 		/// State of the pointing device's cursors.
 		PointerState state;
+		
 		/**
 		 * Parameterized constructor.
 		 * @param nbCursors Number of cursors the pointing device has. In the

@@ -11,17 +11,17 @@ namespace RedBox {
 	 * @ingroup Input
 	 */
 	class InputDevice {
-	public:
+		friend class InputManager;
+	protected:
 		/**
 		 * Default constructor.
 		 */
 		InputDevice();
-
+		
 		/**
 		 * Destructor.
 		 */
 		virtual ~InputDevice();
-	protected:
 		/**
 		 * Abstract update method. This will be called to update the device's
 		 * state.
