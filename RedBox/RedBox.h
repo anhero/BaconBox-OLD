@@ -34,5 +34,10 @@
 
 /**
  * @defgroup Audio Audio
- * *brief Classes used for the audio engine.
+ * @brief Classes used for the audio engine.
+ */
+
+/**
+ * @defgroup Events Events
+ * @brief Classes used for the event system.
  */
