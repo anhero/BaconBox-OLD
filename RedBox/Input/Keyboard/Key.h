@@ -170,7 +170,7 @@ namespace RedBox {
 		const Enum Y = 157;
 		const Enum Z = 158;
 		const Enum ZOOM = 159;
-		const Enum MAX_KEY = 160;
+		const unsigned int NB_KEYS = 160;
 	}
 }
  #endif

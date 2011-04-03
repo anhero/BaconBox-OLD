@@ -5,7 +5,7 @@
 #ifndef RB_ACCELEROMETER_H
 #define RB_ACCELEROMETER_H
 
-#include <sigly.h>
+#include <sigly/sigly.h>
 
 #include "InputDevice.h"
 #include "AccelerometerSignalData.h"

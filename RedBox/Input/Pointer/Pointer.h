@@ -5,7 +5,7 @@
 #ifndef RB_POINTER_H
 #define RB_POINTER_H
 
-#include <sigly.h>
+#include <sigly/sigly.h>
 
 #include "InputDevice.h"
 #include "PointerButtonSignalData.h"

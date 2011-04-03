@@ -5,7 +5,7 @@
 #ifndef RB_GAME_PAD_RB
 #define RB_GAME_PAD_RB
 
-#include <sigly.h>
+#include <sigly\sigly.h>
 
 #include "InputDevice.h"
 #include "GamePadState.h"
