@@ -86,6 +86,7 @@ LIBS += -framework OpenAL
 LIBS += -lz
 }
 
+win32 {
 
 win32:CONFIG(release, debug|release): LIBS += -L"$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/" -lzlib
 else:win32:CONFIG(debug, debug|release): LIBS += -L"$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/" -lzlib
@@ -119,3 +120,4 @@ DEPENDPATH += "$$PWD/../../../../../../../../../../Program Files/OpenAL 1.1 SDK/
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += "$$PWD/../../../../../../../../../../Program Files/OpenAL 1.1 SDK/libs/Win32/OpenAL32.lib"
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += "$$PWD/../../../../../../../../../../Program Files/OpenAL 1.1 SDK/libs/Win32/OpenAL32.lib"
 
+}
