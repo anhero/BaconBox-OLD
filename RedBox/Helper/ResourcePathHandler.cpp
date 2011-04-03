@@ -2,7 +2,7 @@
 
 #include "PlatformFlagger.h"
 
-#if defined(RB_QT) && defined(RB_MAC_PLATFORM)
+#if defined(RB_QT)
 #include <QDir>
 #include <iostream>
 #include <QCoreApplication>
@@ -19,7 +19,7 @@ std::string ResourcePathHandler::getResourcePathFor(const std::string& item) {
 	NSString *resourceDirectory = [[NSBundle mainBundle] resourcePath];
 	path = ((std::string)[resourceDirectory cStringUsingEncoding:NSASCIIStringEncoding] + "/" + item );
 	[pool release];
-#elif defined(RB_QT) && defined(RB_MAC_PLATFORM)
+#elif defined(RB_QT)
 	QDir dir(QDir::currentPath());
 	dir.cdUp();
 	dir.cd("Resources");

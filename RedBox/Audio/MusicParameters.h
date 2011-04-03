@@ -7,9 +7,7 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_AV_AUDIO_PLAYER
 #include <string>
-#endif
 
 namespace RedBox {
 	/**

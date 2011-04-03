@@ -86,3 +86,36 @@ LIBS += -framework OpenAL
 LIBS += -lz
 }
 
+
+win32:CONFIG(release, debug|release): LIBS += -L"$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/" -lzlib
+else:win32:CONFIG(debug, debug|release): LIBS += -L"$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/" -lzlib
+
+INCLUDEPATH += "$$PWD/../../../../../../../../../../Program Files/GnuWin32/include"
+DEPENDPATH += "$$PWD/../../../../../../../../../../Program Files/GnuWin32/include"
+INCLUDEPATH += "$$PWD/../../../../../../../../../../Program Files/GnuWin32/include/freetype2"
+DEPENDPATH += "$$PWD/../../../../../../../../../../Program Files/GnuWin32/include/freetype2"
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += "$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/zlib.lib"
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += "$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/zlib.lib"
+
+win32:CONFIG(release, debug|release): LIBS += -L"$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/" -llibpng
+else:win32:CONFIG(debug, debug|release): LIBS += -L"$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/" -llibpng
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += "$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/libpng.lib"
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += "$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/libpng.lib"
+
+win32:CONFIG(release, debug|release): LIBS += -L"$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/" -lfreetype
+else:win32:CONFIG(debug, debug|release): LIBS += -L"$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/" -lfreetype
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += "$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/freetype.lib"
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += "$$PWD/../../../../../../../../../../Program Files/GnuWin32/lib/freetype.lib"
+
+win32:CONFIG(release, debug|release): LIBS += -L"$$PWD/../../../../../../../../../../Program Files/OpenAL 1.1 SDK/libs/Win32/" -lOpenAL32
+else:win32:CONFIG(debug, debug|release): LIBS += -L"$$PWD/../../../../../../../../../../Program Files/OpenAL 1.1 SDK/libs/Win32/" -lOpenAL32
+
+INCLUDEPATH += "$$PWD/../../../../../../../../../../Program Files/OpenAL 1.1 SDK/include"
+DEPENDPATH += "$$PWD/../../../../../../../../../../Program Files/OpenAL 1.1 SDK/include"
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += "$$PWD/../../../../../../../../../../Program Files/OpenAL 1.1 SDK/libs/Win32/OpenAL32.lib"
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += "$$PWD/../../../../../../../../../../Program Files/OpenAL 1.1 SDK/libs/Win32/OpenAL32.lib"
+

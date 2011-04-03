@@ -7,8 +7,13 @@
 
 #include "PlatformFlagger.h"
 
+#ifdef RB_WIN32
+#include <al.h>
+#include <alc.h>
+#else
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
+#endif
 
 #include <string>
 #include <vector>

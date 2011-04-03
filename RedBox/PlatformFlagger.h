@@ -7,23 +7,33 @@
 
 #endif // LINUX
 
+#ifdef QT
+#define RB_QT
+#endif
+
 #ifdef _WIN32
-#include <sdkddkver.h>
+#ifdef RB_QT
+    #include <qt_windows.h>
+#else
+    #include <sdkddkver.h>
+#endif
 
 #define RB_WIN32
 
-#ifdef _WIN32_WINNT_VISTA
+#define RB_OPENAL
+#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+#define RB_SOUND_ENGINE new OpenALEngine()
+#define RB_MUSIC_ENGINE NULL
+
+#define RB_OPENGL
+
+/*#ifdef _WIN32_WINNT_VISTA
 	#define _WIN32_WINNT _WIN32_WINNT_VISTA
 #else
 	#define _WIN32_WINNT _WIN32_WINNT_WIN2K
 #endif // _WIN32_WINNT_VISTA
-
+*/
 #endif // _WIN32
-
-#ifdef QT
-#define RB_QT
-#include "redbox.h"
-#endif
 
 #ifdef __APPLE__
 

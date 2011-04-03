@@ -3,8 +3,8 @@
  * @ingroup Helper
  */
 
-#ifndef __RANDOMGENERATOR_H
-#define __RANDOMGENERATOR_H
+#ifndef RB_RANDOMGENERATOR_H
+#define RB_RANDOMGENERATOR_H
 
 #include <cstdlib>
 
@@ -40,6 +40,9 @@ namespace RedBox {
 	private:
 		/// Maximum double value.
 		static double D_RAND_MAX;
+                /// Used to know if the random seed has been initialized or not.
+                static bool initialized;
+                static void init();
 	};
 	
 }

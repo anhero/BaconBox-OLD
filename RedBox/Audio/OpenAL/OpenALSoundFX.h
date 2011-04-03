@@ -5,8 +5,15 @@
 #ifndef RB_OPENAL_SOUNDFX_H
 #define RB_OPENAL_SOUNDFX_H
 
+#include "PlatformFlagger.h"
+
+#ifdef RB_WIN32
+#include <al.h>
+#include <alc.h>
+#else
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
+#endif
 #include <vector>
 
 #include "SoundFX.h"
