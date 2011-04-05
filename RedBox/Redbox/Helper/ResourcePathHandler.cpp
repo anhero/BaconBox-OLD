@@ -1,6 +1,10 @@
 #include "ResourcePathHandler.h"
 
 #include "PlatformFlagger.h"
+#ifdef RB_IPHONE_PLATFORM
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#endif
 
 #if defined(RB_QT)
 #include <QDir>
