@@ -182,25 +182,25 @@ void InputManager::update() {
 	for (std::vector<Accelerometer*>::iterator i = accelerometers.begin();
 		 i != accelerometers.end(); ++i) {
 		if(*i) {
-			(*i)->update();
+			(*i)->updateDevice();
 		}
 	}
 	for (std::vector<GamePad*>::iterator i = gamePads.begin();
 		 i != gamePads.end(); ++i) {
 		if(*i) {
-			(*i)->update();
+			(*i)->updateDevice();
 		}
 	}
 	for (std::vector<Keyboard*>::iterator i = keyboards.begin();
 		 i != keyboards.end(); ++i) {
 		if(*i) {
-			(*i)->update();
+			(*i)->updateDevice();
 		}
 	}
 	for (std::vector<Pointer*>::iterator i = pointers.begin();
 		 i != pointers.end(); ++i) {
 		if(*i) {
-			(*i)->update();
+			(*i)->updateDevice();
 		}
 	}
 }
