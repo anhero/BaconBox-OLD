@@ -14,6 +14,9 @@ xcuserdata/
 
 build
 
+RedBoxApp-build*/*
+
+
 *.pbxuser
 *.perspective
 *.perspectivev3
