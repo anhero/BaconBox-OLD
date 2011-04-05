@@ -6,10 +6,8 @@
 
 using namespace RedBox;
 
-KeyboardState::KeyboardState(): InputState() {
-	for(unsigned int i = 0; i < Key::NB_KEYS; ++i) {
-		previousKeys[i] = keys[i] = false;
-	}
+KeyboardState::KeyboardState(): InputState(), previousKeys(std::vector<bool>(Key::NB_KEYS, false)),
+keys(std::vector<bool>(Key::NB_KEYS, false)) {
 }
 
 KeyboardState::~KeyboardState() {
@@ -119,3 +117,5 @@ void KeyboardState::removeMaskKey(const std::string& maskName, Key::Enum key) {
 void KeyboardState::removeMask(const std::string& maskName) {
 	keyMasks.erase(maskName);
 }
+
+

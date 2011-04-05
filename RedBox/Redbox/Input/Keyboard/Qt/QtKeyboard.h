@@ -8,7 +8,8 @@
 #include "Keyboard.h"
 #include <QWidget>
 #include <map>
-#include <Key.h>
+#include <vector>
+#include "Key.h"
 
 namespace RedBox {
 	class QtKeyboard : public QWidget, public Keyboard {
@@ -21,10 +22,13 @@ namespace RedBox {
 		~QtKeyboard();
 		void updateDevice();
 		void keyPressEvent(QKeyEvent* e);
+		void keyReleaseEvent(QKeyEvent* e);
 	private:
 		static QtKeyboard* instance;
+		std::vector<bool> qtKeys;
 		std::map<int, Key::Enum> mappings;
 		void fillMappings();
+		Key::Enum getMapping(int qtKey) const;
 	};
 }
 
