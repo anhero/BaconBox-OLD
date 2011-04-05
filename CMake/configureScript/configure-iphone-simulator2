@@ -1,0 +1,18 @@
+#! /bin/bash
+#unset CPATH
+#unset C_INCLUDE_PATH
+#unset CPLUS_INCLUDE_PATH
+#unset OBJC_INCLUDE_PATH
+#unset LIBS
+#unset DYLD_FALLBACK_LIBRARY_PATH
+#unset DYLD_FALLBACK_FRAMEWORK_PATH
+
+#export SDKVER="4.3"
+#export DEVROOT="/Developer/Platforms/iPhoneSimulator.platform/Developer"
+#export SDKROOT="$DEVROOT/SDKs/iPhoneSimulator4.3.sdk" #WARNING this parameter crash the build, I don't know why.
+#export PKG_CONFIG_PATH="$SDROOT/usr/lib/pkgconfig":"/opt/iphone-simulator-$SDKVER/lib/pkgconfig":"/usr/local/iphone-simulator-$SDKVER/lib/pkgconfig"
+#export PKG_CONFIG_LIBDIR="$PKG_CONFIG_PATH"
+export MAINFOLDER=`pwd`
+
+cd build >/dev/null 2>&1 && cmake .. -DCMAKE_TOOLCHAIN_FILE="$MAINFOLDER/CMake/toolchain/iphone-simulator.toolchain"  -GXcode -DCMAKE_INSTALL_PREFIX="/opt/iphone-simulator-$SDKVER" "$@"
+

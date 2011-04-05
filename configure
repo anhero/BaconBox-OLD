@@ -1,0 +1,3 @@
+#! /bin/bash
+#./CMake/configureScript/configure-iphone
+./CMake/configureScript/configure-iphone-simulator2
