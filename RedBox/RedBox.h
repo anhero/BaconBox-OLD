@@ -36,3 +36,5 @@
  * @defgroup Audio Audio
  * *brief Classes used for the audio engine.
  */
+
+#include <RedBox/RedBoxEngine.h>
