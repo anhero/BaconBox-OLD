@@ -17,60 +17,69 @@ CONFIG += x86
 DEFINES += QT
 DEFINES += _DEBUG
 
+DESTDIR = $$PWD/../../build/lib
+
+
+
+#MOC_DIR = $$PWD/../../build
+#OBJECTS_DIR = $$PWD/../../build
+#RCC_DIR = $$PWD/../../build
+#UI_DIR =  $$PWD/../../build
+
 INCLUDEPATH += ../../../RedBox \
-	../../../RedBox/RedBox \
-	../../../RedBox/RedBox/Audio \
-	../../../RedBox/RedBox/Audio/OpenAL \
-	../../../RedBox/RedBox/Display \
-	../../../RedBox/RedBox/Display/Driver \
-	../../../RedBox/RedBox/Display/Text \
-	../../../RedBox/RedBox/Emitter \
-	../../../RedBox/RedBox/Input \
-	../../../RedBox/RedBox/Input/Accelerometer \
-	../../../RedBox/RedBox/Input/GamePad \
-	../../../RedBox/RedBox/Input/Keyboard \
-	../../../RedBox/RedBox/Input/Keyboard/Qt \
-	../../../RedBox/RedBox/Input/Pointer \
-	../../../RedBox/RedBox/Physic \
-	../../../RedBox/RedBox/Helper \
-	../../../RedBox/RedBox/SignalSlots \
+        $$PWD/../../RedBox/RedBox \
+        $$PWD/../../RedBox/RedBox/Audio \
+        $$PWD/../../RedBox/RedBox/Audio/OpenAL \
+        $$PWD/../../RedBox/RedBox/Display \
+        $$PWD/../../RedBox/RedBox/Display/Driver \
+        $$PWD/../../RedBox/RedBox/Display/Text \
+        $$PWD/../../RedBox/RedBox/Emitter \
+        $$PWD/../../RedBox/RedBox/Input \
+        $$PWD/../../RedBox/RedBox/Input/Accelerometer \
+        $$PWD/../../RedBox/RedBox/Input/GamePad \
+        $$PWD/../../RedBox/RedBox/Input/Keyboard \
+        $$PWD/../../RedBox/RedBox/Input/Keyboard/Qt \
+        $$PWD/../../RedBox/RedBox/Input/Pointer \
+        $$PWD/../../RedBox/RedBox/Physic \
+        $$PWD/../../RedBox/RedBox/Helper \
+        $$PWD/../../RedBox/RedBox/SignalSlots \
 
 
 SOURCES += QtRedbox.cpp \
-	../../../RedBox/RedBox/*.cpp \
-	../../../RedBox/RedBox/Audio/*.cpp \
-	../../../RedBox/RedBox/Audio/OpenAL/*.cpp \
-	../../../RedBox/RedBox/Display/*.cpp \
-	../../../RedBox/RedBox/Display/Driver/*.cpp \
-	../../../RedBox/RedBox/Display/Text/*.cpp \
-	../../../RedBox/RedBox/Emitter/*.cpp \
-	../../../RedBox/RedBox/Input/*.cpp \
-	../../../RedBox/RedBox/Input/Accelerometer/*.cpp \
-	../../../RedBox/RedBox/Input/GamePad/*.cpp \
-	../../../RedBox/RedBox/Input/Keyboard/*.cpp \
-	../../../RedBox/RedBox/Input/Keyboard/Qt/*.cpp \
-	../../../RedBox/RedBox/Input/Pointer/*.cpp \
-	../../../RedBox/RedBox/Physic/*.cpp \
-	../../../RedBox/RedBox/Helper/*.cpp \
-	../../../RedBox/RedBox/SignalSlots/*.cpp \
+        $$PWD/../../RedBox/RedBox/*.cpp \
+        $$PWD/../../RedBox/RedBox/Audio/*.cpp \
+        $$PWD/../../RedBox/RedBox/Audio/OpenAL/*.cpp \
+        $$PWD/../../RedBox/RedBox/Display/*.cpp \
+        $$PWD/../../RedBox/RedBox/Display/Driver/*.cpp \
+        $$PWD/../../RedBox/RedBox/Display/Text/*.cpp \
+        $$PWD/../../RedBox/RedBox/Emitter/*.cpp \
+        $$PWD/../../RedBox/RedBox/Input/*.cpp \
+        $$PWD/../../RedBox/RedBox/Input/Accelerometer/*.cpp \
+        $$PWD/../../RedBox/RedBox/Input/GamePad/*.cpp \
+        $$PWD/../../RedBox/RedBox/Input/Keyboard/*.cpp \
+        $$PWD/../../RedBox/RedBox/Input/Keyboard/Qt/*.cpp \
+        $$PWD/../../RedBox/RedBox/Input/Pointer/*.cpp \
+        $$PWD/../../RedBox/RedBox/Physic/*.cpp \
+        $$PWD/../../RedBox/RedBox/Helper/*.cpp \
+        $$PWD/../../RedBox/RedBox/SignalSlots/*.cpp \
 
 HEADERS += QtRedbox.h \
-	../../../RedBox/RedBox/*.h \
-	../../../RedBox/RedBox/Audio/*.h \
-	../../../RedBox/RedBox/Audio/OpenAL/*.h \
-	../../../RedBox/RedBox/Display/*.h \
-	../../../RedBox/RedBox/Display/Driver/*.h \
-	../../../RedBox/RedBox/Display/Text/*.h \
-	../../../RedBox/RedBox/Emitter/*.h \
-	../../../RedBox/RedBox/Input/*.h \
-	../../../RedBox/RedBox/Input/Accelerometer/*.h \
-	../../../RedBox/RedBox/Input/GamePad/*.h \
-	../../../RedBox/RedBox/Input/Keyboard/*.h \
-	../../../RedBox/RedBox/Input/Keyboard/Qt/*.h \
-	../../../RedBox/RedBox/Input/Pointer/*.h \
-	../../../RedBox/RedBox/Physic/*.h \
-	../../../RedBox/RedBox/Helper/*.h \
-	../../../RedBox/RedBox/SignalSlots/*.h \
+        $$PWD/../../RedBox/RedBox/*.h \
+        $$PWD/../../RedBox/RedBox/Audio/*.h \
+        $$PWD/../../RedBox/RedBox/Audio/OpenAL/*.h \
+        $$PWD/../../RedBox/RedBox/Display/*.h \
+        $$PWD/../../RedBox/RedBox/Display/Driver/*.h \
+        $$PWD/../../RedBox/RedBox/Display/Text/*.h \
+        $$PWD/../../RedBox/RedBox/Emitter/*.h \
+        $$PWD/../../RedBox/RedBox/Input/*.h \
+        $$PWD/../../RedBox/RedBox/Input/Accelerometer/*.h \
+        $$PWD/../../RedBox/RedBox/Input/GamePad/*.h \
+        $$PWD/../../RedBox/RedBox/Input/Keyboard/*.h \
+        $$PWD/../../RedBox/RedBox/Input/Keyboard/Qt/*.h \
+        $$PWD/../../RedBox/RedBox/Input/Pointer/*.h \
+        $$PWD/../../RedBox/RedBox/Physic/*.h \
+        $$PWD/../../RedBox/RedBox/Helper/*.h \
+        $$PWD/../../RedBox/RedBox/SignalSlots/*.h \
 
 unix:!symbian {
 	maemo5 {
@@ -82,21 +91,21 @@ unix:!symbian {
 }
 
 macx {
-INCLUDEPATH += $$PWD/../../../libraries/ios/i386/include
-DEPENDPATH += $$PWD/../../../libraries/ios/i386/include
+INCLUDEPATH += $$PWD/../../libraries/ios/i386/include
+DEPENDPATH += $$PWD/../../libraries/ios/i386/include
 
-LIBS += -L$$PWD/../../../libraries/ios/i386/lib/ -lpng15
+LIBS += -L$$PWD/../../libraries/ios/i386/lib/ -lpng15
 
-PRE_TARGETDEPS += $$PWD/../../../libraries/ios/i386/lib/libpng.a
+PRE_TARGETDEPS += $$PWD/../../libraries/ios/i386/lib/libpng.a
 
 
-LIBS += -L$$PWD/../../../libraries/ios/i386/lib/ -lfreetype
+LIBS += -L$$PWD/../../libraries/ios/i386/lib/ -lfreetype
 
-PRE_TARGETDEPS += $$PWD/../../../libraries/ios/i386/lib/libfreetype.a
+PRE_TARGETDEPS += $$PWD/../../libraries/ios/i386/lib/libfreetype.a
 
-LIBS += -L$$PWD/../../../libraries/ios/i386/lib/ -lvorbisidec
+LIBS += -L$$PWD/../../libraries/ios/i386/lib/ -lvorbisidec
 
-PRE_TARGETDEPS += $$PWD/../../../libraries/ios/i386/lib/libvorbisidec.a
+PRE_TARGETDEPS += $$PWD/../../libraries/ios/i386/lib/libvorbisidec.a
 
 LIBS += -framework OpenAL
 
