@@ -6,6 +6,7 @@
 #include "AudioEngine.h"
 #include "SoundEngine.h"
 #include "MusicEngine.h"
+#include "InputManager.h"
 
 using namespace RedBox;
 
@@ -83,7 +84,10 @@ void RedBoxEngine::pulse() {
 			// We update the delta ratio.
 			deltaRatio = 1.0 + (TimeHelper::getSinceEpoch() - 
 						  (lastUpdate + updateDelay)) / updateDelay;
+			// We update the current state.
 			currentState->update();
+			// We update the input manager.
+			InputManager::getInstance()->update();
 			// We take note of the time.
 			lastUpdate = TimeHelper::getSinceEpoch();
 		}
@@ -108,6 +112,7 @@ void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight) {
 	TimeHelper::init();
 	GraphicDriver::initializeGraphicDriver(screenWidth, screenHeight);
 	Font::initializeFontRenderer();
+	InputManager::getInstance();
 }
 
 double RedBoxEngine::getUpdateDelta() {

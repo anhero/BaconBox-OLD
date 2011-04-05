@@ -5,7 +5,7 @@
 #ifndef RB_GAME_PAD_RB
 #define RB_GAME_PAD_RB
 
-#include <sigly/sigly.h>
+#include <sigly.h>
 
 #include "InputDevice.h"
 #include "GamePadState.h"
@@ -18,6 +18,7 @@ namespace RedBox {
 	 * @ingroup Input
 	 */
 	class GamePad : public InputDevice {
+		friend class InputManager;
 	public:
 		/// Signal sent when a buton is pressed down.
 		sigly::Signal1<GamePadButtonSignalData> buttonPress;

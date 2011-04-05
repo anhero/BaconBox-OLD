@@ -5,7 +5,7 @@
 #ifndef RB_KEYBOARD_H
 #define RB_KEYBOARD_H
 
-#include <sigly/sigly.h>
+#include <sigly.h>
 
 #include "InputDevice.h"
 #include "KeyboardState.h"
@@ -20,6 +20,7 @@ namespace RedBox {
 	 * @ingroup Input
 	 */
 	class Keyboard : public InputDevice {
+		friend class InputManager;
 	public:
 		/// Signal sent when a key is pressed.
 		sigly::Signal1<KeySignalData> keyPress;

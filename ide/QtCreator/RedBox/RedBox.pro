@@ -25,8 +25,14 @@ INCLUDEPATH += ../../../RedBox \
 	../../../RedBox/Display/GraphicDrivers \
 	../../../RedBox/Display/Emitter \
 	../../../RedBox/Display/Interface/Text \
+	../../../RedBox/Input \
+	../../../RedBox/Input/Accelerometer \
+	../../../RedBox/Input/GamePad \
+	../../../RedBox/Input/Keyboard \
+	../../../RedBox/Input/Pointer \
 	../../../RedBox/other \
 	../../../RedBox/Helper \
+	../../../RedBox/SignalSlots \
 	../../../RedBox/StatesSystem
 
 
@@ -38,7 +44,13 @@ SOURCES += QtRedbox.cpp \
 	../../../RedBox/Display/Emitter/*.cpp \
 	../../../RedBox/Display/GraphicDrivers/*.cpp \
 	../../../RedBox/Display/Interface/Text/*.cpp \
+	../../../RedBox/Input/*.cpp \
+	../../../RedBox/Input/Accelerometer/*.cpp \
+	../../../RedBox/Input/GamePad/*.cpp \
+	../../../RedBox/Input/Keyboard/*.cpp \
+	../../../RedBox/Input/Pointer/*.cpp \
 	../../../RedBox/Helper/*.cpp \
+	../../../RedBox/SignalSlots/*.cpp \
 	../../../RedBox/StatesSystem/*.cpp \
 	../../../RedBox/other/*.cpp
 
@@ -50,7 +62,13 @@ HEADERS += QtRedbox.h \
 	../../../RedBox/Display/Emitter/*.h \
 	../../../RedBox/Display/GraphicDrivers/*.h \
 	../../../RedBox/Display/Interface/Text/*.h \
+	../../../RedBox/Input/*.h \
+	../../../RedBox/Input/Accelerometer/*.h \
+	../../../RedBox/Input/GamePad/*.h \
+	../../../RedBox/Input/Keyboard/*.h \
+	../../../RedBox/Input/Pointer/*.h \
 	../../../RedBox/Helper/*.h \
+	../../../RedBox/SignalSlots/*.h \
 	../../../RedBox/StatesSystem/*.h \
 	../../../RedBox/other/*.h \
 	../../../RedBox/*.h

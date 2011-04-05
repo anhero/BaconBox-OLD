@@ -5,7 +5,7 @@
 #ifndef RB_SIGNAL_ANALYZER_H
 #define RB_SIGNAL_ANALYZER_H
 
-#include <sigly/sigly.h>
+#include <sigly.h>
 
 namespace RedBox {
 	/**
