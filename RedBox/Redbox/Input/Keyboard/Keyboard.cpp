@@ -51,3 +51,16 @@ Keyboard::Keyboard() : InputDevice() {
 
 Keyboard::~Keyboard() {
 }
+
+std::vector<bool>& Keyboard::getPreviousKeys() {
+	return state.previousKeys;
+}
+
+std::vector<bool>& Keyboard::getKeys() {
+	return state.keys;
+}
+
+std::map<std::string, std::set<Key::Enum> >& Keyboard::getKeyMasks() {
+	return state.keyMasks;
+}
+

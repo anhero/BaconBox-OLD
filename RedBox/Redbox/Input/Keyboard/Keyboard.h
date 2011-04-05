@@ -5,6 +5,11 @@
 #ifndef RB_KEYBOARD_H
 #define RB_KEYBOARD_H
 
+#include <vector>
+#include <map>
+#include <string>
+#include <set>
+
 #include <sigly.h>
 
 #include "InputDevice.h"
@@ -147,6 +152,23 @@ namespace RedBox {
 		 * Destructor.
 		 */
 		virtual ~Keyboard();
+
+		/**
+		 * Gets the previous keys' state.
+		 * @return Reference to the previous keys' state.
+		 */
+		std::vector<bool>& getPreviousKeys();
+		/**
+		 * Gets the current keys' state.
+		 * @return Reference to the current keys' state.
+		 */
+		std::vector<bool>& getKeys();
+
+		/**
+		 * Gets the key mask definitions.
+		 * @return Reference to the key mask definitions.
+		 */
+		std::map<std::string, std::set<Key::Enum> >& getKeyMasks();
 	};
 }
 

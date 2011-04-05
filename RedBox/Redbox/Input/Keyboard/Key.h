@@ -9,7 +9,8 @@ namespace RedBox {
 	 * Key codes for keyboard input.
 	 */
 	namespace Key {
-		typedef unsigned int Enum;
+		typedef int Enum;
+		const Enum INVALID = -1;
 		const Enum A = 0;
 		const Enum ADD = 1;
 		const Enum APPS = 2;
@@ -184,7 +185,15 @@ namespace RedBox {
 		const Enum LESS = 171;
 		const Enum EQUAL = 172;
 		const Enum GREATER = 173;
-		const unsigned int NB_KEYS = 174;
+		const Enum AT = 174;
+		const Enum CIRCUMFLEX = 175;
+		const Enum UNDERSCORE = 176;
+		const Enum OPEN_QUOTE = 177;
+		const Enum OPEN_BRACE = 178;
+		const Enum CLOSE_BRACE = 179;
+		const Enum BAR = 180;
+		const Enum NBSP = 181;
+		const int NB_KEYS = 183;
 	}
 }
  #endif

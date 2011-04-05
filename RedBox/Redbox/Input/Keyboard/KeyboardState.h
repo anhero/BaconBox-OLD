@@ -8,6 +8,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <vector>
 
 #include "InputState.h"
 #include "Key.h"
@@ -87,10 +88,10 @@ namespace RedBox {
 		bool maskHasKey(const std::string& maskName, Key::Enum key) const;
 	private:
 		/// Keyboard's keys' previous state.
-		bool previousKeys[Key::NB_KEYS];
+		std::vector<bool> previousKeys;
 		
 		/// Keyboard's keys' current state.
-		bool keys[Key::NB_KEYS];
+		std::vector<bool> keys;
 
 		/**
 		 * Key mask definitions. A key mask is pressed when one of its keys

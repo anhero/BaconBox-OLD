@@ -24,18 +24,49 @@ void QtKeyboard::setParentWidget(QWidget* parent) {
 	}
 }
 
-QtKeyboard::QtKeyboard(QWidget* parent) : Keyboard(), QWidget(parent) {
+QtKeyboard::QtKeyboard(QWidget* parent) : Keyboard(), QWidget(parent), qtKeys(std::vector<bool>(Key::NB_KEYS, false)) {
 	QtKeyboard::instance = this;
+	fillMappings();
 }
 
 QtKeyboard::~QtKeyboard() {
 }
 
 void QtKeyboard::updateDevice() {
+	getPreviousKeys() = getKeys();
+	getKeys() = qtKeys;
+	for(Key::Enum i = 0; i < Key::NB_KEYS;++i) {
+		if(isKeyPressed(i)) {
+			keyPress(KeySignalData(state, i));
+		} else if(isKeyHeld(i)) {
+			keyHold(KeySignalData(state, i));
+		} else if(isKeyReleased(i)) {
+			keyRelease(KeySignalData(state, i));
+		}
+	}
+	for(std::map<std::string, std::set<Key::Enum> >::iterator i = getKeyMasks().begin(); i != getKeyMasks().end(); ++i) {
+		if(isKeyMaskPressed(i->first)) {
+			keyMaskPress(KeyMaskSignalData(state, i->first));
+		} else if(isKeyMaskHeld(i->first)) {
+			keyMaskHold(KeyMaskSignalData(state, i->first));
+		} else if(isKeyMaskReleased(i->first)) {
+			keyMaskRelease(KeyMaskSignalData(state, i->first));
+		}
+	}
 }
 
 void QtKeyboard::keyPressEvent(QKeyEvent* e) {
-	std::cout << e->key() << std::endl;
+	Key::Enum keyPressed = getMapping(e->key());
+	if(keyPressed != Key::INVALID) {
+		qtKeys[keyPressed] = true;
+	}
+}
+
+void QtKeyboard::keyReleaseEvent(QKeyEvent* e) {
+	Key::Enum keyPressed = getMapping(e->key());
+	if(keyPressed != Key::INVALID) {
+		qtKeys[keyPressed] = false;
+	}
 }
 
 void QtKeyboard::fillMappings() {
@@ -142,6 +173,85 @@ void QtKeyboard::fillMappings() {
 		mappings[Qt::Key_Equal] = Key::EQUAL;
 		mappings[Qt::Key_Greater] = Key::GREATER;
 		mappings[Qt::Key_Question] = Key::QUESTION;
+		mappings[Qt::Key_At] = Key::AT;
+		mappings[Qt::Key_A] = Key::A;
+		mappings[Qt::Key_B] = Key::B;
+		mappings[Qt::Key_C] = Key::C;
+		mappings[Qt::Key_D] = Key::D;
+		mappings[Qt::Key_E] = Key::E;
+		mappings[Qt::Key_F] = Key::F;
+		mappings[Qt::Key_G] = Key::G;
+		mappings[Qt::Key_H] = Key::H;
+		mappings[Qt::Key_I] = Key::I;
+		mappings[Qt::Key_J] = Key::J;
+		mappings[Qt::Key_K] = Key::K;
+		mappings[Qt::Key_L] = Key::L;
+		mappings[Qt::Key_M] = Key::M;
+		mappings[Qt::Key_N] = Key::N;
+		mappings[Qt::Key_O] = Key::O;
+		mappings[Qt::Key_P] = Key::P;
+		mappings[Qt::Key_Q] = Key::Q;
+		mappings[Qt::Key_R] = Key::R;
+		mappings[Qt::Key_S] = Key::S;
+		mappings[Qt::Key_T] = Key::T;
+		mappings[Qt::Key_U] = Key::U;
+		mappings[Qt::Key_V] = Key::V;
+		mappings[Qt::Key_W] = Key::W;
+		mappings[Qt::Key_X] = Key::X;
+		mappings[Qt::Key_Y] = Key::Y;
+		mappings[Qt::Key_Z] = Key::Z;
+		mappings[Qt::Key_BracketLeft] = Key::OPEN_BRACKETS;
+		mappings[Qt::Key_BracketRight] = Key::CLOSE_BRACKETS;
+		mappings[Qt::Key_AsciiCircum] = Key::CIRCUMFLEX;
+		mappings[Qt::Key_Underscore] = Key::UNDERSCORE;
+		mappings[Qt::Key_QuoteLeft] = Key::OPEN_QUOTE;
+		mappings[Qt::Key_BraceLeft] = Key::OPEN_BRACE;
+		mappings[Qt::Key_Bar] = Key::BAR;
+		mappings[Qt::Key_BraceRight] = Key::CLOSE_BRACE;
+		mappings[Qt::Key_AsciiTilde] = Key::TILDE;
+		mappings[Qt::Key_nobreakspace] = Key::NBSP;
+		mappings[Qt::Key_periodcentered] = Key::PERIOD;
+		mappings[Qt::Key_cedilla] = Key::CLOSE_BRACKETS;
+		mappings[Qt::Key_Agrave] = Key::BACKSLASH;
+		mappings[Qt::Key_Ccedilla] = Key::CLOSE_BRACKETS;
+		mappings[Qt::Key_Egrave] = Key::APOSTROPHE;
+		mappings[Qt::Key_Eacute] = Key::SLASH;
+		mappings[Qt::Key_multiply] = Key::MULTIPLY;
+		mappings[Qt::Key_division] = Key::DIVIDE;
+		mappings[Qt::Key_Kanji] = Key::KANJI;
+		mappings[Qt::Key_Back] = Key::BROWSER_BACK;
+		mappings[Qt::Key_Forward] = Key::BROWSER_FORWARD;
+		mappings[Qt::Key_Stop] = Key::BROWSER_STOP;
+		mappings[Qt::Key_Refresh] = Key::BROWSER_REFRESH;
+		mappings[Qt::Key_VolumeDown] = Key::VOLUME_DOWN;
+		mappings[Qt::Key_VolumeUp] = Key::VOLUME_UP;
+		mappings[Qt::Key_VolumeMute] = Key::VOLUME_MUTE;
+		mappings[Qt::Key_MediaPlay] = Key::MEDIA_PLAY_PAUSE;
+		mappings[Qt::Key_MediaStop] = Key::MEDIA_STOP;
+		mappings[Qt::Key_MediaPrevious] = Key::MEDIA_PREVIOUS_TRACK;
+		mappings[Qt::Key_MediaNext] = Key::MEDIA_NEXT_TRACK;
+		mappings[Qt::Key_MediaPause] = Key::MEDIA_PLAY_PAUSE;
+		mappings[Qt::Key_MediaTogglePlayPause] = Key::MEDIA_PLAY_PAUSE;
+		mappings[Qt::Key_HomePage] = Key::BROWSER_HOME;
+		mappings[Qt::Key_Favorites] = Key::BROWSER_FAVORITES;
+		mappings[Qt::Key_Search] = Key::BROWSER_SEARCH;
+		mappings[Qt::Key_LaunchMail] = Key::LAUNCH_MAIL;
+		mappings[Qt::Key_LaunchMedia] = Key::SELECT_MEDIA;
+		mappings[Qt::Key_Launch0] = Key::LAUNCH_APPLICATION_1;
+		mappings[Qt::Key_Launch1] = Key::LAUNCH_APPLICATION_2;
+		mappings[Qt::Key_Execute] = Key::EXECUTE;
+		mappings[Qt::Key_Play] = Key::PLAY;
+		mappings[Qt::Key_Sleep] = Key::SLEEP;
+		mappings[Qt::Key_Zoom] = Key::ZOOM;
+	}
+
+}
+Key::Enum QtKeyboard::getMapping(int qtKey) const {
+	std::map<int, Key::Enum>::const_iterator mapping = mappings.find(qtKey);
+	if(mapping == mappings.end()) {
+		return Key::INVALID;
+	} else {
+		return mapping->second;
 	}
 }
 
