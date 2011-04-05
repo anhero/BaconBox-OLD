@@ -78,7 +78,6 @@
 		51445D7B133C22150071E34D /* PixMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 51445D79133C22150071E34D /* PixMap.h */; };
 		515E396113066215006E85AC /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515E395F13066215006E85AC /* Camera.cpp */; };
 		515E396213066215006E85AC /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = 515E396013066215006E85AC /* Camera.h */; };
-		5192780D11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 5192780C11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch */; };
 		51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A9351410E8934500D144F4 /* AudioToolbox.framework */; };
 		51927C0711D5EA3E00C65B15 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5102AA7A10F547D300585718 /* AVFoundation.framework */; };
 		51927C0811D5EA4200C65B15 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 512D586C109B6D45009D504E /* libz.dylib */; };
@@ -222,7 +221,6 @@
 		515EB50512FF34AA004FB469 /* libRedBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRedBox.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		517BDCDD11B04CA80095F001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		517D7C3210F87AB10022BBF2 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
-		5192780C11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedboxEngine_Prefix.pch; sourceTree = "<group>"; };
 		519313F012ED62E1008B3AFB /* TextureInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureInfo.cpp; sourceTree = "<group>"; };
 		519313F112ED62E1008B3AFB /* TextureInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureInfo.h; sourceTree = "<group>"; };
 		51961ADE1333BCC7003E186C /* GraphicString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicString.cpp; sourceTree = "<group>"; };
@@ -364,7 +362,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				5192780C11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch */,
 				51CF8D2712DF60E0003FBBAD /* RedBox */,
 				7EF711F5132D35E900524FBB /* libraries */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -601,7 +598,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5192780D11D5B7AF00C65B15 /* RedboxEngine_Prefix.pch in Headers */,
 				51CF8D8712DF60E0003FBBAD /* BackgroundMusic.h in Headers */,
 				51CF8D8D12DF60E0003FBBAD /* SoundFX.h in Headers */,
 				51CF8D8E12DF60E0003FBBAD /* Debug.h in Headers */,
@@ -841,7 +837,6 @@
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = RedboxEngine_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

@@ -14,6 +14,11 @@
 #include <windows.h>
 #endif // RB_WIN32
 
+#ifdef RB_IPHONE_PLATFORM
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#endif
+
 using namespace RedBox;
 
 double TimeHelper::epoch = 0.0;
