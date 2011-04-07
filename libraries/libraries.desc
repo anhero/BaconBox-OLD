@@ -8,3 +8,5 @@ libraries=( ${libraries[@]-} 'freetype' )
 libraries=( ${libraries[@]-} 'libpng' )
 libraries=( ${libraries[@]-} 'libvorbis-tremor' )
 
+libraries=( ${libraries[@]-} 'sigly' )
+
