@@ -8,7 +8,7 @@
 
 #include <map>
 #include <string>
-#include <sigly.h>
+#include "sigly.h"
 
 #include "State.h"
 
