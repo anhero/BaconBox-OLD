@@ -192,13 +192,13 @@ namespace RedBox{
 		 * @param b Vector to do the comparison with.
 		 * @return True if the vectors have the same values, false if not.
 		 */
-		bool operator==( const Vec2& b );
+		bool operator==( const Vec2& b ) const;
 		/**
 		 * Checks if the two vectors have different values.
 		 * @param b Vector to do the comparison with.
 		 * @return True if the vectors have different values, false if not.
 		 */
-		bool operator!=( const Vec2& b );
+		bool operator!=( const Vec2& b ) const;
 		
 		/**
 		 * Calculates the vector's length.

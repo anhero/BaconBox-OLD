@@ -112,10 +112,10 @@ Vec2& Vec2::operator/=( float scalar ) {
 	setY(getY() / scalar);
 	return *this;
 }
-bool Vec2::operator==( const Vec2& b ) {
+bool Vec2::operator==( const Vec2& b ) const {
 	return getX() == b.getX() && getY() == b.getY();
 }
-bool Vec2::operator!=( const Vec2& b ) {
+bool Vec2::operator!=( const Vec2& b ) const {
 	return getX() != b.getX() || getY() != b.getY();
 }
 
