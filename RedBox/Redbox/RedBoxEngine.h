@@ -8,6 +8,7 @@
 
 #include <map>
 #include <string>
+#include <sigly.h>
 
 #include "State.h"
 
@@ -18,6 +19,8 @@ namespace RedBox {
 	 */
 	class RedBoxEngine {
 	public:
+		/// Signal sent when the RedBox engine is initialized.
+		static sigly::Signal2<int, int> onInitialize;
 		/**
 		 * Adds a state to the engine's list.
 		 * @param newState Pointer to the state to add to the engine.

@@ -17,6 +17,7 @@ double RedBoxEngine::updateDelay = 0.0;
 double RedBoxEngine::lastUpdate = 0.0;
 double RedBoxEngine::lastRender = 0.0;
 double RedBoxEngine::deltaRatio = 0.0;
+sigly::Signal2<int, int> RedBoxEngine::onInitialize = sigly::Signal2<int, int>();
 
 State* RedBoxEngine::addState(State* newState) {
 	if(newState) {
@@ -110,9 +111,10 @@ void RedBoxEngine::pulse() {
 
 void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight) {
 	TimeHelper::init();
+	InputManager::getInstance();
+	onInitialize.shoot(screenWidth, screenHeight);
 	GraphicDriver::initializeGraphicDriver(screenWidth, screenHeight);
 	Font::initializeFontRenderer();
-	InputManager::getInstance();
 }
 
 double RedBoxEngine::getUpdateDelta() {
