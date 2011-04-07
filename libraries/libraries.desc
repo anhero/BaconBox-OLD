@@ -6,6 +6,5 @@ if [ "${MSYSTEM-}" == "MINGW32" ]; then
 fi
 libraries=( ${libraries[@]-} 'freetype' )
 libraries=( ${libraries[@]-} 'libpng' )
-libraries=( ${libraries[@]-} 'simple-image' )
 libraries=( ${libraries[@]-} 'libvorbis-tremor' )
 
