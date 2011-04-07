@@ -165,7 +165,7 @@ void RenderStep::playAnimation(const std::string& name) {
 			lastFrameChange = TimeHelper::getSinceStart();
 		}
 	} else {
-		$ECHO("Tried play an animation which does not exist for the concerned RenderStep: " << name);
+		RB_ECHO("Tried play an animation which does not exist for the concerned RenderStep: " << name);
 	}
 }
 

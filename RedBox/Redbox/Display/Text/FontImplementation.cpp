@@ -13,7 +13,7 @@ FT_Library FontImplementation::fontRenderer = NULL;
 
 void FontImplementation::initializeFontRenderer(){
 	if(FT_Init_FreeType( &fontRenderer )){
-		$ECHO("Can not load freetype");
+		RB_ECHO("Can not load freetype");
 	}
 }
 
@@ -30,11 +30,11 @@ FontImplementation::FontImplementation(const std::string& name, const std::strin
 	int error = FT_New_Face( fontRenderer, path.c_str(), 0, &font);
 	if ( error == FT_Err_Unknown_File_Format )
 	{
-		$ECHO("Can't load font, unknow font file format");
+		RB_ECHO("Can't load font, unknow font file format");
 	}
 	else if ( error )
 	{
-		$ECHO("Can't load font, unknow error");		
+		RB_ECHO("Can't load font, unknow error");
 	}
 	
 	setPixelSize(30);
@@ -63,12 +63,12 @@ Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
 		
 		//we load the glyph  
 		if(FT_Load_Glyph( font, glyph_index, FT_LOAD_RENDER )){
-			$ECHO("Can't load glyph");
+			RB_ECHO("Can't load glyph");
 		}
 		
 		FT_Glyph currentGlyph;
 		if(FT_Get_Glyph( font->glyph,  &currentGlyph)){
-			$ECHO("Can't extract glyph from freetype glyph slot");
+			RB_ECHO("Can't extract glyph from freetype glyph slot");
 		}
 		
 		FT_BitmapGlyph  currentBitmapGlyph = (FT_BitmapGlyph)currentGlyph;
@@ -119,7 +119,7 @@ Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
 
 void FontImplementation::setPixelSize(int pixelSize){
 	if(FT_Set_Pixel_Sizes(font, 0, pixelSize)){
-		$ECHO("Can't set pixel size");
+		RB_ECHO("Can't set pixel size");
 	}
 	size = pixelSize + "px";
 	
@@ -128,7 +128,7 @@ void FontImplementation::setPixelSize(int pixelSize){
 
 void FontImplementation::setPointSize(int pointSize, int dpi){
 	if(FT_Set_Char_Size(font, 0, pointSize*64, dpi, dpi)){
-		$ECHO("Can't set point size");
+		RB_ECHO("Can't set point size");
 	}
 	size = pointSize + "pt";
 }

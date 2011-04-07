@@ -27,7 +27,7 @@ void GraphicString::setText(const RB_String32 & text){
 		needReset = true;
 	}
 	else{
-		$ECHO("Trying to set text with no font loaded.");
+		RB_ECHO("Trying to set text with no font loaded.");
 	}
 }
 

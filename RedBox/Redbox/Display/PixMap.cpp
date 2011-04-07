@@ -53,7 +53,7 @@ void PixMap::insertSubPixMap(PixMap * subPixMap, int xOffset, int yOffset){
 		insertSubPixMap(subPixMap->getBuffer(), subPixMap->getWidth(), subPixMap->getHeight(), xOffset, yOffset);
 	}
 	else {
-		$ECHO("Can't insert sub pixmap into current pixmap, because the color format isn't compatible.");
+		RB_ECHO("Can't insert sub pixmap into current pixmap, because the color format isn't compatible.");
 	}
 }
 

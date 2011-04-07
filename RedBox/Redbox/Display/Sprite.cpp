@@ -41,7 +41,7 @@ Sprite::Sprite(const std::string& imageKey): Renderable()
 		);
 #endif
 	} else {
-		$ECHO("Tried to construct a sprite from an invalid image key: " << imageKey);
+		RB_ECHO("Tried to construct a sprite from an invalid image key: " << imageKey);
 	}
 }
 
@@ -62,7 +62,7 @@ Sprite::Sprite(TextureInfo* texInfo): Renderable()
 		);
 #endif
 	} else {
-		$ECHO("Tried to construct a sprite from an invalid texture information: " << texInfo);
+		RB_ECHO("Tried to construct a sprite from an invalid texture information: " << texInfo);
 	}
 }
 
@@ -190,7 +190,7 @@ RenderStep* Sprite::addRenderStep(RenderStep* newRenderStep) {
 	if(newRenderStep) {
 		renderSteps.push_back(newRenderStep);
 	} else {
-		$ECHO("Tried to add an NULL RenderStep to a Sprite.");
+		RB_ECHO("Tried to add an NULL RenderStep to a Sprite.");
 	}
 	return newRenderStep;
 }
@@ -210,10 +210,10 @@ void Sprite::removeRenderStep(RenderStep* renderStep) {
 		}
 		// If it wasn't found, we warn the user.
 		if(notFound) {
-			$ECHO("Tried to remove a RenderStep from a Sprite which does not contain it: " << renderStep);
+			RB_ECHO("Tried to remove a RenderStep from a Sprite which does not contain it: " << renderStep);
 		}
 	} else {
-		$ECHO("Tried to remove a NULL RenderStep pointer from a sprite.");
+		RB_ECHO("Tried to remove a NULL RenderStep pointer from a sprite.");
 	}
 }
 
@@ -302,7 +302,7 @@ void Sprite::construct(TextureInfo* texInfo,
 													   nbFrames);
 		renderSteps.push_back(initialRenderStep);
 	} else {
-		$ECHO("Failed to load a sprite with the following texture information: " << texInfo);
+		RB_ECHO("Failed to load a sprite with the following texture information: " << texInfo);
 	}
 }
 
