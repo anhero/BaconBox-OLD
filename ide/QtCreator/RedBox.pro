@@ -40,7 +40,8 @@ INCLUDEPATH += ../../../RedBox \
         $$PWD/../../RedBox/RedBox/Input/Keyboard \
         $$PWD/../../RedBox/RedBox/Input/Keyboard/Qt \
         $$PWD/../../RedBox/RedBox/Input/Pointer \
-        $$PWD/../../RedBox/RedBox/Physic \
+		$$PWD/../../RedBox/RedBox/Input/Pointer/Qt \
+		$$PWD/../../RedBox/RedBox/Physic \
         $$PWD/../../RedBox/RedBox/Helper \
         $$PWD/../../RedBox/RedBox/SignalSlots \
 
@@ -59,7 +60,8 @@ SOURCES += QtRedbox.cpp \
         $$PWD/../../RedBox/RedBox/Input/Keyboard/*.cpp \
         $$PWD/../../RedBox/RedBox/Input/Keyboard/Qt/*.cpp \
         $$PWD/../../RedBox/RedBox/Input/Pointer/*.cpp \
-        $$PWD/../../RedBox/RedBox/Physic/*.cpp \
+		$$PWD/../../RedBox/RedBox/Input/Pointer/Qt/*.cpp \
+		$$PWD/../../RedBox/RedBox/Physic/*.cpp \
         $$PWD/../../RedBox/RedBox/Helper/*.cpp \
         $$PWD/../../RedBox/RedBox/SignalSlots/*.cpp \
 
@@ -77,7 +79,8 @@ HEADERS += QtRedbox.h \
         $$PWD/../../RedBox/RedBox/Input/Keyboard/*.h \
         $$PWD/../../RedBox/RedBox/Input/Keyboard/Qt/*.h \
         $$PWD/../../RedBox/RedBox/Input/Pointer/*.h \
-        $$PWD/../../RedBox/RedBox/Physic/*.h \
+		$$PWD/../../RedBox/RedBox/Input/Pointer/Qt/*.h \
+		$$PWD/../../RedBox/RedBox/Physic/*.h \
         $$PWD/../../RedBox/RedBox/Helper/*.h \
         $$PWD/../../RedBox/RedBox/SignalSlots/*.h \
 
