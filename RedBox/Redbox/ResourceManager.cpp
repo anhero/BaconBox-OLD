@@ -40,9 +40,9 @@ TextureInfo* ResourceManager::addTexture(const std::string& key, PixMap * aPixma
 			}
 			// We load the new texture.
 			texInfo = textures[key] = GraphicDriver::loadTexture(aPixmap);
-			$ECHO("Overwrote the existing texture named " << key << ".");
+			RB_ECHO("Overwrote the existing texture named " << key << ".");
 		} else {
-			$ECHO("Can't load texture with key: " << key <<
+			RB_ECHO("Can't load texture with key: " << key <<
 				  " texture is already loaded");
 				texInfo = textures[key];
 		}
@@ -101,10 +101,10 @@ SoundInfo* ResourceManager::loadSound(const std::string& filePath,
 				// We load the sound effect and we overwrite the existing sound
 				// effect.
 				newSnd = sounds[key] = AudioEngine::getSoundEngine()->loadSound(filePath);
-				$ECHO("Overwrote the existing sound effect named " << key <<
+				RB_ECHO("Overwrote the existing sound effect named " << key <<
 					  ".");
 			} else {
-				$ECHO("Couldn't load the sound effect named " << key << 
+				RB_ECHO("Couldn't load the sound effect named " << key <<
 					  " found at " << filePath <<
 					  " because a sound with that name already exists.");
 				newSnd = sounds[key];
@@ -120,7 +120,7 @@ SoundInfo* ResourceManager::loadSound(const std::string& filePath,
 			}
 		}
 	} else {
-		$ECHO("Couldn't load the sound effect named " << key << " found at " <<
+		RB_ECHO("Couldn't load the sound effect named " << key << " found at " <<
 			  filePath << " because the sound engine couldn't be loaded.");
 	}
 	return newSnd;
@@ -142,10 +142,10 @@ SoundInfo* ResourceManager::loadSound(const SoundParameters& params,
 				// We load the sound effect and we overwrite the existing sound
 				// effect.
 				newSnd = sounds[params.name] = AudioEngine::getSoundEngine()->loadSound(params);
-				$ECHO("Overwrote the existing sound effect named " <<
+				RB_ECHO("Overwrote the existing sound effect named " <<
 					  params.name << ".");
 			} else {
-				$ECHO("Couldn't load the sound effect named " << params.name << 
+				RB_ECHO("Couldn't load the sound effect named " << params.name <<
 					  " because a sound with that name already exists.");
 				newSnd = sounds[params.name];
 			}
@@ -161,7 +161,7 @@ SoundInfo* ResourceManager::loadSound(const SoundParameters& params,
 			}
 		}
 	} else {
-		$ECHO("Couldn't load the sound effect named " << params.name <<
+		RB_ECHO("Couldn't load the sound effect named " << params.name <<
 			  " because the sound engine couldn't be loaded.");
 	}
 	return newSnd;
@@ -183,10 +183,10 @@ MusicInfo* ResourceManager::loadMusic(const std::string& filePath,
 				}
 				// We load the music and we overwrite the existing music.
 				newBgm = musics[key] = AudioEngine::getMusicEngine()->loadMusic(filePath);
-				$ECHO("Overwrote the existing music named " << key <<
+				RB_ECHO("Overwrote the existing music named " << key <<
 					  ".");
 			} else {
-				$ECHO("Couldn't load the music named " << key << 
+				RB_ECHO("Couldn't load the music named " << key <<
 					  " found at " << filePath <<
 					  " because a music with that name already exists.");
 				newBgm = musics[key];
@@ -202,7 +202,7 @@ MusicInfo* ResourceManager::loadMusic(const std::string& filePath,
 			}
 		}
 	} else {
-		$ECHO("Couldn't load the music named " << key << " found at " <<
+		RB_ECHO("Couldn't load the music named " << key << " found at " <<
 			  filePath << " because the sound engine couldn't be loaded.");
 	}
 	return newBgm;
@@ -223,10 +223,10 @@ MusicInfo* ResourceManager::loadMusic(const MusicParameters& params,
 				}
 				// We load the music and we overwrite the existing music.
 				newBgm = musics[params.name] = AudioEngine::getMusicEngine()->loadMusic(params);
-				$ECHO("Overwrote the existing music named " << params.name <<
+				RB_ECHO("Overwrote the existing music named " << params.name <<
 					  ".");
 			} else {
-				$ECHO("Couldn't load the music named " << params.name << 
+				RB_ECHO("Couldn't load the music named " << params.name <<
 					  " because a music with that name already exists.");
 				newBgm = musics[params.name];
 			}
@@ -241,7 +241,7 @@ MusicInfo* ResourceManager::loadMusic(const MusicParameters& params,
 			}
 		}
 	} else {
-		$ECHO("Couldn't load the music named " << params.name <<
+		RB_ECHO("Couldn't load the music named " << params.name <<
 			  " because the sound engine couldn't be loaded.");
 	}
 	return newBgm;
@@ -259,10 +259,10 @@ void ResourceManager::removeSound(const std::string& name) {
 			// We remove it from the map.
 			sounds.erase(snd);
 		} else {
-			$ECHO("The sound effect named " << name << " could not be removed because the audio engine failed to unload it.");
+			RB_ECHO("The sound effect named " << name << " could not be removed because the audio engine failed to unload it.");
 		}
 	} else {
-		$ECHO("The sound effect named " << name << " could not be removed because it doesn't exist.");
+		RB_ECHO("The sound effect named " << name << " could not be removed because it doesn't exist.");
 	}
 }
 
@@ -278,10 +278,10 @@ void ResourceManager::removeMusic(const std::string& name) {
 			// We remove it from the map.
 			musics.erase(music);
 		} else {
-			$ECHO("The music named " << name << " could not be removed because the audio engine failed to unload it.");
+			RB_ECHO("The music named " << name << " could not be removed because the audio engine failed to unload it.");
 		}
 	} else {
-		$ECHO("The music named " << name << " could not be removed because it doesn't exist.");
+		RB_ECHO("The music named " << name << " could not be removed because it doesn't exist.");
 	}
 }
 
@@ -298,9 +298,9 @@ Font* ResourceManager::loadFont(const std::string & name, const std::string & pa
 			}
 			// We load the new font.
 			aFont = fonts[name] = new Font(name,path);
-			$ECHO("Overwrote the existing font named " << name << ".");
+			RB_ECHO("Overwrote the existing font named " << name << ".");
 		} else {
-			$ECHO("Can't load font with key: " << name <<
+			RB_ECHO("Can't load font with key: " << name <<
 				  " font is already loaded");
 			aFont = fonts[name];
 		}
@@ -374,7 +374,7 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath){
 	FILE *PNG_file = fopen(filePath.c_str(), "rb");
 	if (PNG_file == NULL)
     {
-        $ECHO("Unable to open this png file : " << filePath);
+		RB_ECHO("Unable to open this png file : " << filePath);
         return GL_FALSE;
     }
 	
@@ -383,33 +383,33 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath){
     fread(PNG_header, 1, PNG_HEADER_SIZE, PNG_file);
     if (png_sig_cmp(PNG_header, 0, PNG_HEADER_SIZE) != 0)
     {
-        $ECHO("Trying to load a non png file as a png file. Path to file :" << filePath);
+		RB_ECHO("Trying to load a non png file as a png file. Path to file :" << filePath);
     }
     
     png_structp PNG_reader
 	= png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (PNG_reader == NULL)
     {
-         $ECHO("Cannot read this png file " << filePath);
+		 RB_ECHO("Cannot read this png file " << filePath);
     }
 	
     png_infop PNG_info = png_create_info_struct(PNG_reader);
     if (PNG_info == NULL)
     {
-         $ECHO("Cannot extract info from this png file : "<< filePath);
+		 RB_ECHO("Cannot extract info from this png file : "<< filePath);
         png_destroy_read_struct(&PNG_reader, NULL, NULL);
     }
 	
     png_infop PNG_end_info = png_create_info_struct(PNG_reader);
     if (PNG_end_info == NULL)
     {
-		$ECHO("Cannot extract end info from this png file : " << filePath);
+		RB_ECHO("Cannot extract end info from this png file : " << filePath);
         png_destroy_read_struct(&PNG_reader, &PNG_info, NULL);
     }
     
     if (setjmp(png_jmpbuf(PNG_reader)))
     {
-        $ECHO("Cannot load this png file " << filePath);
+		RB_ECHO("Cannot load this png file " << filePath);
         png_destroy_read_struct(&PNG_reader, &PNG_info, &PNG_end_info);
     }
     

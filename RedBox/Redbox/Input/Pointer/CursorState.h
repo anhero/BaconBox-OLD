@@ -9,6 +9,8 @@
 
 #include "Vec2.h"
 
+#include "CursorButton.h"
+
 namespace RedBox {
 	/**
 	 * Represents the state of a cursor. Can be a mouse or a touch. In the case
@@ -16,24 +18,61 @@ namespace RedBox {
 	 * be set to accomodate the pointing device.
 	 * @ingroup Input
 	 */
-	struct CursorState {
-		/**
-		 * Default number of buttons a cursor has (simple mouse with a left
-		 * button, a right button, a middle button and a scroll wheel).
-		 */
-		static const unsigned int DEFAULT_NB_BUTTONS = 5;
-		
+	class CursorState {
+		friend class PointerState;
+	public:
 		/**
 		 * Parameterized constructor.
 		 * @param x Starting horizontal position.
 		 * @param y Starting vertical position.
-		 * @param nbButtons Number of buttons the cursor has.
 		 */
-		CursorState(unsigned int nbButtons = 5, float x = 0.0f, float y = 0.0f);
-		
+		CursorState(float x = 0.0f, float y = 0.0f);
+
+		/**
+		 * Gets the cursor's position.
+		 * @return Cursor's position.
+		 */
+		const Vec2& getPosition() const;
+
+		/**
+		 * Gets the cursor's previous position.
+		 * @return Cursor's previous position.
+		 */
+		const Vec2& getPreviousPosition() const;
+
+		/**
+		 * Checks if the cursor has just moved.
+		 * @return True if the cursor has just moved, false if not.
+		 */
+		bool hasMoved() const;
+
+		/**
+		 * Checks if the specified button was just pressed.
+		 * @param button Button to check.
+		 * @return True if the button was just pressed, false if not.
+		 */
+		bool isButtonPressed(CursorButton::Enum button) const;
+
+		/**
+		 * Checks if the specified button is being held down.
+		 * @param button Button to check.
+		 * @return True if the button is being held down, false if not.
+		 */
+		bool isButtonHeld(CursorButton::Enum button) const;
+
+		/**
+		 * Checks if the specified button was just released.
+		 * @param button Button to check.
+		 * @return True if the button was just released, false if not.
+		 */
+		bool isButtonReleased(CursorButton::Enum button) const;
+	private:
 		/// Cursor's position.
 		Vec2 position;
-		
+
+		/// Cursor's previous position.
+		Vec2 previousPosition;
+
 		/**
 		 * State of current buttons, values set to true mean the button is
 		 * pressed.

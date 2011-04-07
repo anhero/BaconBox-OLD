@@ -14,10 +14,10 @@ void State::addRenderable(Renderable* aRenderable) {
 		if(!aRenderable->isInState) {
 			toAdd.push_back(aRenderable);
 		} else {
-			$ECHO("Tried to add a renderable that is already in a state.");
+			RB_ECHO("Tried to add a renderable that is already in a state.");
 		}
 	} else {
-		$ECHO("Tried to add an invalid renderable (" << aRenderable << ") to the state.");
+		RB_ECHO("Tried to add an invalid renderable (" << aRenderable << ") to the state.");
 	}
 }
 
@@ -100,6 +100,6 @@ void State::addRenderableDirect(Renderable* aRenderable) {
 													   aRenderable));
 		aRenderable->isInState = true;
 	} else {
-		$ECHO("Tried to add a renderable that is already in a state.");
+		RB_ECHO("Tried to add a renderable that is already in a state.");
 	}
 }

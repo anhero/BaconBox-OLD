@@ -118,7 +118,7 @@ void VerticesGroup::setParentSprite(Sprite* sprite) {
 
 std::pair<float, float> VerticesGroup::getWidthHeight() const {
 	if(vertices.size() == 0) {
-		$ECHO("Tried to get the width and the height of an empty VerticesGroup.");
+		RB_ECHO("Tried to get the width and the height of an empty VerticesGroup.");
 		return std::pair<float, float>(0.0f, 0.0f);
 	}
 	std::pair<float, float>(FLT_MAX, FLT_MIN);
@@ -144,7 +144,7 @@ std::pair<float, float> VerticesGroup::getWidthHeight() const {
 
 float VerticesGroup::getWidth() const {
 	if(vertices.empty()) {
-		$ECHO("Tried to get the width of an empty VerticesGroup.");
+		RB_ECHO("Tried to get the width of an empty VerticesGroup.");
 		return 0.0f;
 	}
 	float minX = FLT_MAX, maxX = FLT_MIN;
@@ -163,7 +163,7 @@ float VerticesGroup::getWidth() const {
 
 float VerticesGroup::getHeight() const {
 	if(vertices.empty()) {
-		$ECHO("Tried to get the height of an empty VerticesGroup.");
+		RB_ECHO("Tried to get the height of an empty VerticesGroup.");
 		return 0.0f;
 	}
 	float minY = FLT_MAX, maxY = FLT_MIN;
@@ -182,7 +182,7 @@ float VerticesGroup::getHeight() const {
 
 float VerticesGroup::getXPosition() const {
 	if(vertices.empty()) {
-		$ECHO("Tried to get the horizontal position of an empty VerticesGroup.");
+		RB_ECHO("Tried to get the horizontal position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 	float result = FLT_MAX;
@@ -198,7 +198,7 @@ float VerticesGroup::getXPosition() const {
 
 float VerticesGroup::getYPosition() const {
 	if(vertices.empty()) {
-		$ECHO("Tried to get the vertical position of an empty VerticesGroup.");
+		RB_ECHO("Tried to get the vertical position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 	float result = FLT_MAX;
@@ -214,7 +214,7 @@ float VerticesGroup::getYPosition() const {
 
 std::pair<float, float> VerticesGroup::getPosition() const {
 	if(vertices.empty()) {
-		$ECHO("Tried to get the position of an empty VerticesGroup.");
+		RB_ECHO("Tried to get the position of an empty VerticesGroup.");
 		return std::pair<float, float>(0.0f, 0.0f);
 	}
 	std::pair<float, float> result(FLT_MAX, FLT_MAX);
@@ -273,7 +273,7 @@ void VerticesGroup::moveY(float deltaY) {
 
 void VerticesGroup::move(float deltaX, float deltaY) {
 	if (vertices.empty()) {
-		$ECHO("Tried to move an empty vertices group.");
+		RB_ECHO("Tried to move an empty vertices group.");
 	}
 	// We create the vector we'll add to every vertices.
 	Vec2 deltaVec(deltaX, deltaY);
@@ -313,7 +313,7 @@ void VerticesGroup::updateVerticesFromData(std::vector<float>& verticesData, Spr
 			if(data != verticesData.end()) {
 				vertex->getPosition().setYPtr(&(*data));
 			} else {
-				$ECHO("Tried to update vertices from vertices data with an incorrect number of vertices data.");
+				RB_ECHO("Tried to update vertices from vertices data with an incorrect number of vertices data.");
 			}
 		} else {
 #ifdef RB_PHYSICS_ENABLED

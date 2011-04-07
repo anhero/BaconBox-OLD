@@ -45,30 +45,30 @@
 #ifdef DEBUG
 #include <iostream>
 //Starts the debug as a print command
-#define $PRINT std::cout << std::fixed
+#define RB_PRINT std::cout << std::fixed
 //TODO: A function to log to a file (usable as $FILE(name)
-#define $FILE(f) $PRINT << "TODO: FILE"
+#define RB_FILE(f) RB_PRINT << "TODO: FILE"
 //Pretty prints a variable following this rule:
 // VAR_NAME: VAR_VALUE
-#define $VAR(a) << #a << ": " << (a) << " "
+#define RB_VAR(a) << #a << ": " << (a) << " "
 //Appends the text prints the text
-#define $TXT(a) << (a)
+#define RB_TXT(a) << (a)
 //Appends a newline character
-#define $ENDLN << std::endl
+#define RB_ENDLN << std::endl
 //Appends the file name and line number of the statement
-#define $FLLN << __FILE__ << "@" << __LINE__ << ": "
+#define RB_FLLN << __FILE__ << "@" << __LINE__ << ": "
 //Shortcut to print text
-#define $ECHO(a) $PRINT $FLLN << a $ENDLN
+#define RB_ECHO(a) RB_PRINT RB_FLLN << a RB_ENDLN
 //Shortcut to print variables
-#define $DBG(a) $PRINT $FLLN $VAR(a) $ENDLN
+#define RB_DBG(a) RB_PRINT RB_FLLN RB_VAR(a) RB_ENDLN
 #else
-#define $PRINT
-#define $VAR(a)
-#define $TXT(a)
-#define $ENDLN
-#define $FLLN
-#define $ECHO(a)
-#define $DBG(a)
+#define RB_PRINT
+#define RB_VAR(a)
+#define RB_TXT(a)
+#define RB_ENDLN
+#define RB_FLLN
+#define RB_ECHO(a)
+#define RB_DBG(a)
 #endif
 
 #endif

@@ -25,10 +25,8 @@ namespace RedBox {
 		 * Parameterizable default constructor.
 		 * @param nbCursors Number of cursors the pointing device(s) can
 		 * support.
-		 * @param nbButtons Number of buttons cursors can have.
 		 */
-		PointerState(unsigned int nbCursors = DEFAULT_NB_CURSORS,
-		             unsigned int nbButtons = CursorState::DEFAULT_NB_BUTTONS);
+		PointerState(unsigned int nbCursors = DEFAULT_NB_CURSORS);
 
 		/**
 		 * Destructor.
@@ -43,6 +41,34 @@ namespace RedBox {
 	private:
 		/// Cursors' states.
 		std::vector<CursorState> cursors;
+
+		/**
+		 * Gets a cursor's position.
+		 * @param index Index of the cursor to get.
+		 * @return Reference to the cursor's position.
+		 */
+		Vec2& getCursorPosition(unsigned int index);
+
+		/**
+		 * Gets a cursor's previous position.
+		 * @param index Index of the cursor to get.
+		 * @return Reference to the cursor's previous position.
+		 */
+		Vec2& getCursorPreviousPosition(unsigned int index);
+
+		/**
+		 * Gets a cursor's buttons.
+		 * @param index Index of the cursor to get.
+		 * @return Reference to the cursor's buttons.
+		 */
+		std::vector<bool>& getCursorButtons(unsigned int index);
+
+		/**
+		 * Gets a cursor's previous buttons.
+		 * @param index Index of the cursor to get.
+		 * @return Reference to the cursor's previous buttons.
+		 */
+		std::vector<bool>& getCursorPreviousButtons(unsigned int index);
 	};
 }
 
