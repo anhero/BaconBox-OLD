@@ -19,7 +19,7 @@ void RBAudioPlayerMusic::play(int nbTimes, double fadeIn) {
 			[bgm fadeInPlay:nbTimes :static_cast<float>(fadeIn)];
 			playedOnce = true;
 		} else {
-			$ECHO("Tried to play a music with an invalid fade in time : " <<
+			RB_ECHO("Tried to play a music with an invalid fade in time : " <<
 				  fadeIn << " sec.");
 		}
 	}
@@ -34,7 +34,7 @@ void RBAudioPlayerMusic::stop(double fadeOut) {
 	if(fadeOut >= 0.0) {
 		[bgm fadeOutStop:static_cast<float>(fadeOut)];
 	} else {
-		$ECHO("Tried to stop a music with an invalid fade out time : " <<
+		RB_ECHO("Tried to stop a music with an invalid fade out time : " <<
 			  fadeOut << " sec.");
 	}
 }
@@ -48,7 +48,7 @@ void RBAudioPlayerMusic::pause(double fadeOut) {
 	if(fadeOut >= 0.0) {
 		[bgm fadeOutPause:static_cast<float>(fadeOut)];
 	} else {
-		$ECHO("Tried to pause a music with an invalid fade out time : " <<
+		RB_ECHO("Tried to pause a music with an invalid fade out time : " <<
 			  fadeOut << " sec.");
 	}
 }
@@ -63,7 +63,7 @@ void RBAudioPlayerMusic::resume(double fadeIn) {
 		[bgm fadeInResume:static_cast<float>(fadeIn)];
 		playedOnce = true;
 	} else {
-		$ECHO("Tried to resume a music with an invalid fade in time : " <<
+		RB_ECHO("Tried to resume a music with an invalid fade in time : " <<
 			  fadeIn << " sec.");
 	}
 }
