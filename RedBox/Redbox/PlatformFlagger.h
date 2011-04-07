@@ -8,9 +8,6 @@
 #define RB_GAME_PAD_IMPL NULL
 //#define RB_GAME_PAD_INCLUDE "GamePad.h"
 
-#define RB_POINTER_IMPL NULL
-//#define RB_POINTER_INCLUDE "Pointer.h"
-
 #ifdef LINUX
 
 #define RB_LINUX
@@ -21,10 +18,15 @@
 #define RB_QT
 #define RB_KEYBOARD_IMPL new QtKeyboard()
 #define RB_KEYBOARD_INCLUDE "QtKeyboard.h"
+#define RB_POINTER_IMPL new QtPointer()
+#define RB_POINTER_INCLUDE "QtPointer.h"
 #else
 
 #define RB_KEYBOARD_IMPL NULL
 //#define RB_KEYBOARD_INCLUDE "Keyboard.h"
+
+#define RB_POINTER_IMPL NULL
+//#define RB_POINTER_INCLUDE "Pointer.h"
 
 #endif
 
