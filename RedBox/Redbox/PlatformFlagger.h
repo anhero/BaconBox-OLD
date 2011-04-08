@@ -15,18 +15,15 @@
 #endif // LINUX
 
 #ifdef QT
-#define RB_QT
-#define RB_KEYBOARD_IMPL new QtKeyboard()
-#define RB_KEYBOARD_INCLUDE "QtKeyboard.h"
-#define RB_POINTER_IMPL new QtPointer()
-#define RB_POINTER_INCLUDE "QtPointer.h"
+	#define RB_QT
+	#define RB_KEYBOARD_IMPL new QtKeyboard()
+	#define RB_KEYBOARD_INCLUDE "QtKeyboard.h"
+	#define RB_POINTER_IMPL new QtPointer()
+	#define RB_POINTER_INCLUDE "QtPointer.h"
 #else
 
-#define RB_KEYBOARD_IMPL NULL
-//#define RB_KEYBOARD_INCLUDE "Keyboard.h"
-
-#define RB_POINTER_IMPL NULL
-//#define RB_POINTER_INCLUDE "Pointer.h"
+	#define RB_KEYBOARD_IMPL NULL
+	//#define RB_KEYBOARD_INCLUDE "Keyboard.h"
 
 #endif
 
@@ -66,6 +63,9 @@
 #if TARGET_IPHONE_SIMULATOR
 	#define RB_IPHONE_PLATFORM
 	#define RB_IPHONE_SIMULATOR_PLATFORM
+
+#define RB_POINTER_IMPL new IOSPointer()
+#define RB_POINTER_INCLUDE "IOSPointer.h"
 #endif // TARGET_IPHONE_SIMULATOR
 
 #if TARGET_OS_IPHONE
@@ -96,4 +96,11 @@
 #endif
 
 #endif // __APPLE__
+
+#if !defined(RB_IPHONE_PLATFORM) && defined(RB_QT)
+
+	#define RB_POINTER_IMPL NULL
+	//#define RB_POINTER_INCLUDE "Pointer.h"
+#endif
+
 #endif
