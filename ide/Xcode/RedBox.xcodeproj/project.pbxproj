@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		245EAF10134E62CD002F0596 /* sigly.h in Headers */ = {isa = PBXBuildFile; fileRef = 245EAF0F134E62CD002F0596 /* sigly.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		245EAF10134E62CD002F0596 /* sigly.h in Headers */ = {isa = PBXBuildFile; fileRef = 245EAF0F134E62CD002F0596 /* sigly.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		245EAF26134E6954002F0596 /* IOSPointer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 245EAF24134E6954002F0596 /* IOSPointer.cpp */; };
+		245EAF27134E6954002F0596 /* IOSPointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 245EAF25134E6954002F0596 /* IOSPointer.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		24CE4855134EC4E3000384A8 /* CursorButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 24CE4854134EC4E2000384A8 /* CursorButton.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		511C4E7C13454AF800D555E2 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4DF913454AF800D555E2 /* AudioEngine.cpp */; };
 		511C4E7D13454AF800D555E2 /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4DFA13454AF800D555E2 /* AudioEngine.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		511C4E7E13454AF800D555E2 /* AudioState.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4DFB13454AF800D555E2 /* AudioState.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -196,6 +199,9 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		245EAF0F134E62CD002F0596 /* sigly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sigly.h; path = ../../libraries/ios/universal/include/sigly.h; sourceTree = "<group>"; };
+		245EAF24134E6954002F0596 /* IOSPointer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOSPointer.cpp; sourceTree = "<group>"; };
+		245EAF25134E6954002F0596 /* IOSPointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSPointer.h; sourceTree = "<group>"; };
+		24CE4854134EC4E2000384A8 /* CursorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CursorButton.h; path = ../../../RedBox/Input/Pointer/CursorButton.h; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -409,6 +415,16 @@
 				515EB50512FF34AA004FB469 /* libRedBox.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		245EAF23134E6954002F0596 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				245EAF24134E6954002F0596 /* IOSPointer.cpp */,
+				245EAF25134E6954002F0596 /* IOSPointer.h */,
+			);
+			name = ios;
+			path = ../../../RedBox/Input/Pointer/ios;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -714,8 +730,10 @@
 		51BB79D0134B7CF500051A7D /* Pointer */ = {
 			isa = PBXGroup;
 			children = (
+				245EAF23134E6954002F0596 /* ios */,
 				51BB79D1134B7CF500051A7D /* CursorState.cpp */,
 				51BB79D2134B7CF500051A7D /* CursorState.h */,
+				24CE4854134EC4E2000384A8 /* CursorButton.h */,
 				51BB79D3134B7CF500051A7D /* Pointer.cpp */,
 				51BB79D4134B7CF500051A7D /* Pointer.h */,
 				51BB79D5134B7CF500051A7D /* PointerButtonSignalData.cpp */,
@@ -763,6 +781,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				511C4EF313454AF800D555E2 /* RedBox.h in Headers */,
+				245EAF10134E62CD002F0596 /* sigly.h in Headers */,
 				511C4E7D13454AF800D555E2 /* AudioEngine.h in Headers */,
 				511C4E7E13454AF800D555E2 /* AudioState.h in Headers */,
 				511C4E8013454AF800D555E2 /* BackgroundMusic.h in Headers */,
@@ -851,8 +870,9 @@
 				51BB7A0B134B7CF600051A7D /* PointerState.h in Headers */,
 				51BB7A14134B7CFE00051A7D /* SignalAnalyzer.h in Headers */,
 				51BB7A16134B7CFE00051A7D /* SignalAnalyzerManager.h in Headers */,
+				245EAF27134E6954002F0596 /* IOSPointer.h in Headers */,
+				24CE4855134EC4E3000384A8 /* CursorButton.h in Headers */,
 				51BB7A18134B7CFE00051A7D /* SignalData.h in Headers */,
-				245EAF10134E62CD002F0596 /* sigly.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,6 +1023,7 @@
 				51BB7A13134B7CFE00051A7D /* SignalAnalyzer.cpp in Sources */,
 				51BB7A15134B7CFE00051A7D /* SignalAnalyzerManager.cpp in Sources */,
 				51BB7A17134B7CFE00051A7D /* SignalData.cpp in Sources */,
+				245EAF26134E6954002F0596 /* IOSPointer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
