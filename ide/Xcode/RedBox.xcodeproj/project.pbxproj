@@ -191,7 +191,6 @@
 		51BB7A18134B7CFE00051A7D /* SignalData.h in Headers */ = {isa = PBXBuildFile; fileRef = 51BB7A12134B7CFE00051A7D /* SignalData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7EF711F1132D35C100524FBB /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711ED132D35C100524FBB /* libfreetype.a */; };
 		7EF711F2132D35C100524FBB /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711EE132D35C100524FBB /* libpng.a */; };
-		7EF711F3132D35C100524FBB /* libsimple-image.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711EF132D35C100524FBB /* libsimple-image.a */; };
 		7EF711F4132D35C100524FBB /* libvorbisidec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711F0132D35C100524FBB /* libvorbisidec.a */; };
 /* End PBXBuildFile section */
 
@@ -381,7 +380,6 @@
 		51BB7A12134B7CFE00051A7D /* SignalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalData.h; sourceTree = "<group>"; };
 		7EF711ED132D35C100524FBB /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../libraries/build/lib/libfreetype.a; sourceTree = "<group>"; };
 		7EF711EE132D35C100524FBB /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../libraries/build/lib/libpng.a; sourceTree = "<group>"; };
-		7EF711EF132D35C100524FBB /* libsimple-image.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsimple-image.a"; path = "../../libraries/build/lib/libsimple-image.a"; sourceTree = "<group>"; };
 		7EF711F0132D35C100524FBB /* libvorbisidec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisidec.a; path = ../../libraries/build/lib/libvorbisidec.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -392,7 +390,6 @@
 			files = (
 				7EF711F1132D35C100524FBB /* libfreetype.a in Frameworks */,
 				7EF711F2132D35C100524FBB /* libpng.a in Frameworks */,
-				7EF711F3132D35C100524FBB /* libsimple-image.a in Frameworks */,
 				7EF711F4132D35C100524FBB /* libvorbisidec.a in Frameworks */,
 				51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */,
 				51927C0711D5EA3E00C65B15 /* AVFoundation.framework in Frameworks */,
@@ -766,7 +763,6 @@
 			children = (
 				7EF711ED132D35C100524FBB /* libfreetype.a */,
 				7EF711EE132D35C100524FBB /* libpng.a */,
-				7EF711EF132D35C100524FBB /* libsimple-image.a */,
 				7EF711F0132D35C100524FBB /* libvorbisidec.a */,
 				245EAF0F134E62CD002F0596 /* sigly.h */,
 			);
