@@ -10,6 +10,11 @@ include(Function)
 recurseFolderList(RedBox_header_search_path ${RedBox_SOURCE_DIR}/RedBox)
 
 
+#if(APPLE)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++")
+#mm(CMAKE_CXX_FLAGS)
+#endif(APPLE)
+
 	
 find_package(OpenGL)
 #list(APPEND RedBox_linkDir_list ${OpenGL_LIBRARY_DIRS})
@@ -73,5 +78,5 @@ if(${RedBox_Compile_Shared})
 )
 endif(${RedBox_Compile_Shared})
 
-
+install(TARGETS RedBox DESTINATION /Users/dupuisj/Desktop/libfuckyeah)
 

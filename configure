@@ -1,3 +1,9 @@
 #! /bin/bash
 #./CMake/configureScript/configure-iphone
-./CMake/configureScript/configure-iphone-simulator2
+#./CMake/configureScript/configure-iphone \
+#-GXcode
+
+
+./CMake/configureScript/configure-iphone-simulator \
+-GXcode
+

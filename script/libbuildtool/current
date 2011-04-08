@@ -1,0 +1,6 @@
+#!/bin/bash --login
+
+export current_dir=$(dirname ${BASH_SOURCE[0]})
+
+cd $current_dir/../../libraries
+libbuildtool --copy-in ./current

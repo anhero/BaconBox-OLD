@@ -930,7 +930,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/bash --login";
-			shellScript = "[[ -d \"${SRCROOT}/../../libraries/ios/universal\" ]] && exit 0;\n\n\ncd \"${SRCROOT}/../../libraries\"\nlibbuildtool -t ios -o version=4.3 -o platform=simulator \\\n&& libbuildtool -t ios -o version=4.3 -o platform=os -o arch=armv6 \\\n&& libbuildtool -t ios -o version=4.3 -o platform=os -o arch=armv7 \\\n&& libbuildtool -t ios -o makeuniversal=true || exit 1";
+			shellScript = "\"${SRCROOT}/../../script/libbuildtool/iphone-lbt\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

@@ -8,22 +8,27 @@ SET (CMAKE_CXX_COMPILER_FORCED true)
 SET (CMAKE_CXX_COMPILER_WORKS true)
 
 SET (SDKVER "4.3")
-SET (DEVROOT "/Developer/Platforms/iPhoneOS.platform/Developer")
-SET (SDKROOT "${DEVROOT}/SDKs/iPhoneOS${SDKVER}.sdk")
+SET (DEVROOT "/Developer/Platforms/iPhoneSimulator.platform/Developer")
+SET (SDKROOT "${DEVROOT}/SDKs/iPhoneSimulator${SDKVER}.sdk")
 SET (CMAKE_OSX_SYSROOT "${SDKROOT}")
-SET (CMAKE_OSX_ARCHITECTURES "armv6" "armv7")
+SET (CMAKE_OSX_ARCHITECTURES "i386")
 
-SET (CMAKE_C_COMPILER "${DEVROOT}/usr/bin/gcc-4.2")
-SET (CMAKE_CXX_COMPILER "${DEVROOT}/usr/bin/g++-4.2")
+SET (CMAKE_C_COMPILER "${DEVROOT}/usr/bin/clang")
+SET (CMAKE_CXX_COMPILER "${DEVROOT}/usr/bin/clang")
 
-ADD_DEFINITIONS("-std=c99")
-ADD_DEFINITIONS("-arch armv6")
-ADD_DEFINITIONS("-arch armv7")
+#SET (CMAKE_C_COMPILER "${DEVROOT}/usr/bin/gcc")
+#SET (CMAKE_CXX_COMPILER "${DEVROOT}/usr/bin/g++")
+
+
+#ADD_DEFINITIONS("-std=c99")
+#ADD_DEFINITIONS("-arch armv6")
+#ADD_DEFINITIONS("-arch armv7")
 ADD_DEFINITIONS("-pipe")
-ADD_DEFINITIONS("-no-cpp-precomp")
+#ADD_DEFINITIONS("-no-cpp-precomp")
 ADD_DEFINITIONS("--sysroot=${SDKROOT}")
-ADD_DEFINITIONS("-miphoneos-version-min=2.0")
+#ADD_DEFINITIONS("-miphoneos-version-min=2.0")
 ADD_DEFINITIONS("-D_ARM_")
+ADD_DEFINITIONS("-x objective-c++")
 
 INCLUDE_DIRECTORIES(SYSTEM "${SDKROOT}/usr/include")
 INCLUDE_DIRECTORIES(SYSTEM "${SDKROOT}/opt/iphone-${SDKVER}/include")
@@ -41,4 +46,5 @@ SET (CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 SET (iphone 1)
 SET (iphoneOS 1)
 SET (iphoneOS_VERSION ${SDKVER})
+
 
