@@ -11,7 +11,7 @@ _hash="220035f111ea045a51e290906025e8b5" #1.5.1
 #_hash="dd4175393720ae041c67ace87cf6d212" #1.4.5
 
 #Host
-[[ -n ${configure_host-} ]] && config_cmdline="${config_cmdline} --host=${configure_host}"
+[[ -n ${configure_host-} ]] && config_cmdline="${config_cmdline-} --host=${configure_host}"
 
 function discover() {
 	#TODO: If using the system's library, include it, otherwise, locally built

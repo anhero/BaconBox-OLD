@@ -1,0 +1,19 @@
+#!/bin/bash
+
+_name="sigly"
+_license="MIT" 
+
+_version="7d996592f52e"
+_archive="${_version}.tar.bz2"
+_archive_url="http://bitbucket.org/anhero/${_name}/get/${_archive}"
+_hash="0c4157a9cf7d300f230d146ba94f0568"
+
+load_base http.fetch
+
+function build() {
+	echo -n 'Copying sigly... '
+	cd "${lib_workdir}/anhero-${_pkgdir}" || exit 1
+	mkdir -p "${libs_builddir}/include/"
+	mv sigly.h "${libs_builddir}/include/" || exit 1
+	echo done.
+}
