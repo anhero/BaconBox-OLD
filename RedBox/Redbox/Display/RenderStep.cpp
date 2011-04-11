@@ -87,6 +87,8 @@ void RenderStep::render() {
 		} else if(mode == (RenderStepMode::SHAPE | RenderStepMode::TEXTURE)) {
 			GraphicDriver::drawShapeWithTexture(verticesData, info,
 										 vertices->getVertices().size());
+		} else if(mode == (RenderStepMode::SHAPE | RenderStepMode::COLOR)) {
+			GraphicDriver::drawShapeWithColor(verticesData, info, vertices->getVertices().size());
 		}
 	}
 }
