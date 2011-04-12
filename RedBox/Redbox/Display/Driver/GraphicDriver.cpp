@@ -27,6 +27,14 @@ void GraphicDriver::drawShapeWithTexture(std::vector<float>& vertices,
 #endif
 }
 
+void GraphicDriver::drawShapeWithColor(std::vector<float>& vertices,
+									   RedBox::RenderInfo &renderingInfo,
+									   unsigned int nbVertices) {
+#ifdef RB_OPENGL
+	OpenGLDriver::drawShapeWithColor(&(*(vertices.begin())), renderingInfo,
+									 nbVertices);
+#endif
+}
 
 void GraphicDriver::prepareScene(int xTranslation, int yTranslation, int angle, float zoom){
 

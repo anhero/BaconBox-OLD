@@ -30,7 +30,6 @@ vertices(newVertices),
 useSinceEpoch(false),
 deleteVerticesGroup(newDeleteVerticesGroup),
 lastFrameChange(0.0),
-currentAnimation(""),
 isPaused(false),
 pauseFrameRemain(0.0) {
 	if(vertices) {
@@ -50,7 +49,7 @@ RenderStep::RenderStep(const std::string& key,
 info(RenderInfo(ResourceManager::getTexture(key), newVertices, frameWidth, frameHeight, nbFrames)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE), vertices(newVertices),
 useSinceEpoch(false), deleteVerticesGroup(newDeleteVerticesGroup),
-lastFrameChange(0.0), currentAnimation(""), isPaused(false),
+lastFrameChange(0.0), isPaused(false),
 pauseFrameRemain(0.0) {
 	if(vertices) {
 		vertices->updateDataFromVertices(verticesData);
@@ -60,7 +59,7 @@ pauseFrameRemain(0.0) {
 RenderStep::RenderStep(const RenderStep& src):Renderable(src), info(src.info),
 mode(src.mode), vertices(src.vertices),
 useSinceEpoch(src.useSinceEpoch), deleteVerticesGroup(src.deleteVerticesGroup),
-lastFrameChange(0.0), currentAnimation(src.currentAnimation), isPaused(false),
+lastFrameChange(0.0), isPaused(false),
 pauseFrameRemain(0.0) {
 	if(vertices) {
 		vertices->updateDataFromVertices(verticesData);
@@ -87,6 +86,8 @@ void RenderStep::render() {
 		} else if(mode == (RenderStepMode::SHAPE | RenderStepMode::TEXTURE)) {
 			GraphicDriver::drawShapeWithTexture(verticesData, info,
 										 vertices->getVertices().size());
+		} else if(mode == (RenderStepMode::SHAPE | RenderStepMode::COLOR)) {
+			GraphicDriver::drawShapeWithColor(verticesData, info, vertices->getVertices().size());
 		}
 	}
 }
@@ -94,10 +95,11 @@ void RenderStep::render() {
 void RenderStep::update() {
 	if(!isPaused) {
 		if(info.isAnimated()) {
-			AnimationParameters* anim = info.getAnimationParameters(currentAnimation);
+			AnimationParameters* anim = info.getAnimationParameters(info.getCurrentAnimation());
 			if(anim) {
 				if(((useSinceEpoch)?(TimeHelper::getSinceEpoch()):(TimeHelper::getSinceStart())) >= lastFrameChange + anim->timePerFrame) {
 					info.incrementFrame();
+					lastFrameChange = ((useSinceEpoch)?(TimeHelper::getSinceEpoch()):(TimeHelper::getSinceStart()));
 				}
 			}
 		}
@@ -157,8 +159,9 @@ void RenderStep::playAnimation(const std::string& name) {
 	if(info.animationExists(name)) {
 		// We set the new current animation and start the animation at the first
 		// frame.
-		currentAnimation = name;
-		info.setCurrentFrame(0);
+		info.setCurrentAnimation(name);
+		info.setCurrentFrame(info.getAnimationParameters(info.getCurrentAnimation())->frames.front());
+		info.resetCurrentNbLoops();
 		if(useSinceEpoch) {
 			lastFrameChange = TimeHelper::getSinceEpoch();
 		} else {
@@ -189,7 +192,7 @@ void RenderStep::resumeAnimation() {
 }
 
 const std::string& RenderStep::getCurrentAnimation() const {
-	return currentAnimation;
+	return info.getCurrentAnimation();
 }
 
 void RenderStep::clean() {
@@ -250,7 +253,6 @@ void RenderStep::copyFrom(const RenderStep &src) {
 		useSinceEpoch = src.useSinceEpoch;
         deleteVerticesGroup = src.deleteVerticesGroup;
 		lastFrameChange = 0.0;
-		currentAnimation = src.currentAnimation;
 		isPaused = false;
 		pauseFrameRemain = 0.0;
     }
@@ -285,8 +287,8 @@ namespace RedBox {
 		output << ", vertices: " << r.vertices << ", useSinceEpoch: " <<
 		((r.useSinceEpoch)?("true"):("false")) << ", deleteVerticesGroup: " <<
 		((r.deleteVerticesGroup)?("true"):("false")) << ", lastFrameChange: " <<
-		r.lastFrameChange << ", currentAnimation: \"" << r.currentAnimation <<
-		", isPaused: " << ((r.isPaused)?("true"):("false")) <<
+		r.lastFrameChange << ", isPaused: " <<
+		((r.isPaused)?("true"):("false")) <<
 		", pauseFrameRemain: " << r.pauseFrameRemain << "}";
 		return output;
 	}

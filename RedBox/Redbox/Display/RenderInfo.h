@@ -193,6 +193,12 @@ namespace RedBox {
 		 */
 		AnimationParameters* getAnimationParameters(const std::string& name);
 		/**
+		 * Gets the animation parameters of a specific animation.
+		 * @param name Name of the animation to get.
+		 * @return Animation parameters asked for.
+		 */
+		const AnimationParameters* getAnimationParameters(const std::string& name) const;
+		/**
 		 * Changes the frame to be shown.
 		 */
 		void setCurrentFrame(unsigned int newCurrentFrame);
@@ -210,8 +216,12 @@ namespace RedBox {
 		/**
 		 * Increments the frame index. If it goes over the number of available
 		 * frames, it resets to 0.
+		 * @param Name of the animation to get its next frame.
 		 */
 		void incrementFrame();
+		const std::string& getCurrentAnimation() const;
+		void setCurrentAnimation(const std::string& name);
+		void resetCurrentNbLoops();
 	private:
         /**
          * Color, first int is red, second is green, third is blue and last one
@@ -230,12 +240,16 @@ namespace RedBox {
 		 * Current frame at which the animation is currently.
 		 */
 		unsigned int currentFrame;
+		/// Current number of times the animation has looped.
+		int currentNbLoops;
 		/**
 		 * Map to associate names to each animations in texCoords. For example,
 		 * to get information about a specific animation, you'd do 
 		 * animations["animationName"].
 		 */
 		std::map<std::string, AnimationParameters> animations;
+		/// Name of the animation currently playing.
+		std::string currentAnimation;
     };
 }
 
