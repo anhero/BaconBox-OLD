@@ -19,23 +19,16 @@ set(RedBox_framework_list  "Foundation" "AudioToolBox" "AVFoundation" "CoreGraph
 	endforeach(framework)
 
 else()
-
-set(RedBox_framework_list  "QtCore" "QtOpenGL" "QtGui" "OpenAL")
-	foreach(framework ${RedBox_framework_list})
-		findpkg_framework(${framework})
-		list(APPEND RedBox_IncludeDir_list ${${framework}_FRAMEWORK_INCLUDES})
-		list(APPEND RedBox_libraries_list ${${framework}_LIBRARY_FWK})
-	endforeach(framework)
-
-mm(RedBox_IncludeDir_list)
-  	#	set(QT_USE_QTOPENGL TRUE)   
+  		set(QT_USE_QTOPENGL TRUE)   
 		set(QT 1)	
 		ADD_DEFINITIONS("-DQT")
-	#	FIND_PACKAGE( Qt4 REQUIRED)	
-	#	INCLUDE( ${QT_USE_FILE} )
+		FIND_PACKAGE( Qt4 REQUIRED)	
+		INCLUDE( ${QT_USE_FILE} )
 
-	#	list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
-	#	list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
+		list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
+		list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
+		set(CFLAGS "-m32" ${CFLAGS})
+		set(CXXFLAGS "-m32" ${CXXFLAGS})
 endif(iphone)
 
 
@@ -49,7 +42,7 @@ include_directories(${RedBox_IncludeDir_list})
 link_directories( ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/)
 link_directories( ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Dependencies/lib/)
 
-#we build dependencies with libbuildtool (only if needed
+#we build dependencies with libbuildtool (only if needed)
 if(iphone)
 	if(NOT IS_DIRECTORY ${RedBox_SOURCE_DIR}/libraries/ios/universal)
 		execute_process(COMMAND	${RedBox_SOURCE_DIR}/script/libbuildtool/iphone-universal)
