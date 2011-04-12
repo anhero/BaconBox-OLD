@@ -1,10 +1,24 @@
 cmake_minimum_required(VERSION 2.6)
 project(RedBox)
-set(LIBRARY_OUTPUT_PATH  ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/)
+
+
+if(NOT CMAKE_BUILD_TYPE)
+  SET(CMAKE_BUILD_TYPE Debug CACHE STRING
+      "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+      FORCE)
+endif(NOT CMAKE_BUILD_TYPE)
+
+if("${CMAKE_GENERATOR}" STREQUAL "Xcode")
+	set(LIBRARY_OUTPUT_PATH  ${RedBox_BINARY_DIR}/temp/)
+else()
+	set(LIBRARY_OUTPUT_PATH  ${RedBox_BINARY_DIR}/temp/${CMAKE_BUILD_TYPE})
+endif("${CMAKE_GENERATOR}" STREQUAL "Xcode")
 
 set(CMAKE_MODULE_PATH "${RedBox_SOURCE_DIR}/script/CMake/module/")
 include(Function)
 include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
+
+
 
 recurseFolderList(RedBox_header_search_path ${RedBox_SOURCE_DIR}/RedBox)
 
@@ -34,13 +48,13 @@ endif(iphone)
 
 #Headers search path
 include_directories(${RedBox_header_search_path})
-include_directories("${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Dependencies/include/")
+include_directories("${RedBox_BINARY_DIR}/Dependencies/include/")
 include_directories(${RedBox_IncludeDir_list})
 
 
 #libraries search path
 link_directories( ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/)
-link_directories( ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Dependencies/lib/)
+link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 
 #we build dependencies with libbuildtool (only if needed)
 if(iphone)
@@ -66,21 +80,21 @@ endforeach(privateHeader ${Private_RedBox_Headers})
 
 #we copy the depencies in the right place 
 if(iphone)
-	copy(${RedBox_SOURCE_DIR}/libraries/ios/universal/lib ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Dependencies/lib/)
-	copy(${RedBox_SOURCE_DIR}/libraries/ios/universal/include ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Dependencies/include/)
+	copy(${RedBox_SOURCE_DIR}/libraries/ios/universal/lib ${RedBox_BINARY_DIR}/Dependencies/lib/)
+	copy(${RedBox_SOURCE_DIR}/libraries/ios/universal/include ${RedBox_BINARY_DIR}/Dependencies/include/)
 else()
-	copy(${RedBox_SOURCE_DIR}/libraries/current/lib ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Dependencies/lib/)
-	copy(${RedBox_SOURCE_DIR}/libraries/current/include ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Dependencies/include/)
+	copy(${RedBox_SOURCE_DIR}/libraries/current/lib ${RedBox_BINARY_DIR}/Dependencies/lib/)
+	copy(${RedBox_SOURCE_DIR}/libraries/current/include ${RedBox_BINARY_DIR}/Dependencies/include/)
 endif(iphone)
 
-#Seting switch for static and shared compilation
-set(RedBox_Compile_Static 1 CACHE bool "Compile RedBox as a static lib")
-set(RedBox_Compile_Static 0 CACHE bool "Compile RedBox as a shared lib")
 
-#mm(RedBoxHeaders)
 
-#We add the static and shared library depending on the case
-if(${RedBox_Compile_Static})
+		list(APPEND RedBox_IncludeDir_list ${RedBox_BINARY_DIR}/Dependencies/lib/)
+		list(APPEND RedBox_IncludeDir_list )
+		list(APPEND RedBox_IncludeDir_list )
+
+
+
 	add_library(RedBox STATIC ${RedBoxSources} ${RedBoxHeaders})
 	target_link_libraries(
 	RedBox
@@ -88,21 +102,17 @@ if(${RedBox_Compile_Static})
 	freetype
 	vorbisdec
 	RedBox_libraries_list
-)
-endif(${RedBox_Compile_Static})
+	)
 
-if(${RedBox_Compile_Shared})
-	add_library(RedBoxShared SHARED ${RedBoxSources} ${RedBoxHeaders})
-	target_link_libraries(
-	RedBoxShared
-	png
-	freetype
-	vorbisdec
-	RedBox_libraries_list
-)
-endif(${RedBox_Compile_Shared})
+		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
+		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
+		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisidec.a)
 
-#Installation
-#install(TARGETS RedBox DESTINATION )
+file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+add_custom_command(TARGET RedBox POST_BUILD 
+					COMMAND libtool -static -o ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a  
+					${RedBox_Dependencies}
+					${RedBox_BINARY_DIR}/temp/${CMAKE_BUILD_TYPE}/libRedBox.a)
+
 
 
