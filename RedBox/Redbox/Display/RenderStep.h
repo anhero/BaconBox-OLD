@@ -267,10 +267,6 @@ namespace RedBox {
 		 */
 		double lastFrameChange;
 		/**
-		 * Name of the animation currently playing.
-		 */
-		std::string currentAnimation;
-		/**
 		 * If the animation is paused or 
 		 */
 		bool isPaused;

@@ -43,6 +43,16 @@ namespace RedBox{
 		static void drawShapeWithTexture(std::vector<float>& vertices,
 										 RenderInfo& renderingInfo,
 										 unsigned int nbVertices);
+		/**
+		 * Draws a colored shape.
+		 * @param vertices Vertices' coordinates forming the shape to draw.
+		 * @param renderingInfo Contains general and platform-specific
+		 * information about how to render the shape.
+		 * @param nbVertices Number of vertices the shape has.
+		 */
+		static void drawShapeWithColor(std::vector<float>& vertices,
+									   RenderInfo& renderingInfo,
+									   unsigned int nbVertices);
 		
 		/**
 		 * Prepare the scene before rendering object.

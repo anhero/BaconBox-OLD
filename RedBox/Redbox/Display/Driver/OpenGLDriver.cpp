@@ -1,5 +1,7 @@
 #include "OpenGLDriver.h"
 
+#include <iostream>
+
 #include "RenderInfo.h"
 #include "TextureInfo.h"
 #include "MathHelper.h"
@@ -10,7 +12,7 @@ void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat* vertices,
 												unsigned int nbVertices){
 	 //@TODO: Check for possible optimizations
 	unsigned char * tempColor = renderingInfo.getColor();
-	unsigned char color[nbVertices];
+	unsigned char color[nbVertices*4];
 	int componentCount = nbVertices*4;
 	for	(int i =0; i< componentCount; i++) {
 		color[i] = tempColor[i%4];
@@ -43,11 +45,34 @@ void OpenGLDriver::drawShapeWithTexture(GLfloat* vertices,
 	
 	glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
 	
-	
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisable(GL_BLEND);
+	glDisable(GL_TEXTURE_2D);
 }
 
+void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,
+									  RenderInfo &renderingInfo,
+									  unsigned int nbVertices) {
+	unsigned char* tempColor = renderingInfo.getColor();
+	unsigned int componentCount = nbVertices * 4;
+	unsigned char color[componentCount];
+	for(unsigned int i = 0; i < componentCount; ++i) {
+		color[i] = tempColor[i % 4];
+	}
+	glEnable(GL_BLEND);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
+	glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
+	
+	glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
+	
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisable(GL_BLEND);
+}
 
 void OpenGLDriver::prepareScene(int xTranslation, int yTranslation, int angle, float zoom) {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
