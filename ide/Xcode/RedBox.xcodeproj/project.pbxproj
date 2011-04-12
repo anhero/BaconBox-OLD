@@ -930,7 +930,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/bash --login";
-			shellScript = "\"${SRCROOT}/../../script/libbuildtool/iphone-lbt\"\n";
+			shellScript = "\"${SRCROOT}/../../script/libbuildtool/iphone-universal\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

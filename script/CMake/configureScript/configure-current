@@ -1,0 +1,13 @@
+#! /bin/bash
+#unset CPATH
+#unset C_INCLUDE_PATH
+#unset CPLUS_INCLUDE_PATH
+#unset OBJC_INCLUDE_PATH
+#unset LIBS
+#unset DYLD_FALLBACK_LIBRARY_PATH
+#unset DYLD_FALLBACK_FRAMEWORK_PATH
+
+export MAINFOLDER=`pwd`
+
+cd build >/dev/null 2>&1 && cmake .. -DCMAKE_INSTALL_PREFIX="/opt/iphone-simulator-$SDKVER" "$@"
+

@@ -1,9 +1,93 @@
 #! /bin/bash
+
+CMAKE=$(which cmake)
+if [ "${CMAKE}" == "" ]; then
+	echo "CMake is not correctly installed and is necessary to build this project." && exit 1
+fi
+
+LIBBUILDTOOL=$(which libbuildtool)
+if [ "${LIBBUILDTOOL}" == "" ]; then
+	echo "LibBuildTool is not correctly installed and is necessary to build the dependencies of this project." && exit 1
+fi
+
+
+function print_help() {
+	#@ function print_help
+	#@ Prints help for libbuildtool.
+
+	local this="$(basename ${0})"
+	echo "
+Usage:
+     -t | --target <name>   Configure the project for the <name> target.
+						   Current supported target:
+                           - current (default)
+
+                           - iphoneOS (You must specify a sdk version like this: './configure -t iphoneOS 4.3' 
+                           where 4.3 is the sdk version number.
+
+                           - iphoneSimulator (You must specify a sdk version like this: './configure -t iphoneSimulator 4.3' 
+                           where 4.3 is the sdk version number.
+
+	-G |--build-system | --generator Specify which Cmake generator to use	
+	"
+}
+
+
+while [ $# -gt 0 ];do
+	case "$1" in
+		"--help"|"-h"|"-?")
+			print_help
+			exit 0
+			;;
+		"--target"|"-t")
+			shift;
+			target=$1
+			if [ "${target}" == "iphoneOS" -o "${target}" == "iphoneSimulator" ] ; then
+				shift;
+				if [ "${1}" == "" ]; then
+					echo "This target need a sdk version number. See ./configure --help for usage." && exit 1
+				fi
+					
+
+				export SDKVER="${1}"
+			fi
+			;;
+		"--build-system"|"--generator"|"-G")
+			shift;
+			generator="${1}"
+			;;
+		esac
+	shift;
+done
+
+
 #./CMake/configureScript/configure-iphone
-#./CMake/configureScript/configure-iphone \
-#-GXcode
+#./script/CMake/configureScript/configure-iphone -GXcode
+
+mkdir build
+cp ./script/CMake/Makefile/Makefile .
+configurePath="./script/CMake/configureScript"
+if [  "${target}" == "iphoneOS" ]; then
+	if [  "${generator}" == "" ]; then
+		"${configurePath}/configure-iphone"
+	else
+		"${configurePath}/configure-iphone" "-G${generator}"
+	fi
+elif [  "${target}" == "iphoneSimulator" ]; then
+	if [  "${generator}" == "" ]; then
+		"${configurePath}/configure-iphone-simulator"
+	else
+		"${configurePath}/configure-iphone-simulator" "-G${generator}"
+	fi
+
+else
+	if [  "${generator}" == "" ]; then
+		"${configurePath}/configure-current"
+	else
+		"${configurePath}/configure-current" "-G${generator}"
+	fi
+
+fi
 
 
-./CMake/configureScript/configure-iphone-simulator \
--GXcode
 

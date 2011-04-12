@@ -3,4 +3,4 @@
 export current_dir=$(dirname ${BASH_SOURCE[0]})
 
 cd $current_dir/../../libraries
-libbuildtool --copy-in ./current
+libbuildtool --copy-in $current_dir/../../libraries/current

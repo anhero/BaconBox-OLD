@@ -44,7 +44,8 @@ endmacro(mm)
 
 MACRO(findpkg_framework fwk)
   IF(APPLE)
-    SET(${fwk}_FRAMEWORK_PATH ${CMAKE_OSX_SYSROOT}/System/Library/Frameworks/)
+    SET(${fwk}_FRAMEWORK_PATH ${CMAKE_OSX_SYSROOT}/System/Library/Frameworks/
+							  /Library/Frameworks/)
     FOREACH(dir ${${fwk}_FRAMEWORK_PATH})
       SET(fwkpath ${dir}/${fwk}.framework)
       IF(EXISTS ${fwkpath})
