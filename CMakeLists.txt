@@ -36,6 +36,7 @@ else()
 
   		set(QT_USE_QTOPENGL TRUE)   
 		set(QT 1)	
+		ADD_DEFINITIONS("-DRB_QT")
 		ADD_DEFINITIONS("-DQT")
 
 include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)

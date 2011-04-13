@@ -17,7 +17,9 @@
 
 
 #ifdef QT
-	#define RB_QT
+	#ifndef RB_QT
+		#define RB_QT
+	#endif
 #endif // QT
 
 #ifdef _WIN32
