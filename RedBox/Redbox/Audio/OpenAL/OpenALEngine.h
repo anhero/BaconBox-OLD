@@ -10,6 +10,9 @@
 #ifdef RB_WIN32
 #include <al.h>
 #include <alc.h>
+#elif defined(RB_LINUX)
+#include <AL/al.h>
+#include <AL/alc.h>
 #else
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
@@ -19,7 +22,12 @@
 #include <vector>
 #include <list>
 
-#include "OpenaLSoundFX.h"
+#ifdef RB_LINUX
+//Linux build (at least) needs it here
+#include <stdint.h>
+#endif
+
+#include "OpenALSoundFX.h"
 #include "SoundEngine.h"
 #include "SoundParameters.h"
 

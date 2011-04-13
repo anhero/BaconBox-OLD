@@ -12,6 +12,8 @@
 #import <OpenGLES/ES1/glext.h>
 #elif defined(RB_QT)
 #include <QtOpenGL>
+#else
+#include <GL/gl.h>
 #endif
 
 #include "GraphicDriver.h"
