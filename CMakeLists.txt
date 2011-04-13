@@ -16,7 +16,6 @@ endif("${CMAKE_GENERATOR}" STREQUAL "Xcode")
 
 set(CMAKE_MODULE_PATH "${RedBox_SOURCE_DIR}/script/CMake/module/")
 include(Function)
-include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 
 
 
@@ -45,6 +44,8 @@ else()
 		set(CXXFLAGS "-m32" ${CXXFLAGS})
 		set(CMAKE_OSX_ARCHITECTURES "i386")
 endif(iphone)
+
+include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 
 
 #Headers search path
@@ -104,7 +105,7 @@ endforeach(privateHeader ${Private_RedBox_Headers})
 	png
 	freetype
 	vorbisdec
-	RedBox_libraries_list
+	${RedBox_libraries_list}
 	)
 
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
