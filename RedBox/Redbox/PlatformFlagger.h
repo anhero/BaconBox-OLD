@@ -2,9 +2,19 @@
 #define RB_PLATFORM_FLAGGER_H
 
 
-#ifdef LINUX
+#ifdef linux
 	#define RB_LINUX
-#endif // LINUX
+
+	//Use OpenGL on Linux
+	#define RB_OPENGL
+
+	//TODO: Check: if this is not defined, OpenAL stuff still gets included...
+	#define RB_OPENAL
+	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+	#define RB_SOUND_ENGINE new OpenALEngine()
+	#define RB_MUSIC_ENGINE NULL
+#endif // linux
+
 
 #ifdef QT
 	#define RB_QT

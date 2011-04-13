@@ -3,7 +3,7 @@
 #include "PlatformFlagger.h"
 
 #ifdef RB_LINUX
-#include <sys/time.h>
+#include <time.h>
 #endif
 
 #ifdef RB_QT
