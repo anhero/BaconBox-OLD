@@ -1,4 +1,5 @@
 get_filename_component(DisplayText_dir ${CMAKE_CURRENT_LIST_FILE} PATH)
+include(${DisplayText_dir}/FreetypeImplementation/Sources.cmake)
 
 file(GLOB RedBox_RedBox_Display_Text_Headers ${DisplayText_dir}/*.h)
 file(GLOB RedBox_RedBox_Display_Text_Sources ${DisplayText_dir}/*.cpp)
