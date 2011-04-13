@@ -30,20 +30,24 @@ set(RedBox_framework_list  "Foundation" "AudioToolBox" "AVFoundation" "CoreGraph
 		list(APPEND RedBox_IncludeDir_list ${${framework}_FRAMEWORK_INCLUDES})
 		list(APPEND RedBox_libraries_list ${${framework}_LIBRARY_FWK})
 	endforeach(framework)
+include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 
 else()
 
   		set(QT_USE_QTOPENGL TRUE)   
 		set(QT 1)	
 		ADD_DEFINITIONS("-DQT")
+
+include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
+		
 		FIND_PACKAGE( Qt4 REQUIRED)	
 		INCLUDE( ${QT_USE_FILE} )
 
 		  QT4_WRAP_CPP( RedBox_QT_MOC_sources ${RedBox_QT_MOC_headers} )
 		  INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
 		
-		list(APPEND RedBoxApp_sources ${RedBoxApp_QT_MOC_sources})
-		
+		list(APPEND RedBox_sources ${RedBox_QT_MOC_sources})
+		mm(RedBox_QT_MOC_headers)
 
 		list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
 		list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
@@ -52,7 +56,6 @@ else()
 		set(CMAKE_OSX_ARCHITECTURES "i386")
 endif(iphone)
 
-include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 
 
 #Headers search path
@@ -106,13 +109,13 @@ endforeach(privateHeader ${Private_RedBox_Headers})
 
 
 	add_library(RedBox STATIC ${RedBoxSources} ${RedBoxHeaders})
-	target_link_libraries(
-	RedBox
-	png
-	freetype
-	vorbisdec
-	${RedBox_libraries_list}
-	)
+#	target_link_libraries(
+#	RedBox
+#	png
+#	freetype
+#	vorbisdec
+#	${RedBox_libraries_list}
+#	)
 
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
