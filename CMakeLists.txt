@@ -32,11 +32,18 @@ set(RedBox_framework_list  "Foundation" "AudioToolBox" "AVFoundation" "CoreGraph
 	endforeach(framework)
 
 else()
+
   		set(QT_USE_QTOPENGL TRUE)   
 		set(QT 1)	
 		ADD_DEFINITIONS("-DQT")
 		FIND_PACKAGE( Qt4 REQUIRED)	
 		INCLUDE( ${QT_USE_FILE} )
+
+		  QT4_WRAP_CPP( RedBox_QT_MOC_sources ${RedBox_QT_MOC_headers} )
+		  INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
+		
+		list(APPEND RedBoxApp_sources ${RedBoxApp_QT_MOC_sources})
+		
 
 		list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
 		list(APPEND RedBox_libraries_list ${QT_LIBRARIES})

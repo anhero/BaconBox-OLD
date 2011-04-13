@@ -8,5 +8,8 @@ list(APPEND RedBoxHeaders ${RedBox_RedBox_Input_Pointer_Qt_Headers})
 list(APPEND RedBoxSources ${RedBox_RedBox_Input_Pointer_Qt_Sources})
 
 
+list(APPEND RedBox_QT_MOC_headers ${RedBox_RedBox_Input_Pointer_Qt_Headers})
+
+
 source_group(RedBox\\Input\\Pointer\\Qt  FILES ${RedBox_RedBox_Input_Pointer_Qt_Sources} ${RedBox_RedBox_Input_Pointer_Qt_Headers})
 
