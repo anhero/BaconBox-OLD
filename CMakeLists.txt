@@ -112,7 +112,8 @@ endif(iphone)
 		
 file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
 add_custom_command(TARGET RedBox POST_BUILD 
-					COMMAND libtool -static -o ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a  
+					COMMAND ${RedBox_SOURCE_DIR}/script/linkscript.sh
+					${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a
 					${RedBox_Dependencies}
 					${RedBox_BINARY_DIR}/temp/${CMAKE_BUILD_TYPE}/libRedBox.a)
 
