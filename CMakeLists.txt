@@ -84,7 +84,6 @@ else()
 endif(iphone)
 
 
-list(APPEND Private_RedBox_Headers ${RedBox_BINARY_DIR}/Dependencies/include/sigly.h)
 
 
 #we copy the header private and public header files
