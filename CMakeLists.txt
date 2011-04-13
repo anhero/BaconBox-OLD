@@ -43,6 +43,7 @@ else()
 		list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
 		set(CFLAGS "-m32" ${CFLAGS})
 		set(CXXFLAGS "-m32" ${CXXFLAGS})
+		set(CMAKE_OSX_ARCHITECTURES "i386")
 endif(iphone)
 
 
@@ -107,7 +108,8 @@ endif(iphone)
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisidec.a)
-
+		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libz.a)
+		
 file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
 add_custom_command(TARGET RedBox POST_BUILD 
 					COMMAND libtool -static -o ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a  
