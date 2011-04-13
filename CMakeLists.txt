@@ -43,11 +43,11 @@ include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 		FIND_PACKAGE( Qt4 REQUIRED)	
 		INCLUDE( ${QT_USE_FILE} )
 
-		  QT4_WRAP_CPP( RedBox_QT_MOC_sources ${RedBox_QT_MOC_headers} )
+		qt4_wrap_cpp(RedBox_QT_MOC_sources ${RedBox_QT_MOC_headers})
+		  
 		  INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
 		
-		list(APPEND RedBox_sources ${RedBox_QT_MOC_sources})
-		mm(RedBox_QT_MOC_headers)
+		list(APPEND RedBoxSources ${RedBox_QT_MOC_sources})
 
 		list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
 		list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
