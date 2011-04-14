@@ -58,11 +58,14 @@ void VerticesGroup::addVertices(unsigned int nbVertices, ...) {
 #ifdef RB_PHYSICS_ENABLED
 		GraphicBody* parentGraphicBody = ((vertices.size()) ? (vertices.front().getParentGraphicBody()):(NULL));
 #endif
+		float x, y;
 		for(unsigned int i = 0; i < nbVertices; i++) {
+			x = static_cast<float>(va_arg(verticesCoords, double));
+			y = static_cast<float>(va_arg(verticesCoords, double));
 #ifdef RB_PHYSICS_ENABLED
-			vertices.push_back(Vertex(static_cast<float>(va_arg(verticesCoords, double)), static_cast<float>(va_arg(verticesCoords, double)), parentSprite, parentGraphicBody));
+			vertices.push_back(Vertex(x, y, parentSprite, parentGraphicBody));
 #else
-			vertices.push_back(Vertex(static_cast<float>(va_arg(verticesCoords, double)), static_cast<float>(va_arg(verticesCoords, double)), parentSprite));
+			vertices.push_back(Vertex(x, y, parentSprite));
 #endif
 		}
 		va_end(verticesCoords);
