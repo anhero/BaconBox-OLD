@@ -67,7 +67,6 @@ include_directories(${RedBox_IncludeDir_list})
 
 #libraries search path
 link_directories( ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/)
-link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 
 #we build dependencies with libbuildtool (only if needed)
 if(iphone)
@@ -105,8 +104,8 @@ foreach(privateHeader ${Private_RedBox_Headers})
 endforeach(privateHeader ${Private_RedBox_Headers})
 
 
-		list(APPEND RedBox_IncludeDir_list ${RedBox_BINARY_DIR}/Dependencies/lib/)
-
+link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
+		
 
 
 	add_library(RedBox STATIC ${RedBoxSources} ${RedBoxHeaders})
@@ -114,7 +113,7 @@ endforeach(privateHeader ${Private_RedBox_Headers})
 	RedBox
 	png
 	freetype
-	vorbisdec
+	vorbisidec
 	z
 	${RedBox_libraries_list}
 	)
