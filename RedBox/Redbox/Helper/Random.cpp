@@ -13,10 +13,10 @@ int Random::getRandomInteger(int min, int max) {
 	if(!initialized) {
 		init();
 	}
-#ifdef RB_WIN32
-	return (rand() % ((max + 1) - min)) + min;
-#else
+#ifdef RB_IPHONE_PLATFORM
 	return (arc4random() % ((max + 1) - min)) + min;
+#else
+	return (rand() % ((max + 1) - min)) + min;
 #endif
 	//return min + (int) ((double) rand () * (max - min + 1)
 	//					/ ((unsigned) RAND_MAX + 1));
@@ -26,10 +26,10 @@ bool Random::getRandomBool(){
 	if(!initialized) {
 		init();
 	}
-#ifdef RB_WIN32
-	return rand()%2;
-#else
+#ifdef RB_IPHONE_PLATFORM
 	return arc4random()%2;
+#else
+	return rand()%2;
 #endif
 }
 

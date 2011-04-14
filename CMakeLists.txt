@@ -36,6 +36,7 @@ else()
 
   		set(QT_USE_QTOPENGL TRUE)   
 		set(QT 1)	
+		ADD_DEFINITIONS("-DRB_QT")
 		ADD_DEFINITIONS("-DQT")
 
 include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
@@ -124,7 +125,8 @@ endforeach(privateHeader ${Private_RedBox_Headers})
 		
 file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
 add_custom_command(TARGET RedBox POST_BUILD 
-					COMMAND libtool -static -o ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a  
+					COMMAND ${RedBox_SOURCE_DIR}/script/linkscript.sh
+					${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a
 					${RedBox_Dependencies}
 					${RedBox_BINARY_DIR}/temp/${CMAKE_BUILD_TYPE}/libRedBox.a)
 

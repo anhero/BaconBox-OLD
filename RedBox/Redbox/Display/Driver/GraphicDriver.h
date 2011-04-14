@@ -8,6 +8,11 @@
 #include <vector>
 #include "TextureInfo.h"
 #include "PixMap.h"
+
+#ifdef RB_OPENGL
+#include "OpenGLDriver.h"
+#endif
+
 namespace RedBox{
 	class RenderInfo;
     /**
