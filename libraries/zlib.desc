@@ -40,7 +40,9 @@ function build() {
 		&& make -fwin32/makefile.gcc install
 	else
 		echo Other platform found.
-		./configure --prefix="${libs_builddir}" \
+		#@HACK tries to copy sharedlib even when not built... (ios)
+		./configure --prefix="${libs_builddir}" --static \
+			--sharedlibdir="README ${libs_builddir}/share/README.zlib" \
 		&& make \
 		&& make install
 	fi
