@@ -5,6 +5,10 @@ include(${RedBox_subroot_dir}/Emitter/Sources.cmake)
 include(${RedBox_subroot_dir}/Helper/Sources.cmake)
 include(${RedBox_subroot_dir}/Input/Sources.cmake)
 include(${RedBox_subroot_dir}/SignalSlots/Sources.cmake)
+include(${RedBox_subroot_dir}/SignalSlots/Sources.cmake)
+include(${RedBox_subroot_dir}/Physic/Sources.cmake)
+
+
 
 file(GLOB RedBox_RedBox_Headers ${RedBox_subroot_dir}/*.h)
 file(GLOB RedBox_RedBox_Sources ${RedBox_subroot_dir}/*.cpp)

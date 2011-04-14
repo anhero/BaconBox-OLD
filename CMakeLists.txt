@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(RedBox)
 
-
+#We force the build type to be at least debug
 if(NOT CMAKE_BUILD_TYPE)
   SET(CMAKE_BUILD_TYPE Debug CACHE STRING
       "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
@@ -16,7 +16,6 @@ endif("${CMAKE_GENERATOR}" STREQUAL "Xcode")
 
 set(CMAKE_MODULE_PATH "${RedBox_SOURCE_DIR}/script/CMake/module/")
 include(Function)
-include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 
 
 
@@ -31,19 +30,32 @@ set(RedBox_framework_list  "Foundation" "AudioToolBox" "AVFoundation" "CoreGraph
 		list(APPEND RedBox_IncludeDir_list ${${framework}_FRAMEWORK_INCLUDES})
 		list(APPEND RedBox_libraries_list ${${framework}_LIBRARY_FWK})
 	endforeach(framework)
+include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 
 else()
+
   		set(QT_USE_QTOPENGL TRUE)   
 		set(QT 1)	
 		ADD_DEFINITIONS("-DQT")
+
+include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
+		
 		FIND_PACKAGE( Qt4 REQUIRED)	
 		INCLUDE( ${QT_USE_FILE} )
+
+		qt4_wrap_cpp(RedBox_QT_MOC_sources ${RedBox_QT_MOC_headers})
+		  
+		  INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
+		
+		list(APPEND RedBoxSources ${RedBox_QT_MOC_sources})
 
 		list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
 		list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
 		set(CFLAGS "-m32" ${CFLAGS})
 		set(CXXFLAGS "-m32" ${CXXFLAGS})
+		set(CMAKE_OSX_ARCHITECTURES "i386")
 endif(iphone)
+
 
 
 #Headers search path
@@ -70,12 +82,6 @@ endif(iphone)
 
 
 
-#we copy the header private and public header files
-file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include/RedBox)
-configure_file(${Public_RedBox_Headers} ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include COPYONLY)
-foreach(privateHeader ${Private_RedBox_Headers})
-	configure_file(${privateHeader} ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include/RedBox COPYONLY)
-endforeach(privateHeader ${Private_RedBox_Headers})
 
 
 #we copy the depencies in the right place 
@@ -89,25 +95,33 @@ endif(iphone)
 
 
 
+
+#we copy the header private and public header files
+file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include/RedBox)
+configure_file(${Public_RedBox_Headers} ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include COPYONLY)
+foreach(privateHeader ${Private_RedBox_Headers})
+	configure_file(${privateHeader} ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include/RedBox COPYONLY)
+endforeach(privateHeader ${Private_RedBox_Headers})
+
+
 		list(APPEND RedBox_IncludeDir_list ${RedBox_BINARY_DIR}/Dependencies/lib/)
-		list(APPEND RedBox_IncludeDir_list )
-		list(APPEND RedBox_IncludeDir_list )
 
 
 
 	add_library(RedBox STATIC ${RedBoxSources} ${RedBoxHeaders})
-	target_link_libraries(
-	RedBox
-	png
-	freetype
-	vorbisdec
-	RedBox_libraries_list
-	)
+#	target_link_libraries(
+#	RedBox
+#	png
+#	freetype
+#	vorbisdec
+#	${RedBox_libraries_list}
+#	)
 
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisidec.a)
-
+		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libz.a)
+		
 file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
 add_custom_command(TARGET RedBox POST_BUILD 
 					COMMAND libtool -static -o ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a  

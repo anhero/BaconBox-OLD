@@ -1,9 +1,7 @@
 #!/bin/bash
 #Libraries to build
 
-if [ "${MSYSTEM-}" == "MINGW32" ]; then
-	libraries=( ${libraries[@]-} 'zlib' )
-fi
+libraries=( ${libraries[@]-} 'zlib' )
 libraries=( ${libraries[@]-} 'freetype' )
 libraries=( ${libraries[@]-} 'libpng' )
 libraries=( ${libraries[@]-} 'libvorbis-tremor' )
