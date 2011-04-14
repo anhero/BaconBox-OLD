@@ -29,35 +29,44 @@ namespace RedBox {
 		friend class GraphicDriver;
 	private:
         /**
-         * Draw a colored and textured shape 
-         * with the given vertices, texture coordinate, rendering informations (colors array and textureID) and
-         * number of vertices
-         * color information will blend with the textured (and background if alpha is not at max value of 255)
-         *
-         * @param vertices Array of vertex to draw, must have this form (X1, Y1, X2, Y2, Xn, Yn).
-         * The order must be clock wise
-         * @param texCoordArray Array of texture coordinate, every value must be in the range 0 to 1. 
-         * @param renderingInfo object of type RenderInfo, containing colors array and textureID
-         * @param nbVertices number of vertices to draw
+         * Draw a colored and textured shape with the given vertices, texture
+		 * coordinate, rendering informations (colors array and textureID) and
+         * number of vertices. Color information will blend with the textured
+		 * (and background if alpha is not at max value of 255).
+         * @param vertices Array of vertex to draw, must have this form (X1, Y1,
+		 * X2, Y2, Xn, Yn). The order must be clockwise.
+		 * @param renderingInfo Object of type RenderInfo, containing the color
+		 * array, texture coordinates and textureID.
+         * @param nbVertices Number of vertices to draw.
          */
 		static void drawShapeWithTextureAndColor(GLfloat* vertices,
 												 RenderInfo& renderingInfo,
 												 unsigned int nbVertices);
         
         /**
-         * Draw a textured shape 
-         * with the given vertices, texture coordinate, rendering informations (textureID) and
-         * the number of vertices
-         *
-         * @param vertices Array of vertex to draw, must have this form (X1, Y1, X2, Y2, Xn, Yn).
-         * The order must be clock wise
-         * @param texCoordArray Array of texture coordinate, every value must be in the range 0 to 1.
-         * @param renderingInfo object of type RenderInfo, containing colors array and textureID
-         * @param nbVertices number of vertices to draw
+         * Draw a textured shape with the given vertices, texture coordinate,
+		 * rendering informations (textureID) and the number of vertices.
+         * @param vertices Array of vertices to draw, must have this form (X1, Y1,
+		 * X2, Y2, Xn, Yn). The order must be clock wise
+         * @param renderingInfo Object of type RenderInfo, containing the color
+		 * array, texture coordinates and textureID.
+         * @param nbVertices Number of vertices to draw.
          */
 		static void drawShapeWithTexture(GLfloat* vertices,
 										 RenderInfo& renderingInfo,
 										 unsigned int nbVertices);
+		/**
+		 * Draw a colored shape with the given vertices and rendering
+		 * information.
+		 * @param vertices Array of vertices to draw. They have to be like this:
+		 * [x1, y1, x2, y2, x3, y3, ...]. The order must be clockwise.
+		 * @param renderingInfo Contains the information about the shape's
+		 * color.
+		 * @param nbVertices Number of vertices the array contains.
+		 */
+		static void drawShapeWithColor(GLfloat* vertices,
+									   RenderInfo& renderingInfo,
+									   unsigned int nbVertices);
 		
 		/**
 		 * Prepare the scene before rendering object.

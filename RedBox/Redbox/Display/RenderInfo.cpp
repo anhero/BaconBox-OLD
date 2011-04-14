@@ -1,6 +1,7 @@
 #include "RenderInfo.h"
 
 #include <cmath>
+#include <iostream>
 
 #include "TextureInfo.h"
 #include "VerticesGroup.h"
@@ -88,7 +89,7 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 					
 					offsetX += realFrameWidth;
 					
-					if(offsetX > realWidth) {
+					if(offsetX >= realWidth) {
 						offsetX = 0.0f;
 						offsetY += realFrameHeight;
 					}
@@ -213,8 +214,17 @@ AnimationParameters* RenderInfo::getAnimationParameters(const std::string& name)
 	}
 }
 
+const AnimationParameters* RenderInfo::getAnimationParameters(const std::string& name) const {
+	if(animationExists(name)) {
+		return &(animations.find(name)->second);
+	} else {
+		RB_ECHO("Tried to get a non-existing animation: " << name);
+		return NULL;
+	}
+}
+
 void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
-	if(newCurrentFrame >= texCoords.size()) {
+	if(newCurrentFrame <= texCoords.size()) {
 		currentFrame = newCurrentFrame;
 	} else {
 		RB_ECHO("Tried to set the current frame that is too high: " << newCurrentFrame);
@@ -222,7 +232,11 @@ void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
 }
 
 unsigned int RenderInfo::getCurrentFrame() const {
-	return currentFrame;
+	if(isAnimated()) {
+		return getAnimationParameters(getCurrentAnimation())->frames[currentFrame];
+	} else {
+		return 0;
+	}
 }
 
 bool RenderInfo::isAnimated() const {
@@ -230,9 +244,35 @@ bool RenderInfo::isAnimated() const {
 }
 
 void RenderInfo::incrementFrame() {
-	if(texCoords.size() <= currentFrame) currentFrame = 0;
-	else ++currentFrame;
+	AnimationParameters* ptrCurrentAnimation = getAnimationParameters(getCurrentAnimation());
+	if(ptrCurrentAnimation) {
+		++currentFrame;
+		if(currentFrame >= ptrCurrentAnimation->frames.size()) {
+			if(ptrCurrentAnimation->nbLoops == -1) {
+				currentFrame = 0;
+			} else {
+				++currentNbLoops;
+				if(currentNbLoops > ptrCurrentAnimation->nbLoops) {
+					--currentNbLoops;
+					--currentFrame;
+				} else {
+					currentFrame = 0;
+				}
+			}
+		}
+	}
 }
+
+const std::string& RenderInfo::getCurrentAnimation() const {
+	return currentAnimation;
+}
+void RenderInfo::setCurrentAnimation(const std::string& name) {
+	currentAnimation = name;
+}
+void RenderInfo::resetCurrentNbLoops() {
+	currentNbLoops = 0;
+}
+
 
 namespace RedBox {
 	std::ostream& operator<<(std::ostream& output, const RenderInfo& r) {

@@ -249,6 +249,12 @@ namespace RedBox {
 		 * Componentes are RGBA.
 		 */
 		void setMainColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
+		
+		/**
+		 * Gets the vertices group.
+		 * @return The sprite's group of vertices.
+		 */
+		VerticesGroup& getVertices();
 #ifdef RB_PHYSICS_ENABLED
         /**
          * Creates an edge on the sprite. Creates an edge linking two vertices.
@@ -269,9 +275,6 @@ namespace RedBox {
          * @param edge Pointer to the edge to remove.
          */
         void removeEdge(Edge* edge);
-		VerticesGroup& getVertices() {
-			return vertices;
-		}
 #endif //RB_PHYSICS_ENABLED
     private:
         /**
