@@ -14,7 +14,7 @@ _hash="b3e2b6e2f1c3e0dffa1fd2a0f848b671" #2.4.4
 
 config_cmdline=" --enable-static=yes --enable-shared=no"
 #Host
-[[ -n ${configure_host-} ]] && config_cmdline=$config_cmdline" --host=${configure_host}"
+#[[ -n ${configure_host-} ]] && config_cmdline=$config_cmdline" --host=${configure_host}"
 
 
 load_base http.fetch
