@@ -232,7 +232,11 @@ void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
 }
 
 unsigned int RenderInfo::getCurrentFrame() const {
-	return getAnimationParameters(getCurrentAnimation())->frames[currentFrame];
+	if(isAnimated()) {
+		return getAnimationParameters(getCurrentAnimation())->frames[currentFrame];
+	} else {
+		return 0;
+	}
 }
 
 bool RenderInfo::isAnimated() const {
