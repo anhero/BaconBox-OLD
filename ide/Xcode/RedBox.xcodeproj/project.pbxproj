@@ -20,12 +20,6 @@
 		511C4E8213454AF800D555E2 /* MusicEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4DFF13454AF800D555E2 /* MusicEngine.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		511C4E8313454AF800D555E2 /* MusicInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E0013454AF800D555E2 /* MusicInfo.cpp */; };
 		511C4E8413454AF800D555E2 /* MusicInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E0113454AF800D555E2 /* MusicInfo.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		511C4E8513454AF800D555E2 /* RBAudioPlayerEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E0313454AF800D555E2 /* RBAudioPlayerEngine.cpp */; };
-		511C4E8613454AF800D555E2 /* RBAudioPlayerEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E0413454AF800D555E2 /* RBAudioPlayerEngine.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		511C4E8713454AF800D555E2 /* RBAudioPlayerMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E0513454AF800D555E2 /* RBAudioPlayerMusic.cpp */; };
-		511C4E8813454AF800D555E2 /* RBAudioPlayerMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E0613454AF800D555E2 /* RBAudioPlayerMusic.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		511C4E8913454AF800D555E2 /* RBAudioPlayerMusicDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E0713454AF800D555E2 /* RBAudioPlayerMusicDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		511C4E8A13454AF800D555E2 /* RBAudioPlayerMusicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E0813454AF800D555E2 /* RBAudioPlayerMusicDelegate.m */; };
 		511C4E8B13454AF800D555E2 /* MusicParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E0913454AF800D555E2 /* MusicParameters.cpp */; };
 		511C4E8C13454AF800D555E2 /* MusicParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E0A13454AF800D555E2 /* MusicParameters.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		511C4E8D13454AF800D555E2 /* OpenALEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E0C13454AF800D555E2 /* OpenALEngine.cpp */; };
@@ -66,8 +60,6 @@
 		511C4EB013454AF800D555E2 /* Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E3113454AF800D555E2 /* Sprite.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		511C4EB113454AF800D555E2 /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E3313454AF800D555E2 /* Font.cpp */; };
 		511C4EB213454AF800D555E2 /* Font.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E3413454AF800D555E2 /* Font.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		511C4EB313454AF800D555E2 /* FontImplementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E3513454AF800D555E2 /* FontImplementation.cpp */; };
-		511C4EB413454AF800D555E2 /* FontImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E3613454AF800D555E2 /* FontImplementation.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		511C4EB513454AF800D555E2 /* Glyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E3713454AF800D555E2 /* Glyph.cpp */; };
 		511C4EB613454AF800D555E2 /* Glyph.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E3813454AF800D555E2 /* Glyph.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		511C4EB713454AF800D555E2 /* GraphicString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E3913454AF800D555E2 /* GraphicString.cpp */; };
@@ -112,7 +104,6 @@
 		511C4EE213454AF800D555E2 /* Link.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E6A13454AF800D555E2 /* Link.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		511C4EE313454AF800D555E2 /* LinkData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E6B13454AF800D555E2 /* LinkData.cpp */; };
 		511C4EE413454AF800D555E2 /* LinkData.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E6C13454AF800D555E2 /* LinkData.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		511C4EE513454AF800D555E2 /* RBString32.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E6D13454AF800D555E2 /* RBString32.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		511C4EE613454AF800D555E2 /* PlatformFlagger.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E6E13454AF800D555E2 /* PlatformFlagger.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		511C4EE713454AF800D555E2 /* RedBoxEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C4E6F13454AF800D555E2 /* RedBoxEngine.cpp */; };
 		511C4EE813454AF800D555E2 /* RedBoxEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 511C4E7013454AF800D555E2 /* RedBoxEngine.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -189,6 +180,15 @@
 		51BB7A16134B7CFE00051A7D /* SignalAnalyzerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 51BB7A10134B7CFE00051A7D /* SignalAnalyzerManager.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51BB7A17134B7CFE00051A7D /* SignalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7A11134B7CFE00051A7D /* SignalData.cpp */; };
 		51BB7A18134B7CFE00051A7D /* SignalData.h in Headers */ = {isa = PBXBuildFile; fileRef = 51BB7A12134B7CFE00051A7D /* SignalData.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51DDA7971357698700DA418B /* RBAudioPlayerEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DDA7901357698700DA418B /* RBAudioPlayerEngine.cpp */; };
+		51DDA7981357698700DA418B /* RBAudioPlayerEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 51DDA7911357698700DA418B /* RBAudioPlayerEngine.h */; };
+		51DDA7991357698700DA418B /* RBAudioPlayerMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DDA7921357698700DA418B /* RBAudioPlayerMusic.cpp */; };
+		51DDA79A1357698700DA418B /* RBAudioPlayerMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 51DDA7931357698700DA418B /* RBAudioPlayerMusic.h */; };
+		51DDA79B1357698700DA418B /* RBAudioPlayerMusicDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 51DDA7941357698700DA418B /* RBAudioPlayerMusicDelegate.h */; };
+		51DDA79C1357698700DA418B /* RBAudioPlayerMusicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DDA7951357698700DA418B /* RBAudioPlayerMusicDelegate.m */; };
+		51DDA7A1135769B500DA418B /* FontImplementation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DDA79E135769B500DA418B /* FontImplementation.cpp */; };
+		51DDA7A2135769B500DA418B /* FontImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 51DDA79F135769B500DA418B /* FontImplementation.h */; };
+		51DDA7A4135769D900DA418B /* RBString32.h in Headers */ = {isa = PBXBuildFile; fileRef = 51DDA7A3135769D900DA418B /* RBString32.h */; };
 		7EF711F1132D35C100524FBB /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711ED132D35C100524FBB /* libfreetype.a */; };
 		7EF711F2132D35C100524FBB /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711EE132D35C100524FBB /* libpng.a */; };
 		7EF711F4132D35C100524FBB /* libvorbisidec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711F0132D35C100524FBB /* libvorbisidec.a */; };
@@ -213,12 +213,6 @@
 		511C4DFF13454AF800D555E2 /* MusicEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicEngine.h; sourceTree = "<group>"; };
 		511C4E0013454AF800D555E2 /* MusicInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicInfo.cpp; sourceTree = "<group>"; };
 		511C4E0113454AF800D555E2 /* MusicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicInfo.h; sourceTree = "<group>"; };
-		511C4E0313454AF800D555E2 /* RBAudioPlayerEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBAudioPlayerEngine.cpp; sourceTree = "<group>"; };
-		511C4E0413454AF800D555E2 /* RBAudioPlayerEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerEngine.h; sourceTree = "<group>"; };
-		511C4E0513454AF800D555E2 /* RBAudioPlayerMusic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBAudioPlayerMusic.cpp; sourceTree = "<group>"; };
-		511C4E0613454AF800D555E2 /* RBAudioPlayerMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerMusic.h; sourceTree = "<group>"; };
-		511C4E0713454AF800D555E2 /* RBAudioPlayerMusicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerMusicDelegate.h; sourceTree = "<group>"; };
-		511C4E0813454AF800D555E2 /* RBAudioPlayerMusicDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBAudioPlayerMusicDelegate.m; sourceTree = "<group>"; };
 		511C4E0913454AF800D555E2 /* MusicParameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicParameters.cpp; sourceTree = "<group>"; };
 		511C4E0A13454AF800D555E2 /* MusicParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicParameters.h; sourceTree = "<group>"; };
 		511C4E0C13454AF800D555E2 /* OpenALEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALEngine.cpp; sourceTree = "<group>"; };
@@ -259,8 +253,6 @@
 		511C4E3113454AF800D555E2 /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
 		511C4E3313454AF800D555E2 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Font.cpp; sourceTree = "<group>"; };
 		511C4E3413454AF800D555E2 /* Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Font.h; sourceTree = "<group>"; };
-		511C4E3513454AF800D555E2 /* FontImplementation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontImplementation.cpp; sourceTree = "<group>"; };
-		511C4E3613454AF800D555E2 /* FontImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontImplementation.h; sourceTree = "<group>"; };
 		511C4E3713454AF800D555E2 /* Glyph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Glyph.cpp; sourceTree = "<group>"; };
 		511C4E3813454AF800D555E2 /* Glyph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Glyph.h; sourceTree = "<group>"; };
 		511C4E3913454AF800D555E2 /* GraphicString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicString.cpp; sourceTree = "<group>"; };
@@ -305,7 +297,6 @@
 		511C4E6A13454AF800D555E2 /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Link.h; sourceTree = "<group>"; };
 		511C4E6B13454AF800D555E2 /* LinkData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LinkData.cpp; sourceTree = "<group>"; };
 		511C4E6C13454AF800D555E2 /* LinkData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkData.h; sourceTree = "<group>"; };
-		511C4E6D13454AF800D555E2 /* RBString32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBString32.h; sourceTree = "<group>"; };
 		511C4E6E13454AF800D555E2 /* PlatformFlagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlagger.h; sourceTree = "<group>"; };
 		511C4E6F13454AF800D555E2 /* RedBoxEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedBoxEngine.cpp; sourceTree = "<group>"; };
 		511C4E7013454AF800D555E2 /* RedBoxEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxEngine.h; sourceTree = "<group>"; };
@@ -378,6 +369,17 @@
 		51BB7A10134B7CFE00051A7D /* SignalAnalyzerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalAnalyzerManager.h; sourceTree = "<group>"; };
 		51BB7A11134B7CFE00051A7D /* SignalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SignalData.cpp; sourceTree = "<group>"; };
 		51BB7A12134B7CFE00051A7D /* SignalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalData.h; sourceTree = "<group>"; };
+		51DDA7901357698700DA418B /* RBAudioPlayerEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBAudioPlayerEngine.cpp; sourceTree = "<group>"; };
+		51DDA7911357698700DA418B /* RBAudioPlayerEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerEngine.h; sourceTree = "<group>"; };
+		51DDA7921357698700DA418B /* RBAudioPlayerMusic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBAudioPlayerMusic.cpp; sourceTree = "<group>"; };
+		51DDA7931357698700DA418B /* RBAudioPlayerMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerMusic.h; sourceTree = "<group>"; };
+		51DDA7941357698700DA418B /* RBAudioPlayerMusicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerMusicDelegate.h; sourceTree = "<group>"; };
+		51DDA7951357698700DA418B /* RBAudioPlayerMusicDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBAudioPlayerMusicDelegate.m; sourceTree = "<group>"; };
+		51DDA7961357698700DA418B /* Sources.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sources.cmake; sourceTree = "<group>"; };
+		51DDA79E135769B500DA418B /* FontImplementation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontImplementation.cpp; sourceTree = "<group>"; };
+		51DDA79F135769B500DA418B /* FontImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontImplementation.h; sourceTree = "<group>"; };
+		51DDA7A0135769B500DA418B /* Sources.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sources.cmake; sourceTree = "<group>"; };
+		51DDA7A3135769D900DA418B /* RBString32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RBString32.h; path = ../../../RedBox/Display/Text/RBString32.h; sourceTree = "<group>"; };
 		7EF711ED132D35C100524FBB /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../libraries/build/lib/libfreetype.a; sourceTree = "<group>"; };
 		7EF711EE132D35C100524FBB /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../libraries/build/lib/libpng.a; sourceTree = "<group>"; };
 		7EF711F0132D35C100524FBB /* libvorbisidec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisidec.a; path = ../../libraries/build/lib/libvorbisidec.a; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 			children = (
 				511C4DF913454AF800D555E2 /* AudioEngine.cpp */,
 				511C4DFA13454AF800D555E2 /* AudioEngine.h */,
+				51DDA78F1357698700DA418B /* MusicIOS */,
 				511C4DFB13454AF800D555E2 /* AudioState.h */,
 				511C4DFC13454AF800D555E2 /* BackgroundMusic.cpp */,
 				511C4DFD13454AF800D555E2 /* BackgroundMusic.h */,
@@ -502,7 +505,6 @@
 				511C4DFF13454AF800D555E2 /* MusicEngine.h */,
 				511C4E0013454AF800D555E2 /* MusicInfo.cpp */,
 				511C4E0113454AF800D555E2 /* MusicInfo.h */,
-				511C4E0213454AF800D555E2 /* MusicObjectiveC */,
 				511C4E0913454AF800D555E2 /* MusicParameters.cpp */,
 				511C4E0A13454AF800D555E2 /* MusicParameters.h */,
 				511C4E0B13454AF800D555E2 /* OpenAL */,
@@ -518,19 +520,6 @@
 				511C4E1A13454AF800D555E2 /* SoundParameters.h */,
 			);
 			path = Audio;
-			sourceTree = "<group>";
-		};
-		511C4E0213454AF800D555E2 /* MusicObjectiveC */ = {
-			isa = PBXGroup;
-			children = (
-				511C4E0313454AF800D555E2 /* RBAudioPlayerEngine.cpp */,
-				511C4E0413454AF800D555E2 /* RBAudioPlayerEngine.h */,
-				511C4E0513454AF800D555E2 /* RBAudioPlayerMusic.cpp */,
-				511C4E0613454AF800D555E2 /* RBAudioPlayerMusic.h */,
-				511C4E0713454AF800D555E2 /* RBAudioPlayerMusicDelegate.h */,
-				511C4E0813454AF800D555E2 /* RBAudioPlayerMusicDelegate.m */,
-			);
-			path = MusicObjectiveC;
 			sourceTree = "<group>";
 		};
 		511C4E0B13454AF800D555E2 /* OpenAL */ = {
@@ -586,10 +575,10 @@
 		511C4E3213454AF800D555E2 /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				51DDA79D135769B500DA418B /* FreetypeImplementation */,
 				511C4E3313454AF800D555E2 /* Font.cpp */,
 				511C4E3413454AF800D555E2 /* Font.h */,
-				511C4E3513454AF800D555E2 /* FontImplementation.cpp */,
-				511C4E3613454AF800D555E2 /* FontImplementation.h */,
+				51DDA7A3135769D900DA418B /* RBString32.h */,
 				511C4E3713454AF800D555E2 /* Glyph.cpp */,
 				511C4E3813454AF800D555E2 /* Glyph.h */,
 				511C4E3913454AF800D555E2 /* GraphicString.cpp */,
@@ -652,7 +641,6 @@
 				511C4E6A13454AF800D555E2 /* Link.h */,
 				511C4E6B13454AF800D555E2 /* LinkData.cpp */,
 				511C4E6C13454AF800D555E2 /* LinkData.h */,
-				511C4E6D13454AF800D555E2 /* RBString32.h */,
 			);
 			path = Physic;
 			sourceTree = "<group>";
@@ -758,6 +746,32 @@
 			path = SignalSlots;
 			sourceTree = "<group>";
 		};
+		51DDA78F1357698700DA418B /* MusicIOS */ = {
+			isa = PBXGroup;
+			children = (
+				51DDA7901357698700DA418B /* RBAudioPlayerEngine.cpp */,
+				51DDA7911357698700DA418B /* RBAudioPlayerEngine.h */,
+				51DDA7921357698700DA418B /* RBAudioPlayerMusic.cpp */,
+				51DDA7931357698700DA418B /* RBAudioPlayerMusic.h */,
+				51DDA7941357698700DA418B /* RBAudioPlayerMusicDelegate.h */,
+				51DDA7951357698700DA418B /* RBAudioPlayerMusicDelegate.m */,
+				51DDA7961357698700DA418B /* Sources.cmake */,
+			);
+			name = MusicIOS;
+			path = ../../RedBox/Audio/MusicIOS;
+			sourceTree = "<group>";
+		};
+		51DDA79D135769B500DA418B /* FreetypeImplementation */ = {
+			isa = PBXGroup;
+			children = (
+				51DDA79E135769B500DA418B /* FontImplementation.cpp */,
+				51DDA79F135769B500DA418B /* FontImplementation.h */,
+				51DDA7A0135769B500DA418B /* Sources.cmake */,
+			);
+			name = FreetypeImplementation;
+			path = ../../../RedBox/Display/Text/FreetypeImplementation;
+			sourceTree = "<group>";
+		};
 		7EF711F5132D35E900524FBB /* libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,9 +797,6 @@
 				511C4E8013454AF800D555E2 /* BackgroundMusic.h in Headers */,
 				511C4E8213454AF800D555E2 /* MusicEngine.h in Headers */,
 				511C4E8413454AF800D555E2 /* MusicInfo.h in Headers */,
-				511C4E8613454AF800D555E2 /* RBAudioPlayerEngine.h in Headers */,
-				511C4E8813454AF800D555E2 /* RBAudioPlayerMusic.h in Headers */,
-				511C4E8913454AF800D555E2 /* RBAudioPlayerMusicDelegate.h in Headers */,
 				511C4E8C13454AF800D555E2 /* MusicParameters.h in Headers */,
 				511C4E8E13454AF800D555E2 /* OpenALEngine.h in Headers */,
 				511C4E9013454AF800D555E2 /* OpenALSoundFX.h in Headers */,
@@ -808,7 +819,6 @@
 				511C4EAE13454AF800D555E2 /* RenderStepMode.h in Headers */,
 				511C4EB013454AF800D555E2 /* Sprite.h in Headers */,
 				511C4EB213454AF800D555E2 /* Font.h in Headers */,
-				511C4EB413454AF800D555E2 /* FontImplementation.h in Headers */,
 				511C4EB613454AF800D555E2 /* Glyph.h in Headers */,
 				511C4EB813454AF800D555E2 /* GraphicString.h in Headers */,
 				511C4EBA13454AF800D555E2 /* StringFX.h in Headers */,
@@ -832,7 +842,6 @@
 				511C4EE013454AF800D555E2 /* GraphicBody.h in Headers */,
 				511C4EE213454AF800D555E2 /* Link.h in Headers */,
 				511C4EE413454AF800D555E2 /* LinkData.h in Headers */,
-				511C4EE513454AF800D555E2 /* RBString32.h in Headers */,
 				511C4EE613454AF800D555E2 /* PlatformFlagger.h in Headers */,
 				511C4EE813454AF800D555E2 /* RedBoxEngine.h in Headers */,
 				511C4EEA13454AF800D555E2 /* ResourceManager.h in Headers */,
@@ -869,6 +878,11 @@
 				245EAF27134E6954002F0596 /* IOSPointer.h in Headers */,
 				24CE4855134EC4E3000384A8 /* CursorButton.h in Headers */,
 				51BB7A18134B7CFE00051A7D /* SignalData.h in Headers */,
+				51DDA7981357698700DA418B /* RBAudioPlayerEngine.h in Headers */,
+				51DDA79A1357698700DA418B /* RBAudioPlayerMusic.h in Headers */,
+				51DDA79B1357698700DA418B /* RBAudioPlayerMusicDelegate.h in Headers */,
+				51DDA7A2135769B500DA418B /* FontImplementation.h in Headers */,
+				51DDA7A4135769D900DA418B /* RBString32.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -944,9 +958,6 @@
 				511C4E7F13454AF800D555E2 /* BackgroundMusic.cpp in Sources */,
 				511C4E8113454AF800D555E2 /* MusicEngine.cpp in Sources */,
 				511C4E8313454AF800D555E2 /* MusicInfo.cpp in Sources */,
-				511C4E8513454AF800D555E2 /* RBAudioPlayerEngine.cpp in Sources */,
-				511C4E8713454AF800D555E2 /* RBAudioPlayerMusic.cpp in Sources */,
-				511C4E8A13454AF800D555E2 /* RBAudioPlayerMusicDelegate.m in Sources */,
 				511C4E8B13454AF800D555E2 /* MusicParameters.cpp in Sources */,
 				511C4E8D13454AF800D555E2 /* OpenALEngine.cpp in Sources */,
 				511C4E8F13454AF800D555E2 /* OpenALSoundFX.cpp in Sources */,
@@ -965,7 +976,6 @@
 				511C4EAC13454AF800D555E2 /* RenderStep.cpp in Sources */,
 				511C4EAF13454AF800D555E2 /* Sprite.cpp in Sources */,
 				511C4EB113454AF800D555E2 /* Font.cpp in Sources */,
-				511C4EB313454AF800D555E2 /* FontImplementation.cpp in Sources */,
 				511C4EB513454AF800D555E2 /* Glyph.cpp in Sources */,
 				511C4EB713454AF800D555E2 /* GraphicString.cpp in Sources */,
 				511C4EB913454AF800D555E2 /* StringFX.cpp in Sources */,
@@ -1020,6 +1030,10 @@
 				51BB7A15134B7CFE00051A7D /* SignalAnalyzerManager.cpp in Sources */,
 				51BB7A17134B7CFE00051A7D /* SignalData.cpp in Sources */,
 				245EAF26134E6954002F0596 /* IOSPointer.cpp in Sources */,
+				51DDA7971357698700DA418B /* RBAudioPlayerEngine.cpp in Sources */,
+				51DDA7991357698700DA418B /* RBAudioPlayerMusic.cpp in Sources */,
+				51DDA79C1357698700DA418B /* RBAudioPlayerMusicDelegate.m in Sources */,
+				51DDA7A1135769B500DA418B /* FontImplementation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
