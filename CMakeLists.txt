@@ -110,13 +110,14 @@ endforeach(privateHeader ${Private_RedBox_Headers})
 
 
 	add_library(RedBox STATIC ${RedBoxSources} ${RedBoxHeaders})
-#	target_link_libraries(
-#	RedBox
-#	png
-#	freetype
-#	vorbisdec
-#	${RedBox_libraries_list}
-#	)
+	target_link_libraries(
+	RedBox
+	png
+	freetype
+	vorbisdec
+	z
+	${RedBox_libraries_list}
+	)
 
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
