@@ -193,7 +193,19 @@ namespace RedBox {
 		const Enum CLOSE_BRACE = 179;
 		const Enum BAR = 180;
 		const Enum NBSP = 181;
-		const int NB_KEYS = 183;
+		const Enum GRAVE = 182;
+		const Enum POWER = 183;
+		const Enum NUM_PAD_ENTER = 184;
+		const Enum NUM_PAD_PERIOD = 185;
+		const Enum NUM_PAD_EQUAL = 186;
+		const Enum UNDO = 187;
+		const Enum REDO = 188;
+		const Enum CUT = 189;
+		const Enum PASTE = 190;
+		const Enum FIND = 191;
+		const Enum CANCEL = 192;
+		const Enum EJECT = 193;
+		const int NB_KEYS = 194;
 	}
 }
  #endif
