@@ -14,7 +14,6 @@
 #define RB_RESOURCE_PATH_HANDLER_H
 
 #include <string>
-
 namespace RedBox {
 	/**
 	 * Functions used to get the resource paths for files.
@@ -43,6 +42,8 @@ namespace RedBox {
 		 * class.
 		 */
 		ResourcePathHandler();
+		
+	
 	};
 }
 

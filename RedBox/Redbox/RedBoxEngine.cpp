@@ -7,8 +7,11 @@
 #include "SoundEngine.h"
 #include "MusicEngine.h"
 #include "InputManager.h"
-
+#include <libgen.h>
 using namespace RedBox;
+
+std::string RedBoxEngine::applicationPath = "";
+
 
 std::map<std::string, State*> RedBoxEngine::states = std::map<std::string, State*>();
 State* RedBoxEngine::currentState = NULL;
@@ -119,4 +122,8 @@ void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight) {
 
 double RedBoxEngine::getUpdateDelta() {
 	return TimeHelper::getSinceEpoch() - lastUpdate;
+}
+
+void RedBoxEngine::application(int argc, char *argv[]){
+	applicationPath = dirname(argv[0]);
 }
