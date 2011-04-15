@@ -41,7 +41,7 @@ namespace RedBox {
 		const Enum D8 = 27;
 		const Enum D9 = 28;
 		const Enum DECIMAL = 29;
-		const Enum DELETE = 30;
+		const Enum DELETEKEY = 30;
 		const Enum DIVIDE = 31;
 		const Enum DOWN = 32;
 		const Enum E = 33;
