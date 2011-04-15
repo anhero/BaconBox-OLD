@@ -4,9 +4,11 @@ _name="sigly"
 _license="MIT" 
 
 _version="7d996592f52e"
-_archive="${_version}.tar.bz2"
+_archive="${_version}.tar.gz"
 _archive_url="http://bitbucket.org/anhero/${_name}/get/${_archive}"
-_hash="0c4157a9cf7d300f230d146ba94f0568"
+
+_hash="0c4157a9cf7d300f230d146ba94f0568" #tar.bz2
+_hash="a1468d47d93b1551656a042ac3894fee" #tar.gz
 
 load_base http.fetch
 
