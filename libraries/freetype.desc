@@ -13,9 +13,12 @@ _hash="b3e2b6e2f1c3e0dffa1fd2a0f848b671" #2.4.4
 #_hash="fb182d508017cb608e9df8c7dca648dc" #2.3.6
 
 config_cmdline=" --enable-static=yes --enable-shared=no"
-#Host
-#[[ -n ${configure_host-} ]] && config_cmdline=$config_cmdline" --host=${configure_host}"
 
+if [ -n ${target_crosscompile-} ]; then
+	if [[ -n ${configure_host-} ]]; then
+		config_cmdline=$config_cmdline" --host=${configure_host}"
+	fi
+fi
 
 load_base http.fetch
 load_base configuremakemake.build
