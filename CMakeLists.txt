@@ -47,7 +47,11 @@ include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 		qt4_wrap_cpp(RedBox_QT_MOC_sources ${RedBox_QT_MOC_headers})
 		  
 		  INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
-		
+
+		FIND_PACKAGE(OpenAL REQUIRED)
+		list(APPEND RedBox_IncludeDir_list ${OPENAL_INCLUDE_DIR})
+		list(APPEND RedBox_libraries_list ${OPENAL_LIBRARY})
+
 		list(APPEND RedBoxSources ${RedBox_QT_MOC_sources})
 
 		list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
