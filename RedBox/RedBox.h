@@ -1,5 +1,5 @@
 // Comment out if you don't need the physics engine.
-#define RB_PHYSICS_ENABLED
+//#define RB_PHYSICS_ENABLED
 
 /** 
  * @defgroup Display Display
