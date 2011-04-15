@@ -10,4 +10,3 @@
 export MAINFOLDER=`pwd`
 
 cd build >/dev/null 2>&1 && cmake .. -DCMAKE_INSTALL_PREFIX="/opt/iphone-simulator-$SDKVER" "$@"
-
