@@ -60,7 +60,7 @@ function staticWithAr() {
 		libdir="$(dirname ${lib})"
 		libdir=$(dir_resolve "${libdir}")
 		ar x "$lib"
-		mv *.o "${tempdir}/"
+		mv *.{o,obj} "${tempdir}/"
 		cd "${origdir}"
 	done;
 
