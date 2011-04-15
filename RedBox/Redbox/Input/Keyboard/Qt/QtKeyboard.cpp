@@ -76,7 +76,7 @@ void QtKeyboard::fillMappings() {
 		mappings[Qt::Key_Backspace] = Key::BACKSPACE;
 		mappings[Qt::Key_Return] = Key::ENTER;
 		mappings[Qt::Key_Enter] = Key::ENTER;
-		mappings[Qt::Key_Delete] = Key::DELETE;
+		mappings[Qt::Key_Delete] = Key::DELETEKEY;
 		mappings[Qt::Key_Pause] = Key::PAUSE;
 		mappings[Qt::Key_Print] = Key::PRINT;
 		mappings[Qt::Key_SysReq] = Key::SYSREQ;
