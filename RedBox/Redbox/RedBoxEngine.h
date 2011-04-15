@@ -11,14 +11,18 @@
 #include "sigly.h"
 
 #include "State.h"
-
 namespace RedBox {
 	/**
 	 * Class managing the states.
 	 * @ingroup StateMachine
 	 */
 	class RedBoxEngine {
+		friend class ResourcePathHandler;
+
 	public:
+		///This function must be called by the main function. The main function arguments must be passed this function 
+		static void application(int argc, char *argv[]);
+		
 		/// Signal sent when the RedBox engine is initialized.
 		static sigly::Signal2<int, int> onInitialize;
 		/**
@@ -100,6 +104,8 @@ namespace RedBox {
 		static double lastRender;
 		/// Ratio of time that the updates need to watch for to catch up.
 		static double deltaRatio;
+		///The path to the current application binary.
+		static std::string applicationPath;
 	};
 }
 

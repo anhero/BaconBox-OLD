@@ -12,8 +12,9 @@
 #include <QCoreApplication>
 #include <QDesktopServices>
 #endif
-
+#include "RedBoxEngine.h"
 using namespace RedBox;
+
 
 std::string ResourcePathHandler::getResourcePathFor(const std::string& item) {
 	std::string path;
@@ -24,11 +25,15 @@ std::string ResourcePathHandler::getResourcePathFor(const std::string& item) {
 	path = ((std::string)[resourceDirectory cStringUsingEncoding:NSASCIIStringEncoding] + "/" + item );
 	[pool release];
 #elif defined(RB_QT)
-	QDir dir(QDir::currentPath());
-	dir.cdUp();
-	dir.cd("Resources");
-	dir.cd("resources");
-	path = dir.absoluteFilePath(item.c_str()).toStdString();
+	
+	path = RedBoxEngine::applicationPath;
+	
+#ifdef RB_MAC_PLATFORM
+	path = path + "/../Resources/" + item;
+#else
+	path = path + "/resources/" + item;
+#endif
+
 #endif
 	return path;
 }
