@@ -78,7 +78,7 @@
 		#define RB_SOUND_ENGINE new OpenALEngine()
 		#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
 		#define RB_MUSIC_ENGINE NULL
-	#elif defined(RB_IPHONE_PLATFORM)
+	#elif defined(RB_IPHONE_PLATFORM) || defined(RB_MAC_PLATFORM)
 		#define RB_OPENAL
 		#define RB_AV_AUDIO_PLAYER
 		#define RB_SOUND_ENGINE new OpenALEngine()
