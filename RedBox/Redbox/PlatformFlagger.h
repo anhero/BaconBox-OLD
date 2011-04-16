@@ -22,6 +22,10 @@
 	#endif
 #endif // QT
 
+#ifdef SDL
+	#define RB_SDL
+#endif
+
 #ifdef _WIN32
 	#ifdef RB_QT
 		#include <qt_windows.h>
@@ -69,8 +73,12 @@
 		#define RB_MAC_PLATFORM
 	#endif
 
-
-	#if defined(RB_IPHONE_PLATFORM) || defined(RB_MAC_PLATFORM)
+	#if defined(SDL) && defined(RB_MAC_PLATFORM)
+		#define RB_OPENAL
+		#define RB_SOUND_ENGINE new OpenALEngine()
+		#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+		#define RB_MUSIC_ENGINE NULL
+	#elif defined(RB_IPHONE_PLATFORM)
 		#define RB_OPENAL
 		#define RB_AV_AUDIO_PLAYER
 		#define RB_SOUND_ENGINE new OpenALEngine()

@@ -30,6 +30,7 @@ if(iphone)
 
 else(iphone)
 	if(SDL)
+		MESSAGE(STATUS "Building with SDL.")
 		ADD_DEFINITIONS("-DSDL")
 	
 		include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
@@ -42,7 +43,7 @@ else(iphone)
 		FIND_PACKAGE(OpenGL REQUIRED)
 		list(APPEND RedBox_IncludeDir_list ${OPENGL_INCLUDE_DIR})
 		list(APPEND RedBox_libraries_list ${OPENLGL_LIBRARY})
-	
+			
 		set(CFLAGS "-m32" ${CFLAGS})
 		set(CXXFLAGS "-m32" ${CXXFLAGS})
 		set(CMAKE_OSX_ARCHITECTURES "i386")
@@ -136,6 +137,7 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 	freetype
 	vorbisidec
 	z
+	SDL
 	${RedBox_libraries_list}
 	)
 
