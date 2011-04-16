@@ -191,7 +191,6 @@
 		51DDA7A4135769D900DA418B /* RBString32.h in Headers */ = {isa = PBXBuildFile; fileRef = 51DDA7A3135769D900DA418B /* RBString32.h */; };
 		7EF711F1132D35C100524FBB /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711ED132D35C100524FBB /* libfreetype.a */; };
 		7EF711F2132D35C100524FBB /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711EE132D35C100524FBB /* libpng.a */; };
-		7EF711F4132D35C100524FBB /* libvorbisidec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711F0132D35C100524FBB /* libvorbisidec.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -392,7 +391,6 @@
 			files = (
 				7EF711F1132D35C100524FBB /* libfreetype.a in Frameworks */,
 				7EF711F2132D35C100524FBB /* libpng.a in Frameworks */,
-				7EF711F4132D35C100524FBB /* libvorbisidec.a in Frameworks */,
 				51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */,
 				51927C0711D5EA3E00C65B15 /* AVFoundation.framework in Frameworks */,
 				51927C0811D5EA4200C65B15 /* libz.dylib in Frameworks */,
