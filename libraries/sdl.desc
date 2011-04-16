@@ -1,0 +1,11 @@
+#!/bin/bash
+
+_name="SDL"
+_license="zlib" 
+_version="1.3.0-5536"
+_archive="${_name}-1.3.tar.gz"
+_archive_url="http://www.libsdl.org/tmp/${_archive}"
+_hash="2f21a961816730c48e6ec17580a425df" 
+
+load_base http.fetch
+load_base configuremakemake.build

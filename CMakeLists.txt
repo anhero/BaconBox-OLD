@@ -135,7 +135,7 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 	RedBox
 	png
 	freetype
-	vorbisidec
+	#	vorbisidec
 	z
 	SDL
 	${RedBox_libraries_list}
@@ -143,7 +143,7 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 
 	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
 	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
-	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisidec.a)
+	#list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisidec.a)
 	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libz.a)
 	if(SDL)
 		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL.a)
@@ -151,7 +151,7 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 		
 file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
 add_custom_command(TARGET RedBox POST_BUILD 
-					COMMAND ${RedBox_SOURCE_DIR}/script/linkscript.sh
+	COMMAND $ENV{_BASH_INTERPRETER} ${RedBox_SOURCE_DIR}/script/linkscript.sh
 					${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a
 					${RedBox_Dependencies}
 					${RedBox_BINARY_DIR}/temp/${CMAKE_BUILD_TYPE}/libRedBox.a)
