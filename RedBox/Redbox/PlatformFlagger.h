@@ -111,6 +111,11 @@
 	#define RB_POINTER_INCLUDE "QtPointer.h"
 #endif // RB_QT
 
+#ifdef RB_SDL
+	#define RB_KEYBOARD_IMPL new SDLKeyboard()
+	#define RB_KEYBOARD_INCLUDE "SDLKeyboard.h"
+#endif
+
 #ifndef RB_POINTER_IMPL
 	#define RB_POINTER_IMPL NULL
 #endif
