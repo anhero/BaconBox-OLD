@@ -17,36 +17,52 @@ endif("${CMAKE_GENERATOR}" STREQUAL "Xcode")
 set(CMAKE_MODULE_PATH "${RedBox_SOURCE_DIR}/script/CMake/module/")
 include(Function)
 
-
-
 recurseFolderList(RedBox_header_search_path ${RedBox_SOURCE_DIR}/RedBox)
 
-
-
 if(iphone)
-set(RedBox_framework_list  "Foundation" "AudioToolBox" "AVFoundation" "CoreGraphics" "OpenAL" "QuartzCore" "UIKit" "OpenGLES")
+	set(RedBox_framework_list  "Foundation" "AudioToolBox" "AVFoundation" "CoreGraphics" "OpenAL" "QuartzCore" "UIKit" "OpenGLES")
 	foreach(framework ${RedBox_framework_list})
 		findpkg_framework(${framework})		
 		list(APPEND RedBox_IncludeDir_list ${${framework}_FRAMEWORK_INCLUDES})
 		list(APPEND RedBox_libraries_list ${${framework}_LIBRARY_FWK})
 	endforeach(framework)
-include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
+	include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 
-else()
+else(iphone)
+	if(SDL)
+		MESSAGE(STATUS "Building with SDL.")
+		ADD_DEFINITIONS("-DSDL")
+	
+		include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
+		INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
+	
+		FIND_PACKAGE(OpenAL REQUIRED)
+		list(APPEND RedBox_IncludeDir_list ${OPENAL_INCLUDE_DIR})
+		list(APPEND RedBox_libraries_list ${OPENAL_LIBRARY})
+		
+		FIND_PACKAGE(OpenGL REQUIRED)
+		list(APPEND RedBox_IncludeDir_list ${OPENGL_INCLUDE_DIR})
+		list(APPEND RedBox_libraries_list ${OPENLGL_LIBRARY})
+			
+		set(CFLAGS "-m32" ${CFLAGS})
+		set(CXXFLAGS "-m32" ${CXXFLAGS})
+		set(CMAKE_OSX_ARCHITECTURES "i386")
+
+	else(SDL)
 
   		set(QT_USE_QTOPENGL TRUE)   
 		set(QT 1)	
 		ADD_DEFINITIONS("-DRB_QT")
 		ADD_DEFINITIONS("-DQT")
 
-include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
+		include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 		
 		FIND_PACKAGE( Qt4 REQUIRED)	
 		INCLUDE( ${QT_USE_FILE} )
 
 		qt4_wrap_cpp(RedBox_QT_MOC_sources ${RedBox_QT_MOC_headers})
 		  
-		  INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
+		INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
 
 		FIND_PACKAGE(OpenAL REQUIRED)
 		list(APPEND RedBox_IncludeDir_list ${OPENAL_INCLUDE_DIR})
@@ -59,6 +75,8 @@ include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 		set(CFLAGS "-m32" ${CFLAGS})
 		set(CXXFLAGS "-m32" ${CXXFLAGS})
 		set(CMAKE_OSX_ARCHITECTURES "i386")
+		
+	endif(SDL)
 endif(iphone)
 
 
@@ -119,13 +137,17 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 	freetype
 	#	vorbisidec
 	z
+	SDL
 	${RedBox_libraries_list}
 	)
 
-		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
-		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
-		#		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisidec.a)
-		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libz.a)
+	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
+	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
+	#list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisidec.a)
+	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libz.a)
+	if(SDL)
+		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL.a)
+	endif(SDL)
 		
 file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
 add_custom_command(TARGET RedBox POST_BUILD 

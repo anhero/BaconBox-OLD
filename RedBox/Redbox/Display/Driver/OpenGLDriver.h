@@ -12,6 +12,8 @@
 #import <OpenGLES/ES1/glext.h>
 #elif defined(RB_QT)
 #include <QtOpenGL>
+#elif defined(RB_MAC_PLATFORM)
+#include <OpenGL/gl.h>
 #else
 #include <GL/gl.h>
 #endif

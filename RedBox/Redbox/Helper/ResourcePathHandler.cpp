@@ -24,7 +24,7 @@ std::string ResourcePathHandler::getResourcePathFor(const std::string& item) {
 	NSString *resourceDirectory = [[NSBundle mainBundle] resourcePath];
 	path = ((std::string)[resourceDirectory cStringUsingEncoding:NSASCIIStringEncoding] + "/" + item );
 	[pool release];
-#elif defined(RB_QT)
+#else
 	
 	path = RedBoxEngine::applicationPath;
 	

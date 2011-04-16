@@ -32,6 +32,7 @@ Usage:
 	"
 }
 
+params=""
 
 while [ $# -gt 0 ];do
 	case "$1" in
@@ -56,6 +57,8 @@ while [ $# -gt 0 ];do
 			shift;
 			generator="${1}"
 			;;
+		*)
+      		params="${params}${1}"
 		esac
 	shift;
 done
@@ -67,24 +70,48 @@ done
 mkdir build
 cp ./script/CMake/Makefile/Makefile .
 configurePath="./script/CMake/configureScript"
+
 if [  "${target}" == "iphoneOS" ]; then
-	if [  "${generator}" == "" ]; then
-		"${configurePath}/configure-iphone"
+	if [  "${params}" == "" ]; then
+		if [  "${generator}" == "" ]; then
+			"${configurePath}/configure-iphone"
+		else
+			"${configurePath}/configure-iphone" "-G${generator}"
+		fi
 	else
-		"${configurePath}/configure-iphone" "-G${generator}"
+		if [  "${generator}" == "" ]; then
+			"${configurePath}/configure-iphone" "${params}"
+		else
+			"${configurePath}/configure-iphone" "-G${generator}" "${params}"
+		fi
 	fi
 elif [  "${target}" == "iphoneSimulator" ]; then
-	if [  "${generator}" == "" ]; then
-		"${configurePath}/configure-iphone-simulator"
+	if [  "${params}" == "" ]; then
+		if [  "${generator}" == "" ]; then
+			"${configurePath}/configure-iphone-simulator"
+		else
+			"${configurePath}/configure-iphone-simulator" "-G${generator}"
+		fi
 	else
-		"${configurePath}/configure-iphone-simulator" "-G${generator}"
+		if [  "${generator}" == "" ]; then
+			"${configurePath}/configure-iphone-simulator" "${params}"
+		else
+			"${configurePath}/configure-iphone-simulator" "-G${generator}" "${params}"
+		fi
 	fi
-
 else
-	if [  "${generator}" == "" ]; then
-		"${configurePath}/configure-current"
+	if [  "${params}" == "" ]; then
+		if [  "${generator}" == "" ]; then
+			"${configurePath}/configure-current"
+		else
+			"${configurePath}/configure-current" "-G${generator}"
+		fi
 	else
-		"${configurePath}/configure-current" "-G${generator}"
+		if [  "${generator}" == "" ]; then
+			"${configurePath}/configure-current" "${params}"
+		else
+			"${configurePath}/configure-current" "-G${generator}" "${params}"
+		fi
 	fi
 
 fi
