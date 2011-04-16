@@ -89,6 +89,7 @@ void OpenGLDriver::prepareScene(int xTranslation, int yTranslation, int angle, f
 
 void OpenGLDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
 	glShadeModel(GL_FLAT);
+	
 	glViewport(0,0,screenWidth, screenHeight);
 	
 	glMatrixMode(GL_PROJECTION);
