@@ -48,6 +48,9 @@ else(iphone)
 		set(CXXFLAGS "-m32" ${CXXFLAGS})
 		set(CMAKE_OSX_ARCHITECTURES "i386")
 
+
+		list(APPEND RedBox_libraries_list SDL)
+
 	else(SDL)
 
   		set(QT_USE_QTOPENGL TRUE)   
@@ -137,7 +140,6 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 	freetype
 	#	vorbisidec
 	z
-	SDL
 	${RedBox_libraries_list}
 	)
 
