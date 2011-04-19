@@ -27,59 +27,53 @@ if(iphone)
 		list(APPEND RedBox_libraries_list ${${framework}_LIBRARY_FWK})
 	endforeach(framework)
 	include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
+elseif(QT)
+	set(QT_USE_QTOPENGL TRUE)   
+	set(QT 1)	
+	ADD_DEFINITIONS("-DRB_QT")
+	ADD_DEFINITIONS("-DQT")
 
+	include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
+	
+	FIND_PACKAGE( Qt4 REQUIRED)	
+	INCLUDE( ${QT_USE_FILE} )
+
+	qt4_wrap_cpp(RedBox_QT_MOC_sources ${RedBox_QT_MOC_headers})
+	  
+	INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
+
+	FIND_PACKAGE(OpenAL REQUIRED)
+	list(APPEND RedBox_IncludeDir_list ${OPENAL_INCLUDE_DIR})
+	list(APPEND RedBox_libraries_list ${OPENAL_LIBRARY})
+
+	list(APPEND RedBoxSources ${RedBox_QT_MOC_sources})
+
+	list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
+	list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
+	set(CFLAGS "-m32" ${CFLAGS})
+	set(CXXFLAGS "-m32" ${CXXFLAGS})
+	set(CMAKE_OSX_ARCHITECTURES "i386")
 else(iphone)
-	if(SDL)
-		MESSAGE(STATUS "Building with SDL.")
-		ADD_DEFINITIONS("-DSDL")
+	MESSAGE(STATUS "Building with SDL.")
+	ADD_DEFINITIONS("-DSDL")
+
+	include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
+	INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
+
+	FIND_PACKAGE(OpenAL REQUIRED)
+	list(APPEND RedBox_IncludeDir_list ${OPENAL_INCLUDE_DIR})
+	list(APPEND RedBox_libraries_list ${OPENAL_LIBRARY})
 	
-		include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
-		INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
-	
-		FIND_PACKAGE(OpenAL REQUIRED)
-		list(APPEND RedBox_IncludeDir_list ${OPENAL_INCLUDE_DIR})
-		list(APPEND RedBox_libraries_list ${OPENAL_LIBRARY})
+	FIND_PACKAGE(OpenGL REQUIRED)
+	list(APPEND RedBox_IncludeDir_list ${OPENGL_INCLUDE_DIR})
+	list(APPEND RedBox_libraries_list ${OPENLGL_LIBRARY})
 		
-		FIND_PACKAGE(OpenGL REQUIRED)
-		list(APPEND RedBox_IncludeDir_list ${OPENGL_INCLUDE_DIR})
-		list(APPEND RedBox_libraries_list ${OPENLGL_LIBRARY})
-			
-		set(CFLAGS "-m32" ${CFLAGS})
-		set(CXXFLAGS "-m32" ${CXXFLAGS})
-		set(CMAKE_OSX_ARCHITECTURES "i386")
+	set(CFLAGS "-m32" ${CFLAGS})
+	set(CXXFLAGS "-m32" ${CXXFLAGS})
+	set(CMAKE_OSX_ARCHITECTURES "i386")
 
 
-		list(APPEND RedBox_libraries_list SDL)
-
-	else(SDL)
-
-  		set(QT_USE_QTOPENGL TRUE)   
-		set(QT 1)	
-		ADD_DEFINITIONS("-DRB_QT")
-		ADD_DEFINITIONS("-DQT")
-
-		include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
-		
-		FIND_PACKAGE( Qt4 REQUIRED)	
-		INCLUDE( ${QT_USE_FILE} )
-
-		qt4_wrap_cpp(RedBox_QT_MOC_sources ${RedBox_QT_MOC_headers})
-		  
-		INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
-
-		FIND_PACKAGE(OpenAL REQUIRED)
-		list(APPEND RedBox_IncludeDir_list ${OPENAL_INCLUDE_DIR})
-		list(APPEND RedBox_libraries_list ${OPENAL_LIBRARY})
-
-		list(APPEND RedBoxSources ${RedBox_QT_MOC_sources})
-
-		list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
-		list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
-		set(CFLAGS "-m32" ${CFLAGS})
-		set(CXXFLAGS "-m32" ${CXXFLAGS})
-		set(CMAKE_OSX_ARCHITECTURES "i386")
-		
-	endif(SDL)
+	list(APPEND RedBox_libraries_list SDL)
 endif(iphone)
 
 
