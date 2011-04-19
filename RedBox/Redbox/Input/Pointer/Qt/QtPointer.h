@@ -45,7 +45,7 @@ namespace RedBox {
 
 		/**
 		 * Updates the pointer. Updates the pointer's buttons' state from
-		 * the qtButtons member.
+		 * Qt's mouse state.
 		 */
 		void updateDevice();
 

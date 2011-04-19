@@ -1,6 +1,8 @@
 get_filename_component(Pointer_dir ${CMAKE_CURRENT_LIST_FILE} PATH)
 if(${QT})
 	include(${Pointer_dir}/Qt/Sources.cmake)
+elseif(${SDL})
+	include(${Pointer_dir}/SDL/Sources.cmake)
 elseif(${iphone})
 	include(${Pointer_dir}/ios/Sources.cmake)	
 endif(${QT})

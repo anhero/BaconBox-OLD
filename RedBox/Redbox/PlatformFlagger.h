@@ -114,6 +114,8 @@
 #ifdef RB_SDL
 	#define RB_KEYBOARD_IMPL new SDLKeyboard()
 	#define RB_KEYBOARD_INCLUDE "SDLKeyboard.h"
+	#define RB_POINTER_IMPL new SDLPointer()
+	#define RB_POINTER_INCLUDE "SDLPointer.h"
 #endif
 
 #ifndef RB_POINTER_IMPL

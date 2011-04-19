@@ -7,8 +7,6 @@
 
 #include <vector>
 
-#include <SDL/SDL.h>
-
 #include "Keyboard.h"
 #include "Key.h"
 
