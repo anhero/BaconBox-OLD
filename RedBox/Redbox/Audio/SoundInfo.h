@@ -15,7 +15,7 @@
 #elif defined(RB_LINUX)
 #include <AL/al.h>
 #include <AL/alc.h>
-#else
+#elif defined(RB_APPLE_PLATFORM)
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #endif

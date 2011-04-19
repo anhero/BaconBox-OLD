@@ -7,25 +7,23 @@
 
 #include "PlatformFlagger.h"
 
+#ifdef RB_OPENAL
 #ifdef RB_WIN32
 #include <al.h>
 #include <alc.h>
 #elif defined(RB_LINUX)
 #include <AL/al.h>
 #include <AL/alc.h>
-#else
+#elif defined(RB_APPLE_PLATFORM)
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #endif
 
+#include <stdint.h>
+
 #include <string>
 #include <vector>
 #include <list>
-
-#ifdef RB_LINUX
-//Linux build (at least) needs it here
-#include <stdint.h>
-#endif
 
 #include "OpenALSoundFX.h"
 #include "SoundEngine.h"
@@ -33,7 +31,7 @@
 
 namespace RedBox {
 	class SoundFX;
-	class SoundInfo;
+	struct SoundInfo;
 	/**
 	 * Audio engine using OpenAL to play the sounds.
 	 * @ingroup Audio
@@ -139,4 +137,5 @@ namespace RedBox {
 	};
 }
 
+#endif
 #endif
