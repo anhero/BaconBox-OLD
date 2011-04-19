@@ -108,6 +108,21 @@ namespace RedBox {
 		 */
 		Pointer* getPointer(unsigned int index = 0);
 		
+	protected:
+		/**
+		 * Default constructor.
+		 */
+		InputManager();
+		
+		/**
+		 * Destructor.
+		 */
+		virtual ~InputManager();
+
+		/**
+		 * Updates all input devices' states.
+		 */
+		virtual void update();
 	private:
 		/// Pointer to the class's unique instance.
 		static InputManager* instance;
@@ -123,21 +138,6 @@ namespace RedBox {
 		
 		/// Pointers to the loaded pointing devices.
 		std::vector<Pointer*> pointers;
-		
-		/**
-		 * Default constructor.
-		 */
-		InputManager();
-		
-		/**
-		 * Destructor.
-		 */
-		~InputManager();
-		
-		/**
-		 * Updates all input devices' states.
-		 */
-		void update();
 	};
 }
 

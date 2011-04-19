@@ -18,6 +18,9 @@
 #include RB_POINTER_INCLUDE
 #endif
 
+#ifdef RB_INPUT_MANAGER_INCLUDE
+#include RB_INPUT_MANAGER_INCLUDE
+#endif
 
 using namespace RedBox;
 
@@ -25,7 +28,7 @@ InputManager* InputManager::instance = NULL;
 
 InputManager* InputManager::getInstance() {
 	if(!instance) {
-		instance = new InputManager();
+		instance = RB_INPUT_MANAGER_IMPL;
 	}
 	return instance;
 }
