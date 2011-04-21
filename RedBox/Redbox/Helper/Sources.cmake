@@ -10,6 +10,10 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	include(${Helper_dir}/libc/Sources.cmake)
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
+if(iphone)
+	include(${Helper_dir}/ios/Sources.cmake)
+endif(iphone)
+
 list(APPEND Private_RedBox_Headers ${RedBox_RedBox_Helper_Headers})
 
 list(APPEND RedBoxHeaders ${RedBox_RedBox_Helper_Headers})
