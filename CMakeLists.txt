@@ -50,9 +50,6 @@ elseif(QT)
 
 	list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
 	list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
-	set(CFLAGS "-m32" ${CFLAGS})
-	set(CXXFLAGS "-m32" ${CXXFLAGS})
-	set(CMAKE_OSX_ARCHITECTURES "i386")
 else(iphone)
 	MESSAGE(STATUS "Building with SDL.")
 	ADD_DEFINITIONS("-DSDL")
@@ -67,12 +64,6 @@ else(iphone)
 	FIND_PACKAGE(OpenGL REQUIRED)
 	list(APPEND RedBox_IncludeDir_list ${OPENGL_INCLUDE_DIR})
 	list(APPEND RedBox_libraries_list ${OPENLGL_LIBRARY})
-		
-	set(CFLAGS "-m32" ${CFLAGS})
-	set(CXXFLAGS "-m32" ${CXXFLAGS})
-	set(CMAKE_OSX_ARCHITECTURES "i386")
-
-
 	list(APPEND RedBox_libraries_list SDL)
 endif(iphone)
 
