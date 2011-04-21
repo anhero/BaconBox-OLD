@@ -2,32 +2,32 @@
 
 #ifdef RB_MAC_PLATFORM
 
-#include "OSXTimeHelper.h"
+#include "LibcTimeHelper.h"
 
 using namespace RedBox;
 
-double OSXTimeHelper::getSinceStart() const {
+double LibcTimeHelper::getSinceStart() const {
 	return sinceStart;
 }
 
-double OSXTimeHelper::getSinceStartReal() const {
+double LibcTimeHelper::getSinceStartReal() const {
 	return sinceStartReal;
 }
 
-double OSXTimeHelper::getSinceStartComplete() const {
+double LibcTimeHelper::getSinceStartComplete() const {
 	return sinceStartComplete;
 }
 
-OSXTimeHelper::OSXTimeHelper() : TimeHelper(), sinceStart(0.0),
+LibcTimeHelper::LibcTimeHelper() : TimeHelper(), sinceStart(0.0),
 sinceStartReal(0.0), sinceStartComplete(0.0) {
 	gettimeofday(&startTime, 0);
 	gettimeofday(&lastTime, 0);
 }
 
-OSXTimeHelper::~OSXTimeHelper() {
+LibcTimeHelper::~LibcTimeHelper() {
 }
 
-void OSXTimeHelper::refreshTime() {
+void LibcTimeHelper::refreshTime() {
 	timeval currentTime;
 	// We get the current time.
 	gettimeofday(&currentTime, 0);
@@ -55,7 +55,7 @@ void OSXTimeHelper::refreshTime() {
 	lastTime = currentTime;
 }
 
-void OSXTimeHelper::timevalSubstract(timeval& x, timeval& y, timeval& result) {
+void LibcTimeHelper::timevalSubstract(timeval& x, timeval& y, timeval& result) {
 	/* Perform the carry for the later subtraction by updating y. */
 	if (x.tv_usec < y.tv_usec) {
 		int nsec = (y.tv_usec - x.tv_usec) / 1000000 + 1;
@@ -75,7 +75,7 @@ void OSXTimeHelper::timevalSubstract(timeval& x, timeval& y, timeval& result) {
 	
 }
 
-double OSXTimeHelper::getNbSecsFromTimeval(const timeval& tv) {
+double LibcTimeHelper::getNbSecsFromTimeval(const timeval& tv) {
 	return static_cast<double>(tv.tv_sec) +
 	static_cast<double>(tv.tv_usec) / 1000000.0;
 }

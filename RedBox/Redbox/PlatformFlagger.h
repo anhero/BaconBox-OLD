@@ -13,6 +13,9 @@
 	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
 	#define RB_SOUND_ENGINE new OpenALEngine()
 	#define RB_MUSIC_ENGINE NULL
+
+	#define	RB_TIME_HELPER_IMPL new LibcTimeHelper()
+	#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
 #endif // linux
 
 
@@ -77,8 +80,8 @@
 	#endif
 
 	#ifdef RB_MAC_PLATFORM
-		#define	RB_TIME_HELPER_IMPL new OSXTimeHelper()
-		#define RB_TIME_HELPER_INCLUDE "OSXTimeHelper.h"
+		#define	RB_TIME_HELPER_IMPL new LibcTimeHelper()
+		#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
 	#endif
 
 	#if defined(SDL) && defined(RB_MAC_PLATFORM)

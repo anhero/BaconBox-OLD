@@ -2,8 +2,8 @@
  * @file
  * @ingroup Helper
  */
-#ifndef RB_OSX_TIME_HELPER_H
-#define RB_OSX_TIME_HELPER_H
+#ifndef RB_Libc_TIME_HELPER_H
+#define RB_Libc_TIME_HELPER_H
 
 #include "PlatformFlagger.h"
 
@@ -18,7 +18,7 @@ namespace RedBox {
 	 * Class used to get information about the time under Mac OS X.
 	 * @ingroup Helper
 	 */
-	class OSXTimeHelper : public TimeHelper {
+	class LibcTimeHelper : public TimeHelper {
 		friend class TimeHelper;
 	public:
 		/**
@@ -66,11 +66,11 @@ namespace RedBox {
 		/**
 		 * Default constructor.
 		 */
-		OSXTimeHelper();
+		LibcTimeHelper();
 		/**
 		 * Destructor.
 		 */
-		~OSXTimeHelper();
+		~LibcTimeHelper();
 		/**
 		 * Refreshes the time variable.
 		 */
