@@ -73,6 +73,11 @@
 		#define RB_MAC_PLATFORM
 	#endif
 
+	#ifdef RB_MAC_PLATFORM
+		#define	RB_TIME_HELPER_IMPL new OSXTimeHelper()
+		#define RB_TIME_HELPER_INCLUDE "OSXTimeHelper.h"
+	#endif
+
 	#if defined(SDL) && defined(RB_MAC_PLATFORM)
 		#define RB_OPENAL
 		#define RB_SOUND_ENGINE new OpenALEngine()
@@ -135,6 +140,10 @@
 
 #ifndef RB_INPUT_MANAGER_IMPL
 	#define RB_INPUT_MANAGER_IMPL new InputManager()
+#endif
+
+#ifndef RB_TIME_HELPER_IMPL
+	#define RB_TIME_HELPER_IMPL NULL
 #endif
 
 #endif

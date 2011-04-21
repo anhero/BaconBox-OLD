@@ -15,8 +15,8 @@ std::string RedBoxEngine::applicationPath = "";
 
 std::map<std::string, State*> RedBoxEngine::states = std::map<std::string, State*>();
 State* RedBoxEngine::currentState = NULL;
-double RedBoxEngine::maxRenderDelay = 0.0;
-double RedBoxEngine::updateDelay = 0.0;
+double RedBoxEngine::maxRenderDelay = 1.0 / 30.0;
+double RedBoxEngine::updateDelay = 1.0 / 120.0;
 double RedBoxEngine::lastUpdate = 0.0;
 double RedBoxEngine::lastRender = 0.0;
 double RedBoxEngine::deltaRatio = 0.0;
@@ -82,25 +82,25 @@ void RedBoxEngine::pulse() {
 	// We make sure the pointer to the current state is valid.
 	if(currentState) {
 		// We update the time from TimeHelper.
-		TimeHelper::refreshTime();
+		TimeHelper::getInstance()->refreshTime();
 		// We check if we need to update.
-		if(TimeHelper::getSinceEpoch() >= lastUpdate + updateDelay) {
+		if(TimeHelper::getInstance()->getSinceStartComplete() >= lastUpdate + updateDelay) {
 			// We update the delta ratio.
-			deltaRatio = 1.0 + (TimeHelper::getSinceEpoch() - 
+			deltaRatio = 1.0 + (TimeHelper::getInstance()->getSinceStartComplete() - 
 						  (lastUpdate + updateDelay)) / updateDelay;
 			// We update the current state.
 			currentState->update();
 			// We update the input manager.
 			InputManager::getInstance()->update();
 			// We take note of the time.
-			lastUpdate = TimeHelper::getSinceEpoch();
+			lastUpdate += updateDelay;
 		}
 		// We check that the delay between renders doesn't go too high or that
 		// the updates aren't lagging behind.
-		if((TimeHelper::getSinceEpoch() >= lastUpdate + maxRenderDelay) ||
+		if((TimeHelper::getInstance()->getSinceStartComplete() >= lastUpdate + maxRenderDelay) ||
 		   deltaRatio < 2.0) {
 			// We take note of the time at which the render was done.
-			lastRender = TimeHelper::getSinceEpoch();
+			lastRender += maxRenderDelay;
 			currentState->render();
 		}
 	}
@@ -113,7 +113,7 @@ void RedBoxEngine::pulse() {
 }
 
 void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight) {
-	TimeHelper::init();
+	TimeHelper::getInstance();
 	InputManager::getInstance();
 	onInitialize.shoot(screenWidth, screenHeight);
 	GraphicDriver::initializeGraphicDriver(screenWidth, screenHeight);
@@ -121,7 +121,7 @@ void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight) {
 }
 
 double RedBoxEngine::getUpdateDelta() {
-	return TimeHelper::getSinceEpoch() - lastUpdate;
+	return TimeHelper::getInstance()->getSinceStartComplete() - lastUpdate;
 }
 
 void RedBoxEngine::application(int argc, char *argv[]){

@@ -7,106 +7,87 @@
 
 namespace RedBox {
 	/**
-	 * Class used to get information about the time.
+	 * Class used to get information about the time. It's a singleton.
 	 * @ingroup Helper
 	 */
 	class TimeHelper {
 		friend class RedBoxEngine;
 	public:
 		/**
-		 * Refreshes the variable getting the current time.
+		 * Gets TimeHelper's instance.
 		 */
-		static void refreshTime();
-		/**
-		 * Gets the time in seconds since the epoch. The fractional part of the
-		 * value represents the current second's time. For Windows, The time is
-		 * the one since the system was started.
-		 * @return Number of seconds since the epoch.
-		 */
-        static double getSinceEpoch();
-		/**
-		 * Pauses the game.
-		 */
-		static void pause();
-		/**
-		 * Unpauses the game.
-		 */
-		static void unpause();
-		/**
-		 * Checks if the game is paused.
-		 * @return True if the game is set to paused, false if not.
-		 */
-		static bool isPaused();
+		static TimeHelper* getInstance();
 		/**
 		 * Gets the time since the game was started (in seconds). Takes into
 		 * account the time scaling. Time is not counted while the game is
 		 * paused. Depends on refreshTime() being called recently.
 		 * @return Time since the game was started (in seconds).
 		 */
-		static double getSinceStart();
+		virtual double getSinceStart() const = 0;
 		/**
 		 * Gets the time since the game was started (in seconds). Does not take
 		 * into account the time scaling. Time is not counted while the game is
 		 * paused. Depends on refreshTime() being called recently.
 		 * @return Time since the game was started (in seconds).
 		 */
-		static double getSinceStartReal();
+		virtual double getSinceStartReal() const = 0;
 		/**
 		 * Gets the time since the game was started (in seconds). Does not take
 		 * into account the time scaling. Time is counted while the game is
 		 * paused. Depends on refreshTime() being called recently.
 		 * @return Time since the game was started (in seconds).
 		 */
-		static double getSinceStartComplete();
+		virtual double getSinceStartComplete() const = 0;
+		/**
+		 * Gets the time scale.
+		 * @return Time scale. 1.0 means it's at normal speed, 2.0 means it's
+		 * going twice as fast.
+		 */
+		double getTimeScale() const;
 		/**
 		 * Sets the game's time scale. Usd to determine at which speed the game
 		 * will go.
 		 * @param newTimeScale Time scaling of the game.
 		 */
-		static void setTimeScale(double newTimeScale);
+		void setTimeScale(double newTimeScale);
 		/**
-		 * Gets the time scale.
+		 * Pauses TimeHelper. Only getSinceStartComplete isn't influenced by
+		 * the pausing/unpausing.
 		 */
-		static double getTimeScale();
-	private:
-		/// Number of seconds since the epoch.
-		static double epoch;
+		void pause();
 		/**
-		 * Time in seconds since the game was started. The fractional part of
-		 * the value represents the current second's time. Affected by the time
-		 * scaling. Does not count the time while the game is paused. Mainly
-		 * used for animations and other visual effects.
+		 * Unpauses TimeHelper. Only getSinceStartComplete isn't influenced by
+		 * the pausing/unpausing.
 		 */
-		static double sinceStart;
+		void unpause();
 		/**
-		 * Time in seconds since the game was started. The fractional part of
-		 * the value represents the current second's time. Not affected by the
-		 * time scaling. Does not count the time while the game is paused.
-		 * Mainly used for knowing how much time the player has spent playing.
+		 * Checks if TimeHelper is paused.
+		 * @return True if TimeHelper is paused, false if not.
 		 */
-		static double sinceStartReal;
-		/// Time at which the game was started (since the epoch, in seconds).
-		static double gameStart;
+		bool isPaused() const;
+	protected:
 		/**
-		 * Used to scale at which speed the time since the game was started is
-		 * going. For example, if timeScale is set at 0.5, sinceStart will
-		 * increment two times slower than usual.
+		 * Default constructor.
 		 */
-		static double timeScale;
-		/// Boolean indicating if the game is paused.
-		static bool paused;
-		/**
-		 * Gets the system's time since the epoch.
-		 */
-		static double getRealEpoch();
-		/**
-		 * Initializes the TimeHelper.
-		 */
-		static void init();
 		TimeHelper();
-		TimeHelper(const TimeHelper& src);
-		~TimeHelper();
-		TimeHelper& operator=(const TimeHelper& src);
+		/**
+		 * Destructor.
+		 */
+		virtual ~TimeHelper();
+		/**
+		 * Refreshes the time variable.
+		 */
+		virtual void refreshTime() = 0;
+	private:
+		/// TimeHelper's instance.
+		static TimeHelper* instance;
+		/**
+		 * Time scaling. The higher the value, the faster the time is being
+		 * calculated.
+		 */
+		double timeScale;
+		/// Set to true if TimeHelper is considered to be paused, false if not.
+		bool paused;
     };
 }
 
