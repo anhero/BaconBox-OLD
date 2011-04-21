@@ -34,6 +34,8 @@ void WindowsTimeHelper::refreshTime() {
 	// We calculate the time since the game started.
 	tmp = currentTime - startTime;
 	sinceStartComplete = nbSecsFromULongLong(tmp);
+	
+	lastTime = currentTime;
 }
 double nbSecsFromULongLong(ULONGLONG ticks) {
 	return static_cast<double>(ticks / 1000LL) +
