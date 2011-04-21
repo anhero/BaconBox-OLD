@@ -1,6 +1,6 @@
 #include "PlatformFlagger.h"
 
-#ifdef RB_MAC_PLATFORM
+#if defined(RB_MAC_PLATFORM) || defined(RB_LINUX)
 
 #include "LibcTimeHelper.h"
 

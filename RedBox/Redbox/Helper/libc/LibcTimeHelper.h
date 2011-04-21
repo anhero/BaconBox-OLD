@@ -2,12 +2,12 @@
  * @file
  * @ingroup Helper
  */
-#ifndef RB_Libc_TIME_HELPER_H
-#define RB_Libc_TIME_HELPER_H
+#ifndef RB_LIBC_TIME_HELPER_H
+#define RB_LIBC_TIME_HELPER_H
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_MAC_PLATFORM
+#if defined(RB_MAC_PLATFORM) || defined(RB_LINUX)
 
 #include <sys/time.h>
 
