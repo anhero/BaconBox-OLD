@@ -53,7 +53,7 @@ elseif(QT)
 	set(CFLAGS "-m32" ${CFLAGS})
 	set(CXXFLAGS "-m32" ${CXXFLAGS})
 	set(CMAKE_OSX_ARCHITECTURES "i386")
-else(iphone)
+elseif(SDL)
 	MESSAGE(STATUS "Building with SDL.")
 	ADD_DEFINITIONS("-DSDL")
 
