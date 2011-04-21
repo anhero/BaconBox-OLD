@@ -41,6 +41,9 @@
 	#define RB_MUSIC_ENGINE NULL
 
 	#define RB_OPENGL
+	
+	#define	RB_TIME_HELPER_IMPL new WindowsTimeHelper()
+	#define RB_TIME_HELPER_INCLUDE "WindowsTimeHelper.h"
 
 	/*#ifdef _WIN32_WINNT_VISTA
 		#define _WIN32_WINNT _WIN32_WINNT_VISTA
