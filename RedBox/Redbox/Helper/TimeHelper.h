@@ -23,21 +23,21 @@ namespace RedBox {
 		 * paused. Depends on refreshTime() being called recently.
 		 * @return Time since the game was started (in seconds).
 		 */
-		virtual double getSinceStart() const = 0;
+		double getSinceStart() const;
 		/**
 		 * Gets the time since the game was started (in seconds). Does not take
 		 * into account the time scaling. Time is not counted while the game is
 		 * paused. Depends on refreshTime() being called recently.
 		 * @return Time since the game was started (in seconds).
 		 */
-		virtual double getSinceStartReal() const = 0;
+		double getSinceStartReal() const;
 		/**
 		 * Gets the time since the game was started (in seconds). Does not take
 		 * into account the time scaling. Time is counted while the game is
 		 * paused. Depends on refreshTime() being called recently.
 		 * @return Time since the game was started (in seconds).
 		 */
-		virtual double getSinceStartComplete() const = 0;
+		double getSinceStartComplete() const;
 		/**
 		 * Gets the time scale.
 		 * @return Time scale. 1.0 means it's at normal speed, 2.0 means it's
@@ -66,6 +66,22 @@ namespace RedBox {
 		 */
 		bool isPaused() const;
 	protected:
+		/**
+		 * Time in seconds since the TimeHelper was initialized. It is
+		 * influenced by the time scaling and by the pausing/unpausing.
+		 */
+		double sinceStart;
+		/**
+		 * Time in seconds since the TimeHelper was initialized. It is
+		 * not influenced by the time scaling, but is influenced by the
+		 * pausing/unpausing.
+		 */
+		double sinceStartReal;
+		/**
+		 * Time in seconds since the TimeHelper was initialized. It is
+		 * not influenced by the time scaling nor by the pausing/unpausing.
+		 */
+		double sinceStartComplete;
 		/**
 		 * Default constructor.
 		 */

@@ -6,20 +6,7 @@
 
 using namespace RedBox;
 
-double LibcTimeHelper::getSinceStart() const {
-	return sinceStart;
-}
-
-double LibcTimeHelper::getSinceStartReal() const {
-	return sinceStartReal;
-}
-
-double LibcTimeHelper::getSinceStartComplete() const {
-	return sinceStartComplete;
-}
-
-LibcTimeHelper::LibcTimeHelper() : TimeHelper(), sinceStart(0.0),
-sinceStartReal(0.0), sinceStartComplete(0.0) {
+LibcTimeHelper::LibcTimeHelper() : TimeHelper() {
 	gettimeofday(&startTime, 0);
 	gettimeofday(&lastTime, 0);
 }

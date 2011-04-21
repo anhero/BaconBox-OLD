@@ -20,49 +20,11 @@ namespace RedBox {
 	 */
 	class LibcTimeHelper : public TimeHelper {
 		friend class TimeHelper;
-	public:
-		/**
-		 * Gets the time since the game was started (in seconds). Takes into
-		 * account the time scaling. Time is not counted while the game is
-		 * paused. Depends on refreshTime() being called recently.
-		 * @return Time since the game was started (in seconds).
-		 */
-		double getSinceStart() const;
-		/**
-		 * Gets the time since the game was started (in seconds). Does not take
-		 * into account the time scaling. Time is not counted while the game is
-		 * paused. Depends on refreshTime() being called recently.
-		 * @return Time since the game was started (in seconds).
-		 */
-		double getSinceStartReal() const;
-		/**
-		 * Gets the time since the game was started (in seconds). Does not take
-		 * into account the time scaling. Time is counted while the game is
-		 * paused. Depends on refreshTime() being called recently.
-		 * @return Time since the game was started (in seconds).
-		 */
-		double getSinceStartComplete() const;
 	private:
 		/// Time at which TimeHelper was initialized.
 		timeval startTime;
 		/// Last time the TimeHelper was refreshed.
 		timeval lastTime;
-		/**
-		 * Time in seconds since the TimeHelper was initialized. It is
-		 * influenced by the time scaling and by the pausing/unpausing.
-		 */
-		double sinceStart;
-		/**
-		 * Time in seconds since the TimeHelper was initialized. It is
-		 * not influenced by the time scaling, but is influenced by the
-		 * pausing/unpausing.
-		 */
-		double sinceStartReal;
-		/**
-		 * Time in seconds since the TimeHelper was initialized. It is
-		 * not influenced by the time scaling nor by the pausing/unpausing.
-		 */
-		double sinceStartComplete;
 		/**
 		 * Default constructor.
 		 */

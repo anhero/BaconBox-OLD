@@ -17,6 +17,18 @@ TimeHelper* TimeHelper::getInstance() {
 	return instance;
 }
 
+double TimeHelper::getSinceStart() const {
+	return sinceStart;
+}
+
+double TimeHelper::getSinceStartReal() const {
+	return sinceStartReal;
+}
+
+double TimeHelper::getSinceStartComplete() const {
+	return sinceStartComplete;
+}
+
 double TimeHelper::getTimeScale() const {
 	return timeScale;
 }
@@ -37,7 +49,8 @@ bool TimeHelper::isPaused() const {
 	return paused;
 }
 
-TimeHelper::TimeHelper() : timeScale(1.0), paused(false) {
+TimeHelper::TimeHelper() : sinceStart(0.0), sinceStartReal(0.0),
+sinceStartComplete(0.0), timeScale(1.0), paused(false) {
 }
 
 TimeHelper::~TimeHelper() {
