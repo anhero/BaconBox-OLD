@@ -1,6 +1,6 @@
 #include "PlatformFlagger.h"
 
-#ifdef RB_WINDOWS
+#ifdef RB_WIN32
 
 #include "WindowsTimeHelper.h"
 
@@ -37,7 +37,7 @@ void WindowsTimeHelper::refreshTime() {
 	
 	lastTime = currentTime;
 }
-double nbSecsFromULongLong(ULONGLONG ticks) {
+double WindowsTimeHelper::nbSecsFromULongLong(ULONGLONG ticks) {
 	return static_cast<double>(ticks / 1000LL) +
 	static_cast<double>(ticks % 1000LL) / 1000.0;
 }

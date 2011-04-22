@@ -3,7 +3,7 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_WINDOWS
+#ifdef RB_WIN32
 
 #include <windows.h>
 
@@ -35,7 +35,7 @@ namespace RedBox {
 		 * @return Double containing the number of seconds with the
 		 * microseconds.
 		 */
-		double nbSecsFromULongLong(ULONGLONG ticks);
+		static double nbSecsFromULongLong(ULONGLONG ticks);
 	};
 }
 
