@@ -32,8 +32,8 @@
 #ifdef _WIN32
 	#ifdef RB_QT
 		#include <qt_windows.h>
-	#else
-		#include <sdkddkver.h>
+	//#else
+		//#include <sdkddkver.h>
 	#endif // RB_QT
 
 	#define RB_WIN32
