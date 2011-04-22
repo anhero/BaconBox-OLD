@@ -84,6 +84,11 @@
 		#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
 	#endif
 
+	#ifdef RB_IPHONE_PLATFORM
+		#define	RB_TIME_HELPER_IMPL new IOSTimeHelper()
+		#define RB_TIME_HELPER_INCLUDE "IOSTimeHelper.h"
+	#endif
+
 	#if defined(SDL) && defined(RB_MAC_PLATFORM)
 		#define RB_OPENAL
 		#define RB_SOUND_ENGINE new OpenALEngine()
