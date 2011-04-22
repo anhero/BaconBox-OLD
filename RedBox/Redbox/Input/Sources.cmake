@@ -4,9 +4,9 @@ include(${Input_dir}/GamePad/Sources.cmake)
 include(${Input_dir}/Keyboard/Sources.cmake)
 include(${Input_dir}/Pointer/Sources.cmake)
 
-if(${SDL})
+if(SDL)
 	include(${Input_dir}/SDL/Sources.cmake)
-endif(${SDL})
+endif(SDL)
 
 file(GLOB RedBox_RedBox_Input_Headers ${Input_dir}/*.h)
 file(GLOB RedBox_RedBox_Input_Sources ${Input_dir}/*.cpp)

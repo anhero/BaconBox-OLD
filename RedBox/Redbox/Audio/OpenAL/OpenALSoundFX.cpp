@@ -18,6 +18,11 @@ void OpenALSoundFX::play(int nbTimes) {
 		} else {
 			nbTimesLeft = nbTimes - 1;
 		}
+		ALint state;
+		alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
+		if(state != AL_PAUSED) {
+			alSourceRewind(sourceId);
+		}
 		// We start playing the sound.
 		alSourcePlay(sourceId);
 	}

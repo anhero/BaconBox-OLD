@@ -50,7 +50,7 @@ elseif(QT)
 
 	list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
 	list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
-else(iphone)
+elseif(SDL)
 	MESSAGE(STATUS "Building with SDL.")
 	ADD_DEFINITIONS("-DSDL")
 
