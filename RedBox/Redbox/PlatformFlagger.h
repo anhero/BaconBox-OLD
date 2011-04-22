@@ -13,6 +13,9 @@
 	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
 	#define RB_SOUND_ENGINE new OpenALEngine()
 	#define RB_MUSIC_ENGINE NULL
+
+	#define	RB_TIME_HELPER_IMPL new LibcTimeHelper()
+	#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
 #endif // linux
 
 
@@ -41,6 +44,9 @@
 	#define RB_MUSIC_ENGINE NULL
 
 	#define RB_OPENGL
+	
+	#define	RB_TIME_HELPER_IMPL new WindowsTimeHelper()
+	#define RB_TIME_HELPER_INCLUDE "WindowsTimeHelper.h"
 
 	/*#ifdef _WIN32_WINNT_VISTA
 		#define _WIN32_WINNT _WIN32_WINNT_VISTA
@@ -71,6 +77,16 @@
 
 	#if TARGET_OS_MAC
 		#define RB_MAC_PLATFORM
+	#endif
+
+	#ifdef RB_MAC_PLATFORM
+		#define	RB_TIME_HELPER_IMPL new LibcTimeHelper()
+		#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
+	#endif
+
+	#ifdef RB_IPHONE_PLATFORM
+		#define	RB_TIME_HELPER_IMPL new IOSTimeHelper()
+		#define RB_TIME_HELPER_INCLUDE "IOSTimeHelper.h"
 	#endif
 
 	#if defined(SDL) && defined(RB_MAC_PLATFORM)
@@ -135,6 +151,10 @@
 
 #ifndef RB_INPUT_MANAGER_IMPL
 	#define RB_INPUT_MANAGER_IMPL new InputManager()
+#endif
+
+#ifndef RB_TIME_HELPER_IMPL
+	#define RB_TIME_HELPER_IMPL NULL
 #endif
 
 #endif

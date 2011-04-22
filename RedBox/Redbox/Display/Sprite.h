@@ -205,6 +205,24 @@ namespace RedBox {
 		 * moves the sprite up.
 		 */
 		void move(float deltaX, float deltaY);
+		
+		/**
+		 * Gets the sprite's width.
+		 * @return Sprite's width.
+		 */
+		float getWidth() const;
+		/**
+		 * Gets the sprite's height.
+		 * @return Sprite's height.
+		 */
+		float getHeight() const;
+		/**
+		 * Gets the sprite's width and height.
+		 * @return Pair containing the sprite's width and height. The first
+		 * member is the width and the second is the height.
+		 */
+		const std::pair<float, float>& getWidthHeight() const;
+		
         /**
          * Warns the vertices not to delete their links on their destruction.
          */

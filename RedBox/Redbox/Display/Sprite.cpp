@@ -182,6 +182,18 @@ void Sprite::move(float deltaX, float deltaY) {
 	vertices.move(deltaX, deltaY);
 }
 
+float Sprite::getWidth() const {
+	return vertices.getWidth();
+}
+
+float Sprite::getHeight() const {
+	return vertices.getHeight();
+}
+
+const std::pair<float, float>& Sprite::getWidthHeight() const {
+	return vertices.getWidthHeight();
+}
+
 void Sprite::warnVerticesOfDeletion() {
     vertices.warnVerticesOfDeletion();
 }
