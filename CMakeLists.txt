@@ -65,6 +65,7 @@ else(iphone)
 	list(APPEND RedBox_IncludeDir_list ${OPENGL_INCLUDE_DIR})
 	list(APPEND RedBox_libraries_list ${OPENLGL_LIBRARY})
 	list(APPEND RedBox_libraries_list SDL)
+	list(APPEND RedBox_libraries_list SDL_mixer)
 endif(iphone)
 
 

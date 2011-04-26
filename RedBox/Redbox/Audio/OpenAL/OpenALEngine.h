@@ -97,7 +97,7 @@ namespace RedBox {
 		 * @param filePath Path to the sound effect's file.
 		 * @return Pointer to the loaded sound effect.
 		 Null if the loading failed.
-		 */
+		 */œ
 		SoundInfo* loadSound(const std::string& filePath);
 		/**
 		 * Loads a sound effect from information.
