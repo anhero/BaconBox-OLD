@@ -48,6 +48,9 @@ namespace RedBox {
 		 * @param newName State's new name.
 		 */
 		void setName(const std::string& newName);
+	protected:
+		///The camera object which prepare the scene before rendering any object.
+		Camera camera;
 	private:
 		/// Temporarily stores the renderable objects to be deleted.
         std::list<Renderable*> toDelete;
@@ -60,8 +63,6 @@ namespace RedBox {
 		/// State's name, used as an identifier.
         std::string name;
 		
-		///The camera object which prepare the scene before rendering any object.
-		Camera camera;
 		/**
 		 * Adds a renderable in the multimap of renderables. It will then be
 		 * able to be updated and rendered correctly.

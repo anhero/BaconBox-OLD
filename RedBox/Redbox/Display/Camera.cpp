@@ -4,11 +4,7 @@
 using namespace RedBox;
 
 
-Camera::Camera() {
-	x = 0;
-	y = 0;
-	angle = 0;
-	zoomFactor = 1.0f;
+Camera::Camera(): x(0), y(0), angle(0), zoomFactor(1.0f) {
 }
 
 void Camera::move(int x, int y) {
