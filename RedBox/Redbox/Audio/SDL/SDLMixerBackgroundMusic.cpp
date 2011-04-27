@@ -30,6 +30,7 @@ void SDLMixerBackgroundMusic::play(int nbTimes) {
 	if(music) {
 		resetPauseResumeFade();
 		Mix_HaltMusic();
+
 		if(!Mix_PlayMusic(music, nbTimes)) {
 			currentMusic = this;
 			looping = (nbTimes == -1);
@@ -71,21 +72,22 @@ AudioState::Enum SDLMixerBackgroundMusic::getCurrentState() {
 		return AudioState::INITIAL;
 	} else if(currentMusic == this && Mix_PlayingMusic()) {
 		switch(Mix_FadingMusic()) {
-			case MIX_NO_FADING:
-				return AudioState::PLAYING;
-				break;
-			case MIX_FADING_OUT:
-				return AudioState::FADING_OUT;
-				break;
-			case MIX_FADING_IN:
-				return AudioState::FADING_IN;
-				break;
-			default:
-				break;
+		case MIX_NO_FADING:
+			return AudioState::PLAYING;
+			break;
+		case MIX_FADING_OUT:
+			return AudioState::FADING_OUT;
+			break;
+		case MIX_FADING_IN:
+			return AudioState::FADING_IN;
+			break;
+		default:
+			break;
 		}
 	} else if(currentMusic == this && Mix_PausedMusic()) {
 		return AudioState::PAUSED;
 	}
+
 	return AudioState::STOPPED;
 }
 
@@ -93,6 +95,7 @@ void SDLMixerBackgroundMusic::play(int nbTimes, double fadeIn) {
 	if(music) {
 		resetPauseResumeFade();
 		Mix_HaltMusic();
+
 		if(!Mix_FadeInMusic(music, nbTimes, static_cast<int>(fadeIn * 1000.0))) {
 			currentMusic = this;
 			looping = (nbTimes == -1);
@@ -133,8 +136,8 @@ void SDLMixerBackgroundMusic::resume(double fadeIn) {
 }
 
 SDLMixerBackgroundMusic::SDLMixerBackgroundMusic() : BackgroundMusic(),
-music(NULL), looping(false), neverPlayed(true), pauseResumeFading(false), fadeTime(0),
-fadeStart(0) {
+	music(NULL), looping(false), neverPlayed(true), pauseResumeFading(false), fadeTime(0),
+	fadeStart(0) {
 }
 
 void SDLMixerBackgroundMusic::load(Mix_Music* newMusic) {
@@ -145,12 +148,13 @@ void SDLMixerBackgroundMusic::fadeUpdate(unsigned int ticks) {
 	if(pauseResumeFading) {
 		if(ticks > fadeStart) {
 			int newVolume = 0;
-			
+
 			// If the fading is over.
 			if(ticks - fadeStart > fadeTime) {
 				if(fadeType == FADE_IN) {
 					newVolume = MIX_MAX_VOLUME;
 				}
+
 				pauseResumeFading = false;
 				fadeTime = 0;
 				fadeStart = 0;
@@ -163,6 +167,7 @@ void SDLMixerBackgroundMusic::fadeUpdate(unsigned int ticks) {
 					newVolume = MIX_MAX_VOLUME - static_cast<int>(static_cast<double>(ticks - fadeStart) / static_cast<double>(fadeTime) * static_cast<double>(MIX_MAX_VOLUME));
 				}
 			}
+
 			if(newVolume) {
 				Mix_VolumeMusic(newVolume);
 			} else {

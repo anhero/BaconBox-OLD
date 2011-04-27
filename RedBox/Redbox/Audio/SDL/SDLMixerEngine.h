@@ -35,10 +35,10 @@ namespace RedBox {
 		 * @return Pointer to the audio engine's instance.
 		 */
 		static SDLMixerEngine* getInstance();
-		
+
 		/// Signal when pause/resume fading needs updating for a music.
 		sigly::Signal1<unsigned int> fadeUpdate;
-		
+
 		/**
 		 * Constructs a sound effect. Gets the sound's data associated with the
 		 * key.
@@ -55,7 +55,7 @@ namespace RedBox {
 		 * sound effect returned is at the INITIAL state.
 		 */
 		SoundFX* getSoundFX(const std::string& key, bool survive = true);
-		
+
 		/**
 		 * Constructs a background music. Gets the music's data associated with
 		 * the key.
@@ -71,25 +71,39 @@ namespace RedBox {
 		 * background music returned is at the INITIAL state.
 		 */
 		BackgroundMusic* getBackgroundMusic(const std::string& key,
-											bool survive = true);
-		
+		                                    bool survive = true);
+		/**
+		 * Called by background musics when the fading from a pause or a
+		 * resume is done. It raises a flag that will be checked in the
+		 * update method and it will disconnect all listener from the
+		 * fadeUpdate signal.
+		 */
 		void askForDisconnect();
 	private:
 		/// Playback frequency
 		static const int AUDIO_RATE = 44100;
+		/// Playback audio format.
 		static const uint16_t AUDIO_FORMAT = AUDIO_S16SYS;
+		/// Number of audio channels. By default, it's in Stereo.
 		static const int AUDIO_CHANNELS = 2;
+		/// Size of the audio buffer for music playing.
 		static const int AUDIO_BUFFERS = 4096;
+		/// Number of possible simultaneous sound effects.
 		static const int NB_SOUND_CHANNELS = 32;
-		
+		/**
+		 * Number of ticks (ms) between each fade update when a music is
+		 * fading to pause or resume.
+		 */
 		static const unsigned int NB_TICKS_PER_FADE = 100;
-		
+
 		/// Singleton instance.
 		static SDLMixerEngine* instance;
-		
+
+		/// Last tick at which the fade update was called.
 		unsigned int lastFadeTick;
+		/// Flag used to ask to be disconnected from the fadeUpdate signal.
 		bool disconnect;
-		
+
 		/**
 		 * List of pointers to musics that the engine takes care of managing.
 		 */
@@ -98,36 +112,36 @@ namespace RedBox {
 		 * List of pointers to sounds that the engine takes care of managing.
 		 */
 		std::list<SDLMixerSoundFX*> sounds;
-		
+
 		/**
 		 * Default constructor.
 		 */
 		SDLMixerEngine();
-		
+
 		/**
 		 * Initializes the audio engine. Called by the static functions that
 		 * load the audio engines.
 		 */
 		void init();
-		
+
 		/**
 		 * Updates the necessary informations for the audio engine.
 		 */
 		void update();
-		
+
 		/**
 		 * Destructor. The audio engine can only be destroyed by the resource
 		 * manager.
 		 */
 		~SDLMixerEngine();
-		
+
 		/**
 		 * Loads sound data from a file.
 		 * @param filePath Path to the sound file to load.
 		 * @return Pointer to the sound data loaded.
 		 */
 		SoundInfo* loadSound(const std::string& filePath);
-		
+
 		/**
 		 * Loads sound data from engine specific parameters.
 		 * @param params Parameters to use to load the sound data. Each engine
@@ -135,7 +149,7 @@ namespace RedBox {
 		 * @return Pointer to the sound data loaded.
 		 */
 		SoundInfo* loadSound(const SoundParameters& params);
-		
+
 		/**
 		 * Unloads sound data.
 		 * @param sound Sound data that needs to be unloaded. Delete must not be
@@ -144,14 +158,14 @@ namespace RedBox {
 		 * @return True if the unloading was successful, false if not.
 		 */
 		bool unloadSound(SoundInfo* sound);
-		
+
 		/**
 		 * Loads music data from a file.
 		 * @param filePath Path to the music file to load.
 		 * @return Pointer to the music data loaded.
 		 */
 		MusicInfo* loadMusic(const std::string& filePath);
-		
+
 		/**
 		 * Loads music data from engine specific parameters.
 		 * @param params Parameters to use to load the music data. Each engine
@@ -159,7 +173,7 @@ namespace RedBox {
 		 * @return Pointer to the music data loaded.
 		 */
 		MusicInfo* loadMusic(const MusicParameters& params);
-		
+
 		/**
 		 * Unloads music data.
 		 * @param sound Sound data that needs to be unloaded. Delete must not be
