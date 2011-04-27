@@ -13,7 +13,7 @@ namespace RedBox {
 	struct SoundParameters {
 		/// Name used by the ResourceManager.
 		std::string name;
-#ifdef RB_OPENAL
+#if defined(RB_OPENAL) || defined(RB_SDL)
 		std::string path;
 #endif
 	};

@@ -14,6 +14,7 @@
 #include "AudioState.h"
 
 #include "SDLMixerBackgroundMusic.h"
+#include "SDLMixerSoundFX.h"
 
 using namespace RedBox;
 
@@ -27,7 +28,25 @@ SDLMixerEngine* SDLMixerEngine::getInstance() {
 }
 
 SoundFX* SDLMixerEngine::getSoundFX(const std::string& key, bool survive) {
-	return 0;
+	SDLMixerSoundFX* result = new SDLMixerSoundFX();
+	if(result) {
+		SoundInfo* info = ResourceManager::getSound(key);
+		if(info) {
+			result->load(info->data);
+			if(!survive) {
+				sounds.push_back(result);
+			}
+		} else {
+			delete result;
+			result = NULL;
+			RB_ECHO("Tried to get a sound effect from an invalid key: " <<
+					key)
+		}
+	} else {
+		RB_ECHO("Failed to allocate memory for the new sound effect: " <<
+				key)
+	}
+	return result;
 }
 BackgroundMusic* SDLMixerEngine::getBackgroundMusic(const std::string& key,
 													bool survive) {
@@ -36,6 +55,9 @@ BackgroundMusic* SDLMixerEngine::getBackgroundMusic(const std::string& key,
 		MusicInfo* info = ResourceManager::getMusic(key);
 		if(info) {
 			result->load(info->music);
+			if(!survive) {
+				musics.push_back(result);
+			}
 		} else {
 			delete result;
 			result = NULL;
@@ -63,6 +85,10 @@ void SDLMixerEngine::init() {
 	if(!Mix_OpenAudio(SDLMixerEngine::AUDIO_RATE, SDLMixerEngine::AUDIO_FORMAT, SDLMixerEngine::AUDIO_CHANNELS, SDLMixerEngine::AUDIO_BUFFERS)) {
 		// We set the function to call when a music is stopped.
 		Mix_HookMusicFinished(SDLMixerBackgroundMusic::stoppedCurrentMusic);
+		// We set the function to call when a sound effect is stopped.
+		Mix_ChannelFinished(SDLMixerSoundFX::channelHalted);
+		// We set the number of sound effect channels.
+		Mix_AllocateChannels(SDLMixerEngine::NB_SOUND_CHANNELS);
 	} else {
 		RB_ECHO("Unable to initialize audio: " << Mix_GetError());
 	}
@@ -77,9 +103,9 @@ void SDLMixerEngine::update() {
 			fadeUpdate.disconnectAll();
 		}
 	}
-	// For each sound effect.
+	// For each background music.
 	for (std::list<SDLMixerBackgroundMusic*>::iterator i = musics.begin();
-		 i != musics.end(); i++) {
+		 i != musics.end(); ++i) {
 		// We make sure the pointer is valid.
 		if(*i) {
 			// If the music is set at stopped.
@@ -93,6 +119,23 @@ void SDLMixerEngine::update() {
 			musics.erase(i);
 		}
 	}
+
+	// For each sound effect.
+	for(std::list<SDLMixerSoundFX*>::iterator i = sounds.begin();
+		i != sounds.end(); ++i) {
+		// We make sure the pointer is valid.
+		if(*i) {
+			// If the sound is set at stopped.
+			if((*i)->getCurrentState() == AudioState::STOPPED) {
+				delete *i;
+				sounds.erase(i);
+			}
+		} else {
+			// If the pointer is invalid (which should not happen), we remove
+			// it from the list.
+			sounds.erase(i);
+		}
+	}
 }
 
 SDLMixerEngine::~SDLMixerEngine() {
@@ -100,15 +143,28 @@ SDLMixerEngine::~SDLMixerEngine() {
 }
 
 SoundInfo* SDLMixerEngine::loadSound(const std::string& filePath) {
-	return 0;
+	SoundInfo* result = new SoundInfo();
+	result->data = Mix_LoadWAV(filePath.c_str());
+	// We make sure the sound file is correctly loaded.
+	if(!result->data) {
+		// We delete the resulting sound info.
+		delete result;
+		result = NULL;
+		RB_ECHO("Unable to load sound effect: " << filePath <<
+				" with SDL_mixer error: " << Mix_GetError());
+	}
+	return result;
 }
 
 SoundInfo* SDLMixerEngine::loadSound(const SoundParameters& params) {
-	return 0;
+	return loadSound(params.path);
 }
 
 bool SDLMixerEngine::unloadSound(SoundInfo* sound) {
-	return 0;
+	if(sound && sound->data) {
+		Mix_FreeChunk(sound->data);
+	}
+	return true;
 }
 
 MusicInfo* SDLMixerEngine::loadMusic(const std::string& filePath) {

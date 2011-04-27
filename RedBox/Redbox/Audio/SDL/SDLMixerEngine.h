@@ -22,6 +22,7 @@
 
 namespace RedBox {
 	class SDLMixerBackgroundMusic;
+	class SDLMixerSoundFX;
 	/**
 	 * Audio engine implementation to play sounds and music with SDL_mixer.
 	 * @ingroup Audio
@@ -79,6 +80,7 @@ namespace RedBox {
 		static const uint16_t AUDIO_FORMAT = AUDIO_S16SYS;
 		static const int AUDIO_CHANNELS = 2;
 		static const int AUDIO_BUFFERS = 4096;
+		static const int NB_SOUND_CHANNELS = 32;
 		
 		static const unsigned int NB_TICKS_PER_FADE = 100;
 		
@@ -92,6 +94,10 @@ namespace RedBox {
 		 * List of pointers to musics that the engine takes care of managing.
 		 */
 		std::list<SDLMixerBackgroundMusic*> musics;
+		/**
+		 * List of pointers to sounds that the engine takes care of managing.
+		 */
+		std::list<SDLMixerSoundFX*> sounds;
 		
 		/**
 		 * Default constructor.
