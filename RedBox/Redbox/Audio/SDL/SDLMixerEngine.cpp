@@ -13,6 +13,7 @@
 #include "MusicInfo.h"
 #include "AudioState.h"
 #include "NullAudio.h"
+#include "Sound.h"
 
 #include "SDLMixerBackgroundMusic.h"
 #include "SDLMixerSoundFX.h"
@@ -73,7 +74,7 @@ BackgroundMusic* SDLMixerEngine::getBackgroundMusic(const std::string& key,
 					key);
 		}
 		if(!survive) {
-			musics.push_back(result);
+			sounds.push_back(result);
 		}
 	} else {
 		RB_ECHO("Failed to allocate memory for the new background music: " <<
@@ -117,37 +118,21 @@ void SDLMixerEngine::update() {
 		}
 	}
 
-	// For each background music.
-	for(std::list<BackgroundMusic*>::iterator i = musics.begin();
-	        i != musics.end(); ++i) {
+	// For each sound (music or sound effect).
+	std::list<Sound*>::iterator i = sounds.begin();
+	while(i != sounds.end()) {
 		// We make sure the pointer is valid.
 		if(*i) {
-			// If the music is set at stopped.
-			if((*i)->getCurrentState() == AudioState::STOPPED) {
-				// We delete the background music.
-				delete *i;
-				musics.erase(i);
-			}
-		} else {
-			// If it's invalid, we remove it.
-			musics.erase(i);
-		}
-	}
-
-	// For each sound effect.
-	for(std::list<SoundFX*>::iterator i = sounds.begin();
-	        i != sounds.end(); ++i) {
-		// We make sure the pointer is valid.
-		if(*i) {
-			// If the sound is set at stopped.
 			if((*i)->getCurrentState() == AudioState::STOPPED) {
 				delete *i;
-				sounds.erase(i);
+				i = sounds.erase(i);
+			} else {
+				++i;
 			}
 		} else {
 			// If the pointer is invalid (which should not happen), we remove
 			// it from the list.
-			sounds.erase(i);
+			i = sounds.erase(i);
 		}
 	}
 }
