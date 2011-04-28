@@ -82,6 +82,8 @@ void State::update() {
 		renderables.insert(std::pair<int, Renderable*>((*it)->getZ(), *it));
 	}
 	zChange.clear();
+
+	camera.update();
 }
 
 const std::string& State::getName() const {

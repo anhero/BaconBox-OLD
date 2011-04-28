@@ -21,6 +21,8 @@ double RedBoxEngine::lastUpdate = 0.0;
 double RedBoxEngine::lastRender = 0.0;
 double RedBoxEngine::deltaRatio = 0.0;
 sigly::Signal2<int, int> RedBoxEngine::onInitialize = sigly::Signal2<int, int>();
+int RedBoxEngine::screenWidth = 0;
+int RedBoxEngine::screenHeight = 0;
 
 State* RedBoxEngine::addState(State* newState) {
 	if(newState) {
@@ -112,7 +114,9 @@ void RedBoxEngine::pulse() {
 	}
 }
 
-void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight) {
+void RedBoxEngine::initializeEngine(int newScreenWidth, int newScreenHeight) {
+	screenWidth = newScreenWidth;
+	screenHeight = newScreenHeight;
 	TimeHelper::getInstance();
 	InputManager::getInstance();
 	onInitialize.shoot(screenWidth, screenHeight);
@@ -122,6 +126,14 @@ void RedBoxEngine::initializeEngine(int screenWidth, int screenHeight) {
 
 double RedBoxEngine::getUpdateDelta() {
 	return TimeHelper::getInstance()->getSinceStartComplete() - lastUpdate;
+}
+
+int RedBoxEngine::getScreenWidth() {
+	return screenWidth;
+}
+
+int RedBoxEngine::getScreenHeight() {
+	return screenHeight;
 }
 
 void RedBoxEngine::application(int argc, char *argv[]){

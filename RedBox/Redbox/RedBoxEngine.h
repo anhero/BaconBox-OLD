@@ -89,6 +89,15 @@ namespace RedBox {
 		 * @return Time in seconds since the last update called on a state.
 		 */
 		static double getUpdateDelta();
+
+		/**
+		 * Gets the screen's width.
+		 */
+		static int getScreenWidth();
+		/**
+		 * Gets the screen's height.
+		 */
+		static int getScreenHeight();
 	private:
 		/// Map of states in the engine.
 		static std::map<std::string, State*> states;
@@ -106,6 +115,10 @@ namespace RedBox {
 		static double deltaRatio;
 		///The path to the current application binary.
 		static std::string applicationPath;
+		/// Screen's width.
+		static int screenWidth;
+		/// Screen's height.
+		static int screenHeight;
 	};
 }
 
