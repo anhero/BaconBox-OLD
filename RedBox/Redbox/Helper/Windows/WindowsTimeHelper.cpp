@@ -7,14 +7,14 @@
 using namespace RedBox;
 
 WindowsTimeHelper::WindowsTimeHelper() : TimeHelper() {
-	startTime = GetTickCount64();
+	startTime = GetTickCount();
 }
 
 WindowsTimeHelper::~WindowsTimeHelper() {
 }
 
 void WindowsTimeHelper::refreshTime() {
-	ULONGLONG currentTime = GetTickCount64();
+	ULONGLONG currentTime = GetTickCount();
 	ULONGLONG tmp;
 	
 	// We add time to sinceStart and sinceStartReal only if the game isn't
