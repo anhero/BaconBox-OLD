@@ -74,8 +74,13 @@ void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,
 	glDisable(GL_BLEND);
 }
 
-void OpenGLDriver::prepareScene(int xTranslation, int yTranslation, int angle, float zoom) {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+void OpenGLDriver::prepareScene(int xTranslation, int yTranslation,
+								int angle, float zoom,
+								const Color& backgroundColor) {
+	glClearColor(clampColorComponent(backgroundColor.getRed()),
+				 clampColorComponent(backgroundColor.getGreen()),
+				 clampColorComponent(backgroundColor.getBlue()),
+				 1.0f);
     glClear( GL_COLOR_BUFFER_BIT);
 	
 	glMatrixMode(GL_MODELVIEW);
@@ -150,5 +155,9 @@ TextureInfo * OpenGLDriver::loadTexture(PixMap * pixMap){
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	
 	return texInfo;
+}
+
+float OpenGLDriver::clampColorComponent(unsigned int component) {
+	return static_cast<float>(component) / static_cast<float>(Color::MAX_COMPONENT_VALUE);
 }
 

@@ -4,7 +4,8 @@
 using namespace RedBox;
 
 
-Camera::Camera(): x(0), y(0), angle(0), zoomFactor(1.0f) {
+Camera::Camera(): x(0), y(0), angle(0), zoomFactor(1.0f),
+backgroundColor(Color::BLACK){
 }
 
 void Camera::move(int x, int y) {
@@ -41,6 +42,14 @@ void Camera::rotateRight(int angle) {
 	this->angle += angle;
 }
 
+void Camera::setBackgroundColor(const Color& newBackgroundColor) {
+	backgroundColor = newBackgroundColor;
+}
+
+const Color& Camera::getBackgroundColor() const {
+	return backgroundColor;
+}
+
 void Camera::zoom(float factor) {
 	zoomFactor *= factor;
 }
@@ -52,5 +61,5 @@ void Camera::resetZoom() {
 }
 
 void Camera::render() {
-	GraphicDriver::prepareScene(-x, -y, angle, zoomFactor);
+	GraphicDriver::prepareScene(-x, -y, angle, zoomFactor, backgroundColor);
 }
