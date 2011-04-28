@@ -20,6 +20,10 @@ Color::Color(unsigned int red, unsigned int green, unsigned int blue,
 	setRGBA(red, green, blue, alpha);
 }
 
+Color::Color(unsigned int rgba) {
+	setRGBA(rgba);
+}
+
 Color::Color(const Color& src) {
 	if(this != &src) {
 		setRGBA(src.getRed(), src.getGreen(), src.getBlue(), src.getAlpha());
@@ -30,6 +34,14 @@ Color& Color::operator=(const Color& src) {
 	if(this != &src) {
 		setRGBA(src.getRed(), src.getGreen(), src.getBlue(), src.getAlpha());
 	}
+}
+
+Color::operator unsigned int() const {
+	unsigned int result = (colors[R] & 0xff) << 24;
+	result |= (colors[G] & 0xff) << 16;
+	result |= (colors[B] & 0xff) << 8;
+	result |= (colors[A] & 0xff);
+	return result;
 }
 
 unsigned int Color::getRed() const {
@@ -49,23 +61,19 @@ unsigned int Color::getAlpha() const {
 }
 
 void Color::setRed(unsigned int red) {
-	if(red > MAX_COMPONENT_VALUE) red = MAX_COMPONENT_VALUE;
-	colors[R] = red;
+	colors[R] = (red & MAX_COMPONENT_VALUE);
 }
 
 void Color::setGreen(unsigned int green) {
-	if(green > MAX_COMPONENT_VALUE) green = MAX_COMPONENT_VALUE;
-	colors[G] = green;
+	colors[G] = (green & MAX_COMPONENT_VALUE);
 }
 
 void Color::setBlue(unsigned int blue) {
-	if(blue > MAX_COMPONENT_VALUE) blue = MAX_COMPONENT_VALUE;
-	colors[B] = blue;
+	colors[B] = (blue & MAX_COMPONENT_VALUE);
 }
 
 void Color::setAlpha(unsigned int alpha) {
-	if(alpha > MAX_COMPONENT_VALUE) alpha = MAX_COMPONENT_VALUE;
-	colors[A] = alpha;
+	colors[A] = (alpha & MAX_COMPONENT_VALUE);
 }
 
 void Color::setRGB(unsigned int red, unsigned int green, unsigned int blue) {
@@ -78,6 +86,13 @@ void Color::setRGBA(unsigned int red, unsigned int green, unsigned int blue,
 					unsigned int alpha) {
 	setRGB(red, green, blue);
 	setAlpha(alpha);
+}
+
+void Color::setRGBA(unsigned int rgba) {
+	setRGBA((rgba & 0xff000000) >> 24,
+			(rgba & 0x00ff0000) >> 16,
+			(rgba & 0x0000ff00) >> 8,
+			rgba & 0x000000ff);
 }
 
 namespace RedBox {

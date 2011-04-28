@@ -62,6 +62,12 @@ namespace RedBox {
 			  unsigned int blue, unsigned int alpha = MAX_COMPONENT_VALUE);
 
 		/**
+		 * Parameterized constructor with one parameter.
+		 * @param rgba Color in the format 0x00000000.
+		 */
+		Color(unsigned int rgba);
+
+		/**
 		 * Copy constructor. Simply calls setRGBA() with the given color's
 		 * components.
 		 * @param src Color to make a copy of.
@@ -73,6 +79,11 @@ namespace RedBox {
 		 * @param src Color to make a copy of.
 		 */
 		Color& operator=(const Color& src);
+
+		/**
+		 * Operator to cast the color into one component.
+		 */
+		operator unsigned int() const;
 
 		/**
 		 * Gets the color's red component.
@@ -100,30 +111,32 @@ namespace RedBox {
 
 		/**
 		 * Sets the color's red component. Takes care of validating the value
-		 * so that it isn't over 255. If it is over 255, it is set at 255.
+		 * so that it isn't over 255. Only the first 2 bytes from the value
+		 * given are used.
 		 * @param red New red component.
 		 */
 		void setRed(unsigned int red);
 
 		/**
 		 * Sets the color's green component. Takes care of validating the
-		 * value so that it isn't over 255. If it is over 255, it is set at
-		 * 255.
+		 * value so that it isn't over 255. Only the first 2 bytes from the
+		 * value given are used.
 		 * @param green New green component.
 		 */
 		void setGreen(unsigned int green);
 
 		/**
 		 * Sets the color's blue component. Takes care of validating the value
-		 * so that it isn't over 255. If it is over 255, it is set at 255.
+		 * so that it isn't over 255. Only the first 2 bytes from the value
+		 * given are used.
 		 * @param blue New blue component.
 		 */
 		void setBlue(unsigned int blue);
 
 		/**
 		 * Sets the color's alpha component. Takes care of validating the
-		 * value so that it isn't over 255. If it is over 255, it is set at
-		 * 255.
+		 * value so that it isn't over 255. Only the first 2 bytes from the value
+		 * given are used.
 		 * @param alpha New alpha component.
 		 */
 		void setAlpha(unsigned int alpha);
@@ -147,6 +160,12 @@ namespace RedBox {
 		 */
 		void setRGBA(unsigned int red, unsigned int green, unsigned int blue,
 					 unsigned int alpha);
+
+		/**
+		 * Set the 4 components with one integer.
+		 * @param rgba Color in the format 0x00000000.
+		 */
+		void setRGBA(unsigned int rgba);
 	private:
 		/// Color components.
 		unsigned int colors[NB_COMPONENTS];

@@ -92,6 +92,14 @@ void State::setName(const std::string& newName) {
 	name = newName;
 }
 
+void State::setBackgroundColor(const Color &newBackgroundColor) {
+	camera.setBackgroundColor(newBackgroundColor);
+}
+
+const Color& State::getBackgroundColor() const {
+	return camera.getBackgroundColor();
+}
+
 void State::addRenderableDirect(Renderable* aRenderable) {
 	assert(aRenderable);
 	if(!aRenderable->isInState) {
