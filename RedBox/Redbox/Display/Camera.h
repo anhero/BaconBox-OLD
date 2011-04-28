@@ -6,6 +6,8 @@
 #ifndef RB_Camera_H
 #define RB_Camera_H
 
+#include "Color.h"
+
 namespace RedBox{
 	/** 
 	 * Represent the camera. This class prepare the scene to mimic a the effect of a camera. 
@@ -54,7 +56,19 @@ namespace RedBox{
 		
 		///Rotate the camera to the right with the given degree value.
 		void rotateRight(int angle);
+
+		/**
+		 * Sets the camera's background color.
+		 * @param newBackgroundColor Camera's new background color.
+		 */
+		void setBackgroundColor(const Color& newBackgroundColor);
 		
+		/**
+		 * Gets the camera's background color.
+		 * @return Camera's background color.
+		 */
+		const Color& getBackgroundColor() const;
+
 		/**
 		 * Multiply the zoom factor by the given value.
 		 * @param factor 1 does nothing, less than 1 zoom out, more than 1 zoom in.
@@ -84,6 +98,9 @@ namespace RedBox{
 		
 		///Zoom factor (1 does nothing, less than 1 zoom out, more than 1 zoom in)
 		float zoomFactor;
+
+		/// Background color for the camera.
+		Color backgroundColor;
 	};
 }
 

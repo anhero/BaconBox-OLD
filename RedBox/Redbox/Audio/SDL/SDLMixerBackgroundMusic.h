@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @ingroup Audio
+ */
 #ifndef RB_SDL_MIXER_BACKGROUND_MUSIC_H
 #define RB_SDL_MIXER_BACKGROUND_MUSIC_H
 
@@ -14,11 +18,19 @@
 #include "BackgroundMusic.h"
 
 namespace RedBox {
+	/**
+	 * SDL_mixer implementation for background musics.
+	 * @ingroup Audio
+	 */
 	class SDLMixerBackgroundMusic : public BackgroundMusic,
-	public sigly::HasSlots<> {
+		public sigly::HasSlots<> {
 		friend class SDLMixerEngine;
 		friend class sigly::Signal1<unsigned int>;
 	public:
+		/**
+		 * Callback function given to SDL_mixer that gets called when a music
+		 * is halted or is done playing.
+		 */
 		static void stoppedCurrentMusic();
 		/**
 		 * Destructor.
@@ -82,36 +94,64 @@ namespace RedBox {
 		 */
 		void resume(double fadeIn);
 	private:
-		static SDLMixerBackgroundMusic* currentMusic;
-		static bool isBeingPaused;
+		/**
+		 * Used by the fadeType boolean to mean the music is fading out on
+		 * pause.
+		 */
 		static const bool FADE_OUT = true;
+		/**
+		 * Used by the fadeType boolean to mean the music is fading in on
+		 * pause.
+		 */
 		static const bool FADE_IN = false;
+		/// Pointer to the current music being played.
+		static SDLMixerBackgroundMusic* currentMusic;
+		/// Set to true if the current music is on pause.
+		static bool isBeingPaused;
+		/// Pointer to the music to play.
 		Mix_Music* music;
+		/// Set to true if the music is infinitely looping.
 		bool looping;
+		/**
+		 * Set to true if the music has not been played at least once. So it
+		 * means that it is in its initial state.
+		 */
 		bool neverPlayed;
-		
+
+		/// Set to true if the music is currently fading in our out of pause.
 		bool pauseResumeFading;
+		/**
+		 * Set to true if it is fading out into pause, or false if it is
+		 * fading in to resume.
+		 */
 		bool fadeType;
+		/// Time the pause/resume fading has to take.
 		unsigned int fadeTime;
+		/// Time at which the pause/resume fading started.
 		unsigned int fadeStart;
-		
+
 		/**
 		 * Default constructor. Musics can only be created by the resource
 		 * manager or the music engine.
 		 */
 		SDLMixerBackgroundMusic();
-		
+
 		/**
 		 * Sets the music.
 		 * @param newMusic Pointer to the music to set.
 		 */
 		void load(Mix_Music* newMusic);
-		
+
 		/**
-		 * Slot called when a pause/resume fading is to be updated.
+		 * Slot called when a pause/resume fading is to be updated. SDL_mixer
+		 * doesn't support fading to pause or resume a music. So we simulate
+		 * it manually. Every 100 ms, the audio engine will call this method
+		 * when the music is fading in or out to pause or resume. When the
+		 * fading is done, we ask the engine to not be called anymore on
+		 * fade updates.
 		 */
 		void fadeUpdate(unsigned int ticks);
-	
+
 		/**
 		 * Resets the pause and resume fading.
 		 */

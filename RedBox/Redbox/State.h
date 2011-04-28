@@ -9,6 +9,7 @@
 #include <string>
 #include "Camera.h"
 #include "Renderable.h"
+#include "Color.h"
 
 namespace RedBox {
 	/**
@@ -48,6 +49,21 @@ namespace RedBox {
 		 * @param newName State's new name.
 		 */
 		void setName(const std::string& newName);
+
+		/**
+		 * Sets the state's background color.
+		 * @param newBackgroundColor State's new background color.
+		 */
+		void setBackgroundColor(const Color& newBackgroundColor);
+
+		/**
+		 * Gets the state's background color.
+		 * @return State's background color.
+		 */
+		const Color& getBackgroundColor() const;
+	protected:
+		///The camera object which prepare the scene before rendering any object.
+		Camera camera;
 	private:
 		/// Temporarily stores the renderable objects to be deleted.
         std::list<Renderable*> toDelete;
@@ -60,8 +76,6 @@ namespace RedBox {
 		/// State's name, used as an identifier.
         std::string name;
 		
-		///The camera object which prepare the scene before rendering any object.
-		Camera camera;
 		/**
 		 * Adds a renderable in the multimap of renderables. It will then be
 		 * able to be updated and rendered correctly.

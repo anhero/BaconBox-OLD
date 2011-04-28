@@ -20,6 +20,8 @@
 
 #include "GraphicDriver.h"
 
+#include "Color.h"
+
 namespace RedBox {
 	class RenderInfo;
     /** 
@@ -77,10 +79,14 @@ namespace RedBox {
 		 * @param xTranslation Shift the matrix on the x axis.
 		 * @param yTranslation Shift the matrix on the y axis.
 		 * @param angle Apply a rotation to the matrix in degree.
-		 * @param Apply a scale factor to the matrix. 1 is unchanged, less than 1 zoom out, 
+		 * @param zoom Apply a scale factor to the matrix. 1 is unchanged, less than 1 zoom out,
 		 * more than 1 zoom in.
+		 * @param backgroundColor Color used for the glClearColor() function
+		 * (the scene's background color). The alpha component is ignored.
 		 */
-		static void prepareScene(int xTranslation, int yTranslation, int angle, float zoom);
+		static void prepareScene(int xTranslation, int yTranslation,
+								 int angle, float zoom,
+								 const Color& backgroundColor);
 		
 		/**
 		 * Initialize the drawing backend an prepare the coordinate system with the given
@@ -97,8 +103,8 @@ namespace RedBox {
 		 * @param pixMap A pixmap object containing the buffer the driver must load.
 		 */
 		static TextureInfo * loadTexture(PixMap * pixMap);
-
-	
+	private:
+		static float clampColorComponent(unsigned int component);
 	};
 }
 

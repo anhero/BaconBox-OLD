@@ -24,15 +24,19 @@ SDLMixerEngine* SDLMixerEngine::getInstance() {
 	if(instance == NULL) {
 		instance = new SDLMixerEngine();
 	}
+
 	return instance;
 }
 
 SoundFX* SDLMixerEngine::getSoundFX(const std::string& key, bool survive) {
 	SDLMixerSoundFX* result = new SDLMixerSoundFX();
+
 	if(result) {
 		SoundInfo* info = ResourceManager::getSound(key);
+
 		if(info) {
 			result->load(info->data);
+
 			if(!survive) {
 				sounds.push_back(result);
 			}
@@ -40,21 +44,25 @@ SoundFX* SDLMixerEngine::getSoundFX(const std::string& key, bool survive) {
 			delete result;
 			result = NULL;
 			RB_ECHO("Tried to get a sound effect from an invalid key: " <<
-					key)
+			        key)
 		}
 	} else {
 		RB_ECHO("Failed to allocate memory for the new sound effect: " <<
-				key)
+		        key)
 	}
+
 	return result;
 }
 BackgroundMusic* SDLMixerEngine::getBackgroundMusic(const std::string& key,
-													bool survive) {
+        bool survive) {
 	SDLMixerBackgroundMusic* result = new SDLMixerBackgroundMusic();
+
 	if(result) {
 		MusicInfo* info = ResourceManager::getMusic(key);
+
 		if(info) {
 			result->load(info->music);
+
 			if(!survive) {
 				musics.push_back(result);
 			}
@@ -62,12 +70,13 @@ BackgroundMusic* SDLMixerEngine::getBackgroundMusic(const std::string& key,
 			delete result;
 			result = NULL;
 			RB_ECHO("Tried to get a background music from an invalid key: " <<
-					key)
+			        key)
 		}
 	} else {
 		RB_ECHO("Failed to allocate memory for the new background music: " <<
-				key)
+		        key)
 	}
+
 	return result;
 }
 
@@ -96,16 +105,18 @@ void SDLMixerEngine::init() {
 
 void SDLMixerEngine::update() {
 	// We update the pause/resume fading.
-	if (SDL_GetTicks() > lastFadeTick + NB_TICKS_PER_FADE) {
+	if(SDL_GetTicks() > lastFadeTick + NB_TICKS_PER_FADE) {
 		lastFadeTick += NB_TICKS_PER_FADE;
 		fadeUpdate.shoot(lastFadeTick);
+
 		if(disconnect) {
 			fadeUpdate.disconnectAll();
 		}
 	}
+
 	// For each background music.
-	for (std::list<SDLMixerBackgroundMusic*>::iterator i = musics.begin();
-		 i != musics.end(); ++i) {
+	for(std::list<SDLMixerBackgroundMusic*>::iterator i = musics.begin();
+	        i != musics.end(); ++i) {
 		// We make sure the pointer is valid.
 		if(*i) {
 			// If the music is set at stopped.
@@ -122,7 +133,7 @@ void SDLMixerEngine::update() {
 
 	// For each sound effect.
 	for(std::list<SDLMixerSoundFX*>::iterator i = sounds.begin();
-		i != sounds.end(); ++i) {
+	        i != sounds.end(); ++i) {
 		// We make sure the pointer is valid.
 		if(*i) {
 			// If the sound is set at stopped.
@@ -145,14 +156,16 @@ SDLMixerEngine::~SDLMixerEngine() {
 SoundInfo* SDLMixerEngine::loadSound(const std::string& filePath) {
 	SoundInfo* result = new SoundInfo();
 	result->data = Mix_LoadWAV(filePath.c_str());
+
 	// We make sure the sound file is correctly loaded.
 	if(!result->data) {
 		// We delete the resulting sound info.
 		delete result;
 		result = NULL;
 		RB_ECHO("Unable to load sound effect: " << filePath <<
-				" with SDL_mixer error: " << Mix_GetError());
+		        " with SDL_mixer error: " << Mix_GetError());
 	}
+
 	return result;
 }
 
@@ -164,23 +177,27 @@ bool SDLMixerEngine::unloadSound(SoundInfo* sound) {
 	if(sound && sound->data) {
 		Mix_FreeChunk(sound->data);
 	}
+
 	return true;
 }
 
 MusicInfo* SDLMixerEngine::loadMusic(const std::string& filePath) {
 	MusicInfo* result = new MusicInfo();
+
 	if(result) {
 		result->music = Mix_LoadMUS(filePath.c_str());
+
 		if(!result->music) {
 			delete result;
 			result = NULL;
 			RB_ECHO("Unable to load music file: " << filePath << std::endl <<
-					" with the SDL_mixer error: " << Mix_GetError());
+			        " with the SDL_mixer error: " << Mix_GetError());
 		}
 	} else {
 		RB_ECHO("Could not allocate memory for the music info for the file: " <<
-				filePath);
+		        filePath);
 	}
+
 	return result;
 }
 
@@ -192,6 +209,7 @@ bool SDLMixerEngine::unloadMusic(MusicInfo* music) {
 	if(music && music->music) {
 		Mix_FreeMusic(music->music);
 	}
+
 	return true;
 }
 

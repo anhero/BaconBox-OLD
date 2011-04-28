@@ -48,6 +48,7 @@ bool SDLMixerSoundFX::isLooping() {
 
 AudioState::Enum SDLMixerSoundFX::getCurrentState() {
 	AudioState::Enum result = AudioState::INITIAL;
+
 	if(hasPlayed) {
 		if(channel == -1) {
 			result = AudioState::STOPPED;
@@ -59,6 +60,7 @@ AudioState::Enum SDLMixerSoundFX::getCurrentState() {
 			}
 		}
 	}
+
 	return result;
 }
 
@@ -66,7 +68,7 @@ SDLMixerSoundFX::~SDLMixerSoundFX() {
 }
 
 SDLMixerSoundFX::SDLMixerSoundFX() : SoundFX(), looping(false), channel(-1),
-data(NULL), hasPlayed(false) {
+	data(NULL), hasPlayed(false) {
 	haltChannel.connect(this, &SDLMixerSoundFX::onChannelHalt);
 }
 

@@ -36,10 +36,13 @@ void GraphicDriver::drawShapeWithColor(std::vector<float>& vertices,
 #endif
 }
 
-void GraphicDriver::prepareScene(int xTranslation, int yTranslation, int angle, float zoom){
+void GraphicDriver::prepareScene(int xTranslation, int yTranslation,
+								 int angle, float zoom,
+								 const Color& backgroundColor){
 
 #ifdef RB_OPENGL
-	OpenGLDriver::prepareScene(xTranslation, yTranslation, angle, zoom);
+	OpenGLDriver::prepareScene(xTranslation, yTranslation, angle, zoom,
+							   backgroundColor);
 #endif
 
 }

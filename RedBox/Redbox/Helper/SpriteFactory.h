@@ -6,6 +6,8 @@
 #ifndef RB_SPRITE_FACTORY_H
 #define RB_SPRITE_FACTORY_H
 
+#include "Color.h"
+
 namespace RedBox {
 	class Sprite;
 	/**
@@ -23,8 +25,7 @@ namespace RedBox {
 		 * @return Pointer to the sprite constructed.
 		 */
 		static Sprite* makePolygon(unsigned int nbSides, float sideLength,
-								   unsigned char red, unsigned char green,
-								   unsigned char blue, unsigned char alpha);
+								   const Color& color);
 	private:
 		/// Constant for PI.
 		static const float PI;

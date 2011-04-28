@@ -17,6 +17,12 @@
 #include "SoundFX.h"
 
 namespace RedBox {
+	/**
+	 * SDL_mixer implementation for sound effects. A sound effect is
+	 * associated with a Mix_Chunk pointer. When playing, it gets associated
+	 * with a sound channel until the sound is done playing.
+	 * @ingroup Audio
+	 */
 	class SDLMixerSoundFX : public SoundFX, public sigly::HasSlots<> {
 		friend class SDLMixerEngine;
 		friend class sigly::Signal1<int>;
@@ -59,7 +65,9 @@ namespace RedBox {
 		 */
 		~SDLMixerSoundFX();
 	private:
+		/// Constant used to signify infinite looping.
 		static const int LOOPING = -1;
+		/// Contant used to signify an invalid or automatic sound channel.
 		static const int INVALID_CHANNEL = -1;
 		/// Signal sent when a channel is done.
 		static sigly::Signal1<int> haltChannel;
@@ -69,6 +77,7 @@ namespace RedBox {
 		int channel;
 		/// Pointer to the sound's data.
 		Mix_Chunk* data;
+		/// Set to false until the sound has played at least once.
 		bool hasPlayed;
 
 		/**
