@@ -44,11 +44,11 @@ SoundFX* SDLMixerEngine::getSoundFX(const std::string& key, bool survive) {
 			delete result;
 			result = NULL;
 			RB_ECHO("Tried to get a sound effect from an invalid key: " <<
-			        key)
+					key);
 		}
 	} else {
 		RB_ECHO("Failed to allocate memory for the new sound effect: " <<
-		        key)
+				key);
 	}
 
 	return result;
@@ -70,11 +70,11 @@ BackgroundMusic* SDLMixerEngine::getBackgroundMusic(const std::string& key,
 			delete result;
 			result = NULL;
 			RB_ECHO("Tried to get a background music from an invalid key: " <<
-			        key)
+					key);
 		}
 	} else {
 		RB_ECHO("Failed to allocate memory for the new background music: " <<
-		        key)
+				key);
 	}
 
 	return result;
