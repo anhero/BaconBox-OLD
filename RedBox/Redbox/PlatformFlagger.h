@@ -44,10 +44,18 @@
 
 	#define RB_WIN32
 
-	#define RB_OPENAL
-	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-	#define RB_SOUND_ENGINE new OpenALEngine()
-	#define RB_MUSIC_ENGINE NULL
+	#ifdef RB_SDL
+		#define RB_SOUND_ENGINE SDLMixerEngine::getInstance()
+		#define RB_SOUND_ENGINE_INCLUDE "SDLMixerEngine.h"
+		#define RB_MUSIC_ENGINE SDLMixerEngine::getInstance()
+		#define RB_MUSIC_ENGINE_INCLUDE "SDLMixerEngine.h"
+	#elif defined(RB_QT)
+		//TODO: Check: if this is not defined, OpenAL stuff still gets included...
+		#define RB_OPENAL
+		#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+		#define RB_SOUND_ENGINE new OpenALEngine()
+		#define RB_MUSIC_ENGINE NULL
+	#endif
 
 	#define RB_OPENGL
 	
