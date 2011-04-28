@@ -59,7 +59,7 @@ namespace RedBox {
 		 * @return Sound's current state.
 		 * @see RedBox::AudioState::Enum
 		 */
-		AudioState::Enum getCurrentState();
+		AudioState::Enum getCurrentState() const;
 		/**
 		 * Destructor.
 		 */

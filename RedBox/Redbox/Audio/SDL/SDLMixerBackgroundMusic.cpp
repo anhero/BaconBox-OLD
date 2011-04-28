@@ -67,7 +67,7 @@ bool SDLMixerBackgroundMusic::isLooping() {
 	return looping && currentMusic == this && Mix_PlayingMusic();
 }
 
-AudioState::Enum SDLMixerBackgroundMusic::getCurrentState() {
+AudioState::Enum SDLMixerBackgroundMusic::getCurrentState() const {
 	if(neverPlayed || !music) {
 		return AudioState::INITIAL;
 	} else if(currentMusic == this && Mix_PlayingMusic()) {

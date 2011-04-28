@@ -46,7 +46,7 @@ bool SDLMixerSoundFX::isLooping() {
 	return looping && channel && Mix_Playing(channel);
 }
 
-AudioState::Enum SDLMixerSoundFX::getCurrentState() {
+AudioState::Enum SDLMixerSoundFX::getCurrentState() const {
 	AudioState::Enum result = AudioState::INITIAL;
 
 	if(hasPlayed) {

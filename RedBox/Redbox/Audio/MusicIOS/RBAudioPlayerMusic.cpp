@@ -72,7 +72,7 @@ bool RBAudioPlayerMusic::isLooping() {
 	return [bgm isLooping];
 }
 
-AudioState::Enum RBAudioPlayerMusic::getCurrentState() {
+AudioState::Enum RBAudioPlayerMusic::getCurrentState() const {
 	if(!playedOnce) {
 		return AudioState::INITIAL;
 	} else if([bgm isStopped]) {
