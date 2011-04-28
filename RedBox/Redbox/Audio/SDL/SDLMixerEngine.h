@@ -107,11 +107,11 @@ namespace RedBox {
 		/**
 		 * List of pointers to musics that the engine takes care of managing.
 		 */
-		std::list<SDLMixerBackgroundMusic*> musics;
+		std::list<BackgroundMusic*> musics;
 		/**
 		 * List of pointers to sounds that the engine takes care of managing.
 		 */
-		std::list<SDLMixerSoundFX*> sounds;
+		std::list<SoundFX*> sounds;
 
 		/**
 		 * Default constructor.

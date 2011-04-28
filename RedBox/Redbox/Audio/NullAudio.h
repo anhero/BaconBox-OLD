@@ -80,7 +80,6 @@ namespace RedBox {
 		 * sound without having it loaded many times in memory.
 		 */
 		virtual ~NullAudio();
-	protected:
 		/**
 		 * Default constructor. Can only be called by the audio engine.
 		 */

@@ -12,6 +12,7 @@
 #include "SoundInfo.h"
 #include "MusicInfo.h"
 #include "AudioState.h"
+#include "NullAudio.h"
 
 #include "SDLMixerBackgroundMusic.h"
 #include "SDLMixerSoundFX.h"
@@ -29,22 +30,23 @@ SDLMixerEngine* SDLMixerEngine::getInstance() {
 }
 
 SoundFX* SDLMixerEngine::getSoundFX(const std::string& key, bool survive) {
-	SDLMixerSoundFX* result = new SDLMixerSoundFX();
+	SDLMixerSoundFX* sdlSound = new SDLMixerSoundFX();
+	SoundFX* result = sdlSound;
 
 	if(result) {
 		SoundInfo* info = ResourceManager::getSound(key);
 
 		if(info) {
-			result->load(info->data);
+			sdlSound->load(info->data);
 
-			if(!survive) {
-				sounds.push_back(result);
-			}
 		} else {
 			delete result;
-			result = NULL;
+			result = new NullAudio();
 			RB_ECHO("Tried to get a sound effect from an invalid key: " <<
 					key);
+		}
+		if(!survive) {
+			sounds.push_back(result);
 		}
 	} else {
 		RB_ECHO("Failed to allocate memory for the new sound effect: " <<
@@ -55,22 +57,23 @@ SoundFX* SDLMixerEngine::getSoundFX(const std::string& key, bool survive) {
 }
 BackgroundMusic* SDLMixerEngine::getBackgroundMusic(const std::string& key,
         bool survive) {
-	SDLMixerBackgroundMusic* result = new SDLMixerBackgroundMusic();
+	SDLMixerBackgroundMusic* sdlMusic = new SDLMixerBackgroundMusic();
+	BackgroundMusic* result = sdlMusic;
 
 	if(result) {
 		MusicInfo* info = ResourceManager::getMusic(key);
 
 		if(info) {
-			result->load(info->music);
+			sdlMusic->load(info->music);
 
-			if(!survive) {
-				musics.push_back(result);
-			}
 		} else {
 			delete result;
-			result = NULL;
+			result = new NullAudio();
 			RB_ECHO("Tried to get a background music from an invalid key: " <<
 					key);
+		}
+		if(!survive) {
+			musics.push_back(result);
 		}
 	} else {
 		RB_ECHO("Failed to allocate memory for the new background music: " <<
@@ -115,7 +118,7 @@ void SDLMixerEngine::update() {
 	}
 
 	// For each background music.
-	for(std::list<SDLMixerBackgroundMusic*>::iterator i = musics.begin();
+	for(std::list<BackgroundMusic*>::iterator i = musics.begin();
 	        i != musics.end(); ++i) {
 		// We make sure the pointer is valid.
 		if(*i) {
@@ -132,7 +135,7 @@ void SDLMixerEngine::update() {
 	}
 
 	// For each sound effect.
-	for(std::list<SDLMixerSoundFX*>::iterator i = sounds.begin();
+	for(std::list<SoundFX*>::iterator i = sounds.begin();
 	        i != sounds.end(); ++i) {
 		// We make sure the pointer is valid.
 		if(*i) {

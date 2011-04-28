@@ -12,6 +12,7 @@
 
 #include "SoundFX.h"
 #include "SoundInfo.h"
+#include "NullAudio.h"
 
 #include "ResourceManager.h"
 
@@ -50,7 +51,11 @@ SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
 		sources.back()->load(sndInfo->bufferId);
 		return sources.back();
 	} else {
-		return NULL;
+		NullAudio* nullAudio = new NullAudio();
+		if(!survive) {
+			nullsToClean.push_back(nullAudio);
+		}
+		return nullAudio;
 	}
 }
 
@@ -154,6 +159,12 @@ void OpenALEngine::update() {
 			}
 		}
 	}
+
+	for(std::list<NullAudio*>::iterator i = nullsToClean.begin();
+		i != nullsToClean.end(); ++i) {
+		if(*i) delete *i;
+	}
+	nullsToClean.clear();
 }
 
 SoundInfo* OpenALEngine::loadSound(const std::string& filePath) {

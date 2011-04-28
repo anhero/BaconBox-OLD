@@ -44,7 +44,7 @@ namespace RedBox {
 		 * List of pointers to the musics that are to be deleted automatically
 		 * once done.
 		 */		
-		std::list<RBAudioPlayerMusic*> managedMusics;
+		std::list<BackgroundMusic*> managedMusics;
 		/**
 		 * Default constructor.
 		 */
