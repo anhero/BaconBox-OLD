@@ -10,6 +10,10 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	include(${Helper_dir}/libc/Sources.cmake)
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
+if(WIN32)
+	include(${Helper_dir}/Windows/Sources.cmake)
+endif(WIN32)
+
 if(iphone)
 	include(${Helper_dir}/ios/Sources.cmake)
 endif(iphone)
