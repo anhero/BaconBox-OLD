@@ -42,13 +42,6 @@ Sprite* SpriteFactory::makePolygon(unsigned int nbSides, float sideLength,
 	}
 }
 
-
-/*std::vector<Vec2>* SpriteFactory::createLine(float length) {
-	std::vector<Vec2>* result = new std::vector<Vec2>(2, Vec2(0.0f, 0.0f));
-	result->at(1).setX(length);
-	return result;
-}*/
-
 float SpriteFactory::degreeToRadian(float degree) {
 	return degree * DEGREE_TO_RADIAN;
 }
