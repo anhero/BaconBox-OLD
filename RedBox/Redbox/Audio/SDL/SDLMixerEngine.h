@@ -23,6 +23,7 @@
 namespace RedBox {
 	class SDLMixerBackgroundMusic;
 	class SDLMixerSoundFX;
+	class Sound;
 	/**
 	 * Audio engine implementation to play sounds and music with SDL_mixer.
 	 * @ingroup Audio
@@ -105,13 +106,9 @@ namespace RedBox {
 		bool disconnect;
 
 		/**
-		 * List of pointers to musics that the engine takes care of managing.
-		 */
-		std::list<BackgroundMusic*> musics;
-		/**
 		 * List of pointers to sounds that the engine takes care of managing.
 		 */
-		std::list<SoundFX*> sounds;
+		std::list<Sound*> sounds;
 
 		/**
 		 * Default constructor.

@@ -46,7 +46,7 @@ void NullAudio::pause(double fadeOut) {
 }
 
 void NullAudio::resume(double fadeIn) {
-	RB_ECHO("Resuming a NullAudio object with a " << fadeOut <<
+	RB_ECHO("Resuming a NullAudio object with a " << fadeIn <<
 			" second(s) fade in.");
 }
 
