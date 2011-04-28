@@ -59,7 +59,7 @@ namespace RedBox {
 		 * @param alpha Alpha component.
 		 */
 		Color(unsigned int red, unsigned int green,
-			  unsigned int blue, unsigned int alpha);
+			  unsigned int blue, unsigned int alpha = MAX_COMPONENT_VALUE);
 
 		/**
 		 * Copy constructor. Simply calls setRGBA() with the given color's
