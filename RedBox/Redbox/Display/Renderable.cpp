@@ -46,3 +46,55 @@ void Renderable::copyFrom(const Renderable& src) {
 		this->z = src.z;
 	}
 }
+
+void Renderable::setVelocity(Vec2 velocity){
+	this->velocity = velocity;
+}
+
+Vec2 Renderable::getVelocity(){
+	return velocity;
+}
+void Renderable::setAcceleration(Vec2 acceleration){
+	this->acceleration = acceleration;
+}
+Vec2 Renderable::getAcceleration(){
+	return acceleration;
+}
+
+float Renderable::getXPosition() const {
+	return position.getX();
+}
+
+float Renderable::getYPosition() const {
+	return position.getY();
+}
+
+
+void Renderable::setXPosition(float x) {
+	position.setX(x);
+}
+
+void Renderable::setYPosition(float y) {
+	position.setY(y);
+}
+
+void Renderable::setPosition(float x, float y) {
+	position.setY(y);
+}
+
+void Renderable::moveX(float deltaX) {
+	position.setX(position.getX() + deltaX);
+}
+
+void Renderable::moveY(float deltaY) {
+	position.setY(position.getY() + deltaY);
+}
+
+void Renderable::move(float deltaX, float deltaY) {
+	moveX(deltaX);
+	moveY(deltaY);
+}
+
+void Renderable::update(){
+	
+}

@@ -112,31 +112,31 @@ void Sprite::createVertex(float x, float y) {
 	vertices.addVertex(x, y);
 }
 
-float Sprite::getXPosition() const {
-	return vertices.getXPosition();
-}
-float Sprite::getYPosition() const {
-	return vertices.getYPosition();
-}
-std::pair<float, float> Sprite::getPosition() const {
-	return vertices.getPosition();
-}
+
+
+
 void Sprite::setXPosition(float x) {
+	Renderable::setXPosition(x);
 	vertices.setXPosition(x);
 }
 void Sprite::setYPosition(float y) {
+	Renderable::setYPosition(y);
 	vertices.setYPosition(y);
 }
 void Sprite::setPosition(float x, float y) {
+	Renderable::setPosition(x, y);
 	vertices.setPosition(x, y);
 }
 void Sprite::moveX(float deltaX) {
+	Renderable::moveX(deltaX);
 	vertices.moveX(deltaX);
 }
 void Sprite::moveY(float deltaY) {
+	Renderable::moveY(deltaY);
 	vertices.moveY(deltaY);
 }
 void Sprite::move(float deltaX, float deltaY) {
+	Renderable::move(deltaX, deltaY);
 	vertices.move(deltaX, deltaY);
 }
 

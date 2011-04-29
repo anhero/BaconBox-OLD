@@ -99,23 +99,7 @@ namespace RedBox {
 		 * @param parentBody
          */
         void createVertex(float x, float y);
-		/**
-		 * Gets the sprite's horizontal position.
-		 * @return Horizontal position (in pixels). Lower value means more to
-		 * the left.
-		 */
-		float getXPosition() const;
-		/**
-		 * Gets the sprite's vertical position.
-		 * @return Vertical position (in pixels). Lower value means more at the
-		 * top.
-		 */
-		float getYPosition() const;
-		/**
-		 * Gets the sprite's horizontal and vertical position.
-		 * @return Horizontal and vertical position (in pixels).
-		 */
-		std::pair<float, float> getPosition() const;
+		
 		/**
 		 * Sets the sprite's horizontal position.
 		 * @param x New horizontal position (in pixels). Lower value means more

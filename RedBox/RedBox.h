@@ -45,3 +45,6 @@
  */
 
 #include <RedBox/RedBoxEngine.h>
+#include <RedBox/ResourceManager.h>
+#include <RedBox/ResourcePathHandler.h>
+#include <RedBox/Sprite.h>
