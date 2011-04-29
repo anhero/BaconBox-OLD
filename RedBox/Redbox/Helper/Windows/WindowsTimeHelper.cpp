@@ -6,6 +6,10 @@
 
 using namespace RedBox;
 
+void WindowsTimeHelper::sleep(double duration) {
+	Sleep(static_cast<unsigned int>(duration * 1000.0));
+}
+
 WindowsTimeHelper::WindowsTimeHelper() : TimeHelper() {
 	startTime = GetTickCount64();
 }

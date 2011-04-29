@@ -20,6 +20,12 @@ namespace RedBox {
 	 */
 	class LibcTimeHelper : public TimeHelper {
 		friend class TimeHelper;
+	public:
+		/**
+		 * Makes the game go to sleep for a specific time.
+		 * @param duration Duration of the sleep.
+		 */
+		void sleep(double duration);
 	private:
 		/// Time at which TimeHelper was initialized.
 		timeval startTime;
@@ -37,6 +43,7 @@ namespace RedBox {
 		 * Refreshes the time variable.
 		 */
 		void refreshTime();
+
 		/**
 		 * Substracts two timevals.
 		 * @param x Timeval to be substracted.

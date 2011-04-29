@@ -79,6 +79,11 @@ namespace RedBox {
 		 * @return True if TimeHelper is paused, false if not.
 		 */
 		bool isPaused() const;
+		/**
+		 * Makes the game go to sleep for a specific time.
+		 * @param duration Duration of the sleep.
+		 */
+		virtual void sleep(double duration) = 0;
 	protected:
 		/**
 		 * Time in seconds since the TimeHelper was initialized. It is
