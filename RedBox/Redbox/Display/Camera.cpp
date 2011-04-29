@@ -68,17 +68,17 @@ void Camera::shake(float intensity, double duration, bool forceReset,
 				   ShakeAxes axes) {
 	if(forceReset || intensity > shakeIntensity) {
 		shakeIntensity = fabs(intensity);
-		shakeStart = TimeHelper::getInstance()->getSinceStart();
+		shakeStart = TimeHelper::getInstance().getSinceStart();
 		shakeDuration = ((duration > 0.0) ? (duration) : (0.0));
 		shakeAxes = axes;
 	}
 }
 
 void Camera::update() {
-	double timeSinceStarted = TimeHelper::getInstance()->getSinceStart() - shakeStart;
+	double timeSinceStarted = TimeHelper::getInstance().getSinceStart() - shakeStart;
 	if(timeSinceStarted < shakeDuration) {
 		// We set random offsets to the camera.
-		float tmpIntensity = (timeSinceStarted == 0.0) ? (shakeIntensity) : ((1.0f - ((TimeHelper::getInstance()->getSinceStart() - shakeStart) / shakeDuration)) * shakeIntensity);
+		float tmpIntensity = (timeSinceStarted == 0.0) ? (shakeIntensity) : ((1.0f - ((TimeHelper::getInstance().getSinceStart() - shakeStart) / shakeDuration)) * shakeIntensity);
 		if(shakeAxes == BOTH_AXES || shakeAxes == HORIZONTAL_AXIS) {
 			offsetX = static_cast<int>(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(RedBoxEngine::getScreenWidth()));
 		} else {

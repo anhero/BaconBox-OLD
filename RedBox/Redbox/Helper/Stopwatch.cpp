@@ -14,7 +14,7 @@ void Stopwatch::start() {
 	paused = false;
 
 	// We get the current time.
-	startTime = TimeHelper::getInstance()->getSinceStart(timeType);
+	startTime = TimeHelper::getInstance().getSinceStart(timeType);
 }
 
 void Stopwatch::stop() {
@@ -31,7 +31,7 @@ void Stopwatch::pause() {
 		// We pause the stopwatch.
 		paused = true;
 		// We calculate the time when the stopwatch was paused.
-		pausedTime = TimeHelper::getInstance()->getSinceStart(timeType) - startTime;
+		pausedTime = TimeHelper::getInstance().getSinceStart(timeType) - startTime;
 	}
 }
 
@@ -41,7 +41,7 @@ void Stopwatch::unpause() {
 		// We unpause the stopwatch.
 		paused = false;
 		// We recalculate the start time.
-		startTime = TimeHelper::getInstance()->getSinceStart(timeType) - pausedTime;
+		startTime = TimeHelper::getInstance().getSinceStart(timeType) - pausedTime;
 		// We reset the paused time.
 		pausedTime = 0.0;
 	}
@@ -56,7 +56,7 @@ double Stopwatch::getTime() {
 			return pausedTime;
 		} else {
 			// We return the time since the stopwatch was started.
-			return TimeHelper::getInstance()->getSinceStart(timeType) - startTime;
+			return TimeHelper::getInstance().getSinceStart(timeType) - startTime;
 		}
 	}
 	// If the timer isn't running.

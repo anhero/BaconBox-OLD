@@ -31,7 +31,7 @@
 	#endif
 
 
-	#define	RB_TIME_HELPER_IMPL new LibcTimeHelper()
+	#define	RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
 	#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
 #endif // linux
 
@@ -59,7 +59,7 @@
 
 	#define RB_OPENGL
 	
-	#define	RB_TIME_HELPER_IMPL new WindowsTimeHelper()
+	#define	RB_TIME_HELPER_IMPL RedBox::WindowsTimeHelper
 	#define RB_TIME_HELPER_INCLUDE "WindowsTimeHelper.h"
 
 	/*#ifdef _WIN32_WINNT_VISTA
@@ -94,12 +94,12 @@
 	#endif
 
 	#ifdef RB_MAC_PLATFORM
-		#define	RB_TIME_HELPER_IMPL new LibcTimeHelper()
+		#define RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
 		#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
 	#endif
 
 	#ifdef RB_IPHONE_PLATFORM
-		#define	RB_TIME_HELPER_IMPL new IOSTimeHelper()
+		#define	RB_TIME_HELPER_IMPL RedBox::IOSTimeHelper
 		#define RB_TIME_HELPER_INCLUDE "IOSTimeHelper.h"
 	#endif
 
@@ -165,10 +165,6 @@
 
 #ifndef RB_INPUT_MANAGER_IMPL
 	#define RB_INPUT_MANAGER_IMPL new InputManager()
-#endif
-
-#ifndef RB_TIME_HELPER_IMPL
-	#define RB_TIME_HELPER_IMPL NULL
 #endif
 
 #endif

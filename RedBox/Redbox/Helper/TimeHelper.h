@@ -22,7 +22,7 @@ namespace RedBox {
 		/**
 		 * Gets TimeHelper's instance.
 		 */
-		static TimeHelper* getInstance();
+		static TimeHelper& getInstance();
 		/**
 		 * Calls the respective getSinceStart...() functions from the enum
 		 * type.
@@ -114,8 +114,6 @@ namespace RedBox {
 		 */
 		virtual void refreshTime() = 0;
 	private:
-		/// TimeHelper's instance.
-		static TimeHelper* instance;
 		/**
 		 * Time scaling. The higher the value, the faster the time is being
 		 * calculated.

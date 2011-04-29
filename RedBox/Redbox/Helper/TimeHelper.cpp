@@ -8,12 +8,8 @@
 
 using namespace RedBox;
 
-TimeHelper* TimeHelper::instance = 0;
-
-TimeHelper* TimeHelper::getInstance() {
-	if(!instance) {
-		instance = RB_TIME_HELPER_IMPL;
-	}
+TimeHelper& TimeHelper::getInstance() {
+	static RB_TIME_HELPER_IMPL instance;
 	return instance;
 }
 

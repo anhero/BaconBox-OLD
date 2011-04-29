@@ -86,11 +86,11 @@ void RedBoxEngine::pulse() {
 	// We make sure the pointer to the current state is valid.
 	if(currentState) {
 		// We update the time from TimeHelper.
-		TimeHelper::getInstance()->refreshTime();
+		TimeHelper::getInstance().refreshTime();
 		// We check if we need to update.
-		if(TimeHelper::getInstance()->getSinceStartComplete() >= lastUpdate + updateDelay) {
+		if(TimeHelper::getInstance().getSinceStartComplete() >= lastUpdate + updateDelay) {
 			// We update the delta ratio.
-			deltaRatio = 1.0 + (TimeHelper::getInstance()->getSinceStartComplete() - 
+			deltaRatio = 1.0 + (TimeHelper::getInstance().getSinceStartComplete() -
 						  (lastUpdate + updateDelay)) / updateDelay;
 			// We update the current state.
 			currentState->update();
@@ -109,7 +109,7 @@ void RedBoxEngine::pulse() {
 		}
 		// We check that the delay between renders doesn't go too high or that
 		// the updates aren't lagging behind.
-		if(((TimeHelper::getInstance()->getSinceStartComplete() >= lastUpdate + maxRenderDelay) ||
+		if(((TimeHelper::getInstance().getSinceStartComplete() >= lastUpdate + maxRenderDelay) ||
 		   deltaRatio < 2.0) && !renderedSinceLastUpdate) {
 			// We take note of the time at which the render was done.
 			lastRender += maxRenderDelay;
@@ -140,7 +140,7 @@ void RedBoxEngine::initializeEngine(int newScreenWidth, int newScreenHeight) {
 }
 
 double RedBoxEngine::getUpdateDelta() {
-	return TimeHelper::getInstance()->getSinceStartComplete() - lastUpdate;
+	return TimeHelper::getInstance().getSinceStartComplete() - lastUpdate;
 }
 
 int RedBoxEngine::getScreenWidth() {
