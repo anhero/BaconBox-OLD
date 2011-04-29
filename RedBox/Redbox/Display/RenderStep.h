@@ -23,7 +23,7 @@ namespace RedBox {
      * Definition of a specific render step.
      * @ingroup Display
      */
-    class RenderStep : public Renderable {
+    class RenderStep {
         /**
          * Outputs the RenderStep's content.
          * @param output The ostream in which RenderStep is output.

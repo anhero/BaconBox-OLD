@@ -1,5 +1,5 @@
 #include "Renderable.h"
-
+#include "RedBoxEngine.h"
 using namespace RedBox;
 Renderable::Renderable(): z(0), toBeDeleted(false), zChanged(false),
 isInState(false){
@@ -96,5 +96,11 @@ void Renderable::move(float deltaX, float deltaY) {
 }
 
 void Renderable::update(){
-	
+	//float ratio1 = RedBoxEngine::getUpdateDelta();
+	//float ratio2 = RedBoxEngine::getUpdateDelay();
+	float ratio = 0.00833;
+	oldPosition = position;
+	position += (velocity * ratio);
+	this->setPosition(position.getX(), position.getY());
+	velocity += (acceleration* ratio);
 }

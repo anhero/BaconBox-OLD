@@ -143,6 +143,16 @@ namespace RedBox {
 		 */
 		virtual void move(float deltaX, float deltaY);
 		
+		/**
+		 * return renderable's width.
+		 */
+		virtual float getWidth() const = 0;
+		
+		/**
+		 * return renderable's height.
+		 */
+		virtual float getHeight() const = 0;
+
 	private:
 		///Position vector
 		Vec2 position;
@@ -155,6 +165,13 @@ namespace RedBox {
 		
 		///acceleration vector
 		Vec2 acceleration;
+		
+		
+		///Maximum velocity in X
+		float maxVelocityX;
+		
+		///Maximum velocity in Y
+		float maxVelocityY;
 		
 		/// The z coordinate.
 		int z;

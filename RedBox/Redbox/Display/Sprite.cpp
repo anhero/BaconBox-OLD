@@ -98,6 +98,7 @@ void Sprite::render() {
 }
 
 void Sprite::update() {
+	Renderable::update();
 	// We update the render steps.
 	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
 		i != renderSteps.end();

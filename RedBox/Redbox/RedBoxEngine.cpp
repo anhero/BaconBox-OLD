@@ -127,3 +127,7 @@ double RedBoxEngine::getUpdateDelta() {
 void RedBoxEngine::application(int argc, char *argv[]){
 	applicationPath = dirname(argv[0]);
 }
+
+double RedBoxEngine::getUpdateDelay(){
+	return updateDelay;
+}

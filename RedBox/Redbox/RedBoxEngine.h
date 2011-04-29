@@ -58,6 +58,10 @@ namespace RedBox {
 		 */
 		static int getUpdatesPerSecond();
 		/**
+		 * Return the normal delay between each update (1/Update per second)
+		 */
+		static double getUpdateDelay();
+		/**
 		 * Gets the ratio of time to catch up to time things correctly in the
 		 * updates.
 		 */

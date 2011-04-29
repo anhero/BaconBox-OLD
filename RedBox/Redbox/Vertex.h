@@ -1,6 +1,5 @@
 /**
  * @file
- * @ingroup Display
  */
 
 #ifndef RB_VERTEX_H
@@ -19,7 +18,6 @@ namespace RedBox{
     /**
      * Represents a vertex. Vertex used for forming up shapes and physics
      * elements.
-     * @ingroup Display
      */
     class Vertex {
         /**

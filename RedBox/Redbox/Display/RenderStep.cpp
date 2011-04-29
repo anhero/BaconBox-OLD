@@ -12,7 +12,7 @@
 
 using namespace RedBox;
 
-RenderStep::RenderStep(): Renderable(), vertices(new VerticesGroup()),
+RenderStep::RenderStep(): vertices(new VerticesGroup()),
 useSinceEpoch(false), deleteVerticesGroup(true) {
 }
 
@@ -22,7 +22,7 @@ RenderStep::RenderStep(TextureInfo* newTexInfo,
 					   unsigned int frameHeight,
 					   unsigned int nbFrames,
 					   int* newColor,
-					   bool newDeleteVerticesGroup): Renderable(),
+					   bool newDeleteVerticesGroup): 
 info(RenderInfo(newTexInfo, newVertices, frameWidth, frameHeight, nbFrames,
 				newColor)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE),
@@ -45,7 +45,7 @@ RenderStep::RenderStep(const std::string& key,
 					   unsigned int frameWidth,
 					   unsigned int frameHeight,
 					   unsigned int nbFrames,
-					   bool newDeleteVerticesGroup): Renderable(),
+					   bool newDeleteVerticesGroup):
 info(RenderInfo(ResourceManager::getTexture(key), newVertices, frameWidth, frameHeight, nbFrames)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE), vertices(newVertices),
 useSinceEpoch(false), deleteVerticesGroup(newDeleteVerticesGroup),
@@ -56,7 +56,7 @@ pauseFrameRemain(0.0) {
 	}
 }
 
-RenderStep::RenderStep(const RenderStep& src):Renderable(src), info(src.info),
+RenderStep::RenderStep(const RenderStep& src): info(src.info),
 mode(src.mode), vertices(src.vertices),
 useSinceEpoch(src.useSinceEpoch), deleteVerticesGroup(src.deleteVerticesGroup),
 lastFrameChange(0.0), isPaused(false),
@@ -67,7 +67,7 @@ pauseFrameRemain(0.0) {
 }
 
 RenderStep& RenderStep::operator=(const RenderStep &src) {
-    Renderable::operator=(src);
+ 
     copyFrom(src);
     return *this;
 }

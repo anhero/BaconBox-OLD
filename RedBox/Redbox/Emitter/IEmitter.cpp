@@ -166,3 +166,10 @@ void IEmitter::copyFrom(const IEmitter& src) {
 		}
 	}
 }
+
+float IEmitter::getWidth() const {
+	return 1;
+}
+float IEmitter::getHeight() const{
+	return 1;
+}

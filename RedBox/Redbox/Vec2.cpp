@@ -70,7 +70,7 @@ void Vec2::setIsPtr(bool newIsPtr) {
 }
 
 const Vec2 Vec2::operator*( float scalar ) const {
-	return Vec2( getX()*scalar, getX()*scalar );
+	return Vec2( getX()*scalar, getY()*scalar );
 }
 const Vec2 Vec2::operator/( float scalar ) const {
 	return Vec2( getX()/scalar, getY()/scalar );
