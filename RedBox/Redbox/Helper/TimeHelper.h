@@ -13,24 +13,38 @@ namespace RedBox {
 	class TimeHelper {
 		friend class RedBoxEngine;
 	public:
+		enum TimeType {
+			SCALABLE_PAUSABLE,
+			PAUSABLE,
+			COMPLETE
+		};
+
 		/**
 		 * Gets TimeHelper's instance.
 		 */
 		static TimeHelper* getInstance();
+		/**
+		 * Calls the respective getSinceStart...() functions from the enum
+		 * type.
+		 * @param timeType Type of time to get.
+		 * @return Time since the game started either scaled or not and with
+		 * the paused time counted or not.
+		 */
+		double getSinceStart(TimeType timeType = SCALABLE_PAUSABLE) const;
 		/**
 		 * Gets the time since the game was started (in seconds). Takes into
 		 * account the time scaling. Time is not counted while the game is
 		 * paused. Depends on refreshTime() being called recently.
 		 * @return Time since the game was started (in seconds).
 		 */
-		double getSinceStart() const;
+		double getSinceStartScalablePausable() const;
 		/**
 		 * Gets the time since the game was started (in seconds). Does not take
 		 * into account the time scaling. Time is not counted while the game is
 		 * paused. Depends on refreshTime() being called recently.
 		 * @return Time since the game was started (in seconds).
 		 */
-		double getSinceStartReal() const;
+		double getSinceStartPausable() const;
 		/**
 		 * Gets the time since the game was started (in seconds). Does not take
 		 * into account the time scaling. Time is counted while the game is

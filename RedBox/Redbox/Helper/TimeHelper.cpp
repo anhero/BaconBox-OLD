@@ -17,11 +17,28 @@ TimeHelper* TimeHelper::getInstance() {
 	return instance;
 }
 
-double TimeHelper::getSinceStart() const {
+double TimeHelper::getSinceStart(TimeType timeType) const {
+	switch(timeType) {
+	case SCALABLE_PAUSABLE:
+		return getSinceStartScalablePausable();
+		break;
+	case PAUSABLE:
+		return getSinceStartPausable();
+		break;
+	case COMPLETE:
+		return getSinceStartComplete();
+		break;
+	default:
+		return getSinceStartComplete();
+		break;
+	}
+}
+
+double TimeHelper::getSinceStartScalablePausable() const {
 	return sinceStart;
 }
 
-double TimeHelper::getSinceStartReal() const {
+double TimeHelper::getSinceStartPausable() const {
 	return sinceStartReal;
 }
 
