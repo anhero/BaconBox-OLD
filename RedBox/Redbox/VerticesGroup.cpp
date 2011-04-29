@@ -7,10 +7,6 @@
 #include <cfloat>
 #include <cassert>
 
-#include "Sprite.h"
-#ifdef RB_PHYSICS_ENABLED
-#include "GraphicBody.h"
-#endif
 
 using namespace RedBox;
 
@@ -29,44 +25,23 @@ VerticesGroup& VerticesGroup::operator=(const VerticesGroup& src) {
 	return *this;
 }
 
-#ifdef RB_PHYSICS_ENABLED
-void VerticesGroup::addVertex(float x, float y, Sprite* sprite, 
-                              GraphicBody* graphicBody)
-#else
-void VerticesGroup::addVertex(float x, float y, Sprite* sprite)
-#endif
+
+void VerticesGroup::addVertex(float x, float y)
 {
-	if(vertices.size() > 1) {
-		sprite = vertices.front().getParentSprite();
-#ifdef RB_PHYSICS_ENABLED
-		graphicBody = vertices.front().getParentGraphicBody();
-#endif
-	}
 	// We add the new vertex to the list.
-#ifdef RB_PHYSICS_ENABLED
-	vertices.push_back(Vertex(x, y, sprite, graphicBody));
-#else
-	vertices.push_back(Vertex(x, y, sprite));
-#endif
+	vertices.push_back(Vertex(x, y));
 }
 
 void VerticesGroup::addVertices(unsigned int nbVertices, ...) {
 	if (nbVertices) {
 		va_list verticesCoords;
 		va_start(verticesCoords, nbVertices);
-		Sprite* parentSprite = ((vertices.size()) ? (vertices.front().getParentSprite()):(NULL));
-#ifdef RB_PHYSICS_ENABLED
-		GraphicBody* parentGraphicBody = ((vertices.size()) ? (vertices.front().getParentGraphicBody()):(NULL));
-#endif
+
 		float x, y;
 		for(unsigned int i = 0; i < nbVertices; i++) {
 			x = static_cast<float>(va_arg(verticesCoords, double));
 			y = static_cast<float>(va_arg(verticesCoords, double));
-#ifdef RB_PHYSICS_ENABLED
-			vertices.push_back(Vertex(x, y, parentSprite, parentGraphicBody));
-#else
-			vertices.push_back(Vertex(x, y, parentSprite));
-#endif
+			vertices.push_back(Vertex(x, y));
 		}
 		va_end(verticesCoords);
 	}
@@ -107,17 +82,7 @@ bool VerticesGroup::containsVertices(Vertex* firstVertex, Vertex* secondVertex) 
     return !(firstNotFound || secondNotFound);
 }
 
-void VerticesGroup::warnVerticesOfDeletion() {
-    for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
-        i->warnOfParentSpriteDeletion();
-    }
-}
 
-void VerticesGroup::setParentSprite(Sprite* sprite) {
-    for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
-        i->setParentSprite(sprite);
-    }
-}
 
 std::pair<float, float> VerticesGroup::getWidthHeight() const {
 	if(vertices.size() == 0) {
@@ -238,9 +203,7 @@ void VerticesGroup::setXPosition(float x) {
 	Vec2 vec(x - getXPosition(), 0.0f);
 	for (std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
 		i->getPosition() += vec;
-#ifdef RB_PHYSICS_ENABLED
-		i->getOldPosition() += vec;
-#endif
+
 	}
 }
 
@@ -248,9 +211,7 @@ void VerticesGroup::setYPosition(float y) {
 	Vec2 vec(0.0f, y - getYPosition());
 	for (std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
 		i->getPosition() += vec;
-#ifdef RB_PHYSICS_ENABLED
-		i->getOldPosition() += vec;
-#endif
+
 	}
 }
 
@@ -260,9 +221,6 @@ void VerticesGroup::setPosition(float x, float y) {
 	Vec2 vec(x - position.first, y - position.second);
 	for (std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
 		i->getPosition() += vec;
-#ifdef RB_PHYSICS_ENABLED
-		i->getOldPosition() += vec;
-#endif
 	}
 }
 
@@ -286,47 +244,9 @@ void VerticesGroup::move(float deltaX, float deltaY) {
 	}
 }
 
-#ifdef RB_PHYSICS_ENABLED
-void VerticesGroup::setParentGraphicBody(GraphicBody* body) {
-    for(std::list<Vertex>::iterator i = vertices.begin(); i != vertices.end(); i++) {
-        i->setParentGraphicBody(body);
-    }
-}
-#endif
 
-#ifdef RB_PHYSICS_ENABLED
-void VerticesGroup::updateVerticesFromData(std::vector<float>& verticesData, Sprite* sprite, GraphicBody* graphicBody)
-#else
-void VerticesGroup::updateVerticesFromData(std::vector<float>& verticesData, Sprite* sprite)
-#endif
-{
-	std::vector<float>::iterator data = verticesData.begin();
-	std::list<Vertex>::iterator vertex = vertices.begin();
-	if(!vertices.empty()) {
-		sprite = vertices.front().getParentSprite();
-#ifdef RB_PHYSICS_ENABLED
-		graphicBody = vertices.front().getParentGraphicBody();
-#endif
-	}
-	while (data != verticesData.end()) {
-		if (vertex != vertices.end()) {
-			vertex->getPosition().setIsPtr(true);
-			vertex->getPosition().setXPtr(&(*data));
-			++data;
-			if(data != verticesData.end()) {
-				vertex->getPosition().setYPtr(&(*data));
-			} else {
-				RB_ECHO("Tried to update vertices from vertices data with an incorrect number of vertices data.");
-			}
-		} else {
-#ifdef RB_PHYSICS_ENABLED
-			vertices.push_back(Vertex(&(*data), &(*(++data)), sprite, graphicBody));
-#else
-			vertices.push_back(Vertex(&(*data), &(*(++data)), sprite));
-#endif
-		}
-	}
-}
+
+
 
 void VerticesGroup::updateDataFromVertices(std::vector<float>& verticesData) {
 	assert(verticesData.size() % 2 == 0);

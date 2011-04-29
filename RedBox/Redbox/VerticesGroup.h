@@ -1,7 +1,6 @@
 /**
  * @file
  * @ingroup Display
- * @ingroup Physics
  */
 
 #ifndef RB_VERTICES_GROUP_H
@@ -17,15 +16,12 @@
 #include "Vertex.h"
 
 namespace RedBox {
-#ifdef RB_PHYSICS_ENABLED
-	class GraphicBody;
-#endif
+
 	class Sprite;
 	/**
 	 * Group of Vertex for OpenGL and RedBox. Represents a group of vertex
 	 * with information accessible for OpenGL and RedBox.
 	 * @ingroup Display
-	 * @ingroup Physics
 	 */
 	class VerticesGroup {
         /**
@@ -56,20 +52,13 @@ namespace RedBox {
 		 */
 		VerticesGroup& operator=(const VerticesGroup& src);
         
-#ifdef RB_PHYSICS_ENABLED
         /**
          * Adds a vertex to the instance. This includes resizing the vertexData
          * array.
          * @param x New vertex's horizontal value.
          * @param y New vertex's vertical value.
-         * @param parentSprite Pointer to the vertex's parent sprite.
-         * @param parentGraphicBody Pointer to the vertex's parent graphic body.
          */
-        void addVertex(float x, float y, Sprite* sprite = NULL, 
-                       GraphicBody* graphicBody = NULL);
-#else
-        void addVertex(float x, float y, Sprite* sprite = NULL);
-#endif
+        void addVertex(float x, float y);
 		/**
 		 * Adds multiple vertices. Can recieve a variable number of parameters.
 		 * @param nbVertices Number of vertices to add. Each of the following
@@ -97,16 +86,8 @@ namespace RedBox {
          * @param secondVertex Second vertex to check for.
          */
         bool containsVertices(Vertex* firstVertex, Vertex* secondVertex);
-        /**
-         * Warns the vertices to not delete their links and edges.
-         */
-        void warnVerticesOfDeletion();
-		/**
-		 * Sets the vertices' parent sprite. Loops through the vertices list
-		 * and sets the parent for each of the vertices.
-		 * @param parentSprite Pointer to the new parent sprite.
-		 */
-		void setParentSprite(Sprite* parentSprite);
+
+	
 		/**
 		 * Gets the distance between the left-most and the right-most vertex and
 		 * the distance between the lowest and the highest vertex. Using this
@@ -185,31 +166,7 @@ namespace RedBox {
 		 * position.
 		 */
 		void move(float deltaX, float deltaY);
-#ifdef RB_PHYSICS_ENABLED
-		/**
-		 * Sets the vertices' parent graphic body. Loops through the vertices
-		 * list and sets the parent for each of the vertices.
-		 * @param parentSprite Pointer to the new parent graphic body.
-		 */
-		void setParentGraphicBody(GraphicBody* parentGraphicBody);
-		/**
-		 * Updates the instance's vertices from the veritcesData.
-		 * @param verticesData Data about the vertices' coordinates.
-		 * @param sprite Pointer to the parent sprite to use if this function
-		 * is used on an empty VerticesGroup.
-		 * @param graphicBody Pointer to the parent graphic body to use if this
-		 * function is used on an empty VerticesGroup.
-		 */
-		void updateVerticesFromData(std::vector<float>& verticesData, Sprite* sprite = NULL, GraphicBody* graphicBody = NULL);
-#else
-		/**
-		 * Updates the instance's vertices from the veritcesData.
-		 * @param verticesData Data about the vertices' coordinates.
-		 * @param sprite Pointer to the parent sprite to use if this function
-		 * is used on an empty VerticesGroup.
-		 */
-		void updateVerticesFromData(std::vector<float>& verticesData, Sprite* sprite = NULL);
-#endif
+
 		/**
 		 * Updates the verticesData from the instance's vertices. Will not do
 		 * anything if the list of vertices has the same number of vertices as

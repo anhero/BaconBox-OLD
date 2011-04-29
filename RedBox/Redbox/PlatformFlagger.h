@@ -60,8 +60,6 @@
 
 	#include "TargetConditionals.h"
 
-	#define RB_PHYSICS_ENABLED
-
 	#define RB_APPLE_PLATFORM
 	#define RB_OPENGL
 

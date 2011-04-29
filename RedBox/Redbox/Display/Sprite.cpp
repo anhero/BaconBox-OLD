@@ -4,30 +4,18 @@
 
 #include "TextureInfo.h"
 #include "RenderStep.h"
-#include "GraphicBody.h"
 #include "ResourceManager.h"
 #include "Debug.h"
-#include "Edge.h"
 #include "VerticesGroup.h"
 
 using namespace RedBox;
 
-#ifdef RB_PHYSICS_ENABLED
-Sprite::Sprite(GraphicBody* parentBody): Renderable() {
-	vertices.setParentSprite(this);
-	vertices.setParentGraphicBody(parentBody);
-}
-#else
-Sprite::Sprite(): Renderable() {
-	vertices.setParentSprite(this);
-}
-#endif
 
-#ifdef RB_PHYSICS_ENABLED
-Sprite::Sprite(const std::string& imageKey, GraphicBody* parentBody): Renderable()
-#else
+Sprite::Sprite(): Renderable() {
+}
+
+
 Sprite::Sprite(const std::string& imageKey): Renderable()
-#endif
 {
 	TextureInfo* texInfo = ResourceManager::getTexture(imageKey);
 	if(texInfo) {
@@ -35,32 +23,22 @@ Sprite::Sprite(const std::string& imageKey): Renderable()
 				  texInfo->imageWidth,
 				  texInfo->imageHeight,
 				  1
-#ifdef RB_PHYSICS_ENABLED
-				  , parentBody);
-#else
+
 		);
-#endif
 	} else {
 		RB_ECHO("Tried to construct a sprite from an invalid image key: " << imageKey);
 	}
 }
 
-#ifdef RB_PHYSICS_ENABLED
-Sprite::Sprite(TextureInfo* texInfo, GraphicBody* parentBody): Renderable()
-#else
+
 Sprite::Sprite(TextureInfo* texInfo): Renderable()
-#endif
 {
 	if(texInfo) {
 		construct(texInfo,
 				  texInfo->imageWidth,
 				  texInfo->imageHeight,
 				  1
-#ifdef RB_PHYSICS_ENABLED
-				  , parentBody);
-#else
 		);
-#endif
 	} else {
 		RB_ECHO("Tried to construct a sprite from an invalid texture information: " << texInfo);
 	}
@@ -70,50 +48,30 @@ Sprite::Sprite(const std::string& imageKey,
 			   unsigned int frameWidth,
 			   unsigned int frameHeight,
 			   unsigned int nbFrames
-#ifdef RB_PHYSICS_ENABLED
-			   , GraphicBody* parentBody): Renderable()
-#else
 ): Renderable()
-#endif
 {
 	construct(ResourceManager::getTexture(imageKey),
 			  frameWidth,
 			  frameHeight,
 			  nbFrames
-#ifdef RB_PHYSICS_ENABLED
-			  , parentBody);
-#else
 	);
-#endif
 }
 
 Sprite::Sprite(TextureInfo* texInfo,
 			   unsigned int frameWidth,
 			   unsigned int frameHeight,
 			   unsigned int nbFrames
-#ifdef RB_PHYSICS_ENABLED
-			   , GraphicBody* parentBody): Renderable()
-#else
 ): Renderable()
-#endif
 {
 	construct(texInfo,
 			  frameWidth,
 			  frameHeight,
 			  nbFrames
-#ifdef RB_PHYSICS_ENABLED
-			  , parentBody);
-#else
 	);
-#endif
 }
 
-#ifdef RB_PHYSICS_ENABLED
-Sprite::Sprite(const Sprite& src):Renderable(src), renderSteps(src.renderSteps),
-vertices(src.vertices), edges(src.edges)
-#else
+
 Sprite::Sprite(const Sprite& src):Renderable(src), renderSteps(src.renderSteps), vertices(src.vertices)
-#endif
 {
     //copyFrom(src);
 }
@@ -151,7 +109,7 @@ void Sprite::update() {
 }
 
 void Sprite::createVertex(float x, float y) {
-	vertices.addVertex(x, y, this);
+	vertices.addVertex(x, y);
 }
 
 float Sprite::getXPosition() const {
@@ -194,9 +152,6 @@ const std::pair<float, float>& Sprite::getWidthHeight() const {
 	return vertices.getWidthHeight();
 }
 
-void Sprite::warnVerticesOfDeletion() {
-    vertices.warnVerticesOfDeletion();
-}
 
 RenderStep* Sprite::addRenderStep(RenderStep* newRenderStep) {
 	if(newRenderStep) {
@@ -270,47 +225,12 @@ void Sprite::setMainColor(unsigned char red, unsigned char green, unsigned char 
 VerticesGroup& Sprite::getVertices() {
 	return vertices;
 }
-#ifdef RB_PHYSICS_ENABLED
-void Sprite::createEdge(Vertex* firstVertex, Vertex* secondVertex) {
-    // We make sure the pointers to the vertices given are valid.
-    // They have to be different and they have to be part of the vertices group.
-    if(firstVertex != secondVertex && vertices.containsVertices(firstVertex, secondVertex)) {
-        // We add the edge to the list.
-		edges.push_back(Edge(firstVertex, secondVertex));
-    }
-}
 
-void Sprite::setParentGraphicBody(GraphicBody* body) {
-	vertices.setParentGraphicBody(body);
-}
-
-void Sprite::removeEdge(Edge* edge) {
-	bool notFound = true;
-	std::list<Edge>::iterator i = edges.begin();
-	// We search for the edge to delete.
-	while(notFound && i != edges.end()) {
-        // If we found it.
-        if(edge == &(*i)) {
-			// We make sure to stop the loop.
-            notFound = false;
-            // We remove it from the list.
-            edges.erase(i);
-        } else {
-            // If we haven't found it, we go to the next one.
-            i++;
-        }
-	}       
-}
-#endif
 void Sprite::construct(TextureInfo* texInfo,
 					   unsigned int frameWidth,
 					   unsigned int frameHeight,
 					   unsigned int nbFrames
-#ifdef RB_PHYSICS_ENABLED
-					   , GraphicBody* parentBody)
-#else
 )
-#endif
 {
 	if(texInfo) {
 		// Generates the square vertices from the frame width and height.
@@ -319,10 +239,7 @@ void Sprite::construct(TextureInfo* texInfo,
 							 static_cast<float>(frameWidth), 0.0f,
 							 static_cast<float>(frameWidth), static_cast<float>(frameHeight),
 							 0.0f, static_cast<float>(frameHeight));
-		vertices.setParentSprite(this);
-#ifdef RB_PHYSICS_ENABLED
-		vertices.setParentGraphicBody(parentBody);
-#endif
+
 		RenderStep* initialRenderStep = new RenderStep(texInfo,
 													   &vertices,
 													   frameWidth,
@@ -336,19 +253,12 @@ void Sprite::construct(TextureInfo* texInfo,
 
 void Sprite::clean() {
 	clearRenderSteps();
-	vertices.warnVerticesOfDeletion();
-#ifdef RB_PHYSICS_ENABLED
-    edges.clear();
-#endif
 }
 
 void Sprite::copyFrom(const Sprite& src) {
     if(this != &src && &src) {
         renderSteps = src.renderSteps;
         vertices = src.vertices;
-#ifdef RB_PHYSICS_ENABLED
-        edges = src.edges;
-#endif
     } else {
         clean();
     }

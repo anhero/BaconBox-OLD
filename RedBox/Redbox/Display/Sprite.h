@@ -17,54 +17,20 @@
 #include "Renderable.h"
 #include "VerticesGroup.h"
 
-#ifdef RB_PHYSICS_ENABLED
-#include "Edge.h"
-#endif
 
 namespace RedBox {
 	class RenderStep;
-#ifdef RB_PHYSICS_ENABLED
-	class GraphicBody;
-#endif
+
     /** 
      * Represents a sprite.
      * @ingroup Display
      */
 	class Sprite : public Renderable {
     public:
-#ifdef RB_PHYSICS_ENABLED
-        /**
-         * Default constructor.
-         */
-        Sprite(GraphicBody* = NULL);
-#else
+
         Sprite();
-#endif
-#ifdef RB_PHYSICS_ENABLED
-		/**
-		 * Parameterized constructor. Loads a sprite using the image in the
-		 * ResourceManager with the corresponding key.
-		 * @param imageKey Image's key in the ResourceManager to use for the
-		 * constructed sprite.
-		 * @param parentBody Parent graphic body, if there is one. Only exists
-		 * if the Physics engine is enabled.
-		 */
-		Sprite(const std::string& imageKey, GraphicBody* parentBody = NULL);
-#else
 		Sprite(const std::string& imageKey);
-#endif
-#ifdef RB_PHYSICS_ENABLED
-		/**
-		 * Parameterized constructor. Loads a sprite using the image in the
-		 * ResourceManager with the corresponding key.
-		 * @param texInfo TextureInfo to load the sprite from.
-		 * @param parentBody Parent graphic body, if there is one. Only exists
-		 * if the Physics engine is enabled.
-		 */
-		Sprite(TextureInfo* texInfo, GraphicBody* parentBody = NULL);
-#else
 		Sprite(TextureInfo* texInfo);
-#endif
 		/**
 		 * Parameterized constructor. Loads a sprite using the image in the 
 		 * ResourceManager with the corresponding key. Only takes the asked
@@ -79,18 +45,12 @@ namespace RedBox {
 		 * pixels).
 		 * @param nbFrames Number of frames the sprite will load (for
 		 * animations)
-		 * @param parentBody Parent graphic body, if there is one. Only exists
-		 * if the Physics engine is enabled.
 		 */
 		Sprite(const std::string& imageKey,
 			   unsigned int frameWidth,
 			   unsigned int frameHeight,
 			   unsigned int nbFrames = 1
-#ifdef RB_PHYSICS_ENABLED
-			   , GraphicBody* parentBody = NULL);
-#else
 			   );
-#endif
 		/**
 		 * Parameterized constructor. Loads a sprite using a TextureInfo. Only
 		 * takes the asked part of the image with the given width and height.
@@ -103,18 +63,13 @@ namespace RedBox {
 		 * pixels).
 		 * @param nbFrames Number of frames the sprite will load (for
 		 * animations).
-		 * @param parentBody Parent graphic body, if there is one. Only exists
-		 * if the Physics engine is enabled.
+
 		 */
 		Sprite(TextureInfo* texInfo,
 			   unsigned int frameWidth,
 			   unsigned int frameHeight,
 			   unsigned int nbFrames = 1
-#ifdef RB_PHYSICS_ENABLED
-			   , GraphicBody* parentBody = NULL);
-#else
 		);
-#endif
         /**
          * Copy constructor.
          * @param src Sprite to make a copy of.
@@ -222,11 +177,7 @@ namespace RedBox {
 		 * member is the width and the second is the height.
 		 */
 		const std::pair<float, float>& getWidthHeight() const;
-		
-        /**
-         * Warns the vertices not to delete their links on their destruction.
-         */
-        void warnVerticesOfDeletion();
+
 		/**
 		 * Adds a rendering step. Does nothing if the recieved pointer is NULL.
 		 * @param newRenderStep Pointer to the rendering step to add.
@@ -277,27 +228,7 @@ namespace RedBox {
 		int getMaxX();
 		int getMinY();
 		int getMaxY();
-#ifdef RB_PHYSICS_ENABLED
-        /**
-         * Creates an edge on the sprite. Creates an edge linking two vertices.
-         * The vertices given must be part of the same sprite.
-         * @param firstVertex Pointer to the first vertex that the edge will 
-         * link.
-         * @param secondVertex Pointer to the second vertex that the edge will
-         * link.
-         */
-        void createEdge(Vertex* firstVertex, Vertex* secondVertex);
-		/**
-		 * Sets the parent graphic body to the vertices.
-		 * @param body Pointer to the parent graphic body to set.
-		 */
-        void setParentGraphicBody(GraphicBody* body);
-		/**
-         * Removes the given edge from the sprite's edges.
-         * @param edge Pointer to the edge to remove.
-         */
-        void removeEdge(Edge* edge);
-#endif //RB_PHYSICS_ENABLED
+
     private:
         /**
 		 * List containing the rendering steps. The first RenderStep in the list
@@ -306,10 +237,6 @@ namespace RedBox {
         std::list<RenderStep*> renderSteps;
         /// Vertices making up the sprite.
         VerticesGroup vertices;
-#ifdef RB_PHYSICS_ENABLED
-        /// Edges making up the sprite.
-        std::list<Edge> edges;
-#endif //RB_PHYSICS_ENABLED
 		
 		/**
 		 * Constructs the sprite using the given info.
@@ -325,11 +252,7 @@ namespace RedBox {
 					   unsigned int frameWidth,
 					   unsigned int frameHeight,
 					   unsigned int nbFrames = 1
-#ifdef RB_PHYSICS_ENABLED
-					   , GraphicBody* parentBody = NULL);
-#else
 		);
-#endif
         /**
          * Resets the sprite. Also frees up all allocated memory.
          */

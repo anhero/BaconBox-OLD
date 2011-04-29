@@ -2,7 +2,6 @@
  * @file
  * @ingroup Math
  * @ingroup Display
- * @ingroup Physics
  */
 #ifndef RB_VECTOR2D_H
 #define RB_VECTOR2D_H
@@ -16,7 +15,6 @@ namespace RedBox{
 	 * Two-dimensional vector. Vector represented in two dimensions.
 	 * @ingroup Math
 	 * @ingroup Display
-	 * @ingroup Physics
 	 */
 	class Vec2 {
         /**
