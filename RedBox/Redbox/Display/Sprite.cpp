@@ -365,4 +365,15 @@ void Sprite::clearRenderSteps() {
 	renderSteps.clear();
 }
 
-
+int Sprite::getMinX(){
+	return vertices.getXPosition();
+}
+int Sprite::getMaxX(){
+	return vertices.getXPosition() + vertices.getWidth();
+}
+int Sprite::getMinY(){
+	return vertices.getYPosition();
+}
+int Sprite::getMaxY(){
+	return vertices.getYPosition() + vertices.getHeight();
+}

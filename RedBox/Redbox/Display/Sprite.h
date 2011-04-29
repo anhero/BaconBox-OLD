@@ -273,6 +273,10 @@ namespace RedBox {
 		 * @return The sprite's group of vertices.
 		 */
 		VerticesGroup& getVertices();
+		int getMinX();
+		int getMaxX();
+		int getMinY();
+		int getMaxY();
 #ifdef RB_PHYSICS_ENABLED
         /**
          * Creates an edge on the sprite. Creates an edge linking two vertices.
