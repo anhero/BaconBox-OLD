@@ -113,6 +113,11 @@ namespace RedBox {
 		static double lastRender;
 		/// Ratio of time that the updates need to watch for to catch up.
 		static double deltaRatio;
+		/**
+		 * Flag used to limit rendering so it doesn't render more times than
+		 * it updates.
+		 */
+		static bool renderedSinceLastUpdate;
 		///The path to the current application binary.
 		static std::string applicationPath;
 		/// Screen's width.

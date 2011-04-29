@@ -20,6 +20,7 @@ double RedBoxEngine::updateDelay = 1.0 / 120.0;
 double RedBoxEngine::lastUpdate = 0.0;
 double RedBoxEngine::lastRender = 0.0;
 double RedBoxEngine::deltaRatio = 0.0;
+bool RedBoxEngine::renderedSinceLastUpdate = false;
 sigly::Signal2<int, int> RedBoxEngine::onInitialize = sigly::Signal2<int, int>();
 int RedBoxEngine::screenWidth = 0;
 int RedBoxEngine::screenHeight = 0;
@@ -92,18 +93,21 @@ void RedBoxEngine::pulse() {
 						  (lastUpdate + updateDelay)) / updateDelay;
 			// We update the current state.
 			currentState->update();
+			renderedSinceLastUpdate = false;
 			// We update the input manager.
 			InputManager::getInstance()->update();
 			// We take note of the time.
 			lastUpdate += updateDelay;
+			TimeHelper::getInstance()->sleep(0.01);
 		}
 		// We check that the delay between renders doesn't go too high or that
 		// the updates aren't lagging behind.
-		if((TimeHelper::getInstance()->getSinceStartComplete() >= lastUpdate + maxRenderDelay) ||
-		   deltaRatio < 2.0) {
+		if(((TimeHelper::getInstance()->getSinceStartComplete() >= lastUpdate + maxRenderDelay) ||
+		   deltaRatio < 2.0) && !renderedSinceLastUpdate) {
 			// We take note of the time at which the render was done.
 			lastRender += maxRenderDelay;
 			currentState->render();
+			renderedSinceLastUpdate = true;
 		}
 	}
 	if(AudioEngine::getSoundEngine()) {
