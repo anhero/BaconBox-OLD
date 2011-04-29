@@ -190,7 +190,7 @@ float Sprite::getHeight() const {
 	return vertices.getHeight();
 }
 
-const std::pair<float, float>& Sprite::getWidthHeight() const {
+std::pair<float, float> Sprite::getWidthHeight() const {
 	return vertices.getWidthHeight();
 }
 

@@ -221,7 +221,7 @@ namespace RedBox {
 		 * @return Pair containing the sprite's width and height. The first
 		 * member is the width and the second is the height.
 		 */
-		const std::pair<float, float>& getWidthHeight() const;
+		std::pair<float, float> getWidthHeight() const;
 		
         /**
          * Warns the vertices not to delete their links on their destruction.
