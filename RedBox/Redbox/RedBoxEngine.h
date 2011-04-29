@@ -98,6 +98,10 @@ namespace RedBox {
 		 * Gets the screen's height.
 		 */
 		static int getScreenHeight();
+
+		static bool isBufferSwapped();
+
+		static void setBufferSwapped();
 	private:
 		/// Map of states in the engine.
 		static std::map<std::string, State*> states;
@@ -113,6 +117,7 @@ namespace RedBox {
 		static double lastRender;
 		/// Ratio of time that the updates need to watch for to catch up.
 		static double deltaRatio;
+		static bool bufferSwapped;
 		/**
 		 * Flag used to limit rendering so it doesn't render more times than
 		 * it updates.
