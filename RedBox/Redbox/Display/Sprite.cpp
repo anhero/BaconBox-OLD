@@ -257,15 +257,17 @@ std::list<RenderStep*>& Sprite::getRenderSteps() {
 void Sprite::setMainColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha){
 	RenderStep * mainRenderStep = getMainRenderStep();
 	
-	//We check if the wanted color is pure white, in which case we set off the coloring mode. 
-	if(red == 0xFF && green == 0xFF && blue == 0xFF && alpha == 0xFF){
+	//We check if the wanted color is pure white and if we have a texture.
+	//In this case, we set the coloring mode to off.
+	if (red == 0xFF && green == 0xFF && blue == 0xFF && alpha == 0xFF
+			&& ( mainRenderStep->getMode() & RenderStepMode::TEXTURE ) ){
 		mainRenderStep->removeMode(RenderStepMode::COLOR);
 	}
-	else{
+	else {
 		mainRenderStep->addMode(RenderStepMode::COLOR);
 		mainRenderStep->setColor(red, green, blue, alpha);
 	}
-	
+
 }
 VerticesGroup& Sprite::getVertices() {
 	return vertices;
