@@ -15,12 +15,11 @@ Color::Color() {
 	operator=(BLACK);
 }
 
-Color::Color(unsigned int red, unsigned int green, unsigned int blue,
-			 unsigned int alpha) {
+Color::Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) {
 	setRGBA(red, green, blue, alpha);
 }
 
-Color::Color(unsigned int rgba) {
+Color::Color(uint32_t rgba) {
 	setRGBA(rgba);
 }
 
@@ -36,63 +35,75 @@ Color& Color::operator=(const Color& src) {
 	}
 }
 
-Color::operator unsigned int() const {
-	unsigned int result = (colors[R] & 0xff) << 24;
-	result |= (colors[G] & 0xff) << 16;
-	result |= (colors[B] & 0xff) << 8;
-	result |= (colors[A] & 0xff);
+bool Color::operator==(const Color& other) {
+	return colors[R] == other.colors[R] && colors[G] == other.colors[G] &&
+			colors[B] == other.colors[B] && colors[A] == other.colors[A];
+}
+
+bool Color::operator!=(const Color& other) {
+	return !operator==(other);
+}
+
+Color::operator uint32_t() const {
+	unsigned int result = static_cast<uint32_t>(colors[R]) << 24;
+	result |= static_cast<uint32_t>(colors[G]) << 16;
+	result |= static_cast<uint32_t>(colors[B]) << 8;
+	result |= static_cast<uint32_t>(colors[A]);
 	return result;
 }
 
-unsigned int Color::getRed() const {
+uint8_t Color::getRed() const {
 	return colors[R];
 }
 
-unsigned int Color::getGreen() const {
+uint8_t Color::getGreen() const {
 	return colors[G];
 }
 
-unsigned int Color::getBlue() const {
+uint8_t Color::getBlue() const {
 	return colors[B];
 }
 
-unsigned int Color::getAlpha() const {
+uint8_t Color::getAlpha() const {
 	return colors[A];
 }
 
-void Color::setRed(unsigned int red) {
+void Color::setRed(uint8_t red) {
 	colors[R] = (red & MAX_COMPONENT_VALUE);
 }
 
-void Color::setGreen(unsigned int green) {
-	colors[G] = (green & MAX_COMPONENT_VALUE);
+void Color::setGreen(uint8_t green) {
+	colors[G] = green;
 }
 
-void Color::setBlue(unsigned int blue) {
-	colors[B] = (blue & MAX_COMPONENT_VALUE);
+void Color::setBlue(uint8_t blue) {
+	colors[B] = blue;
 }
 
-void Color::setAlpha(unsigned int alpha) {
-	colors[A] = (alpha & MAX_COMPONENT_VALUE);
+void Color::setAlpha(uint8_t alpha) {
+	colors[A] = alpha;
 }
 
-void Color::setRGB(unsigned int red, unsigned int green, unsigned int blue) {
+void Color::setRGB(uint8_t red, uint8_t green, uint8_t blue) {
 	setRed(red);
 	setGreen(green);
 	setBlue(blue);
 }
 
-void Color::setRGBA(unsigned int red, unsigned int green, unsigned int blue,
-					unsigned int alpha) {
+void Color::setRGBA(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) {
 	setRGB(red, green, blue);
 	setAlpha(alpha);
 }
 
-void Color::setRGBA(unsigned int rgba) {
-	setRGBA((rgba & 0xff000000) >> 24,
-			(rgba & 0x00ff0000) >> 16,
-			(rgba & 0x0000ff00) >> 8,
-			rgba & 0x000000ff);
+void Color::setRGBA(uint32_t rgba) {
+	setRGBA(static_cast<uint8_t>((rgba & 0xff000000) >> 24),
+			static_cast<uint8_t>((rgba & 0x00ff0000) >> 16),
+			static_cast<uint8_t>((rgba & 0x0000ff00) >> 8),
+			static_cast<uint8_t>(rgba & 0x000000ff));
+}
+
+const uint8_t* Color::getComponents() const {
+	return colors;
 }
 
 namespace RedBox {

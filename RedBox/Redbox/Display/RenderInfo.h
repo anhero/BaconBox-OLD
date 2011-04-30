@@ -12,6 +12,7 @@
 #include <iostream>
 
 #include "AnimationParameters.h"
+#include "Color.h"
 
 namespace RedBox {
 	class VerticesGroup;
@@ -34,6 +35,7 @@ namespace RedBox {
          * Default constructor.
          */
         RenderInfo();
+
         /**
          * Parametrized constructor.
          * @param newTexInfo Pointer to the information about the texture.
@@ -51,7 +53,8 @@ namespace RedBox {
 				   unsigned int frameWidth,
 				   unsigned int frameHeight,
 				   unsigned int nbFrames = 1,
-				   int* newColor = NULL);
+				   const Color& newColor = Color::WHITE);
+
 		/**
 		 * Loads the texture coordinates. Used to determine what information
 		 * needs to be read in the image to show on screen. The upper left
@@ -111,31 +114,10 @@ namespace RedBox {
 		void addAnimation(const std::string& name,
 						  const AnimationParameters& newAnimation);
 		/**
-		 * Gets the color's array.
-		 * @return Array containing the RGBA values for the color. Each value
-		 * is inclusively between 1 and 255.
+		 * Gets the color.
+		 * @return The RenderInfo's color.
 		 */
-		unsigned char* getColor();
-		/**
-		 * Gets the color's red value.
-		 * @return Color's red value. Value inclusively between 1 and 255.
-		 */
-		unsigned char getRedValue() const;
-		/**
-		 * Gets the color's green value.
-		 * @return Color's green value. Value inclusively between 1 and 255.
-		 */
-		unsigned char getGreenValue() const;
-		/**
-		 * Gets the color's blue value.
-		 * @return Color's blue value. Value inclusively between 1 and 255.
-		 */
-		unsigned char getBlueValue() const;
-		/**
-		 * Gets the color's alpha value.
-		 * @return Color's alpha value. Value inclusively between 1 and 255.
-		 */
-		unsigned char getAlphaValue() const;
+		const Color& getColor() const;
 		/**
 		 * Gets the texture info. Returns the texture information pointed by
 		 * the texInfo pointer.
@@ -149,32 +131,9 @@ namespace RedBox {
 		std::vector<std::vector<float> >& getTexCoords();
 		/**
 		 * Sets the color by specifying the red, green, blue and alpha values.
-		 * @param red Color's red value. Value inclusively between 1 and 255.
-		 * @param green Color's green value. Value inclusively between 1 and 255.
-		 * @param blue Color's blue value. Value inclusively between 1 and 255.
-		 * @param alpha Color's alpha value. Value inclusively between 1 and 255.
+		 * @param newColor The RenderInfo's new color.
 		 */
-		void setRGBA(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
-		/**
-		 * Sets the color's red value.
-		 * @param red Color's red value. Value inclusively between 1 and 255.
-		 */
-		void setRedValue(unsigned char red);
-		/**
-		 * Sets the color's green value.
-		 * @param green Color's green value. Value inclusively between 1 and 255.
-		 */
-		void setGreenValue(unsigned char green);
-		/**
-		 * Sets the color's blue value.
-		 * @param blue Color's blue value. Value inclusively between 1 and 255.
-		 */
-		void setBlueValue(unsigned char blue);
-		/**
-		 * Sets the color's alpha value.
-		 * @param alpha Color's alpha value. Value inclusively between 1 and 255.
-		 */
-		void setAlphaValue(unsigned char alpha);
+		void setColor(const Color& newColor);
 		/**
 		 * Sets the texture information.
 		 * @param newTexInfo Pointer to the new texture information.
@@ -227,7 +186,7 @@ namespace RedBox {
          * Color, first int is red, second is green, third is blue and last one
          * is alpha.
          */
-        unsigned char color[4];
+		Color color;
         /// Pointer to the texture information.
         TextureInfo* texInfo;
 		/**

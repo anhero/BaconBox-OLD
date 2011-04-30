@@ -15,7 +15,7 @@ Vec2::Vec2(float* pX, float* pY): isPtr(true){
     coordsPtr.y = pY;
 }
 
-Vec2::Vec2(const Vec2& src):isPtr(src.isPtr) {
+Vec2::Vec2(const Vec2& src):isPtr(false) {
     coordsVal.x = src.getX();
     coordsVal.y = src.getY();
 }

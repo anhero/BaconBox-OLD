@@ -15,6 +15,7 @@
 #include "RenderInfo.h"
 #include "Renderable.h"
 #include "RenderStepMode.h"
+#include "Color.h"
 
 namespace RedBox {
 	class VerticesGroup;
@@ -49,7 +50,7 @@ namespace RedBox {
 		 * pixels).
 		 * @param nbFrames Number of frames of texture coordinates to generate.
 		 * will start loading.
-         * @param newColor Array to use to set the RenderInfo's color.
+		 * @param newColor Color to use to set the RenderInfo's color.
 		 * @param newDeleteVerticesGroup True if the RenderStep needs to delete
 		 * the vertices when destroyed. False if not. Sprites loading their
 		 * render steps will put this parameter to false.
@@ -59,7 +60,7 @@ namespace RedBox {
 				   unsigned int frameWidth,
 				   unsigned int frameHeight,
 				   unsigned int nbFrames = 1,
-				   int* newColor = NULL,
+				   const Color& newColor = Color::WHITE,
 				   bool newDeleteVerticesGroup = false);
 		/**
 		 * Parameterized constructor.
@@ -72,7 +73,6 @@ namespace RedBox {
 		 * pixels).
 		 * @param nbFrames Number of frames of texture coordinates to generate.
 		 * will start loading.
-         * @param newColor Array to use to set the RenderInfo's color.
 		 * @param newDeleteVerticesGroup True if the RenderStep needs to delete
 		 * the vertices when destroyed. False if not. Sprites loading their
 		 * render steps will put this parameter to false.
@@ -225,7 +225,7 @@ namespace RedBox {
 		 * given color components Range are from 0 to 255.
 		 * Componentes are RGBA.
 		 */
-		void setColor(int red, int green, int blue, int alpha);
+		void setColor(const Color& newColor);
     private:
         /// Information on the render. Includes the color and the texture ID.
         RenderInfo info;

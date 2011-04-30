@@ -21,7 +21,7 @@ RenderStep::RenderStep(TextureInfo* newTexInfo,
 					   unsigned int frameWidth,
 					   unsigned int frameHeight,
 					   unsigned int nbFrames,
-					   int* newColor,
+					   const Color& newColor,
 					   bool newDeleteVerticesGroup): 
 info(RenderInfo(newTexInfo, newVertices, frameWidth, frameHeight, nbFrames,
 				newColor)),
@@ -35,7 +35,7 @@ pauseFrameRemain(0.0) {
 	if(vertices) {
 		vertices->updateDataFromVertices(verticesData);
 	}
-	if(newColor) {
+	if(newColor != Color::WHITE) {
 		mode |= RenderStepMode::COLOR;
 	}
 }
@@ -56,14 +56,8 @@ pauseFrameRemain(0.0) {
 	}
 }
 
-RenderStep::RenderStep(const RenderStep& src): info(src.info),
-mode(src.mode), vertices(src.vertices),
-useSinceEpoch(src.useSinceEpoch), deleteVerticesGroup(src.deleteVerticesGroup),
-lastFrameChange(0.0), isPaused(false),
-pauseFrameRemain(0.0) {
-	if(vertices) {
-		vertices->updateDataFromVertices(verticesData);
-	}
+RenderStep::RenderStep(const RenderStep& src) {
+	copyFrom(src);
 }
 
 RenderStep& RenderStep::operator=(const RenderStep &src) {
@@ -247,9 +241,11 @@ void RenderStep::removeVertexPtr(Vertex* vertexPtr) {
 void RenderStep::copyFrom(const RenderStep &src) {
     if(this != &src && &src) {
         clean();
-        mode = src.mode;
-        info = src.info;
-        vertices = src.vertices;
+		info = src.info;
+		mode = src.mode;
+		vertices = 0;
+		verticesData.clear();
+		verticesPtr.clear();
 		useSinceEpoch = src.useSinceEpoch;
         deleteVerticesGroup = src.deleteVerticesGroup;
 		lastFrameChange = 0.0;
@@ -258,8 +254,8 @@ void RenderStep::copyFrom(const RenderStep &src) {
     }
 }
 
-void RenderStep::setColor(int red, int green, int blue, int alpha){
-	info.setRGBA(red, green, blue, alpha);
+void RenderStep::setColor(const Color& newColor){
+	info.setColor(newColor);
 }
 
 namespace RedBox {

@@ -10,11 +10,8 @@
 
 using namespace RedBox;
 
-RenderInfo::RenderInfo(): texInfo(NULL), currentFrame(0) {
-	color[0] = 255;
-	color[1] = 255;
-	color[2] = 255;
-	color[3] = 255;
+RenderInfo::RenderInfo(): color(Color::WHITE), texInfo(NULL), currentFrame(0),
+currentNbLoops(0) {
 }
 
 RenderInfo::RenderInfo(TextureInfo* newTexInfo,
@@ -22,20 +19,9 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
 					   unsigned int frameWidth,
 					   unsigned int frameHeight,
 					   unsigned int nbFrames,
-					   int* newColor):
+					   const Color& newColor): color(newColor),
 texInfo(newTexInfo), texCoords(std::vector< std::vector<float> >(nbFrames)),
 currentFrame(0) {
-	if(newColor) {
-		color[0] = newColor[0];
-		color[1] = newColor[1];
-		color[2] = newColor[2];
-		color[3] = newColor[3];
-	} else {
-		color[0] = 255;
-		color[1] = 255;
-		color[2] = 255;
-		color[3] = 255;
-	}
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
 }
 
@@ -156,45 +142,23 @@ void RenderInfo::addAnimation(const std::string& name,
 		RB_ECHO("Failed to add the animation named : " << name);
 	}
 }
-unsigned char* RenderInfo::getColor() {
+
+const Color& RenderInfo::getColor() const {
 	return color;
 }
-unsigned char RenderInfo::getRedValue() const {
-	return color[0];
-}
-unsigned char RenderInfo::getGreenValue() const {
-	return color[1];
-}
-unsigned char RenderInfo::getBlueValue() const {
-	return color[2];
-}
-unsigned char RenderInfo::getAlphaValue() const {
-	return color[3];
-}
+
 TextureInfo& RenderInfo::getTexInfo() {
 	return *texInfo;
 }
+
 std::vector<std::vector<float> >& RenderInfo::getTexCoords() {
 	return texCoords;
 }
-void RenderInfo::setRGBA(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha) {
-	color[0] = red;
-	color[1] = green;
-	color[2] = blue;
-	color[3] = alpha;
+
+void RenderInfo::setColor(const Color& newColor) {
+	color = newColor;
 }
-void RenderInfo::setRedValue(unsigned char red) {
-	color[0] = red;
-}
-void RenderInfo::setGreenValue(unsigned char green) {
-	color[1] = green;
-}
-void RenderInfo::setBlueValue(unsigned char blue) {
-	color[2] = blue;
-}
-void RenderInfo::setAlphaValue(unsigned char alpha) {
-	color[3] = alpha;
-}
+
 void RenderInfo::setTexInfo(TextureInfo* newTexInfo) {
 	texInfo = newTexInfo;
 }
@@ -276,8 +240,7 @@ void RenderInfo::resetCurrentNbLoops() {
 
 namespace RedBox {
 	std::ostream& operator<<(std::ostream& output, const RenderInfo& r) {
-		output << "{color: [" << r.color[0] << ", " << r.color[1] << ", " <<
-		r.color[2] << ", " << r.color[3] << "], texInfo: " << r.texInfo <<
+		output << "{color: " << r.color << ", texInfo: " << r.texInfo <<
 		", texCoords: [";
 		
 		for(std::vector< std::vector<float> >::const_iterator i = r.texCoords.begin(); i != r.texCoords.end(); i++) {

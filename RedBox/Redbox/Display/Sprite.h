@@ -16,6 +16,7 @@
 #include "TextureInfo.h"
 #include "Renderable.h"
 #include "VerticesGroup.h"
+#include "Color.h"
 
 
 namespace RedBox {
@@ -201,7 +202,7 @@ namespace RedBox {
 		 * given color components Range are from 0 to 255.
 		 * Componentes are RGBA.
 		 */
-		void setMainColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
+		void setMainColor(const Color& color);
 		
 		/**
 		 * Gets the vertices group.

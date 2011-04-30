@@ -1,26 +1,29 @@
 #include "OpenGLDriver.h"
 
+#include <stdint.h>
+
 #include <iostream>
 
 #include "RenderInfo.h"
 #include "TextureInfo.h"
 #include "MathHelper.h"
+
 using namespace RedBox;
 
 void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat* vertices,
 												RenderInfo& renderingInfo,
 												unsigned int nbVertices){
 	 //@TODO: Check for possible optimizations
-	unsigned char * tempColor = renderingInfo.getColor();
-	unsigned char color[nbVertices*4];
-	int componentCount = nbVertices*4;
-	for	(int i =0; i< componentCount; i++) {
-		color[i] = tempColor[i%4];
+	const uint8_t* tempColor = renderingInfo.getColor().getComponents();
+	uint8_t color[nbVertices * 4];
+	unsigned int componentCount = nbVertices * 4;
+	for	(unsigned int i = 0; i < componentCount; i++) {
+		color[i] = tempColor[i % 4];
 	}
-	
-        glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
+
 	glEnableClientState(GL_COLOR_ARRAY);
-        drawShapeWithTexture(vertices, renderingInfo, nbVertices);
+	glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
+	drawShapeWithTexture(vertices, renderingInfo, nbVertices);
 	
 	glDisableClientState(GL_COLOR_ARRAY);
 
@@ -54,24 +57,24 @@ void OpenGLDriver::drawShapeWithTexture(GLfloat* vertices,
 void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,
 									  RenderInfo &renderingInfo,
 									  unsigned int nbVertices) {
-	unsigned char* tempColor = renderingInfo.getColor();
+	const uint8_t* tempColor = renderingInfo.getColor().getComponents();
 	unsigned int componentCount = nbVertices * 4;
-	unsigned char color[componentCount];
+	uint8_t color[componentCount];
 	for(unsigned int i = 0; i < componentCount; ++i) {
 		color[i] = tempColor[i % 4];
 	}
+	glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
-	
+
 	glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
 	
-	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisable(GL_BLEND);
+	glDisableClientState(GL_COLOR_ARRAY);
 }
 
 void OpenGLDriver::prepareScene(int xTranslation, int yTranslation,

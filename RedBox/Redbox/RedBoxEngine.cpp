@@ -97,12 +97,6 @@ void RedBoxEngine::pulse() {
 			renderedSinceLastUpdate = false;
 			// We update the input manager.
 			InputManager::getInstance()->update();
-			if(AudioEngine::getSoundEngine()) {
-				AudioEngine::getSoundEngine()->update();
-			}
-			if(AudioEngine::getMusicEngine()) {
-				AudioEngine::getMusicEngine()->update();
-			}
 			// We take note of the time.
 			lastUpdate += updateDelay;
 			//TimeHelper::getInstance()->sleep(0.01);
@@ -116,6 +110,12 @@ void RedBoxEngine::pulse() {
 			currentState->render();
 			renderedSinceLastUpdate = true;
 			bufferSwapped = false;
+		}
+		if(AudioEngine::getSoundEngine()) {
+			AudioEngine::getSoundEngine()->update();
+		}
+		if(AudioEngine::getMusicEngine()) {
+			AudioEngine::getMusicEngine()->update();
 		}
 	}
 }
