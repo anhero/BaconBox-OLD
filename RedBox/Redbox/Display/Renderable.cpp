@@ -79,6 +79,7 @@ void Renderable::setYPosition(float y) {
 }
 
 void Renderable::setPosition(float x, float y) {
+	position.setX(x);
 	position.setY(y);
 }
 
