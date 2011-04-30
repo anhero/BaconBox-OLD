@@ -76,13 +76,13 @@ Sprite::Sprite(const Sprite& src): Renderable(src) {
 }
 
 Sprite::~Sprite() {
-    clean();
+	clean();
 }
 
 Sprite& Sprite::operator=(const Sprite& src) {
-    Renderable::operator=(src);
-    copyFrom(src);
-    return *this;
+	Renderable::operator=(src);
+	copyFrom(src);
+	return *this;
 }
 
 void Sprite::render() {
@@ -211,18 +211,8 @@ std::list<RenderStep*>& Sprite::getRenderSteps() {
 
 void Sprite::setMainColor(const Color& color){
 	RenderStep * mainRenderStep = getMainRenderStep();
-	
-	//We check if the wanted color is pure white and if we have a texture.
-	//In this case, we set the coloring mode to off.
-	if (color == Color::WHITE
-			&& ( mainRenderStep->getMode() & RenderStepMode::TEXTURE ) ){
-		mainRenderStep->removeMode(RenderStepMode::COLOR);
-	}
-	else {
-		mainRenderStep->addMode(RenderStepMode::COLOR);
-		mainRenderStep->setColor(color);
-	}
-
+	mainRenderStep->addMode(RenderStepMode::COLOR);
+	mainRenderStep->setColor(color);
 }
 VerticesGroup& Sprite::getVertices() {
 	return vertices;
@@ -258,15 +248,15 @@ void Sprite::clean() {
 }
 
 void Sprite::copyFrom(const Sprite& src) {
-    if(this != &src && &src) {
+	if(this != &src && &src) {
 		clean();
 		vertices = src.vertices;
 		renderSteps.push_front(new RenderStep(*src.renderSteps.front()));
 		renderSteps.front()->setVerticesGroup(&vertices);
 		renderSteps.front()->updateVerticesData();
-    } else {
-        clean();
-    }
+	} else {
+		clean();
+	}
 }
 
 void Sprite::clearRenderSteps() {

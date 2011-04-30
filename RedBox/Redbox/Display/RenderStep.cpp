@@ -22,7 +22,7 @@ RenderStep::RenderStep(TextureInfo* newTexInfo,
 					   unsigned int frameHeight,
 					   unsigned int nbFrames,
 					   const Color& newColor,
-					   bool newDeleteVerticesGroup): 
+					   bool newDeleteVerticesGroup):
 info(RenderInfo(newTexInfo, newVertices, frameWidth, frameHeight, nbFrames,
 				newColor)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE),
@@ -56,18 +56,18 @@ pauseFrameRemain(0.0) {
 	}
 }
 
-RenderStep::RenderStep(const RenderStep& src) {
+RenderStep::RenderStep(const RenderStep& src): vertices(0), deleteVerticesGroup(false) {
 	copyFrom(src);
 }
 
 RenderStep& RenderStep::operator=(const RenderStep &src) {
- 
-    copyFrom(src);
-    return *this;
+
+	copyFrom(src);
+	return *this;
 }
 
 RenderStep::~RenderStep() {
-    clean();
+	clean();
 }
 
 void RenderStep::render() {
@@ -78,7 +78,7 @@ void RenderStep::render() {
 			GraphicDriver::drawShapeWithTextureAndColor(verticesData, info,
 												 vertices->getVertices().size());
 		} else if(mode == (RenderStepMode::SHAPE | RenderStepMode::TEXTURE)) {
-			GraphicDriver::drawShapeWithTexture(verticesData, info,
+			GraphicDriver::drawShapeWithTextureAndColor(verticesData, info,
 										 vertices->getVertices().size());
 		} else if(mode == (RenderStepMode::SHAPE | RenderStepMode::COLOR)) {
 			GraphicDriver::drawShapeWithColor(verticesData, info, vertices->getVertices().size());
@@ -101,44 +101,44 @@ void RenderStep::update() {
 }
 
 RenderInfo& RenderStep::getRenderInfo() {
-    return info;
+	return info;
 }
 
 void RenderStep::setRenderInfo(const RenderInfo& newRenderInfo) {
-    info = newRenderInfo;
+	info = newRenderInfo;
 }
 
 RenderStepMode::Enum RenderStep::getMode() const {
-    return mode;
+	return mode;
 }
 
 void RenderStep::setMode(RenderStepMode::Enum newMode) {
-    mode = newMode;
+	mode = newMode;
 }
 
 void RenderStep::addMode(RenderStepMode::Enum newMode) {
-    mode |= newMode;
+	mode |= newMode;
 }
 
 void RenderStep::removeMode(RenderStepMode::Enum mode) {
-	//Magic line fliping to 0 every flag passed with the mode parameter. 
-    mode = ~(~(mode) | (mode));
+	//Magic line fliping to 0 every flag passed with the mode parameter.
+	mode = ~(~(mode) | (mode));
 }
 
 bool RenderStep::isDeleteVerticesGroup() const {
-    return deleteVerticesGroup;
+	return deleteVerticesGroup;
 }
 
 void RenderStep::setDeleteVerticesGroup(bool newDeleteVerticesGroup) {
-    deleteVerticesGroup = newDeleteVerticesGroup;
+	deleteVerticesGroup = newDeleteVerticesGroup;
 }
 
 VerticesGroup* RenderStep::getVerticesGroup() {
-    return vertices;
+	return vertices;
 }
 
 void RenderStep::setVerticesGroup(VerticesGroup* newVertices) {
-    vertices = newVertices;
+	vertices = newVertices;
 }
 
 bool RenderStep::isUseSinceEpoch() const {
@@ -190,9 +190,9 @@ const std::string& RenderStep::getCurrentAnimation() const {
 }
 
 void RenderStep::clean() {
-    if(deleteVerticesGroup && vertices) {
-        delete vertices;
-    }
+	if(deleteVerticesGroup && vertices) {
+		delete vertices;
+	}
 }
 
 void RenderStep::updateVerticesData() {
@@ -239,19 +239,19 @@ void RenderStep::removeVertexPtr(Vertex* vertexPtr) {
 }
 
 void RenderStep::copyFrom(const RenderStep &src) {
-    if(this != &src && &src) {
-        clean();
+	if(this != &src && &src) {
+		clean();
 		info = src.info;
 		mode = src.mode;
 		vertices = 0;
 		verticesData.clear();
 		verticesPtr.clear();
 		useSinceEpoch = src.useSinceEpoch;
-        deleteVerticesGroup = src.deleteVerticesGroup;
+		deleteVerticesGroup = src.deleteVerticesGroup;
 		lastFrameChange = 0.0;
 		isPaused = false;
 		pauseFrameRemain = 0.0;
-    }
+	}
 }
 
 void RenderStep::setColor(const Color& newColor){
