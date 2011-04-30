@@ -185,6 +185,31 @@ namespace RedBox {
 		 * @param sides Correct value are LEFT | RIGHT | TOP | BOTTOM | ALL
 		 */
 		bool IsCollidingSide(RB_SIDE sides);
+
+		/**
+		* Return if the renderable is a static one.
+		* A static object won't react to collision. (wall, floor, moving platform, etc.)
+		*/
+		bool getIsStatic();
+
+		/**
+		* Set if the renderable is a static one.
+		* A static object won't react to collision. (wall, floor, moving platform, etc.)
+		*/
+		void setIsStatic(bool isStatic);
+
+		/** 
+		* Return the elasticity factor of the renderable.
+		* Elasticity  will determine how should it bounce in a collision. Default value is 0 (Solid object)
+		*/
+		float getElasticity();
+		/** 
+		* Set the elasticity factor of the renderable.
+		* Elasticity  will determine how should it bounce in a collision. Default value is 0 (Solid object)
+		*/
+		void setElasticity(float elasticity);
+
+
 	private:
 		///Position vector
 		Vec2 position;
@@ -210,7 +235,12 @@ namespace RedBox {
 		 * A side that can't collide will let a sprite pass through.
 		 */
 		RB_SIDE collidableSides;
+	
+		///Elasticity factor of the renderable, will determine how should it bounce in a collision. Default value is 0 (Solid object)
+		float elasticity;
 		
+		///This renderable won't react to collision if this boolean is set to true. 
+		bool staticObject;
 		/// The z coordinate.
 		int z;
 		/// Used to know if the renderable needs to be deleted.

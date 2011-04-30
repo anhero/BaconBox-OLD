@@ -2,7 +2,7 @@
 #include "RedBoxEngine.h"
 using namespace RedBox;
 Renderable::Renderable(): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(0), toBeDeleted(false), zChanged(false),
-isInState(false). collidableSides(Side::ALL){
+isInState(false), collidableSides(Side::ALL), elasticity(0.0), staticObject(false){
 }
 
 Renderable::Renderable(const Renderable& src): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(src.z), 
@@ -160,3 +160,18 @@ bool Renderable::IsCollidingSide(RB_SIDE sides){
 	RB_SIDE tempSides = collidableSides & sides;
 	return collidableSides == tempSides;
 }
+
+bool Renderable::getIsStatic(){
+	return staticObject;
+}
+
+void Renderable::setIsStatic(bool isStatic){
+	staticObject = isStatic;
+}
+float Renderable::getElasticity(){
+return elasticity;
+}
+void Renderable::setElasticity(float elasticity){
+this->elasticity = elasticity;
+}
+
