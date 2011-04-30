@@ -154,7 +154,7 @@ void RenderStep::playAnimation(const std::string& name) {
 		// We set the new current animation and start the animation at the first
 		// frame.
 		info.setCurrentAnimation(name);
-		info.setCurrentFrame(info.getAnimationParameters(info.getCurrentAnimation())->frames.front());
+		info.setCurrentFrame(0);
 		info.resetCurrentNbLoops();
 		if(useSinceEpoch) {
 			lastFrameChange = TimeHelper::getInstance().getSinceStartComplete();
