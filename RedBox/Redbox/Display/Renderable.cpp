@@ -1,11 +1,11 @@
 #include "Renderable.h"
 #include "RedBoxEngine.h"
 using namespace RedBox;
-Renderable::Renderable(): z(0), toBeDeleted(false), zChanged(false),
+Renderable::Renderable(): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(0), toBeDeleted(false), zChanged(false),
 isInState(false){
 }
 
-Renderable::Renderable(const Renderable& src): z(src.z), 
+Renderable::Renderable(const Renderable& src): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(src.z), 
 toBeDeleted(src.toBeDeleted), zChanged(src.zChanged), isInState(false) {
 }
 
@@ -95,12 +95,53 @@ void Renderable::move(float deltaX, float deltaY) {
 	moveY(deltaY);
 }
 
+void Renderable::setMaxVelocityX(float xVelocity){
+	maxVelocityX = xVelocity;
+}
+void Renderable::setMaxVelocityY(float yVelocity){
+	maxVelocityY = yVelocity;
+}
+
+void Renderable::setMaxVelocity(float xVelocity, float yVelocity){
+	maxVelocityX = xVelocity;
+	maxVelocityY = yVelocity;
+}
+float Renderable::getMaxVelocityX(){
+	return maxVelocityX;
+}
+float Renderable::getMaxVelocityY(){
+	return maxVelocityY;
+}
+
 void Renderable::update(){
 	//float ratio1 = RedBoxEngine::getUpdateDelta();
 	//float ratio2 = RedBoxEngine::getUpdateDelay();
 	float ratio = 0.00833;
 	oldPosition = position;
+	
+	
+	if (maxVelocityX != NO_MAX_VELOCITY) {
+		
+		if (velocity.getX() < -maxVelocityX) {
+			velocity.setX(-maxVelocityX);
+		}
+		else if(velocity.getX() > maxVelocityX) {
+			velocity.setX(maxVelocityX);
+		}
+	}
+	if (maxVelocityY != NO_MAX_VELOCITY) {
+		
+		if (velocity.getY() < -maxVelocityY) {
+			velocity.setY(-maxVelocityY);
+		}
+		else if(velocity.getY() > maxVelocityY) {
+			velocity.setY(maxVelocityY);
+		}
+	}
+	
+	
 	position += (velocity * ratio);
 	this->setPosition(position.getX(), position.getY());
 	velocity += (acceleration* ratio);
+	
 }

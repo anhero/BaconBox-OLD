@@ -6,7 +6,7 @@
 #include "Vec2.h"
 #ifndef RB_RENDERABLE_H
 #define RB_RENDERABLE_H
-
+#define NO_MAX_VELOCITY -1
 namespace RedBox {
 	/**
 	 * Represents a renderable object assiociated with its z coordinate.
@@ -143,6 +143,17 @@ namespace RedBox {
 		 */
 		virtual void move(float deltaX, float deltaY);
 		
+		///Set the absolute maxmimum velocity in x (Maximum velocity in both x direction)
+		void setMaxVelocityX(float xVelocity);
+		///Set the absolute maxmimum velocity in y (Maximum velocity in both y direction)
+		void setMaxVelocityY(float yVelocity);
+		///Set the absolute maxmimum velocity in x and y (Maximum velocity in both direction for both axis)
+		void setMaxVelocity(float xVelocity, float yVelocity);
+		///Return the absolute maximum velocity in x (Maximum velocity in both x direction)
+		float getMaxVelocityX();
+		///Return the absolute maximum velocity in y (Maximum velocity in both y direction)
+		float getMaxVelocityY();
+		
 		/**
 		 * return renderable's width.
 		 */
@@ -152,6 +163,7 @@ namespace RedBox {
 		 * return renderable's height.
 		 */
 		virtual float getHeight() const = 0;
+		
 
 	private:
 		///Position vector
