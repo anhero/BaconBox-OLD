@@ -5,6 +5,8 @@
 #ifndef RB_COLOR_H
 #define RB_COLOR_H
 
+#include <stdint.h>
+
 #include <iostream>
 
 namespace RedBox {
@@ -19,7 +21,7 @@ namespace RedBox {
 		/// Number of components each color has.
 		static const unsigned int NB_COMPONENTS = 4;
 		/// Maximum value a component can have.
-		static const unsigned int MAX_COMPONENT_VALUE = 255;
+		static const unsigned int MAX_COMPONENT_VALUE = 0xff;
 		/// Black color (0, 0, 0, 255).
 		static const Color BLACK;
 		/// White color (255, 255, 255, 255).
@@ -58,14 +60,14 @@ namespace RedBox {
 		 * @param blue Blue component.
 		 * @param alpha Alpha component.
 		 */
-		Color(unsigned int red, unsigned int green,
-			  unsigned int blue, unsigned int alpha = MAX_COMPONENT_VALUE);
+		Color(uint8_t red, uint8_t green, uint8_t blue,
+			  uint8_t alpha = MAX_COMPONENT_VALUE);
 
 		/**
 		 * Parameterized constructor with one parameter.
 		 * @param rgba Color in the format 0x00000000.
 		 */
-		Color(unsigned int rgba);
+		Color(uint32_t rgba);
 
 		/**
 		 * Copy constructor. Simply calls setRGBA() with the given color's
@@ -81,33 +83,45 @@ namespace RedBox {
 		Color& operator=(const Color& src);
 
 		/**
+		 * Comparison operator overlaod.
+		 * @param other Other color to compare to.
+		 */
+		bool operator==(const Color& other);
+
+		/**
+		 * Comparison operator overlaod.
+		 * @param other Other color to compare to.
+		 */
+		bool operator!=(const Color& other);
+
+		/**
 		 * Operator to cast the color into one component.
 		 */
-		operator unsigned int() const;
+		operator uint32_t() const;
 
 		/**
 		 * Gets the color's red component.
 		 * @return Red component
 		 */
-		unsigned int getRed() const;
+		uint8_t getRed() const;
 
 		/**
 		 * Gets the color's green component.
 		 * @return Green component
 		 */
-		unsigned int getGreen() const;
+		uint8_t getGreen() const;
 
 		/**
 		 * Gets the color's blue component.
 		 * @return Blue component
 		 */
-		unsigned int getBlue() const;
+		uint8_t getBlue() const;
 
 		/**
 		 * Gets the color's alpha component.
 		 * @return Alpha component
 		 */
-		unsigned int getAlpha() const;
+		uint8_t getAlpha() const;
 
 		/**
 		 * Sets the color's red component. Takes care of validating the value
@@ -115,7 +129,7 @@ namespace RedBox {
 		 * given are used.
 		 * @param red New red component.
 		 */
-		void setRed(unsigned int red);
+		void setRed(uint8_t red);
 
 		/**
 		 * Sets the color's green component. Takes care of validating the
@@ -123,7 +137,7 @@ namespace RedBox {
 		 * value given are used.
 		 * @param green New green component.
 		 */
-		void setGreen(unsigned int green);
+		void setGreen(uint8_t green);
 
 		/**
 		 * Sets the color's blue component. Takes care of validating the value
@@ -131,7 +145,7 @@ namespace RedBox {
 		 * given are used.
 		 * @param blue New blue component.
 		 */
-		void setBlue(unsigned int blue);
+		void setBlue(uint8_t blue);
 
 		/**
 		 * Sets the color's alpha component. Takes care of validating the
@@ -139,7 +153,7 @@ namespace RedBox {
 		 * given are used.
 		 * @param alpha New alpha component.
 		 */
-		void setAlpha(unsigned int alpha);
+		void setAlpha(uint8_t alpha);
 
 		/**
 		 * Sets the color's red, green and blue components. Simply calls
@@ -148,7 +162,7 @@ namespace RedBox {
 		 * @param green New green component.
 		 * @param blue New blue component.
 		 */
-		void setRGB(unsigned int red, unsigned int green, unsigned int blue);
+		void setRGB(uint8_t red, uint8_t green, uint8_t blue);
 
 		/**
 		 * Sets the color's red, green and blue components. Simply calls
@@ -158,17 +172,22 @@ namespace RedBox {
 		 * @param blue New blue component.
 		 * @param alpha New alpha component.
 		 */
-		void setRGBA(unsigned int red, unsigned int green, unsigned int blue,
-					 unsigned int alpha);
+		void setRGBA(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha);
 
 		/**
 		 * Set the 4 components with one integer.
 		 * @param rgba Color in the format 0x00000000.
 		 */
-		void setRGBA(unsigned int rgba);
+		void setRGBA(uint32_t rgba);
+
+		/**
+		 * Directly gets the color's array of components.
+		 * @return Array containing the four components in the order RGBA.
+		 */
+		const uint8_t* getComponents() const;
 	private:
 		/// Color components.
-		unsigned int colors[NB_COMPONENTS];
+		uint8_t colors[NB_COMPONENTS];
 	};
 }
 

@@ -4,6 +4,8 @@
 
 #include "PlatformFlagger.h"
 
+#include <iostream>
+
 #include <cfloat>
 #include <cassert>
 
@@ -296,6 +298,7 @@ void VerticesGroup::resetPointers() {
 void VerticesGroup::copyFrom(const VerticesGroup& src) {
     // We make sure the recieved VertexGroup isn't the instance and isn't null.
 	if(this != &src && &src) {
+		vertices.clear();
 		vertices = src.vertices;
 	}
 }

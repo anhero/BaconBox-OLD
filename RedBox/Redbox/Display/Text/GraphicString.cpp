@@ -180,7 +180,7 @@ void GraphicString::setString(){
 		//We do not delete the glyph, it would break the glyph cache.
 		//Also we must check for null pointer, since space does not have sprite
 		if(i->second != NULL){
-			i->second->setMainColor(color[0], color[1], color[2], color[3]);
+			i->second->setMainColor(Color(color[0], color[1], color[2], color[3]));
 		}
 	}
 	setPosition();

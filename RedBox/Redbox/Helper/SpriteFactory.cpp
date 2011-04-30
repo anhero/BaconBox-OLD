@@ -31,8 +31,7 @@ Sprite* SpriteFactory::makePolygon(unsigned int nbSides, float sideLength,
 		RenderStep* ren = new RenderStep();
 		ren->setVerticesGroup(&result->getVertices());
 		ren->setDeleteVerticesGroup(false);
-		ren->setColor(color.getRed(), color.getGreen(), color.getBlue(),
-					  color.getAlpha());
+		ren->setColor(color);
 		ren->setMode(RenderStepMode::SHAPE | RenderStepMode::COLOR);
 		result->addRenderStep(ren);
 

@@ -5,8 +5,8 @@ Renderable::Renderable(): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VEL
 isInState(false), collidableSides(Side::ALL), elasticity(0.0), staticObject(false){
 }
 
-Renderable::Renderable(const Renderable& src): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(src.z), 
-toBeDeleted(src.toBeDeleted), zChanged(src.zChanged), isInState(false) {
+Renderable::Renderable(const Renderable& src) {
+	copyFrom(src);
 }
 
 Renderable::~Renderable() {
@@ -43,7 +43,16 @@ void Renderable::resetZChanged() {
 
 void Renderable::copyFrom(const Renderable& src) {
 	if(this != &src && &src) {
-		this->z = src.z;
+		position = src.position;
+		oldPosition = position;
+		velocity = Vec2();
+		acceleration = Vec2();
+		maxVelocityX = src.maxVelocityX;
+		maxVelocityY = src.maxVelocityY;
+		z = src.z;
+		toBeDeleted = false;
+		zChanged = true;
+		isInState = false;
 	}
 }
 
