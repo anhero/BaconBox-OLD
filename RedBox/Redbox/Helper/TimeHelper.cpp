@@ -8,20 +8,33 @@
 
 using namespace RedBox;
 
-TimeHelper* TimeHelper::instance = 0;
-
-TimeHelper* TimeHelper::getInstance() {
-	if(!instance) {
-		instance = RB_TIME_HELPER_IMPL;
-	}
+TimeHelper& TimeHelper::getInstance() {
+	static RB_TIME_HELPER_IMPL instance;
 	return instance;
 }
 
-double TimeHelper::getSinceStart() const {
+double TimeHelper::getSinceStart(TimeType timeType) const {
+	switch(timeType) {
+	case SCALABLE_PAUSABLE:
+		return getSinceStartScalablePausable();
+		break;
+	case PAUSABLE:
+		return getSinceStartPausable();
+		break;
+	case COMPLETE:
+		return getSinceStartComplete();
+		break;
+	default:
+		return getSinceStartComplete();
+		break;
+	}
+}
+
+double TimeHelper::getSinceStartScalablePausable() const {
 	return sinceStart;
 }
 
-double TimeHelper::getSinceStartReal() const {
+double TimeHelper::getSinceStartPausable() const {
 	return sinceStartReal;
 }
 

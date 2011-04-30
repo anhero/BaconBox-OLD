@@ -51,7 +51,7 @@ bool OpenALSoundFX::isLooping() {
 	return static_cast<bool>(looping);
 }
 
-AudioState::Enum OpenALSoundFX::getCurrentState() {
+AudioState::Enum OpenALSoundFX::getCurrentState() const {
 	ALint state;
 	AudioState::Enum result;
 	alGetSourcei(sourceId, AL_SOURCE_STATE, &state);

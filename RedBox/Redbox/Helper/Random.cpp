@@ -40,6 +40,13 @@ double Random::getRandomDouble(double min, double max) {
 	return (static_cast<double>(rand()) / Random::D_RAND_MAX) * (max - min) + min;
 }
 
+double Random::getRandomFloat(float min, float max) {
+	if(!initialized) {
+		init();
+	}
+	return (static_cast<float>(rand()) / Random::D_RAND_MAX) * (max - min) + min;
+}
+
 void Random::init() {
 	srand(time(NULL));
 	initialized = true;

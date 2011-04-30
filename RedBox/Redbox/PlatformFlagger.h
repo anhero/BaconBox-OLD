@@ -1,24 +1,6 @@
 #ifndef RB_PLATFORM_FLAGGER_H
 #define RB_PLATFORM_FLAGGER_H
 
-
-#ifdef linux
-	#define RB_LINUX
-
-	//Use OpenGL on Linux
-	#define RB_OPENGL
-
-	//TODO: Check: if this is not defined, OpenAL stuff still gets included...
-	#define RB_OPENAL
-	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-	#define RB_SOUND_ENGINE new OpenALEngine()
-	#define RB_MUSIC_ENGINE NULL
-
-	#define	RB_TIME_HELPER_IMPL new LibcTimeHelper()
-	#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
-#endif // linux
-
-
 #ifdef QT
 	#ifndef RB_QT
 		#define RB_QT
@@ -29,6 +11,30 @@
 	#define RB_SDL
 #endif
 
+#ifdef linux
+	#define RB_LINUX
+
+	//Use OpenGL on Linux
+	#define RB_OPENGL
+
+	#ifdef RB_SDL
+		#define RB_SOUND_ENGINE SDLMixerEngine::getInstance()
+		#define RB_SOUND_ENGINE_INCLUDE "SDLMixerEngine.h"
+		#define RB_MUSIC_ENGINE SDLMixerEngine::getInstance()
+		#define RB_MUSIC_ENGINE_INCLUDE "SDLMixerEngine.h"
+	#elif defined(RB_QT)
+		//TODO: Check: if this is not defined, OpenAL stuff still gets included...
+		#define RB_OPENAL
+		#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+		#define RB_SOUND_ENGINE new OpenALEngine()
+		#define RB_MUSIC_ENGINE NULL
+	#endif
+
+
+	#define	RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
+	#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
+#endif // linux
+
 #ifdef _WIN32
 	#ifdef RB_QT
 		#include <qt_windows.h>
@@ -38,14 +44,22 @@
 
 	#define RB_WIN32
 
-	#define RB_OPENAL
-	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-	#define RB_SOUND_ENGINE new OpenALEngine()
-	#define RB_MUSIC_ENGINE NULL
+	#ifdef RB_SDL
+		#define RB_SOUND_ENGINE SDLMixerEngine::getInstance()
+		#define RB_SOUND_ENGINE_INCLUDE "SDLMixerEngine.h"
+		#define RB_MUSIC_ENGINE SDLMixerEngine::getInstance()
+		#define RB_MUSIC_ENGINE_INCLUDE "SDLMixerEngine.h"
+	#elif defined(RB_QT)
+		//TODO: Check: if this is not defined, OpenAL stuff still gets included...
+		#define RB_OPENAL
+		#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+		#define RB_SOUND_ENGINE new OpenALEngine()
+		#define RB_MUSIC_ENGINE NULL
+	#endif
 
 	#define RB_OPENGL
 	
-	#define	RB_TIME_HELPER_IMPL new WindowsTimeHelper()
+	#define	RB_TIME_HELPER_IMPL RedBox::WindowsTimeHelper
 	#define RB_TIME_HELPER_INCLUDE "WindowsTimeHelper.h"
 
 	/*#ifdef _WIN32_WINNT_VISTA
@@ -78,20 +92,20 @@
 	#endif
 
 	#ifdef RB_MAC_PLATFORM
-		#define	RB_TIME_HELPER_IMPL new LibcTimeHelper()
+		#define RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
 		#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
 	#endif
 
 	#ifdef RB_IPHONE_PLATFORM
-		#define	RB_TIME_HELPER_IMPL new IOSTimeHelper()
+		#define	RB_TIME_HELPER_IMPL RedBox::IOSTimeHelper
 		#define RB_TIME_HELPER_INCLUDE "IOSTimeHelper.h"
 	#endif
 
 	#if defined(SDL) && defined(RB_MAC_PLATFORM)
-		#define RB_OPENAL
-		#define RB_SOUND_ENGINE new OpenALEngine()
-		#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-		#define RB_MUSIC_ENGINE NULL
+		#define RB_SOUND_ENGINE SDLMixerEngine::getInstance()
+		#define RB_SOUND_ENGINE_INCLUDE "SDLMixerEngine.h"
+		#define RB_MUSIC_ENGINE SDLMixerEngine::getInstance()
+		#define RB_MUSIC_ENGINE_INCLUDE "SDLMixerEngine.h"
 	#elif defined(RB_IPHONE_PLATFORM) || defined(RB_MAC_PLATFORM)
 		#define RB_OPENAL
 		#define RB_AV_AUDIO_PLAYER
@@ -149,10 +163,6 @@
 
 #ifndef RB_INPUT_MANAGER_IMPL
 	#define RB_INPUT_MANAGER_IMPL new InputManager()
-#endif
-
-#ifndef RB_TIME_HELPER_IMPL
-	#define RB_TIME_HELPER_IMPL NULL
 #endif
 
 #endif

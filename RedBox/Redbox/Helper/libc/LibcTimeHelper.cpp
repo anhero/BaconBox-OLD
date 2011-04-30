@@ -4,6 +4,9 @@
 
 #include "LibcTimeHelper.h"
 
+#include <unistd.h>
+#include <cmath>
+
 using namespace RedBox;
 
 LibcTimeHelper::LibcTimeHelper() : TimeHelper() {
@@ -40,6 +43,11 @@ void LibcTimeHelper::refreshTime() {
 
 	// We refresh the lastTime variable.
 	lastTime = currentTime;
+}
+
+void LibcTimeHelper::sleep(double duration) {
+	::sleep(static_cast<unsigned int>(floor(duration)));
+	::usleep(static_cast<unsigned int>(fmod(duration, floor(duration)) * 1000.0) * 1000);
 }
 
 void LibcTimeHelper::timevalSubstract(timeval& x, timeval& y, timeval& result) {

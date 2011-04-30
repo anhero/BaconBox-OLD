@@ -31,6 +31,7 @@
 
 namespace RedBox {
 	class SoundFX;
+	class NullAudio;
 	struct SoundInfo;
 	/**
 	 * Audio engine using OpenAL to play the sounds.
@@ -76,6 +77,8 @@ namespace RedBox {
 		std::vector<std::string> deviceList;
 		/// Sources being played.
 		std::list<OpenALSoundFX*> sources;
+		/// Non-surviving NullAudios that were returned.
+		std::list<NullAudio*> nullsToClean;
 		/**
 		 * Default constructor.
 		 */
@@ -95,8 +98,8 @@ namespace RedBox {
 		/**
 		 * Loads a sound effect from a file. For now, it must be a wav file.
 		 * @param filePath Path to the sound effect's file.
-		 * @return Pointer to the loaded sound effect.
-		 Null if the loading failed.
+		 * @return Pointer to the loaded sound effect. Null if the loading
+		 * failed.
 		 */
 		SoundInfo* loadSound(const std::string& filePath);
 		/**

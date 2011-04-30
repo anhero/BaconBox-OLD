@@ -12,6 +12,10 @@
 #include <string>
 #endif
 
+#ifdef RB_SDL
+#include <SDL/SDL_mixer.h>
+#endif
+
 namespace RedBox {
 	/**
 	 * Contains the data about a sound that can be played. Contains platform-
@@ -22,6 +26,9 @@ namespace RedBox {
 #ifdef RB_AV_AUDIO_PLAYER
 		/// Path to the music file.
 		std::string filePath;
+#endif
+#ifdef RB_SDL
+		Mix_Music* music;
 #endif
 	};
 }

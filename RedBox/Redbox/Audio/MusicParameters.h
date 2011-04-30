@@ -20,7 +20,7 @@ namespace RedBox {
 	struct MusicParameters {
 		/// Name used by the ResourceManager.
 		std::string name;
-#ifdef RB_AV_AUDIO_PLAYER
+#if defined(RB_AV_AUDIO_PLAYER) || defined(RB_SDL)
 		/// Path to the music to load.
 		std::string filePath;
 #endif

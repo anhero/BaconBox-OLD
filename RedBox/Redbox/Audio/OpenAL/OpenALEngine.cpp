@@ -12,6 +12,7 @@
 
 #include "SoundFX.h"
 #include "SoundInfo.h"
+#include "NullAudio.h"
 
 #include "ResourceManager.h"
 
@@ -50,7 +51,11 @@ SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
 		sources.back()->load(sndInfo->bufferId);
 		return sources.back();
 	} else {
-		return NULL;
+		NullAudio* nullAudio = new NullAudio();
+		if(!survive) {
+			nullsToClean.push_back(nullAudio);
+		}
+		return nullAudio;
 	}
 }
 
@@ -132,28 +137,41 @@ void OpenALEngine::init() {
 }
 
 void OpenALEngine::update() {
-	// We delete the sources of stopped sounds that must not survive.
-	ALint state;
-	// For each sound effect.
-	for (std::list<OpenALSoundFX*>::iterator i = sources.begin();
-		 i != sources.end(); i++) {
-		// We get its current state.
-		alGetSourcei((*i)->sourceId, AL_SOURCE_STATE, &state);
-		// We check if it is not being played.
-		if (state == AL_STOPPED) {
-			// If we have to decrease its number of times left.
-			if((*i)->nbTimesLeft > 0) {
-				// We decrease it and replay it.
-				--(*i)->nbTimesLeft;
-				alSourcePlay((*i)->sourceId);
-			} else if(!(*i)->survives) {
-				// We delete the sound.
-				alDeleteSources(1, &((*i)->sourceId));
-				delete *i;
-				sources.erase(i);
+	{
+		// We delete the sources of stopped sounds that must not survive.
+		ALint state;
+		// For each sound effect.
+		std::list<OpenALSoundFX*>::iterator i = sources.begin();
+		while(i != sources.end()) {
+			// We get its current state.
+			alGetSourcei((*i)->sourceId, AL_SOURCE_STATE, &state);
+			// We check if it is not being played.
+			if(state == AL_STOPPED) {
+				// If we have to decrease its number of times left.
+				if((*i)->nbTimesLeft > 0) {
+					// We decrease it and replay it.
+					--(*i)->nbTimesLeft;
+					alSourcePlay((*i)->sourceId);
+					++i;
+				} else if(!(*i)->survives) {
+					// We delete the sound.
+					alDeleteSources(1, &((*i)->sourceId));
+					delete *i;
+					i = sources.erase(i);
+				} else {
+					++i;
+				}
+			} else {
+				++i;
 			}
 		}
 	}
+
+	for(std::list<NullAudio*>::iterator i = nullsToClean.begin();
+		i != nullsToClean.end(); ++i) {
+		if(*i) delete *i;
+	}
+	nullsToClean.clear();
 }
 
 SoundInfo* OpenALEngine::loadSound(const std::string& filePath) {

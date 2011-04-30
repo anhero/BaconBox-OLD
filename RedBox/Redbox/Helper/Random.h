@@ -37,6 +37,15 @@ namespace RedBox {
 		 * @return Number generated randomly between min and max (inclusively).
 		 */
 		static double getRandomDouble(double min, double max);
+
+		/**
+		 * Generates a random float. The number generated will inclusively be
+		 * between the min and the max recieved.
+		 * @param min Minimum value the generated number can have.
+		 * @param max Maximum value the generated number can have.
+		 * @return Number generated randomly between min and max (inclusively).
+		 */
+		static double getRandomFloat(float min, float max);
 	private:
 		/// Maximum double value.
 		static double D_RAND_MAX;

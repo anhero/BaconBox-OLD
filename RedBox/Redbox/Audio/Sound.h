@@ -47,7 +47,7 @@ namespace RedBox {
 		 * @return Sound's current state.
 		 * @see RedBox::AudioState::Enum
 		 */
-		virtual AudioState::Enum getCurrentState() = 0;
+		virtual AudioState::Enum getCurrentState() const = 0;
 		/**
 		 * Destructor. Does not delete the sound data, only the sound source.
 		 * This is done to be able to have many sounds playing the same

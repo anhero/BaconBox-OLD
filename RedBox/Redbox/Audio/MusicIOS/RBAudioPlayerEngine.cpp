@@ -4,6 +4,7 @@
 #include "MusicInfo.h"
 #include "ResourceManager.h"
 #include "AudioState.h"
+#include "NullAudio.h"
 
 #include "Debug.h"
 
@@ -20,7 +21,11 @@ BackgroundMusic* RBAudioPlayerEngine::getBackgroundMusic(std::string const &key,
 		}
 		return bgm;
 	} else {
-		return NULL;
+		NullAudio* nullAudio = new NullAudio();
+		if(!survive) {
+			managedMusics.push_back(nullAudio);
+		}
+		return nullAudio;
 	}
 }
 
@@ -34,7 +39,7 @@ void RBAudioPlayerEngine::init() {
 }
 
 void RBAudioPlayerEngine::update() {
-	for (std::list<RBAudioPlayerMusic*>::iterator i = managedMusics.begin();
+	for (std::list<BackgroundMusic*>::iterator i = managedMusics.begin();
 		 i != managedMusics.end(); i++) {
 		// If the music is at stopped, we delete it.
 		if((*i)->getCurrentState() == AudioState::STOPPED) {

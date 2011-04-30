@@ -21,6 +21,11 @@
 #endif
 #endif
 
+#ifdef RB_SDL
+#include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
+#endif
+
 #include <string>
 
 namespace RedBox {
@@ -32,6 +37,10 @@ namespace RedBox {
 #ifdef RB_OPENAL
 		/// OpenAL sound buffer ID.
 		ALuint bufferId;
+#endif
+#ifdef RB_SDL
+		/// Pointer to SDL's sound data.
+		Mix_Chunk* data;
 #endif
 	};
 }

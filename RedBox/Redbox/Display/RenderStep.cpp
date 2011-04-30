@@ -97,9 +97,9 @@ void RenderStep::update() {
 		if(info.isAnimated()) {
 			AnimationParameters* anim = info.getAnimationParameters(info.getCurrentAnimation());
 			if(anim) {
-				if(((useSinceEpoch)?(TimeHelper::getInstance()->getSinceStartComplete()):(TimeHelper::getInstance()->getSinceStart())) >= lastFrameChange + anim->timePerFrame) {
+				if(((useSinceEpoch)?(TimeHelper::getInstance().getSinceStartComplete()):(TimeHelper::getInstance().getSinceStart())) >= lastFrameChange + anim->timePerFrame) {
 					info.incrementFrame();
-					lastFrameChange = ((useSinceEpoch)?(TimeHelper::getInstance()->getSinceStartComplete()):(TimeHelper::getInstance()->getSinceStart()));
+					lastFrameChange = ((useSinceEpoch)?(TimeHelper::getInstance().getSinceStartComplete()):(TimeHelper::getInstance().getSinceStart()));
 				}
 			}
 		}
@@ -163,9 +163,9 @@ void RenderStep::playAnimation(const std::string& name) {
 		info.setCurrentFrame(info.getAnimationParameters(info.getCurrentAnimation())->frames.front());
 		info.resetCurrentNbLoops();
 		if(useSinceEpoch) {
-			lastFrameChange = TimeHelper::getInstance()->getSinceStartComplete();
+			lastFrameChange = TimeHelper::getInstance().getSinceStartComplete();
 		} else {
-			lastFrameChange = TimeHelper::getInstance()->getSinceStart();
+			lastFrameChange = TimeHelper::getInstance().getSinceStart();
 		}
 	} else {
 		RB_ECHO("Tried play an animation which does not exist for the concerned RenderStep: " << name);
@@ -175,18 +175,18 @@ void RenderStep::playAnimation(const std::string& name) {
 void RenderStep::pauseAnimation() {
 	isPaused = true;
 	if(useSinceEpoch) {
-		pauseFrameRemain = TimeHelper::getInstance()->getSinceStartComplete() - lastFrameChange;
+		pauseFrameRemain = TimeHelper::getInstance().getSinceStartComplete() - lastFrameChange;
 	} else {
-		pauseFrameRemain = TimeHelper::getInstance()->getSinceStart() - lastFrameChange;
+		pauseFrameRemain = TimeHelper::getInstance().getSinceStart() - lastFrameChange;
 	}
 }
 
 void RenderStep::resumeAnimation() {
 	isPaused = false;
 	if(useSinceEpoch) {
-		lastFrameChange = TimeHelper::getInstance()->getSinceStartComplete() - pauseFrameRemain;
+		lastFrameChange = TimeHelper::getInstance().getSinceStartComplete() - pauseFrameRemain;
 	} else {
-		lastFrameChange = TimeHelper::getInstance()->getSinceStart() - pauseFrameRemain;
+		lastFrameChange = TimeHelper::getInstance().getSinceStart() - pauseFrameRemain;
 	}
 	pauseFrameRemain = 0.0;
 }

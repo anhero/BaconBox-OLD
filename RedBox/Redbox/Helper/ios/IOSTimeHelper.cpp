@@ -9,6 +9,10 @@
 
 using namespace RedBox;
 
+void IOSTimeHelper::sleep(double duration) {
+	[NSThread sleepForTimeInterval : duration]
+}
+
 IOSTimeHelper::IOSTimeHelper() : TimeHelper(), startTime(0.0), lastTime(0.0) {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	startTime = [[NSDate date] timeIntervalSince1970];

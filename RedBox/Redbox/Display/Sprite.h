@@ -160,8 +160,8 @@ namespace RedBox {
 		 * @return Pair containing the sprite's width and height. The first
 		 * member is the width and the second is the height.
 		 */
-		const std::pair<float, float>& getWidthHeight() const;
-
+		std::pair<float, float> getWidthHeight() const;
+		
 		/**
 		 * Adds a rendering step. Does nothing if the recieved pointer is NULL.
 		 * @param newRenderStep Pointer to the rendering step to add.

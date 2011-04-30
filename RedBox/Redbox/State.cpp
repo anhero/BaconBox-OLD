@@ -82,6 +82,8 @@ void State::update() {
 		renderables.insert(std::pair<int, Renderable*>((*it)->getZ(), *it));
 	}
 	zChange.clear();
+
+	camera.update();
 }
 
 const std::string& State::getName() const {
@@ -90,6 +92,14 @@ const std::string& State::getName() const {
 
 void State::setName(const std::string& newName) {
 	name = newName;
+}
+
+void State::setBackgroundColor(const Color &newBackgroundColor) {
+	camera.setBackgroundColor(newBackgroundColor);
+}
+
+const Color& State::getBackgroundColor() const {
+	return camera.getBackgroundColor();
 }
 
 void State::addRenderableDirect(Renderable* aRenderable) {

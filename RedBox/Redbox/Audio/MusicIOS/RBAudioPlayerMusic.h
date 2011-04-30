@@ -73,7 +73,7 @@ namespace RedBox {
 		 * @return Sound effect's current state.
 		 * @see RedBox::AudioState::Enum
 		 */
-		AudioState::Enum getCurrentState();
+		AudioState::Enum getCurrentState() const;
 		/**
 		 * Destructor. Does not delete the music data, only the music source.
 		 * This is done to be able to have many musics playing the same

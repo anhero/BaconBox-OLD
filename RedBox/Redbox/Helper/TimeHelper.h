@@ -13,24 +13,38 @@ namespace RedBox {
 	class TimeHelper {
 		friend class RedBoxEngine;
 	public:
+		enum TimeType {
+			SCALABLE_PAUSABLE,
+			PAUSABLE,
+			COMPLETE
+		};
+
 		/**
 		 * Gets TimeHelper's instance.
 		 */
-		static TimeHelper* getInstance();
+		static TimeHelper& getInstance();
+		/**
+		 * Calls the respective getSinceStart...() functions from the enum
+		 * type.
+		 * @param timeType Type of time to get.
+		 * @return Time since the game started either scaled or not and with
+		 * the paused time counted or not.
+		 */
+		double getSinceStart(TimeType timeType = SCALABLE_PAUSABLE) const;
 		/**
 		 * Gets the time since the game was started (in seconds). Takes into
 		 * account the time scaling. Time is not counted while the game is
 		 * paused. Depends on refreshTime() being called recently.
 		 * @return Time since the game was started (in seconds).
 		 */
-		double getSinceStart() const;
+		double getSinceStartScalablePausable() const;
 		/**
 		 * Gets the time since the game was started (in seconds). Does not take
 		 * into account the time scaling. Time is not counted while the game is
 		 * paused. Depends on refreshTime() being called recently.
 		 * @return Time since the game was started (in seconds).
 		 */
-		double getSinceStartReal() const;
+		double getSinceStartPausable() const;
 		/**
 		 * Gets the time since the game was started (in seconds). Does not take
 		 * into account the time scaling. Time is counted while the game is
@@ -65,6 +79,11 @@ namespace RedBox {
 		 * @return True if TimeHelper is paused, false if not.
 		 */
 		bool isPaused() const;
+		/**
+		 * Makes the game go to sleep for a specific time.
+		 * @param duration Duration of the sleep.
+		 */
+		virtual void sleep(double duration) = 0;
 	protected:
 		/**
 		 * Time in seconds since the TimeHelper was initialized. It is
@@ -95,8 +114,6 @@ namespace RedBox {
 		 */
 		virtual void refreshTime() = 0;
 	private:
-		/// TimeHelper's instance.
-		static TimeHelper* instance;
 		/**
 		 * Time scaling. The higher the value, the faster the time is being
 		 * calculated.

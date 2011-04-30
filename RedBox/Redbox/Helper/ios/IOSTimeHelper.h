@@ -10,6 +10,8 @@
 namespace RedBox {
 	class IOSTimeHelper : public TimeHelper {
 		friend class TimeHelper;
+	public:
+		void sleep(double duration);
 	private:
 		/// Time at which TimeHelper was initialized.
 		double startTime;
