@@ -4,6 +4,7 @@
  */
 
 #include "Vec2.h"
+#include "Side.h"
 #ifndef RB_RENDERABLE_H
 #define RB_RENDERABLE_H
 #define NO_MAX_VELOCITY -1
@@ -165,6 +166,25 @@ namespace RedBox {
 		virtual float getHeight() const = 0;
 		
 
+		/**
+		 * Use to set the collidableSides flag. 
+		 * Used to set which side of a sprite should collide and which should not.
+		 * @param collidableSides Correct value are LEFT | RIGHT | TOP | BOTTOM | ALL
+		 */
+		 void setCollidableSides(RB_SIDE collidableSides);
+		
+		/**
+		 * Getter for the collidableSides flag. 
+		 * Used to get which side of a sprite should collide and which should not.
+		 * @return Possible return flag : LEFT | RIGHT | TOP | BOTTOM 
+		 */
+		RB_SIDE getCollidableSides();
+		
+		/**
+		 * Return true if the given sides are collidable sides.
+		 * @param sides Correct value are LEFT | RIGHT | TOP | BOTTOM | ALL
+		 */
+		bool IsCollidingSide(RB_SIDE sides);
 	private:
 		///Position vector
 		Vec2 position;
@@ -184,6 +204,12 @@ namespace RedBox {
 		
 		///Maximum velocity in Y
 		float maxVelocityY;
+		
+		/**
+		 *Contain "Side" flag (see Side.h). It tells which side can collide. 
+		 * A side that can't collide will let a sprite pass through.
+		 */
+		RB_SIDE collidableSides;
 		
 		/// The z coordinate.
 		int z;

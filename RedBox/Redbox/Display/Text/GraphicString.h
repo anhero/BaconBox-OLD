@@ -25,15 +25,7 @@ namespace RedBox{
 			//upToDown  //not implemented yet
 	};
 	
-	/** 
-	 * Alignment of the string.
-     * @ingroup Group
-     */
-	enum Alignment{
-		left,
-		right,
-		center
-	};
+	
 	
 	/** 
 	 * A GraphicString is a renderable object that print text
@@ -42,6 +34,15 @@ namespace RedBox{
      */
 	class GraphicString : public Renderable{
 	public:
+		/** 
+		 * Alignment of the string.
+		 */
+		enum Alignment{
+			left,
+			right,
+			center
+		};
+		
 		
 		/**
 		 * Constructor

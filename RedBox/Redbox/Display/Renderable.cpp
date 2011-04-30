@@ -2,7 +2,7 @@
 #include "RedBoxEngine.h"
 using namespace RedBox;
 Renderable::Renderable(): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(0), toBeDeleted(false), zChanged(false),
-isInState(false){
+isInState(false). collidableSides(Side::ALL){
 }
 
 Renderable::Renderable(const Renderable& src): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(src.z), 
@@ -145,4 +145,18 @@ void Renderable::update(){
 	this->setPosition(position.getX(), position.getY());
 	velocity += (acceleration* ratio);
 	
+}
+
+
+void Renderable::setCollidableSides(RB_SIDE collidableSides){
+	this->collidableSides = collidableSides;
+}
+
+RB_SIDE Renderable::getCollidableSides(){
+	return collidableSides;
+}
+
+bool Renderable::IsCollidingSide(RB_SIDE sides){
+	RB_SIDE tempSides = collidableSides & sides;
+	return collidableSides == tempSides;
 }

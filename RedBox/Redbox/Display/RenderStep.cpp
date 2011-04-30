@@ -126,9 +126,9 @@ void RenderStep::addMode(RenderStepMode::Enum newMode) {
     mode |= newMode;
 }
 
-void RenderStep::removeMode(RenderStepMode::Enum newMode) {
-	//Magic line fliping to 0 every flag passed with the newMode parameter. 
-    mode = ~(~(mode) | (newMode));
+void RenderStep::removeMode(RenderStepMode::Enum mode) {
+	//Magic line fliping to 0 every flag passed with the mode parameter. 
+    mode = ~(~(mode) | (mode));
 }
 
 bool RenderStep::isDeleteVerticesGroup() const {

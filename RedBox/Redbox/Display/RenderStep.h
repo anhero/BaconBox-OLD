@@ -136,7 +136,7 @@ namespace RedBox {
         void addMode(RenderStepMode::Enum newMode);
 		
 		///Flip off the given flags. (You can pass more than one flag like this: (Flag1 | flag2))
-		void removeMode(RenderStepMode::Enum newMode);
+		void removeMode(RenderStepMode::Enum mode);
         /**
          * Checks if the RenderStep needs to delete its vertices in its
          * destructor.
