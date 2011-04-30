@@ -14,11 +14,11 @@
 #include "Glyph.h"
 #include <list>
 namespace RedBox{
-	/** 
+	/**
 	 * Rendering direction for a string.
 	 * Some language require right to left rendering.
-     * @ingroup TextDisplay
-     */
+	 * @ingroup TextDisplay
+	 */
 	enum StringDirection{
 			leftToRight,
 			rightToLeft,
@@ -30,8 +30,8 @@ namespace RedBox{
 	/** 
 	 * A GraphicString is a renderable object that print text
 	 * to the screen.
-     * @ingroup Group
-     */
+	 * @ingroup Group
+	 */
 	class GraphicString : public Renderable{
 	public:
 		/** 
@@ -44,41 +44,42 @@ namespace RedBox{
 		};
 		
 		
+
 		/**
 		 * Constructor
 		 * @param font Rendering font.
-		 * @param x X position, 0 by default. WARNING! The origin of a string is not 
+		 * @param x X position, 0 by default. WARNING! The origin of a string is not
 		 * the top left corner, but the left tip, right tip or middle of the baseline depending on the alignment.
-		 * @param y Y position, 0 by default. WARNING! The origin of a string is not 
+		 * @param y Y position, 0 by default. WARNING! The origin of a string is not
 		 * the top left corner, but the left tip, right tip or middle of the baseline depending on the alignment.
 		 * @param alignment Alignment of the string (left, center or right), left by default.
-		 * @param direction String direction, useful when you want to support i18n (leftToRight, rightToLeft, 
+		 * @param direction String direction, useful when you want to support i18n (leftToRight, rightToLeft,
 		 * upToDown), leftToRight by default.
 		 */
 		GraphicString(Font * font, int x = 0, int y = 0, Alignment alignment = left, StringDirection direction = leftToRight);
-		
+
 		/**
 		 * Set the text of the GraphicString with an
 		 * UTF8 string.
 		 */
 		void setText(const std::string & text);
-		
+
 		/**
-		 * Set the text of the GraphicString with an 
+		 * Set the text of the GraphicString with an
 		 * UTF32 string.
 		 */
 		void setText(const RB_String32 &  text);
-		
+
 		///Set the rendering direction of the string. (See the StringDirection enum)
 		void setDirection(StringDirection direction);
-		
+
 		///Set the alignment of the string (Left, right or centered)
 		void setAlignment(Alignment alignment);
-		
-		
-		///Set the color of the string with the given RGBA components 
+
+
+		///Set the color of the string with the given RGBA components
 		void setColor(int red, int green, int blue, int alpha);
-		
+
 		/**
 		 * Set the position of the string.
 		 * Depending on the alignment,
@@ -91,14 +92,14 @@ namespace RedBox{
 		 * and a top-left, middle-left, bottom-left origin.
 		 */
 		void setPosition(int x, int y);
-		
-		
+
+
 		/**
 		 * Set the string size in pixel.
 		 * Warning: character wont necesserly be "pixelSize" wide.
 		 */
 		void setPixelSize(int pixelSize);
-		
+
 		/**
 		 * Set the string size in font point (1/72 inch).
 		 * The function require the dpi to fix the appropriate
@@ -107,36 +108,41 @@ namespace RedBox{
 		 * @param dpi DPI of the screen (pixel per inch)
 		 */
 		void setPointSize(int pointSize, int dpi);
-		
+
 		/**
 		 * Tell the rendering font to use automatic line height (which is not always availlable,
 		 * but it's there most of the time.
 		 */
 		void setAutomaticLineHeight();
-		
+
 		/**
 		 * Tell the rendering font to use the given line height and reset the string.
 		 * Call setAutomaticLineHeight() to return to the default automatic line height.
 		 */
 		void setManualLineHeight(int lineHeight);
-		
-		
+
+
 		///Set the rendering font for the string.
 		void setFont(Font * font);
-		
+
 		///Render the graphic string.
 		void render();
-		
+
 		///Update the graphic string.
 		void update();
-		
-	private:
+
+		///Returnes the width of the GraphicString
+		float getWidth() const;
+		///Returns the height of the GraphicString
+		float getHeight() const;
+
 		/**
-		 * Most change to the string will break it (Ex: if you call setText after seting a color 
+		 * Most change to the string will break it (Ex: if you call setText after seting a color
 		 * you will lose this color), so we need to call the setString() before rendering each time a change is made.
 		 */
 		void setString();
-		
+
+	private:
 		/**
 		 * The setPosition part of the setString is complicated a bit, so we put it in a separate function.
 		 * It's a bit more expensive in operation, but it's cleaner this way.
@@ -144,18 +150,18 @@ namespace RedBox{
 		void setPosition();
 		///Free memory occupied by the sprites in the characters list and flush it.
 		void flushCharacters();
-		
+
 		///X position
 		int x;
-		
+
 		///Y position
 		int y;
-		
+
 		///RGBA color components of the string. The range is 0 to 255.
 		int color[4];
-		
+
 		/**
-		 * Most change to the string will break it (Ex: if you call setText after seting a color 
+		 * Most change to the string will break it (Ex: if you call setText after seting a color
 		 * you will lose this color), so we need to call the setString() before rendering each time a change is made.
 		 * This boolean is set to true when the string is broken (set back to false when the setString function is called).
 		 * When set to true, the setString will automatically get called before rendering.
@@ -163,22 +169,25 @@ namespace RedBox{
 		bool needReset;
 		///Rendering font.
 		Font * font;
-		
+
 		///List of StringFX applied to the current string.
 		std::list<StringFX> renderEffects;
-		
+
 		///Alignment of the string (Left, right, center)
 		Alignment alignment;
-		
+
 		///Rendering direction of the string (Left to right, right to left, up to down)
 		StringDirection direction;
-		
+
 		///List of sprite representing each glyph.
 		std::list<std::pair<Glyph*, Sprite*> > characters;
-		
+
 		///Unicode values of the GraphicString
 		RB_String32 internalString;
-		
+
+		///Calculated width of the string
+		float widthCache;
+
 	};
 }
 

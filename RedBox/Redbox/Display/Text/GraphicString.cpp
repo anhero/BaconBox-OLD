@@ -8,6 +8,9 @@ using namespace RedBox;
 GraphicString::GraphicString(Font * font, int x, int y, Alignment alignment, StringDirection direction):Renderable(), font(font), x(x), y(y), alignment(alignment), direction(direction){
 	color[0] = color[1] = color [2] = color[3]  = 0xFF;
 	needReset = false;
+	widthCache = 0;
+
+	setString();
 };
 
 void GraphicString::setText(const RB_String32 & text){
@@ -37,18 +40,19 @@ void GraphicString::setText(const std::string & text){
 }
 
 void GraphicString::setPosition(int x, int y){
+	Renderable::setPosition(x, y);
 	//We set the position atribute
 	this->x = x;
 	this->y = y;
 	needReset = true;
-	
+
 }
 void GraphicString::setPosition(){
-	
+
 	int lineHeight = font->getLineHeight();
 	int x = this->x;
 	int y = this->y;
-	//We check if the direction is horizontal (alignment adjustement are different for 
+	//We check if the direction is horizontal (alignment adjustement are different for
 	//vertical direction.
 	if(direction == leftToRight || direction == rightToLeft){
 		//If the direction is left to right we iterate to set the position (we pretend it's left align first, since we need
@@ -79,16 +83,16 @@ void GraphicString::setPosition(){
 				x += i->first->getXAdvance();
 			}
 		}
-		
+
 		int xAdjustment;
-		
+
 		if(alignment == left){
 			xAdjustment = 0;
-			
+
 		}
 		else if(alignment == right){
 			xAdjustment = this->x - x;
-			
+
 		}
 		else if(alignment == center){
 			xAdjustment = (this->x-x) * 0.5;
@@ -100,7 +104,11 @@ void GraphicString::setPosition(){
 				i->second->moveX(xAdjustment);
 			}
 		}
+		//Adding last glyph's width to position...
+		x += i->first->getXAdvance();
 	}
+	//To then put it in the cache.
+	this->widthCache = x;
 }
 
 
@@ -183,7 +191,7 @@ void GraphicString::setColor(int red, int green, int blue, int alpha){
 	color[1] = green;
 	color[2] = blue;
 	color[3] = alpha;
-	needReset = true;	
+	needReset = true;
 }
 
 
@@ -194,4 +202,12 @@ void GraphicString::setAutomaticLineHeight(){
 void GraphicString::setManualLineHeight(int lineHeight){
 	font->setManualLineHeight(lineHeight);
 	needReset = true;
+}
+
+float RedBox::GraphicString::getWidth() const {
+	return this->widthCache;
+}
+
+float RedBox::GraphicString::getHeight() const {
+	return this->font->getLineHeight();
 }
