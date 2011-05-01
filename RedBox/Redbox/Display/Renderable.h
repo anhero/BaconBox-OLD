@@ -5,9 +5,13 @@
 
 #include "Vec2.h"
 #include "Side.h"
+#include "CollisionData.h"
+#include "AABB.h"
 #ifndef RB_RENDERABLE_H
 #define RB_RENDERABLE_H
 #define NO_MAX_VELOCITY -1
+
+
 namespace RedBox {
 	/**
 	 * Represents a renderable object assiociated with its z coordinate.
@@ -73,6 +77,16 @@ namespace RedBox {
 		 * Set the velocity vector
 		 */
 		void setVelocity(Vec2 velocity);
+		
+		/**
+		 * Set the x factor of the velocity vector.
+		 */
+		void setVelocityX(float xVelocity);
+		/**
+		 * Set the y factor of the velocity vector.
+		 */
+		void setVelocityY(float yVelocity);
+
 		/**
 		 * Return the velocity vector
 		 */
@@ -119,6 +133,16 @@ namespace RedBox {
 		 * the top.
 		 */
 		virtual void setPosition(float x, float y);
+		
+		/**
+		 * Return x position before any movement was applied (at the start of the update)
+		 */
+		float getOldXPosition();
+		/**
+		 * Return y position before any movement was applied (at the start of the update)
+		 */
+		float getOldYPosition();
+		
 		/**
 		 * Moves the renderable horizontally.
 		 * @param deltaX Value to add to the renderable's horizontal position (in
@@ -143,6 +167,7 @@ namespace RedBox {
 		 * moves the renderable up.
 		 */
 		virtual void move(float deltaX, float deltaY);
+		
 		
 		///Set the absolute maxmimum velocity in x (Maximum velocity in both x direction)
 		void setMaxVelocityX(float xVelocity);
@@ -208,9 +233,53 @@ namespace RedBox {
 		* Elasticity  will determine how should it bounce in a collision. Default value is 0 (Solid object)
 		*/
 		void setElasticity(float elasticity);
-
+		
+		/**
+		 * Use this function to collide the current renderable against another one. 
+		 * It will test if they are colliding, and return a pair containing collision information.
+		 * @param aRenderable A Renderable object against which you want to collide the current object.
+		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
+		 * the second value is a structure containing information about the collision. See CollisionData.
+		 */
+		std::pair<bool, CollisionData> collide(Renderable * aRenderable);
+		
+		
+		/**
+		 * Use this function to collide  two renderable against each other. 
+		 * It will test if they are colliding, and return a pair containing collision information.
+		 * @param object1 A Renderable object you want to collide to object2.
+		 * @param object2 A Renderable object you want to collide to object1
+		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
+		 * the second value is a structure containing information about the collision. See CollisionData.
+		 */
+		static std::pair<bool, CollisionData> collide(Renderable * object1, Renderable * object2);
+		
+		AABB getAABB();
+		
 
 	private:
+		/**
+		 * This function will solve the collision on the x axis. It will separate the objects and
+		 * return information about the collision by return value and by seting the collisionInfo structure (passed
+		 * as a parameter. 
+		 * @param object1 object1 A Renderable object you want to collide to object2.
+		 * @param object2 A Renderable object you want to collide to object1
+		 * @oaram collisionData Structure containing information about the collision (see CollisionData)
+		 * @return Return true if the two objects were colliding, false in the other case.
+		 */
+		static bool solveXCollision(Renderable * object1, Renderable * object2, CollisionData * collisionInfo);
+		/**
+		 * This function will solve the collision on the y axis. It will separate the objects and
+		 * return information about the collision by return value and by seting the collisionInfo structure (passed
+		 * as a parameter. 
+		 * @param object1 object1 A Renderable object you want to collide to object2.
+		 * @param object2 A Renderable object you want to collide to object1
+		 * @oaram collisionData Structure containing information about the collision (see CollisionData)
+		 * @return Return true if the two objects were colliding, false in the other case.
+		 */
+		static bool solveYCollision(Renderable * object1, Renderable * object2, CollisionData * collisionInfo);
+
+		
 		///Position vector
 		Vec2 position;
 		
