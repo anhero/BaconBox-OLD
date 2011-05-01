@@ -246,7 +246,7 @@ void RenderInfo::setDefaultFrame(unsigned int newDefaultFrame) {
 		defaultFrame = newDefaultFrame;
 	} else {
 		RB_ECHO("Tried to set the default frame to a value too high: " << newDefaultFrame);
-		defaultFrame = texCoords.size();
+		defaultFrame = (texCoords.size()) ? (texCoords.size() - 1) : (0);
 	}
 }
 
