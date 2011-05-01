@@ -103,8 +103,7 @@ namespace RedBox {
 		void addAnimation(const std::string& name,
 						  double timePerFrame,
 						  int nbLoops,
-						  unsigned int nbFrames,
-						  unsigned int firstFrame, ... );
+						  unsigned int nbFrames, ... );
 		/**
 		 * Adds an animation. To be used for manual creation of animation
 		 * parameters.
@@ -178,9 +177,32 @@ namespace RedBox {
 		 * @param Name of the animation to get its next frame.
 		 */
 		void incrementFrame();
+		/**
+		 * Gets the name of the RenderInfo's current animation.
+		 * @return Current animation's name.
+		 */
 		const std::string& getCurrentAnimation() const;
+		/**
+		 * Sets the current animation.
+		 * @param New current animation's name.
+		 */
 		void setCurrentAnimation(const std::string& name);
+		/**
+		 * Resets the counter of number of loops done for the animation.
+		 */
 		void resetCurrentNbLoops();
+		/**
+		 * Gets the default frame index.
+		 * @return Index of the default frame to show when the RenderInfo isn't
+		 * animated.
+		 */
+		unsigned int getDefaultFrame() const;
+		/**
+		 * Sets the default frame index.
+		 * @param newDefaultFrame Index of the new default frame to show when
+		 * the RenderInfo isn't animated.
+		 */
+		void setDefaultFrame(unsigned int newDefaultFrame);
 	private:
         /**
          * Color, first int is red, second is green, third is blue and last one
@@ -201,6 +223,8 @@ namespace RedBox {
 		unsigned int currentFrame;
 		/// Current number of times the animation has looped.
 		int currentNbLoops;
+		/// Index of the frame to show when the RenderInfo isn't animated.
+		unsigned int defaultFrame;
 		/**
 		 * Map to associate names to each animations in texCoords. For example,
 		 * to get information about a specific animation, you'd do 

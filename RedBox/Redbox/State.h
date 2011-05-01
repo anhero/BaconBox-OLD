@@ -7,6 +7,7 @@
 #include <map>
 #include <list>
 #include <string>
+#include <sigly.h>
 #include "Camera.h"
 #include "Renderable.h"
 #include "Color.h"
@@ -16,12 +17,17 @@ namespace RedBox {
      * A state represents the THE GAME's different states, it contains and
 	 * manages the renderable objects. Ex: the playState, the MenuState.
      */
-	class State {
+	class State : public sigly::HasSlots<> {
 	public:
 		/**
 		 * Default constructor.
 		 */
 		State();
+
+		/**
+		 * Destructor.
+		 */
+		virtual ~State();
 		/**
          * Adds a renderable object to the multimap to begin rendering and
 		 * updating it. Once a renderable is added with this function, it is

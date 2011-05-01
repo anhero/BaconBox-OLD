@@ -77,7 +77,7 @@ namespace RedBox {
 		/**
 		 * Set the velocity vector
 		 */
-		void setVelocity(Vec2 velocity);
+		void setVelocity(const Vec2& velocity);
 		
 		/**
 		 * Set the x factor of the velocity vector.
@@ -91,16 +91,46 @@ namespace RedBox {
 		/**
 		 * Return the velocity vector
 		 */
-		Vec2 getVelocity();
+		const Vec2& getVelocity();
+		/**
+		 * Return the x factor of the velocity vector
+		 */
+		float getVelocityX();
+		/**
+		 * Return the y factor of the velocity vector
+		 */
+		float getVelocityY();
+		
 		/**
 		 * Set the acceleration vector
 		 */
-		void setAcceleration(Vec2 acceleration);
+		void setAcceleration(const Vec2& acceleration);
+		
+		/**
+		 * Set the x factor of the accelaration vector.
+		 */
+		void setAccelerationX(float xAccelaration);
+		
+		/**
+		 * Set the y factor of the accelaration vector.
+		 */
+		void setAccelerationY(float yAccelaration);
+
 		/**
 		 * Return the acceleration vector
 		 */
-		Vec2 getAcceleration();
+		const Vec2& getAcceleration();
 		
+		/**
+		 * Return the x factor of the acceleration vector
+		 */
+		float getAccelerationX();
+		
+		/**
+		 * Return the y factor of the acceleration vector
+		 */
+		float getAccelerationY();
+
 		/**
 		 * Gets the renderable's horizontal position.
 		 * @return Horizontal position (in pixels). Lower value means more to
@@ -277,7 +307,18 @@ namespace RedBox {
 		
 		AABB getAABB();
 		
-
+		/**
+		 * Sets the drag.
+		 * @param newDrag New drag. Deceleration applied when there is no
+		 * acceleration until velocity reaches 0.
+		 */
+		void setDrag(const Vec2& newDrag);
+		/**
+		 * Gets the drag.
+		 * @return Vec2 containing the deceleration applied when there is no
+		 * acceleration until velocity reaches 0.
+		 */
+		const Vec2& getDrag() const;
 	private:
 		/**
 		 * This function will solve the collision on the x axis. It will separate the objects and
@@ -312,6 +353,12 @@ namespace RedBox {
 		
 		///acceleration vector
 		Vec2 acceleration;
+
+		/**
+		 * Deceleration applied when there is no acceleration until velocity
+		 * reaches 0.
+		 */
+		Vec2 drag;
 		
 		
 		///Maximum velocity in X
