@@ -21,7 +21,7 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
 					   unsigned int nbFrames,
 					   const Color& newColor): color(newColor),
 texInfo(newTexInfo), texCoords(std::vector< std::vector<float> >(nbFrames)),
-currentFrame(0) {
+currentFrame(0), currentNbLoops(0) {
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
 }
 
@@ -187,7 +187,8 @@ const AnimationParameters* RenderInfo::getAnimationParameters(const std::string&
 }
 
 void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
-	if(newCurrentFrame <= getAnimationParameters(getCurrentAnimation())->frames.size()) {
+	if(animationExists(currentAnimation) &&
+			newCurrentFrame <= getAnimationParameters(getCurrentAnimation())->frames.size()) {
 		currentFrame = newCurrentFrame;
 	} else {
 		RB_ECHO("Tried to set the current frame that is too high: " << newCurrentFrame);
@@ -195,7 +196,7 @@ void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
 }
 
 unsigned int RenderInfo::getCurrentFrame() const {
-	if(isAnimated()) {
+	if(isAnimated() && animationExists(currentAnimation)) {
 		return getAnimationParameters(getCurrentAnimation())->frames[currentFrame];
 	} else {
 		return 0;
