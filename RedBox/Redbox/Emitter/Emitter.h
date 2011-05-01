@@ -12,6 +12,8 @@
 #include "RedBoxEngine.h"
 #include "Random.h"
 
+#include "Debug.h"
+
 namespace RedBox {
 	/**
 	 * Represents an emitter. Emitters for specific objects inherit from this
@@ -78,7 +80,11 @@ namespace RedBox {
 					i->renderable->update();
 					// We update the lifespan.
 					i->timeLeft -= RedBoxEngine::getUpdateDelta();
-					// We update the particles depending on their phase.
+				}
+				// We update the particles depending on their phase.
+				ParticleState::Enum tmpState;
+				do {
+					tmpState = i->state;
 					switch (i->state) {
 						case ParticleState::BIRTH:
 							updateAlpha(RedBoxEngine::getUpdateDelta() * birthPhase.alphaPerSecond, i->renderable);
@@ -109,8 +115,9 @@ namespace RedBox {
 						default:
 							break;
 					}
-				}
+				} while(tmpState != i->state);
 			}
+
 		}
 		/**
 		 * Renders the emitter and its particles.
@@ -145,9 +152,11 @@ namespace RedBox {
 		void setNbMaxParticles(unsigned int newNbMaxParticles) {
 			// We make sure to free the memory if we reduce the number of
 			// maximum particles.
-			for(unsigned int i = particles.size() - 1; i >= newNbMaxParticles; i--) {
-				if(particles[i].renderable) {
-					delete particles[i].renderable;
+			if(particles.size() > 0) {
+				for(unsigned int i = particles.size() - 1; i >= newNbMaxParticles; i--) {
+					if(particles[i].renderable) {
+						delete particles[i].renderable;
+					}
 				}
 			}
 			particles.resize(newNbMaxParticles);
@@ -216,10 +225,10 @@ namespace RedBox {
 			 * Copy constructor.
 			 * @param src Particle to make a copy of.
 			 */
-			Particle(const Particle& src):renderable(src.renderable),
+			Particle(const Particle& src):renderable(0),
 			timeLeft(src.timeLeft), state(src.state) {
-				if(renderable) {
-					renderable = new T(*renderable);
+				if(src.renderable) {
+					renderable = new T(*src.renderable);
 				}
 			}
 			/**
@@ -268,7 +277,11 @@ namespace RedBox {
 				if(this != &src) {
 					if(&src) {
 						clearRenderable();
-						renderable = src.renderable;
+						if(src.renderable) {
+							renderable = new T(*src.renderable);
+						} else {
+							renderable = NULL;
+						}
 						timeLeft = src.timeLeft;
 						state = src.state;
 					} else {
@@ -305,6 +318,8 @@ namespace RedBox {
 			// If it's dead, we start it.
 			if(deadParticle != particles.end()) {
 				startParticle(deadParticle->renderable);
+				deadParticle->timeLeft = birthPhase.phaseDuration + Random::getRandomDouble(0.0, birthPhase.phaseDurationVariance);
+				deadParticle->state = ParticleState::BIRTH;
 				++nbParticles;
 				return true;
 			} else {
@@ -312,9 +327,6 @@ namespace RedBox {
 			}
 		}
 		
-		ParticlePhase& getCurrentPhase(const Particle& particle) {
-			return birthPhase;
-		}
 		/**
 		 * Resets the emitter.
 		 */

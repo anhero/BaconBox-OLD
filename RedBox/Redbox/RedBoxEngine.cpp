@@ -98,7 +98,11 @@ void RedBoxEngine::pulse() {
 			// We update the input manager.
 			InputManager::getInstance()->update();
 			// We take note of the time.
-			lastUpdate += updateDelay;
+			if(lastUpdate) {
+				lastUpdate += updateDelay;
+			} else {
+				lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
+			}
 			//TimeHelper::getInstance()->sleep(0.01);
 		}
 		// We check that the delay between renders doesn't go too high or that

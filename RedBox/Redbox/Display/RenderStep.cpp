@@ -12,8 +12,9 @@
 
 using namespace RedBox;
 
-RenderStep::RenderStep(): vertices(new VerticesGroup()),
-useSinceEpoch(false), deleteVerticesGroup(true) {
+RenderStep::RenderStep(): vertices(0), useSinceEpoch(false),
+	deleteVerticesGroup(false), lastFrameChange(0.0), isPaused(false),
+pauseFrameRemain(0.0) {
 }
 
 RenderStep::RenderStep(TextureInfo* newTexInfo,
@@ -56,7 +57,9 @@ pauseFrameRemain(0.0) {
 	}
 }
 
-RenderStep::RenderStep(const RenderStep& src) {
+RenderStep::RenderStep(const RenderStep& src): vertices(0),
+useSinceEpoch(false), deleteVerticesGroup(false), lastFrameChange(0.0),
+isPaused(false), pauseFrameRemain(0.0) {
 	copyFrom(src);
 }
 

@@ -193,6 +193,14 @@ namespace RedBox {
 		 * particle's dying phase.
 		 */
 		void setDyingPhase(const ParticlePhase& newDyingPhase);
+		/**
+		 * return emitter's width.
+		 */
+		virtual float getWidth() const;
+		/**
+		 * return emitter's height.
+		 */
+		virtual float getHeight() const;
 	protected:
 		/// Number of particles currently active and being shown.
 		unsigned int nbParticles;
@@ -229,17 +237,6 @@ namespace RedBox {
 		ParticlePhase lifePhase;
 		/// Definition of what happens in the particle's dying phase.
 		ParticlePhase dyingPhase;
-		
-		
-		/**
-		 * return emitter's width.
-		 */
-		virtual float getWidth() const;
-		/**
-		 * return emitter's height.
-		 */
-		virtual float getHeight() const;
-
 	private:
 		/**
 		 * Cleans the emitter. Frees all allocated memory and resets the

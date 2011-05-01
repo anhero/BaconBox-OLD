@@ -7,6 +7,7 @@
 #define RB_SPRITE_EMITTER_H
 
 #include <vector>
+#include <string>
 
 #include "Emitter.h"
 #include "Sprite.h"
@@ -25,6 +26,8 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		SpriteEmitter();
+
+		SpriteEmitter(const std::string& keyName);
 		/**
 		 * Copy constructor.
 		 * @param src SpriteEmitter to make a copy of.
@@ -41,6 +44,7 @@ namespace RedBox {
 		 */
 		SpriteEmitter& operator=(const SpriteEmitter& src);
 	private:
+		Sprite* defaultSprite;
 		/**
 		 * Updates the sprite's alpha using the given alpha to add to
 		 * the sprite's current alpha value.
