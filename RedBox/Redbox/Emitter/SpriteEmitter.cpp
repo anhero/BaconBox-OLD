@@ -16,6 +16,10 @@ defaultSprite(0) {
 	defaultSprite = new Sprite(keyName);
 }
 
+SpriteEmitter::SpriteEmitter(Sprite* newDefaultSprite): Emitter<Sprite>(),
+defaultSprite(newDefaultSprite) {
+}
+
 SpriteEmitter::SpriteEmitter(const SpriteEmitter& src): Emitter<Sprite>(src),
 defaultSprite(0) {
 	copyFrom(src);
@@ -31,6 +35,17 @@ SpriteEmitter& SpriteEmitter::operator=(const SpriteEmitter& src) {
 	Emitter<Sprite>::operator=(src);
 	copyFrom(src);
 	return *this;
+}
+
+void SpriteEmitter::setDefaultSprite(Sprite* newDefaultSprite) {
+	if(defaultSprite) {
+		delete defaultSprite;
+	}
+	defaultSprite = newDefaultSprite;
+}
+
+Sprite* SpriteEmitter::getDefaultSprite() {
+	return defaultSprite;
 }
 
 void SpriteEmitter::updateAlpha(float deltaAlpha, Sprite* renderable) {

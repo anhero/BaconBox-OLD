@@ -27,7 +27,19 @@ namespace RedBox {
 		 */
 		SpriteEmitter();
 
+		/**
+		 * Parameterized constructor. Initializes the default sprite from the
+		 * specified texture.
+		 * @param keyName Name of the texture to load the sprite with.
+		 */
 		SpriteEmitter(const std::string& keyName);
+
+		/**
+		 * Parameterized constructor. Initializes the sprite emitter to use
+		 * the given sprite as the default sprite for each particle.
+		 * @param newDefaultSprite New default sprite
+		 */
+		SpriteEmitter(Sprite* newDefaultSprite);
 		/**
 		 * Copy constructor.
 		 * @param src SpriteEmitter to make a copy of.
@@ -43,7 +55,20 @@ namespace RedBox {
 		 * @return Instance of this SpriteEmitter.
 		 */
 		SpriteEmitter& operator=(const SpriteEmitter& src);
+
+		/**
+		 * Sets the sprite emitter's default sprite for each particle.
+		 * @param newDefaultSprite New default sprite to use for each particle.
+		 */
+		void setDefaultSprite(Sprite* newDefaultSprite);
+
+		/**
+		 * Gets the default sprite used for each particle.
+		 * @return Pointer to the emitter's default sprite.
+		 */
+		Sprite* getDefaultSprite();
 	private:
+		/// Default sprite to make a copy of for each particle.
 		Sprite* defaultSprite;
 		/**
 		 * Updates the sprite's alpha using the given alpha to add to
