@@ -14,7 +14,7 @@ bool AABB::overlaps(AABB * rect1, AABB * rect2){
 	return rect1->maxX > rect2->minX &&
 		   rect1->minX < rect2->maxX &&
 		   rect1->maxY > rect2->minY &&
-		   rect1->minX < rect2->maxY;
+		   rect1->minY < rect2->maxY;
 }
 
 bool AABB::overlaps(AABB * rect){
