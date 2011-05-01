@@ -6,7 +6,34 @@
 
 using namespace RedBox;
 
-State::State() {
+State::State() : sigly::HasSlots<>() {
+}
+
+State::~State() {
+	// We delete all the renderables from the list of renderables that need
+	// to be deleted.
+	for(std::list<Renderable*>::iterator i = toDelete.begin();
+		i !=toDelete.end();
+		++i) {
+		if(*i) {
+			delete *i;
+		}
+	}
+	// We delete the renderables that were waiting to be added.
+	for(std::list<Renderable*>::iterator i = toAdd.begin(); i != toAdd.end();
+		i++) {
+		if(*i) {
+			delete *i;
+		}
+	}
+
+	// We delete the renderables.
+	for(std::multimap<int, Renderable*>::iterator i = renderables.begin();
+		i != renderables.end(); ++i) {
+		if(i->second) {
+			delete i->second;
+		}
+	}
 }
 
 void State::addRenderable(Renderable* aRenderable) {
