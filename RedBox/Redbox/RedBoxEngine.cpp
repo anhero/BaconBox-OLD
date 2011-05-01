@@ -7,6 +7,7 @@
 #include "SoundEngine.h"
 #include "MusicEngine.h"
 #include "InputManager.h"
+#include "TimerManager.h"
 #include <libgen.h>
 using namespace RedBox;
 
@@ -97,6 +98,8 @@ void RedBoxEngine::pulse() {
 			renderedSinceLastUpdate = false;
 			// We update the input manager.
 			InputManager::getInstance().update();
+			// We update the timers.
+			TimerManager::update();
 			// We take note of the time.
 			if(lastUpdate) {
 				lastUpdate += updateDelay;
