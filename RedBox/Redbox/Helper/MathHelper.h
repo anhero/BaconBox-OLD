@@ -29,6 +29,8 @@ namespace RedBox {
 		 * @return Remainder from the division.
 		 */
 		static float modFloat(float dividend, float divisor);
+
+		static float degreesToRadians(float degrees);
 	};
 }
 #endif

@@ -1,6 +1,10 @@
 #include "Vec2.h"
 
+#include "MathHelper.h"
+
 using namespace RedBox;
+
+const Vec2 Vec2::UP = Vec2(0.0f, -1.0f);
 
 Vec2::Vec2():isPtr(false) {
     coordsVal.x = 0.0f;
@@ -134,6 +138,20 @@ void Vec2::normalize() {
 	
 	setX(getX() * len);
 	setY(getY() * len);
+}
+
+void Vec2::rotate(float angle) {
+	float radians = MathHelper::degreesToRadians(angle),
+			tx = getX() * cosf(radians) + getY() * sinf(radians),
+			ty = getY() * cosf(radians) - getX() * sinf(radians);
+	setX(tx);
+	setY(ty);
+}
+
+void Vec2::setLength(float length) {
+	normalize();
+	setX(getX() * length);
+	setY(getY() * length);
 }
 
 void Vec2::copyFrom(const Vec2& src) {
