@@ -7,7 +7,7 @@
 
 using namespace RedBox;
 Renderable::Renderable(): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(0), toBeDeleted(false), zChanged(false),
-isInState(false), collidableSides(Side::ALL), elasticity(0.0), staticObject(false){
+isInState(false), collidableSides(Side::ALL), elasticity(0.0), staticObject(false), drag(Vec2()){
 }
 
 Renderable::Renderable(const Renderable& src) {
@@ -52,6 +52,7 @@ void Renderable::copyFrom(const Renderable& src) {
 		oldPosition = position;
 		velocity = Vec2();
 		acceleration = Vec2();
+		drag = src.drag;
 		maxVelocityX = src.maxVelocityX;
 		maxVelocityY = src.maxVelocityY;
 		z = src.z;
@@ -61,17 +62,17 @@ void Renderable::copyFrom(const Renderable& src) {
 	}
 }
 
-void Renderable::setVelocity(Vec2 velocity){
+void Renderable::setVelocity(const Vec2& velocity){
 	this->velocity = velocity;
 }
 
-Vec2 Renderable::getVelocity(){
+const Vec2& Renderable::getVelocity(){
 	return velocity;
 }
-void Renderable::setAcceleration(Vec2 acceleration){
+void Renderable::setAcceleration(const Vec2& acceleration){
 	this->acceleration = acceleration;
 }
-Vec2 Renderable::getAcceleration(){
+const Vec2& Renderable::getAcceleration(){
 	return acceleration;
 }
 
@@ -166,7 +167,32 @@ void Renderable::update(){
 	position += (velocity * ratio);
 	this->setPosition(position.getX(), position.getY());
 	velocity += (acceleration* ratio);
-	
+	if(acceleration.getX() == 0.0f) {
+		if(velocity.getX() > 0.0f) {
+			velocity.setX(velocity.getX() - drag.getX() * ratio);
+			if(velocity.getX() < 0.0f) {
+				velocity.setX(0.0f);
+			}
+		} else if(velocity.getX() < 0.0f) {
+			velocity.setX(velocity.getX() + drag.getX() * ratio);
+			if(velocity.getX() > 0.0f) {
+				velocity.setX(0.0f);
+			}
+		}
+	}
+	if(acceleration.getY() == 0.0f) {
+		if(velocity.getY() > 0.0f) {
+			velocity.setY(velocity.getY() - drag.getY() * ratio);
+			if(velocity.getY() < 0.0f) {
+				velocity.setY(0.0f);
+			}
+		} else if(velocity.getY() < 0.0f) {
+			velocity.setY(velocity.getY() + drag.getY() * ratio);
+			if(velocity.getY() > 0.0f) {
+				velocity.setY(0.0f);
+			}
+		}
+	}
 }
 
 
@@ -452,4 +478,12 @@ std::pair<bool, std::list<CollisionData> > Renderable::collide(std::list<Rendera
 
 AABB Renderable::getAABB(){
 	return AABB(getXPosition(), getXPosition() + getWidth(), getYPosition(), getYPosition() + getHeight());
+}
+
+void Renderable::setDrag(const Vec2 &newDrag) {
+	drag = newDrag;
+}
+
+const Vec2& Renderable::getDrag() const {
+	return drag;
 }

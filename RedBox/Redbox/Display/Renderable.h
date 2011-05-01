@@ -77,7 +77,7 @@ namespace RedBox {
 		/**
 		 * Set the velocity vector
 		 */
-		void setVelocity(Vec2 velocity);
+		void setVelocity(const Vec2& velocity);
 		
 		/**
 		 * Set the x factor of the velocity vector.
@@ -91,15 +91,15 @@ namespace RedBox {
 		/**
 		 * Return the velocity vector
 		 */
-		Vec2 getVelocity();
+		const Vec2& getVelocity();
 		/**
 		 * Set the acceleration vector
 		 */
-		void setAcceleration(Vec2 acceleration);
+		void setAcceleration(const Vec2& acceleration);
 		/**
 		 * Return the acceleration vector
 		 */
-		Vec2 getAcceleration();
+		const Vec2& getAcceleration();
 		
 		/**
 		 * Gets the renderable's horizontal position.
@@ -277,7 +277,18 @@ namespace RedBox {
 		
 		AABB getAABB();
 		
-
+		/**
+		 * Sets the drag.
+		 * @param newDrag New drag. Deceleration applied when there is no
+		 * acceleration until velocity reaches 0.
+		 */
+		void setDrag(const Vec2& newDrag);
+		/**
+		 * Gets the drag.
+		 * @return Vec2 containing the deceleration applied when there is no
+		 * acceleration until velocity reaches 0.
+		 */
+		const Vec2& getDrag() const;
 	private:
 		/**
 		 * This function will solve the collision on the x axis. It will separate the objects and
@@ -312,6 +323,12 @@ namespace RedBox {
 		
 		///acceleration vector
 		Vec2 acceleration;
+
+		/**
+		 * Deceleration applied when there is no acceleration until velocity
+		 * reaches 0.
+		 */
+		Vec2 drag;
 		
 		
 		///Maximum velocity in X
