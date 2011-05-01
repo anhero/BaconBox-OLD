@@ -162,10 +162,9 @@ void Renderable::update(){
 		}
 	}
 	
-	
+	velocity += (acceleration* ratio);
 	position += (velocity * ratio);
 	this->setPosition(position.getX(), position.getY());
-	velocity += (acceleration* ratio);
 	
 }
 
@@ -370,15 +369,17 @@ bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, Col
 			object1->setVelocityY(obj2v - obj1v * object1->getElasticity());
 			//Handle horizontal moving static object EX. moving platform
 			if(obj1Delta > obj2Delta){
-				object1->setXPosition(object1->getXPosition() + object2->getXPosition() - object2->getOldXPosition());
+				object1->setXPosition(object1->getXPosition() + (object2->getXPosition() - object2->getOldXPosition()));
 			}
 		}
 		else if(!object2->getIsStatic()){
 			object2->setYPosition(object2->getYPosition() + overlap);
 			object2->setVelocityY(obj1v - obj2v*object2->getElasticity());
 			//Handle horizontal moving static object EX. moving platform
-			object2->setXPosition(object2->getXPosition() + object1->getXPosition() - object2->getOldXPosition());
-			
+			if(obj1Delta > obj2Delta){
+				object2->setXPosition(object2->getXPosition() + object1->getXPosition() - object1->getOldXPosition());
+
+			}
 		}
 		return true;
 	}
