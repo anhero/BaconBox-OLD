@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-//#define RB_OVERLAP_BIAS 0
+#define RB_OVERLAP_BIAS 4
 
 using namespace RedBox;
 Renderable::Renderable(): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(0), toBeDeleted(false), zChanged(false),
@@ -228,7 +228,7 @@ bool Renderable::solveXCollision(Renderable * object1, Renderable * object2, Col
 		if(obj1AABB.overlaps(&obj2AABB)){
 			
 			
-			float maxOverlap = obj1DeltaAbs + obj2DeltaAbs; //+ RB_OVERLAP_BIAS;
+			float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + RB_OVERLAP_BIAS;
 			
 			if(obj1Delta > obj2Delta) {
 				overlap = object1->getXPosition() + object1->getWidth() - object2->getXPosition();
@@ -259,16 +259,16 @@ bool Renderable::solveXCollision(Renderable * object1, Renderable * object2, Col
 		if (!object1->getIsStatic() && !object2->getIsStatic()) {
 			overlap *= 0.5f;
 			object1->setXPosition( object1->getXPosition() - overlap);
-			object2->setXPosition( object1->getXPosition() + overlap);
+			object2->setXPosition( object2->getXPosition() + overlap);
 			
-			float obj1velocity = obj2v * (obj2v > 0 ? 1 : -1);
-			float obj2velocity = obj1v * (obj1v > 0 ? 1 : -1);
+			float obj1velocity = fabsf(obj2v) * (obj2v > 0 ? 1 : -1);
+			float obj2velocity = fabsf(obj1v) * (obj1v > 0 ? 1 : -1);
 			float average = ( obj1velocity + obj2velocity) * 0.5;
 			obj1velocity -= average;
 			obj2velocity -= average;
 			
 			object1->setVelocityX(average + obj1velocity * object1->getElasticity());
-			object2->setVelocityX(average + obj1velocity * object1->getElasticity());
+			object2->setVelocityX(average + obj2velocity * object2->getElasticity());
 		}
 		else if(!object1->getIsStatic()){
 			object1->setXPosition(object1->getXPosition() - overlap);
@@ -319,7 +319,7 @@ bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, Col
 			
 			
 			
-			float maxOverlap = obj1DeltaAbs + obj2DeltaAbs; //+ RB_OVERLAP_BIAS;
+			float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + RB_OVERLAP_BIAS;
 			
 			
 			
@@ -354,16 +354,16 @@ bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, Col
 		if (!object1->getIsStatic() && !object2->getIsStatic()) {
 			overlap *= 0.5f;
 			object1->setYPosition( object1->getYPosition() - overlap);
-			object2->setYPosition( object1->getYPosition() + overlap);
+			object2->setYPosition( object2->getYPosition() + overlap);
 			
-			float obj1velocity = obj2v * (obj2v > 0 ? 1 : -1);
-			float obj2velocity = obj1v * (obj1v > 0 ? 1 : -1);
+			float obj1velocity = fabsf(obj2v) * (obj2v > 0 ? 1 : -1);
+			float obj2velocity = fabsf(obj1v) * (obj1v > 0 ? 1 : -1);
 			float average = ( obj1velocity + obj2velocity) * 0.5;
 			obj1velocity -= average;
 			obj2velocity -= average;
 			
 			object1->setVelocityY(average + obj1velocity * object1->getElasticity());
-			object2->setVelocityY(average + obj1velocity * object1->getElasticity());
+			object2->setVelocityY(average + obj2velocity * object2->getElasticity());
 		}
 		else if(!object1->getIsStatic()){
 			object1->setYPosition(object1->getYPosition() - overlap);
@@ -395,7 +395,7 @@ std::pair<bool, CollisionData> Renderable::collide(Renderable * object1, Rendera
 	if (object1 != object2) {
 		bool collideInX = solveXCollision(object1, object2, &currentCollisionData);
 		bool collideInY = solveYCollision(object1, object2, &currentCollisionData);
-		return std::pair<bool, CollisionData>(collideInX && collideInY, currentCollisionData);
+		return std::pair<bool, CollisionData>(collideInX || collideInY, currentCollisionData);
 	}
 	else{
 		return std::pair<bool, CollisionData>(false, currentCollisionData);
