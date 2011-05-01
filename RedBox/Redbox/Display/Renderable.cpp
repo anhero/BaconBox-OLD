@@ -163,11 +163,7 @@ void Renderable::update(){
 		}
 	}
 	
-	velocity += (acceleration* ratio);
-	position += (velocity * ratio);
-	this->setPosition(position.getX(), position.getY());
-
-	velocity += (acceleration* ratio);
+	
 	if(acceleration.getX() == 0.0f) {
 		if(velocity.getX() > 0.0f) {
 			velocity.setX(velocity.getX() - drag.getX() * ratio);
@@ -194,6 +190,12 @@ void Renderable::update(){
 			}
 		}
 	}
+	
+	velocity += (acceleration* ratio);
+	position += (velocity * ratio);
+	this->setPosition(position.getX(), position.getY());
+
+	
 }
 
 
