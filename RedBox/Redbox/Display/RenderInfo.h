@@ -180,6 +180,8 @@ namespace RedBox {
 		const std::string& getCurrentAnimation() const;
 		void setCurrentAnimation(const std::string& name);
 		void resetCurrentNbLoops();
+		unsigned int getDefaultFrame() const;
+		void setDefaultFrame(unsigned int newDefaultFrame);
 	private:
         /**
          * Color, first int is red, second is green, third is blue and last one
@@ -200,6 +202,8 @@ namespace RedBox {
 		unsigned int currentFrame;
 		/// Current number of times the animation has looped.
 		int currentNbLoops;
+
+		unsigned int defaultFrame;
 		/**
 		 * Map to associate names to each animations in texCoords. For example,
 		 * to get information about a specific animation, you'd do 

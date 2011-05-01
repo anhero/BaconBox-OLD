@@ -11,7 +11,7 @@
 using namespace RedBox;
 
 RenderInfo::RenderInfo(): color(Color::WHITE), texInfo(NULL), currentFrame(0),
-currentNbLoops(0) {
+currentNbLoops(0), defaultFrame(0) {
 }
 
 RenderInfo::RenderInfo(TextureInfo* newTexInfo,
@@ -21,7 +21,7 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
 					   unsigned int nbFrames,
 					   const Color& newColor): color(newColor),
 texInfo(newTexInfo), texCoords(std::vector< std::vector<float> >(nbFrames)),
-currentFrame(0), currentNbLoops(0) {
+currentFrame(0), currentNbLoops(0), defaultFrame(0) {
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
 }
 
@@ -199,7 +199,7 @@ unsigned int RenderInfo::getCurrentFrame() const {
 	if(isAnimated() && animationExists(currentAnimation)) {
 		return getAnimationParameters(getCurrentAnimation())->frames[currentFrame];
 	} else {
-		return 0;
+		return defaultFrame;
 	}
 }
 
@@ -237,6 +237,18 @@ void RenderInfo::resetCurrentNbLoops() {
 	currentNbLoops = 0;
 }
 
+unsigned int RenderInfo::getDefaultFrame() const {
+	return defaultFrame;
+}
+
+void RenderInfo::setDefaultFrame(unsigned int newDefaultFrame) {
+	if(newDefaultFrame < texCoords.size()) {
+		defaultFrame = newDefaultFrame;
+	} else {
+		RB_ECHO("Tried to set the default frame to a value too high: " << newDefaultFrame);
+		defaultFrame = texCoords.size();
+	}
+}
 
 namespace RedBox {
 	std::ostream& operator<<(std::ostream& output, const RenderInfo& r) {
