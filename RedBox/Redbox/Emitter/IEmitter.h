@@ -193,6 +193,10 @@ namespace RedBox {
 		 * particle's dying phase.
 		 */
 		void setDyingPhase(const ParticlePhase& newDyingPhase);
+
+		void deleteOnDeactivate();
+		void dontDeleteOnDeactivate();
+
 		/**
 		 * return emitter's width.
 		 */
@@ -237,6 +241,7 @@ namespace RedBox {
 		ParticlePhase lifePhase;
 		/// Definition of what happens in the particle's dying phase.
 		ParticlePhase dyingPhase;
+		bool dieOnDeactivate;
 	private:
 		/**
 		 * Cleans the emitter. Frees all allocated memory and resets the

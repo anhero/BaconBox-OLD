@@ -103,8 +103,7 @@ namespace RedBox {
 		void addAnimation(const std::string& name,
 						  double timePerFrame,
 						  int nbLoops,
-						  unsigned int nbFrames,
-						  unsigned int firstFrame, ... );
+						  unsigned int nbFrames, ... );
 		/**
 		 * Adds an animation. To be used for manual creation of animation
 		 * parameters.

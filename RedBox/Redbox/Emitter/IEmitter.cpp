@@ -3,10 +3,10 @@
 using namespace RedBox;
 
 IEmitter::IEmitter(): Renderable(), nbParticles(0), nbParticlesToShoot(-1),
-lifeSpan(-1.0), elapsedTime(0.0), isActive(true), angle(0.0f),
+lifeSpan(-1.0), elapsedTime(0.0), isActive(false), angle(0.0f),
 angleVariance(0.0f), force(0.0f), forceVariance(0.0f), emitRate(0.0),
 emitCounter(0.0), birthPhase(ParticlePhase()), lifePhase(ParticlePhase()),
-dyingPhase(ParticlePhase()) {
+dyingPhase(ParticlePhase()), dieOnDeactivate(false) {
 }
 IEmitter::IEmitter(const IEmitter& src): Renderable(src),
 nbParticles(src.nbParticles), nbParticlesToShoot(src.nbParticlesToShoot),
@@ -14,7 +14,8 @@ lifeSpan(src.lifeSpan), elapsedTime(src.elapsedTime), isActive(src.isActive),
 angle(src.angle), angleVariance(src.angleVariance), force(src.force),
 forceVariance(src.forceVariance), emitRate(src.emitRate),
 emitCounter(src.emitCounter), birthPhase(src.birthPhase),
-lifePhase(src.lifePhase), dyingPhase(src.dyingPhase) {
+lifePhase(src.lifePhase), dyingPhase(src.dyingPhase),
+dieOnDeactivate(src.dieOnDeactivate) {
 }
 
 IEmitter::~IEmitter() {
@@ -125,6 +126,13 @@ void IEmitter::setLifePhase(const ParticlePhase& newLifePhase) {
 
 void IEmitter::setDyingPhase(const ParticlePhase& newDyingPhase) {
 	dyingPhase = newDyingPhase;
+}
+
+void IEmitter::deleteOnDeactivate() {
+	dieOnDeactivate = true;
+}
+void IEmitter::dontDeleteOnDeactivate() {
+	dieOnDeactivate = false;
 }
 
 void IEmitter::clean() {

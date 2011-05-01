@@ -50,18 +50,23 @@ namespace RedBox {
 			copyFrom(src);
 			return *this;
 		}
+
 		/**
 		 * Updates the emitter and its particles.
 		 */
 		virtual void update() {
 			// We make sure that the sprite emitter is active and has a valid emitRate.
-			if(isActive && emitRate > 0.0) {
+			if(isActive && emitRate > 0.0 &&
+					(nbParticlesToShoot == -1 || nbParticlesToShoot > 0)) {
 				float rate = 1.0 / emitRate;
 				emitCounter += RedBoxEngine::getUpdateDelta();
 				// We try to shoot particles as long as the emission rate lets us.
-				while(emitCounter > rate && shootParticle()) {
+				while((nbParticlesToShoot == -1 || nbParticlesToShoot > 0) &&
+					  emitCounter > rate && shootParticle()) {
+					if(nbParticlesToShoot > -1) --nbParticlesToShoot;
 					emitCounter -= rate;
 				}
+
 				// We check if we have to count the emitter's life span.
 				if(lifeSpan != -1.0) {
 					// We update the emitter's elapsed time.
@@ -117,7 +122,7 @@ namespace RedBox {
 					}
 				} while(tmpState != i->state);
 			}
-
+			deleteIfPossible();
 		}
 		/**
 		 * Renders the emitter and its particles.
@@ -324,6 +329,26 @@ namespace RedBox {
 				return true;
 			} else {
 				return false;
+			}
+		}
+
+		void deleteIfPossible() {
+			if(nbParticlesToShoot == 0) {
+				bool notFound = true;
+				typename std::vector<Particle>::iterator i = particles.begin();
+				while(notFound && i != particles.end()) {
+					if(i->state != ParticleState::DEAD) {
+						notFound = false;
+					} else {
+						++i;
+					}
+				}
+				if(notFound) {
+					deactivate();
+					if(dieOnDeactivate) {
+						this->setToBeDeleted(true);
+					}
+				}
 			}
 		}
 		
