@@ -25,6 +25,7 @@ namespace RedBox{
          */
         friend std::ostream& operator<<(std::ostream& output, const Vec2& v);
 	public:
+		static const Vec2 UP;
 		/**
 		 * Default constructor. By default, the vector doesn't use pointers.
 		 */
@@ -213,6 +214,18 @@ namespace RedBox{
 		 * zero, it will instead print an error message. 
 		 */
 		void normalize();
+
+		/**
+		 * Rotates the vector counter-clockwise by the given angle (in degrees).
+		 * @param angle Angle to rotate the vector by (in degrees).
+		 */
+		void rotate(float angle);
+
+		/**
+		 * Sets the vector's length while keeping its current direction.
+		 * @param length Vec2's new length.
+		 */
+		void setLength(float length);
 	private:
 		/**
 		 * Uses pointers or not depending on the necessities. If the vector is

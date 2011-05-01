@@ -17,3 +17,7 @@ int MathHelper::nextPowerOf2(int number){
 float MathHelper::modFloat(float dividend, float divisor) {
 	return dividend - (floor(dividend / divisor) * divisor);
 }
+
+float MathHelper::degreesToRadians(float degrees) {
+	return degrees * 0.0174532925f;
+}

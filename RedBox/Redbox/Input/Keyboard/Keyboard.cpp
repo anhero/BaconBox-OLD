@@ -1,6 +1,12 @@
 #include "Keyboard.h"
 
+#include "InputManager.h"
+
 using namespace RedBox;
+
+Keyboard* Keyboard::getDefault() {
+	return InputManager::getDefaultKeyboard();
+}
 
 const KeyboardState& Keyboard::getState() const {
 	return state;

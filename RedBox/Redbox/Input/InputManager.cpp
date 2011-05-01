@@ -24,13 +24,25 @@
 
 using namespace RedBox;
 
-InputManager* InputManager::instance = NULL;
-
-InputManager* InputManager::getInstance() {
-	if(!instance) {
-		instance = RB_INPUT_MANAGER_IMPL;
-	}
+InputManager& InputManager::getInstance() {
+	static RB_INPUT_MANAGER_IMPL instance;
 	return instance;
+}
+
+Accelerometer* InputManager::getDefaultAccelerometer() {
+	return InputManager::getInstance().getAccelerometer();
+}
+
+GamePad* InputManager::getDefaultGamePad() {
+	return InputManager::getInstance().getGamePad();
+}
+
+Keyboard* InputManager::getDefaultKeyboard() {
+	return InputManager::getInstance().getKeyboard();
+}
+
+Pointer* InputManager::getDefaultPointer() {
+	return InputManager::getInstance().getPointer();
 }
 
 unsigned int InputManager::getNbAccelerometers() const {

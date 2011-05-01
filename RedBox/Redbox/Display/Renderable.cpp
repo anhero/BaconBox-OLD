@@ -139,7 +139,7 @@ void Renderable::setVelocityY(float yVelocity){
 void Renderable::update(){
 	//float ratio1 = RedBoxEngine::getUpdateDelta();
 	//float ratio2 = RedBoxEngine::getUpdateDelay();
-	float ratio = 0.00833;
+	float ratio = RedBoxEngine::getUpdateDelta();
 	oldPosition = position;
 	
 	
