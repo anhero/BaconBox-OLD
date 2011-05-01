@@ -160,17 +160,6 @@ namespace RedBox {
          */
         void setVerticesGroup(VerticesGroup* newVertices);
 		/**
-		 * Gets if the RenderStep is using the epoch time or not for animations.
-		 * @return True if the RenderStep uses epoch time, false if not.
-		 */
-		bool isUseSinceEpoch() const;
-		/**
-		 * Sets if the RenderStep uses the epoch time or not for animations.
-		 * @param newUseSinceEpoch True if the RenderStep needs to use the
-		 * epoch time, false if not.
-		 */
-		void setUseSinceEpoch(bool newUseSinceEpoch);
-		/**
 		 * Plays an animation.
 		 * @param name Name of the animation to play.
 		 */
@@ -250,29 +239,17 @@ namespace RedBox {
 		 * keep its vertices data synchronized with.
 		 */
 		std::list<Vertex*> verticesPtr;
-		/**
-		 * Wether to use the epoch time or not for animations. If it doesn't, it 
-		 * uses the time since the game was started. Useful for RenderSteps with
-		 * animations used for the pause menu. By default this member is set to
-		 * false.
-		 */
-		bool useSinceEpoch;
         /**
          * Determines if the RenderStep needs to delete its vertices in its
          * destructor.
          */
         bool deleteVerticesGroup;
 		/**
-		 * Gets the time at which the last frame was changed for the animation.
-		 */
-		double lastFrameChange;
-		/**
 		 * If the animation is paused or 
 		 */
 		bool isPaused;
-		/// Time since the last frame when it was paused.
-		double pauseFrameRemain;
-        /**
+		double animCounter;
+		/**
          * Resets the RenderStep. Also frees up all allocated memory.
          */
         void clean();

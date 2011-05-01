@@ -1,5 +1,7 @@
 #include "RenderStep.h"
 
+#include <iostream>
+
 #include "TextureInfo.h"
 #include "RenderInfo.h"
 #include "GraphicDriver.h"
@@ -9,12 +11,12 @@
 #include "Debug.h"
 #include "Vertex.h"
 #include "VerticesGroup.h"
+#include "RedBoxEngine.h"
 
 using namespace RedBox;
 
-RenderStep::RenderStep(): vertices(0), useSinceEpoch(false),
-	deleteVerticesGroup(false), lastFrameChange(0.0), isPaused(false),
-pauseFrameRemain(0.0) {
+RenderStep::RenderStep(): vertices(0), deleteVerticesGroup(false),
+isPaused(false), animCounter(0.0) {
 }
 
 RenderStep::RenderStep(TextureInfo* newTexInfo,
@@ -28,11 +30,8 @@ info(RenderInfo(newTexInfo, newVertices, frameWidth, frameHeight, nbFrames,
 				newColor)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE),
 vertices(newVertices),
-useSinceEpoch(false),
 deleteVerticesGroup(newDeleteVerticesGroup),
-lastFrameChange(0.0),
-isPaused(false),
-pauseFrameRemain(0.0) {
+isPaused(false), animCounter(0.0) {
 	if(vertices) {
 		vertices->updateDataFromVertices(verticesData);
 	}
@@ -49,17 +48,14 @@ RenderStep::RenderStep(const std::string& key,
 					   bool newDeleteVerticesGroup):
 info(RenderInfo(ResourceManager::getTexture(key), newVertices, frameWidth, frameHeight, nbFrames)),
 mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE), vertices(newVertices),
-useSinceEpoch(false), deleteVerticesGroup(newDeleteVerticesGroup),
-lastFrameChange(0.0), isPaused(false),
-pauseFrameRemain(0.0) {
+deleteVerticesGroup(newDeleteVerticesGroup), isPaused(false), animCounter(0.0) {
 	if(vertices) {
 		vertices->updateDataFromVertices(verticesData);
 	}
 }
 
 RenderStep::RenderStep(const RenderStep& src): vertices(0),
-useSinceEpoch(false), deleteVerticesGroup(false), lastFrameChange(0.0),
-isPaused(false), pauseFrameRemain(0.0) {
+deleteVerticesGroup(false), isPaused(false), animCounter(0.0) {
 	copyFrom(src);
 }
 
@@ -94,9 +90,10 @@ void RenderStep::update() {
 		if(info.isAnimated()) {
 			AnimationParameters* anim = info.getAnimationParameters(info.getCurrentAnimation());
 			if(anim) {
-				if(((useSinceEpoch)?(TimeHelper::getInstance().getSinceStartComplete()):(TimeHelper::getInstance().getSinceStart())) >= lastFrameChange + anim->timePerFrame) {
+				animCounter += RedBoxEngine::getUpdateDelta();
+				if(animCounter >= anim->timePerFrame) {
 					info.incrementFrame();
-					lastFrameChange = ((useSinceEpoch)?(TimeHelper::getInstance().getSinceStartComplete()):(TimeHelper::getInstance().getSinceStart()));
+					animCounter -= anim->timePerFrame;
 				}
 			}
 		}
@@ -144,13 +141,6 @@ void RenderStep::setVerticesGroup(VerticesGroup* newVertices) {
     vertices = newVertices;
 }
 
-bool RenderStep::isUseSinceEpoch() const {
-	return useSinceEpoch;
-}
-void RenderStep::setUseSinceEpoch(bool newUseSinceEpoch) {
-	useSinceEpoch = newUseSinceEpoch;
-}
-
 void RenderStep::playAnimation(const std::string& name) {
 	// We check if the animation really exists.
 	if(info.animationExists(name)) {
@@ -159,11 +149,8 @@ void RenderStep::playAnimation(const std::string& name) {
 		info.setCurrentAnimation(name);
 		info.setCurrentFrame(0);
 		info.resetCurrentNbLoops();
-		if(useSinceEpoch) {
-			lastFrameChange = TimeHelper::getInstance().getSinceStartComplete();
-		} else {
-			lastFrameChange = TimeHelper::getInstance().getSinceStart();
-		}
+		animCounter = 0.0;
+		isPaused = false;
 	} else {
 		RB_ECHO("Tried play an animation which does not exist for the concerned RenderStep: " << name);
 	}
@@ -171,21 +158,10 @@ void RenderStep::playAnimation(const std::string& name) {
 
 void RenderStep::pauseAnimation() {
 	isPaused = true;
-	if(useSinceEpoch) {
-		pauseFrameRemain = TimeHelper::getInstance().getSinceStartComplete() - lastFrameChange;
-	} else {
-		pauseFrameRemain = TimeHelper::getInstance().getSinceStart() - lastFrameChange;
-	}
 }
 
 void RenderStep::resumeAnimation() {
 	isPaused = false;
-	if(useSinceEpoch) {
-		lastFrameChange = TimeHelper::getInstance().getSinceStartComplete() - pauseFrameRemain;
-	} else {
-		lastFrameChange = TimeHelper::getInstance().getSinceStart() - pauseFrameRemain;
-	}
-	pauseFrameRemain = 0.0;
 }
 
 const std::string& RenderStep::getCurrentAnimation() const {
@@ -249,11 +225,9 @@ void RenderStep::copyFrom(const RenderStep &src) {
 		vertices = 0;
 		verticesData.clear();
 		verticesPtr.clear();
-		useSinceEpoch = src.useSinceEpoch;
         deleteVerticesGroup = src.deleteVerticesGroup;
-		lastFrameChange = 0.0;
 		isPaused = false;
-		pauseFrameRemain = 0.0;
+		animCounter = 0.0;
     }
 }
 
@@ -283,12 +257,10 @@ namespace RedBox {
 			}
 			output << "RenderStepMode::COLOR";
 		}
-		output << ", vertices: " << r.vertices << ", useSinceEpoch: " <<
-		((r.useSinceEpoch)?("true"):("false")) << ", deleteVerticesGroup: " <<
-		((r.deleteVerticesGroup)?("true"):("false")) << ", lastFrameChange: " <<
-		r.lastFrameChange << ", isPaused: " <<
-		((r.isPaused)?("true"):("false")) <<
-		", pauseFrameRemain: " << r.pauseFrameRemain << "}";
+		output << ", vertices: " << r.vertices << ", deleteVerticesGroup: " <<
+		((r.deleteVerticesGroup)?("true"):("false")) << ", isPaused: " <<
+		((r.isPaused)?("true"):("false")) << ", animCounter: " << r.animCounter
+		<< "}";
 		return output;
 	}
 }

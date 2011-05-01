@@ -113,8 +113,7 @@ void RenderInfo::addAnimation(const std::string& name,
 void RenderInfo::addAnimation(const std::string& name,
 							  double timePerFrame,
 							  int nbLoops,
-							  unsigned int nbFrames,
-							  unsigned int firstFrame, ... ) {
+							  unsigned int nbFrames, ... ) {
 	std::pair<std::map<std::string, AnimationParameters>::iterator, bool> insertionResult;
 	// We make sure it is trying to add an animation with at least one frame.
 	// We also insert the new animation in the map if possible and continue
@@ -124,10 +123,10 @@ void RenderInfo::addAnimation(const std::string& name,
 		// We set the frame numbers to the added animation using the variable
 		// parameters.
 		va_list frames;
-		va_start(frames, firstFrame);
-		for(std::vector<unsigned int>::iterator i = ++(insertionResult.first->second.frames.begin());
+		va_start(frames, nbFrames);
+		for(std::vector<unsigned int>::iterator i = insertionResult.first->second.frames.begin();
 			i != insertionResult.first->second.frames.end();
-			i++) {
+			++i) {
 			*i = va_arg(frames, unsigned int);
 		}
 		va_end(frames);
@@ -188,7 +187,7 @@ const AnimationParameters* RenderInfo::getAnimationParameters(const std::string&
 }
 
 void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
-	if(newCurrentFrame <= texCoords.size()) {
+	if(newCurrentFrame <= getAnimationParameters(getCurrentAnimation())->frames.size()) {
 		currentFrame = newCurrentFrame;
 	} else {
 		RB_ECHO("Tried to set the current frame that is too high: " << newCurrentFrame);
@@ -208,16 +207,16 @@ bool RenderInfo::isAnimated() const {
 }
 
 void RenderInfo::incrementFrame() {
-	AnimationParameters* ptrCurrentAnimation = getAnimationParameters(getCurrentAnimation());
-	if(ptrCurrentAnimation) {
+	AnimationParameters* anim = getAnimationParameters(getCurrentAnimation());
+	if(anim) {
 		++currentFrame;
-		if(currentFrame >= ptrCurrentAnimation->frames.size()) {
-			if(ptrCurrentAnimation->nbLoops == -1) {
+		if(currentFrame >= anim->frames.size()) {
+			if(anim->nbLoops == -1) {
 				currentFrame = 0;
-			} else {
+			} else if(anim->nbLoops > -1) {
 				++currentNbLoops;
-				if(currentNbLoops > ptrCurrentAnimation->nbLoops) {
-					--currentNbLoops;
+				if(currentNbLoops > anim->nbLoops) {
+					currentNbLoops = anim->nbLoops;
 					--currentFrame;
 				} else {
 					currentFrame = 0;
