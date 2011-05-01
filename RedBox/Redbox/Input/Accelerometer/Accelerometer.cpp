@@ -1,6 +1,12 @@
 #include "Accelerometer.h"
 
+#include "InputManager.h"
+
 using namespace RedBox;
+
+Accelerometer* Accelerometer::getDefault() {
+	return InputManager::getDefaultAccelerometer();
+}
 
 void Accelerometer::activateSignals() {
 	signalsActive = true;

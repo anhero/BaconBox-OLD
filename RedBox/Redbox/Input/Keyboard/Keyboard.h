@@ -44,7 +44,14 @@ namespace RedBox {
 		
 		/// Signal sent when a key mask is released.
 		sigly::Signal1<KeyMaskSignalData> keyMaskRelease;
-		
+
+		/**
+		 * Gets a pointer to the default keyboard device.
+		 * @return Pointer to the default keyboard device. Null if none are
+		 * available.
+		 */
+		static Keyboard* getDefault();
+
 		/**
 		 * Gets the keyboard's current state.
 		 * @return Keyboard's current state. Contains information about the keys

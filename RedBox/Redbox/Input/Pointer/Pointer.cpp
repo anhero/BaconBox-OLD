@@ -1,6 +1,12 @@
 #include "Pointer.h"
 
+#include "InputManager.h"
+
 using namespace RedBox;
+
+Pointer* Pointer::getDefault() {
+	return InputManager::getDefaultPointer();
+}
 
 const Vec2& Pointer::getPosition(unsigned int cursorIndex) const {
 	return state.cursors[cursorIndex].getPosition();

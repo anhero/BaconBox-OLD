@@ -27,6 +27,13 @@ namespace RedBox {
 		sigly::Signal1<AccelerometerSignalData> change;
 		
 		/**
+		 * Gets a pointer to the default accelerometer device.
+		 * @return Pointer to the default accelerometer device. Null if none are
+		 * available.
+		 */
+		static Accelerometer* getDefault();
+
+		/**
 		 * Activates the signal sending when the accelerometer's value are
 		 * updated.
 		 */

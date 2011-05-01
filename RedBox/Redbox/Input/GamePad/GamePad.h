@@ -33,6 +33,13 @@ namespace RedBox {
 		sigly::Signal1<GamePadThumbstickSignalData> thumbstickMove;
 		
 		/**
+		 * Gets a pointer to the default gamepad device.
+		 * @return Pointer to the default gamepad device. Null if none are
+		 * available.
+		 */
+		static GamePad* getDefault();
+
+		/**
 		 * Gets the game pad's state containing the buttons' and the 
 		 * thumbsticks' state.
 		 * @return Game pad's state.

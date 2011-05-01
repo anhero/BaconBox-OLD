@@ -37,6 +37,13 @@ namespace RedBox {
 		sigly::Signal1<PointerMoveSignalData> move;
 		
 		/**
+		 * Gets a pointer to the default pointer device.
+		 * @return Pointer to the default pointer device. Null if none are
+		 * available.
+		 */
+		static Pointer* getDefault();
+
+		/**
 		 * Gets the cursor's position.
 		 * @param Index of the cursor to check.
 		 * @return Cursor's position.
