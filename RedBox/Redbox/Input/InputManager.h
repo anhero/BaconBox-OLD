@@ -26,6 +26,31 @@ namespace RedBox {
 		 * @return Pointer to the instance.
 		 */
 		static InputManager& getInstance();
+
+		/**
+		 * Gets a pointer to the default accelerometer device.
+		 * @return Pointer to the default accelerometer device. Null if none are
+		 * available.
+		 */
+		static Accelerometer* getDefaultAccelerometer();
+		/**
+		 * Gets a pointer to the default gamepad device.
+		 * @return Pointer to the default gamepad device. Null if none are
+		 * available.
+		 */
+		static GamePad* getDefaultGamePad();
+		/**
+		 * Gets a pointer to the default keyboard device.
+		 * @return Pointer to the default keyboard device. Null if none are
+		 * available.
+		 */
+		static Keyboard* getDefaultKeyboard();
+		/**
+		 * Gets a pointer to the default pointer device.
+		 * @return Pointer to the default pointer device. Null if none are
+		 * available.
+		 */
+		static Pointer* getDefaultPointer();
 		
 		/**
 		 * Gets the number of accelerometers initialized.

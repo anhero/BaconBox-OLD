@@ -29,6 +29,22 @@ InputManager& InputManager::getInstance() {
 	return instance;
 }
 
+Accelerometer* InputManager::getDefaultAccelerometer() {
+	return InputManager::getInstance().getAccelerometer();
+}
+
+GamePad* InputManager::getDefaultGamePad() {
+	return InputManager::getInstance().getGamePad();
+}
+
+Keyboard* InputManager::getDefaultKeyboard() {
+	return InputManager::getInstance().getKeyboard();
+}
+
+Pointer* InputManager::getDefaultPointer() {
+	return InputManager::getInstance().getPointer();
+}
+
 unsigned int InputManager::getNbAccelerometers() const {
 	return accelerometers.size();
 }
