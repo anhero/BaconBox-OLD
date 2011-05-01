@@ -25,7 +25,7 @@ namespace RedBox {
 		 * Gets the InputManager's singleton instance.
 		 * @return Pointer to the instance.
 		 */
-		static InputManager* getInstance();
+		static InputManager& getInstance();
 		
 		/**
 		 * Gets the number of accelerometers initialized.
@@ -124,9 +124,6 @@ namespace RedBox {
 		 */
 		virtual void update();
 	private:
-		/// Pointer to the class's unique instance.
-		static InputManager* instance;
-		
 		/// Pointers to the loaded accelerometers.
 		std::vector<Accelerometer*> accelerometers;
 		

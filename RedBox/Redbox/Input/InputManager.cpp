@@ -24,12 +24,8 @@
 
 using namespace RedBox;
 
-InputManager* InputManager::instance = NULL;
-
-InputManager* InputManager::getInstance() {
-	if(!instance) {
-		instance = RB_INPUT_MANAGER_IMPL;
-	}
+InputManager& InputManager::getInstance() {
+	static RB_INPUT_MANAGER_IMPL instance;
 	return instance;
 }
 

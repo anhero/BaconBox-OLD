@@ -144,7 +144,7 @@
 	#define RB_KEYBOARD_INCLUDE "SDLKeyboard.h"
 	#define RB_POINTER_IMPL new SDLPointer()
 	#define RB_POINTER_INCLUDE "SDLPointer.h"
-	#define RB_INPUT_MANAGER_IMPL new SDLInputManager()
+	#define RB_INPUT_MANAGER_IMPL RedBox::SDLInputManager
 	#define RB_INPUT_MANAGER_INCLUDE "SDLInputManager.h"
 #endif
 
@@ -162,7 +162,7 @@
 #endif
 
 #ifndef RB_INPUT_MANAGER_IMPL
-	#define RB_INPUT_MANAGER_IMPL new InputManager()
+	#define RB_INPUT_MANAGER_IMPL RedBox::InputManager
 #endif
 
 #endif

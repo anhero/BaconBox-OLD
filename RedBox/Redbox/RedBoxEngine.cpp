@@ -96,7 +96,7 @@ void RedBoxEngine::pulse() {
 			currentState->update();
 			renderedSinceLastUpdate = false;
 			// We update the input manager.
-			InputManager::getInstance()->update();
+			InputManager::getInstance().update();
 			// We take note of the time.
 			if(lastUpdate) {
 				lastUpdate += updateDelay;
