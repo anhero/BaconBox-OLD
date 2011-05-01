@@ -191,10 +191,10 @@ void Renderable::setIsStatic(bool isStatic){
 	staticObject = isStatic;
 }
 float Renderable::getElasticity(){
-return elasticity;
+	return elasticity;
 }
 void Renderable::setElasticity(float elasticity){
-this->elasticity = elasticity;
+	this->elasticity = elasticity;
 }
 
 bool Renderable::solveXCollision(Renderable * object1, Renderable * object2, CollisionData * collisionInfo){
@@ -226,30 +226,30 @@ bool Renderable::solveXCollision(Renderable * object1, Renderable * object2, Col
 		
 		
 		if(obj1AABB.overlaps(&obj2AABB)){
-		
-		
-		float maxOverlap = obj1DeltaAbs + obj2DeltaAbs; //+ RB_OVERLAP_BIAS;
-		
-		if(obj1Delta > obj2Delta) {
-			overlap = object1->getXPosition() + object1->getWidth() - object2->getXPosition();
-			if(overlap > maxOverlap || !object1->IsCollidingSide(Side::RIGHT) || !object2->IsCollidingSide(Side::LEFT)){
-				overlap = 0;
+			
+			
+			float maxOverlap = obj1DeltaAbs + obj2DeltaAbs; //+ RB_OVERLAP_BIAS;
+			
+			if(obj1Delta > obj2Delta) {
+				overlap = object1->getXPosition() + object1->getWidth() - object2->getXPosition();
+				if(overlap > maxOverlap || !object1->IsCollidingSide(Side::RIGHT) || !object2->IsCollidingSide(Side::LEFT)){
+					overlap = 0;
+				}
+				else{
+					collisionInfo->sideObj1 |= Side::RIGHT;
+					collisionInfo->sideObj2 |= Side::LEFT;
+				}
 			}
-			else{
-				collisionInfo->sideObj1 |= Side::RIGHT;
-				collisionInfo->sideObj2 |= Side::LEFT;
+			else if(obj1Delta < obj2Delta){
+				overlap = object1->getXPosition() - object2->getWidth() - object2->getXPosition();
+				if(-overlap > maxOverlap || !object1->IsCollidingSide(Side::LEFT) || !object2->IsCollidingSide(Side::RIGHT)){
+					overlap = 0;
+				}
+				else{
+					collisionInfo->sideObj1 |= Side::LEFT;
+					collisionInfo->sideObj2 |= Side::RIGHT;
+				}
 			}
-		}
-		else if(obj1Delta < obj2Delta){
-			overlap = object1->getXPosition() - object2->getWidth() - object2->getXPosition();
-			if(-overlap > maxOverlap || !object1->IsCollidingSide(Side::LEFT) || !object2->IsCollidingSide(Side::RIGHT)){
-				overlap = 0;
-			}
-			else{
-				collisionInfo->sideObj1 |= Side::LEFT;
-				collisionInfo->sideObj2 |= Side::RIGHT;
-			}
-		}
 		}	
 	}
 	
@@ -316,36 +316,36 @@ bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, Col
 		
 		
 		if(obj1AABB.overlaps(&obj2AABB)){
-
-	
-		
+			
+			
+			
 			float maxOverlap = obj1DeltaAbs + obj2DeltaAbs; //+ RB_OVERLAP_BIAS;
-		
-		
-		
-		
-		if(obj1Delta > obj2Delta) {
-			overlap = object1->getYPosition() + object1->getHeight() - object2->getYPosition();
-			if(overlap > maxOverlap || !object1->IsCollidingSide(Side::RIGHT) || !object2->IsCollidingSide(Side::LEFT)){
-				overlap = 0;
+			
+			
+			
+			
+			if(obj1Delta > obj2Delta) {
+				overlap = object1->getYPosition() + object1->getHeight() - object2->getYPosition();
+				if(overlap > maxOverlap || !object1->IsCollidingSide(Side::RIGHT) || !object2->IsCollidingSide(Side::LEFT)){
+					overlap = 0;
+				}
+				else{
+					collisionInfo->sideObj1 |= Side::BOTTOM;
+					collisionInfo->sideObj2 |= Side::TOP;
+				}
 			}
-			else{
-				collisionInfo->sideObj1 |= Side::BOTTOM;
-				collisionInfo->sideObj2 |= Side::TOP;
+			else if(obj1Delta < obj2Delta){
+				overlap = object1->getYPosition() - object2->getHeight() - object2->getYPosition();
+				if(-overlap > maxOverlap || !object1->IsCollidingSide(Side::LEFT) || !object2->IsCollidingSide(Side::RIGHT)){
+					overlap = 0;
+				}
+				else{
+					collisionInfo->sideObj1 |= Side::TOP;
+					collisionInfo->sideObj2 |= Side::BOTTOM;
+				}
 			}
+			
 		}
-		else if(obj1Delta < obj2Delta){
-			overlap = object1->getYPosition() - object2->getHeight() - object2->getYPosition();
-			if(-overlap > maxOverlap || !object1->IsCollidingSide(Side::LEFT) || !object2->IsCollidingSide(Side::RIGHT)){
-				overlap = 0;
-			}
-			else{
-				collisionInfo->sideObj1 |= Side::TOP;
-				collisionInfo->sideObj2 |= Side::BOTTOM;
-			}
-		}
-		
-	}
 	}
 	
 	if(overlap !=0){
@@ -378,7 +378,7 @@ bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, Col
 			object2->setVelocityY(obj1v - obj2v*object2->getElasticity());
 			//Handle horizontal moving static object EX. moving platform
 			object2->setXPosition(object2->getXPosition() + object1->getXPosition() - object2->getOldXPosition());
-
+			
 		}
 		return true;
 	}
@@ -393,9 +393,9 @@ std::pair<bool, CollisionData> Renderable::collide(Renderable * object1, Rendera
 	currentCollisionData.obj1 = object1;
 	currentCollisionData.obj2 = object2;
 	if (object1 != object2) {
-	bool collideInX = solveXCollision(object1, object2, &currentCollisionData);
-	bool collideInY = solveYCollision(object1, object2, &currentCollisionData);
-	return std::pair<bool, CollisionData>(collideInX && collideInY, currentCollisionData);
+		bool collideInX = solveXCollision(object1, object2, &currentCollisionData);
+		bool collideInY = solveYCollision(object1, object2, &currentCollisionData);
+		return std::pair<bool, CollisionData>(collideInX && collideInY, currentCollisionData);
 	}
 	else{
 		return std::pair<bool, CollisionData>(false, currentCollisionData);
@@ -413,8 +413,42 @@ float Renderable::getOldXPosition(){
 }
 float Renderable::getOldYPosition(){
 	return oldPosition.getY();
-
+	
 }
+
+std::pair<bool, std::list<CollisionData> > Renderable::collide(std::list<Renderable*> renderables1, std::list<Renderable*> renderables2){
+	std::list<CollisionData> collisionInfo;
+	bool collide = false;
+	for(std::list<Renderable*>::iterator i = renderables1.begin(); i != renderables1.end();
+		i++) {
+		for(std::list<Renderable*>::iterator j = renderables2.begin(); j != renderables2.end();
+			j++) {
+			if(*i != *j){
+				std::pair<bool, CollisionData> collisionPair = Renderable::collide(*i, *j);
+				if(collisionPair.first){
+					collide = true;
+				}
+				collisionInfo.push_back(collisionPair.second);
+			}
+		}
+	}
+	return std::pair<bool, std::list<CollisionData> >(collide,  collisionInfo);
+}
+
+std::pair<bool, std::list<CollisionData> > Renderable::collide(std::list<Renderable*> renderables){
+	std::list<CollisionData> collisionInfo;
+	bool collide = false;
+	for(std::list<Renderable*>::iterator i = renderables.begin(); i != renderables.end();
+		i++) {
+		std::pair<bool, CollisionData> collisionPair = this->collide(*i);
+		if(collisionPair.first){
+			collide = true;
+		}
+		collisionInfo.push_back(collisionPair.second);
+	}
+	return std::pair<bool, std::list<CollisionData> >(collide,  collisionInfo);
+}
+
 
 AABB Renderable::getAABB(){
 	return AABB(getXPosition(), getXPosition() + getWidth(), getYPosition(), getYPosition() + getHeight());

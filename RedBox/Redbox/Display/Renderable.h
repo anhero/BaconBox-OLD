@@ -7,6 +7,7 @@
 #include "Side.h"
 #include "CollisionData.h"
 #include "AABB.h"
+#include <list>
 #ifndef RB_RENDERABLE_H
 #define RB_RENDERABLE_H
 #define NO_MAX_VELOCITY -1
@@ -243,6 +244,26 @@ namespace RedBox {
 		 */
 		std::pair<bool, CollisionData> collide(Renderable * aRenderable);
 		
+		
+		/**
+		 * Use this function to collide the current renderable against a list of other renderables. 
+		 * It will test if they are colliding, and return a pair containing collision information.
+		 * @param renderables A list of Renderable objects against which you want to collide the current object.
+		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
+		 * the second value is a list of structure containing information about the collision. See CollisionData.
+		 */
+		std::pair<bool, std::list<CollisionData> > collide(std::list<Renderable*> renderables);
+
+		/**
+		 * Use this function to collide a list of other renderables against another. 
+		 * It will test if they are colliding, and return a pair containing collision information.
+		 * @param renderables1 A list of Renderable objects against which you want to collide the renderables2 list of objects.
+		 * @param renderables2 A list of Renderable objects against which you want to collide the renderables1 list of objects.
+		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
+		 * the second value is a list of structure containing information about the collision. See CollisionData.
+		 */
+		static std::pair<bool, std::list<CollisionData> > collide(std::list<Renderable*> renderables1, std::list<Renderable*> renderables2);
+
 		
 		/**
 		 * Use this function to collide  two renderable against each other. 
