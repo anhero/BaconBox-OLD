@@ -48,3 +48,7 @@
 #include <RedBox/ResourceManager.h>
 #include <RedBox/ResourcePathHandler.h>
 #include <RedBox/Sprite.h>
+#include <RedBox/Stopwatch.h>
+#include <RedBox/Font.h>
+#include <RedBox/GraphicString.h>
+#include <RedBox/Parser.h>

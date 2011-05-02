@@ -20,3 +20,8 @@ std::string Parser::intToString(const int anInt){
 }
 
 
+std::string Parser::floatToString(const float aFloat){
+	std::stringstream ss;
+	ss << aFloat;
+	return ss.str();
+}

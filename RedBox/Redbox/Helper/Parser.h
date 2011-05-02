@@ -27,6 +27,11 @@ namespace RedBox {
 		 * Create a string from the given integer. Ex: 123 would give "123".
 		 */
 		static std::string intToString(const int anInt);
+		
+		/**
+		 * Create a string from the given float. Ex: 12.3 would give "12.3".
+		 */
+		static std::string floatToString(const float aFloat);
 	};
 }
 
