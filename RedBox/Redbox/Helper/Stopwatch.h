@@ -83,6 +83,12 @@ namespace RedBox {
 		 * @return Type of time the stopwatch is using.
 		 */
 		TimeHelper::TimeType getTimeType() const;
+
+		/**
+		 * Adds time to the stopwatch.
+		 * @param time Time in seconds to add to the stopwatch.
+		 */
+		void addToTime(double time);
 	private:
 		/// Time at which the stopwatch was started.
 		double startTime;

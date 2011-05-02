@@ -98,3 +98,13 @@ void Stopwatch::setTimeType(TimeHelper::TimeType newTimeType) {
 TimeHelper::TimeType Stopwatch::getTimeType() const {
 	return timeType;
 }
+
+void Stopwatch::addToTime(double time) {
+	if(started) {
+		if(paused) {
+			pausedTime += time;
+		} else {
+			startTime -= time;
+		}
+	}
+}
