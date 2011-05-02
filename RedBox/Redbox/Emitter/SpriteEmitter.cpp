@@ -73,7 +73,6 @@ void SpriteEmitter::startParticle(Sprite*& renderable) {
 		shootVec.setLength(force + Random::getRandomFloat(0.0f, forceVariance));
 		shootVec.rotate(angle + Random::getRandomFloat(-angleVariance, angleVariance));
 		renderable->setVelocity(shootVec);
-		renderable->setAcceleration(getAcceleration());
 	}
 }
 

@@ -18,6 +18,24 @@ function build() {
 
 	print_info Patching SDL
 	cd "${lib_workdir}/${_name}-${_version}/"
+
+	#Hack to remove Error: Couldn't open stream
+	patch -p1 <<'EOF'
+--- a/src/video/x11/SDL_x11events.c	2011-04-08 16:07:04.000000000 -0400
++++ b/src/video/x11/SDL_x11events.c	2011-04-29 21:35:23.000000000 -0400
+@@ -558,8 +558,8 @@
+ 	  printf("No driver data\n");
+ 	  continue;
+ 	}
+-	if(data->eventStream <= 0) 
+-	    printf("Error: Couldn't open stream\n");
++	//if(data->eventStream <= 0) 
++	//    printf("Error: Couldn't open stream\n");
+ 	rd = read(data->eventStream, ev, size * 64);
+ 	//printf("Got %i/%i bytes\n",rd,size);
+ 	if(rd >= size) {
+EOF
+
 	#Ugly hack to not use system iconv...
 	patch -p1 <<'EOF'
 --- a/configure	2011-03-26 22:52:31.000000000 -0400
