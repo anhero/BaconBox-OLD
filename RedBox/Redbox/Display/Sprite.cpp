@@ -290,3 +290,30 @@ RenderInfo* Sprite::getMainRenderInfo() {
 		return NULL;
 	}
 }
+
+void Sprite::addAnimation(const std::string& name,
+							  double timePerFrame,
+							  int nbLoops,
+							  unsigned int nbFrames, ... ) {
+	
+	
+	std::vector<unsigned int> framesVector(nbFrames);
+	
+	// We make sure it is trying to add an animation with at least one frame.
+	if(nbFrames >= 1) {
+		// We set the frame numbers to the added animation using the variable
+		// parameters.
+		va_list frames;
+		va_start(frames, nbFrames);
+		for(std::vector<unsigned int>::iterator i = framesVector.begin();
+			i != framesVector.end();
+			++i) {
+			*i = va_arg(frames, unsigned int);
+		}
+		va_end(frames);
+		
+		getMainRenderInfo()->addAnimation(name, framesVector, timePerFrame, nbLoops);
+	} else {
+		RB_ECHO("Failed to add the animation named : " << name);
+	}
+}

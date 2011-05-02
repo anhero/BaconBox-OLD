@@ -52,3 +52,5 @@
 #include <RedBox/Font.h>
 #include <RedBox/GraphicString.h>
 #include <RedBox/Parser.h>
+#include <RedBox/SpriteEmitter.h>
+#include <RedBox/AudioEngine.h>
