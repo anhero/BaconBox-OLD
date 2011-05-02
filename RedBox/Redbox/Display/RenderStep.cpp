@@ -90,7 +90,7 @@ void RenderStep::update() {
 		if(info.isAnimated()) {
 			AnimationParameters* anim = info.getAnimationParameters(info.getCurrentAnimation());
 			if(anim) {
-				animCounter += RedBoxEngine::getUpdateDelta();
+				animCounter += RedBoxEngine::getSinceLastUpdate();
 				if(animCounter >= anim->timePerFrame) {
 					info.incrementFrame();
 					animCounter -= anim->timePerFrame;

@@ -41,7 +41,7 @@ double Timer::getInterval() const {
 
 void Timer::update() {
 	if(started) {
-		timeCounter += RedBoxEngine::getUpdateDelta();
+		timeCounter += RedBoxEngine::getSinceLastUpdate();
 		while(timeCounter > interval) {
 			timeCounter -= interval;
 			tick();

@@ -20,7 +20,9 @@ namespace RedBox {
 		friend class ResourcePathHandler;
 
 	public:
-		///This function must be called by the main function. The main function arguments must be passed this function 
+		static const double DEFAULT_UPDATES_PER_SECOND = 60.0;
+		static const unsigned int DEFAULT_MIN_FRAMES_PER_SECOND = 5;
+		///This function must be called by the main function. The main function arguments must be passed this function
 		static void application(int argc, char *argv[]);
 		
 		/// Signal sent when the RedBox engine is initialized.
@@ -51,34 +53,29 @@ namespace RedBox {
 		 * Gets the minimum fps.
 		 * @return Minimum fps.
 		 */
-		static int getFpsMin();
+		static unsigned int getMinFps();
 		/**
 		 * Gets the number of updates per second.
 		 * @return Number of updates per second.
 		 */
-		static int getUpdatesPerSecond();
+		static double getUpdatesPerSecond();
 		/**
 		 * Return the normal delay between each update (1/Update per second)
 		 */
 		static double getUpdateDelay();
 		/**
-		 * Gets the ratio of time to catch up to time things correctly in the
-		 * updates.
-		 */
-		static double getDeltaRatio();
-		/**
 		 * Sets the minimum number of frames per second to be rendered. Cannot
 		 * have a higher number than the number of updates per second.
 		 * @param fpsMin Minimum number of frames per second.
 		 */
-		static void setFpsMin(int fpsMin);
+		static void setMinFps(unsigned int newMinFps);
 		/**
 		 * Sets the updates per second. Updates per second called on the current
 		 * state. Cannot have a lower number than the number of frames per
 		 * second.
 		 * @param updatesPerSecond Number of updates per second.
 		 */
-		static void setUpdatesPerSecond(int updatesPerSecond);
+		static void setUpdatesPerSecond(double updatesPerSecond);
 		/**
 		 * Called by the context to call the update and the render correctly
 		 * on the current state.
@@ -92,7 +89,7 @@ namespace RedBox {
 		 * Gets the time elapsed since the last update called on a state.
 		 * @return Time in seconds since the last update called on a state.
 		 */
-		static double getUpdateDelta();
+		static double getSinceLastUpdate();
 
 		/**
 		 * Gets the screen's width.
@@ -111,16 +108,17 @@ namespace RedBox {
 		static std::map<std::string, State*> states;
 		/// Pointer to the current state being played.
 		static State* currentState;
-		/// Maximum delay between each render called on the current state.
-		static double maxRenderDelay;
-		/// Delay between each update called on the current state.
-		static double updateDelay;
 		/// Time at which the last update was called on the current state.
 		static double lastUpdate;
-		/// Time at which the last render was called on the current state.
-		static double lastRender;
-		/// Ratio of time that the updates need to watch for to catch up.
-		static double deltaRatio;
+		/// Internal update count between each render.
+		static unsigned int loops;
+		/// Time at which the next update can be called.
+		static double nextUpdate;
+		/// Delay between each update called on the current state.
+		static double updateDelay;
+		/// Minimum renders that can be skipped between updates.
+		static unsigned int minFps;
+		/// Flag to set when the buffer needs to be swapped.
 		static bool bufferSwapped;
 		/**
 		 * Flag used to limit rendering so it doesn't render more times than

@@ -1,5 +1,7 @@
 #include "RedBoxEngine.h"
 
+#include <cassert>
+
 #include "TimeHelper.h"
 #include "GraphicDriver.h"
 #include "Font.h"
@@ -16,11 +18,11 @@ std::string RedBoxEngine::applicationPath = "";
 
 std::map<std::string, State*> RedBoxEngine::states = std::map<std::string, State*>();
 State* RedBoxEngine::currentState = NULL;
-double RedBoxEngine::maxRenderDelay = 1.0 / 30.0;
-double RedBoxEngine::updateDelay = 1.0 / 120.0;
 double RedBoxEngine::lastUpdate = 0.0;
-double RedBoxEngine::lastRender = 0.0;
-double RedBoxEngine::deltaRatio = 0.0;
+unsigned int RedBoxEngine::loops = 0;
+double RedBoxEngine::nextUpdate = 0;
+double RedBoxEngine::updateDelay = 1.0 / DEFAULT_UPDATES_PER_SECOND;
+unsigned int RedBoxEngine::minFps = DEFAULT_MIN_FRAMES_PER_SECOND;
 bool RedBoxEngine::bufferSwapped = false;
 bool RedBoxEngine::renderedSinceLastUpdate = false;
 sigly::Signal2<int, int> RedBoxEngine::onInitialize = sigly::Signal2<int, int>();
@@ -53,46 +55,42 @@ State* RedBoxEngine::getCurrentState() {
 	return currentState;
 }
 
-int RedBoxEngine::getFpsMin() {
-	return static_cast<int>(1.0 / maxRenderDelay);
+unsigned int RedBoxEngine::getMinFps() {
+	return minFps;
 }
 
-int RedBoxEngine::getUpdatesPerSecond() {
-	return static_cast<int>(1.0 / updateDelay);
+double RedBoxEngine::getUpdatesPerSecond() {
+	assert(updateDelay);
+	return 1.0 / updateDelay;
 }
 
-double RedBoxEngine::getDeltaRatio() {
-	return deltaRatio;
+double RedBoxEngine::getUpdateDelay() {
+	return updateDelay;
 }
 
-void RedBoxEngine::setFpsMin(int fpsMin) {
-	// Calculate the maximum render delay.
-	double newMaxRenderDelay = 1.0 / static_cast<double>(fpsMin);
-	// We make sure the maximum render delay is higher than the update delay.
-	if(newMaxRenderDelay >= updateDelay) {
-		maxRenderDelay = newMaxRenderDelay;
-	}
+void RedBoxEngine::setMinFps(unsigned int newMinFps) {
+	minFps = newMinFps;
 }
 
-void RedBoxEngine::setUpdatesPerSecond(int updatesPerSecond) {
-	// Calculate the update delay.
-	double newUpdateDelay = 1.0 / static_cast<double>(updatesPerSecond);
-	// We make sure the maximum render delay is higher than the update delay.
-	if(newUpdateDelay <= maxRenderDelay) {
-		updateDelay = newUpdateDelay;
+void RedBoxEngine::setUpdatesPerSecond(double updatesPerSecond) {
+	if(updatesPerSecond) {
+		// Calculate the update delay.
+		updateDelay = 1.0 / static_cast<double>(updatesPerSecond);
 	}
 }
 
 void RedBoxEngine::pulse() {
 	// We make sure the pointer to the current state is valid.
 	if(currentState) {
-		// We update the time from TimeHelper.
 		TimeHelper::getInstance().refreshTime();
-		// We check if we need to update.
-		if(TimeHelper::getInstance().getSinceStartComplete() >= lastUpdate + updateDelay) {
-			// We update the delta ratio.
-			deltaRatio = 1.0 + (TimeHelper::getInstance().getSinceStartComplete() -
-						  (lastUpdate + updateDelay)) / updateDelay;
+		// We update the time from TimeHelper.
+		if(!nextUpdate) {
+			nextUpdate = TimeHelper::getInstance().getSinceStartComplete();
+		}
+		loops = 0;
+		while(TimeHelper::getInstance().getSinceStartComplete() > nextUpdate &&
+			  loops < minFps) {
+			TimeHelper::getInstance().refreshTime();
 			// We update the current state.
 			currentState->update();
 			renderedSinceLastUpdate = false;
@@ -100,20 +98,11 @@ void RedBoxEngine::pulse() {
 			InputManager::getInstance().update();
 			// We update the timers.
 			TimerManager::update();
-			// We take note of the time.
-			if(lastUpdate) {
-				lastUpdate += updateDelay;
-			} else {
-				lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
-			}
-			//TimeHelper::getInstance()->sleep(0.01);
+			nextUpdate += updateDelay;
+			lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
+			++loops;
 		}
-		// We check that the delay between renders doesn't go too high or that
-		// the updates aren't lagging behind.
-		if(((TimeHelper::getInstance().getSinceStartComplete() >= lastUpdate + maxRenderDelay) ||
-		   deltaRatio < 2.0) && !renderedSinceLastUpdate) {
-			// We take note of the time at which the render was done.
-			lastRender += maxRenderDelay;
+		if(!renderedSinceLastUpdate) {
 			currentState->render();
 			renderedSinceLastUpdate = true;
 			bufferSwapped = false;
@@ -127,15 +116,6 @@ void RedBoxEngine::pulse() {
 	}
 }
 
-bool RedBoxEngine::isBufferSwapped() {
-	return bufferSwapped;
-}
-
-void RedBoxEngine::setBufferSwapped() {
-	bufferSwapped = true;
-}
-
-
 void RedBoxEngine::initializeEngine(int newScreenWidth, int newScreenHeight) {
 	screenWidth = newScreenWidth;
 	screenHeight = newScreenHeight;
@@ -146,7 +126,7 @@ void RedBoxEngine::initializeEngine(int newScreenWidth, int newScreenHeight) {
 	Font::initializeFontRenderer();
 }
 
-double RedBoxEngine::getUpdateDelta() {
+double RedBoxEngine::getSinceLastUpdate() {
 	return TimeHelper::getInstance().getSinceStartComplete() - lastUpdate;
 }
 
@@ -158,10 +138,14 @@ int RedBoxEngine::getScreenHeight() {
 	return screenHeight;
 }
 
-void RedBoxEngine::application(int argc, char *argv[]){
-	applicationPath = dirname(argv[0]);
+bool RedBoxEngine::isBufferSwapped() {
+	return bufferSwapped;
 }
 
-double RedBoxEngine::getUpdateDelay(){
-	return updateDelay;
+void RedBoxEngine::setBufferSwapped() {
+	bufferSwapped = true;
+}
+
+void RedBoxEngine::application(int argc, char *argv[]){
+	applicationPath = dirname(argv[0]);
 }
