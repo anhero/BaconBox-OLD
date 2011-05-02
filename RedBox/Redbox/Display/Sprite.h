@@ -223,6 +223,15 @@ namespace RedBox {
 		 */
 		RenderInfo* getMainRenderInfo();
 		
+		
+		
+		/**
+		 * Sets the current animation.
+		 * @param name current animation's name.
+		 */
+		void playAnimation(const std::string& name);
+		
+		
 		/**
 		 * Adds an animation. Accepts a variable number of parameters for each
 		 * animation frame. For example, an animation of 7 frames could be added
