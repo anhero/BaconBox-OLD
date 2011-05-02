@@ -108,6 +108,8 @@ namespace RedBox {
 		static std::map<std::string, State*> states;
 		/// Pointer to the current state being played.
 		static State* currentState;
+		/// Pointer to the last updated state.
+		static State* lastState;
 		/// Time at which the last update was called on the current state.
 		static double lastUpdate;
 		/// Internal update count between each render.
