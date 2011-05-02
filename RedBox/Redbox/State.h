@@ -18,6 +18,7 @@ namespace RedBox {
 	 * manages the renderable objects. Ex: the playState, the MenuState.
      */
 	class State : public sigly::HasSlots<> {
+		friend class RedBoxEngine;
 	public:
 		/**
 		 * Default constructor.
@@ -67,9 +68,19 @@ namespace RedBox {
 		 * @return State's background color.
 		 */
 		const Color& getBackgroundColor() const;
+
 	protected:
 		///The camera object which prepare the scene before rendering any object.
 		Camera camera;
+		/**
+		 * Method called by the engine when the state gets called to be played.
+		 */
+		virtual void onGetFocus();
+		/**
+		 * Method called by the engine when the state is not the current state
+		 * anymore.
+		 */
+		virtual void onLoseFocus();
 	private:
 		/// Temporarily stores the renderable objects to be deleted.
         std::list<Renderable*> toDelete;

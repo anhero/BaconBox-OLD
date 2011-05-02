@@ -129,6 +129,12 @@ const Color& State::getBackgroundColor() const {
 	return camera.getBackgroundColor();
 }
 
+void State::onGetFocus() {
+}
+
+void State::onLoseFocus() {
+}
+
 void State::addRenderableDirect(Renderable* aRenderable) {
 	assert(aRenderable);
 	if(!aRenderable->isInState) {

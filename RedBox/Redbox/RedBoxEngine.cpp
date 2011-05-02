@@ -10,6 +10,7 @@
 #include "MusicEngine.h"
 #include "InputManager.h"
 #include "TimerManager.h"
+#include "Debug.h"
 #include <libgen.h>
 using namespace RedBox;
 
@@ -33,6 +34,7 @@ State* RedBoxEngine::addState(State* newState) {
 	if(newState) {
 		if(states.empty()) {
 			currentState = newState;
+			currentState->onGetFocus();
 		}
 		states.insert(std::pair<std::string, State*>(newState->getName(), newState));
 	}
@@ -50,7 +52,19 @@ void RedBoxEngine::removeState(const std::string& name) {
 }
 
 State* RedBoxEngine::playState(const std::string& name) {
-	currentState = states[name];
+	// We call the lose and get focus methods for the states.
+	if(currentState) {
+		currentState->onLoseFocus();
+	}
+	// We make sure the state asked for exists.
+	std::map<std::string, State*>::iterator it = states.find(name);
+	if(it != states.end()) {
+		currentState = it->second;
+		currentState->onGetFocus();
+	} else {
+		RB_ECHO("State \"" << name <<
+				"\" doesn't exist so it cannot be played.");
+	}
 	return currentState;
 }
 
