@@ -93,14 +93,44 @@ namespace RedBox {
 		 */
 		const Vec2& getVelocity();
 		/**
+		 * Return the x factor of the velocity vector
+		 */
+		float getVelocityX();
+		/**
+		 * Return the y factor of the velocity vector
+		 */
+		float getVelocityY();
+		
+		/**
 		 * Set the acceleration vector
 		 */
 		void setAcceleration(const Vec2& acceleration);
+		
+		/**
+		 * Set the x factor of the accelaration vector.
+		 */
+		void setAccelerationX(float xAccelaration);
+		
+		/**
+		 * Set the y factor of the accelaration vector.
+		 */
+		void setAccelerationY(float yAccelaration);
+
 		/**
 		 * Return the acceleration vector
 		 */
 		const Vec2& getAcceleration();
 		
+		/**
+		 * Return the x factor of the acceleration vector
+		 */
+		float getAccelerationX();
+		
+		/**
+		 * Return the y factor of the acceleration vector
+		 */
+		float getAccelerationY();
+
 		/**
 		 * Gets the renderable's horizontal position.
 		 * @return Horizontal position (in pixels). Lower value means more to

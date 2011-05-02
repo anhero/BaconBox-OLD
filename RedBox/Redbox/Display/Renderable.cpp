@@ -164,9 +164,6 @@ void Renderable::update(){
 	}
 	
 	
-	position += (velocity * ratio);
-	this->setPosition(position.getX(), position.getY());
-	velocity += (acceleration* ratio);
 	if(acceleration.getX() == 0.0f) {
 		if(velocity.getX() > 0.0f) {
 			velocity.setX(velocity.getX() - drag.getX() * ratio);
@@ -193,6 +190,12 @@ void Renderable::update(){
 			}
 		}
 	}
+	
+	velocity += (acceleration* ratio);
+	position += (velocity * ratio);
+	this->setPosition(position.getX(), position.getY());
+
+	
 }
 
 
@@ -396,15 +399,17 @@ bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, Col
 			object1->setVelocityY(obj2v - obj1v * object1->getElasticity());
 			//Handle horizontal moving static object EX. moving platform
 			if(obj1Delta > obj2Delta){
-				object1->setXPosition(object1->getXPosition() + object2->getXPosition() - object2->getOldXPosition());
+				object1->setXPosition(object1->getXPosition() + (object2->getXPosition() - object2->getOldXPosition()));
 			}
 		}
 		else if(!object2->getIsStatic()){
 			object2->setYPosition(object2->getYPosition() + overlap);
 			object2->setVelocityY(obj1v - obj2v*object2->getElasticity());
 			//Handle horizontal moving static object EX. moving platform
-			object2->setXPosition(object2->getXPosition() + object1->getXPosition() - object2->getOldXPosition());
-			
+			if(obj1Delta > obj2Delta){
+				object2->setXPosition(object2->getXPosition() + object1->getXPosition() - object1->getOldXPosition());
+
+			}
 		}
 		return true;
 	}
@@ -486,4 +491,26 @@ void Renderable::setDrag(const Vec2 &newDrag) {
 
 const Vec2& Renderable::getDrag() const {
 	return drag;
+}
+
+void Renderable::setAccelerationX(float xAccelaration){
+	acceleration.setX(xAccelaration);
+}
+void Renderable::setAccelerationY(float yAccelaration){
+	acceleration.setY(yAccelaration);
+
+}
+
+
+float Renderable::getAccelerationX(){
+	return acceleration.getX();
+}
+float Renderable::getAccelerationY(){
+	return acceleration.getY();
+}
+float Renderable::getVelocityX(){
+	return velocity.getX();
+}
+float Renderable::getVelocityY(){
+	return velocity.getY();
 }
