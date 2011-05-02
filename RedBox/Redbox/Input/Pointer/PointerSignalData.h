@@ -28,6 +28,22 @@ namespace RedBox {
 		 */
 		virtual ~PointerSignalData();
 		
+		/**
+		 * Return a vector of the position of the pointer.
+		 */
+		Vec2 getPosition();
+		
+		/**
+		 * Return the x value of the position of the pointer.
+		 */
+		float getXPosition();
+		
+		/**
+		 * Return the y value of the position of the pointer.
+		 */
+		float getYPosition();
+		
+		
 		/// State of the pointing device that sent the signal.
 		const PointerState& pointerState;
 	};

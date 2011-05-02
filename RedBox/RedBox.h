@@ -59,3 +59,8 @@
 #include <RedBox/SoundFX.h>
 #include <RedBox/Timer.h>
 #include <RedBox/SpriteEmitter.h>
+#include <RedBox/KeySignalData.h>
+#include <RedBox/Keyboard.h>
+#include <RedBox/Pointer.h>
+#include <RedBox/PointerData.h>
+
