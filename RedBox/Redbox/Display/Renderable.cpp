@@ -51,7 +51,7 @@ void Renderable::copyFrom(const Renderable& src) {
 		position = src.position;
 		oldPosition = position;
 		velocity = Vec2();
-		acceleration = Vec2();
+		acceleration = src.acceleration;
 		drag = src.drag;
 		maxVelocityX = src.maxVelocityX;
 		maxVelocityY = src.maxVelocityY;
