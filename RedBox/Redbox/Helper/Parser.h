@@ -6,8 +6,8 @@
 #ifndef RB_PARSER_H
 #define RB_PARSER_H
 
-#include <sstream>
-#include <iostream>
+#define RB_FULL_PRECISION -1
+
 #include <string>
 
 
@@ -31,7 +31,7 @@ namespace RedBox {
 		/**
 		 * Create a string from the given float. Ex: 12.3 would give "12.3".
 		 */
-		static std::string floatToString(const float aFloat);
+		static std::string doubleToString(const double aFloat, int precision = RB_FULL_PRECISION);
 	};
 }
 

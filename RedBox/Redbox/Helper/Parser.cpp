@@ -1,5 +1,7 @@
 #include "Parser.h"
-
+#include <iomanip>
+#include <iostream>
+#include <sstream>
 using namespace RedBox;
 
 int Parser::stringToInt(const std::string& str){
@@ -20,8 +22,15 @@ std::string Parser::intToString(const int anInt){
 }
 
 
-std::string Parser::floatToString(const float aFloat){
+std::string Parser::doubleToString(const double aDouble, int precision){
 	std::stringstream ss;
-	ss << aFloat;
+	//std::ostringstream oss;
+	if(precision != RB_FULL_PRECISION){
+		ss << std::fixed <<std::setprecision(precision) << aDouble;
+	}
+	else {
+		ss << aDouble;
+
+	}
 	return ss.str();
 }
