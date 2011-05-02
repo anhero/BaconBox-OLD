@@ -5,6 +5,8 @@
 #ifndef RB_AUDIO_ENGINE_H
 #define RB_AUDIO_ENGINE_H
 
+#include <string>
+
 namespace RedBox {
 	class SoundFX;
 	class BackgroundMusic;
@@ -43,6 +45,24 @@ namespace RedBox {
 		 * @return Pointer to the music engine. Loads it if needed.
 		 */
 		static MusicEngine* getMusicEngine();
+
+		/**
+		 * Plays a sound effect if a sound engine is available.
+		 * @param key Name of the sound resource to play.
+		 * @param nbTimes Number of times to play the sound (-1 for infinite
+		 * looping).
+		 */
+		static void playSoundFX(const std::string& key, int nbTimes = 1);
+
+		/**
+		 * Plays a background music if a music engine is available.
+		 * @param key Name of the music resource to play.
+		 * @param nbTimes Number of times to play the music (-1 for infinite
+		 * looping).
+		 */
+		static void playBackgroundMusic(const std::string& key,
+										int nbTimes = -1,
+										double fadeIn = 0.0);
 	protected:
 		/**
 		 * Default constructor.

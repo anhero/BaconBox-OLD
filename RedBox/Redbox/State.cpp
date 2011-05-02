@@ -130,9 +130,11 @@ const Color& State::getBackgroundColor() const {
 }
 
 void State::onGetFocus() {
+	activateSlots();
 }
 
 void State::onLoseFocus() {
+	deactivateSlots();
 }
 
 void State::addRenderableDirect(Renderable* aRenderable) {

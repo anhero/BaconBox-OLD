@@ -4,6 +4,8 @@
 
 #include "SoundEngine.h"
 #include "MusicEngine.h"
+#include "SoundFX.h"
+#include "BackgroundMusic.h"
 
 #ifdef RB_SOUND_ENGINE_INCLUDE
 #include RB_SOUND_ENGINE_INCLUDE
@@ -50,6 +52,31 @@ MusicEngine* AudioEngine::getMusicEngine() {
 		loadMusicEngine();
 	}
 	return musicEngine;
+}
+
+void AudioEngine::playSoundFX(const std::string &key, int nbTimes) {
+	SoundEngine* engine = getSoundEngine();
+	if(engine) {
+		SoundFX* sound = engine->getSoundFX(key, false);
+		if(sound) {
+			sound->play(nbTimes);
+		}
+	}
+}
+
+void AudioEngine::playBackgroundMusic(const std::string &key, int nbTimes,
+									  double fadeIn) {
+	MusicEngine* engine = getMusicEngine();
+	if(engine) {
+		BackgroundMusic* music = engine->getBackgroundMusic(key, false);
+		if(music) {
+			if(fadeIn) {
+				music->play(nbTimes, fadeIn);
+			} else {
+				music->play(nbTimes);
+			}
+		}
+	}
 }
 
 AudioEngine::AudioEngine() {

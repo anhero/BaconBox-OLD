@@ -53,6 +53,84 @@ namespace RedBox {
 		static Keyboard* getDefault();
 
 		/**
+		 * Connect a function callback to the keyPress signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectKeyPress(desttype* pclass, void (desttype::*pmemfun)(KeySignalData)) {
+			Keyboard* keyboard = getDefault();
+			if(keyboard) {
+				keyboard->keyPress.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
+		 * Connect a function callback to the keyHold signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectKeyHold(desttype* pclass, void (desttype::*pmemfun)(KeySignalData)) {
+			Keyboard* keyboard = getDefault();
+			if(keyboard) {
+				keyboard->keyHold.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
+		 * Connect a function callback to the keyRelease signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectKeyRelease(desttype* pclass, void (desttype::*pmemfun)(KeySignalData)) {
+			Keyboard* keyboard = getDefault();
+			if(keyboard) {
+				keyboard->keyRelease.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
+		 * Connect a function callback to the keyMaskPress signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectKeyMaskPress(desttype* pclass, void (desttype::*pmemfun)(KeyMaskSignalData)) {
+			Keyboard* keyboard = getDefault();
+			if(keyboard) {
+				keyboard->keyMaskPress.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
+		 * Connect a function callback to the keyMaskHold signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectKeyMaskHold(desttype* pclass, void (desttype::*pmemfun)(KeyMaskSignalData)) {
+			Keyboard* keyboard = getDefault();
+			if(keyboard) {
+				keyboard->keyMaskHold.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
+		 * Connect a function callback to the keyMaskRelease signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectKeyMaskRelease(desttype* pclass, void (desttype::*pmemfun)(KeyMaskSignalData)) {
+			Keyboard* keyboard = getDefault();
+			if(keyboard) {
+				keyboard->keyMaskRelease.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
 		 * Gets the keyboard's current state.
 		 * @return Keyboard's current state. Contains information about the keys
 		 * and key masks (which ones are pressed and which ones aren't).

@@ -27,6 +27,19 @@ namespace RedBox {
 		sigly::Signal1<AccelerometerSignalData> change;
 		
 		/**
+		 * Connect a function callback to the buttonPress signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectChange(desttype* pclass, void (desttype::*pmemfun)(AccelerometerSignalData)) {
+			Accelerometer* accelerometer = getDefault();
+			if(accelerometer) {
+				accelerometer->change.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
 		 * Gets a pointer to the default accelerometer device.
 		 * @return Pointer to the default accelerometer device. Null if none are
 		 * available.

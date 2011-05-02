@@ -26,7 +26,10 @@ bool AABB::overlaps(const AABB& rect1, const AABB& rect2){
 }
 
 bool AABB::overlaps(float x, float y, const AABB &rect) {
-	return x > rect.minX && x < rect.maxX && y > rect.minX && y < rect.maxY;
+	return x > rect.minX &&
+			x < rect.maxX &&
+			y > rect.minY &&
+			y < rect.maxY;
 }
 
 bool AABB::overlaps(const Vec2& point, const AABB& rect) {

@@ -19,6 +19,7 @@ std::string RedBoxEngine::applicationPath = "";
 
 std::map<std::string, State*> RedBoxEngine::states = std::map<std::string, State*>();
 State* RedBoxEngine::currentState = NULL;
+State* RedBoxEngine::lastState = NULL;
 double RedBoxEngine::lastUpdate = 0.0;
 unsigned int RedBoxEngine::loops = 0;
 double RedBoxEngine::nextUpdate = 0;
@@ -34,7 +35,6 @@ State* RedBoxEngine::addState(State* newState) {
 	if(newState) {
 		if(states.empty()) {
 			currentState = newState;
-			currentState->onGetFocus();
 		}
 		states.insert(std::pair<std::string, State*>(newState->getName(), newState));
 	}
@@ -52,15 +52,10 @@ void RedBoxEngine::removeState(const std::string& name) {
 }
 
 State* RedBoxEngine::playState(const std::string& name) {
-	// We call the lose and get focus methods for the states.
-	if(currentState) {
-		currentState->onLoseFocus();
-	}
 	// We make sure the state asked for exists.
 	std::map<std::string, State*>::iterator it = states.find(name);
 	if(it != states.end()) {
 		currentState = it->second;
-		currentState->onGetFocus();
 	} else {
 		RB_ECHO("State \"" << name <<
 				"\" doesn't exist so it cannot be played.");
@@ -107,7 +102,17 @@ void RedBoxEngine::pulse() {
 		loops = 0;
 		while(TimeHelper::getInstance().getSinceStartComplete() > nextUpdate &&
 			  loops < minFps) {
+			// We refresh the time.
 			TimeHelper::getInstance().refreshTime();
+
+			// We call the focus methods if needed.
+			if(currentState != lastState) {
+				if(lastState) {
+					lastState->onLoseFocus();
+				}
+				currentState->onGetFocus();
+			}
+
 			// We update the current state.
 			currentState->update();
 			renderedSinceLastUpdate = false;
@@ -117,6 +122,7 @@ void RedBoxEngine::pulse() {
 			TimerManager::update();
 			nextUpdate += updateDelay;
 			lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
+			lastState = currentState;
 			++loops;
 		}
 		if(!renderedSinceLastUpdate) {
