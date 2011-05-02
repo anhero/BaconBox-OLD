@@ -254,7 +254,7 @@ bool Renderable::solveXCollision(Renderable * object1, Renderable * object2, Col
 		obj2AABB.maxX += obj2DeltaAbs;
 		
 		
-		if(obj1AABB.overlaps(&obj2AABB)){
+		if(obj1AABB.overlaps(obj2AABB)){
 			
 			
 			float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + RB_OVERLAP_BIAS;
@@ -344,7 +344,7 @@ bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, Col
 		obj2AABB.maxY += obj2DeltaAbs;
 		
 		
-		if(obj1AABB.overlaps(&obj2AABB)){
+		if(obj1AABB.overlaps(obj2AABB)){
 			
 			
 			
