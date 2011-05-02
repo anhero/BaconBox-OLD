@@ -35,6 +35,8 @@ State* RedBoxEngine::addState(State* newState) {
 	if(newState) {
 		if(states.empty()) {
 			currentState = newState;
+		} else {
+			newState->deactivateSlots();
 		}
 		states.insert(std::pair<std::string, State*>(newState->getName(), newState));
 	}
