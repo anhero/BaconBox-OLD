@@ -62,5 +62,5 @@
 #include <RedBox/KeySignalData.h>
 #include <RedBox/Keyboard.h>
 #include <RedBox/Pointer.h>
-#include <RedBox/PointerData.h>
+#include <RedBox/PointerSignalData.h>
 
