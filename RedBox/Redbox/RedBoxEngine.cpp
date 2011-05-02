@@ -113,6 +113,7 @@ void RedBoxEngine::pulse() {
 				currentState->onGetFocus();
 			}
 
+			lastState = currentState;
 			// We update the current state.
 			currentState->update();
 			renderedSinceLastUpdate = false;
@@ -122,7 +123,6 @@ void RedBoxEngine::pulse() {
 			TimerManager::update();
 			nextUpdate += updateDelay;
 			lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
-			lastState = currentState;
 			++loops;
 		}
 		if(!renderedSinceLastUpdate) {
