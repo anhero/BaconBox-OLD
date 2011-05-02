@@ -317,3 +317,7 @@ void Sprite::addAnimation(const std::string& name,
 		RB_ECHO("Failed to add the animation named : " << name);
 	}
 }
+
+void Sprite::playAnimation(const std::string& name) {
+	getMainRenderStep()->playAnimation(name);
+}

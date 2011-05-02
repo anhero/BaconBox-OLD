@@ -184,7 +184,7 @@ namespace RedBox {
 		const std::string& getCurrentAnimation() const;
 		/**
 		 * Sets the current animation.
-		 * @param New current animation's name.
+		 * @param name current animation's name.
 		 */
 		void setCurrentAnimation(const std::string& name);
 		/**
