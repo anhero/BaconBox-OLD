@@ -59,3 +59,5 @@
 #include <RedBox/SoundFX.h>
 #include <RedBox/Timer.h>
 #include <RedBox/SpriteEmitter.h>
+#include <RedBox/RenderInfo.h>
+#include <RedBox/RenderStep.h>
