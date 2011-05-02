@@ -282,3 +282,11 @@ int Sprite::getMinY(){
 int Sprite::getMaxY(){
 	return vertices.getYPosition() + vertices.getHeight();
 }
+
+RenderInfo* Sprite::getMainRenderInfo() {
+	if(getMainRenderStep()) {
+		return &getMainRenderStep()->getRenderInfo();
+	} else {
+		return NULL;
+	}
+}

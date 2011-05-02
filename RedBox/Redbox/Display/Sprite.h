@@ -21,7 +21,7 @@
 
 namespace RedBox {
 	class RenderStep;
-
+	class RenderInfo;
     /** 
      * Represents a sprite.
      * @ingroup Display
@@ -29,6 +29,9 @@ namespace RedBox {
 	class Sprite : public Renderable {
     public:
 
+		/**
+		 * Default constructor.
+		 */
         Sprite();
 		Sprite(const std::string& imageKey);
 		Sprite(TextureInfo* texInfo);
@@ -214,6 +217,11 @@ namespace RedBox {
 		int getMinY();
 		int getMaxY();
 
+		/**
+		 * Gets a pointer to the main render step's render information. If there
+		 * aren't any render steps for the sprite, NULL is returned.
+		 */
+		RenderInfo* getMainRenderInfo();
     private:
         /**
 		 * List containing the rendering steps. The first RenderStep in the list
