@@ -44,6 +44,58 @@ namespace RedBox {
 		static Pointer* getDefault();
 
 		/**
+		 * Connect a function callback to the buttonPress signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectButtonPress(desttype* pclass, void (desttype::*pmemfun)(PointerButtonSignalData)) {
+			Pointer* pointer = getDefault();
+			if(pointer) {
+				pointer->buttonPress.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
+		 * Connect a function callback to the buttonHold signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectButtonHold(desttype* pclass, void (desttype::*pmemfun)(PointerButtonSignalData)) {
+			Pointer* pointer = getDefault();
+			if(pointer) {
+				pointer->buttonHold.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
+		 * Connect a function callback to the buttonRelease signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectButtonRelease(desttype* pclass, void (desttype::*pmemfun)(PointerButtonSignalData)) {
+			Pointer* pointer = getDefault();
+			if(pointer) {
+				pointer->buttonRelease.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
+		 * Connect a function callback to the buttonPress signal.
+		 * @param pclass Pointer to the instance concerned by the signal.
+		 * @param pmemfum Pointer to the function to call.
+		 */
+		template <class desttype>
+		static void connectMove(desttype* pclass, void (desttype::*pmemfun)(PointerMoveSignalData)) {
+			Pointer* pointer = getDefault();
+			if(pointer) {
+				pointer->move.connect(pclass, pmemfun);
+			}
+		}
+
+		/**
 		 * Gets the cursor's position.
 		 * @param Index of the cursor to check.
 		 * @return Cursor's position.
