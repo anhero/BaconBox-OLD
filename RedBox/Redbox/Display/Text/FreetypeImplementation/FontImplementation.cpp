@@ -2,6 +2,7 @@
 #include "Debug.h"
 #include "ResourceManager.h"
 #include "MathHelper.h"
+#include "Parser.h"
 #include <sstream>
 #include <freetype/ftglyph.h>
 #include <algorithm>
@@ -121,7 +122,7 @@ void FontImplementation::setPixelSize(int pixelSize){
 	if(FT_Set_Pixel_Sizes(font, 0, pixelSize)){
 		RB_ECHO("Can't set pixel size");
 	}
-	size = pixelSize + "px";
+	size = Parser::intToString(pixelSize) + "px";
 	
 }
 
@@ -130,7 +131,7 @@ void FontImplementation::setPointSize(int pointSize, int dpi){
 	if(FT_Set_Char_Size(font, 0, pointSize*64, dpi, dpi)){
 		RB_ECHO("Can't set point size");
 	}
-	size = pointSize + "pt";
+	size = Parser::intToString(pointSize) + "pt";
 }
 void FontImplementation::setManualLineHeight(int lineHeight){
 	this->lineHeight = lineHeight;

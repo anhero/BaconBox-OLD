@@ -18,7 +18,7 @@ bool AABB::overlaps(float x, float y) const {
 	return overlaps(x, y, *this);
 }
 
-bool AABB::overlaps(const AABB& rect1, const AABB& rect2){
+bool AABB::overlaps(const AABB& rect1, const AABB& rect2) {
 	return rect1.maxX > rect2.minX &&
 		   rect1.minX < rect2.maxX &&
 		   rect1.maxY > rect2.minY &&
