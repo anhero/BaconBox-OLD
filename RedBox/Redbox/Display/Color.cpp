@@ -90,6 +90,12 @@ void Color::setRGB(uint8_t red, uint8_t green, uint8_t blue) {
 	setBlue(blue);
 }
 
+void Color::setRGB(uint32_t rgb) {
+	setRGB(static_cast<uint8_t>((rgb & 0xff0000) >> 16),
+		   static_cast<uint8_t>((rgb & 0x00ff00) >> 8),
+		   static_cast<uint8_t>(rgb & 0x0000ff));
+}
+
 void Color::setRGBA(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) {
 	setRGB(red, green, blue);
 	setAlpha(alpha);

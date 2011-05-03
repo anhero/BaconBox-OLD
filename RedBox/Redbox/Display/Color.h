@@ -149,8 +149,8 @@ namespace RedBox {
 
 		/**
 		 * Sets the color's alpha component. Takes care of validating the
-		 * value so that it isn't over 255. Only the first 2 bytes from the value
-		 * given are used.
+		 * value so that it isn't over 255. Only the first 2 bytes from the
+		 * value given are used.
 		 * @param alpha New alpha component.
 		 */
 		void setAlpha(uint8_t alpha);
@@ -165,6 +165,12 @@ namespace RedBox {
 		void setRGB(uint8_t red, uint8_t green, uint8_t blue);
 
 		/**
+		 * Set the first 3 components with one integer.
+		 * @param rgb Color in the format 0x000000.
+		 */
+		void setRGB(uint32_t rgb);
+		
+		/**
 		 * Sets the color's red, green and blue components. Simply calls
 		 * setRed(), setGreen() and setBlue().
 		 * @param red New red component.
@@ -173,7 +179,7 @@ namespace RedBox {
 		 * @param alpha New alpha component.
 		 */
 		void setRGBA(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha);
-
+		
 		/**
 		 * Set the 4 components with one integer.
 		 * @param rgba Color in the format 0x00000000.
