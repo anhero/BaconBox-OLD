@@ -107,7 +107,10 @@ void OpenGLDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
 #else
 	glOrtho(0, screenWidth, screenHeight, 0, -1, 1);
 #endif
-
+#ifdef RB_MAC_PLATFORM
+	int swapInterval = 1;
+	CGLSetParameter(CGLGetCurrentContext(), kCGLCPSwapInterval, &swapInterval);
+#endif
 }
 
 

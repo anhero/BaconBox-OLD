@@ -13,6 +13,7 @@
 #elif defined(RB_QT)
 #include <QtOpenGL>
 #elif defined(RB_MAC_PLATFORM)
+#include <OpenGl/OpenGL.h>
 #include <OpenGL/gl.h>
 #else
 #include <GL/gl.h>
