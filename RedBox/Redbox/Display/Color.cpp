@@ -33,6 +33,7 @@ Color& Color::operator=(const Color& src) {
 	if(this != &src) {
 		setRGBA(src.getRed(), src.getGreen(), src.getBlue(), src.getAlpha());
 	}
+	return *this;
 }
 
 bool Color::operator==(const Color& other) {
