@@ -65,3 +65,4 @@
 #include <RedBox/PointerSignalData.h>
 #include <RedBox/RenderInfo.h>
 #include <RedBox/RenderStep.h>
+#include <RedBox/SpriteFactory.h>
