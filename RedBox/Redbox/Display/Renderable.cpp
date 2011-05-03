@@ -258,7 +258,7 @@ bool Renderable::solveXCollision(Renderable * object1, Renderable * object2, Col
 		if(obj1AABB.overlaps(obj2AABB)){
 			
 			float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + RB_OVERLAP_BIAS;
-			
+
 			if(obj1Delta > obj2Delta) {
 				overlap = object1->getXPosition() + object1->getWidth() - object2->getXPosition();
 
@@ -343,11 +343,11 @@ bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, Col
 		
 		if(obj1AABB.overlaps(obj2AABB)){
 			float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + RB_OVERLAP_BIAS;
-			
+
 			if(obj1Delta > obj2Delta) {
 				overlap = object1->getYPosition() + object1->getHeight() - object2->getYPosition();
 
-				if(overlap > maxOverlap || !object1->IsCollidingSide(Side::RIGHT) || !object2->IsCollidingSide(Side::LEFT)) {
+				if(overlap > maxOverlap || !object1->IsCollidingSide(Side::BOTTOM) || !object2->IsCollidingSide(Side::TOP)) {
 					overlap = 0;
 				} else {
 					collisionInfo->sideObj1 |= Side::BOTTOM;
@@ -357,7 +357,7 @@ bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, Col
 			} else if(obj1Delta < obj2Delta) {
 				overlap = object1->getYPosition() - object2->getHeight() - object2->getYPosition();
 
-				if((-overlap > maxOverlap) || !object1->IsCollidingSide(Side::LEFT) || !object2->IsCollidingSide(Side::RIGHT)) {
+				if((-overlap > maxOverlap) || !object1->IsCollidingSide(Side::TOP) || !object2->IsCollidingSide(Side::BOTTOM)) {
 					overlap = 0;
 				} else{
 					collisionInfo->sideObj1 |= Side::TOP;
