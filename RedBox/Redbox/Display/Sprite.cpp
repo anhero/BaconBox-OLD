@@ -11,11 +11,11 @@
 using namespace RedBox;
 
 
-Sprite::Sprite(): Renderable() {
+Sprite::Sprite(): GraphicBody() {
 }
 
 
-Sprite::Sprite(const std::string& imageKey): Renderable()
+Sprite::Sprite(const std::string& imageKey): GraphicBody()
 {
 	TextureInfo* texInfo = ResourceManager::getTexture(imageKey);
 	if(texInfo) {
@@ -31,7 +31,7 @@ Sprite::Sprite(const std::string& imageKey): Renderable()
 }
 
 
-Sprite::Sprite(TextureInfo* texInfo): Renderable()
+Sprite::Sprite(TextureInfo* texInfo): GraphicBody()
 {
 	if(texInfo) {
 		construct(texInfo,
@@ -48,7 +48,7 @@ Sprite::Sprite(const std::string& imageKey,
 			   unsigned int frameWidth,
 			   unsigned int frameHeight,
 			   unsigned int nbFrames
-): Renderable()
+): GraphicBody()
 {
 	construct(ResourceManager::getTexture(imageKey),
 			  frameWidth,
@@ -61,7 +61,7 @@ Sprite::Sprite(TextureInfo* texInfo,
 			   unsigned int frameWidth,
 			   unsigned int frameHeight,
 			   unsigned int nbFrames
-): Renderable()
+): GraphicBody()
 {
 	construct(texInfo,
 			  frameWidth,
@@ -71,7 +71,7 @@ Sprite::Sprite(TextureInfo* texInfo,
 }
 
 
-Sprite::Sprite(const Sprite& src): Renderable(src) {
+Sprite::Sprite(const Sprite& src): GraphicBody(src) {
 	copyFrom(src);
 }
 
@@ -80,7 +80,7 @@ Sprite::~Sprite() {
 }
 
 Sprite& Sprite::operator=(const Sprite& src) {
-	Renderable::operator=(src);
+	GraphicBody::operator=(src);
 	copyFrom(src);
 	return *this;
 }
@@ -97,7 +97,7 @@ void Sprite::render() {
 }
 
 void Sprite::update() {
-	Renderable::update();
+	GraphicBody::update();
 	// We update the render steps.
 	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
 		i != renderSteps.end();
@@ -116,27 +116,27 @@ void Sprite::createVertex(float x, float y) {
 
 
 void Sprite::setXPosition(float x) {
-	Renderable::setXPosition(x);
+	GraphicBody::setXPosition(x);
 	vertices.setXPosition(x);
 }
 void Sprite::setYPosition(float y) {
-	Renderable::setYPosition(y);
+	GraphicBody::setYPosition(y);
 	vertices.setYPosition(y);
 }
 void Sprite::setPosition(float x, float y) {
-	Renderable::setPosition(x, y);
+	GraphicBody::setPosition(x, y);
 	vertices.setPosition(x, y);
 }
 void Sprite::moveX(float deltaX) {
-	Renderable::moveX(deltaX);
+	GraphicBody::moveX(deltaX);
 	vertices.moveX(deltaX);
 }
 void Sprite::moveY(float deltaY) {
-	Renderable::moveY(deltaY);
+	GraphicBody::moveY(deltaY);
 	vertices.moveY(deltaY);
 }
 void Sprite::move(float deltaX, float deltaY) {
-	Renderable::move(deltaX, deltaY);
+	GraphicBody::move(deltaX, deltaY);
 	vertices.move(deltaX, deltaY);
 }
 

@@ -5,7 +5,7 @@
 
 using namespace RedBox;
 
-GraphicString::GraphicString(Font * font, int x, int y, Alignment alignment, StringDirection direction):Renderable(), font(font), x(x), y(y), alignment(alignment), direction(direction){
+GraphicString::GraphicString(Font * font, int x, int y, Alignment alignment, StringDirection direction):GraphicBody(), font(font), x(x), y(y), alignment(alignment), direction(direction){
 	color[0] = color[1] = color [2] = color[3]  = 0xFF;
 	needReset = false;
 	widthCache = 0;
@@ -40,7 +40,7 @@ void GraphicString::setText(const std::string & text){
 }
 
 void GraphicString::setPosition(int x, int y){
-	Renderable::setPosition(x, y);
+	GraphicBody::setPosition(x, y);
 	//We set the position atribute
 	this->x = x;
 	this->y = y;

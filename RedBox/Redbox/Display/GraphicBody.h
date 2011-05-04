@@ -2,49 +2,49 @@
  * @file
  * @ingroup Display
  */
+#ifndef RB_GraphicBody_H
+#define RB_GraphicBody_H
+
+#include <list>
 
 #include "Vec2.h"
 #include "Side.h"
 #include "CollisionData.h"
 #include "AABB.h"
-#include <list>
-#ifndef RB_RENDERABLE_H
-#define RB_RENDERABLE_H
-#define NO_MAX_VELOCITY -1
-
 
 namespace RedBox {
 	/**
-	 * Represents a renderable object assiociated with its z coordinate.
+	 * Represents a GraphicBody object assiociated with its z coordinate.
      * @ingroup Display
 	 */
-	class Renderable {
+	class GraphicBody {
 		friend class State;
 	public:
+		static const float NO_MAX_VELOCITY = -1.0f;
 		/**
 		 * The default constructor.
 		 */
-		Renderable();
+		GraphicBody();
 		/**
 		 * The copy constructor.
-		 * @param src The renderable to make a copy of.
+		 * @param src The GraphicBody to make a copy of.
 		 */
-		Renderable(const Renderable& src);
+		GraphicBody(const GraphicBody& src);
 		/**
 		 * The destructor.
 		 */
-		virtual ~Renderable();
+		virtual ~GraphicBody();
 		/**
 		 * The assignment operator overload.
-		 * @param src The renderable to make a copy of.
+		 * @param src The GraphicBody to make a copy of.
 		 */
-		Renderable& operator=(const Renderable& src);
+		GraphicBody& operator=(const GraphicBody& src);
 		/**
-		 * Updates the renderable.
+		 * Updates the GraphicBody.
 		 */
 		virtual void update();
 		/**
-		 * Renders the renderable.
+		 * Renders the GraphicBody.
 		 */
 		virtual void render()=0;
 		/**
@@ -56,8 +56,8 @@ namespace RedBox {
 		 */
 		void setZ(int z);
 		/**
-		 * Checks if the renderable needs to be deleted.
-		 * @return True if the renderable needs to be deleted false if not.
+		 * Checks if the GraphicBody needs to be deleted.
+		 * @return True if the GraphicBody needs to be deleted false if not.
 		 */
 		bool isToBeDeleted() const;
 		/**
@@ -66,7 +66,7 @@ namespace RedBox {
 		 */
 		bool isZChanged() const;
 		/**
-		 * Sets the renderable to be deleted or not.
+		 * Sets the GraphicBody to be deleted or not.
 		 * @param newToBeDeleted New value to be deleted.
 		 */
 		void setToBeDeleted(bool newToBeDeleted);
@@ -132,32 +132,32 @@ namespace RedBox {
 		float getAccelerationY();
 
 		/**
-		 * Gets the renderable's horizontal position.
+		 * Gets the GraphicBody's horizontal position.
 		 * @return Horizontal position (in pixels). Lower value means more to
 		 * the left.
 		 */
 		virtual float getXPosition() const;
 		/**
-		 * Gets the renderable's vertical position.
+		 * Gets the GraphicBody's vertical position.
 		 * @return Vertical position (in pixels). Lower value means more at the
 		 * top.
 		 */
 		virtual float getYPosition() const;
 		
 		/**
-		 * Sets the renderable's horizontal position.
+		 * Sets the GraphicBody's horizontal position.
 		 * @param x New horizontal position (in pixels). Lower value means more
 		 * to the left.
 		 */
 		virtual void setXPosition(float x);
 		/**
-		 * Sets the renderable's horizontal position.
+		 * Sets the GraphicBody's horizontal position.
 		 * @param y New vertical position (in pixels). Lower value means more at
 		 * the top.
 		 */
 		virtual void setYPosition(float y);
 		/**
-		 * Sets the renderable's horizontal and vertical position.
+		 * Sets the GraphicBody's horizontal and vertical position.
 		 * @param x New horizontal position (in pixels). Lower value means more
 		 * to the left.
 		 * @param y New vertical position (in pixels). Lower value means more at
@@ -175,27 +175,27 @@ namespace RedBox {
 		float getOldYPosition();
 		
 		/**
-		 * Moves the renderable horizontally.
-		 * @param deltaX Value to add to the renderable's horizontal position (in
-		 * pixels). Positive value moves the renderable to the right and a negative
-		 * value moves the renderable to the left.
+		 * Moves the GraphicBody horizontally.
+		 * @param deltaX Value to add to the GraphicBody's horizontal position (in
+		 * pixels). Positive value moves the GraphicBody to the right and a negative
+		 * value moves the GraphicBody to the left.
 		 */
 		virtual void moveX(float deltaX);
 		/**
-		 * Moves the renderable vertically.
-		 * @param deltaY Value to add to the renderable's vertical position (in
-		 * pixels). Positive value moves the renderable down and a negative value
-		 * moves the renderable up.
+		 * Moves the GraphicBody vertically.
+		 * @param deltaY Value to add to the GraphicBody's vertical position (in
+		 * pixels). Positive value moves the GraphicBody down and a negative value
+		 * moves the GraphicBody up.
 		 */
 		virtual void moveY(float deltaY);
 		/**
-		 * Moves the renderable horizontally and vertically.
-		 * @param deltaX Value to add to the renderable's horizontal position (in
-		 * pixels). Positive value moves the renderable to the right and a negative
-		 * value moves the renderable to the left.
-		 * @param deltaY Value to add to the renderable's vertical position (in
-		 * pixels). Positive value moves the renderable down and a negative value
-		 * moves the renderable up.
+		 * Moves the GraphicBody horizontally and vertically.
+		 * @param deltaX Value to add to the GraphicBody's horizontal position (in
+		 * pixels). Positive value moves the GraphicBody to the right and a negative
+		 * value moves the GraphicBody to the left.
+		 * @param deltaY Value to add to the GraphicBody's vertical position (in
+		 * pixels). Positive value moves the GraphicBody down and a negative value
+		 * moves the GraphicBody up.
 		 */
 		virtual void move(float deltaX, float deltaY);
 		
@@ -212,12 +212,12 @@ namespace RedBox {
 		float getMaxVelocityY();
 		
 		/**
-		 * return renderable's width.
+		 * return GraphicBody's width.
 		 */
 		virtual float getWidth() const = 0;
 		
 		/**
-		 * return renderable's height.
+		 * return GraphicBody's height.
 		 */
 		virtual float getHeight() const = 0;
 		
@@ -243,67 +243,67 @@ namespace RedBox {
 		bool IsCollidingSide(RB_SIDE sides);
 
 		/**
-		* Return if the renderable is a static one.
+		* Return if the GraphicBody is a static one.
 		* A static object won't react to collision. (wall, floor, moving platform, etc.)
 		*/
 		bool getIsStatic();
 
 		/**
-		* Set if the renderable is a static one.
+		* Set if the GraphicBody is a static one.
 		* A static object won't react to collision. (wall, floor, moving platform, etc.)
 		*/
 		void setIsStatic(bool isStatic);
 
 		/** 
-		* Return the elasticity factor of the renderable.
+		* Return the elasticity factor of the GraphicBody.
 		* Elasticity  will determine how should it bounce in a collision. Default value is 0 (Solid object)
 		*/
 		float getElasticity();
 		/** 
-		* Set the elasticity factor of the renderable.
+		* Set the elasticity factor of the GraphicBody.
 		* Elasticity  will determine how should it bounce in a collision. Default value is 0 (Solid object)
 		*/
 		void setElasticity(float elasticity);
 		
 		/**
-		 * Use this function to collide the current renderable against another one. 
+		 * Use this function to collide the current GraphicBody against another one.
 		 * It will test if they are colliding, and return a pair containing collision information.
-		 * @param aRenderable A Renderable object against which you want to collide the current object.
+		 * @param aGraphicBody A GraphicBody object against which you want to collide the current object.
 		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
 		 * the second value is a structure containing information about the collision. See CollisionData.
 		 */
-		std::pair<bool, CollisionData> collide(Renderable * aRenderable);
+		std::pair<bool, CollisionData> collide(GraphicBody * aGraphicBody);
 		
 		
 		/**
-		 * Use this function to collide the current renderable against a list of other renderables. 
+		 * Use this function to collide the current GraphicBody against a list of other GraphicBodys.
 		 * It will test if they are colliding, and return a pair containing collision information.
-		 * @param renderables A list of Renderable objects against which you want to collide the current object.
+		 * @param GraphicBodys A list of GraphicBody objects against which you want to collide the current object.
 		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
 		 * the second value is a list of structure containing information about the collision. See CollisionData.
 		 */
-		std::pair<bool, std::list<CollisionData> > collide(std::list<Renderable*> renderables);
+		std::pair<bool, std::list<CollisionData> > collide(std::list<GraphicBody*> GraphicBodys);
 
 		/**
-		 * Use this function to collide a list of other renderables against another. 
+		 * Use this function to collide a list of other GraphicBodys against another.
 		 * It will test if they are colliding, and return a pair containing collision information.
-		 * @param renderables1 A list of Renderable objects against which you want to collide the renderables2 list of objects.
-		 * @param renderables2 A list of Renderable objects against which you want to collide the renderables1 list of objects.
+		 * @param GraphicBodys1 A list of GraphicBody objects against which you want to collide the GraphicBodys2 list of objects.
+		 * @param GraphicBodys2 A list of GraphicBody objects against which you want to collide the GraphicBodys1 list of objects.
 		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
 		 * the second value is a list of structure containing information about the collision. See CollisionData.
 		 */
-		static std::pair<bool, std::list<CollisionData> > collide(std::list<Renderable*> renderables1, std::list<Renderable*> renderables2);
+		static std::pair<bool, std::list<CollisionData> > collide(std::list<GraphicBody*> GraphicBodys1, std::list<GraphicBody*> GraphicBodys2);
 
 		
 		/**
-		 * Use this function to collide  two renderable against each other. 
+		 * Use this function to collide  two GraphicBody against each other.
 		 * It will test if they are colliding, and return a pair containing collision information.
-		 * @param object1 A Renderable object you want to collide to object2.
-		 * @param object2 A Renderable object you want to collide to object1
+		 * @param object1 A GraphicBody object you want to collide to object2.
+		 * @param object2 A GraphicBody object you want to collide to object1
 		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
 		 * the second value is a structure containing information about the collision. See CollisionData.
 		 */
-		static std::pair<bool, CollisionData> collide(Renderable * object1, Renderable * object2);
+		static std::pair<bool, CollisionData> collide(GraphicBody * object1, GraphicBody * object2);
 		
 		AABB getAABB();
 		
@@ -324,22 +324,22 @@ namespace RedBox {
 		 * This function will solve the collision on the x axis. It will separate the objects and
 		 * return information about the collision by return value and by seting the collisionInfo structure (passed
 		 * as a parameter. 
-		 * @param object1 object1 A Renderable object you want to collide to object2.
-		 * @param object2 A Renderable object you want to collide to object1
+		 * @param object1 object1 A GraphicBody object you want to collide to object2.
+		 * @param object2 A GraphicBody object you want to collide to object1
 		 * @oaram collisionData Structure containing information about the collision (see CollisionData)
 		 * @return Return true if the two objects were colliding, false in the other case.
 		 */
-		static bool solveXCollision(Renderable * object1, Renderable * object2, CollisionData * collisionInfo);
+		static bool solveXCollision(GraphicBody * object1, GraphicBody * object2, CollisionData * collisionInfo);
 		/**
 		 * This function will solve the collision on the y axis. It will separate the objects and
 		 * return information about the collision by return value and by seting the collisionInfo structure (passed
 		 * as a parameter. 
-		 * @param object1 object1 A Renderable object you want to collide to object2.
-		 * @param object2 A Renderable object you want to collide to object1
+		 * @param object1 object1 A GraphicBody object you want to collide to object2.
+		 * @param object2 A GraphicBody object you want to collide to object1
 		 * @oaram collisionData Structure containing information about the collision (see CollisionData)
 		 * @return Return true if the two objects were colliding, false in the other case.
 		 */
-		static bool solveYCollision(Renderable * object1, Renderable * object2, CollisionData * collisionInfo);
+		static bool solveYCollision(GraphicBody * object1, GraphicBody * object2, CollisionData * collisionInfo);
 
 		
 		///Position vector
@@ -373,25 +373,25 @@ namespace RedBox {
 		 */
 		RB_SIDE collidableSides;
 	
-		///Elasticity factor of the renderable, will determine how should it bounce in a collision. Default value is 0 (Solid object)
+		///Elasticity factor of the GraphicBody, will determine how should it bounce in a collision. Default value is 0 (Solid object)
 		float elasticity;
 		
-		///This renderable won't react to collision if this boolean is set to true. 
+		///This GraphicBody won't react to collision if this boolean is set to true.
 		bool staticObject;
 		/// The z coordinate.
 		int z;
-		/// Used to know if the renderable needs to be deleted.
+		/// Used to know if the GraphicBody needs to be deleted.
 		bool toBeDeleted;
 		/// Used to know if the z changed.
 		bool zChanged;
-		/// Used to know if the renderable is in a state's list of renderables.
+		/// Used to know if the GraphicBody is in a state's list of GraphicBodys.
 		bool isInState;
 		/**
-		 * Copies another renderable.
-		 * Makes the current instance a copy of the renderable received.
-		 * @param src The renderable to make a copy of.
+		 * Copies another GraphicBody.
+		 * Makes the current instance a copy of the GraphicBody received.
+		 * @param src The GraphicBody to make a copy of.
 		 */
-		void copyFrom(const Renderable& src);
+		void copyFrom(const GraphicBody& src);
 	};
 }
 

@@ -11,7 +11,7 @@
 
 namespace RedBox{
 	
-	class Renderable;
+	class GraphicBody;
 	/** 
 	 * This structure is used to return collision data 
      */
@@ -23,9 +23,9 @@ namespace RedBox{
 		///Overlapping amount 
 		float overlap;
 		///First colliding object
-		Renderable * obj1;
+		GraphicBody * obj1;
 		///Second colliding object
-		Renderable * obj2;
+		GraphicBody * obj2;
 		///Constructor
 		CollisionData():sideObj1(0), sideObj2(0), overlap(0), obj1(NULL), obj2(NULL){}
 	};

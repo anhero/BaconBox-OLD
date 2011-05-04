@@ -5,7 +5,7 @@
 #ifndef RB_IEMITTER_H
 #define RB_IEMITTER_H
 
-#include "Renderable.h"
+#include "GraphicBody.h"
 #include "ParticlePhase.h"
 
 namespace RedBox {
@@ -13,7 +13,7 @@ namespace RedBox {
 	 * Interface for emitters. Abstract class.
 	 * @ingroup Display
 	 */
-	class IEmitter: public Renderable {
+	class IEmitter: public GraphicBody {
 	public:
 		/**
 		 * Default constructor.

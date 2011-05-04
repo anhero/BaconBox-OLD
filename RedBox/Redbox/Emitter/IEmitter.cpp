@@ -2,13 +2,13 @@
 
 using namespace RedBox;
 
-IEmitter::IEmitter(): Renderable(), nbParticles(0), nbParticlesToShoot(-1),
+IEmitter::IEmitter(): GraphicBody(), nbParticles(0), nbParticlesToShoot(-1),
 lifeSpan(-1.0), elapsedTime(0.0), isActive(false), angle(0.0f),
 angleVariance(0.0f), force(0.0f), forceVariance(0.0f), emitRate(0.0),
 emitCounter(0.0), birthPhase(ParticlePhase()), lifePhase(ParticlePhase()),
 dyingPhase(ParticlePhase()), dieOnDeactivate(false) {
 }
-IEmitter::IEmitter(const IEmitter& src): Renderable(src),
+IEmitter::IEmitter(const IEmitter& src): GraphicBody(src),
 nbParticles(src.nbParticles), nbParticlesToShoot(src.nbParticlesToShoot),
 lifeSpan(src.lifeSpan), elapsedTime(src.elapsedTime), isActive(src.isActive),
 angle(src.angle), angleVariance(src.angleVariance), force(src.force),
@@ -22,7 +22,7 @@ IEmitter::~IEmitter() {
 }
 
 IEmitter& IEmitter::operator=(const IEmitter& src) {
-	Renderable::operator=(src);
+	GraphicBody::operator=(src);
 	copyFrom(src);
 	return *this;
 }

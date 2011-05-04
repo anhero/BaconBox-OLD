@@ -6,7 +6,7 @@
 #ifndef RB_GRAPHICSTRING_H
 #define RB_GRAPHICSTRING_H
 
-#include "Renderable.h"
+#include "GraphicBody.h"
 #include "Font.h"
 #include "StringFX.h"
 #include "Sprite.h"
@@ -29,11 +29,11 @@ namespace RedBox{
 	
 	
 	/** 
-	 * A GraphicString is a renderable object that print text
+	 * A GraphicString is a GraphicBody object that print text
 	 * to the screen.
 	 * @ingroup Group
 	 */
-	class GraphicString : public Renderable{
+	class GraphicString : public GraphicBody{
 	public:
 		
 		/** 

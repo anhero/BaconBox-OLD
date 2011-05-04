@@ -48,10 +48,10 @@ Sprite* SpriteEmitter::getDefaultSprite() {
 	return defaultSprite;
 }
 
-void SpriteEmitter::updateAlpha(float deltaAlpha, Sprite* renderable) {
+void SpriteEmitter::updateAlpha(float deltaAlpha, Sprite* GraphicBody) {
 }
 
-void SpriteEmitter::updateScaling(float deltaScaling, Sprite* renderable) {
+void SpriteEmitter::updateScaling(float deltaScaling, Sprite* GraphicBody) {
 }
 
 Sprite* SpriteEmitter::initParticle() {
@@ -63,16 +63,16 @@ Sprite* SpriteEmitter::initParticle() {
 	}
 }
 
-void SpriteEmitter::startParticle(Sprite*& renderable) {
-	if (!renderable) {
-		renderable = initParticle();
+void SpriteEmitter::startParticle(Sprite*& GraphicBody) {
+	if (!GraphicBody) {
+		GraphicBody = initParticle();
 	}
-	if (renderable) {
-		renderable->setPosition(getXPosition(), getYPosition());
+	if (GraphicBody) {
+		GraphicBody->setPosition(getXPosition(), getYPosition());
 		Vec2 shootVec(Vec2::UP);
 		shootVec.setLength(force + Random::getRandomFloat(0.0f, forceVariance));
 		shootVec.rotate(angle + Random::getRandomFloat(-angleVariance, angleVariance));
-		renderable->setVelocity(shootVec);
+		GraphicBody->setVelocity(shootVec);
 	}
 }
 
@@ -92,12 +92,12 @@ void SpriteEmitter::copyFrom(const SpriteEmitter& src) {
 	}
 }
 
-void SpriteEmitter::updateParticle(Sprite* renderable) {
-	assert(renderable);
-	renderable->update();
+void SpriteEmitter::updateParticle(Sprite* GraphicBody) {
+	assert(GraphicBody);
+	GraphicBody->update();
 }
 
-void SpriteEmitter::renderParticle(Sprite* renderable) {
-	assert(renderable);
-	renderable->render();
+void SpriteEmitter::renderParticle(Sprite* GraphicBody) {
+	assert(GraphicBody);
+	GraphicBody->render();
 }

@@ -74,16 +74,16 @@ namespace RedBox {
 		 * Updates the sprite's alpha using the given alpha to add to
 		 * the sprite's current alpha value.
 		 * @param deltaAlpha Alpha value to add to the sprite's alpha.
-		 * @param renderable Sprite to have its alpha updated.
+		 * @param GraphicBody Sprite to have its alpha updated.
 		 */
-		void updateAlpha(float deltaAlpha, Sprite* renderable);
+		void updateAlpha(float deltaAlpha, Sprite* GraphicBody);
 		/**
 		 * Updates the sprite's size using the given scaling value to add
 		 * to the sprite's size scaling.
-		 * @param deltaScaling Scaling value to add to the renderable's size.
-		 * @param renderable Sprite to have its size updated.
+		 * @param deltaScaling Scaling value to add to the GraphicBody's size.
+		 * @param GraphicBody Sprite to have its size updated.
 		 */
-		void updateScaling(float deltaScaling, Sprite* renderable);
+		void updateScaling(float deltaScaling, Sprite* GraphicBody);
 		/**
 		 * Initializes a particle's sprite and returns a pointer to it.
 		 * @return Pointer to the created sprite.
@@ -93,20 +93,20 @@ namespace RedBox {
 		 * Starts a particle with the information about its generated angle and
 		 * shooting force. If the given pointer to the sprite isn't
 		 * initialized, it will initialize it.
-		 * @param renderable Renderable to have its values initialized to go in
+		 * @param GraphicBody GraphicBody to have its values initialized to go in
 		 * the right direction with the right force.
 		 */
-		void startParticle(Sprite*& renderable);
+		void startParticle(Sprite*& GraphicBody);
 		/**
 		 * Updates the particle.
-		 * @param renderable Pointer to the sprite to update.
+		 * @param GraphicBody Pointer to the sprite to update.
 		 */
-		void updateParticle(Sprite* renderable);
+		void updateParticle(Sprite* GraphicBody);
 		/**
 		 * Renders the particle.
-		 * @param renderable Pointer to the sprite to render.
+		 * @param GraphicBody Pointer to the sprite to render.
 		 */
-		void renderParticle(Sprite* renderable);
+		void renderParticle(Sprite* GraphicBody);
 		/**
 		 * Cleans and resets the SpriteEmitter.
 		 */

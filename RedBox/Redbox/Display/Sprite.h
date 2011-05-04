@@ -14,7 +14,7 @@
 #include "PlatformFlagger.h"
 
 #include "TextureInfo.h"
-#include "Renderable.h"
+#include "GraphicBody.h"
 #include "VerticesGroup.h"
 #include "Color.h"
 
@@ -26,7 +26,7 @@ namespace RedBox {
      * Represents a sprite.
      * @ingroup Display
      */
-	class Sprite : public Renderable {
+	class Sprite : public GraphicBody {
     public:
 
 		/**

@@ -10,41 +10,41 @@ State::State() : sigly::HasSlots<>() {
 }
 
 State::~State() {
-	// We delete all the renderables from the list of renderables that need
+	// We delete all the GraphicBodys from the list of GraphicBodys that need
 	// to be deleted.
-	for(std::list<Renderable*>::iterator i = toDelete.begin();
+	for(std::list<GraphicBody*>::iterator i = toDelete.begin();
 		i !=toDelete.end();
 		++i) {
 		if(*i) {
 			delete *i;
 		}
 	}
-	// We delete the renderables that were waiting to be added.
-	for(std::list<Renderable*>::iterator i = toAdd.begin(); i != toAdd.end();
+	// We delete the GraphicBodys that were waiting to be added.
+	for(std::list<GraphicBody*>::iterator i = toAdd.begin(); i != toAdd.end();
 		i++) {
 		if(*i) {
 			delete *i;
 		}
 	}
 
-	// We delete the renderables.
-	for(std::multimap<int, Renderable*>::iterator i = renderables.begin();
-		i != renderables.end(); ++i) {
+	// We delete the GraphicBodys.
+	for(std::multimap<int, GraphicBody*>::iterator i = GraphicBodys.begin();
+		i != GraphicBodys.end(); ++i) {
 		if(i->second) {
 			delete i->second;
 		}
 	}
 }
 
-void State::addRenderable(Renderable* aRenderable) {
-	if(aRenderable) {
-		if(!aRenderable->isInState) {
-			toAdd.push_back(aRenderable);
+void State::addGraphicBody(GraphicBody* aGraphicBody) {
+	if(aGraphicBody) {
+		if(!aGraphicBody->isInState) {
+			toAdd.push_back(aGraphicBody);
 		} else {
-			RB_ECHO("Tried to add a renderable that is already in a state.");
+			RB_ECHO("Tried to add a GraphicBody that is already in a state.");
 		}
 	} else {
-		RB_ECHO("Tried to add an invalid renderable (" << aRenderable << ") to the state.");
+		RB_ECHO("Tried to add an invalid GraphicBody (" << aGraphicBody << ") to the state.");
 	}
 }
 
@@ -52,48 +52,48 @@ void State::addRenderable(Renderable* aRenderable) {
 void State::render() {
 	camera.render();
 	
-    for(std::multimap<int, Renderable*>::iterator i=renderables.begin();
-		i !=renderables.end();
+    for(std::multimap<int, GraphicBody*>::iterator i=GraphicBodys.begin();
+		i !=GraphicBodys.end();
 		i++) {
 		i->second->render();
 	}
 }
 
 void State::update() {
-	// We add the renderables to the multimap.
-	for(std::list<Renderable*>::iterator i = toAdd.begin(); i != toAdd.end();
+	// We add the GraphicBodys to the multimap.
+	for(std::list<GraphicBody*>::iterator i = toAdd.begin(); i != toAdd.end();
 		i++) {
-		addRenderableDirect(*i);
+		addGraphicBodyDirect(*i);
 	}
 	toAdd.clear();
-	// We loop through each of the renderables to update them.
-	for(std::multimap<int, Renderable*>::iterator i = renderables.begin();
-		i != renderables.end();
+	// We loop through each of the GraphicBodys to update them.
+	for(std::multimap<int, GraphicBody*>::iterator i = GraphicBodys.begin();
+		i != GraphicBodys.end();
 		i++) {
 		// We check if the delete flag is on.
 		if(i->second->isToBeDeleted()) {
-			// We put the renderable in the list of renderables to delete.
+			// We put the GraphicBody in the list of GraphicBodys to delete.
 			toDelete.push_back(i->second);
-			// We remove the renderable from the multimap.
-			renderables.erase(i);
+			// We remove the GraphicBody from the multimap.
+			GraphicBodys.erase(i);
 		} else {
-			// We update the renderable.
+			// We update the GraphicBody.
 			i->second->update();
 			// We check if the z value has changed.
 			if(i->second->isZChanged()) {
 				// If so, we put it at the right z value in the multimap.
-				// To do that, we first put it in the list of renderables that
+				// To do that, we first put it in the list of GraphicBodys that
 				// have had their z changed.
 				zChange.push_back(i->second);
 				// We remove it from the multimap.
-				renderables.erase(i);
+				GraphicBodys.erase(i);
 			}
 		}
 	}
 	
-	// We delete all the renderables from the list of renderables that need
+	// We delete all the GraphicBodys from the list of GraphicBodys that need
 	// to be deleted.
-	for(std::list<Renderable*>::iterator it=toDelete.begin();
+	for(std::list<GraphicBody*>::iterator it=toDelete.begin();
 		it !=toDelete.end();
 		it++) {
 		delete *it;
@@ -101,12 +101,12 @@ void State::update() {
 	// We clear the list.
 	toDelete.clear();
 	
-	// Put the renderables which have had their z changed back into the
+	// Put the GraphicBodys which have had their z changed back into the
 	// multimap.
-	for(std::list<Renderable*>::iterator it=zChange.begin();
+	for(std::list<GraphicBody*>::iterator it=zChange.begin();
 		it !=zChange.end();
 		it++) {
-		renderables.insert(std::pair<int, Renderable*>((*it)->getZ(), *it));
+		GraphicBodys.insert(std::pair<int, GraphicBody*>((*it)->getZ(), *it));
 	}
 	zChange.clear();
 
@@ -137,14 +137,14 @@ void State::onLoseFocus() {
 	deactivateSlots();
 }
 
-void State::addRenderableDirect(Renderable* aRenderable) {
-	assert(aRenderable);
-	if(!aRenderable->isInState) {
-		aRenderable->resetZChanged();
-		renderables.insert(std::pair<int, Renderable*>(aRenderable->getZ(),
-													   aRenderable));
-		aRenderable->isInState = true;
+void State::addGraphicBodyDirect(GraphicBody* aGraphicBody) {
+	assert(aGraphicBody);
+	if(!aGraphicBody->isInState) {
+		aGraphicBody->resetZChanged();
+		GraphicBodys.insert(std::pair<int, GraphicBody*>(aGraphicBody->getZ(),
+													   aGraphicBody));
+		aGraphicBody->isInState = true;
 	} else {
-		RB_ECHO("Tried to add a renderable that is already in a state.");
+		RB_ECHO("Tried to add a GraphicBody that is already in a state.");
 	}
 }

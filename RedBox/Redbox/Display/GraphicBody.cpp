@@ -1,4 +1,4 @@
-#include "Renderable.h"
+#include "GraphicBody.h"
 #include "Engine.h"
 
 #include <cmath>
@@ -6,47 +6,47 @@
 #define RB_OVERLAP_BIAS 4
 
 using namespace RedBox;
-Renderable::Renderable(): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(0), toBeDeleted(false), zChanged(false),
+GraphicBody::GraphicBody(): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(0), toBeDeleted(false), zChanged(false),
 isInState(false), collidableSides(Side::ALL), elasticity(0.0), staticObject(false), drag(Vec2()){
 }
 
-Renderable::Renderable(const Renderable& src) {
+GraphicBody::GraphicBody(const GraphicBody& src) {
 	copyFrom(src);
 }
 
-Renderable::~Renderable() {
+GraphicBody::~GraphicBody() {
 }
 
-Renderable& Renderable::operator=(const Renderable& src) {
+GraphicBody& GraphicBody::operator=(const GraphicBody& src) {
 	copyFrom(src);
 	return *this;
 }
 
-int Renderable::getZ() const {
+int GraphicBody::getZ() const {
 	return this->z;
 }
-void Renderable::setZ(int z) {
+void GraphicBody::setZ(int z) {
 	this->z = z;
 	zChanged = true;
 }
 
-bool Renderable::isToBeDeleted() const {
+bool GraphicBody::isToBeDeleted() const {
 	return toBeDeleted;
 }
 
-bool Renderable::isZChanged() const {
+bool GraphicBody::isZChanged() const {
 	return zChanged;
 }
 
-void Renderable::setToBeDeleted(bool newToBeDeleted) {
+void GraphicBody::setToBeDeleted(bool newToBeDeleted) {
 	toBeDeleted = newToBeDeleted;
 }
 
-void Renderable::resetZChanged() {
+void GraphicBody::resetZChanged() {
 	zChanged = false;
 }
 
-void Renderable::copyFrom(const Renderable& src) {
+void GraphicBody::copyFrom(const GraphicBody& src) {
 	if(this != &src && &src) {
 		position = src.position;
 		oldPosition = position;
@@ -63,82 +63,82 @@ void Renderable::copyFrom(const Renderable& src) {
 	}
 }
 
-void Renderable::setVelocity(const Vec2& velocity){
+void GraphicBody::setVelocity(const Vec2& velocity){
 	this->velocity = velocity;
 }
 
-const Vec2& Renderable::getVelocity(){
+const Vec2& GraphicBody::getVelocity(){
 	return velocity;
 }
-void Renderable::setAcceleration(const Vec2& acceleration){
+void GraphicBody::setAcceleration(const Vec2& acceleration){
 	this->acceleration = acceleration;
 }
-const Vec2& Renderable::getAcceleration(){
+const Vec2& GraphicBody::getAcceleration(){
 	return acceleration;
 }
 
-float Renderable::getXPosition() const {
+float GraphicBody::getXPosition() const {
 	return position.getX();
 }
 
-float Renderable::getYPosition() const {
+float GraphicBody::getYPosition() const {
 	return position.getY();
 }
 
 
-void Renderable::setXPosition(float x) {
+void GraphicBody::setXPosition(float x) {
 	position.setX(x);
 }
 
-void Renderable::setYPosition(float y) {
+void GraphicBody::setYPosition(float y) {
 	position.setY(y);
 }
 
-void Renderable::setPosition(float x, float y) {
+void GraphicBody::setPosition(float x, float y) {
 	position.setX(x);
 	position.setY(y);
 }
 
-void Renderable::moveX(float deltaX) {
+void GraphicBody::moveX(float deltaX) {
 	position.setX(position.getX() + deltaX);
 }
 
-void Renderable::moveY(float deltaY) {
+void GraphicBody::moveY(float deltaY) {
 	position.setY(position.getY() + deltaY);
 }
 
-void Renderable::move(float deltaX, float deltaY) {
+void GraphicBody::move(float deltaX, float deltaY) {
 	moveX(deltaX);
 	moveY(deltaY);
 }
 
-void Renderable::setMaxVelocityX(float xVelocity){
+void GraphicBody::setMaxVelocityX(float xVelocity){
 	maxVelocityX = xVelocity;
 }
-void Renderable::setMaxVelocityY(float yVelocity){
+void GraphicBody::setMaxVelocityY(float yVelocity){
 	maxVelocityY = yVelocity;
 }
 
-void Renderable::setMaxVelocity(float xVelocity, float yVelocity){
+void GraphicBody::setMaxVelocity(float xVelocity, float yVelocity){
 	maxVelocityX = xVelocity;
 	maxVelocityY = yVelocity;
 }
-float Renderable::getMaxVelocityX(){
+float GraphicBody::getMaxVelocityX(){
 	return maxVelocityX;
 }
-float Renderable::getMaxVelocityY(){
+float GraphicBody::getMaxVelocityY(){
 	return maxVelocityY;
 }
 
-void Renderable::setVelocityX(float xVelocity){
+void GraphicBody::setVelocityX(float xVelocity){
 	velocity.setX(xVelocity);
 }
-void Renderable::setVelocityY(float yVelocity){
+void GraphicBody::setVelocityY(float yVelocity){
 	velocity.setY(yVelocity);
 }
 
 
-void Renderable::update(){
+void GraphicBody::update(){
 	//float ratio1 = Engine::getUpdateDelta();
 	//float ratio2 = Engine::getUpdateDelay();
 	float ratio = Engine::getSinceLastUpdate();
@@ -200,34 +200,34 @@ void Renderable::update(){
 }
 
 
-void Renderable::setCollidableSides(RB_SIDE collidableSides){
+void GraphicBody::setCollidableSides(RB_SIDE collidableSides){
 	this->collidableSides = collidableSides;
 }
 
-RB_SIDE Renderable::getCollidableSides(){
+RB_SIDE GraphicBody::getCollidableSides(){
 	return collidableSides;
 }
 
-bool Renderable::IsCollidingSide(RB_SIDE sides){
+bool GraphicBody::IsCollidingSide(RB_SIDE sides){
 	//RB_SIDE tempSides = (collidableSides | sides);
 	return collidableSides & sides;
 }
 
-bool Renderable::getIsStatic(){
+bool GraphicBody::getIsStatic(){
 	return staticObject;
 }
 
-void Renderable::setIsStatic(bool isStatic){
+void GraphicBody::setIsStatic(bool isStatic){
 	staticObject = isStatic;
 }
-float Renderable::getElasticity(){
+float GraphicBody::getElasticity(){
 	return elasticity;
 }
-void Renderable::setElasticity(float elasticity){
+void GraphicBody::setElasticity(float elasticity){
 	this->elasticity = elasticity;
 }
 
-bool Renderable::solveXCollision(Renderable * object1, Renderable * object2, CollisionData * collisionInfo){
+bool GraphicBody::solveXCollision(GraphicBody * object1, GraphicBody * object2, CollisionData * collisionInfo){
 	//We check if both instance are static
 	if (object1->getIsStatic() && object2->getIsStatic()) {
 		return false;
@@ -311,7 +311,7 @@ bool Renderable::solveXCollision(Renderable * object1, Renderable * object2, Col
 	}
 }
 
-bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, CollisionData * collisionInfo){
+bool GraphicBody::solveYCollision(GraphicBody * object1, GraphicBody * object2, CollisionData * collisionInfo){
 	//We check if both instance are static
 	if (object1->getIsStatic() && object2->getIsStatic()) {
 		return false;
@@ -406,7 +406,7 @@ bool Renderable::solveYCollision(Renderable * object1, Renderable * object2, Col
 }
 
 
-std::pair<bool, CollisionData> Renderable::collide(Renderable * object1, Renderable * object2){
+std::pair<bool, CollisionData> GraphicBody::collide(GraphicBody * object1, GraphicBody * object2){
 	CollisionData currentCollisionData;
 	currentCollisionData.obj1 = object1;
 	currentCollisionData.obj2 = object2;
@@ -421,28 +421,28 @@ std::pair<bool, CollisionData> Renderable::collide(Renderable * object1, Rendera
 }
 
 
-std::pair<bool, CollisionData> Renderable::collide(Renderable * aRenderable){
-	return collide(this, aRenderable);
+std::pair<bool, CollisionData> GraphicBody::collide(GraphicBody * aGraphicBody){
+	return collide(this, aGraphicBody);
 }
 
 
-float Renderable::getOldXPosition(){
+float GraphicBody::getOldXPosition(){
 	return oldPosition.getX();
 }
-float Renderable::getOldYPosition(){
+float GraphicBody::getOldYPosition(){
 	return oldPosition.getY();
 	
 }
 
-std::pair<bool, std::list<CollisionData> > Renderable::collide(std::list<Renderable*> renderables1, std::list<Renderable*> renderables2){
+std::pair<bool, std::list<CollisionData> > GraphicBody::collide(std::list<GraphicBody*> GraphicBodys1, std::list<GraphicBody*> GraphicBodys2){
 	std::list<CollisionData> collisionInfo;
 	bool collide = false;
-	for(std::list<Renderable*>::iterator i = renderables1.begin(); i != renderables1.end();
+	for(std::list<GraphicBody*>::iterator i = GraphicBodys1.begin(); i != GraphicBodys1.end();
 		i++) {
-		for(std::list<Renderable*>::iterator j = renderables2.begin(); j != renderables2.end();
+		for(std::list<GraphicBody*>::iterator j = GraphicBodys2.begin(); j != GraphicBodys2.end();
 			j++) {
 			if(*i != *j){
-				std::pair<bool, CollisionData> collisionPair = Renderable::collide(*i, *j);
+				std::pair<bool, CollisionData> collisionPair = GraphicBody::collide(*i, *j);
 				if(collisionPair.first){
 					collide = true;
 				}
@@ -453,10 +453,10 @@ std::pair<bool, std::list<CollisionData> > Renderable::collide(std::list<Rendera
 	return std::pair<bool, std::list<CollisionData> >(collide,  collisionInfo);
 }
 
-std::pair<bool, std::list<CollisionData> > Renderable::collide(std::list<Renderable*> renderables){
+std::pair<bool, std::list<CollisionData> > GraphicBody::collide(std::list<GraphicBody*> GraphicBodys){
 	std::list<CollisionData> collisionInfo;
 	bool collide = false;
-	for(std::list<Renderable*>::iterator i = renderables.begin(); i != renderables.end();
+	for(std::list<GraphicBody*>::iterator i = GraphicBodys.begin(); i != GraphicBodys.end();
 		i++) {
 		std::pair<bool, CollisionData> collisionPair = this->collide(*i);
 		if(collisionPair.first){
@@ -468,36 +468,36 @@ std::pair<bool, std::list<CollisionData> > Renderable::collide(std::list<Rendera
 }
 
 
-AABB Renderable::getAABB(){
+AABB GraphicBody::getAABB(){
 	return AABB(getXPosition(), getXPosition() + getWidth(), getYPosition(), getYPosition() + getHeight());
 }
 
-void Renderable::setDrag(const Vec2 &newDrag) {
+void GraphicBody::setDrag(const Vec2 &newDrag) {
 	drag = newDrag;
 }
 
-const Vec2& Renderable::getDrag() const {
+const Vec2& GraphicBody::getDrag() const {
 	return drag;
 }
 
-void Renderable::setAccelerationX(float xAccelaration){
+void GraphicBody::setAccelerationX(float xAccelaration){
 	acceleration.setX(xAccelaration);
 }
-void Renderable::setAccelerationY(float yAccelaration){
+void GraphicBody::setAccelerationY(float yAccelaration){
 	acceleration.setY(yAccelaration);
 
 }
 
 
-float Renderable::getAccelerationX(){
+float GraphicBody::getAccelerationX(){
 	return acceleration.getX();
 }
-float Renderable::getAccelerationY(){
+float GraphicBody::getAccelerationY(){
 	return acceleration.getY();
 }
-float Renderable::getVelocityX(){
+float GraphicBody::getVelocityX(){
 	return velocity.getX();
 }
-float Renderable::getVelocityY(){
+float GraphicBody::getVelocityY(){
 	return velocity.getY();
 }

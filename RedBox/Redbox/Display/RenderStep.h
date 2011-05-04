@@ -13,7 +13,7 @@
 
 #include "TextureInfo.h"
 #include "RenderInfo.h"
-#include "Renderable.h"
+#include "GraphicBody.h"
 #include "RenderStepMode.h"
 #include "Color.h"
 
