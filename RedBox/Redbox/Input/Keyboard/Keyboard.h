@@ -239,6 +239,12 @@ namespace RedBox {
 		virtual ~Keyboard();
 
 		/**
+		 * Abstract update method. This will be called to update the device's
+		 * state.
+		 */
+		virtual void updateDevice();
+
+		/**
 		 * Gets the previous keys' state.
 		 * @return Reference to the previous keys' state.
 		 */

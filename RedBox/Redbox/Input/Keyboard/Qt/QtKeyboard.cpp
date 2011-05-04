@@ -4,7 +4,7 @@
 
 #include "QtKeyboard.h"
 
-#include <iostream>
+#include "InputManager.h"
 
 #include <QKeyEvent>
 
@@ -19,8 +19,7 @@ void QtKeyboard::setParentWidget(QWidget* parent) {
 		instance->setEnabled(true);
 		instance->grabKeyboard();
 		instance->setFocus(Qt::OtherFocusReason);
-	} else {
-		std::cout << "Damn it!" << std::endl;
+		InputManager::getInstance().dontDeleteKeyboards();
 	}
 }
 
@@ -33,6 +32,7 @@ QtKeyboard::~QtKeyboard() {
 }
 
 void QtKeyboard::updateDevice() {
+	Keyboard::updateDevice();
 	getPreviousKeys() = getKeys();
 	getKeys() = qtKeys;
 	for(Key::Enum i = 0; i < Key::NB_KEYS;++i) {

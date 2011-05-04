@@ -42,6 +42,10 @@ Pointer::Pointer(unsigned int nbCursors) : InputDevice(), state(PointerState(nbC
 Pointer::~Pointer() {
 }
 
+void Pointer::updateDevice() {
+	InputDevice::updateDevice();
+}
+
 std::vector<CursorState>& Pointer::getCursorStates() {
 	return state.cursors;
 }

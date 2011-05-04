@@ -20,6 +20,10 @@ namespace RedBox {
 	 */
 	class InputManager {
 		friend class Engine;
+		friend class Accelerometer;
+		friend class GamePad;
+		friend class Keyboard;
+		friend class Pointer;
 	public:
 		/**
 		 * Gets the InputManager's singleton instance.
@@ -133,6 +137,43 @@ namespace RedBox {
 		 */
 		Pointer* getPointer(unsigned int index = 0);
 		
+		/**
+		 * Specify to not delete the accelerometers when the input manager is
+		 * destroyed.
+		 */
+		void dontDeleteAccelerometers();
+		/**
+		 * Specify to not delete the game pads when the input manager is
+		 * destroyed.
+		 */
+		void dontDeleteGamePads();
+		/**
+		 * Specify to not delete the keyboards when the input manager is
+		 * destroyed.
+		 */
+		void dontDeleteKeyboards();
+		/**
+		 * Specify to not delete the pointers when the input manager is
+		 * destroyed.
+		 */
+		void dontDeletePointers();
+		/**
+		 * Specify to delete the accelerometers when the input manager is
+		 * destroyed.
+		 */
+		void deleteAccelerometersOnQuit();
+		/**
+		 * Specify to delete the game pads when the input manager is destroyed.
+		 */
+		void deleteGamePadsOnQuit();
+		/**
+		 * Specify to delete the keyboards when the input manager is destroyed.
+		 */
+		void deleteKeyboardsOnQuit();
+		/**
+		 * Specify to delete the pointers when the input manager is destroyed.
+		 */
+		void deletePointersOnQuit();
 	protected:
 		/**
 		 * Default constructor.
@@ -160,6 +201,18 @@ namespace RedBox {
 		
 		/// Pointers to the loaded pointing devices.
 		std::vector<Pointer*> pointers;
+
+		/**
+		 * Flag set to know if the input manager has to delete the
+		 * accelerometers.
+		 */
+		bool deleteAccelerometers;
+		/// Flag set to know if the input manager has to delete the game pads.
+		bool deleteGamePads;
+		/// Flag set to know if the input manager has to delete the keyboards.
+		bool deleteKeyboards;
+		/// Flag set to know if the input manager has to delete the pointers.
+		bool deletePointers;
 	};
 }
 

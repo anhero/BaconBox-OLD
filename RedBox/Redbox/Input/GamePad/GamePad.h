@@ -110,6 +110,12 @@ namespace RedBox {
 		 * Destructor.
 		 */
 		virtual ~GamePad();
+
+		/**
+		 * Abstract update method. This will be called to update the device's
+		 * state.
+		 */
+		virtual void updateDevice();
 	};
 }
 

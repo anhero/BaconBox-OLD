@@ -7,3 +7,6 @@ InputDevice::InputDevice() {
 
 InputDevice::~InputDevice() {
 }
+
+void InputDevice::updateDevice() {
+}

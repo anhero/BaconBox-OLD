@@ -161,34 +161,73 @@ Pointer* InputManager::getPointer(unsigned int index) {
 	}
 }
 
+void InputManager::dontDeleteAccelerometers() {
+	deleteAccelerometers = false;
+}
+void InputManager::dontDeleteGamePads() {
+	deleteGamePads = false;
+}
+void InputManager::dontDeleteKeyboards() {
+	deleteKeyboards = false;
+}
+void InputManager::dontDeletePointers() {
+	deletePointers = false;
+}
 
-InputManager::InputManager() {
+void InputManager::deleteAccelerometersOnQuit() {
+	deleteAccelerometers = true;
+}
+void InputManager::deleteGamePadsOnQuit() {
+	deleteGamePads = true;
+}
+
+void InputManager::deleteKeyboardsOnQuit() {
+	deleteKeyboards = true;
+}
+
+void InputManager::deletePointersOnQuit() {
+	deletePointers = true;
+}
+
+InputManager::InputManager() : deleteAccelerometers(true), deleteGamePads(true),
+deleteKeyboards(true), deletePointers(this) {
 }
 
 InputManager::~InputManager() {
 	// We delete all the devices.
-	for (std::vector<Accelerometer*>::iterator i = accelerometers.begin();
-		 i != accelerometers.end(); ++i) {
-		if(*i) {
-			delete *i;
+	if(deleteAccelerometers) {
+		for (std::vector<Accelerometer*>::iterator i = accelerometers.begin();
+			 i != accelerometers.end(); ++i) {
+			if(*i) {
+				delete *i;
+			}
 		}
 	}
-	for (std::vector<GamePad*>::iterator i = gamePads.begin();
-		 i != gamePads.end(); ++i) {
-		if(*i) {
-			delete *i;
+
+	if(deleteGamePads) {
+		for (std::vector<GamePad*>::iterator i = gamePads.begin();
+			 i != gamePads.end(); ++i) {
+			if(*i) {
+				delete *i;
+			}
 		}
 	}
-	for (std::vector<Keyboard*>::iterator i = keyboards.begin();
-		 i != keyboards.end(); ++i) {
-		if(*i) {
-			delete *i;
+
+	if(deleteKeyboards) {
+		for (std::vector<Keyboard*>::iterator i = keyboards.begin();
+			 i != keyboards.end(); ++i) {
+			if(*i) {
+				delete *i;
+			}
 		}
 	}
-	for (std::vector<Pointer*>::iterator i = pointers.begin();
-		 i != pointers.end(); ++i) {
-		if(*i) {
-			delete *i;
+
+	if(deletePointers) {
+		for (std::vector<Pointer*>::iterator i = pointers.begin();
+			 i != pointers.end(); ++i) {
+			if(*i) {
+				delete *i;
+			}
 		}
 	}
 }

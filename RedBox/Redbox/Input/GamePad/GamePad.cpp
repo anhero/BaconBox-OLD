@@ -18,3 +18,6 @@ GamePad::GamePad() : InputDevice() {
 GamePad::~GamePad() {
 }
 
+void GamePad::updateDevice() {
+	InputDevice::updateDevice();
+}

@@ -160,6 +160,12 @@ namespace RedBox {
 		virtual ~Pointer();
 
 		/**
+		 * Abstract update method. This will be called to update the device's
+		 * state.
+		 */
+		virtual void updateDevice();
+
+		/**
 		 * Gets the cursors' state. Used for platform specific implementation
 		 * so they can access the required information.
 		 * @return Reference to the cursors' state.

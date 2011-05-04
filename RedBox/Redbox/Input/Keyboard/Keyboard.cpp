@@ -58,6 +58,10 @@ Keyboard::Keyboard() : InputDevice() {
 Keyboard::~Keyboard() {
 }
 
+void Keyboard::updateDevice() {
+	InputDevice::updateDevice();
+}
+
 std::vector<bool>& Keyboard::getPreviousKeys() {
 	return state.previousKeys;
 }

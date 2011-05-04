@@ -26,7 +26,7 @@ namespace RedBox {
 		 * Abstract update method. This will be called to update the device's
 		 * state.
 		 */
-		virtual void updateDevice() = 0;
+		virtual void updateDevice();
 	};
 }
 

@@ -3,6 +3,8 @@
 #ifdef RB_QT
 #include "QtPointer.h"
 
+#include "InputManager.h"
+
 #include <QMouseEvent>
 #include <QCursor>
 #include <QPoint>
@@ -20,6 +22,7 @@ void QtPointer::setParentWidget(QWidget* parent) {
 		instance->grabMouse();
 		instance->setMouseTracking(true);
 		instance->raise();
+		InputManager::getInstance().dontDeletePointers();
 	}
 }
 
@@ -31,6 +34,7 @@ QtPointer::~QtPointer() {
 }
 
 void QtPointer::updateDevice() {
+	Pointer::updateDevice();
 	// We check the mouse button events.
 	getCursorPreviousButtons(0) = getCursorButtons(0);
 	Qt::MouseButtons buttons = QApplication::mouseButtons();

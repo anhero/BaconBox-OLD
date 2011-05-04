@@ -37,3 +37,7 @@ Accelerometer::Accelerometer() : InputDevice() {
 
 Accelerometer::~Accelerometer() {
 }
+
+void Accelerometer::updateDevice() {
+	InputDevice::updateDevice();
+}

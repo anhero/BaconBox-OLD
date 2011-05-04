@@ -102,6 +102,12 @@ namespace RedBox {
 		 * Destructor.
 		 */
 		virtual ~Accelerometer();
+
+		/**
+		 * Abstract update method. This will be called to update the device's
+		 * state.
+		 */
+		virtual void updateDevice();
 		
 	private:
 		
