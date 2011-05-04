@@ -27,10 +27,8 @@ namespace RedBox {
 		static Sprite* makePolygon(unsigned int nbSides, float sideLength,
 								   const Color& color);
 	private:
-		/// Constant for PI.
-		static const float PI;
-		/// Constant used for converting degrees to radians.
-		static const float DEGREE_TO_RADIAN;
+		
+		
 		/**
 		 * Converts degrees to radians.
 		 * @param degree Angle in degrees to convert to radians.
