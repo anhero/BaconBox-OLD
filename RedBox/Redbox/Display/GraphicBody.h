@@ -7,6 +7,7 @@
 
 #include <list>
 
+#include "Object.h"
 #include "Vec2.h"
 #include "Side.h"
 #include "CollisionData.h"
@@ -17,7 +18,7 @@ namespace RedBox {
 	 * Represents a GraphicBody object assiociated with its z coordinate.
      * @ingroup Display
 	 */
-	class GraphicBody {
+	class GraphicBody : public Object {
 		friend class State;
 	public:
 		static const float NO_MAX_VELOCITY = -1.0f;

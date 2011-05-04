@@ -6,11 +6,13 @@
 #define RB_OVERLAP_BIAS 4
 
 using namespace RedBox;
-GraphicBody::GraphicBody(): maxVelocityX(NO_MAX_VELOCITY), maxVelocityY(NO_MAX_VELOCITY), z(0), toBeDeleted(false), zChanged(false),
-isInState(false), collidableSides(Side::ALL), elasticity(0.0), staticObject(false), drag(Vec2()){
+GraphicBody::GraphicBody() : Object(), maxVelocityX(NO_MAX_VELOCITY),
+maxVelocityY(NO_MAX_VELOCITY), z(0), toBeDeleted(false), zChanged(false),
+isInState(false), collidableSides(Side::ALL), elasticity(0.0),
+staticObject(false), drag(Vec2()) {
 }
 
-GraphicBody::GraphicBody(const GraphicBody& src) {
+GraphicBody::GraphicBody(const GraphicBody& src) : Object(src) {
 	copyFrom(src);
 }
 
@@ -18,6 +20,7 @@ GraphicBody::~GraphicBody() {
 }
 
 GraphicBody& GraphicBody::operator=(const GraphicBody& src) {
+	Object::operator=(src);
 	copyFrom(src);
 	return *this;
 }
@@ -85,7 +88,6 @@ float GraphicBody::getYPosition() const {
 	return position.getY();
 }
 
-
 void GraphicBody::setXPosition(float x) {
 	position.setX(x);
 }
@@ -139,8 +141,6 @@ void GraphicBody::setVelocityY(float yVelocity){
 
 
 void GraphicBody::update(){
-	//float ratio1 = Engine::getUpdateDelta();
-	//float ratio2 = Engine::getUpdateDelay();
 	float ratio = Engine::getSinceLastUpdate();
 	oldPosition = position;
 	
@@ -209,7 +209,6 @@ RB_SIDE GraphicBody::getCollidableSides(){
 }
 
 bool GraphicBody::IsCollidingSide(RB_SIDE sides){
-	//RB_SIDE tempSides = (collidableSides | sides);
 	return collidableSides & sides;
 }
 
