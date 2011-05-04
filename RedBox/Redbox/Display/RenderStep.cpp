@@ -11,7 +11,7 @@
 #include "Debug.h"
 #include "Vertex.h"
 #include "VerticesGroup.h"
-#include "RedBoxEngine.h"
+#include "Engine.h"
 
 using namespace RedBox;
 
@@ -90,7 +90,7 @@ void RenderStep::update() {
 		if(info.isAnimated()) {
 			AnimationParameters* anim = info.getAnimationParameters(info.getCurrentAnimation());
 			if(anim) {
-				animCounter += RedBoxEngine::getSinceLastUpdate();
+				animCounter += Engine::getSinceLastUpdate();
 				if(animCounter >= anim->timePerFrame) {
 					info.incrementFrame();
 					animCounter -= anim->timePerFrame;

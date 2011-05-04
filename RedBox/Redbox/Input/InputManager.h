@@ -19,7 +19,7 @@ namespace RedBox {
 	 * @ingroup Input
 	 */
 	class InputManager {
-		friend class RedBoxEngine;
+		friend class Engine;
 	public:
 		/**
 		 * Gets the InputManager's singleton instance.

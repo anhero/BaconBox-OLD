@@ -9,7 +9,7 @@
 
 #include "IEmitter.h"
 #include "ParticleState.h"
-#include "RedBoxEngine.h"
+#include "Engine.h"
 #include "Random.h"
 
 #include "Debug.h"
@@ -59,7 +59,7 @@ namespace RedBox {
 			if(isActive && emitRate > 0.0 &&
 					(nbParticlesToShoot == -1 || nbParticlesToShoot > 0)) {
 				float rate = 1.0 / emitRate;
-				emitCounter += RedBoxEngine::getSinceLastUpdate();
+				emitCounter += Engine::getSinceLastUpdate();
 				// We try to shoot particles as long as the emission rate lets us.
 				while((nbParticlesToShoot == -1 || nbParticlesToShoot > 0) &&
 					  emitCounter > rate && shootParticle()) {
@@ -70,7 +70,7 @@ namespace RedBox {
 				// We check if we have to count the emitter's life span.
 				if(lifeSpan != -1.0) {
 					// We update the emitter's elapsed time.
-					elapsedTime += RedBoxEngine::getSinceLastUpdate();
+					elapsedTime += Engine::getSinceLastUpdate();
 					if(lifeSpan < elapsedTime) {
 						deactivate();
 					}
@@ -84,7 +84,7 @@ namespace RedBox {
 					// We update the sprite.
 					i->renderable->update();
 					// We update the lifespan.
-					i->timeLeft -= RedBoxEngine::getSinceLastUpdate();
+					i->timeLeft -= Engine::getSinceLastUpdate();
 				}
 				// We update the particles depending on their phase.
 				ParticleState::Enum tmpState;
@@ -92,24 +92,24 @@ namespace RedBox {
 					tmpState = i->state;
 					switch (i->state) {
 						case ParticleState::BIRTH:
-							updateAlpha(RedBoxEngine::getSinceLastUpdate() * birthPhase.alphaPerSecond, i->renderable);
-							updateScaling(RedBoxEngine::getSinceLastUpdate() * birthPhase.scalingPerSecond, i->renderable);
+							updateAlpha(Engine::getSinceLastUpdate() * birthPhase.alphaPerSecond, i->renderable);
+							updateScaling(Engine::getSinceLastUpdate() * birthPhase.scalingPerSecond, i->renderable);
 							if(i->timeLeft <= 0.0) {
 								i->state = ParticleState::LIFE;
 								i->timeLeft = lifePhase.phaseDuration + Random::getRandomDouble(0.0, lifePhase.phaseDurationVariance);
 							}
 							break;
 						case ParticleState::LIFE:
-							updateAlpha(RedBoxEngine::getSinceLastUpdate() * lifePhase.alphaPerSecond, i->renderable);
-							updateScaling(RedBoxEngine::getSinceLastUpdate() * lifePhase.scalingPerSecond, i->renderable);
+							updateAlpha(Engine::getSinceLastUpdate() * lifePhase.alphaPerSecond, i->renderable);
+							updateScaling(Engine::getSinceLastUpdate() * lifePhase.scalingPerSecond, i->renderable);
 							if(i->timeLeft <= 0.0) {
 								i->state = ParticleState::DYING;
 								i->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
 							}
 							break;
 						case ParticleState::DYING:
-							updateAlpha(RedBoxEngine::getSinceLastUpdate() * dyingPhase.alphaPerSecond, i->renderable);
-							updateScaling(RedBoxEngine::getSinceLastUpdate() * dyingPhase.scalingPerSecond, i->renderable);
+							updateAlpha(Engine::getSinceLastUpdate() * dyingPhase.alphaPerSecond, i->renderable);
+							updateScaling(Engine::getSinceLastUpdate() * dyingPhase.scalingPerSecond, i->renderable);
 							if(i->timeLeft <= 0.0) {
 								i->state = ParticleState::DEAD;
 								i->timeLeft = 0.0;

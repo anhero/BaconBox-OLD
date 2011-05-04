@@ -19,7 +19,7 @@ namespace RedBox {
 	 */
 	class AudioEngine {
 		friend class ResourceManager;
-		friend class RedBoxEngine;
+		friend class Engine;
 	public:
 		/**
 		 * Loads the sound and the music engine.

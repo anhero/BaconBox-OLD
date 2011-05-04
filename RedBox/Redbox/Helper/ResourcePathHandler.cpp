@@ -12,7 +12,7 @@
 #include <QCoreApplication>
 #include <QDesktopServices>
 #endif
-#include "RedBoxEngine.h"
+#include "Engine.h"
 using namespace RedBox;
 
 
@@ -26,7 +26,7 @@ std::string ResourcePathHandler::getResourcePathFor(const std::string& item) {
 	[pool release];
 #else
 	
-	path = RedBoxEngine::applicationPath;
+	path = Engine::applicationPath;
 	
 #ifdef RB_MAC_PLATFORM
 	path = path + "/../Resources/" + item;

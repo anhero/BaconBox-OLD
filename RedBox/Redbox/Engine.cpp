@@ -1,4 +1,4 @@
-#include "RedBoxEngine.h"
+#include "Engine.h"
 
 #include <cassert>
 
@@ -14,24 +14,24 @@
 #include <libgen.h>
 using namespace RedBox;
 
-std::string RedBoxEngine::applicationPath = "";
+std::string Engine::applicationPath = "";
 
 
-std::map<std::string, State*> RedBoxEngine::states = std::map<std::string, State*>();
-State* RedBoxEngine::currentState = NULL;
-State* RedBoxEngine::lastState = NULL;
-double RedBoxEngine::lastUpdate = 0.0;
-unsigned int RedBoxEngine::loops = 0;
-double RedBoxEngine::nextUpdate = 0;
-double RedBoxEngine::updateDelay = 1.0 / DEFAULT_UPDATES_PER_SECOND;
-unsigned int RedBoxEngine::minFps = DEFAULT_MIN_FRAMES_PER_SECOND;
-bool RedBoxEngine::bufferSwapped = false;
-bool RedBoxEngine::renderedSinceLastUpdate = false;
-sigly::Signal2<int, int> RedBoxEngine::onInitialize = sigly::Signal2<int, int>();
-int RedBoxEngine::screenWidth = 0;
-int RedBoxEngine::screenHeight = 0;
+std::map<std::string, State*> Engine::states = std::map<std::string, State*>();
+State* Engine::currentState = NULL;
+State* Engine::lastState = NULL;
+double Engine::lastUpdate = 0.0;
+unsigned int Engine::loops = 0;
+double Engine::nextUpdate = 0;
+double Engine::updateDelay = 1.0 / DEFAULT_UPDATES_PER_SECOND;
+unsigned int Engine::minFps = DEFAULT_MIN_FRAMES_PER_SECOND;
+bool Engine::bufferSwapped = false;
+bool Engine::renderedSinceLastUpdate = false;
+sigly::Signal2<int, int> Engine::onInitialize = sigly::Signal2<int, int>();
+int Engine::screenWidth = 0;
+int Engine::screenHeight = 0;
 
-State* RedBoxEngine::addState(State* newState) {
+State* Engine::addState(State* newState) {
 	if(newState) {
 		if(states.empty()) {
 			currentState = newState;
@@ -43,7 +43,7 @@ State* RedBoxEngine::addState(State* newState) {
 	return newState;
 }
 
-void RedBoxEngine::removeState(const std::string& name) {
+void Engine::removeState(const std::string& name) {
 	std::map<std::string, State*>::iterator toDelete = states.find(name);
 	if(currentState != toDelete->second) {
 		if(toDelete->second) {
@@ -53,7 +53,7 @@ void RedBoxEngine::removeState(const std::string& name) {
 	}
 }
 
-State* RedBoxEngine::playState(const std::string& name) {
+State* Engine::playState(const std::string& name) {
 	// We make sure the state asked for exists.
 	std::map<std::string, State*>::iterator it = states.find(name);
 	if(it != states.end()) {
@@ -65,35 +65,35 @@ State* RedBoxEngine::playState(const std::string& name) {
 	return currentState;
 }
 
-State* RedBoxEngine::getCurrentState() {
+State* Engine::getCurrentState() {
 	return currentState;
 }
 
-unsigned int RedBoxEngine::getMinFps() {
+unsigned int Engine::getMinFps() {
 	return minFps;
 }
 
-double RedBoxEngine::getUpdatesPerSecond() {
+double Engine::getUpdatesPerSecond() {
 	assert(updateDelay);
 	return 1.0 / updateDelay;
 }
 
-double RedBoxEngine::getUpdateDelay() {
+double Engine::getUpdateDelay() {
 	return updateDelay;
 }
 
-void RedBoxEngine::setMinFps(unsigned int newMinFps) {
+void Engine::setMinFps(unsigned int newMinFps) {
 	minFps = newMinFps;
 }
 
-void RedBoxEngine::setUpdatesPerSecond(double updatesPerSecond) {
+void Engine::setUpdatesPerSecond(double updatesPerSecond) {
 	if(updatesPerSecond) {
 		// Calculate the update delay.
 		updateDelay = 1.0 / static_cast<double>(updatesPerSecond);
 	}
 }
 
-void RedBoxEngine::pulse() {
+void Engine::pulse() {
 	// We make sure the pointer to the current state is valid.
 	if(currentState) {
 		TimeHelper::getInstance().refreshTime();
@@ -141,7 +141,7 @@ void RedBoxEngine::pulse() {
 	}
 }
 
-void RedBoxEngine::initializeEngine(int newScreenWidth, int newScreenHeight) {
+void Engine::initializeEngine(int newScreenWidth, int newScreenHeight) {
 	screenWidth = newScreenWidth;
 	screenHeight = newScreenHeight;
 	TimeHelper::getInstance();
@@ -151,26 +151,26 @@ void RedBoxEngine::initializeEngine(int newScreenWidth, int newScreenHeight) {
 	Font::initializeFontRenderer();
 }
 
-double RedBoxEngine::getSinceLastUpdate() {
+double Engine::getSinceLastUpdate() {
 	return TimeHelper::getInstance().getSinceStartComplete() - lastUpdate;
 }
 
-int RedBoxEngine::getScreenWidth() {
+int Engine::getScreenWidth() {
 	return screenWidth;
 }
 
-int RedBoxEngine::getScreenHeight() {
+int Engine::getScreenHeight() {
 	return screenHeight;
 }
 
-bool RedBoxEngine::isBufferSwapped() {
+bool Engine::isBufferSwapped() {
 	return bufferSwapped;
 }
 
-void RedBoxEngine::setBufferSwapped() {
+void Engine::setBufferSwapped() {
 	bufferSwapped = true;
 }
 
-void RedBoxEngine::application(int argc, char *argv[]){
+void Engine::application(int argc, char *argv[]){
 	applicationPath = dirname(argv[0]);
 }

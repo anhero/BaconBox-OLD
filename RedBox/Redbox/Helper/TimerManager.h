@@ -10,13 +10,13 @@
 namespace RedBox {
 	class Timer;
 	/**
-	 * Internal manager for the timers. Only the Timer and RedBoxEngine classes
+	 * Internal manager for the timers. Only the Timer and Engine classes
 	 * have access to this class's functions.
 	 * @ingroup Helper
 	 */
 	class TimerManager {
 		friend class Timer;
-		friend class RedBoxEngine;
+		friend class Engine;
 	private:
 		/// Set containing pointers to the timers that need updating.
 		static std::set<Timer*> timers;

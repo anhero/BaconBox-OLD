@@ -16,9 +16,8 @@ namespace RedBox {
 	 * Class managing the states.
 	 * @ingroup StateMachine
 	 */
-	class RedBoxEngine {
+	class Engine {
 		friend class ResourcePathHandler;
-
 	public:
 		static const double DEFAULT_UPDATES_PER_SECOND = 60.0;
 		static const unsigned int DEFAULT_MIN_FRAMES_PER_SECOND = 5;

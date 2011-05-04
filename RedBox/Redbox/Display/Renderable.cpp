@@ -1,5 +1,5 @@
 #include "Renderable.h"
-#include "RedBoxEngine.h"
+#include "Engine.h"
 
 #include <cmath>
 
@@ -139,9 +139,9 @@ void Renderable::setVelocityY(float yVelocity){
 
 
 void Renderable::update(){
-	//float ratio1 = RedBoxEngine::getUpdateDelta();
-	//float ratio2 = RedBoxEngine::getUpdateDelay();
-	float ratio = RedBoxEngine::getSinceLastUpdate();
+	//float ratio1 = Engine::getUpdateDelta();
+	//float ratio2 = Engine::getUpdateDelay();
+	float ratio = Engine::getSinceLastUpdate();
 	oldPosition = position;
 	
 	

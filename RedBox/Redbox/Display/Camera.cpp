@@ -2,7 +2,7 @@
 #include "GraphicDriver.h"
 #include "TimeHelper.h"
 #include "Random.h"
-#include "RedBoxEngine.h"
+#include "Engine.h"
 #include <cmath>
 
 using namespace RedBox;
@@ -80,12 +80,12 @@ void Camera::update() {
 		// We set random offsets to the camera.
 		float tmpIntensity = (timeSinceStarted == 0.0) ? (shakeIntensity) : ((1.0f - ((TimeHelper::getInstance().getSinceStart() - shakeStart) / shakeDuration)) * shakeIntensity);
 		if(shakeAxes == BOTH_AXES || shakeAxes == HORIZONTAL_AXIS) {
-			offsetX = static_cast<int>(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(RedBoxEngine::getScreenWidth()));
+			offsetX = static_cast<int>(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(Engine::getScreenWidth()));
 		} else {
 			offsetX = 0;
 		}
 		if(shakeAxes == BOTH_AXES || shakeAxes == VERTICAL_AXIS) {
-			offsetY = static_cast<int>(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(RedBoxEngine::getScreenHeight()));
+			offsetY = static_cast<int>(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(Engine::getScreenHeight()));
 		} else {
 			offsetY = 0;
 		}

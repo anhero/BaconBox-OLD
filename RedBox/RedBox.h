@@ -44,7 +44,7 @@
  * @brief Classes related to player input.
  */
 
-#include <RedBox/RedBoxEngine.h>
+#include <RedBox/Engine.h>
 #include <RedBox/ResourceManager.h>
 #include <RedBox/ResourcePathHandler.h>
 #include <RedBox/Sprite.h>

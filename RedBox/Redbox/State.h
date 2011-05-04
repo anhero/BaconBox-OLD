@@ -18,7 +18,7 @@ namespace RedBox {
 	 * manages the renderable objects. Ex: the playState, the MenuState.
      */
 	class State : public sigly::HasSlots<> {
-		friend class RedBoxEngine;
+		friend class Engine;
 	public:
 		/**
 		 * Default constructor.

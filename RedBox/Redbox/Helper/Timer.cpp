@@ -1,6 +1,6 @@
 #include "Timer.h"
 
-#include "RedBoxEngine.h"
+#include "Engine.h"
 #include "TimerManager.h"
 
 using namespace RedBox;
@@ -41,7 +41,7 @@ double Timer::getInterval() const {
 
 void Timer::update() {
 	if(started) {
-		timeCounter += RedBoxEngine::getSinceLastUpdate();
+		timeCounter += Engine::getSinceLastUpdate();
 		while(timeCounter > interval) {
 			timeCounter -= interval;
 			tick();

@@ -11,7 +11,7 @@ namespace RedBox {
 	 * @ingroup Helper
 	 */
 	class TimeHelper {
-		friend class RedBoxEngine;
+		friend class Engine;
 	public:
 		enum TimeType {
 			SCALABLE_PAUSABLE,
