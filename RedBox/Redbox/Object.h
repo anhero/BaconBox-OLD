@@ -9,10 +9,19 @@ namespace RedBox {
 	 * Base class that all RedBox instantiable classes extend.
 	 */
 	class Object {
+	public:
 		/**
 		 * Default constructor.
 		 */
 		Object();
+		/**
+		 * Copy constructor.
+		 */
+		Object(const Object& src);
+		/**
+		 * Assignation operator overload.
+		 */
+		Object& operator=(const Object& src);
 		/**
 		 * Destructor.
 		 */
