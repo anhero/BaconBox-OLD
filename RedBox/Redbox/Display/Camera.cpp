@@ -7,67 +7,84 @@
 
 using namespace RedBox;
 
-Camera::Camera(): Object(), x(0), y(0), angle(0), zoomFactor(1.0f),
+Camera::Camera(): Object(), position(Vec2()), angle(0), zoomFactor(1.0f),
 backgroundColor(Color::BLACK), shakeIntensity(0.0f), shakeStart(0.0),
-shakeDuration(0.0), shakeAxes(BOTH_AXES), offsetX(0), offsetY(0) {
+shakeDuration(0.0), shakeAxes(BOTH_AXES), offset(Vec2()) {
 }
 
-Camera::Camera(const Camera& src) : Object(), x(src.x), y(src.y),
+Camera::Camera(const Camera& src) : Object(), position(src.position),
 angle(src.angle), zoomFactor(src.zoomFactor),
 backgroundColor(src.backgroundColor), shakeIntensity(src.shakeIntensity),
-shakeStart(src.shakeStart), shakeAxes(src.shakeAxes), offsetX(src.offsetX),
-offsetY(src.offsetY) {
+shakeStart(src.shakeStart), shakeAxes(src.shakeAxes), offset(src.offset) {
 }
 
 Camera& Camera::operator=(const Camera& src) {
 	Object::operator=(src);
 	if(this != &src) {
-		x = src.x;
-		y = src.y;
+		position = src.position;
 		angle = src.angle;
 		zoomFactor = src.zoomFactor;
 		backgroundColor = src.backgroundColor;
 		shakeIntensity = src.shakeIntensity;
 		shakeStart = src.shakeStart;
 		shakeAxes = src.shakeAxes;
-		offsetX = src.offsetX;
-		offsetY = src.offsetY;
+		offset = src.offset;
 	}
 	return *this;
 }
 
-void Camera::move(int x, int y) {
-	this->x += x;
-	this->y += y;
+void Camera::move(float x, float y) {
+	position += Vec2(x, y);
 }
 
-void Camera::setPosition(int x, int y) {
-	this->x = x;
-	this->y = y;
+void Camera::move(const Vec2& moveVector) {
+	position += moveVector;
 }
 
-int Camera::getX() {
-	return x;
+void Camera::moveX(float x) {
+	position.addToX(x);
 }
 
-int Camera::getY() {
-	return y;
+void Camera::moveY(float y) {
+	position.addToY(y);
+}
+
+void Camera::setPosition(float x, float y) {
+	position = Vec2(x, y);
+}
+
+void Camera::setPosition(const Vec2 &newPosition) {
+	position = newPosition;
+}
+
+float Camera::getXPosition() const {
+	return position.getX();
+}
+
+float Camera::getYPosition() const {
+	return position.getY();
+}
+
+const Vec2& Camera::getPosition() const {
+	return position;
 }
 
 void Camera::resetAngle() {
-	angle = 0;
+	angle = 0.0f;
 }
-void Camera::setAngle(int angle) {
-	this->angle = angle;
+
+void Camera::setAngle(float newAngle) {
+	angle = newAngle;
 }
-float Camera::getAngle() {
+
+float Camera::getAngle() const {
 	return angle;
 }
-void Camera::rotateLeft(int angle) {
-	this->angle -= angle;
+void Camera::rotateLeft(float rotationAngle) {
+	angle -= rotationAngle;
 }
-void Camera::rotateRight(int angle) {
-	this->angle += angle;
+void Camera::rotateRight(float rotationAngle) {
+	angle += rotationAngle;
 }
 
 void Camera::setBackgroundColor(const Color& newBackgroundColor) {
@@ -88,6 +105,10 @@ void Camera::resetZoom() {
 	zoomFactor = 1.0f;
 }
 
+float Camera::getZoom() const {
+	return zoomFactor;
+}
+
 void Camera::shake(float intensity, double duration, bool forceReset,
 				   ShakeAxes axes) {
 	if(forceReset || intensity > shakeIntensity) {
@@ -104,22 +125,29 @@ void Camera::update() {
 		// We set random offsets to the camera.
 		float tmpIntensity = (timeSinceStarted == 0.0) ? (shakeIntensity) : ((1.0f - ((TimeHelper::getInstance().getSinceStart() - shakeStart) / shakeDuration)) * shakeIntensity);
 		if(shakeAxes == BOTH_AXES || shakeAxes == HORIZONTAL_AXIS) {
-			offsetX = static_cast<int>(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(Engine::getScreenWidth()));
+			offset.setX(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(Engine::getScreenWidth()));
 		} else {
-			offsetX = 0;
+			offset.setX(0.0f);
 		}
 		if(shakeAxes == BOTH_AXES || shakeAxes == VERTICAL_AXIS) {
-			offsetY = static_cast<int>(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(Engine::getScreenHeight()));
+			offset.setY(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(Engine::getScreenHeight()));
 		} else {
-			offsetY = 0;
+			offset.setY(0.0f);
 		}
 	} else {
 		// We reset the offsets.
-		offsetX = 0;
-		offsetY = 0;
+		offset = Vec2();
 	}
 }
 
 void Camera::render() {
-	GraphicDriver::prepareScene(-x + offsetX, -y + offsetY, angle, zoomFactor, backgroundColor);
+	GraphicDriver::prepareScene(position + offset, angle, zoomFactor, backgroundColor);
+}
+
+Vec2 Camera::screenToWorld(const Vec2& positionOnScreen) {
+	return positionOnScreen + position;
+}
+
+Vec2 Camera::worldToScreen(const Vec2& positionInWorld) {
+	return positionInWorld - position;
 }

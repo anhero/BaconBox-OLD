@@ -104,6 +104,18 @@ namespace RedBox {
 		 * @param newX New vector's vertical value.
 		 */
 		void setY(float newY);
+
+		/**
+		 * Adds a value to the x value.
+		 * @param xToAdd Value to add to x.
+		 */
+		void addToX(float xToAdd);
+
+		/**
+		 * Adds a value to the y value.
+		 * @param yToAdd Value to add to y.
+		 */
+		void addToY(float yToAdd);
 		/**
 		 * Does the vector store pointers? If not, it means it directly stores
 		 * the values.
