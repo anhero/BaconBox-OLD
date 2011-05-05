@@ -9,13 +9,15 @@
 
 #include <iostream>
 
+#include "Object.h"
+
 namespace RedBox {
 	/**
 	 * Simple class that represents a color in an RGBA format. Each component
 	 * ranges from 0 to 255.
 	 * @ingroup Display
 	 */
-	class Color {
+	class Color : public Object {
 		friend std::ostream& operator<<(std::ostream& output, const Color& color);
 	public:
 		/// Number of components each color has.

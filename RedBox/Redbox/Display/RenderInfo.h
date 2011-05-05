@@ -11,6 +11,7 @@
 #include <cstdarg>
 #include <iostream>
 
+#include "Object.h"
 #include "AnimationParameters.h"
 #include "Color.h"
 
@@ -21,7 +22,7 @@ namespace RedBox {
      * Struct contaning rendering information.
      * @ingroup Display
      */
-    class RenderInfo {
+	class RenderInfo : public Object {
         /**
          * Outputs the RenderInfo's content.
          * @param output The ostream in which RenderInfo is output.
@@ -35,6 +36,11 @@ namespace RedBox {
          * Default constructor.
          */
         RenderInfo();
+
+		/**
+		 * Copy constructor.
+		 */
+		RenderInfo(const RenderInfo& src);
 
         /**
          * Parametrized constructor.

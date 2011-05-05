@@ -2,10 +2,10 @@
  * @file
  * @ingroup Display
  */
-
 #ifndef RB_Camera_H
 #define RB_Camera_H
 
+#include "Object.h"
 #include "Color.h"
 
 namespace RedBox{
@@ -15,7 +15,7 @@ namespace RedBox{
 	 * to the left before rendering.
      * @ingroup Display
      */
-	class Camera{
+	class Camera : public Object {
 	public:
 		enum ShakeAxes {
 			BOTH_AXES,
@@ -25,6 +25,16 @@ namespace RedBox{
 
 		///Default Constructor
 		Camera();
+
+		/**
+		 * Copy constructor.
+		 */
+		Camera(const Camera& src);
+
+		/**
+		 * Assignation operator overload.
+		 */
+		Camera& operator=(const Camera& src);
 		
 		/**
 		 * Move the camera

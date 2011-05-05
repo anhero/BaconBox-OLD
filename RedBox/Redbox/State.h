@@ -7,17 +7,20 @@
 #include <map>
 #include <list>
 #include <string>
+
 #include <sigly.h>
+
+#include "Object.h"
 #include "Camera.h"
 #include "GraphicBody.h"
 #include "Color.h"
 
 namespace RedBox {
 	/**
-     * A state represents the THE GAME's different states, it contains and
+	 * A state represents the the game's different states, it contains and
 	 * manages the GraphicBody objects. Ex: the playState, the MenuState.
      */
-	class State : public sigly::HasSlots<> {
+	class State : public Object, public sigly::HasSlots<> {
 		friend class Engine;
 	public:
 		/**

@@ -33,6 +33,10 @@ namespace RedBox {
 		 * Default constructor.
 		 */
         Sprite();
+		/**
+		 * Simple parameterized constructor.
+		 * @param imageKey Key to the texture to create a sprite from.
+		 */
 		Sprite(const std::string& imageKey);
 		Sprite(TextureInfo* texInfo);
 		/**

@@ -13,25 +13,26 @@
 #include <cstdarg>
 
 #include "PlatformFlagger.h"
+
+#include "Object.h"
 #include "Vertex.h"
 
 namespace RedBox {
-
 	class Sprite;
 	/**
 	 * Group of Vertex for OpenGL and RedBox. Represents a group of vertex
 	 * with information accessible for OpenGL and RedBox.
 	 * @ingroup Display
 	 */
-	class VerticesGroup {
-        /**
-         * Outputs the vertices group's content.
-         * @param output The ostream in which the vertices group is output.
-         * @param v Vertices group to output in the ostream.
-         * @return Resulting ostream.
-         */
+	class VerticesGroup : public Object {
+		/**
+		 * Outputs the vertices group's content.
+		 * @param output The ostream in which the vertices group is output.
+		 * @param v Vertices group to output in the ostream.
+		 * @return Resulting ostream.
+		 */
 		friend std::ostream& operator<<(std::ostream& output,
-										const VerticesGroup& v);
+		                                const VerticesGroup& v);
 	public:
 		/**
 		 * The default constructor.
@@ -51,20 +52,20 @@ namespace RedBox {
 		 * @param src Vertex group to make a copy of.
 		 */
 		VerticesGroup& operator=(const VerticesGroup& src);
-        
-        /**
-         * Adds a vertex to the instance. This includes resizing the vertexData
-         * array.
-         * @param x New vertex's horizontal value.
-         * @param y New vertex's vertical value.
-         */
-        void addVertex(float x, float y);
+
+		/**
+		 * Adds a vertex to the instance. This includes resizing the vertexData
+		 * array.
+		 * @param x New vertex's horizontal value.
+		 * @param y New vertex's vertical value.
+		 */
+		void addVertex(float x, float y);
 		/**
 		 * Adds multiple vertices. Can recieve a variable number of parameters.
 		 * @param nbVertices Number of vertices to add. Each of the following
 		 * parameters must be floats. The number of parameters must equal to
 		 * twice the number of vertices to add. In the order, the floats are the
-		 * horizontal value then the vertical value of the vertex to add, 
+		 * horizontal value then the vertical value of the vertex to add,
 		 * followed by the other vertices. For example, to add 4 vertices :
 		 * addVertices(4, 1.3f, 3.4f, 1.0f, 0.05f, 4.33f, 2.66f, 19.0f, 84.1f)
 		 */
@@ -74,20 +75,20 @@ namespace RedBox {
 		 * @param vertexToDelete Pointer to the vertex to delete.
 		 */
 		void deleteVertex(Vertex* vertexToDelete);
-        /**
-         * Gets the vertices. The vertices' values are actually pointers that
-         * point to the values in verticesData.
-         * @return Dynamic array containing the vertices.
-         */
-        std::list<Vertex>& getVertices();
-        /**
-         * Checks if the vertices are from the instance.
-         * @param firstVertex First vertex to check for.
-         * @param secondVertex Second vertex to check for.
-         */
-        bool containsVertices(Vertex* firstVertex, Vertex* secondVertex);
+		/**
+		 * Gets the vertices. The vertices' values are actually pointers that
+		 * point to the values in verticesData.
+		 * @return Dynamic array containing the vertices.
+		 */
+		std::list<Vertex>& getVertices();
+		/**
+		 * Checks if the vertices are from the instance.
+		 * @param firstVertex First vertex to check for.
+		 * @param secondVertex Second vertex to check for.
+		 */
+		bool containsVertices(Vertex* firstVertex, Vertex* secondVertex);
 
-	
+
 		/**
 		 * Gets the distance between the left-most and the right-most vertex and
 		 * the distance between the lowest and the highest vertex. Using this
@@ -125,7 +126,7 @@ namespace RedBox {
 		 * position (in that order).
 		 */
 		std::pair<float, float> getPosition() const;
-		
+
 		/**
 		 * Sets the horizontal position.
 		 * @param x New horizontal position, corresponds to the vertices group's
@@ -187,10 +188,10 @@ namespace RedBox {
 		 * @param src VertexGroup to make a copy of.
 		 */
 		void copyFrom(const VerticesGroup& src);
-        /**
-         * Frees all memory allocated.
-         */
-        void clean();
+		/**
+		 * Frees all memory allocated.
+		 */
+		void clean();
 	};
 }
 

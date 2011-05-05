@@ -16,7 +16,7 @@
 namespace RedBox {
 	/**
 	 * Represents a GraphicBody object assiociated with its z coordinate.
-     * @ingroup Display
+	 * @ingroup Display
 	 */
 	class GraphicBody : public Object {
 		friend class State;
@@ -47,7 +47,7 @@ namespace RedBox {
 		/**
 		 * Renders the GraphicBody.
 		 */
-		virtual void render()=0;
+		virtual void render() = 0;
 		/**
 		 * Gets the z coordinate.
 		 */
@@ -79,7 +79,7 @@ namespace RedBox {
 		 * Set the velocity vector
 		 */
 		void setVelocity(const Vec2& velocity);
-		
+
 		/**
 		 * Set the x factor of the velocity vector.
 		 */
@@ -101,17 +101,17 @@ namespace RedBox {
 		 * Return the y factor of the velocity vector
 		 */
 		float getVelocityY();
-		
+
 		/**
 		 * Set the acceleration vector
 		 */
 		void setAcceleration(const Vec2& acceleration);
-		
+
 		/**
 		 * Set the x factor of the accelaration vector.
 		 */
 		void setAccelerationX(float xAccelaration);
-		
+
 		/**
 		 * Set the y factor of the accelaration vector.
 		 */
@@ -121,12 +121,12 @@ namespace RedBox {
 		 * Return the acceleration vector
 		 */
 		const Vec2& getAcceleration();
-		
+
 		/**
 		 * Return the x factor of the acceleration vector
 		 */
 		float getAccelerationX();
-		
+
 		/**
 		 * Return the y factor of the acceleration vector
 		 */
@@ -144,7 +144,7 @@ namespace RedBox {
 		 * top.
 		 */
 		virtual float getYPosition() const;
-		
+
 		/**
 		 * Sets the GraphicBody's horizontal position.
 		 * @param x New horizontal position (in pixels). Lower value means more
@@ -165,7 +165,7 @@ namespace RedBox {
 		 * the top.
 		 */
 		virtual void setPosition(float x, float y);
-		
+
 		/**
 		 * Return x position before any movement was applied (at the start of the update)
 		 */
@@ -174,7 +174,7 @@ namespace RedBox {
 		 * Return y position before any movement was applied (at the start of the update)
 		 */
 		float getOldYPosition();
-		
+
 		/**
 		 * Moves the GraphicBody horizontally.
 		 * @param deltaX Value to add to the GraphicBody's horizontal position (in
@@ -199,8 +199,8 @@ namespace RedBox {
 		 * moves the GraphicBody up.
 		 */
 		virtual void move(float deltaX, float deltaY);
-		
-		
+
+
 		///Set the absolute maxmimum velocity in x (Maximum velocity in both x direction)
 		void setMaxVelocityX(float xVelocity);
 		///Set the absolute maxmimum velocity in y (Maximum velocity in both y direction)
@@ -211,37 +211,37 @@ namespace RedBox {
 		float getMaxVelocityX();
 		///Return the absolute maximum velocity in y (Maximum velocity in both y direction)
 		float getMaxVelocityY();
-		
+
 		/**
 		 * return GraphicBody's width.
 		 */
 		virtual float getWidth() const = 0;
-		
+
 		/**
 		 * return GraphicBody's height.
 		 */
 		virtual float getHeight() const = 0;
-		
+
 
 		/**
-		 * Use to set the collidableSides flag. 
+		 * Use to set the collidableSides flag.
 		 * Used to set which side of a sprite should collide and which should not.
 		 * @param collidableSides Correct value are LEFT | RIGHT | TOP | BOTTOM | ALL
 		 */
-		 void setCollidableSides(RB_SIDE collidableSides);
-		
+		void setCollidableSides(Side::Enum collidableSides);
+
 		/**
-		 * Getter for the collidableSides flag. 
+		 * Getter for the collidableSides flag.
 		 * Used to get which side of a sprite should collide and which should not.
-		 * @return Possible return flag : LEFT | RIGHT | TOP | BOTTOM 
+		 * @return Possible return flag : LEFT | RIGHT | TOP | BOTTOM
 		 */
-		RB_SIDE getCollidableSides();
-		
+		Side::Enum getCollidableSides();
+
 		/**
 		 * Return true if the given sides are collidable sides.
 		 * @param sides Correct value are LEFT | RIGHT | TOP | BOTTOM | ALL
 		 */
-		bool IsCollidingSide(RB_SIDE sides);
+		bool IsCollidingSide(Side::Enum sides);
 
 		/**
 		* Return if the GraphicBody is a static one.
@@ -255,32 +255,32 @@ namespace RedBox {
 		*/
 		void setIsStatic(bool isStatic);
 
-		/** 
+		/**
 		* Return the elasticity factor of the GraphicBody.
 		* Elasticity  will determine how should it bounce in a collision. Default value is 0 (Solid object)
 		*/
 		float getElasticity();
-		/** 
+		/**
 		* Set the elasticity factor of the GraphicBody.
 		* Elasticity  will determine how should it bounce in a collision. Default value is 0 (Solid object)
 		*/
 		void setElasticity(float elasticity);
-		
+
 		/**
 		 * Use this function to collide the current GraphicBody against another one.
 		 * It will test if they are colliding, and return a pair containing collision information.
 		 * @param aGraphicBody A GraphicBody object against which you want to collide the current object.
-		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
+		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding),
 		 * the second value is a structure containing information about the collision. See CollisionData.
 		 */
-		std::pair<bool, CollisionData> collide(GraphicBody * aGraphicBody);
-		
-		
+		std::pair<bool, CollisionData> collide(GraphicBody* aGraphicBody);
+
+
 		/**
 		 * Use this function to collide the current GraphicBody against a list of other GraphicBodys.
 		 * It will test if they are colliding, and return a pair containing collision information.
 		 * @param GraphicBodys A list of GraphicBody objects against which you want to collide the current object.
-		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
+		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding),
 		 * the second value is a list of structure containing information about the collision. See CollisionData.
 		 */
 		std::pair<bool, std::list<CollisionData> > collide(std::list<GraphicBody*> GraphicBodys);
@@ -290,24 +290,26 @@ namespace RedBox {
 		 * It will test if they are colliding, and return a pair containing collision information.
 		 * @param GraphicBodys1 A list of GraphicBody objects against which you want to collide the GraphicBodys2 list of objects.
 		 * @param GraphicBodys2 A list of GraphicBody objects against which you want to collide the GraphicBodys1 list of objects.
-		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
+		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding),
 		 * the second value is a list of structure containing information about the collision. See CollisionData.
 		 */
 		static std::pair<bool, std::list<CollisionData> > collide(std::list<GraphicBody*> GraphicBodys1, std::list<GraphicBody*> GraphicBodys2);
 
-		
 		/**
 		 * Use this function to collide  two GraphicBody against each other.
 		 * It will test if they are colliding, and return a pair containing collision information.
 		 * @param object1 A GraphicBody object you want to collide to object2.
 		 * @param object2 A GraphicBody object you want to collide to object1
-		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding), 
+		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding),
 		 * the second value is a structure containing information about the collision. See CollisionData.
 		 */
-		static std::pair<bool, CollisionData> collide(GraphicBody * object1, GraphicBody * object2);
-		
+		static std::pair<bool, CollisionData> collide(GraphicBody* object1, GraphicBody* object2);
+
+		/**
+		 * Gets an AABB from the graphic body.
+		 */
 		AABB getAABB();
-		
+
 		/**
 		 * Sets the drag.
 		 * @param newDrag New drag. Deceleration applied when there is no
@@ -324,35 +326,35 @@ namespace RedBox {
 		/**
 		 * This function will solve the collision on the x axis. It will separate the objects and
 		 * return information about the collision by return value and by seting the collisionInfo structure (passed
-		 * as a parameter. 
+		 * as a parameter.
 		 * @param object1 object1 A GraphicBody object you want to collide to object2.
 		 * @param object2 A GraphicBody object you want to collide to object1
 		 * @oaram collisionData Structure containing information about the collision (see CollisionData)
 		 * @return Return true if the two objects were colliding, false in the other case.
 		 */
-		static bool solveXCollision(GraphicBody * object1, GraphicBody * object2, CollisionData * collisionInfo);
+		static bool solveXCollision(GraphicBody* object1, GraphicBody* object2, CollisionData* collisionInfo);
 		/**
 		 * This function will solve the collision on the y axis. It will separate the objects and
 		 * return information about the collision by return value and by seting the collisionInfo structure (passed
-		 * as a parameter. 
+		 * as a parameter.
 		 * @param object1 object1 A GraphicBody object you want to collide to object2.
 		 * @param object2 A GraphicBody object you want to collide to object1
 		 * @oaram collisionData Structure containing information about the collision (see CollisionData)
 		 * @return Return true if the two objects were colliding, false in the other case.
 		 */
-		static bool solveYCollision(GraphicBody * object1, GraphicBody * object2, CollisionData * collisionInfo);
+		static bool solveYCollision(GraphicBody* object1, GraphicBody* object2, CollisionData* collisionInfo);
 
-		
-		///Position vector
+
+		/// Position vector
 		Vec2 position;
-		
-		///last position vector
+
+		/// Last position vector
 		Vec2 oldPosition;
-		
-		///Velocity vector
+
+		/// Velocity vector
 		Vec2 velocity;
-		
-		///acceleration vector
+
+		/// Acceleration vector
 		Vec2 acceleration;
 
 		/**
@@ -360,24 +362,29 @@ namespace RedBox {
 		 * reaches 0.
 		 */
 		Vec2 drag;
-		
-		
-		///Maximum velocity in X
+
+		/// Maximum velocity in X
 		float maxVelocityX;
-		
-		///Maximum velocity in Y
+
+		/// Maximum velocity in Y
 		float maxVelocityY;
-		
+
 		/**
-		 *Contain "Side" flag (see Side.h). It tells which side can collide. 
-		 * A side that can't collide will let a sprite pass through.
+		 * Contain "Side" flag (see Side.h). It tells which side can collide. A
+		 * side that can't collide will let a sprite pass through.
 		 */
-		RB_SIDE collidableSides;
-	
-		///Elasticity factor of the GraphicBody, will determine how should it bounce in a collision. Default value is 0 (Solid object)
+		Side::Enum collidableSides;
+
+		/**
+		 * Elasticity factor of the GraphicBody, will determine how should it
+		 * bounce in a collision. Default value is 0 (Solid object).
+		 */
 		float elasticity;
-		
-		///This GraphicBody won't react to collision if this boolean is set to true.
+
+		/**
+		 * This GraphicBody won't react to collision if this boolean is set to
+		 * true.
+		 */
 		bool staticObject;
 		/// The z coordinate.
 		int z;

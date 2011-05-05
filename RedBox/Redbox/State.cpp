@@ -6,7 +6,7 @@
 
 using namespace RedBox;
 
-State::State() : sigly::HasSlots<>() {
+State::State() : Object(), sigly::HasSlots<>() {
 }
 
 State::~State() {

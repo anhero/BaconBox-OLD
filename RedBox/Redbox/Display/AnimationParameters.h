@@ -16,14 +16,6 @@ namespace RedBox {
 	 * @ingroup Display
 	 */
 	struct AnimationParameters {
-        /**
-         * Outputs the AnimationParameters' content.
-         * @param output The ostream in which AnimationParameters is output.
-         * @param a AnimationParameters to output in the ostream.
-         * @return Resulting ostream.
-         */
-		friend std::ostream& operator<<(std::ostream& output,
-										const AnimationParameters& a);
 		/**
 		 * Default constructor. By default, an animation will loop indefinetely.
 		 */
@@ -45,5 +37,12 @@ namespace RedBox {
 		 */
 		int nbLoops;
 	};
+	/**
+	 * Outputs the AnimationParameters' content.
+	 * @param output The ostream in which AnimationParameters is output.
+	 * @param a AnimationParameters to output in the ostream.
+	 * @return Resulting ostream.
+	 */
+	std::ostream& operator<<(std::ostream& output, const AnimationParameters& a);
 }
 #endif

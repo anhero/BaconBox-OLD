@@ -1,30 +1,43 @@
 /**
  * @file
  */
-
 #ifndef RB_SIDE_H
 #define RB_SIDE_H
 
-namespace RedBox{
+namespace RedBox {
 	/**
-	 * Container for side flag. Side flag are used to indicated on 
-	 * which side a collision occured or to tell the engine which side are collidable.
+	 * Container for side flag. Side flag are used to indicated on
+	 * which side a collision occured or to tell the engine which side are
+	 * collidable.
 	 */
-	typedef int RB_SIDE;
 	namespace Side {
-		///left RB_SIDE flag. Side flag are used to indicated on which side a collision occured or to tell the engine which side are collidable.
-		static const int LEFT = 1;
-		///right RB_SIDE flag. Side flag are used to indicated on which side a collision occured or to tell the engine which side are collidable.
-		static const int RIGHT = 2;
-		///top RB_SIDE flag. Side flag are used to indicated on which side a collision occured or to tell the engine which side are collidable.
-		static const int TOP = 4;
-		///bottom RB_SIDE flag. Side flag are used to indicated on which side a collision occured or to tell the engine which side are collidable.
-		static const int BOTTOM = 8;
-		///All RB_SIDE flag (cointain all RB_SIDE flags). Side flag are used to indicated on which side a collision occured or to tell the engine which side are collidable.
-		static const int ALL = LEFT | RIGHT | TOP | BOTTOM;
-	}   
-		
-
+		typedef unsigned int Enum;
+		/**
+		 * Left Side flag. Side flag are used to indicated on which side a
+		 * collision occured or to tell the engine which side are collidable.
+		 */
+		const Enum LEFT = 1;
+		/**
+		 * Right Side flag. Side flag are used to indicated on which side a
+		 * collision occured or to tell the engine which side are collidable.
+		 */
+		const Enum RIGHT = 2;
+		/**
+		 * Top Side flag. Side flag are used to indicated on which side a
+		 * collision occured or to tell the engine which side are collidable.
+		 */
+		const Enum TOP = 4;
+		/**
+		 * Bottom RB_SIDE flag. Side flag are used to indicated on which side a
+		 * collision occured or to tell the engine which side are collidable.
+		 */
+		const Enum BOTTOM = 8;
+		/**
+		 * All Side flags. Side flags are used to indicated on which side a
+		 * collision occured or to tell the engine which side are collidable.
+		 */
+		const Enum ALL = LEFT | RIGHT | TOP | BOTTOM;
+	}
 }
 
 #endif

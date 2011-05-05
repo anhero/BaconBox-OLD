@@ -2,9 +2,8 @@
  * @file
  * @ingroup Display
  */
-
-#ifndef __RENDER_STEP_MODE_H
-#define __RENDER_STEP_MODE_H
+#ifndef RB_RENDER_STEP_MODE_H
+#define RB_RENDER_STEP_MODE_H
 
 namespace RedBox {
 	namespace RenderStepMode {

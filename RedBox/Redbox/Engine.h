@@ -22,8 +22,8 @@ namespace RedBox {
 		static const double DEFAULT_UPDATES_PER_SECOND = 60.0;
 		static const unsigned int DEFAULT_MIN_FRAMES_PER_SECOND = 5;
 		///This function must be called by the main function. The main function arguments must be passed this function
-		static void application(int argc, char *argv[]);
-		
+		static void application(int argc, char* argv[]);
+
 		/// Signal sent when the RedBox engine is initialized.
 		static sigly::Signal2<int, int> onInitialize;
 		/**
@@ -99,8 +99,14 @@ namespace RedBox {
 		 */
 		static int getScreenHeight();
 
+		/**
+		 * Checks if the buffer was swapped since the last update.
+		 */
 		static bool isBufferSwapped();
 
+		/**
+		 * Tells the engine the buffer was swapped.
+		 */
 		static void setBufferSwapped();
 	private:
 		/// Map of states in the engine.

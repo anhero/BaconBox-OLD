@@ -7,9 +7,33 @@
 
 using namespace RedBox;
 
-Camera::Camera(): x(0), y(0), angle(0), zoomFactor(1.0f),
+Camera::Camera(): Object(), x(0), y(0), angle(0), zoomFactor(1.0f),
 backgroundColor(Color::BLACK), shakeIntensity(0.0f), shakeStart(0.0),
 shakeDuration(0.0), shakeAxes(BOTH_AXES), offsetX(0), offsetY(0) {
+}
+
+Camera::Camera(const Camera& src) : Object(), x(src.x), y(src.y),
+angle(src.angle), zoomFactor(src.zoomFactor),
+backgroundColor(src.backgroundColor), shakeIntensity(src.shakeIntensity),
+shakeStart(src.shakeStart), shakeAxes(src.shakeAxes), offsetX(src.offsetX),
+offsetY(src.offsetY) {
+}
+
+Camera& Camera::operator=(const Camera& src) {
+	Object::operator=(src);
+	if(this != &src) {
+		x = src.x;
+		y = src.y;
+		angle = src.angle;
+		zoomFactor = src.zoomFactor;
+		backgroundColor = src.backgroundColor;
+		shakeIntensity = src.shakeIntensity;
+		shakeStart = src.shakeStart;
+		shakeAxes = src.shakeAxes;
+		offsetX = src.offsetX;
+		offsetY = src.offsetY;
+	}
+	return *this;
 }
 
 void Camera::move(int x, int y) {
