@@ -93,9 +93,21 @@ void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
 	glRotatef(angle, 0, 0, 1);
 	// We floor the values to make sure not to have small lines surrounding the
 	// graphics.
-	glTranslatef(floor(position.getX()), floor(position.getY()), 0);
+	glTranslatef(-floor(position.getX()), -floor(position.getY()), 0);
 	glScalef(zoom, zoom, 1);
 
+}
+
+void OpenGLDriver::pushMatrix() {
+	glPushMatrix();
+}
+
+void OpenGLDriver::translate(const Vec2 &translation) {
+	glTranslatef(-translation.getX(), -translation.getY(), 0.0f);
+}
+
+void OpenGLDriver::popMatrix() {
+	glPopMatrix();
 }
 
 void OpenGLDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {

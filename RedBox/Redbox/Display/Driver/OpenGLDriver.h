@@ -79,6 +79,9 @@ namespace RedBox {
 		static void prepareScene(const Vec2& position, float angle, float zoom,
 								 const Color& backgroundColor);
 		
+		static void pushMatrix();
+		static void translate(const Vec2& translation);
+		static void popMatrix();
 		/**
 		 * Initialize the drawing backend an prepare the coordinate system with the given
 		 * screen size.

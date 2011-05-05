@@ -11,11 +11,12 @@
 #include "Vec2.h"
 #include "Side.h"
 #include "CollisionData.h"
+#include "Layer.h"
 #include "AABB.h"
 
 namespace RedBox {
 	/**
-	 * Represents a GraphicBody object assiociated with its z coordinate.
+	 * Represents a GraphicBody object assiociated with its layer.
 	 * @ingroup Display
 	 */
 	class GraphicBody : public Object {
@@ -49,32 +50,32 @@ namespace RedBox {
 		 */
 		virtual void render() = 0;
 		/**
-		 * Gets the z coordinate.
+		 * Gets the layer.
 		 */
-		int getZ() const;
+		const Layer& getLayer() const;
 		/**
-		 * Sets the z coordinate.
+		 * Sets the layer.
 		 */
-		void setZ(int z);
+		void setLayer(const Layer& newLayer);
 		/**
 		 * Checks if the GraphicBody needs to be deleted.
 		 * @return True if the GraphicBody needs to be deleted false if not.
 		 */
 		bool isToBeDeleted() const;
 		/**
-		 * Checks if the z has recently been changed and not yet updated.
-		 * @return True if the z has recently been changed, false if not.
+		 * Checks if the layer has recently been changed and not yet updated.
+		 * @return True if the layer has recently been changed, false if not.
 		 */
-		bool isZChanged() const;
+		bool isLayerChanged() const;
 		/**
 		 * Sets the GraphicBody to be deleted or not.
 		 * @param newToBeDeleted New value to be deleted.
 		 */
 		void setToBeDeleted(bool newToBeDeleted);
 		/**
-		 * Resets the z changed status.
+		 * Resets the layer changed status.
 		 */
-		void resetZChanged();
+		void resetLayerChanged();
 		/**
 		 * Set the velocity vector
 		 */
@@ -144,6 +145,8 @@ namespace RedBox {
 		 * top.
 		 */
 		virtual float getYPosition() const;
+
+		virtual const Vec2& getPosition() const;
 
 		/**
 		 * Sets the GraphicBody's horizontal position.
@@ -445,12 +448,12 @@ namespace RedBox {
 		 * true.
 		 */
 		bool staticObject;
-		/// The z coordinate.
-		int z;
+		/// The graphic body's layer.
+		Layer layer;
 		/// Used to know if the GraphicBody needs to be deleted.
 		bool toBeDeleted;
-		/// Used to know if the z changed.
-		bool zChanged;
+		/// Used to know if the layer changed.
+		bool layerChanged;
 		/// Used to know if the GraphicBody is in a state's list of GraphicBodys.
 		bool isInState;
 		/**

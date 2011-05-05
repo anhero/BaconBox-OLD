@@ -96,17 +96,17 @@ namespace RedBox {
 		 * @param GraphicBody GraphicBody to have its values initialized to go in
 		 * the right direction with the right force.
 		 */
-		void startParticle(Sprite*& GraphicBody);
+		void startParticle(Sprite*& graphicBody);
 		/**
 		 * Updates the particle.
 		 * @param GraphicBody Pointer to the sprite to update.
 		 */
-		void updateParticle(Sprite* GraphicBody);
+		void updateParticle(Sprite* graphicBody);
 		/**
 		 * Renders the particle.
 		 * @param GraphicBody Pointer to the sprite to render.
 		 */
-		void renderParticle(Sprite* GraphicBody);
+		void renderParticle(Sprite* graphicBody);
 		/**
 		 * Cleans and resets the SpriteEmitter.
 		 */

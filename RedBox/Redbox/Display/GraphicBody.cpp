@@ -7,7 +7,7 @@
 
 using namespace RedBox;
 GraphicBody::GraphicBody() : Object(), maxVelocityX(NO_MAX_VELOCITY),
-	maxVelocityY(NO_MAX_VELOCITY), z(0), toBeDeleted(false), zChanged(false),
+	maxVelocityY(NO_MAX_VELOCITY), layer(Layer()), toBeDeleted(false), layerChanged(false),
 	isInState(false), collidableSides(Side::ALL), elasticity(0.0),
 	staticObject(false), drag(Vec2()) {
 }
@@ -25,28 +25,28 @@ GraphicBody& GraphicBody::operator=(const GraphicBody& src) {
 	return *this;
 }
 
-int GraphicBody::getZ() const {
-	return this->z;
+const Layer& GraphicBody::getLayer() const {
+	return layer;
 }
-void GraphicBody::setZ(int z) {
-	this->z = z;
-	zChanged = true;
+void GraphicBody::setLayer(const Layer& newLayer) {
+	layer = newLayer;
+	layerChanged = true;
 }
 
 bool GraphicBody::isToBeDeleted() const {
 	return toBeDeleted;
 }
 
-bool GraphicBody::isZChanged() const {
-	return zChanged;
+bool GraphicBody::isLayerChanged() const {
+	return layerChanged;
 }
 
 void GraphicBody::setToBeDeleted(bool newToBeDeleted) {
 	toBeDeleted = newToBeDeleted;
 }
 
-void GraphicBody::resetZChanged() {
-	zChanged = false;
+void GraphicBody::resetLayerChanged() {
+	layerChanged = false;
 }
 
 void GraphicBody::copyFrom(const GraphicBody& src) {
@@ -58,9 +58,9 @@ void GraphicBody::copyFrom(const GraphicBody& src) {
 		drag = src.drag;
 		maxVelocityX = src.maxVelocityX;
 		maxVelocityY = src.maxVelocityY;
-		z = src.z;
+		layer = src.layer;
 		toBeDeleted = false;
-		zChanged = true;
+		layerChanged = true;
 		isInState = false;
 		staticObject = src.staticObject;
 	}
@@ -86,6 +86,10 @@ float GraphicBody::getXPosition() const {
 
 float GraphicBody::getYPosition() const {
 	return position.getY();
+}
+
+const Vec2& GraphicBody::getPosition() const {
+	return position;
 }
 
 void GraphicBody::setXPosition(float x) {
