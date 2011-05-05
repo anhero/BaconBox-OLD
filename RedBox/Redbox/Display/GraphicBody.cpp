@@ -518,7 +518,7 @@ float GraphicBody::getVelocityY() {
 }
 
 
-bool GraphicBody::lineXCollide(GraphicBody * aGraphicBody, float linePosition, float lowerXBoundary, float higherXBoundary){
+bool GraphicBody::horizLineCollide(GraphicBody * aGraphicBody, float linePosition, float lowerXBoundary, float higherXBoundary){
 	bool colliding = false;
 
 	float delta = aGraphicBody->getYPosition() - aGraphicBody->getOldYPosition();
@@ -532,7 +532,7 @@ bool GraphicBody::lineXCollide(GraphicBody * aGraphicBody, float linePosition, f
 			  aGraphicBody->getYPosition() + aGraphicBody->getHeight() + deltaABS);
 	
 	
-	if(rect.lineXOverlaps(linePosition, lowerXBoundary, higherXBoundary)){
+	if(rect.horizLineOverlaps(linePosition, lowerXBoundary, higherXBoundary)){
 		if(delta > 0.0f) {
 			overlap = aGraphicBody->getYPosition() + aGraphicBody->getHeight() - linePosition;
 		}
@@ -550,7 +550,7 @@ bool GraphicBody::lineXCollide(GraphicBody * aGraphicBody, float linePosition, f
 	}
 	return colliding;
 }
-bool GraphicBody::lineYCollide(GraphicBody * aGraphicBody, float linePosition, float lowerYBoundary, float higherYBoundary){
+bool GraphicBody::vertLineCollide(GraphicBody * aGraphicBody, float linePosition, float lowerYBoundary, float higherYBoundary){
 	bool colliding = false;
 	float delta = aGraphicBody->getXPosition() - aGraphicBody->getOldXPosition();
 	
@@ -563,7 +563,7 @@ bool GraphicBody::lineYCollide(GraphicBody * aGraphicBody, float linePosition, f
 			  aGraphicBody->getOldYPosition() + aGraphicBody->getHeight());
 	
 	
-	if(rect.lineYOverlaps(linePosition, lowerYBoundary, higherYBoundary)){
+	if(rect.vertLineOverlaps(linePosition, lowerYBoundary, higherYBoundary)){
 		if(delta > 0.0f) {
 			overlap = aGraphicBody->getXPosition() + aGraphicBody->getWidth() - linePosition;
 		}
@@ -581,3 +581,12 @@ bool GraphicBody::lineYCollide(GraphicBody * aGraphicBody, float linePosition, f
 	}
 	return colliding;
 }
+
+bool GraphicBody::horizLineCollide(float linePosition, float lowerXBoundary, float higherXBoundary){
+	return horizLineCollide(this, linePosition, lowerXBoundary, higherXBoundary);
+}
+
+bool GraphicBody::vertLineCollide(float linePosition, float lowerYBoundary, float higherYBoundary){
+	return vertLineCollide(this, linePosition, lowerYBoundary, higherYBoundary);
+}
+

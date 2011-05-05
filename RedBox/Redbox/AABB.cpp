@@ -55,7 +55,7 @@ bool AABB::overlaps(const Vec2& point, const AABB& rect) {
 	return overlaps(point.getX(), point.getY(), rect);
 }
 
-bool AABB::lineXOverlaps(AABB & rect, float linePosition, float lowerXBoundary, float higherXBoundary){
+bool AABB::horizLineOverlaps(AABB & rect, float linePosition, float lowerXBoundary, float higherXBoundary){
 	if (lowerXBoundary > higherXBoundary) {
 		return rect.maxY > linePosition &&
 		rect.minY < linePosition;
@@ -68,7 +68,7 @@ bool AABB::lineXOverlaps(AABB & rect, float linePosition, float lowerXBoundary, 
 	}
 }
 
-bool AABB::lineYOverlaps(AABB & rect, float linePosition, float lowerYBoundary, float higherYBoundary){
+bool AABB::vertLineOverlaps(AABB & rect, float linePosition, float lowerYBoundary, float higherYBoundary){
 	if (lowerYBoundary > higherYBoundary) {
 		return rect.maxX > linePosition &&
 		rect.minX < linePosition;
@@ -84,10 +84,10 @@ bool AABB::lineYOverlaps(AABB & rect, float linePosition, float lowerYBoundary, 
 }
 
 
-bool AABB::lineXOverlaps(float linePosition, float lowerYBoundary, float higherYBoundary){
-	return lineXOverlaps(*this, linePosition, lowerYBoundary, higherYBoundary);
+bool AABB::horizLineOverlaps(float linePosition, float lowerYBoundary, float higherYBoundary){
+	return horizLineOverlaps(*this, linePosition, lowerYBoundary, higherYBoundary);
 }
 
-bool AABB::lineYOverlaps(float linePosition, float lowerXBoundary, float higherXBoundary){
-	return lineYOverlaps(*this, linePosition, lowerXBoundary, higherXBoundary);
+bool AABB::vertLineOverlaps(float linePosition, float lowerXBoundary, float higherXBoundary){
+	return vertLineOverlaps(*this, linePosition, lowerXBoundary, higherXBoundary);
 }

@@ -306,8 +306,62 @@ namespace RedBox {
 		static std::pair<bool, CollisionData> collide(GraphicBody* object1, GraphicBody* object2);
 
 		
-		static bool lineXCollide(GraphicBody * aGraphicBody, float linePosition, float lowerXBoundary = 1.0f, float higherXBoundary = -1.0f);
-		static bool lineYCollide(GraphicBody * aGraphicBody, float linePosition, float lowerYBoundary = 1.0f, float higherYBoundary = -1.0f);
+		
+		
+		/**
+		 * Collide the current GraphicBody against the given horizontal line. The line must be a flat 
+		 * line parallel to the X axis (cutting the Y axis at position indicated by linePosition.
+		 * @param aGraphicBody The graphic body you want to collide.
+		 * @param linePosition Position of the line on the Y axis. (If the line have no boundaries, 
+		 * it will cut the Y axis at this position.
+		 * @param lowerXboundary Lower boundary of the line (a AABB with a maxX lower than 
+		 * this value won't collide with the line). If the value is higher than higherXBoundary, the line is infinite.
+		 * @param higherXboundary Higher boundary of the line (a AABB with a minX higher than 
+		 * this value won't collide with the line). If the value is lower than lowerXBoundary, the line is infinite.
+		 * @return return true if the GraphicBody was colliding
+		 */
+		bool horizLineCollide(float linePosition, float lowerXBoundary = 1.0f, float higherXBoundary = -1.0f);
+		/**
+		 * Collide the current GraphicBody against the given vertical line. The line must be a flat 
+		 * line parallel to the Y axis (cutting the X axis at position indicated by linePosition.
+		 * @param aGraphicBody The graphic body you want to collide.
+		 * @param linePosition Position of the line on the X axis. (If the line have no boundaries, 
+		 * it will cut the X axis at this position.
+		 * @param lowerYboundary Lower boundary of the line (a AABB with a maxY lower than 
+		 * this value won't collide with the line). If the value is higher than higherYBoundary, the line is infinite.
+		 * @param higherYboundary Higher boundary of the line (a AABB with a minY higher than 
+		 * this value won't collide with the line). If the value is lower than lowerYBoundary, the line is infinite.
+		 * @return return true if the GraphicBody was colliding
+		 */
+		bool vertLineCollide(float linePosition, float lowerYBoundary = 1.0f, float higherYBoundary = -1.0f);
+
+		/**
+		 * Collide the given GraphicBody against the given horizontal line. The line must be a flat 
+		 * line parallel to the X axis (cutting the Y axis at position indicated by linePosition.
+		 * @param aGraphicBody The graphic body you want to collide.
+		 * @param linePosition Position of the line on the Y axis. (If the line have no boundaries, 
+		 * it will cut the Y axis at this position.
+		 * @param lowerXboundary Lower boundary of the line (a AABB with a maxX lower than 
+		 * this value won't collide with the line). If the value is higher than higherXBoundary, the line is infinite.
+		 * @param higherXboundary Higher boundary of the line (a AABB with a minX higher than 
+		 * this value won't collide with the line). If the value is lower than lowerXBoundary, the line is infinite.
+		 * @return return true if the GraphicBody was colliding
+		 */
+		static bool horizLineCollide(GraphicBody * aGraphicBody, float linePosition, float lowerXBoundary = 1.0f, float higherXBoundary = -1.0f);
+	
+		/**
+		 * Collide the given GraphicBody against the given vertical line. The line must be a flat 
+		 * line parallel to the Y axis (cutting the X axis at position indicated by linePosition.
+		 * @param aGraphicBody The graphic body you want to collide.
+		 * @param linePosition Position of the line on the X axis. (If the line have no boundaries, 
+		 * it will cut the X axis at this position.
+		 * @param lowerYboundary Lower boundary of the line (a AABB with a maxY lower than 
+		 * this value won't collide with the line). If the value is higher than higherYBoundary, the line is infinite.
+		 * @param higherYboundary Higher boundary of the line (a AABB with a minY higher than 
+		 * this value won't collide with the line). If the value is lower than lowerYBoundary, the line is infinite.
+		 * @return return true if the GraphicBody was colliding
+		 */
+		static bool vertLineCollide(GraphicBody * aGraphicBody, float linePosition, float lowerYBoundary = 1.0f, float higherYBoundary = -1.0f);
 
 		/**
 		 * Gets an AABB from the graphic body.
