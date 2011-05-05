@@ -55,4 +55,39 @@ bool AABB::overlaps(const Vec2& point, const AABB& rect) {
 	return overlaps(point.getX(), point.getY(), rect);
 }
 
+bool AABB::lineXOverlaps(AABB & rect, float linePosition, float lowerXBoundary, float higherXBoundary){
+	if (lowerXBoundary > higherXBoundary) {
+		return rect.maxY > linePosition &&
+		rect.minY < linePosition;
+	}
+	else{
+		return rect.maxY > linePosition &&
+		rect.minY < linePosition &&
+		rect.maxX > lowerXBoundary &&
+		rect.minX < higherXBoundary;
+	}
+}
 
+bool AABB::lineYOverlaps(AABB & rect, float linePosition, float lowerYBoundary, float higherYBoundary){
+	if (lowerYBoundary > higherYBoundary) {
+		return rect.maxX > linePosition &&
+		rect.minX < linePosition;
+	}
+	else{
+		return rect.maxX > linePosition &&
+		rect.minX < linePosition &&
+		rect.maxY > lowerYBoundary &&
+		rect.minY < higherYBoundary;
+	}
+	
+	
+}
+
+
+bool AABB::lineXOverlaps(float linePosition, float lowerYBoundary, float higherYBoundary){
+	return lineXOverlaps(*this, linePosition, lowerYBoundary, higherYBoundary);
+}
+
+bool AABB::lineYOverlaps(float linePosition, float lowerXBoundary, float higherXBoundary){
+	return lineYOverlaps(*this, linePosition, lowerXBoundary, higherXBoundary);
+}

@@ -249,12 +249,12 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 		// We create AABBs of the old position with the updated horizontal
 		//position.
 		AABB obj1AABB(object1->getXPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)),
-		              object1->getXPosition() + object1->getWidth() + ((obj1Delta > 0.0f) ? (obj1Delta) : (-obj1Delta)),
+		              object1->getXPosition() + object1->getWidth() + obj1DeltaAbs,
 		              object1->getOldYPosition(),
 		              object1->getOldYPosition() + object1->getHeight());
 
 		AABB obj2AABB(object2->getXPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)),
-		              object2->getXPosition() + object2->getWidth() + ((obj2Delta > 0.0f) ? (obj2Delta) : (-obj2Delta)),
+		              object2->getXPosition() + object2->getWidth() + obj2DeltaAbs,
 		              object2->getOldYPosition(),
 		              object2->getOldYPosition() + object2->getHeight());
 
@@ -515,4 +515,69 @@ float GraphicBody::getVelocityX() {
 }
 float GraphicBody::getVelocityY() {
 	return velocity.getY();
+}
+
+
+bool GraphicBody::lineXCollide(GraphicBody * aGraphicBody, float linePosition, float lowerXBoundary, float higherXBoundary){
+	bool colliding = false;
+
+	float delta = aGraphicBody->getYPosition() - aGraphicBody->getOldYPosition();
+
+	float deltaABS = fabsf(delta);
+	float overlap = 0.0f;
+	
+	AABB rect(aGraphicBody->getOldXPosition(),
+			  aGraphicBody->getOldXPosition() + aGraphicBody->getWidth(),
+			  aGraphicBody->getYPosition() - ((delta > 0.0f) ? (delta) : (0.0f)),
+			  aGraphicBody->getYPosition() + aGraphicBody->getHeight() + deltaABS);
+	
+	
+	if(rect.lineXOverlaps(linePosition, lowerXBoundary, higherXBoundary)){
+		if(delta > 0.0f) {
+			overlap = aGraphicBody->getYPosition() + aGraphicBody->getHeight() - linePosition;
+		}
+		else if(delta < 0.0f) {
+			overlap = aGraphicBody->getYPosition() - linePosition;
+			
+		}
+		
+		if(overlap){
+			float objv = aGraphicBody->getVelocity().getY();
+			aGraphicBody->moveY(-overlap);
+			aGraphicBody->setVelocityY(-(objv * aGraphicBody->getElasticity()));
+			colliding = true;
+		}
+	}
+	return colliding;
+}
+bool GraphicBody::lineYCollide(GraphicBody * aGraphicBody, float linePosition, float lowerYBoundary, float higherYBoundary){
+	bool colliding = false;
+	float delta = aGraphicBody->getXPosition() - aGraphicBody->getOldXPosition();
+	
+	float deltaABS = fabsf(delta);
+	float overlap = 0.0f;
+	
+	AABB rect(aGraphicBody->getXPosition() - ((delta > 0.0f) ? (delta) : (0.0f)),
+			  aGraphicBody->getXPosition() + aGraphicBody->getWidth() + deltaABS,
+			  aGraphicBody->getOldYPosition(),
+			  aGraphicBody->getOldYPosition() + aGraphicBody->getHeight());
+	
+	
+	if(rect.lineYOverlaps(linePosition, lowerYBoundary, higherYBoundary)){
+		if(delta > 0.0f) {
+			overlap = aGraphicBody->getXPosition() + aGraphicBody->getWidth() - linePosition;
+		}
+		else if(delta < 0.0f) {
+			overlap = aGraphicBody->getXPosition() - linePosition;
+			
+		}
+		
+		if(overlap){
+			float objv = aGraphicBody->getVelocity().getX();
+			aGraphicBody->moveX(-overlap);
+			aGraphicBody->setVelocityX(-(objv * aGraphicBody->getElasticity()));
+			colliding = true;
+		}
+	}
+	return colliding;
 }

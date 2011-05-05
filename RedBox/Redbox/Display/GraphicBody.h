@@ -305,6 +305,10 @@ namespace RedBox {
 		 */
 		static std::pair<bool, CollisionData> collide(GraphicBody* object1, GraphicBody* object2);
 
+		
+		static bool lineXCollide(GraphicBody * aGraphicBody, float linePosition, float lowerXBoundary = 1.0f, float higherXBoundary = -1.0f);
+		static bool lineYCollide(GraphicBody * aGraphicBody, float linePosition, float lowerYBoundary = 1.0f, float higherYBoundary = -1.0f);
+
 		/**
 		 * Gets an AABB from the graphic body.
 		 */
@@ -322,6 +326,7 @@ namespace RedBox {
 		 * acceleration until velocity reaches 0.
 		 */
 		const Vec2& getDrag() const;
+		
 	private:
 		/**
 		 * This function will solve the collision on the x axis. It will separate the objects and
