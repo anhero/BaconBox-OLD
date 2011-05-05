@@ -98,6 +98,18 @@ void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
 
 }
 
+void OpenGLDriver::pushMatrix() {
+	glPushMatrix();
+}
+
+void OpenGLDriver::translate(const Vec2 &translation) {
+	glTranslatef(-translation.getX(), -translation.getY(), 0.0f);
+}
+
+void OpenGLDriver::popMatrix() {
+	glPopMatrix();
+}
+
 void OpenGLDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
 	glShadeModel(GL_FLAT);
 	

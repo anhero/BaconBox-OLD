@@ -48,6 +48,23 @@ void GraphicDriver::prepareScene(const Vec2& position, float angle, float zoom,
 
 }
 
+void GraphicDriver::pushMatrix() {
+#ifdef RB_OPENGL
+	OpenGLDriver::pushMatrix();
+#endif
+}
+
+void GraphicDriver::translate(const Vec2 &translation) {
+#ifdef RB_OPENGL
+	OpenGLDriver::translate(translation);
+#endif
+}
+
+void GraphicDriver::popMatrix() {
+#ifdef RB_OPENGL
+	OpenGLDriver::popMatrix();
+#endif
+}
 
 void GraphicDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
 #ifdef RB_OPENGL

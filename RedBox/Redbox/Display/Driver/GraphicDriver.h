@@ -80,6 +80,9 @@ namespace RedBox{
 		 */
 		static void initializeGraphicDriver(int screenWidth, int screenHeight);
 		
+		static void pushMatrix();
+		static void translate(const Vec2& translation);
+		static void popMatrix();
 		
 		/**
 		 * Load a texture into graphic memory.

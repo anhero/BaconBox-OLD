@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include "Debug.h"
+#include "GraphicDriver.h"
 
 using namespace RedBox;
 
@@ -51,11 +52,23 @@ void State::addGraphicBody(GraphicBody* aGraphicBody) {
 
 void State::render() {
 	camera.render();
-	
-	for(BodyMap::iterator i= graphicBodies.begin();
-		i != graphicBodies.end();
-		i++) {
-		i->second->render();
+	if(!graphicBodies.empty()) {
+		Layer lastLayer = graphicBodies.begin()->first;
+		GraphicDriver::pushMatrix();
+		GraphicDriver::translate(Vec2(-(1.0f - graphicBodies.begin()->second->getLayer().getScrollFactor().getX()) * camera.getXPosition(),
+									  -(1.0f - graphicBodies.begin()->second->getLayer().getScrollFactor().getY()) * camera.getYPosition()));
+		for(BodyMap::iterator i = graphicBodies.begin();
+			i != graphicBodies.end(); i++) {
+			if(lastLayer != i->first) {
+				GraphicDriver::popMatrix();
+				GraphicDriver::pushMatrix();
+				GraphicDriver::translate(Vec2(-(1.0f - i->second->getLayer().getScrollFactor().getX()) * camera.getXPosition(),
+											  -(1.0f - i->second->getLayer().getScrollFactor().getY()) * camera.getYPosition()));
+				lastLayer = i->first;
+			}
+			i->second->render();
+		}
+		GraphicDriver::popMatrix();
 	}
 }
 
