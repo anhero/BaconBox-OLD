@@ -93,7 +93,7 @@ void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
 	glRotatef(angle, 0, 0, 1);
 	// We floor the values to make sure not to have small lines surrounding the
 	// graphics.
-	glTranslatef(floor(position.getX()), floor(position.getY()), 0);
+	glTranslatef(-floor(position.getX()), -floor(position.getY()), 0);
 	glScalef(zoom, zoom, 1);
 
 }

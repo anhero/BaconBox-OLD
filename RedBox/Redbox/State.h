@@ -11,6 +11,7 @@
 #include <sigly.h>
 
 #include "Object.h"
+#include "Layer.h"
 #include "Camera.h"
 #include "GraphicBody.h"
 #include "Color.h"
@@ -85,14 +86,16 @@ namespace RedBox {
 		 */
 		virtual void onLoseFocus();
 	private:
+		/// Container type for the graphic bodies.
+		typedef std::multimap<Layer, GraphicBody*, Layer::LessCompare> BodyMap;
 		/// Temporarily stores the GraphicBody objects to be deleted.
         std::list<GraphicBody*> toDelete;
 		/// Temporarily stores the GraphicBody objects to be added.
 		std::list<GraphicBody*> toAdd;
 		/// Temporarily stores the GraphicBody objects that need to change their Z value.
-        std::list<GraphicBody*> zChange;
+		std::list<GraphicBody*> layerChange;
 		/// Stores all the GraphicBodys active GraphicBodys objects.
-        std::multimap<int, GraphicBody*> GraphicBodys;
+		BodyMap graphicBodies;
 		/// State's name, used as an identifier.
         std::string name;
 		

@@ -63,16 +63,16 @@ Sprite* SpriteEmitter::initParticle() {
 	}
 }
 
-void SpriteEmitter::startParticle(Sprite*& GraphicBody) {
-	if (!GraphicBody) {
-		GraphicBody = initParticle();
+void SpriteEmitter::startParticle(Sprite*& graphicBody) {
+	if (!graphicBody) {
+		graphicBody = initParticle();
 	}
-	if (GraphicBody) {
-		GraphicBody->setPosition(getXPosition(), getYPosition());
+	if (graphicBody) {
+		graphicBody->setPosition(getXPosition(), getYPosition());
 		Vec2 shootVec(Vec2::UP);
 		shootVec.setLength(force + Random::getRandomFloat(0.0f, forceVariance));
 		shootVec.rotate(angle + Random::getRandomFloat(-angleVariance, angleVariance));
-		GraphicBody->setVelocity(shootVec);
+		graphicBody->setVelocity(shootVec);
 	}
 }
 
@@ -92,12 +92,12 @@ void SpriteEmitter::copyFrom(const SpriteEmitter& src) {
 	}
 }
 
-void SpriteEmitter::updateParticle(Sprite* GraphicBody) {
-	assert(GraphicBody);
-	GraphicBody->update();
+void SpriteEmitter::updateParticle(Sprite* graphicBody) {
+	assert(graphicBody);
+	graphicBody->update();
 }
 
-void SpriteEmitter::renderParticle(Sprite* GraphicBody) {
-	assert(GraphicBody);
-	GraphicBody->render();
+void SpriteEmitter::renderParticle(Sprite* graphicBody) {
+	assert(graphicBody);
+	graphicBody->render();
 }

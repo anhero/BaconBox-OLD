@@ -82,7 +82,7 @@ namespace RedBox {
 				// We check if it is still alive.
 				if (i->timeLeft > 0.0) {
 					// We update the sprite.
-					i->GraphicBody->update();
+					updateParticle(i->graphicBody);
 					// We update the lifespan.
 					i->timeLeft -= Engine::getSinceLastUpdate();
 				}
@@ -92,24 +92,24 @@ namespace RedBox {
 					tmpState = i->state;
 					switch (i->state) {
 						case ParticleState::BIRTH:
-							updateAlpha(Engine::getSinceLastUpdate() * birthPhase.alphaPerSecond, i->GraphicBody);
-							updateScaling(Engine::getSinceLastUpdate() * birthPhase.scalingPerSecond, i->GraphicBody);
+							updateAlpha(Engine::getSinceLastUpdate() * birthPhase.alphaPerSecond, i->graphicBody);
+							updateScaling(Engine::getSinceLastUpdate() * birthPhase.scalingPerSecond, i->graphicBody);
 							if(i->timeLeft <= 0.0) {
 								i->state = ParticleState::LIFE;
 								i->timeLeft = lifePhase.phaseDuration + Random::getRandomDouble(0.0, lifePhase.phaseDurationVariance);
 							}
 							break;
 						case ParticleState::LIFE:
-							updateAlpha(Engine::getSinceLastUpdate() * lifePhase.alphaPerSecond, i->GraphicBody);
-							updateScaling(Engine::getSinceLastUpdate() * lifePhase.scalingPerSecond, i->GraphicBody);
+							updateAlpha(Engine::getSinceLastUpdate() * lifePhase.alphaPerSecond, i->graphicBody);
+							updateScaling(Engine::getSinceLastUpdate() * lifePhase.scalingPerSecond, i->graphicBody);
 							if(i->timeLeft <= 0.0) {
 								i->state = ParticleState::DYING;
 								i->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
 							}
 							break;
 						case ParticleState::DYING:
-							updateAlpha(Engine::getSinceLastUpdate() * dyingPhase.alphaPerSecond, i->GraphicBody);
-							updateScaling(Engine::getSinceLastUpdate() * dyingPhase.scalingPerSecond, i->GraphicBody);
+							updateAlpha(Engine::getSinceLastUpdate() * dyingPhase.alphaPerSecond, i->graphicBody);
+							updateScaling(Engine::getSinceLastUpdate() * dyingPhase.scalingPerSecond, i->graphicBody);
 							if(i->timeLeft <= 0.0) {
 								i->state = ParticleState::DEAD;
 								i->timeLeft = 0.0;
@@ -134,7 +134,7 @@ namespace RedBox {
 				for(typename std::vector<Particle>::iterator i = particles.begin();
 					i != particles.end(); i++) {
 					if(i->timeLeft > 0.0) {
-						i->GraphicBody->render();
+						renderParticle(i->graphicBody);
 					}
 				}
 			}
@@ -159,8 +159,8 @@ namespace RedBox {
 			// maximum particles.
 			if(particles.size() > 0) {
 				for(unsigned int i = particles.size() - 1; i >= newNbMaxParticles; i--) {
-					if(particles[i].GraphicBody) {
-						delete particles[i].GraphicBody;
+					if(particles[i].graphicBody) {
+						delete particles[i].graphicBody;
 					}
 				}
 			}
@@ -193,19 +193,19 @@ namespace RedBox {
 		 * @param GraphicBody GraphicBody to have its values initialized to go in
 		 * the right direction with the right force.
 		 */
-		virtual void startParticle(T*& GraphicBody)=0;
+		virtual void startParticle(T*& graphicBody)=0;
 		/**
 		 * Updates the particle. If the pointer recieved is null, the method
 		 * will not do anything.
 		 * @param GraphicBody Pointer to the GraphicBody to update.
 		 */
-		virtual void updateParticle(T* GraphicBody)=0;
+		virtual void updateParticle(T* graphicBody)=0;
 		/**
 		 * Renders the particle. If the pointer recieved is null, the method
 		 * will not do anything.
 		 * @param GraphicBody Pointer to the GraphicBody to render.
 		 */
-		virtual void renderParticle(T* GraphicBody)=0;
+		virtual void renderParticle(T* graphicBody)=0;
 	private:
 		/**
 		 * Represents a particle the sprite emitter will shoot.
@@ -214,7 +214,7 @@ namespace RedBox {
 			/**
 			 * Default constructor.
 			 */
-			Particle():GraphicBody(NULL), timeLeft(0.0), state(ParticleState::DEAD) {
+			Particle():graphicBody(NULL), timeLeft(0.0), state(ParticleState::DEAD) {
 			}
 			/**
 			 * Parameterized constructor.
@@ -222,18 +222,18 @@ namespace RedBox {
 			 * @param newLifespan Time remaining for the sprite to be shown.
 			 */
 			Particle(T* newGraphicBody, double newTimeLeft,
-					 ParticleState::Enum state):
-			GraphicBody(newGraphicBody), timeLeft(newTimeLeft),
-			state(ParticleState::DEAD) {
+					 ParticleState::Enum newState):
+			graphicBody(newGraphicBody), timeLeft(newTimeLeft),
+			state(newState) {
 			}
 			/**
 			 * Copy constructor.
 			 * @param src Particle to make a copy of.
 			 */
-			Particle(const Particle& src):GraphicBody(0),
+			Particle(const Particle& src) : graphicBody(NULL),
 			timeLeft(src.timeLeft), state(src.state) {
-				if(src.GraphicBody) {
-					GraphicBody = new T(*src.GraphicBody);
+				if(src.graphicBody) {
+					graphicBody = new T(*src.graphicBody);
 				}
 			}
 			/**
@@ -251,7 +251,7 @@ namespace RedBox {
 				return *this;
 			}
 			/// Pointer to the particle's GraphicBody object.
-			T* GraphicBody;
+			T* graphicBody;
 			/// Time left in the particle's current phase.
 			double timeLeft;
 			/// Flag used to know in which phase the particle is.
@@ -261,8 +261,8 @@ namespace RedBox {
 			 * Frees up all the memory used by the GraphicBody.
 			 */
 			void clearGraphicBody() {
-				if(GraphicBody) {
-					delete GraphicBody;
+				if(graphicBody) {
+					delete graphicBody;
 				}
 			}
 			/**
@@ -270,7 +270,7 @@ namespace RedBox {
 			 */
 			void clean() {
 				clearGraphicBody();
-				GraphicBody = NULL;
+				graphicBody = NULL;
 				timeLeft = 0.0;
 				state = ParticleState::DEAD;
 			}
@@ -282,10 +282,10 @@ namespace RedBox {
 				if(this != &src) {
 					if(&src) {
 						clearGraphicBody();
-						if(src.GraphicBody) {
-							GraphicBody = new T(*src.GraphicBody);
+						if(src.graphicBody) {
+							graphicBody = new T(*src.graphicBody);
 						} else {
-							GraphicBody = NULL;
+							graphicBody = NULL;
 						}
 						timeLeft = src.timeLeft;
 						state = src.state;
@@ -322,7 +322,7 @@ namespace RedBox {
 			typename std::vector<Particle>::iterator deadParticle = findFirstDeadParticle();
 			// If it's dead, we start it.
 			if(deadParticle != particles.end()) {
-				startParticle(deadParticle->GraphicBody);
+				startParticle(deadParticle->graphicBody);
 				deadParticle->timeLeft = birthPhase.phaseDuration + Random::getRandomDouble(0.0, birthPhase.phaseDurationVariance);
 				deadParticle->state = ParticleState::BIRTH;
 				++nbParticles;

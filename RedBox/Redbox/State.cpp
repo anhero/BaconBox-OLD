@@ -13,7 +13,7 @@ State::~State() {
 	// We delete all the GraphicBodys from the list of GraphicBodys that need
 	// to be deleted.
 	for(std::list<GraphicBody*>::iterator i = toDelete.begin();
-		i !=toDelete.end();
+		i != toDelete.end();
 		++i) {
 		if(*i) {
 			delete *i;
@@ -28,8 +28,8 @@ State::~State() {
 	}
 
 	// We delete the GraphicBodys.
-	for(std::multimap<int, GraphicBody*>::iterator i = GraphicBodys.begin();
-		i != GraphicBodys.end(); ++i) {
+	for(BodyMap::iterator i = graphicBodies.begin(); i != graphicBodies.end();
+		++i) {
 		if(i->second) {
 			delete i->second;
 		}
@@ -52,8 +52,8 @@ void State::addGraphicBody(GraphicBody* aGraphicBody) {
 void State::render() {
 	camera.render();
 	
-    for(std::multimap<int, GraphicBody*>::iterator i=GraphicBodys.begin();
-		i !=GraphicBodys.end();
+	for(BodyMap::iterator i= graphicBodies.begin();
+		i != graphicBodies.end();
 		i++) {
 		i->second->render();
 	}
@@ -67,48 +67,47 @@ void State::update() {
 	}
 	toAdd.clear();
 	// We loop through each of the GraphicBodys to update them.
-	for(std::multimap<int, GraphicBody*>::iterator i = GraphicBodys.begin();
-		i != GraphicBodys.end();
+	for(BodyMap::iterator i = graphicBodies.begin(); i != graphicBodies.end();
 		i++) {
 		// We check if the delete flag is on.
 		if(i->second->isToBeDeleted()) {
 			// We put the GraphicBody in the list of GraphicBodys to delete.
 			toDelete.push_back(i->second);
 			// We remove the GraphicBody from the multimap.
-			GraphicBodys.erase(i);
+			graphicBodies.erase(i);
 		} else {
 			// We update the GraphicBody.
 			i->second->update();
 			// We check if the z value has changed.
-			if(i->second->isZChanged()) {
-				// If so, we put it at the right z value in the multimap.
+			if(i->second->isLayerChanged()) {
+				// If so, we put it at the right layer in the multimap.
 				// To do that, we first put it in the list of GraphicBodys that
 				// have had their z changed.
-				zChange.push_back(i->second);
+				layerChange.push_back(i->second);
 				// We remove it from the multimap.
-				GraphicBodys.erase(i);
+				graphicBodies.erase(i);
 			}
 		}
 	}
 	
 	// We delete all the GraphicBodys from the list of GraphicBodys that need
 	// to be deleted.
-	for(std::list<GraphicBody*>::iterator it=toDelete.begin();
-		it !=toDelete.end();
-		it++) {
-		delete *it;
+	for(std::list<GraphicBody*>::iterator i = toDelete.begin();
+		i != toDelete.end();
+		++i) {
+		delete *i;
 	}
 	// We clear the list.
 	toDelete.clear();
 	
 	// Put the GraphicBodys which have had their z changed back into the
 	// multimap.
-	for(std::list<GraphicBody*>::iterator it=zChange.begin();
-		it !=zChange.end();
-		it++) {
-		GraphicBodys.insert(std::pair<int, GraphicBody*>((*it)->getZ(), *it));
+	for(std::list<GraphicBody*>::iterator i = layerChange.begin();
+		i != layerChange.end();
+		i++) {
+		graphicBodies.insert(std::pair<Layer, GraphicBody*>((*i)->getLayer(), *i));
 	}
-	zChange.clear();
+	layerChange.clear();
 
 	camera.update();
 }
@@ -140,8 +139,8 @@ void State::onLoseFocus() {
 void State::addGraphicBodyDirect(GraphicBody* aGraphicBody) {
 	assert(aGraphicBody);
 	if(!aGraphicBody->isInState) {
-		aGraphicBody->resetZChanged();
-		GraphicBodys.insert(std::pair<int, GraphicBody*>(aGraphicBody->getZ(),
+		aGraphicBody->resetLayerChanged();
+		graphicBodies.insert(std::pair<Layer, GraphicBody*>(aGraphicBody->getLayer(),
 													   aGraphicBody));
 		aGraphicBody->isInState = true;
 	} else {
