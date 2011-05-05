@@ -12,6 +12,7 @@
 #include "RBOpenGL.h"
 
 #include "Color.h"
+#include "Vec2.h"
 
 namespace RedBox {
 	class RenderInfo;
@@ -75,8 +76,7 @@ namespace RedBox {
 		 * @param backgroundColor Color used for the glClearColor() function
 		 * (the scene's background color). The alpha component is ignored.
 		 */
-		static void prepareScene(int xTranslation, int yTranslation,
-								 int angle, float zoom,
+		static void prepareScene(const Vec2& position, float angle, float zoom,
 								 const Color& backgroundColor);
 		
 		/**

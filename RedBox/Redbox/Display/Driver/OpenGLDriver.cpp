@@ -2,6 +2,8 @@
 
 #include <stdint.h>
 
+#include <cmath>
+
 #include <iostream>
 
 #include "RenderInfo.h"
@@ -77,8 +79,7 @@ void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,
 	glDisableClientState(GL_COLOR_ARRAY);
 }
 
-void OpenGLDriver::prepareScene(int xTranslation, int yTranslation,
-								int angle, float zoom,
+void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
 								const Color& backgroundColor) {
 	glClearColor(clampColorComponent(backgroundColor.getRed()),
 				 clampColorComponent(backgroundColor.getGreen()),
@@ -90,7 +91,9 @@ void OpenGLDriver::prepareScene(int xTranslation, int yTranslation,
 	glLoadIdentity();
 	
 	glRotatef(angle, 0, 0, 1);
-	glTranslatef(xTranslation, yTranslation, 0);
+	// We floor the values to make sure not to have small lines surrounding the
+	// graphics.
+	glTranslatef(floor(position.getX()), floor(position.getY()), 0);
 	glScalef(zoom, zoom, 1);
 
 }

@@ -1,6 +1,9 @@
 #include "GraphicDriver.h"
 
+#include "PlatformFlagger.h"
+
 #include "RenderInfo.h"
+
 #ifdef RB_OPENGL
 #include "OpenGLDriver.h"
 #endif
@@ -36,13 +39,11 @@ void GraphicDriver::drawShapeWithColor(std::vector<float>& vertices,
 #endif
 }
 
-void GraphicDriver::prepareScene(int xTranslation, int yTranslation,
-								 int angle, float zoom,
-								 const Color& backgroundColor){
+void GraphicDriver::prepareScene(const Vec2& position, float angle, float zoom,
+								 const Color& backgroundColor) {
 
 #ifdef RB_OPENGL
-	OpenGLDriver::prepareScene(xTranslation, yTranslation, angle, zoom,
-							   backgroundColor);
+	OpenGLDriver::prepareScene(position, angle, zoom, backgroundColor);
 #endif
 
 }

@@ -2,11 +2,12 @@
  * @file
  * @ingroup Display
  */
-#ifndef RB_Camera_H
-#define RB_Camera_H
+#ifndef RB_CAMERA_H
+#define RB_CAMERA_H
 
 #include "Object.h"
 #include "Color.h"
+#include "Vec2.h"
 
 namespace RedBox{
 	/** 
@@ -37,41 +38,61 @@ namespace RedBox{
 		Camera& operator=(const Camera& src);
 		
 		/**
-		 * Move the camera
-		 * @param x Number of pixels to add to the current x 
-		 * position of the camera.
-		 * @param y Number of pixels to add to the current y 
-		 * position of the camera.
+		 * Moves the camera.
+		 * @param x Value to move the camera on the x axis.
+		 * @param y Value to move the camera on the y axis.
 		 */
-		void move(int x, int y);
+		void move(float x, float y);
+
+		/**
+		 * Move the camera.
+		 * @param moveVector 2D vector containing the number of pixels to move
+		 * the camera.
+		 */
+		void move(const Vec2& moveVector);
+
+		/**
+		 * Move the camera horizontally.
+		 * @param x Number of pixels to move the camera horizontally.
+		 */
+		void moveX(float x);
+
+		/**
+		 * Move the camera vertically.
+		 * @param x Number of pixels to move the camera vertically.
+		 */
+		void moveY(float y);
 		
 		/**
 		 * Set the position of the camera.
 		 * @param x Set the x position of the camera.
 		 * @param y Set the y position of the camera.
 		 */
-		void setPosition(int x, int y);
+		void setPosition(float x, float y);
+		void setPosition(const Vec2& newPosition);
 		
-		///Return the position of the camera on the x axis
-		int getX();
+		/// Return the camera's position on the x axis
+		float getXPosition() const;
 		
-		///Return the position of the camera on the y axis
-		int getY();
+		/// Return the camera's position on the y axis
+		float getYPosition() const;
+
+		const Vec2& getPosition() const;
 		
-		///Reset the angle of the camera at the default value: 0
+		/// Reset the angle of the camera at the default value: 0
 		void resetAngle();
 		
-		///Set the angle of the camera to the given degree angle.
-		void setAngle(int angle);
+		/// Set the angle of the camera to the given degree angle.
+		void setAngle(float newAngle);
 		
-		///Return the angle value of the camera in degree.
-		float getAngle();
+		/// Return the angle value of the camera in degree.
+		float getAngle() const;
 		
-		///Rotate the camera to the left with the given degree value.
-		void rotateLeft(int angle);
+		/// Rotate the camera counter-clockwise with the given degree value.
+		void rotateLeft(float rotationAngle);
 		
-		///Rotate the camera to the right with the given degree value.
-		void rotateRight(int angle);
+		/// Rotate the camera cockwise with the given degree value.
+		void rotateRight(float rotationAngle);
 
 		/**
 		 * Sets the camera's background color.
@@ -98,8 +119,15 @@ namespace RedBox{
 		 * zoom in.
 		 */
 		void setZoom(float factor);
+
+		/**
+		 * Gets the zoom factor.
+		 * @return Camera's zoom factor. less than 1 is zoomed out, more than
+		 * 1 is zoomed in.
+		 */
+		float getZoom() const;
 		
-		///Set the zoom factor to the default value: 1.
+		/// Set the zoom factor to the default value: 1.
 		void resetZoom();
 		
 		/**
@@ -125,19 +153,20 @@ namespace RedBox{
 		 */
 		void update();
 
-		///Prepare the scene according to the position, angle and zoom factor of the camera.
+		/// Prepare the scene according to the position, angle and zoom factor of the camera.
 		void render();
+
+		Vec2 screenToWorld(const Vec2& positionOnScreen);
+
+		Vec2 worldToScreen(const Vec2& positionInWorld);
 	private:
-		///Position on the x axis.
-		int x;
+		/// Camera's position.
+		Vec2 position;
 		
-		///Position on the y axis.
-		int y;
+		/// Angle of the camera.
+		float angle;
 		
-		///Angle of the camera.
-		int angle;
-		
-		///Zoom factor (1 does nothing, less than 1 zoom out, more than 1 zoom in)
+		/// Zoom factor (1 does nothing, less than 1 zoom out, more than 1 zoom in)
 		float zoomFactor;
 
 		/// Background color for the camera.
@@ -154,10 +183,8 @@ namespace RedBox{
 		double shakeDuration;
 		/// Axis on which the shaking takes place.
 		ShakeAxes shakeAxes;
-		/// Horizontal offset used when the camera is shaking.
-		int offsetX;
-		/// Vertical offset used when the camera is shaking.
-		int offsetY;
+		/// Offset used when the camera is shaking.
+		Vec2 offset;
 	};
 }
 

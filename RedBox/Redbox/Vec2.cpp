@@ -66,6 +66,23 @@ void Vec2::setY(float newY) {
 		coordsVal.y = newY;
 	}
 }
+
+void Vec2::addToX(float xToAdd) {
+	if(isPtr) {
+		*(coordsPtr.x) += xToAdd;
+	} else {
+		coordsVal.x += xToAdd;
+	}
+}
+
+void Vec2::addToY(float yToAdd) {
+	if(isPtr) {
+		*(coordsPtr.y) += yToAdd;
+	} else {
+		coordsVal.y = yToAdd;
+	}
+}
+
 bool Vec2::getIsPtr() const {
 	return isPtr;
 }
