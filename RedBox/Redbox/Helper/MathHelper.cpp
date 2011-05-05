@@ -5,6 +5,9 @@
 
 using namespace RedBox;
 
+const float MathHelper::PI = 3.141592f;
+const float MathHelper::DEGREE_TO_RADIAN = 0.017453f;
+
 int MathHelper::nextPowerOf2(int number){
 	if (number == 0)
 		return 1;

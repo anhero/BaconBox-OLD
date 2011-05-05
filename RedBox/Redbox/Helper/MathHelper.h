@@ -30,7 +30,18 @@ namespace RedBox {
 		 */
 		static float modFloat(float dividend, float divisor);
 
+		/**
+		 * Convert the given number in degrees to radian.
+		 */
 		static float degreesToRadians(float degrees);
+		
+		/// Constant for PI.
+		static const float PI;
+		
+	private:
+		/// Constant used for converting degrees to radians.
+		static const float DEGREE_TO_RADIAN;
+		
 	};
 }
 #endif
