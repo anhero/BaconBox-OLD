@@ -24,7 +24,7 @@ namespace RedBox {
 		/**
 		 * Destructor.
 		 */
-		IOSTimeHelper();
+		~IOSTimeHelper();
 		/**
 		 * Refreshes the time variable.
 		 */
