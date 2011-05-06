@@ -43,8 +43,8 @@ namespace RedBox {
 		 * @param overwrite When set to true, it will delete any existing texture at 
 		 * the specified key. (False (default) will print an error if the key is occupied).
 		 */
-		static TextureInfo* loadTexture(const std::string& filePath,
-										const std::string& key,
+		static TextureInfo* loadTexture(const std::string& key,
+										const std::string& filePath,
 										bool overwrite = false);
 		/**
 		 * Gets the information about the asked texture. Uses the texture's key
@@ -67,14 +67,14 @@ namespace RedBox {
 		static MusicInfo* getMusic(const std::string& key);
 		/**
 		 * Loads a sound effect.
-		 * @param name Name to give to the sound effect.
+		 * @param key Name to give to the sound effect.
 		 * @param info Information needed to load the sound effect. Audio engine
 		 * dependant.
 		 * @return Pointer to the loaded sound effect. Returns NULL if the
 		 * loading failed.
 		 */
-		static SoundInfo* loadSound(const std::string& filePath,
-									const std::string& key,
+		static SoundInfo* loadSound(const std::string& key,
+									const std::string& filePath,
 									bool overwrite = false);
 		/**
 		 * Loads a sound effect.
@@ -86,12 +86,12 @@ namespace RedBox {
 							  bool overwrite = false);
 		/**
 		 * Loads a background music.
-		 * @param name Name to give to the background music.
+		 * @param key Name to give to the background music.
 		 * @param info Information needed to load the background music. Audio
 		 * Engine dependant.
 		 */
-		static MusicInfo* loadMusic(const std::string& filePath,
-									const std::string& key,
+		static MusicInfo* loadMusic(const std::string& key,
+									const std::string& filePath,
 									bool overwrite = false);
 		/**
 		 * Loads a background music.
@@ -103,33 +103,33 @@ namespace RedBox {
 									bool overwrite = true);
 		/**
 		 * Removes and unloads a sound effect.
-		 * @param name Name of the sound effect to unload.
+		 * @param key Name of the sound effect to unload.
 		 */
-		static void removeSound(const std::string& name);
+		static void removeSound(const std::string& key);
 		/**
 		 * Removes and unloads a background music.
-		 * @param name Name of the background music to unload.
+		 * @param key Name of the background music to unload.
 		 */
-		static void removeMusic(const std::string& name);
+		static void removeMusic(const std::string& key);
 		
 		/**
 		 * Load the fond at the specified path and put it in the fonts' map.
-		 * @param name Name of the font, it will be the key of the fonts' map.
+		 * @param key Name of the font, it will be the key of the fonts' map.
 		 * @param path Path of the font.
 		 */
-		static Font* loadFont(const std::string & name, const std::string & path, bool overwrite = false);
+		static Font* loadFont(const std::string & key, const std::string & path, bool overwrite = false);
 		
 		/**
 		 * Return a pointer to the font specified by the given name. 
-		 * @param name Name of the font.
+		 * @param key Name of the font.
 		 * @return Return a pointer to the specified font or NULL if no font is
 		 * found.
 		 */
-		static Font* getFont(const std::string & name);
+		static Font* getFont(const std::string & key);
 		/**
 		 * Remove the specified font from the fonts' map.
 		 */
-		static void removeFont(const std::string & name);
+		static void removeFont(const std::string & key);
 		
 		/**
 		 * Unloads everything in the ResourceManager.
