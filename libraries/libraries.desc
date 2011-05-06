@@ -5,7 +5,9 @@ libraries=( ${libraries[@]-} 'zlib' )
 libraries=( ${libraries[@]-} 'freetype' )
 libraries=( ${libraries[@]-} 'libpng' )
 #libraries=( ${libraries[@]-} 'libvorbis-tremor' )
-libraries=( ${libraries[@]-} 'sdl' )
-libraries=( ${libraries[@]-} 'sdl_mixer' )
+if [ ${libs_target-} != "ios" ]; then
+	libraries=( ${libraries[@]-} 'sdl' )
+	libraries=( ${libraries[@]-} 'sdl_mixer' )
+fi
 libraries=( ${libraries[@]-} 'sigly' )
 
