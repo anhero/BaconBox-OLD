@@ -2,7 +2,7 @@
 
 #include "CursorButton.h"
 
-#include "Debug.h"
+#include "Console.h"
 
 using namespace RedBox;
 
@@ -18,7 +18,7 @@ const CursorState& PointerState::getCursorState(unsigned int index) const {
 	// cursor state.
 	if(index >= cursors.size()) {
 		index = cursors.size() - 1;
-		RB_ECHO("Tried to get a cursor's state that does not exist, returning instead the cursor state with the highest index.");
+		Console::Print("Tried to get a cursor's state that does not exist, returning instead the cursor state with the highest index.");
 	}
 
 	return cursors[index];

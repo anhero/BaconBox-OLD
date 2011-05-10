@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include "Debug.h"
+#include "Console.h"
 
 #include "Random.h"
 
@@ -58,7 +58,7 @@ Sprite* SpriteEmitter::initParticle() {
 	if(defaultSprite) {
 		return new Sprite(*defaultSprite);
 	} else {
-		RB_ECHO("Initializing a particle without a default sprite.");
+		Console::Print("Initializing a particle without a default sprite.");
 		return NULL;
 	}
 }

@@ -1,6 +1,6 @@
 #include "GraphicString.h"
 #include "TextureInfo.h"
-#include "Debug.h"
+#include "Console.h"
 #include "UTFConvert.h"
 
 using namespace RedBox;
@@ -30,7 +30,8 @@ void GraphicString::setText(const RB_String32 & text){
 		needReset = true;
 	}
 	else{
-		RB_ECHO("Trying to set text with no font loaded.");
+		Console::Print("Trying to set text with no font loaded.");
+		Console::PrintTrace();
 	}
 }
 

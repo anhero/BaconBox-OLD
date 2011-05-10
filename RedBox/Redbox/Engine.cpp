@@ -10,7 +10,7 @@
 #include "MusicEngine.h"
 #include "InputManager.h"
 #include "TimerManager.h"
-#include "Debug.h"
+#include "Console.h"
 #include <libgen.h>
 using namespace RedBox;
 
@@ -64,7 +64,7 @@ State* Engine::playState(const std::string& name) {
 	if(it != states.end()) {
 		currentState = it->second;
 	} else {
-		RB_ECHO("State \"" << name <<
+		Console::Print("State \"" + name +
 		        "\" doesn't exist so it cannot be played.");
 	}
 

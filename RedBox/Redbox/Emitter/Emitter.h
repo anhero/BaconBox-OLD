@@ -12,8 +12,6 @@
 #include "Engine.h"
 #include "Random.h"
 
-#include "Debug.h"
-
 namespace RedBox {
 	/**
 	 * Represents an emitter. Emitters for specific objects inherit from this

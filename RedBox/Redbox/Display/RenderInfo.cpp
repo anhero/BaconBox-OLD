@@ -5,7 +5,7 @@
 
 #include "TextureInfo.h"
 #include "VerticesGroup.h"
-#include "Debug.h"
+#include "Console.h"
 #include "MathHelper.h"
 
 using namespace RedBox;
@@ -87,23 +87,28 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 					}
 				}
 			} else {
-				RB_ECHO("Attempted to construct a RenderInfo with a number of frames too high: " << nbFrames);
+				Console::Print("Attempted to construct a RenderInfo with a number of frames too high: " + nbFrames);
+				Console::PrintTrace();
 			}
 		}
 	} else {
 		// On affiche les erreurs.
-		RB_ECHO("Attempted to load texture coordinates with incorrect parameters: ");
+		Console::Print("Attempted to load texture coordinates with incorrect parameters: ");
+		Console::PrintTrace();
 
 		if(!newTexInfo) {
-			RB_ECHO("    - Texture information pointer is invalid: " << texInfo);
+			Console::Print("    - Texture information pointer is invalid: " + Console::ToString(texInfo));
+			Console::PrintTrace();
 		}
 
 		if(!vertices) {
-			RB_ECHO("    - VerticesGroup pointer given is invalid : " << vertices);
+			Console::Print("    - VerticesGroup pointer given is invalid : " + Console::ToString(vertices));
+			Console::PrintTrace();
 		}
 
 		if(nbFrames == 0) {
-			RB_ECHO("    - Number of frames must be of at least 1.");
+			Console::Print("    - Number of frames must be of at least 1.");
+			Console::PrintTrace();
 		}
 	}
 }
@@ -115,7 +120,8 @@ void RenderInfo::addAnimation(const std::string& name,
 	// We add the animation to the map and we check if it was successfully
 	// added.
 	if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(frames, timePerFrame, nbLoops))).second)) {
-		RB_ECHO("Failed to add the animation named : " << name);
+		Console::Print("Failed to add the animation named : " + name);
+		Console::PrintTrace();
 	}
 }
 
@@ -143,14 +149,16 @@ void RenderInfo::addAnimation(const std::string& name,
 
 		va_end(frames);
 	} else {
-		RB_ECHO("Failed to add the animation named : " << name);
+		Console::Print("Failed to add the animation named : " + name);
+		Console::PrintTrace();
 	}
 }
 
 void RenderInfo::addAnimation(const std::string& name,
                               const AnimationParameters& newAnimation) {
 	if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, newAnimation)).second)) {
-		RB_ECHO("Failed to add the animation named : " << name);
+		Console::Print("Failed to add the animation named : " + name);
+		Console::PrintTrace();
 	}
 }
 
@@ -184,7 +192,9 @@ AnimationParameters* RenderInfo::getAnimationParameters(const std::string& name)
 	if(animationExists(name)) {
 		return &(animations[name]);
 	} else {
-		RB_ECHO("Tried to get a non-existing animation: " << name);
+		Console::Print("Tried to get a non-existing animation: " + name);
+		Console::PrintTrace();
+
 		return NULL;
 	}
 }
@@ -193,7 +203,8 @@ const AnimationParameters* RenderInfo::getAnimationParameters(const std::string&
 	if(animationExists(name)) {
 		return &(animations.find(name)->second);
 	} else {
-		RB_ECHO("Tried to get a non-existing animation: " << name);
+		Console::Print("Tried to get a non-existing animation: " + name);
+		Console::PrintTrace();
 		return NULL;
 	}
 }
@@ -203,7 +214,8 @@ void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
 	        newCurrentFrame <= getAnimationParameters(getCurrentAnimation())->frames.size()) {
 		currentFrame = newCurrentFrame;
 	} else {
-		RB_ECHO("Tried to set the current frame that is too high: " << newCurrentFrame);
+		Console::Print("Tried to set the current frame that is too high: " + newCurrentFrame);
+		Console::PrintTrace();
 	}
 }
 
@@ -260,7 +272,8 @@ void RenderInfo::setDefaultFrame(unsigned int newDefaultFrame) {
 	if(newDefaultFrame < texCoords.size()) {
 		defaultFrame = newDefaultFrame;
 	} else {
-		RB_ECHO("Tried to set the default frame to a value too high: " << newDefaultFrame);
+		Console::Print("Tried to set the default frame to a value too high: " + newDefaultFrame);
+		Console::PrintTrace();
 		defaultFrame = (texCoords.size()) ? (texCoords.size() - 1) : (0);
 	}
 }

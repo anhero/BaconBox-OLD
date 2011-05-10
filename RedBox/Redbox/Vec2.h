@@ -9,7 +9,6 @@
 #include <cmath>
 #include <iostream>
 
-#include "Debug.h"
 #include "Object.h"
 
 namespace RedBox {

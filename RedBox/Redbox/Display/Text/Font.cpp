@@ -1,5 +1,4 @@
 #include "Font.h"
-#include "Debug.h"
 #include "ResourceManager.h"
 #include "MathHelper.h"
 #include <sstream>

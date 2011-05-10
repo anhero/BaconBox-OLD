@@ -1,6 +1,6 @@
 #include "VerticesGroup.h"
 
-#include "Debug.h"
+#include "Console.h"
 
 #include "PlatformFlagger.h"
 
@@ -94,7 +94,7 @@ bool VerticesGroup::containsVertices(Vertex* firstVertex, Vertex* secondVertex) 
 
 std::pair<float, float> VerticesGroup::getWidthHeight() const {
 	if(vertices.size() == 0) {
-		RB_ECHO("Tried to get the width and the height of an empty VerticesGroup.");
+		Console::Print("Tried to get the width and the height of an empty VerticesGroup.");
 		return std::pair<float, float>(0.0f, 0.0f);
 	}
 
@@ -126,7 +126,7 @@ std::pair<float, float> VerticesGroup::getWidthHeight() const {
 
 float VerticesGroup::getWidth() const {
 	if(vertices.empty()) {
-		RB_ECHO("Tried to get the width of an empty VerticesGroup.");
+		Console::Print("Tried to get the width of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -149,7 +149,7 @@ float VerticesGroup::getWidth() const {
 
 float VerticesGroup::getHeight() const {
 	if(vertices.empty()) {
-		RB_ECHO("Tried to get the height of an empty VerticesGroup.");
+		Console::Print("Tried to get the height of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -172,7 +172,7 @@ float VerticesGroup::getHeight() const {
 
 float VerticesGroup::getXPosition() const {
 	if(vertices.empty()) {
-		RB_ECHO("Tried to get the horizontal position of an empty VerticesGroup.");
+		Console::Print("Tried to get the horizontal position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -191,7 +191,7 @@ float VerticesGroup::getXPosition() const {
 
 float VerticesGroup::getYPosition() const {
 	if(vertices.empty()) {
-		RB_ECHO("Tried to get the vertical position of an empty VerticesGroup.");
+		Console::Print("Tried to get the vertical position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -210,7 +210,7 @@ float VerticesGroup::getYPosition() const {
 
 std::pair<float, float> VerticesGroup::getPosition() const {
 	if(vertices.empty()) {
-		RB_ECHO("Tried to get the position of an empty VerticesGroup.");
+		Console::Print("Tried to get the position of an empty VerticesGroup.");
 		return std::pair<float, float>(0.0f, 0.0f);
 	}
 
@@ -269,7 +269,7 @@ void VerticesGroup::moveY(float deltaY) {
 
 void VerticesGroup::move(float deltaX, float deltaY) {
 	if(vertices.empty()) {
-		RB_ECHO("Tried to move an empty vertices group.");
+		Console::Print("Tried to move an empty vertices group.");
 	}
 
 	// We create the vector we'll add to every vertices.

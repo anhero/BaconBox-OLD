@@ -1,5 +1,5 @@
 #include "FontImplementation.h"
-#include "Debug.h"
+#include "Console.h"
 #include "ResourceManager.h"
 #include "MathHelper.h"
 #include "Parser.h"
@@ -14,7 +14,7 @@ FT_Library FontImplementation::fontRenderer = NULL;
 
 void FontImplementation::initializeFontRenderer(){
 	if(FT_Init_FreeType( &fontRenderer )){
-		RB_ECHO("Can not load freetype");
+		Console::Print("Can not load freetype");
 	}
 }
 
@@ -31,11 +31,11 @@ FontImplementation::FontImplementation(const std::string& name, const std::strin
 	int error = FT_New_Face( fontRenderer, path.c_str(), 0, &font);
 	if ( error == FT_Err_Unknown_File_Format )
 	{
-		RB_ECHO("Can't load font, unknow font file format");
+		Console::Print("Can't load font, unknow font file format");
 	}
 	else if ( error )
 	{
-		RB_ECHO("Can't load font, unknow error");
+		Console::Print("Can't load font, unknow error");
 	}
 	
 	setPixelSize(30);
@@ -64,12 +64,12 @@ Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
 		
 		//we load the glyph  
 		if(FT_Load_Glyph( font, glyph_index, FT_LOAD_RENDER )){
-			RB_ECHO("Can't load glyph");
+			Console::Print("Can't load glyph");
 		}
 		
 		FT_Glyph currentGlyph;
 		if(FT_Get_Glyph( font->glyph,  &currentGlyph)){
-			RB_ECHO("Can't extract glyph from freetype glyph slot");
+			Console::Print("Can't extract glyph from freetype glyph slot");
 		}
 		
 		FT_BitmapGlyph  currentBitmapGlyph = (FT_BitmapGlyph)currentGlyph;
@@ -120,7 +120,7 @@ Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
 
 void FontImplementation::setPixelSize(int pixelSize){
 	if(FT_Set_Pixel_Sizes(font, 0, pixelSize)){
-		RB_ECHO("Can't set pixel size");
+		Console::Print("Can't set pixel size");
 	}
 	size = Parser::intToString(pixelSize) + "px";
 	
@@ -129,7 +129,7 @@ void FontImplementation::setPixelSize(int pixelSize){
 
 void FontImplementation::setPointSize(int pointSize, int dpi){
 	if(FT_Set_Char_Size(font, 0, pointSize*64, dpi, dpi)){
-		RB_ECHO("Can't set point size");
+		Console::Print("Can't set point size");
 	}
 	size = Parser::intToString(pointSize) + "pt";
 }

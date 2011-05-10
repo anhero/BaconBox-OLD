@@ -5,7 +5,7 @@
 #include "TextureInfo.h"
 #include "RenderStep.h"
 #include "ResourceManager.h"
-#include "Debug.h"
+#include "Console.h"
 #include "VerticesGroup.h"
 
 using namespace RedBox;
@@ -26,7 +26,7 @@ Sprite::Sprite(const std::string& imageKey): GraphicBody()
 
 		);
 	} else {
-		RB_ECHO("Tried to construct a sprite from an invalid image key: " << imageKey);
+		Console::Print("Tried to construct a sprite from an invalid image key: " + imageKey);
 	}
 }
 
@@ -40,7 +40,7 @@ Sprite::Sprite(TextureInfo* texInfo): GraphicBody()
 				  1
 		);
 	} else {
-		RB_ECHO("Tried to construct a sprite from an invalid texture information: " << texInfo);
+		Console::Print("Tried to construct a sprite from an invalid texture information: " + Console::ToString(texInfo));
 	}
 }
 
@@ -157,7 +157,7 @@ RenderStep* Sprite::addRenderStep(RenderStep* newRenderStep) {
 	if(newRenderStep) {
 		renderSteps.push_back(newRenderStep);
 	} else {
-		RB_ECHO("Tried to add an NULL RenderStep to a Sprite.");
+		Console::Print("Tried to add an NULL RenderStep to a Sprite.");
 	}
 	return newRenderStep;
 }
@@ -177,10 +177,10 @@ void Sprite::removeRenderStep(RenderStep* renderStep) {
 		}
 		// If it wasn't found, we warn the user.
 		if(notFound) {
-			RB_ECHO("Tried to remove a RenderStep from a Sprite which does not contain it: " << renderStep);
+			Console::Print("Tried to remove a RenderStep from a Sprite which does not contain it: " + Console::ToString(renderStep));
 		}
 	} else {
-		RB_ECHO("Tried to remove a NULL RenderStep pointer from a sprite.");
+		Console::Print("Tried to remove a NULL RenderStep pointer from a sprite.");
 	}
 }
 
@@ -239,7 +239,7 @@ void Sprite::construct(TextureInfo* texInfo,
 													   nbFrames);
 		renderSteps.push_back(initialRenderStep);
 	} else {
-		RB_ECHO("Failed to load a sprite with the following texture information: " << texInfo);
+		Console::Print("Failed to load a sprite with the following texture information: " + Console::ToString(texInfo));
 	}
 }
 
@@ -314,7 +314,7 @@ void Sprite::addAnimation(const std::string& name,
 		
 		getMainRenderInfo()->addAnimation(name, framesVector, timePerFrame, nbLoops);
 	} else {
-		RB_ECHO("Failed to add the animation named : " << name);
+		Console::Print("Failed to add the animation named : " + name);
 	}
 }
 

@@ -8,7 +8,7 @@
 #include "ResourceManager.h"
 #include "TimeHelper.h"
 #include "AnimationParameters.h"
-#include "Debug.h"
+#include "Console.h"
 #include "Vertex.h"
 #include "VerticesGroup.h"
 #include "Engine.h"
@@ -156,7 +156,7 @@ void RenderStep::playAnimation(const std::string& name) {
 		animCounter = 0.0;
 		isPaused = false;
 	} else {
-		RB_ECHO("Tried play an animation which does not exist for the concerned RenderStep: " << name);
+		Console::Print("Tried play an animation which does not exist for the concerned RenderStep: " + name);
 	}
 }
 

@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include "Debug.h"
+#include "Console.h"
 #include "GraphicDriver.h"
 
 using namespace RedBox;
@@ -42,10 +42,10 @@ void State::addGraphicBody(GraphicBody* aGraphicBody) {
 		if(!aGraphicBody->isInState) {
 			toAdd.push_back(aGraphicBody);
 		} else {
-			RB_ECHO("Tried to add a GraphicBody that is already in a state.");
+			Console::Print("Tried to add a GraphicBody that is already in a state.");
 		}
 	} else {
-		RB_ECHO("Tried to add an invalid GraphicBody (" << aGraphicBody << ") to the state.");
+		Console::Print("Tried to add an invalid GraphicBody (" + Console::ToString(aGraphicBody) + ") to the state.");
 	}
 }
 
@@ -157,6 +157,6 @@ void State::addGraphicBodyDirect(GraphicBody* aGraphicBody) {
 													   aGraphicBody));
 		aGraphicBody->isInState = true;
 	} else {
-		RB_ECHO("Tried to add a GraphicBody that is already in a state.");
+		Console::Print("Tried to add a GraphicBody that is already in a state.");
 	}
 }

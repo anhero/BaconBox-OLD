@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "Debug.h"
+#include "Console.h"
 
 using namespace RedBox;
 
@@ -86,7 +86,7 @@ void PixMap::insertSubPixMap(PixMap* subPixMap, unsigned int xOffset,
 	if(subPixMap->getColorFormat() == colorFormat) {
 		insertSubPixMap(subPixMap->getBuffer(), subPixMap->getWidth(), subPixMap->getHeight(), xOffset, yOffset);
 	} else {
-		RB_ECHO("Can't insert sub pixmap into current pixmap, because the color format isn't compatible.");
+		Console::Print("Can't insert sub pixmap into current pixmap, because the color format isn't compatible.");
 	}
 }
 
