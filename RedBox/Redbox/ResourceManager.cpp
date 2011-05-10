@@ -375,10 +375,10 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath){
 	if (PNG_file == NULL)
     {
 		RB_ECHO("Unable to open this png file : " << filePath);
-        return GL_FALSE;
+        return false;
     }
 	
-	GLubyte PNG_header[PNG_HEADER_SIZE];
+	uint8_t PNG_header[PNG_HEADER_SIZE];
     
     fread(PNG_header, 1, PNG_HEADER_SIZE, PNG_file);
     if (png_sig_cmp(PNG_header, 0, PNG_HEADER_SIZE) != 0)
