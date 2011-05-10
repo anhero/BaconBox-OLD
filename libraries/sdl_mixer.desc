@@ -11,3 +11,12 @@ config_cmdline="--with-sdl-prefix=${libs_builddir}"
 
 load_base http.fetch
 load_base configuremakemake.build
+
+copy_function build __build
+
+function build() {
+	SDL_CONFIG="${libs_builddir}/bin/sdl-config"
+	SDLLIBS="-Wl,-Bstatic $(${SDL_CONFIG} --static-libs) -Wl,-Bdynamic"
+
+	__build
+}
