@@ -1,3 +1,6 @@
+#include "PlatformFlagger.h"
+#ifdef RB_OPENGL
+
 #include "OpenGLDriver.h"
 
 #include <stdint.h>
@@ -182,3 +185,4 @@ float OpenGLDriver::clampColorComponent(unsigned int component) {
 	return static_cast<float>(component) / static_cast<float>(Color::MAX_COMPONENT_VALUE);
 }
 
+#endif //RB_OPENGL

@@ -2,6 +2,10 @@
  * @file
  * @ingroup GraphicDrivers
  */
+
+
+#include "PlatformFlagger.h"
+#ifdef RB_OPENGL
 #ifndef RB_OPENGLDRIVER
 #define RB_OPENGLDRIVER
 
@@ -103,4 +107,4 @@ namespace RedBox {
 }
 
 #endif
-
+#endif //RB_OPENGL

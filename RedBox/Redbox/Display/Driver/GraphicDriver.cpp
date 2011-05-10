@@ -6,6 +6,8 @@
 
 #ifdef RB_OPENGL
 #include "OpenGLDriver.h"
+#else
+#include "NullGraphicsDriver.h"
 #endif
 
 using namespace RedBox;
