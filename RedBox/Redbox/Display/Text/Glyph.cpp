@@ -1,4 +1,5 @@
 #include "Glyph.h"
+#include "Console.h"
 
 using namespace RedBox;
 
@@ -20,7 +21,7 @@ int Glyph::getHoriBearingX(){
 }
 
 void Glyph::setHoriBearingY(int topDisplacement){
-	this->horiBearingY = horiBearingY;
+	this->horiBearingY = topDisplacement;
 }
 
 int Glyph::getHoriBearingY(){

@@ -65,7 +65,7 @@ void GraphicString::setPosition(){
 			for(i = begin; i != end; i++){
 				//We need to check for null pointer since space does not have sprite
 				if (i->second != NULL){
-					i->second->setPosition(x+i->first->getHoriBearingX(), y-i->first->getHoriBearingY() - i->first->getHeight()+ lineHeight);
+					i->second->setPosition(x+i->first->getHoriBearingX(), y + lineHeight + (i->first->getHeight() - i->first->getHoriBearingY()) - i->first->getHeight());
 				}
 				x += i->first->getXAdvance();
 			}
@@ -79,7 +79,7 @@ void GraphicString::setPosition(){
 			for(i = begin; i != end; i++){
 				//We need to check for null pointer since space does not have sprite
 				if (i->second != NULL){
-					i->second->setPosition(x+i->first->getHoriBearingX(), y-i->first->getHoriBearingY() - i->first->getHeight()+ lineHeight);
+					i->second->setPosition(x+i->first->getHoriBearingX(), y + lineHeight + (i->first->getHeight() - i->first->getHoriBearingY()) - i->first->getHeight());
 				}
 				x += i->first->getXAdvance();
 			}
