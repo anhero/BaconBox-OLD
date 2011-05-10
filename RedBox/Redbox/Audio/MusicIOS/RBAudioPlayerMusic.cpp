@@ -1,6 +1,6 @@
 #include "RBAudioPlayerMusic.h"
 
-#include "Debug.h"
+#include "Console.h"
 #include <cassert>
 
 using namespace RedBox;
@@ -19,8 +19,8 @@ void RBAudioPlayerMusic::play(int nbTimes, double fadeIn) {
 			[bgm fadeInPlay:nbTimes :static_cast<float>(fadeIn)];
 			playedOnce = true;
 		} else {
-			RB_ECHO("Tried to play a music with an invalid fade in time : " <<
-				  fadeIn << " sec.");
+			Console::Print("Tried to play a music with an invalid fade in time : " +
+				Console::ToString(fadeIn) + " sec.");
 		}
 	}
 }
@@ -34,8 +34,8 @@ void RBAudioPlayerMusic::stop(double fadeOut) {
 	if(fadeOut >= 0.0) {
 		[bgm fadeOutStop:static_cast<float>(fadeOut)];
 	} else {
-		RB_ECHO("Tried to stop a music with an invalid fade out time : " <<
-			  fadeOut << " sec.");
+		Console::Print("Tried to stop a music with an invalid fade out time : " +
+			  Console::ToString(fadeOut) + " sec.");
 	}
 }
 
@@ -48,8 +48,8 @@ void RBAudioPlayerMusic::pause(double fadeOut) {
 	if(fadeOut >= 0.0) {
 		[bgm fadeOutPause:static_cast<float>(fadeOut)];
 	} else {
-		RB_ECHO("Tried to pause a music with an invalid fade out time : " <<
-			  fadeOut << " sec.");
+		Console::Print("Tried to pause a music with an invalid fade out time : " +
+			  Console::ToString(fadeOut) + " sec.");
 	}
 }
 
@@ -63,8 +63,8 @@ void RBAudioPlayerMusic::resume(double fadeIn) {
 		[bgm fadeInResume:static_cast<float>(fadeIn)];
 		playedOnce = true;
 	} else {
-		RB_ECHO("Tried to resume a music with an invalid fade in time : " <<
-			  fadeIn << " sec.");
+		Console::Print("Tried to resume a music with an invalid fade in time : " +
+			  Console::ToString(fadeIn) + " sec.");
 	}
 }
 
