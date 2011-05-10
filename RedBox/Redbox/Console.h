@@ -181,11 +181,11 @@ namespace RedBox {
 			/**
 			 * Convert type to string.
 			 */
-			template<class T> static std::string ToString(T i);
-			/**
-			 * Convert integer to string.
-			 */
-			static std::string ToString(int i);
+			template<class T> static std::string ToString(T i) {
+				std::stringstream ss;
+				ss << i;
+				return ss.str();
+			}
 	};
 }
 
