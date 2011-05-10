@@ -1,6 +1,9 @@
 #ifndef RB_PLATFORM_FLAGGER_H
 #define RB_PLATFORM_FLAGGER_H
 
+/* ****************************************************************************
+ * Basic platform defines/detection
+ */
 #ifdef QT
 	#ifndef RB_QT
 		#define RB_QT
@@ -11,72 +14,38 @@
 	#define RB_SDL
 #endif
 
+
+/* ****************************************************************************
+ * System-specific defines
+ */
+//Linux systems
 #ifdef linux
 	#define RB_LINUX
 
-	//Use OpenGL on Linux
-	#define RB_OPENGL
-
-	#ifdef RB_SDL
-		#define RB_SOUND_ENGINE SDLMixerEngine::getInstance()
-		#define RB_SOUND_ENGINE_INCLUDE "SDLMixerEngine.h"
-		#define RB_MUSIC_ENGINE SDLMixerEngine::getInstance()
-		#define RB_MUSIC_ENGINE_INCLUDE "SDLMixerEngine.h"
-	#elif defined(RB_QT)
-		//TODO: Check: if this is not defined, OpenAL stuff still gets included...
-		#define RB_OPENAL
-		#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-		#define RB_SOUND_ENGINE new OpenALEngine()
-		#define RB_MUSIC_ENGINE NULL
-	#endif
-
-
-	#define	RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
+	#define RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
 	#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
 #endif // linux
 
+//Windows systems
 #ifdef _WIN32
 	#ifdef RB_QT
 		#include <qt_windows.h>
-	//#else
-		//#include <sdkddkver.h>
 	#endif // RB_QT
 
 	#define RB_WIN32
 
-	#ifdef RB_SDL
-		#define RB_SOUND_ENGINE SDLMixerEngine::getInstance()
-		#define RB_SOUND_ENGINE_INCLUDE "SDLMixerEngine.h"
-		#define RB_MUSIC_ENGINE SDLMixerEngine::getInstance()
-		#define RB_MUSIC_ENGINE_INCLUDE "SDLMixerEngine.h"
-	#elif defined(RB_QT)
-		//TODO: Check: if this is not defined, OpenAL stuff still gets included...
-		#define RB_OPENAL
-		#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-		#define RB_SOUND_ENGINE new OpenALEngine()
-		#define RB_MUSIC_ENGINE NULL
-	#endif
-
-	#define RB_OPENGL
-	
-	#define	RB_TIME_HELPER_IMPL RedBox::WindowsTimeHelper
+	#define RB_TIME_HELPER_IMPL RedBox::WindowsTimeHelper
 	#define RB_TIME_HELPER_INCLUDE "WindowsTimeHelper.h"
-
-	/*#ifdef _WIN32_WINNT_VISTA
-		#define _WIN32_WINNT _WIN32_WINNT_VISTA
-	#else
-		#define _WIN32_WINNT _WIN32_WINNT_WIN2K
-	#endif // _WIN32_WINNT_VISTA
-	*/
 #endif // _WIN32
 
+//Apple systems
 #ifdef __APPLE__
-
+	//Get more informations about the system
 	#include "TargetConditionals.h"
 
 	#define RB_APPLE_PLATFORM
-	#define RB_OPENGL
 
+	//More detailed platforms
 	#if TARGET_IPHONE_SIMULATOR
 		#define RB_IPHONE_PLATFORM
 		#define RB_IPHONE_SIMULATOR_PLATFORM
@@ -91,55 +60,37 @@
 		#define RB_MAC_PLATFORM
 	#endif
 
+	//Time on OSX
 	#ifdef RB_MAC_PLATFORM
 		#define RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
 		#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
 	#endif
 
+	//Time on iOS
 	#ifdef RB_IPHONE_PLATFORM
-		#define	RB_TIME_HELPER_IMPL RedBox::IOSTimeHelper
+		#define RB_TIME_HELPER_IMPL RedBox::IOSTimeHelper
 		#define RB_TIME_HELPER_INCLUDE "IOSTimeHelper.h"
 	#endif
 
-	#if defined(SDL) && defined(RB_MAC_PLATFORM)
-		#define RB_SOUND_ENGINE SDLMixerEngine::getInstance()
-		#define RB_SOUND_ENGINE_INCLUDE "SDLMixerEngine.h"
-		#define RB_MUSIC_ENGINE SDLMixerEngine::getInstance()
-		#define RB_MUSIC_ENGINE_INCLUDE "SDLMixerEngine.h"
-	#elif defined(RB_IPHONE_PLATFORM) || defined(RB_MAC_PLATFORM)
-		#define RB_OPENAL
-		#define RB_AV_AUDIO_PLAYER
-		#define RB_SOUND_ENGINE new OpenALEngine()
-		#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-		#if defined(RB_QT)
-			#define RB_MUSIC_ENGINE NULL
-		#else
-			#define RB_MUSIC_ENGINE_INCLUDE "RBAudioPlayerEngine.h"
-			#define RB_MUSIC_ENGINE new RBAudioPlayerEngine()
-		#endif
-		// Example of the 4 defines needed for the audio engine.
-		//#define RB_SOUND_ENGINE new OpenALEngine()
-		//#define RB_MUSIC_ENGINE new OpenALEngine()
-		//#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-		//#define RB_MUSIC_ENGINE_INCLUDE "OpenALEngine.h"
-	#endif
 
 #endif // __APPLE__
 
-// Defines for input.
-#ifdef RB_IPHONE_PLATFORM
-	#define RB_POINTER_IMPL new IOSPointer()
-	#define RB_POINTER_INCLUDE "IOSPointer.h"
-#endif // RB_IPHONE_PLATFORM
+/* ****************************************************************************
+ * Platform-specific defines
+ */
 
-#ifdef RB_QT
-	#define RB_KEYBOARD_IMPL new QtKeyboard()
-	#define RB_KEYBOARD_INCLUDE "QtKeyboard.h"
-	#define RB_POINTER_IMPL new QtPointer()
-	#define RB_POINTER_INCLUDE "QtPointer.h"
-#endif // RB_QT
+//SDL platform
+#if defined(RB_SDL)
+	//Graphics engine for SDL
+	#define RB_OPENGL
 
-#ifdef RB_SDL
+	//Sound engine for SDL
+	#define RB_SOUND_ENGINE SDLMixerEngine::getInstance()
+	#define RB_SOUND_ENGINE_INCLUDE "SDLMixerEngine.h"
+	#define RB_MUSIC_ENGINE SDLMixerEngine::getInstance()
+	#define RB_MUSIC_ENGINE_INCLUDE "SDLMixerEngine.h"
+
+	//Input engine for SDL
 	#define RB_KEYBOARD_IMPL new SDLKeyboard()
 	#define RB_KEYBOARD_INCLUDE "SDLKeyboard.h"
 	#define RB_POINTER_IMPL new SDLPointer()
@@ -148,6 +99,57 @@
 	#define RB_INPUT_MANAGER_INCLUDE "SDLInputManager.h"
 #endif
 
+//Qt platform
+#if defined(RB_QT)
+	//Graphics engine for Qt
+	#define RB_OPENGL
+
+	//Sound engine for Qt
+	#define RB_OPENAL
+	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+	#define RB_SOUND_ENGINE new OpenALEngine()
+	#define RB_MUSIC_ENGINE NULL
+
+	//Input engine for Qt
+	#define RB_KEYBOARD_IMPL new QtKeyboard()
+	#define RB_KEYBOARD_INCLUDE "QtKeyboard.h"
+	#define RB_POINTER_IMPL new QtPointer()
+	#define RB_POINTER_INCLUDE "QtPointer.h"
+#endif
+
+//iOS platform
+#if defined(RB_IPHONE_PLATFORM)
+	
+	//Sound engine for iOS
+	#define RB_OPENAL
+	#define RB_AV_AUDIO_PLAYER
+	#define RB_SOUND_ENGINE new OpenALEngine()
+	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+
+	//Input engine for iOS
+	#define RB_POINTER_IMPL new IOSPointer()
+	#define RB_POINTER_INCLUDE "IOSPointer.h"
+#endif
+
+/*
+//Mac platform (without SDL or Qt) (currently unsupported)
+//TODO: Support mac platform with cocoa only and related defines
+#if defined(RB_MAC_PLATFORM)
+	#if defined(RB_QT)
+		#define RB_MUSIC_ENGINE NULL
+	#else
+		#define RB_MUSIC_ENGINE_INCLUDE "RBAudioPlayerEngine.h"
+		#define RB_MUSIC_ENGINE new RBAudioPlayerEngine()
+	#endif
+#endif
+*/
+
+
+/* ****************************************************************************
+ * Defaulting implementations if not defined
+ */
+
+//For NULL inputs
 #ifndef RB_POINTER_IMPL
 	#define RB_POINTER_IMPL NULL
 #endif
@@ -161,8 +163,20 @@
 	#define RB_GAME_PAD_IMPL NULL
 #endif
 
+//For NULL sound engine
+#ifndef RB_SOUND_ENGINE
+	#define RB_SOUND_ENGINE NullAudioEngine::getInstance()
+	#define RB_SOUND_ENGINE_INCLUDE "NullAudioEngine.h"
+#endif
+#ifndef RB_MUSIC_ENGINE
+	#define RB_MUSIC_ENGINE NullAudioEngine::getInstance()
+	#define RB_MUSIC_ENGINE_INCLUDE "NullAudioEngine.h"
+#endif
+
+//Default input manager
 #ifndef RB_INPUT_MANAGER_IMPL
 	#define RB_INPUT_MANAGER_IMPL RedBox::InputManager
 #endif
 
-#endif
+
+#endif // RB_PLATFORM_FLAGGER_H
