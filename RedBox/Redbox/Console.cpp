@@ -46,3 +46,17 @@ void Console::Printf(string formatString, ...) {
 	std::cout << std::endl;
 	va_end (args);
 }
+
+
+template<class T> std::string Console::ToString(T i) {
+    std::stringstream ss;
+    std::string s;
+    ss << i;
+    s = ss.str();
+
+    return s;
+}
+
+std::string Console::ToString(int i) {
+	return Console::ToString<int>(i);
+}

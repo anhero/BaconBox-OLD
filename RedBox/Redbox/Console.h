@@ -177,6 +177,14 @@ namespace RedBox {
 			 * @param text Text to print.
 			 */
 			static void Error(string text);
+			/**
+			 * Convert type to string.
+			 */
+			template<class T> static std::string ToString(T i);
+			/**
+			 * Convert integer to string.
+			 */
+			static std::string ToString(int i);
 	};
 }
 
