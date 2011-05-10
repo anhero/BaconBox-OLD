@@ -5,8 +5,6 @@
 
 #include <stdint.h>
 
-#include <cmath>
-
 #include <iostream>
 
 #include "RenderInfo.h"
@@ -94,9 +92,7 @@ void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
 	glLoadIdentity();
 	
 	glRotatef(angle, 0, 0, 1);
-	// We floor the values to make sure not to have small lines surrounding the
-	// graphics.
-	glTranslatef(-floor(position.getX()), -floor(position.getY()), 0);
+	glTranslatef(-(position.getX()), -(position.getY()), 0);
 	glScalef(zoom, zoom, 1);
 
 }
@@ -175,8 +171,8 @@ TextureInfo * OpenGLDriver::loadTexture(PixMap * pixMap){
 				 GL_UNSIGNED_BYTE,
 				 poweredTo2Pixmap.getBuffer());
 	
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	
 	return texInfo;
 }
