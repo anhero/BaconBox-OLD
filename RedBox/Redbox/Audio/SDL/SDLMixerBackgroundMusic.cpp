@@ -6,7 +6,7 @@
 
 #include <SDL/SDL.h>
 
-#include "Debug.h"
+#include "Console.h"
 
 #include "SDLMixerEngine.h"
 
@@ -36,7 +36,8 @@ void SDLMixerBackgroundMusic::play(int nbTimes) {
 			looping = (nbTimes == -1);
 			neverPlayed = false;
 		} else {
-			RB_ECHO("Error playing a music with Mix_PlayMusic(): " << Mix_GetError());
+			Console::Print("Error playing a music with Mix_PlayMusic(): " + std::string(Mix_GetError()));
+			Console::PrintTrace();
 		}
 	}
 }
@@ -101,7 +102,8 @@ void SDLMixerBackgroundMusic::play(int nbTimes, double fadeIn) {
 			looping = (nbTimes == -1);
 			neverPlayed = false;
 		} else {
-			RB_ECHO("Error playing a music with Mix_FadeInMusic(): " << Mix_GetError());
+			Console::Print("Error playing a music with Mix_FadeInMusic(): " + std::string(Mix_GetError()));
+			Console::PrintTrace();
 		}
 	}
 }

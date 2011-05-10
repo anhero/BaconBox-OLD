@@ -2,7 +2,7 @@
 
 #include "NullAudioEngine.h"
 
-#include "Debug.h"
+#include "Console.h"
 
 #include "ResourceManager.h"
 #include "SoundInfo.h"
@@ -36,15 +36,15 @@ SoundFX* NullAudioEngine::getSoundFX(const std::string& key, bool survive) {
 		} else {
 			delete result;
 			result = new NullAudio();
-			RB_ECHO("Tried to get a sound effect from an invalid key: " <<
-					key);
+			Console::Print("Tried to get a sound effect from an invalid key: " + key);
+			Console::PrintTrace();
 		}
 		if(!survive) {
 			sounds.push_back(result);
 		}
 	} else {
-		RB_ECHO("Failed to allocate memory for the new sound effect: " <<
-				key);
+		Console::Print("Failed to allocate memory for the new sound effect: " + key);
+			Console::PrintTrace();
 	}
 
 	return result;
@@ -63,15 +63,15 @@ BackgroundMusic* NullAudioEngine::getBackgroundMusic(const std::string& key,
 		} else {
 			delete result;
 			result = new NullAudio();
-			RB_ECHO("Tried to get a background music from an invalid key: " <<
-					key);
+			Console::Print("Tried to get a background music from an invalid key: " + key);
+			Console::PrintTrace();
 		}
 		if(!survive) {
 			sounds.push_back(result);
 		}
 	} else {
-		RB_ECHO("Failed to allocate memory for the new background music: " <<
-				key);
+		Console::Print("Failed to allocate memory for the new background music: " + key);
+		Console::PrintTrace();
 	}
 
 	return result;
@@ -87,7 +87,7 @@ NullAudioEngine::NullAudioEngine() : SoundEngine(), MusicEngine(), disconnect(fa
 }
 
 void NullAudioEngine::init() {
-	RB_ECHO("NullAudioEngine::init();");
+	Console::Print("NullAudioEngine::init();");
 }
 
 void NullAudioEngine::update() {
@@ -133,8 +133,8 @@ SoundInfo* NullAudioEngine::loadSound(const std::string& filePath) {
 		// We delete the resulting sound info.
 		delete result;
 		result = NULL;
-		RB_ECHO("Unable to load sound effect: " << filePath <<
-		        " ...");
+		Console::Print("Unable to load sound effect: " + filePath + " ...");
+		Console::PrintTrace();
 	}
 
 	return result;
@@ -161,11 +161,12 @@ MusicInfo* NullAudioEngine::loadMusic(const std::string& filePath) {
 		if(!result->music) {
 			delete result;
 			result = NULL;
-			RB_ECHO("Unable to load music file: " << filePath << std::endl <<
-			        "... ");
+			Console::Print("Unable to load music file: " + filePath + "... ");
+			Console::PrintTrace();
 		}
 	} else {
-		RB_ECHO("Could not allocate memory for the music info for the file: " << filePath);
+		Console::Print("Could not allocate memory for the music info for the file: " + filePath);
+		Console::PrintTrace();
 	}
 
 	return result;

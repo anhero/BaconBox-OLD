@@ -14,8 +14,6 @@
 #include RB_MUSIC_ENGINE_INCLUDE
 #endif
 
-#include "Debug.h"
-
 using namespace RedBox;
 
 SoundEngine* AudioEngine::soundEngine = NULL;
