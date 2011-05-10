@@ -55,8 +55,8 @@ TextureInfo* ResourceManager::addTexture(const std::string& key, PixMap * aPixma
 }
 
 
-TextureInfo* ResourceManager::loadTexture(const std::string& filePath,
-										 const std::string& key,
+TextureInfo* ResourceManager::loadTexture(const std::string& key,
+										  const std::string& filePath,
 										 bool overwrite) {
 	
 	PixMap * aPixMap = loadPixMap(filePath);
@@ -84,8 +84,8 @@ MusicInfo* ResourceManager::getMusic(const std::string& key) {
 	return (itr != musics.end())?(itr->second):(NULL);
 }
 
-SoundInfo* ResourceManager::loadSound(const std::string& filePath,
-									  const std::string& key,
+SoundInfo* ResourceManager::loadSound(const std::string& key,
+									  const std::string& filePath,
 									  bool overwrite) {
 	SoundInfo* newSnd = NULL;
 	// We make sure the sound engine is loaded and that there already isn't 
@@ -167,8 +167,8 @@ SoundInfo* ResourceManager::loadSound(const SoundParameters& params,
 	return newSnd;
 }
 
-MusicInfo* ResourceManager::loadMusic(const std::string& filePath,
-									  const std::string& key,
+MusicInfo* ResourceManager::loadMusic(const std::string& key,
+									  const std::string& filePath,
 									  bool overwrite) {
 	MusicInfo* newBgm = NULL;
 	// We make sure the sound engine is loaded and that there already isn't 
@@ -247,9 +247,9 @@ MusicInfo* ResourceManager::loadMusic(const MusicParameters& params,
 	return newBgm;
 }
 
-void ResourceManager::removeSound(const std::string& name) {
+void ResourceManager::removeSound(const std::string& key) {
 	// We find the sound effect.
-	std::map<std::string, SoundInfo*>::iterator snd = sounds.find(name);
+	std::map<std::string, SoundInfo*>::iterator snd = sounds.find(key);
 	// We check if the sound effect asked exists and we ask the sound engine to
 	// unload the data.
 	if(snd != sounds.end()) {
@@ -259,16 +259,16 @@ void ResourceManager::removeSound(const std::string& name) {
 			// We remove it from the map.
 			sounds.erase(snd);
 		} else {
-			RB_ECHO("The sound effect named " << name << " could not be removed because the audio engine failed to unload it.");
+			RB_ECHO("The sound effect named " << key << " could not be removed because the audio engine failed to unload it.");
 		}
 	} else {
-		RB_ECHO("The sound effect named " << name << " could not be removed because it doesn't exist.");
+		RB_ECHO("The sound effect named " << key << " could not be removed because it doesn't exist.");
 	}
 }
 
-void ResourceManager::removeMusic(const std::string& name) {
+void ResourceManager::removeMusic(const std::string& key) {
 	// We find the music.
-	std::map<std::string, MusicInfo*>::iterator music = musics.find(name);
+	std::map<std::string, MusicInfo*>::iterator music = musics.find(key);
 	// We check if the music asked exists and we ask the music engine to
 	// unload the data.
 	if(music != musics.end()) {
@@ -278,42 +278,42 @@ void ResourceManager::removeMusic(const std::string& name) {
 			// We remove it from the map.
 			musics.erase(music);
 		} else {
-			RB_ECHO("The music named " << name << " could not be removed because the audio engine failed to unload it.");
+			RB_ECHO("The music named " << key << " could not be removed because the audio engine failed to unload it.");
 		}
 	} else {
-		RB_ECHO("The music named " << name << " could not be removed because it doesn't exist.");
+		RB_ECHO("The music named " << key << " could not be removed because it doesn't exist.");
 	}
 }
 
-Font* ResourceManager::loadFont(const std::string & name, const std::string & path, bool overwrite) {
+Font* ResourceManager::loadFont(const std::string & key, const std::string & path, bool overwrite) {
 	Font * aFont = NULL;
 	// We check if there is already a font with this name.
-	if(fonts.find(name) != fonts.end()) {
+	if(fonts.find(key) != fonts.end()) {
 		// We check if we overwrite the existing font or not.
 		if(overwrite) {
 			// We free the allocated memory.
-			aFont = fonts[name];
+			aFont = fonts[key];
 			if(aFont) {
 				delete aFont;
 			}
 			// We load the new font.
-			aFont = fonts[name] = new Font(name,path);
-			RB_ECHO("Overwrote the existing font named " << name << ".");
+			aFont = fonts[key] = new Font(key,path);
+			RB_ECHO("Overwrote the existing font named " << key << ".");
 		} else {
-			RB_ECHO("Can't load font with key: " << name <<
+			RB_ECHO("Can't load font with key: " << key <<
 				  " font is already loaded");
-			aFont = fonts[name];
+			aFont = fonts[key];
 		}
 	} else {
 		// We load the new texture and add it to the map.
-		aFont = new Font(name,path);
-		fonts.insert(std::pair<std::string, Font*>(name, aFont));
+		aFont = new Font(key,path);
+		fonts.insert(std::pair<std::string, Font*>(key, aFont));
 	}
 	return aFont;
 }
 
-Font* ResourceManager::getFont(const std::string & name){
-	std::map<std::string, Font*>::iterator i = fonts.find(name);
+Font* ResourceManager::getFont(const std::string & key){
+	std::map<std::string, Font*>::iterator i = fonts.find(key);
 	if (i != fonts.end()){
 		return (*i).second;
 	}
@@ -322,8 +322,8 @@ Font* ResourceManager::getFont(const std::string & name){
 	}
 }
 
-void ResourceManager::removeFont(const std::string & name){
-	std::map<std::string, Font*>::iterator i = fonts.find(name);
+void ResourceManager::removeFont(const std::string & key){
+	std::map<std::string, Font*>::iterator i = fonts.find(key);
 	if (i != fonts.end()){
 		delete (*i).second;
 	}
