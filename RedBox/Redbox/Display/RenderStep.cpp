@@ -89,7 +89,7 @@ void RenderStep::render() {
 
 void RenderStep::update() {
 	if(!isPaused) {
-		if(info.isAnimated()) {
+		if(info.isAnimated() && info.getCurrentAnimation() != "") {
 			AnimationParameters* anim = info.getAnimationParameters(info.getCurrentAnimation());
 
 			if(anim) {
