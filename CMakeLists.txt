@@ -8,6 +8,12 @@ if(NOT CMAKE_BUILD_TYPE)
       FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
+#Define the DEBUG symbol if necessary.
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+	ADD_DEFINITIONS("-DDEBUG")
+	set(CMAKE_CXX_FLAGS_DEBUG "-g -rdynamic")
+endif("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+
 if("${CMAKE_GENERATOR}" STREQUAL "Xcode")
 	set(LIBRARY_OUTPUT_PATH  ${RedBox_BINARY_DIR}/temp/)
 else()
