@@ -15,9 +15,9 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 endif("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 
 if("${CMAKE_GENERATOR}" STREQUAL "Xcode")
-	set(LIBRARY_OUTPUT_PATH  ${RedBox_BINARY_DIR}/temp/)
+	set(LIBRARY_OUTPUT_PATH  ${RedBox_BINARY_DIR}/lib/)
 else()
-	set(LIBRARY_OUTPUT_PATH  ${RedBox_BINARY_DIR}/temp/${CMAKE_BUILD_TYPE})
+	set(LIBRARY_OUTPUT_PATH  ${RedBox_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE})
 endif("${CMAKE_GENERATOR}" STREQUAL "Xcode")
 
 set(CMAKE_MODULE_PATH "${RedBox_SOURCE_DIR}/script/CMake/module/")
@@ -127,7 +127,6 @@ endforeach(privateHeader ${Private_RedBox_Headers})
 link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 		
 
-
 	add_library(RedBox STATIC ${RedBoxSources} ${RedBoxHeaders})
 	target_link_libraries(
 	RedBox
@@ -138,20 +137,20 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 	${RedBox_libraries_list}
 	)
 
-	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
-	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
+	#list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
+	#list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
 	#list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisidec.a)
-	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libz.a)
-	if(SDL)
-		list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL.a)
-	endif(SDL)
+	#list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libz.a)
+	#if(SDL)
+	#	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL.a)
+	#endif(SDL)
 		
-file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
-add_custom_command(TARGET RedBox POST_BUILD 
-	COMMAND $ENV{_BASH_INTERPRETER} ${RedBox_SOURCE_DIR}/script/linkscript.sh
-					${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a
-					${RedBox_Dependencies}
-					${RedBox_BINARY_DIR}/temp/${CMAKE_BUILD_TYPE}/libRedBox.a)
+#file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+#add_custom_command(TARGET RedBox POST_BUILD 
+#	COMMAND $ENV{_BASH_INTERPRETER} ${RedBox_SOURCE_DIR}/script/linkscript.sh
+#					${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a
+#					${RedBox_Dependencies}
+#					${RedBox_BINARY_DIR}/temp/${CMAKE_BUILD_TYPE}/libRedBox.a)
 
 
 
