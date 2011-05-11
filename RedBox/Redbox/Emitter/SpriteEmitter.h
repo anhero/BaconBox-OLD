@@ -91,6 +91,15 @@ namespace RedBox {
 		void updateScaling(const Vec2& deltaScaling, Sprite* graphicBody);
 
 		/**
+		 * Updates the GraphicBody's rotation angle using the given angle to
+		 * add to the GraphicBody's rotation angle.
+		 * @param deltaAngle Angle value to add to the GraphicBody's rotation
+		 * angle.
+		 * @param graphicBody GraphicBody to have its rotation angle udpated.
+		 */
+		void updateRotation(float deltaAngle, Sprite* graphicBody);
+
+		/**
 		 * Initializes a particle's sprite and returns a pointer to it.
 		 * @return Pointer to the created sprite.
 		 */

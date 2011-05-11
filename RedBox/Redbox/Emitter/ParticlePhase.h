@@ -30,8 +30,9 @@ namespace RedBox {
 		 */
 		ParticlePhase(double newPhaseDuration,
 					  double newPhaseDurationVariance,
-					  float newAlphaPerSecond,
-					  const Vec2& newScalingPerSecond);
+					  float newAlphaPerSecond = 0.0f,
+					  const Vec2& newScalingPerSecond = Vec2(0.0f, 0.0f),
+					  float newAnglePerSecond = 0.0f);
 
 		/// Minimum duration the phase will last.
 		double phaseDuration;
@@ -44,6 +45,9 @@ namespace RedBox {
 
 		/// Scaling value being changed per second.
 		Vec2 scalingPerSecond;
+
+		/// Rotation angle per second.
+		float anglePerSecond;
 	};
 }
 #endif

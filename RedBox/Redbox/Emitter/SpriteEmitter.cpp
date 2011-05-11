@@ -15,16 +15,16 @@ SpriteEmitter::SpriteEmitter(): Emitter<Sprite>(), defaultSprite(0) {
 }
 
 SpriteEmitter::SpriteEmitter(const std::string& keyName): Emitter<Sprite>(),
-defaultSprite(0) {
+	defaultSprite(0) {
 	defaultSprite = new Sprite(keyName);
 }
 
 SpriteEmitter::SpriteEmitter(Sprite* newDefaultSprite): Emitter<Sprite>(),
-defaultSprite(newDefaultSprite) {
+	defaultSprite(newDefaultSprite) {
 }
 
 SpriteEmitter::SpriteEmitter(const SpriteEmitter& src): Emitter<Sprite>(src),
-defaultSprite(0) {
+	defaultSprite(0) {
 	copyFrom(src);
 }
 
@@ -44,6 +44,7 @@ void SpriteEmitter::setDefaultSprite(Sprite* newDefaultSprite) {
 	if(defaultSprite) {
 		delete defaultSprite;
 	}
+
 	defaultSprite = newDefaultSprite;
 }
 
@@ -55,33 +56,29 @@ void SpriteEmitter::updateAlpha(int16_t deltaAlpha, Sprite* graphicBody) {
 	if(graphicBody && graphicBody->getMainRenderInfo()) {
 		int16_t tmpAlpha = static_cast<int16_t>(graphicBody->getMainRenderInfo()->getColor().getAlpha());
 		tmpAlpha += deltaAlpha;
+
 		if(tmpAlpha > static_cast<int16_t>(Color::MAX_COMPONENT_VALUE)) {
 			tmpAlpha = static_cast<int16_t>(Color::MAX_COMPONENT_VALUE);
 		} else if(tmpAlpha < 0) {
 			tmpAlpha = 0;
 		}
+
 		Color tmpColor = graphicBody->getMainRenderInfo()->getColor();
 		tmpColor.setAlpha(static_cast<uint8_t>(tmpAlpha));
 		graphicBody->setMainColor(tmpColor);
 	}
-	/*currentAlpha += deltaAlpha;
-	if(currentAlpha > static_cast<float>(Color::MAX_COMPONENT_VALUE)) {
-		currentAlpha = static_cast<float>(Color::MAX_COMPONENT_VALUE);
-	} else if (currentAlpha < 0.0f) {
-		currentAlpha = 0.0f;
-	}
-
-	if(graphicBody) {
-		Color newColor = graphicBody->getMainRenderInfo()->getColor();
-		newColor.setAlpha(static_cast<uint8_t>(currentAlpha));
-		graphicBody->setMainColor(newColor);
-	}*/
 }
 
 void SpriteEmitter::updateScaling(const Vec2& deltaScaling,
-								  Sprite* graphicBody) {
+                                  Sprite* graphicBody) {
 	if(graphicBody) {
 		graphicBody->addToScaling(deltaScaling);
+	}
+}
+
+void SpriteEmitter::updateRotation(float deltaAngle, Sprite* graphicBody) {
+	if(graphicBody) {
+		graphicBody->addToAngle(deltaAngle);
 	}
 }
 
@@ -95,10 +92,11 @@ Sprite* SpriteEmitter::initParticle() {
 }
 
 void SpriteEmitter::startParticle(Sprite*& graphicBody) {
-	if (!graphicBody) {
+	if(!graphicBody) {
 		graphicBody = initParticle();
 	}
-	if (graphicBody) {
+
+	if(graphicBody) {
 		graphicBody->setPosition(getXPosition(), getYPosition());
 		Vec2 shootVec(Vec2::UP);
 		shootVec.setLength(force + Random::getRandomFloat(0.0f, forceVariance));
@@ -117,6 +115,7 @@ void SpriteEmitter::clean() {
 void SpriteEmitter::copyFrom(const SpriteEmitter& src) {
 	if(this != &src && &src) {
 		clean();
+
 		if(src.defaultSprite) {
 			defaultSprite = new Sprite(*src.defaultSprite);
 		}

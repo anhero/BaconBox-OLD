@@ -24,9 +24,7 @@ Sprite::Sprite(const std::string& imageKey): GraphicBody(),
 		construct(texInfo,
 		          texInfo->imageWidth,
 		          texInfo->imageHeight,
-		          1
-
-		         );
+		          1);
 	} else {
 		Console::Print("Tried to construct a sprite from an invalid image key: " + imageKey);
 	}
@@ -38,8 +36,7 @@ Sprite::Sprite(TextureInfo* texInfo): GraphicBody(), scaling(Vec2(1.0f, 1.0f)),
 		construct(texInfo,
 		          texInfo->imageWidth,
 		          texInfo->imageHeight,
-		          1
-		         );
+		          1);
 	} else {
 		Console::Print("Tried to construct a sprite from an invalid texture information: " + Console::ToString(texInfo));
 	}
@@ -53,8 +50,7 @@ Sprite::Sprite(const std::string& imageKey,
 	construct(ResourceManager::getTexture(imageKey),
 	          frameWidth,
 	          frameHeight,
-	          nbFrames
-	         );
+	          nbFrames);
 }
 
 Sprite::Sprite(TextureInfo* texInfo,
@@ -65,8 +61,7 @@ Sprite::Sprite(TextureInfo* texInfo,
 	construct(texInfo,
 	          frameWidth,
 	          frameHeight,
-	          nbFrames
-	         );
+	          nbFrames);
 }
 
 
@@ -334,38 +329,44 @@ void Sprite::addToScaling(Vec2 scalingToAdd) {
 	if(scalingToAdd.getX() + scaling.getX() == 0.0f) {
 		if(scalingToAdd.getX() > 0.0f) {
 			scalingToAdd.addToX(FLT_MIN);
-		} else if (scalingToAdd.getX() < 0.0f) {
+		} else if(scalingToAdd.getX() < 0.0f) {
 			scalingToAdd.addToX(-FLT_MIN);
 		}
 	}
+
 	if(scalingToAdd.getY() + scaling.getY() == 0.0f) {
 		if(scalingToAdd.getY() > 0.0f) {
 			scalingToAdd.addToY(FLT_MIN);
-		} else if (scalingToAdd.getY() < 0.0f) {
+		} else if(scalingToAdd.getY() < 0.0f) {
 			scalingToAdd.addToY(-FLT_MIN);
 		}
 	}
+
 	vertices.scale(Vec2((scaling.getX() + scalingToAdd.getX()) / scaling.getX(),
-						(scaling.getY() + scalingToAdd.getY()) / scaling.getY()));
+	                    (scaling.getY() + scalingToAdd.getY()) / scaling.getY()));
 }
 
 void Sprite::addToScaling(float xScaling, float yScaling) {
-	if(xScaling + scaling.getX() == 0.0f) {
-		if(xScaling > 0.0f) {
-			xScaling += FLT_MIN;
-		} else if (xScaling < 0.0f) {
-			xScaling -= FLT_MIN;
+	if(xScaling || yScaling) {
+		if(xScaling + scaling.getX() == 0.0f) {
+			if(xScaling > 0.0f) {
+				xScaling += FLT_MIN;
+			} else if(xScaling < 0.0f) {
+				xScaling -= FLT_MIN;
+			}
 		}
-	}
-	if(yScaling + scaling.getY() == 0.0f) {
-		if(yScaling > 0.0f) {
-			yScaling += FLT_MIN;
-		} else if (yScaling < 0.0f) {
-			yScaling -= FLT_MIN;
+
+		if(yScaling + scaling.getY() == 0.0f) {
+			if(yScaling > 0.0f) {
+				yScaling += FLT_MIN;
+			} else if(yScaling < 0.0f) {
+				yScaling -= FLT_MIN;
+			}
 		}
+
+		vertices.scale(Vec2((scaling.getX() + xScaling) / scaling.getX(),
+		                    (scaling.getY() + yScaling) / scaling.getY()));
 	}
-	vertices.scale(Vec2((scaling.getX() + xScaling) / scaling.getX(),
-						(scaling.getY() + yScaling) / scaling.getY()));
 }
 
 void Sprite::setXScaling(float newXScaling) {
@@ -393,31 +394,35 @@ float Sprite::getAngle() const {
 }
 
 void Sprite::setAngle(float newAngle) {
-	vertices.rotate(-angle);
-	angle = newAngle;
-	vertices.rotate(angle);
-	Vec2 tmp = vertices.getPosition();
-	GraphicBody::setPosition(tmp.getX(), tmp.getY());
+	if(newAngle != angle) {
+		vertices.rotate(-angle);
+		angle = newAngle;
+		vertices.rotate(angle);
+		Vec2 tmp = vertices.getPosition();
+		GraphicBody::setPosition(tmp.getX(), tmp.getY());
+	}
 }
 
 void Sprite::addToAngle(float angleToAdd) {
-	if(angleToAdd < 0.0f) {
-		angleToAdd += 360.0f;
-	} else if(angleToAdd > 360.0f) {
-		angleToAdd -= 360.0f;
+	if(angleToAdd) {
+		if(angleToAdd < 0.0f) {
+			angleToAdd += 360.0f;
+		} else if(angleToAdd > 360.0f) {
+			angleToAdd -= 360.0f;
+		}
+
+		angle += angleToAdd;
+
+		if(angle < 0.0f) {
+			angle += 360.0f;
+		} else if(angle > 360.0f) {
+			angle -= 360.0f;
+		}
+
+		vertices.rotate(angleToAdd);
+		Vec2 tmp = vertices.getPosition();
+		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	}
-
-	angle += angleToAdd;
-
-	if(angle < 0.0f) {
-		angle += 360.0f;
-	} else if(angle > 360.0f) {
-		angle -= 360.0f;
-	}
-
-	vertices.rotate(angleToAdd);
-	Vec2 tmp = vertices.getPosition();
-	GraphicBody::setPosition(tmp.getX(), tmp.getY());
 }
 
 void Sprite::clean() {
