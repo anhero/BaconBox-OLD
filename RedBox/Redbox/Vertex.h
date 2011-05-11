@@ -32,24 +32,36 @@ namespace RedBox {
 		 * to nothing.
 		 */
 		Vertex();
+
 		/**
-		 * Parametrized constructor. Constructs a vertex at the given position.
+		 * Parameterized constructor. Constructs a vertex at the given position.
 		 * Positions recieved are stored in the Vec2 used for the position.
 		 * @param posX Horizontal position.
 		 * @param posY Vertical position.
 		 * body.
 		 */
 		Vertex(float posX, float posY);
+
+		/**
+		 * Parameterized constructor. Constructs a vertex with the given
+		 * pointers to the positions. Those pointers are stored in the Vec2
+		 * used for the position.
+		 * @param posX Pointer to the float containing the horizontal position.
+		 * @param posY Pointer to the float containing the vertical position.
+		 */
 		Vertex(float* posX, float* posY);
+
 		/**
 		 * Copy constructor. Constructs a copy of the recieved vertex.
 		 * @param src Vertex to make a copy of.
 		 */
 		Vertex(const Vertex& src);
+
 		/**
 		 * Destructor.
 		 */
 		~Vertex();
+
 		/**
 		 * Assignation operator overload. Makes the instance a copy of the
 		 * recieved vertex.
@@ -62,27 +74,30 @@ namespace RedBox {
 		 * @return Float representing the vertex's horizontal position.
 		 */
 		float getXPosition() const;
+
 		/**
 		 * Gets the vertex's vertical position.
 		 * @return Float representing the vertex's vertical position.
 		 */
 		float getYPosition() const;
+
 		/**
 		 * Gets the position.
 		 * @return Vec2 representing the vertex's position.
 		 */
 		Vec2& getPosition();
+
 		/**
 		 * Sets the vertex's horizontal position.
 		 * @param xPos Vertex's new horizontal position.
 		 */
 		void setXPosition(float xPos);
+
 		/**
 		 * Sets the vertex's vertical position.
 		 * @param xPos Vertex's new vertical position.
 		 */
 		void setYPosition(float yPos);
-
 	private:
 		/// Current position. Stores X and Y as direct values or as pointers.
 		Vec2 position;

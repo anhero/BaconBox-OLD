@@ -2,8 +2,6 @@
  * @file
  * @ingroup Display
  */
-
-
 #ifndef RB_SPRITE_H
 #define RB_SPRITE_H
 
@@ -28,17 +26,24 @@ namespace RedBox {
      */
 	class Sprite : public GraphicBody {
     public:
-
 		/**
 		 * Default constructor.
 		 */
         Sprite();
+
 		/**
 		 * Simple parameterized constructor.
 		 * @param imageKey Key to the texture to create a sprite from.
 		 */
 		Sprite(const std::string& imageKey);
+
+		/**
+		 * Simple parameterized constructor. Does the same thing as the
+		 * constructor that recieves an key.
+		 * @param Pointer to the texture information to load the sprite with.
+		 */
 		Sprite(TextureInfo* texInfo);
+
 		/**
 		 * Parameterized constructor. Loads a sprite using the image in the 
 		 * ResourceManager with the corresponding key. Only takes the asked
@@ -57,8 +62,8 @@ namespace RedBox {
 		Sprite(const std::string& imageKey,
 			   unsigned int frameWidth,
 			   unsigned int frameHeight,
-			   unsigned int nbFrames = 1
-			   );
+			   unsigned int nbFrames = 1);
+
 		/**
 		 * Parameterized constructor. Loads a sprite using a TextureInfo. Only
 		 * takes the asked part of the image with the given width and height.
@@ -71,35 +76,39 @@ namespace RedBox {
 		 * pixels).
 		 * @param nbFrames Number of frames the sprite will load (for
 		 * animations).
-
 		 */
 		Sprite(TextureInfo* texInfo,
 			   unsigned int frameWidth,
 			   unsigned int frameHeight,
-			   unsigned int nbFrames = 1
-		);
+			   unsigned int nbFrames = 1);
+
         /**
          * Copy constructor.
          * @param src Sprite to make a copy of.
          */
         Sprite(const Sprite& src);
+
         /**
          * Assignation operator overload.
          * @param src Sprite to make a copy of.
          */
         Sprite& operator=(const Sprite& src);
+
         /**
          * Destructor. Frees up all allocated memory.
          */
         virtual ~Sprite();
+
         /**
          * Renders the sprite.
          */
         virtual void render();
+
 		/**
 		 * Updates the sprite.
 		 */
 		virtual void update();
+
         /**
          * Creates a vertex in the vertices group.
          * @param x Horizontal position.
@@ -109,17 +118,37 @@ namespace RedBox {
         void createVertex(float x, float y);
 		
 		/**
+		 * Gets the sprite's center's position.
+		 * @return 2D vector containing the sprite's center's position.
+		 */
+		Vec2 getPositionCenter() const;
+
+		/**
+		 * Gets the sprite's center's horizontal position.
+		 * @return Sprite's center's horizontal position.
+		 */
+		float getXPositionCenter() const;
+
+		/**
+		 * Gets the sprite's center's vertical position.
+		 * @return Sprite's center vertical position.
+		 */
+		float getYPositionCenter() const;
+
+		/**
 		 * Sets the sprite's horizontal position.
 		 * @param x New horizontal position (in pixels). Lower value means more
 		 * to the left.
 		 */
 		void setXPosition(float x);
+
 		/**
 		 * Sets the sprite's horizontal position.
 		 * @param y New vertical position (in pixels). Lower value means more at
 		 * the top.
 		 */
 		void setYPosition(float y);
+
 		/**
 		 * Sets the sprite's horizontal and vertical position.
 		 * @param x New horizontal position (in pixels). Lower value means more
@@ -128,6 +157,7 @@ namespace RedBox {
 		 * the top.
 		 */
 		void setPosition(float x, float y);
+
 		/**
 		 * Moves the sprite horizontally.
 		 * @param deltaX Value to add to the sprite's horizontal position (in
@@ -135,6 +165,7 @@ namespace RedBox {
 		 * value moves the sprite to the left.
 		 */
 		void moveX(float deltaX);
+
 		/**
 		 * Moves the sprite vertically.
 		 * @param deltaY Value to add to the sprite's vertical position (in
@@ -142,6 +173,7 @@ namespace RedBox {
 		 * moves the sprite up.
 		 */
 		void moveY(float deltaY);
+
 		/**
 		 * Moves the sprite horizontally and vertically.
 		 * @param deltaX Value to add to the sprite's horizontal position (in
@@ -158,17 +190,19 @@ namespace RedBox {
 		 * @return Sprite's width.
 		 */
 		float getWidth() const;
+
 		/**
 		 * Gets the sprite's height.
 		 * @return Sprite's height.
 		 */
 		float getHeight() const;
+
 		/**
 		 * Gets the sprite's width and height.
 		 * @return Pair containing the sprite's width and height. The first
 		 * member is the width and the second is the height.
 		 */
-		std::pair<float, float> getWidthHeight() const;
+		Vec2 getWidthHeight() const;
 		
 		/**
 		 * Adds a rendering step. Does nothing if the recieved pointer is NULL.
@@ -176,6 +210,7 @@ namespace RedBox {
 		 * @return Pointer to the rendering step added. NULL if it failed.
 		 */
 		RenderStep* addRenderStep(RenderStep* newRenderStep);
+
 		/**
 		 * Removes a rendering step. Does nothing if the recieved is either NULL
 		 * or isn't in the list. Does not free up any memory used by the pointed
@@ -183,6 +218,7 @@ namespace RedBox {
 		 * @param renderStep Rendering step to remove from the set.
 		 */
 		void removeRenderStep(RenderStep* renderStep);
+
 		/**
 		 * Gets the main RenderStep. The main RenderStep is the one at the front
 		 * of the list.
@@ -190,6 +226,7 @@ namespace RedBox {
 		 * NULL if the list is empty.
 		 */
 		RenderStep* getMainRenderStep();
+
 		/**
 		 * Gets a RenderStep. Has to loop through the list to get it, so it is
 		 * quite slower than a direct access.
@@ -198,6 +235,7 @@ namespace RedBox {
 		 * @return Pointer to the RenderStep at the position given.
 		 */
 		RenderStep* getRenderStep(unsigned int position);
+
 		/**
 		 * Gets the list of RenderStep's.
 		 * @return List of RenderStep used by the sprite.
@@ -216,10 +254,26 @@ namespace RedBox {
 		 * @return The sprite's group of vertices.
 		 */
 		VerticesGroup& getVertices();
-		int getMinX();
-		int getMaxX();
-		int getMinY();
-		int getMaxY();
+
+		/**
+		 * Gets the sprite's left side's position.
+		 */
+		float getMinX() const;
+
+		/**
+		 * Gets the sprite's right side's position.
+		 */
+		float getMaxX() const;
+
+		/**
+		 * Gets the sprite's top side's position.
+		 */
+		float getMinY() const;
+
+		/**
+		 * Gets the sprite's bottom side's position.
+		 */
+		float getMaxY() const;
 
 		/**
 		 * Gets a pointer to the main render step's render information. If there
@@ -227,14 +281,11 @@ namespace RedBox {
 		 */
 		RenderInfo* getMainRenderInfo();
 		
-		
-		
 		/**
 		 * Sets the current animation.
 		 * @param name current animation's name.
 		 */
 		void playAnimation(const std::string& name);
-		
 		
 		/**
 		 * Adds an animation. Accepts a variable number of parameters for each
@@ -255,14 +306,88 @@ namespace RedBox {
 						  int nbLoops,
 						  unsigned int nbFrames, ... );
 		
+		/**
+		 * Change the sprite's scaling.
+		 * @param newScaling New scaling to apply.
+		 */
+		void setScaling(const Vec2& newScaling);
+
+		/**
+		 * Change the sprite's scaling.
+		 * @param xScaling New horizontal scaling to apply.
+		 * @param yScaling New vertical scaling to apply.
+		 */
+		void setScaling(float xScaling, float yScaling);
+
+		/**
+		 * Change the sprite's scaling.
+		 * @param xScaling New horizontal scaling to apply.
+		 */
+		void setXScaling(float newXScaling);
+
+		/**
+		 * Change the sprite's scaling.
+		 * @param yScaling New vertical scaling to apply.
+		 */
+		void setYScaling(float newYScaling);
+
+		/**
+		 * Get the sprite's scaling.
+		 * @return 2D vector containing the sprite's scaling currently applied.
+		 */
+		const Vec2& getScaling() const;
+
+		/**
+		 * Get the sprite's horizontal scaling.
+		 * @return Sprite's horizontal scaling currently applied.
+		 */
+		float getXScaling() const;
+
+		/**
+		 * Get the sprite's vertical scaling.
+		 * @return Sprite's vertical scaling currently applied.
+		 */
+		float getYScaling() const;
+
+		/**
+		 * Gets the sprite's current rotation angle.
+		 * @return Sprite's current rotation angle. As the angle increments, it
+		 * rotates counter-clockwise.
+		 */
+		float getAngle() const;
+
+		/**
+		 * Sets the sprite's rotation angle.
+		 * @param newAngle Sprite's new rotation angle. As the angle increments,
+		 * it makes the sprite rotate counter-clockwise.
+		 */
+		void setAngle(float newAngle);
+
+		/**
+		 * Adds a value to the sprite's rotation angle.
+		 * @param angleToAdd Angle to add to the sprite's current rotation
+		 * angle. If the angle goes over 360 or under 0, it is automatically
+		 * wrapped around.
+		 */
+		void addToAngle(float angleToAdd);
     private:
         /**
 		 * List containing the rendering steps. The first RenderStep in the list
 		 * is considered as the main one.
 		 */
         std::list<RenderStep*> renderSteps;
+
         /// Vertices making up the sprite.
         VerticesGroup vertices;
+		
+		/// Sprite scaling currently applied on the X and Y axis.
+		Vec2 scaling;
+
+		/**
+		 * Rotation currently applied to the sprite (in degrees, between 0 and
+		 * 360).
+		 */
+		float angle;
 		
 		/**
 		 * Constructs the sprite using the given info.
