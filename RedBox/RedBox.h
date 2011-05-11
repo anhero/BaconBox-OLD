@@ -63,3 +63,4 @@
 #include <RedBox/RenderStep.h>
 #include <RedBox/SpriteFactory.h>
 #include <RedBox/InputManager.h>
+#include <RedBox/Console.h>
