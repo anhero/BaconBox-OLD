@@ -57,25 +57,96 @@ namespace RedBox {
 		 * Sets the layer.
 		 */
 		void setLayer(const Layer& newLayer);
+
+		/**
+		 * Sets the graphic body's coordinate.
+		 * @param newZ New z coordinate. The higher the value closer the graphic
+		 * body will be.
+		 */
+		void setZ(int newZ);
+
+		/**
+		 * Sets the graphic body's scroll factor.
+		 * @param newScrollFactor New horizontal and vertical scroll factor. A
+		 * value higher than 1 means the graphic body will move faster as if it
+		 * were closer to the camera and between 1 and 0 means it will move as
+		 * if it were far from the camera.
+		 */
+		void setScrollFactor(const Vec2& newScrollFactor);
+
+		/**
+		 * Sets the graphic body's horizontal scroll factor.
+		 * @param newXScrollFactor New horizontal scroll factor. A value higher
+		 * than 1 means the graphic body will move faster as if it were closer
+		 * to the camera and between 1 and 0 means it will move as if it were
+		 * far from the camera.
+		 */
+		void setXScrollFactor(float newXScrollFactor);
+
+		/**
+		 * Sets the graphic body's vertical scroll factor.
+		 * @param newYScrollFactor New vertical scroll factor. A value higher
+		 * than 1 means the graphic body will move faster as if it were closer
+		 * to the camera and between 1 and 0 means it will move as if it were
+		 * far from the camera.
+		 */
+		void setYScrollFactor(float newYScrollFactor);
+
+		/**
+		 * Gets the graphic body's z coordinate.
+		 * @return Z coordinate. The higher the value the closer the graphic
+		 * body will be.
+		 */
+		int getZ() const;
+
+		/**
+		 * Gets the graphic body's scroll factor.
+		 * @return Horizontal and vertical scroll factor. A value higher than 1
+		 * means the graphic body will move faster as if it were closer to the
+		 * camera, between 1 and 0 means it will move as if it were far from the
+		 * camera.
+		 */
+		const Vec2& getScrollFactor() const;
+
+		/**
+		 * Gets the graphic body's horizontal scroll factor.
+		 * @return Horizontal scroll factor. A value higher than 1 means the
+		 * graphic body will move faster as if it were closer to the camera,
+		 * between 1 and 0 means it will move as if it were far from the camera.
+		 */
+		float getXScrollFactor() const;
+
+		/**
+		 * Gets the graphic body's vertical scroll factor.
+		 * @return Vertical scroll factor. A value higher than 1 means the
+		 * graphic body will move faster as if it were closer to the camera,
+		 * between 1 and 0 means it will move as if it were far from the camera.
+		 */
+		float getYScrollFactor() const;
+
 		/**
 		 * Checks if the GraphicBody needs to be deleted.
 		 * @return True if the GraphicBody needs to be deleted false if not.
 		 */
 		bool isToBeDeleted() const;
+
 		/**
 		 * Checks if the layer has recently been changed and not yet updated.
 		 * @return True if the layer has recently been changed, false if not.
 		 */
 		bool isLayerChanged() const;
+
 		/**
 		 * Sets the GraphicBody to be deleted or not.
 		 * @param newToBeDeleted New value to be deleted.
 		 */
 		void setToBeDeleted(bool newToBeDeleted);
+
 		/**
 		 * Resets the layer changed status.
 		 */
 		void resetLayerChanged();
+
 		/**
 		 * Set the velocity vector
 		 */
@@ -85,6 +156,7 @@ namespace RedBox {
 		 * Set the x factor of the velocity vector.
 		 */
 		void setVelocityX(float xVelocity);
+
 		/**
 		 * Set the y factor of the velocity vector.
 		 */
@@ -94,10 +166,12 @@ namespace RedBox {
 		 * Return the velocity vector
 		 */
 		const Vec2& getVelocity();
+
 		/**
 		 * Return the x factor of the velocity vector
 		 */
 		float getVelocityX();
+
 		/**
 		 * Return the y factor of the velocity vector
 		 */

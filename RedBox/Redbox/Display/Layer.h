@@ -1,5 +1,6 @@
 /**
  * @file
+ * @ingroup Display
  */
 #ifndef RB_LAYER_H
 #define RB_LAYER_H
@@ -11,6 +12,7 @@ namespace RedBox {
 	/**
 	 * Represents a layer in a State. A layer has a z coordinate and a scroll
 	 * factor that is used for parallax scrolling.
+	 * @ingroup Display
 	 */
 	class Layer : public Object {
 	public:
@@ -63,26 +65,73 @@ namespace RedBox {
 
 		/**
 		 * Gets the layer's z coordinate.
+		 * @return Z coordinate. The higher the value the closer the layer will
+		 * be.
 		 */
 		int getZ() const;
 
 		/**
 		 * Gets the layer's scroll factor.
+		 * @return Horizontal and vertical scroll factor. A value higher than 1
+		 * means the layer will move faster as if it were closer to the camera,
+		 * between 1 and 0 means it will move as if it were far from the camera.
 		 */
 		const Vec2& getScrollFactor() const;
 
 		/**
-		 * Sets the layer's z coordinate.
+		 * Sets the graphic body's coordinate.
+		 * @param newZ New z coordinate. The higher the value closer the graphic
+		 * body will be.
 		 */
 		void setZ(int newZ);
 
 		/**
 		 * Sets the layer's scroll factor.
+		 * @param newScrollFactor New horizontal and vertical scroll factor. A
+		 * value higher than 1 means the layer will move faster as if it were
+		 * closer to the camera and between 1 and 0 means it will move as
+		 * if it were far from the camera.
 		 */
 		void setScrollFactor(const Vec2& newScrollFactor);
+
+		/**
+		 * Sets the layer's horizontal scroll factor.
+		 * @param newXScrollFactor New horizontal scroll factor. A value higher
+		 * than 1 means the layer will move faster as if it were closer to the
+		 * camera and between 1 and 0 means it will move as if it were far from
+		 * the camera.
+		 */
+		void setXScrollFactor(float newXScrollFactor);
+
+		/**
+		 * Sets the layer's vertical scroll factor.
+		 * @param newYScrollFactor New vertical scroll factor. A value higher
+		 * than 1 means the layer will move faster as if it were closer to the
+		 * camera and between 1 and 0 means it will move as if it were far from
+		 * the camera.
+		 */
+		void setYScrollFactor(float newYScrollFactor);
+
+		/**
+		 * Gets the layer's horizontal scroll factor.
+		 * @return Horizontal scroll factor. A value higher than 1 means the
+		 * layer will move faster as if it were closer to the camera, between 1
+		 * and 0 means it will move as if it were far from the camera.
+		 */
+		float getXScrollFactor() const;
+
+		/**
+		 * Gets the layer's vertical scroll factor.
+		 * @return Vertical scroll factor. A value higher than 1 means the
+		 * layer will move faster as if it were closer to the camera, between 1
+		 * and 0 means it will move as if it were far from the camera.
+		 */
+		float getYScrollFactor() const;
+
 	private:
 		/// Z coordinate. Lower value means more to the front of the camera.
 		int z;
+
 		/**
 		 * Scroll factor. Factor applied to the bodies' coordinates to have
 		 * parallax scrolling. Lower values means "farther" from the camera.

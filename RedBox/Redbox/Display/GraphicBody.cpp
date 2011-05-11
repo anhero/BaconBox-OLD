@@ -28,9 +28,42 @@ GraphicBody& GraphicBody::operator=(const GraphicBody& src) {
 const Layer& GraphicBody::getLayer() const {
 	return layer;
 }
+
 void GraphicBody::setLayer(const Layer& newLayer) {
 	layer = newLayer;
 	layerChanged = true;
+}
+
+void GraphicBody::setZ(int newZ) {
+	layer.setZ(newZ);
+}
+
+void GraphicBody::setScrollFactor(const Vec2& newScrollFactor) {
+	layer.setScrollFactor(newScrollFactor);
+}
+
+void GraphicBody::setXScrollFactor(float newXScrollFactor) {
+	layer.setXScrollFactor(newXScrollFactor);
+}
+
+void GraphicBody::setYScrollFactor(float newYScrollFactor) {
+	layer.setYScrollFactor(newYScrollFactor);
+}
+
+int GraphicBody::getZ() const {
+	return layer.getZ();
+}
+
+const Vec2& GraphicBody::getScrollFactor() const {
+	return layer.getScrollFactor();
+}
+
+float GraphicBody::getXScrollFactor() const {
+	return layer.getXScrollFactor();
+}
+
+float GraphicBody::getYScrollFactor() const {
+	return layer.getYScrollFactor();
 }
 
 bool GraphicBody::isToBeDeleted() const {
