@@ -1,10 +1,13 @@
 #include "SpriteEmitter.h"
 
 #include <cassert>
+#include <cmath>
 
 #include "Console.h"
 
 #include "Random.h"
+
+#include "RenderInfo.h"
 
 using namespace RedBox;
 
@@ -48,10 +51,38 @@ Sprite* SpriteEmitter::getDefaultSprite() {
 	return defaultSprite;
 }
 
-void SpriteEmitter::updateAlpha(float deltaAlpha, Sprite* GraphicBody) {
+void SpriteEmitter::updateAlpha(int16_t deltaAlpha, Sprite* graphicBody) {
+	if(graphicBody && graphicBody->getMainRenderInfo()) {
+		int16_t tmpAlpha = static_cast<int16_t>(graphicBody->getMainRenderInfo()->getColor().getAlpha());
+		tmpAlpha += deltaAlpha;
+		if(tmpAlpha > static_cast<int16_t>(Color::MAX_COMPONENT_VALUE)) {
+			tmpAlpha = static_cast<int16_t>(Color::MAX_COMPONENT_VALUE);
+		} else if(tmpAlpha < 0) {
+			tmpAlpha = 0;
+		}
+		Color tmpColor = graphicBody->getMainRenderInfo()->getColor();
+		tmpColor.setAlpha(static_cast<uint8_t>(tmpAlpha));
+		graphicBody->setMainColor(tmpColor);
+	}
+	/*currentAlpha += deltaAlpha;
+	if(currentAlpha > static_cast<float>(Color::MAX_COMPONENT_VALUE)) {
+		currentAlpha = static_cast<float>(Color::MAX_COMPONENT_VALUE);
+	} else if (currentAlpha < 0.0f) {
+		currentAlpha = 0.0f;
+	}
+
+	if(graphicBody) {
+		Color newColor = graphicBody->getMainRenderInfo()->getColor();
+		newColor.setAlpha(static_cast<uint8_t>(currentAlpha));
+		graphicBody->setMainColor(newColor);
+	}*/
 }
 
-void SpriteEmitter::updateScaling(float deltaScaling, Sprite* GraphicBody) {
+void SpriteEmitter::updateScaling(const Vec2& deltaScaling,
+								  Sprite* graphicBody) {
+	if(graphicBody) {
+		graphicBody->addToScaling(deltaScaling);
+	}
 }
 
 Sprite* SpriteEmitter::initParticle() {

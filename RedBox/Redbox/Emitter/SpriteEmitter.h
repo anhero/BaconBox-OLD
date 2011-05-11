@@ -40,15 +40,18 @@ namespace RedBox {
 		 * @param newDefaultSprite New default sprite
 		 */
 		SpriteEmitter(Sprite* newDefaultSprite);
+
 		/**
 		 * Copy constructor.
 		 * @param src SpriteEmitter to make a copy of.
 		 */
 		SpriteEmitter(const SpriteEmitter& src);
+
 		/**
 		 * Destructor.
 		 */
 		~SpriteEmitter();
+
 		/**
 		 * Assignation operator overloading.
 		 * @param SpriteEmitter to make a copy of.
@@ -70,25 +73,29 @@ namespace RedBox {
 	private:
 		/// Default sprite to make a copy of for each particle.
 		Sprite* defaultSprite;
+
 		/**
 		 * Updates the sprite's alpha using the given alpha to add to
 		 * the sprite's current alpha value.
 		 * @param deltaAlpha Alpha value to add to the sprite's alpha.
 		 * @param GraphicBody Sprite to have its alpha updated.
 		 */
-		void updateAlpha(float deltaAlpha, Sprite* GraphicBody);
+		void updateAlpha(int16_t deltaAlpha, Sprite* graphicBody);
+
 		/**
 		 * Updates the sprite's size using the given scaling value to add
 		 * to the sprite's size scaling.
 		 * @param deltaScaling Scaling value to add to the GraphicBody's size.
 		 * @param GraphicBody Sprite to have its size updated.
 		 */
-		void updateScaling(float deltaScaling, Sprite* GraphicBody);
+		void updateScaling(const Vec2& deltaScaling, Sprite* graphicBody);
+
 		/**
 		 * Initializes a particle's sprite and returns a pointer to it.
 		 * @return Pointer to the created sprite.
 		 */
 		Sprite* initParticle();
+
 		/**
 		 * Starts a particle with the information about its generated angle and
 		 * shooting force. If the given pointer to the sprite isn't
@@ -97,20 +104,24 @@ namespace RedBox {
 		 * the right direction with the right force.
 		 */
 		void startParticle(Sprite*& graphicBody);
+
 		/**
 		 * Updates the particle.
 		 * @param GraphicBody Pointer to the sprite to update.
 		 */
 		void updateParticle(Sprite* graphicBody);
+
 		/**
 		 * Renders the particle.
 		 * @param GraphicBody Pointer to the sprite to render.
 		 */
 		void renderParticle(Sprite* graphicBody);
+
 		/**
 		 * Cleans and resets the SpriteEmitter.
 		 */
 		void clean();
+
 		/**
 		 * Makes a copy of the recieved SpriteEmitter.
 		 * @param src SpriteEmitter to make a copy of.

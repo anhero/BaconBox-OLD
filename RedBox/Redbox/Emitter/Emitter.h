@@ -5,6 +5,8 @@
 #ifndef RB_EMITTER_H
 #define RB_EMITTER_H
 
+#include <stdint.h>
+
 #include <vector>
 
 #include "IEmitter.h"
@@ -90,24 +92,30 @@ namespace RedBox {
 					tmpState = i->state;
 					switch (i->state) {
 						case ParticleState::BIRTH:
-							updateAlpha(Engine::getSinceLastUpdate() * birthPhase.alphaPerSecond, i->graphicBody);
-							updateScaling(Engine::getSinceLastUpdate() * birthPhase.scalingPerSecond, i->graphicBody);
+							i->alphaCounter += Engine::getSinceLastUpdate() * birthPhase.alphaPerSecond;
+							updateAlpha(static_cast<int16_t>(floorf(i->alphaCounter)), i->graphicBody);
+							i->alphaCounter = fmodf(i->alphaCounter, 1.0f);
+							updateScaling(birthPhase.scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
 							if(i->timeLeft <= 0.0) {
 								i->state = ParticleState::LIFE;
 								i->timeLeft = lifePhase.phaseDuration + Random::getRandomDouble(0.0, lifePhase.phaseDurationVariance);
 							}
 							break;
 						case ParticleState::LIFE:
-							updateAlpha(Engine::getSinceLastUpdate() * lifePhase.alphaPerSecond, i->graphicBody);
-							updateScaling(Engine::getSinceLastUpdate() * lifePhase.scalingPerSecond, i->graphicBody);
+							i->alphaCounter += Engine::getSinceLastUpdate() * lifePhase.alphaPerSecond;
+							updateAlpha(static_cast<int16_t>(floorf(i->alphaCounter)), i->graphicBody);
+							i->alphaCounter = fmodf(i->alphaCounter, 1.0f);
+							updateScaling(lifePhase.scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
 							if(i->timeLeft <= 0.0) {
 								i->state = ParticleState::DYING;
 								i->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
 							}
 							break;
 						case ParticleState::DYING:
-							updateAlpha(Engine::getSinceLastUpdate() * dyingPhase.alphaPerSecond, i->graphicBody);
-							updateScaling(Engine::getSinceLastUpdate() * dyingPhase.scalingPerSecond, i->graphicBody);
+						i->alphaCounter += Engine::getSinceLastUpdate() * dyingPhase.alphaPerSecond;
+						updateAlpha(static_cast<int16_t>(floorf(i->alphaCounter)), i->graphicBody);
+						i->alphaCounter = fmodf(i->alphaCounter, 1.0f);
+							updateScaling(dyingPhase.scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
 							if(i->timeLeft <= 0.0) {
 								i->state = ParticleState::DEAD;
 								i->timeLeft = 0.0;
@@ -171,14 +179,14 @@ namespace RedBox {
 		 * @param deltaAlpha Alpha value to add to the GraphicBody's alpha.
 		 * @param GraphicBody GraphicBody to have its alpha updated.
 		 */
-		virtual void updateAlpha(float deltaAlpha, T* GraphicBody)=0;
+		virtual void updateAlpha(int16_t deltaAlpha, T* graphicBody)=0;
 		/**
 		 * Updates the GraphicBody's size using the given scaling value to add
 		 * to the GraphicBody's size scaling.
 		 * @param deltaScaling Scaling value to add to the GraphicBody's size.
 		 * @param GraphicBody GraphicBody to have its size updated.
 		 */
-		virtual void updateScaling(float deltaScaling, T* GraphicBody)=0;
+		virtual void updateScaling(const Vec2& deltaScaling, T* graphicBody)=0;
 		/**
 		 * Initializes a particle's renerable and returns a pointer to it.
 		 * @return Pointer to the created GraphicBody.
@@ -222,24 +230,27 @@ namespace RedBox {
 			Particle(T* newGraphicBody, double newTimeLeft,
 					 ParticleState::Enum newState):
 			graphicBody(newGraphicBody), timeLeft(newTimeLeft),
-			state(newState) {
+			state(newState), alphaCounter(0.0f) {
 			}
+
 			/**
 			 * Copy constructor.
 			 * @param src Particle to make a copy of.
 			 */
 			Particle(const Particle& src) : graphicBody(NULL),
-			timeLeft(src.timeLeft), state(src.state) {
+			timeLeft(src.timeLeft), state(src.state), alphaCounter(0.0f) {
 				if(src.graphicBody) {
 					graphicBody = new T(*src.graphicBody);
 				}
 			}
+
 			/**
 			 * Destructor. Frees up the memory used by the GraphicBody.
 			 */
 			~Particle() {
 				clearGraphicBody();
 			}
+
 			/**
 			 * Assignation operator overload.
 			 * @param src Particle to make a copy of.
@@ -248,12 +259,17 @@ namespace RedBox {
 				copyFrom(src);
 				return *this;
 			}
+
 			/// Pointer to the particle's GraphicBody object.
 			T* graphicBody;
+
 			/// Time left in the particle's current phase.
 			double timeLeft;
+
 			/// Flag used to know in which phase the particle is.
 			ParticleState::Enum state;
+
+			float alphaCounter;
 		private:
 			/**
 			 * Frees up all the memory used by the GraphicBody.
@@ -263,6 +279,7 @@ namespace RedBox {
 					delete graphicBody;
 				}
 			}
+
 			/**
 			 * Resets the particle.
 			 */
@@ -272,6 +289,7 @@ namespace RedBox {
 				timeLeft = 0.0;
 				state = ParticleState::DEAD;
 			}
+
 			/**
 			 * Makes a copy of the recieved particle.
 			 * @param src Particle to make a copy of.

@@ -170,6 +170,13 @@ namespace RedBox {
 		virtual void setPosition(float x, float y);
 
 		/**
+		 * Sets the GraphicBody's horizontal and vertical position.
+		 * @param newPosition New horizontal and vertical position.
+		 * @see GraphicBody::setPosition(float x, float y)
+		 */
+		void setPosition(const Vec2& newPosition);
+
+		/**
 		 * Return x position before any movement was applied (at the start of the update)
 		 */
 		float getOldXPosition();

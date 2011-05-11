@@ -43,7 +43,6 @@ namespace RedBox {
 		 */
 		virtual void render()=0;
 		
-		
 		/**
 		 * Gets the maximum number of particles.
 		 * @return Maximum number of particles an emitter can have at the

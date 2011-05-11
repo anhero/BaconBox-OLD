@@ -105,6 +105,10 @@ void GraphicBody::setPosition(float x, float y) {
 	position.setY(y);
 }
 
+void GraphicBody::setPosition(const Vec2 &newPosition) {
+	setPosition(newPosition.getX(), newPosition.getY());
+}
+
 void GraphicBody::moveX(float deltaX) {
 	position.setX(position.getX() + deltaX);
 }

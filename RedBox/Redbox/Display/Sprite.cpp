@@ -2,6 +2,8 @@
 
 #include "PlatformFlagger.h"
 
+#include <cfloat>
+
 #include "TextureInfo.h"
 #include "RenderStep.h"
 #include "ResourceManager.h"
@@ -9,7 +11,6 @@
 #include "VerticesGroup.h"
 
 using namespace RedBox;
-
 
 Sprite::Sprite(): GraphicBody() {
 }
@@ -30,7 +31,6 @@ Sprite::Sprite(const std::string& imageKey): GraphicBody(),
 		Console::Print("Tried to construct a sprite from an invalid image key: " + imageKey);
 	}
 }
-
 
 Sprite::Sprite(TextureInfo* texInfo): GraphicBody(), scaling(Vec2(1.0f, 1.0f)),
 	angle(0.0f) {
@@ -316,17 +316,56 @@ void Sprite::addAnimation(const std::string& name,
 }
 
 void Sprite::setScaling(const Vec2& newScaling) {
+	setScaling(newScaling.getX(), newScaling.getY());
 }
 
 void Sprite::setScaling(float xScaling, float yScaling) {
 	if(xScaling && yScaling) {
-		vertices.scale(Vec2(1.0f / scaling.getX(), 1.0f / scaling.getY()));
+		vertices.scale(Vec2(xScaling / scaling.getX(), yScaling / scaling.getY()));
 		scaling = Vec2(xScaling, yScaling);
-		vertices.scale(scaling);
 		Vec2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	} else {
+		Console::Print("Tried to set a scaling of 0 to a sprite.");
 	}
+}
+
+void Sprite::addToScaling(Vec2 scalingToAdd) {
+	if(scalingToAdd.getX() + scaling.getX() == 0.0f) {
+		if(scalingToAdd.getX() > 0.0f) {
+			scalingToAdd.addToX(FLT_MIN);
+		} else if (scalingToAdd.getX() < 0.0f) {
+			scalingToAdd.addToX(-FLT_MIN);
+		}
+	}
+	if(scalingToAdd.getY() + scaling.getY() == 0.0f) {
+		if(scalingToAdd.getY() > 0.0f) {
+			scalingToAdd.addToY(FLT_MIN);
+		} else if (scalingToAdd.getY() < 0.0f) {
+			scalingToAdd.addToY(-FLT_MIN);
+		}
+	}
+	vertices.scale(Vec2((scaling.getX() + scalingToAdd.getX()) / scaling.getX(),
+						(scaling.getY() + scalingToAdd.getY()) / scaling.getY()));
+}
+
+void Sprite::addToScaling(float xScaling, float yScaling) {
+	if(xScaling + scaling.getX() == 0.0f) {
+		if(xScaling > 0.0f) {
+			xScaling += FLT_MIN;
+		} else if (xScaling < 0.0f) {
+			xScaling -= FLT_MIN;
+		}
+	}
+	if(yScaling + scaling.getY() == 0.0f) {
+		if(yScaling > 0.0f) {
+			yScaling += FLT_MIN;
+		} else if (yScaling < 0.0f) {
+			yScaling -= FLT_MIN;
+		}
+	}
+	vertices.scale(Vec2((scaling.getX() + xScaling) / scaling.getX(),
+						(scaling.getY() + yScaling) / scaling.getY()));
 }
 
 void Sprite::setXScaling(float newXScaling) {

@@ -319,6 +319,9 @@ namespace RedBox {
 		 */
 		void setScaling(float xScaling, float yScaling);
 
+		void addToScaling(Vec2 scalingToAdd);
+		void addToScaling(float xScaling, float yScaling);
+
 		/**
 		 * Change the sprite's scaling.
 		 * @param xScaling New horizontal scaling to apply.

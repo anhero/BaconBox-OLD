@@ -4,6 +4,9 @@
  */
 #ifndef RB_PARTICLE_PHASE_H
 #define RB_PARTICLE_PHASE_H
+
+#include "Vec2.h"
+
 namespace RedBox {
 	/**
 	 * Represents a phase in a particle's "life".
@@ -14,6 +17,7 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		ParticlePhase();
+
 		/**
 		 * Parameterized constructor.
 		 * @param newPhaseDuration Minimum duration.
@@ -27,15 +31,19 @@ namespace RedBox {
 		ParticlePhase(double newPhaseDuration,
 					  double newPhaseDurationVariance,
 					  float newAlphaPerSecond,
-					  float newScalingPerSecond);
+					  const Vec2& newScalingPerSecond);
+
 		/// Minimum duration the phase will last.
 		double phaseDuration;
+
 		/// Variance to be added to the duration, between 0 and this value.
 		double phaseDurationVariance;
+
 		/// Alpha value being changed per second.
 		float alphaPerSecond;
+
 		/// Scaling value being changed per second.
-		float scalingPerSecond;
+		Vec2 scalingPerSecond;
 	};
 }
 #endif
