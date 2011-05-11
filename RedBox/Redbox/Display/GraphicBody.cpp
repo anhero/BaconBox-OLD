@@ -143,7 +143,6 @@ void GraphicBody::setVelocityY(float yVelocity) {
 	velocity.setY(yVelocity);
 }
 
-
 void GraphicBody::update() {
 	float ratio = Engine::getSinceLastUpdate();
 	oldPosition = position;
@@ -338,13 +337,13 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 	if(obj1Delta != obj2Delta) {
 		// We create AABBs of the old position with the updated vertical
 		// position.
-		AABB obj1AABB(object1->getOldXPosition(),
-		              object1->getOldXPosition() + object1->getWidth(),
+		AABB obj1AABB(object1->getXPosition(),
+					  object1->getXPosition() + object1->getWidth(),
 		              object1->getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)),
 		              object1->getYPosition() + object1->getHeight() + obj1DeltaAbs);
 
-		AABB obj2AABB(object2->getOldXPosition(),
-		              object2->getOldXPosition() + object2->getWidth(),
+		AABB obj2AABB(object2->getXPosition(),
+					  object2->getXPosition() + object2->getWidth(),
 		              object2->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)),
 		              object2->getYPosition() + object2->getHeight() + obj2DeltaAbs);
 

@@ -58,9 +58,9 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 				float realWidth = static_cast<float>(texInfo->imageWidth) / static_cast<float>(texInfo->poweredWidth);
 				texCoords.resize(nbFrames);
 				float offsetX = 0.0f, offsetY = 0.0f;
-				std::pair<float, float> position = vertices->getPosition();
+				Vec2 position = vertices->getPosition();
 				// We get the width and the height of the of the vertices group.
-				std::pair<float, float> size = vertices->getWidthHeight();
+				Vec2 size = vertices->getWidthHeight();
 				unsigned int tmpSize = vertices->getVertices().size(), j = 0;
 				std::list<Vertex>& tmpVertices = vertices->getVertices();
 
@@ -73,9 +73,9 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 					j = 0;
 
 					for(std::list<Vertex>::iterator j2 = tmpVertices.begin(); j2 != tmpVertices.end(); j2++) {
-						(*i)[j] = offsetX + (j2->getXPosition() - position.first / size.first) / static_cast<float>(texInfo->poweredWidth);
+						(*i)[j] = offsetX + (j2->getXPosition() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth);
 						++j;
-						(*i)[j] = offsetY + (j2->getYPosition() - position.second / size.second) / static_cast<float>(texInfo->poweredHeight);
+						(*i)[j] = offsetY + (j2->getYPosition() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight);
 						++j;
 					}
 

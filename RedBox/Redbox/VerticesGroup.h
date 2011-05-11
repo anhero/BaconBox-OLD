@@ -20,7 +20,7 @@
 namespace RedBox {
 	class Sprite;
 	/**
-	 * Group of Vertex for OpenGL and RedBox. Represents a group of vertex
+	 * Group of Vertices for OpenGL and RedBox. Represents a group of vertices
 	 * with information accessible for OpenGL and RedBox.
 	 * @ingroup Display
 	 */
@@ -38,15 +38,18 @@ namespace RedBox {
 		 * The default constructor.
 		 */
 		VerticesGroup();
+
 		/**
 		 * The copy constructor.
 		 * @param src Vertex group to make a copy of.
 		 */
 		VerticesGroup(const VerticesGroup& src);
+
 		/**
 		 * The destructor.
 		 */
 		~VerticesGroup();
+
 		/**
 		 * The assignment operator overload.
 		 * @param src Vertex group to make a copy of.
@@ -60,6 +63,7 @@ namespace RedBox {
 		 * @param y New vertex's vertical value.
 		 */
 		void addVertex(float x, float y);
+
 		/**
 		 * Adds multiple vertices. Can recieve a variable number of parameters.
 		 * @param nbVertices Number of vertices to add. Each of the following
@@ -70,24 +74,26 @@ namespace RedBox {
 		 * addVertices(4, 1.3f, 3.4f, 1.0f, 0.05f, 4.33f, 2.66f, 19.0f, 84.1f)
 		 */
 		void addVertices(unsigned int nbVertices, ...);
+
 		/**
 		 * Removes a vertex. Causes the vertices group to be rebuilt.
 		 * @param vertexToDelete Pointer to the vertex to delete.
 		 */
 		void deleteVertex(Vertex* vertexToDelete);
+
 		/**
 		 * Gets the vertices. The vertices' values are actually pointers that
 		 * point to the values in verticesData.
 		 * @return Dynamic array containing the vertices.
 		 */
 		std::list<Vertex>& getVertices();
+
 		/**
 		 * Checks if the vertices are from the instance.
 		 * @param firstVertex First vertex to check for.
 		 * @param secondVertex Second vertex to check for.
 		 */
 		bool containsVertices(Vertex* firstVertex, Vertex* secondVertex);
-
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex and
@@ -97,35 +103,63 @@ namespace RedBox {
 		 * @return First element in the pair contains the width and the second
 		 * the height.
 		 */
-		std::pair<float, float> getWidthHeight() const;
+		Vec2 getWidthHeight() const;
+
 		/**
 		 * Gets the distance between the left-most and the right-most vertex.
 		 * @return Distance between the left-most and the right-most vertex.
 		 */
 		float getWidth() const;
+
 		/**
 		 * Gets the distance between the lowest and the highest vertex.
 		 * @return Distance between the lowest and the highest vertex.
 		 */
 		float getHeight() const;
+
 		/**
 		 * Gets the horizontal position. Higher position value means it is more
 		 * to the right.
-		 * @return Horizontal position (in pixels).
+		 * @return Horizontal position (in pixels) of the left side.
 		 */
 		float getXPosition() const;
+
+		/**
+		 * Gets the center's horizontal position. Higher position value means it
+		 * is more to the right.
+		 * @return Horizontal position (in pixels) of the center.
+		 */
+		float getXPositionCenter() const;
+
 		/**
 		 * Gets the vertical position. Higher position value means it is lower
 		 * on the screen.
+		 * @return Vertical position (in pixels) of the top side.
 		 */
 		float getYPosition() const;
+
+		/**
+		 * Gets the center's horizontal position. Higher position value means it
+		 * is more to the bottom.
+		 * @return Center's horizontal position (in pixels).
+		 */
+		float getYPositionCenter() const;
+
 		/**
 		 * Gets the vertices group's position. (0, 0) is at the upper left
 		 * corner.
 		 * @return Pair containing the horizontal position and the vertical
-		 * position (in that order).
+		 * position (in that order) of the left and top side.
 		 */
-		std::pair<float, float> getPosition() const;
+		Vec2 getPosition() const;
+
+		/**
+		 * Gets the vertices group's center's position. (0, 0) is at the upper
+		 * left corner.
+		 * @return 2D Vector containing the center's horizontal position and the
+		 * vertical position (in that order).
+		 */
+		Vec2 getPositionCenter() const;
 
 		/**
 		 * Sets the horizontal position.
@@ -133,12 +167,14 @@ namespace RedBox {
 		 * new left position (in pixels).
 		 */
 		void setXPosition(float x);
+
 		/**
 		 * Sets the vertical position.
 		 * @param y New vertical position, corresponds to the verices group's
 		 * new top position (in pixels).
 		 */
 		void setYPosition(float y);
+
 		/**
 		 * Sets the horizontal and vertical position.
 		 * @param x New horizontal position, corresponds to the vertices group's
@@ -147,18 +183,21 @@ namespace RedBox {
 		 * new top position (in pixels).
 		 */
 		void setPosition(float x, float y);
+
 		/**
 		 * Move the vertices group horizontally.
 		 * @param deltaX Adds this value to the vertices group's horizontal
 		 * position.
 		 */
 		void moveX(float deltaX);
+
 		/**
 		 * Move the vertices group vertically.
 		 * @param deltaY Adds this value to the vertices group's vertical
 		 * position.
 		 */
 		void moveY(float deltaX);
+
 		/**
 		 * Move the vertices group horizontally and vertically.
 		 * @param deltaX Adds this value to the vertices group's horizontal
@@ -169,6 +208,21 @@ namespace RedBox {
 		void move(float deltaX, float deltaY);
 
 		/**
+		 * Scales the width and height of the vertices group using the center
+		 * as the anchor point.
+		 * @param factor 2D vector containing the horizontal and vertical
+		 * scaling factor to apply.
+		 */
+		void scale(const Vec2& factor);
+
+		/**
+		 * Rotates the vertices group using the center as the anchor point.
+		 * @param angle Angle used to rotate the vertices group. A positive
+		 * value rotates it counter-clockwise.
+		 */
+		void rotate(float angle);
+
+		/**
 		 * Updates the verticesData from the instance's vertices. Will not do
 		 * anything if the list of vertices has the same number of vertices as
 		 * the vertices data contains.
@@ -176,20 +230,23 @@ namespace RedBox {
 		 */
 		void updateDataFromVertices(std::vector<float>& verticesData);
 	private:
-		/// Dynamic array containing the vertexes pointing to the vertexes' data.
+		/// List containing the vertices pointing to the vertices' data.
 		std::list<Vertex> vertices;
+
 		/**
 		 * Goes through all the vertices and re-sets their pointers to floats
 		 * correctly.
 		 */
 		void resetPointers();
+
 		/**
 		 * Makes the instance a copy of the VertexGroup recieved.
-		 * @param src VertexGroup to make a copy of.
+		 * @param src VerticesGroup to make a copy of.
 		 */
 		void copyFrom(const VerticesGroup& src);
+
 		/**
-		 * Frees all memory allocated.
+		 * Frees all memory allocated by the vertices group.
 		 */
 		void clean();
 	};
