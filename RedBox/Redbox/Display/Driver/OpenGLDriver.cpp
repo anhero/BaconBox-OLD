@@ -15,21 +15,22 @@ using namespace RedBox;
 
 void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat* vertices,
 												RenderInfo& renderingInfo,
-												unsigned int nbVertices){
-	 //@TODO: Check for possible optimizations
-	const uint8_t* tempColor = renderingInfo.getColor().getComponents();
-	uint8_t color[nbVertices * 4];
-	unsigned int componentCount = nbVertices * 4;
-	for	(unsigned int i = 0; i < componentCount; i++) {
-		color[i] = tempColor[i % 4];
+												unsigned int nbVertices) {
+	if(renderingInfo.getColor().getAlpha() > 0) {
+		//@TODO: Check for possible optimizations
+		const uint8_t* tempColor = renderingInfo.getColor().getComponents();
+		uint8_t color[nbVertices * 4];
+		unsigned int componentCount = nbVertices * 4;
+		for	(unsigned int i = 0; i < componentCount; i++) {
+			color[i] = tempColor[i % 4];
+		}
+
+		glEnableClientState(GL_COLOR_ARRAY);
+		glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
+		drawShapeWithTexture(vertices, renderingInfo, nbVertices);
+
+		glDisableClientState(GL_COLOR_ARRAY);
 	}
-
-	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
-	drawShapeWithTexture(vertices, renderingInfo, nbVertices);
-	
-	glDisableClientState(GL_COLOR_ARRAY);
-
 }
 
 void OpenGLDriver::drawShapeWithTexture(GLfloat* vertices,
@@ -60,24 +61,26 @@ void OpenGLDriver::drawShapeWithTexture(GLfloat* vertices,
 void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,
 									  RenderInfo &renderingInfo,
 									  unsigned int nbVertices) {
-	const uint8_t* tempColor = renderingInfo.getColor().getComponents();
-	unsigned int componentCount = nbVertices * 4;
-	uint8_t color[componentCount];
-	for(unsigned int i = 0; i < componentCount; ++i) {
-		color[i] = tempColor[i % 4];
-	}
-	glEnableClientState(GL_COLOR_ARRAY);
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glEnable(GL_BLEND);
-	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
+	if(renderingInfo.getColor().getAlpha() > 0) {
+		const uint8_t* tempColor = renderingInfo.getColor().getComponents();
+		unsigned int componentCount = nbVertices * 4;
+		uint8_t color[componentCount];
+		for(unsigned int i = 0; i < componentCount; ++i) {
+			color[i] = tempColor[i % 4];
+		}
+		glEnableClientState(GL_COLOR_ARRAY);
+		glVertexPointer(2, GL_FLOAT, 0, vertices);
+		glEnable(GL_BLEND);
+		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
 
-	glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-	
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisable(GL_BLEND);
-	glDisableClientState(GL_COLOR_ARRAY);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisable(GL_BLEND);
+		glDisableClientState(GL_COLOR_ARRAY);
+	}
 }
 
 void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
