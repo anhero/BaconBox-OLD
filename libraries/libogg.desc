@@ -1,0 +1,13 @@
+#!/bin/bash
+
+_name="libogg"
+_license="BSD-style"
+_version="1.2.2"
+_archive="${_name}-${_version}.tar.gz"
+
+_archive_url="http://downloads.xiph.org/releases/ogg/${_archive}"
+
+_hash="5a9fcabc9a1b7c6f1cd75ddc78f36c56"
+
+load_base http.fetch
+load_base configuremakemake.build
