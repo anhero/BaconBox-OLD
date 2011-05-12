@@ -1,15 +1,17 @@
 #include "GraphicBody.h"
 #include "Engine.h"
 
+#include <cfloat>
 #include <cmath>
 
 #define RB_OVERLAP_BIAS 4
 
 using namespace RedBox;
 GraphicBody::GraphicBody() : Object(), maxVelocityX(NO_MAX_VELOCITY),
-	maxVelocityY(NO_MAX_VELOCITY), layer(Layer()), toBeDeleted(false), layerChanged(false),
-	isInState(false), collidableSides(Side::ALL), elasticity(0.0),
-	staticObject(false), drag(Vec2()) {
+	maxVelocityY(NO_MAX_VELOCITY), scaling(Vec2(1.0f, 1.0f)), angle(0.0f),
+	layer(Layer()), toBeDeleted(false), layerChanged(false), isInState(false),
+	collidableSides(Side::ALL), elasticity(0.0f), staticObject(false),
+	drag(Vec2(0.0f, 0.0f)) {
 }
 
 GraphicBody::GraphicBody(const GraphicBody& src) : Object(src) {
@@ -91,6 +93,8 @@ void GraphicBody::copyFrom(const GraphicBody& src) {
 		drag = src.drag;
 		maxVelocityX = src.maxVelocityX;
 		maxVelocityY = src.maxVelocityY;
+		scaling = src.scaling;
+		angle = src.angle;
 		layer = src.layer;
 		toBeDeleted = false;
 		layerChanged = true;
@@ -535,14 +539,81 @@ const Vec2& GraphicBody::getDrag() const {
 	return drag;
 }
 
+void GraphicBody::setScaling(const Vec2& newScaling) {
+	setScaling(newScaling.getX(), newScaling.getY());
+}
+
+void GraphicBody::setScaling(float xScaling, float yScaling) {
+	scaling.setX(xScaling);
+	scaling.setY(yScaling);
+}
+
+void GraphicBody::addToScaling(const Vec2& scalingToAdd) {
+	addToScaling(scalingToAdd.getX(), scalingToAdd.getY());
+}
+
+void GraphicBody::addToScaling(float xScaling, float yScaling) {
+	if(xScaling || yScaling) {
+		if(xScaling + scaling.getX() == 0.0f) {
+			if(xScaling > 0.0f) {
+				xScaling += FLT_MIN;
+			} else if(xScaling < 0.0f) {
+				xScaling -= FLT_MIN;
+			}
+		}
+
+		if(yScaling + scaling.getY() == 0.0f) {
+			if(yScaling > 0.0f) {
+				yScaling += FLT_MIN;
+			} else if(yScaling < 0.0f) {
+				yScaling -= FLT_MIN;
+			}
+		}
+
+		setScaling(scaling.getX() + xScaling, scaling.getY() + yScaling);
+	}
+}
+
+void GraphicBody::setXScaling(float newXScaling) {
+	setScaling(newXScaling, scaling.getY());
+}
+
+void GraphicBody::setYScaling(float newYScaling) {
+	setScaling(scaling.getX(), newYScaling);
+}
+
+const Vec2& GraphicBody::getScaling() const {
+	return scaling;
+}
+
+float GraphicBody::getXScaling() const {
+	return scaling.getX();
+}
+
+float GraphicBody::getYScaling() const {
+	return scaling.getY();
+}
+
+float GraphicBody::getAngle() const {
+	return angle;
+}
+
+void GraphicBody::setAngle(float newAngle) {
+	angle = fmodf(newAngle, 360.0f);
+}
+
+void GraphicBody::addToAngle(float angleToAdd) {
+	setAngle(angle + angleToAdd);
+}
+
 void GraphicBody::setAccelerationX(float xAccelaration) {
 	acceleration.setX(xAccelaration);
 }
+
 void GraphicBody::setAccelerationY(float yAccelaration) {
 	acceleration.setY(yAccelaration);
 
 }
-
 
 float GraphicBody::getAccelerationX() {
 	return acceleration.getX();

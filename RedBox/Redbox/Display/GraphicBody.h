@@ -254,6 +254,7 @@ namespace RedBox {
 		 * Return x position before any movement was applied (at the start of the update)
 		 */
 		float getOldXPosition();
+
 		/**
 		 * Return y position before any movement was applied (at the start of the update)
 		 */
@@ -266,6 +267,7 @@ namespace RedBox {
 		 * value moves the GraphicBody to the left.
 		 */
 		virtual void moveX(float deltaX);
+
 		/**
 		 * Moves the GraphicBody vertically.
 		 * @param deltaY Value to add to the GraphicBody's vertical position (in
@@ -273,6 +275,7 @@ namespace RedBox {
 		 * moves the GraphicBody up.
 		 */
 		virtual void moveY(float deltaY);
+
 		/**
 		 * Moves the GraphicBody horizontally and vertically.
 		 * @param deltaX Value to add to the GraphicBody's horizontal position (in
@@ -287,12 +290,16 @@ namespace RedBox {
 
 		///Set the absolute maxmimum velocity in x (Maximum velocity in both x direction)
 		void setMaxVelocityX(float xVelocity);
+
 		///Set the absolute maxmimum velocity in y (Maximum velocity in both y direction)
 		void setMaxVelocityY(float yVelocity);
+
 		///Set the absolute maxmimum velocity in x and y (Maximum velocity in both direction for both axis)
 		void setMaxVelocity(float xVelocity, float yVelocity);
+
 		///Return the absolute maximum velocity in x (Maximum velocity in both x direction)
 		float getMaxVelocityX();
+
 		///Return the absolute maximum velocity in y (Maximum velocity in both y direction)
 		float getMaxVelocityY();
 
@@ -465,6 +472,73 @@ namespace RedBox {
 		 */
 		const Vec2& getDrag() const;
 		
+		/**
+		 * Change the sprite's scaling.
+		 * @param newScaling New scaling to apply.
+		 */
+		void setScaling(const Vec2& newScaling);
+
+		/**
+		 * Change the sprite's scaling.
+		 * @param xScaling New horizontal scaling to apply.
+		 * @param yScaling New vertical scaling to apply.
+		 */
+		virtual void setScaling(float xScaling, float yScaling);
+
+		void addToScaling(const Vec2& scalingToAdd);
+		void addToScaling(float xScaling, float yScaling);
+
+		/**
+		 * Change the sprite's scaling.
+		 * @param xScaling New horizontal scaling to apply.
+		 */
+		void setXScaling(float newXScaling);
+
+		/**
+		 * Change the sprite's scaling.
+		 * @param yScaling New vertical scaling to apply.
+		 */
+		void setYScaling(float newYScaling);
+
+		/**
+		 * Get the sprite's scaling.
+		 * @return 2D vector containing the sprite's scaling currently applied.
+		 */
+		const Vec2& getScaling() const;
+
+		/**
+		 * Get the sprite's horizontal scaling.
+		 * @return Sprite's horizontal scaling currently applied.
+		 */
+		float getXScaling() const;
+
+		/**
+		 * Get the sprite's vertical scaling.
+		 * @return Sprite's vertical scaling currently applied.
+		 */
+		float getYScaling() const;
+
+		/**
+		 * Gets the sprite's current rotation angle.
+		 * @return Sprite's current rotation angle. As the angle increments, it
+		 * rotates counter-clockwise.
+		 */
+		float getAngle() const;
+
+		/**
+		 * Sets the sprite's rotation angle.
+		 * @param newAngle Sprite's new rotation angle. As the angle increments,
+		 * it makes the sprite rotate counter-clockwise.
+		 */
+		virtual void setAngle(float newAngle);
+
+		/**
+		 * Adds a value to the sprite's rotation angle.
+		 * @param angleToAdd Angle to add to the sprite's current rotation
+		 * angle. If the angle goes over 360 or under 0, it is automatically
+		 * wrapped around.
+		 */
+		void addToAngle(float angleToAdd);
 	private:
 		/**
 		 * This function will solve the collision on the x axis. It will separate the objects and
@@ -472,20 +546,23 @@ namespace RedBox {
 		 * as a parameter.
 		 * @param object1 object1 A GraphicBody object you want to collide to object2.
 		 * @param object2 A GraphicBody object you want to collide to object1
-		 * @oaram collisionData Structure containing information about the collision (see CollisionData)
+		 * @param collisionData Structure containing information about the collision (see CollisionData)
 		 * @return Return true if the two objects were colliding, false in the other case.
 		 */
-		static bool solveXCollision(GraphicBody* object1, GraphicBody* object2, CollisionData* collisionInfo);
+		static bool solveXCollision(GraphicBody* object1, GraphicBody* object2,
+									CollisionData* collisionInfo);
+
 		/**
 		 * This function will solve the collision on the y axis. It will separate the objects and
 		 * return information about the collision by return value and by seting the collisionInfo structure (passed
 		 * as a parameter.
 		 * @param object1 object1 A GraphicBody object you want to collide to object2.
 		 * @param object2 A GraphicBody object you want to collide to object1
-		 * @oaram collisionData Structure containing information about the collision (see CollisionData)
+		 * @param collisionData Structure containing information about the collision (see CollisionData)
 		 * @return Return true if the two objects were colliding, false in the other case.
 		 */
-		static bool solveYCollision(GraphicBody* object1, GraphicBody* object2, CollisionData* collisionInfo);
+		static bool solveYCollision(GraphicBody* object1, GraphicBody* object2,
+									CollisionData* collisionInfo);
 
 
 		/// Position vector
@@ -512,6 +589,15 @@ namespace RedBox {
 		/// Maximum velocity in Y
 		float maxVelocityY;
 
+		/// Sprite scaling currently applied on the X and Y axis.
+		Vec2 scaling;
+
+		/**
+		 * Rotation currently applied to the sprite (in degrees, between 0 and
+		 * 360).
+		 */
+		float angle;
+
 		/**
 		 * Contain "Side" flag (see Side.h). It tells which side can collide. A
 		 * side that can't collide will let a sprite pass through.
@@ -529,14 +615,19 @@ namespace RedBox {
 		 * true.
 		 */
 		bool staticObject;
+
 		/// The graphic body's layer.
 		Layer layer;
+
 		/// Used to know if the GraphicBody needs to be deleted.
 		bool toBeDeleted;
+
 		/// Used to know if the layer changed.
 		bool layerChanged;
+
 		/// Used to know if the GraphicBody is in a state's list of GraphicBodys.
 		bool isInState;
+
 		/**
 		 * Copies another GraphicBody.
 		 * Makes the current instance a copy of the GraphicBody received.

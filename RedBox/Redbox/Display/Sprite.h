@@ -305,12 +305,6 @@ namespace RedBox {
 						  double timePerFrame,
 						  int nbLoops,
 						  unsigned int nbFrames, ... );
-		
-		/**
-		 * Change the sprite's scaling.
-		 * @param newScaling New scaling to apply.
-		 */
-		void setScaling(const Vec2& newScaling);
 
 		/**
 		 * Change the sprite's scaling.
@@ -319,61 +313,13 @@ namespace RedBox {
 		 */
 		void setScaling(float xScaling, float yScaling);
 
-		void addToScaling(Vec2 scalingToAdd);
-		void addToScaling(float xScaling, float yScaling);
-
-		/**
-		 * Change the sprite's scaling.
-		 * @param xScaling New horizontal scaling to apply.
-		 */
-		void setXScaling(float newXScaling);
-
-		/**
-		 * Change the sprite's scaling.
-		 * @param yScaling New vertical scaling to apply.
-		 */
-		void setYScaling(float newYScaling);
-
-		/**
-		 * Get the sprite's scaling.
-		 * @return 2D vector containing the sprite's scaling currently applied.
-		 */
-		const Vec2& getScaling() const;
-
-		/**
-		 * Get the sprite's horizontal scaling.
-		 * @return Sprite's horizontal scaling currently applied.
-		 */
-		float getXScaling() const;
-
-		/**
-		 * Get the sprite's vertical scaling.
-		 * @return Sprite's vertical scaling currently applied.
-		 */
-		float getYScaling() const;
-
-		/**
-		 * Gets the sprite's current rotation angle.
-		 * @return Sprite's current rotation angle. As the angle increments, it
-		 * rotates counter-clockwise.
-		 */
-		float getAngle() const;
-
 		/**
 		 * Sets the sprite's rotation angle.
 		 * @param newAngle Sprite's new rotation angle. As the angle increments,
 		 * it makes the sprite rotate counter-clockwise.
 		 */
 		void setAngle(float newAngle);
-
-		/**
-		 * Adds a value to the sprite's rotation angle.
-		 * @param angleToAdd Angle to add to the sprite's current rotation
-		 * angle. If the angle goes over 360 or under 0, it is automatically
-		 * wrapped around.
-		 */
-		void addToAngle(float angleToAdd);
-    private:
+	private:
         /**
 		 * List containing the rendering steps. The first RenderStep in the list
 		 * is considered as the main one.
@@ -382,15 +328,6 @@ namespace RedBox {
 
         /// Vertices making up the sprite.
         VerticesGroup vertices;
-		
-		/// Sprite scaling currently applied on the X and Y axis.
-		Vec2 scaling;
-
-		/**
-		 * Rotation currently applied to the sprite (in degrees, between 0 and
-		 * 360).
-		 */
-		float angle;
 		
 		/**
 		 * Constructs the sprite using the given info.
@@ -405,8 +342,7 @@ namespace RedBox {
 		void construct(TextureInfo* texInfo,
 					   unsigned int frameWidth,
 					   unsigned int frameHeight,
-					   unsigned int nbFrames = 1
-		);
+					   unsigned int nbFrames = 1);
         /**
          * Resets the sprite. Also frees up all allocated memory.
          */

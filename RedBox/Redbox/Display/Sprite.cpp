@@ -2,8 +2,6 @@
 
 #include "PlatformFlagger.h"
 
-#include <cfloat>
-
 #include "TextureInfo.h"
 #include "RenderStep.h"
 #include "ResourceManager.h"
@@ -15,9 +13,7 @@ using namespace RedBox;
 Sprite::Sprite(): GraphicBody() {
 }
 
-
-Sprite::Sprite(const std::string& imageKey): GraphicBody(),
-	scaling(Vec2(1.0f, 1.0f)), angle(0.0f) {
+Sprite::Sprite(const std::string& imageKey): GraphicBody() {
 	TextureInfo* texInfo = ResourceManager::getTexture(imageKey);
 
 	if(texInfo) {
@@ -30,8 +26,7 @@ Sprite::Sprite(const std::string& imageKey): GraphicBody(),
 	}
 }
 
-Sprite::Sprite(TextureInfo* texInfo): GraphicBody(), scaling(Vec2(1.0f, 1.0f)),
-	angle(0.0f) {
+Sprite::Sprite(TextureInfo* texInfo): GraphicBody() {
 	if(texInfo) {
 		construct(texInfo,
 		          texInfo->imageWidth,
@@ -45,8 +40,7 @@ Sprite::Sprite(TextureInfo* texInfo): GraphicBody(), scaling(Vec2(1.0f, 1.0f)),
 Sprite::Sprite(const std::string& imageKey,
                unsigned int frameWidth,
                unsigned int frameHeight,
-               unsigned int nbFrames
-              ): GraphicBody(), scaling(Vec2(1.0f, 1.0f)), angle(0.0f) {
+			   unsigned int nbFrames): GraphicBody() {
 	construct(ResourceManager::getTexture(imageKey),
 	          frameWidth,
 	          frameHeight,
@@ -56,8 +50,7 @@ Sprite::Sprite(const std::string& imageKey,
 Sprite::Sprite(TextureInfo* texInfo,
                unsigned int frameWidth,
                unsigned int frameHeight,
-               unsigned int nbFrames
-              ): GraphicBody(), scaling(Vec2(1.0f, 1.0f)), angle(0.0f) {
+			   unsigned int nbFrames): GraphicBody() {
 	construct(texInfo,
 	          frameWidth,
 	          frameHeight,
@@ -232,8 +225,7 @@ VerticesGroup& Sprite::getVertices() {
 void Sprite::construct(TextureInfo* texInfo,
                        unsigned int frameWidth,
                        unsigned int frameHeight,
-                       unsigned int nbFrames
-                      ) {
+					   unsigned int nbFrames) {
 	if(texInfo) {
 		// Generates the square vertices from the frame width and height.
 		vertices.addVertices(4,
@@ -310,14 +302,10 @@ void Sprite::addAnimation(const std::string& name,
 	}
 }
 
-void Sprite::setScaling(const Vec2& newScaling) {
-	setScaling(newScaling.getX(), newScaling.getY());
-}
-
 void Sprite::setScaling(float xScaling, float yScaling) {
 	if(xScaling && yScaling) {
-		vertices.scale(Vec2(xScaling / scaling.getX(), yScaling / scaling.getY()));
-		scaling = Vec2(xScaling, yScaling);
+		vertices.scale(Vec2(xScaling / getXScaling(), yScaling / getYScaling()));
+		GraphicBody::setScaling(xScaling, yScaling);
 		Vec2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	} else {
@@ -325,101 +313,10 @@ void Sprite::setScaling(float xScaling, float yScaling) {
 	}
 }
 
-void Sprite::addToScaling(Vec2 scalingToAdd) {
-	if(scalingToAdd.getX() + scaling.getX() == 0.0f) {
-		if(scalingToAdd.getX() > 0.0f) {
-			scalingToAdd.addToX(FLT_MIN);
-		} else if(scalingToAdd.getX() < 0.0f) {
-			scalingToAdd.addToX(-FLT_MIN);
-		}
-	}
-
-	if(scalingToAdd.getY() + scaling.getY() == 0.0f) {
-		if(scalingToAdd.getY() > 0.0f) {
-			scalingToAdd.addToY(FLT_MIN);
-		} else if(scalingToAdd.getY() < 0.0f) {
-			scalingToAdd.addToY(-FLT_MIN);
-		}
-	}
-
-	vertices.scale(Vec2((scaling.getX() + scalingToAdd.getX()) / scaling.getX(),
-	                    (scaling.getY() + scalingToAdd.getY()) / scaling.getY()));
-}
-
-void Sprite::addToScaling(float xScaling, float yScaling) {
-	if(xScaling || yScaling) {
-		if(xScaling + scaling.getX() == 0.0f) {
-			if(xScaling > 0.0f) {
-				xScaling += FLT_MIN;
-			} else if(xScaling < 0.0f) {
-				xScaling -= FLT_MIN;
-			}
-		}
-
-		if(yScaling + scaling.getY() == 0.0f) {
-			if(yScaling > 0.0f) {
-				yScaling += FLT_MIN;
-			} else if(yScaling < 0.0f) {
-				yScaling -= FLT_MIN;
-			}
-		}
-
-		vertices.scale(Vec2((scaling.getX() + xScaling) / scaling.getX(),
-		                    (scaling.getY() + yScaling) / scaling.getY()));
-	}
-}
-
-void Sprite::setXScaling(float newXScaling) {
-	setScaling(newXScaling, scaling.getY());
-}
-
-void Sprite::setYScaling(float newYScaling) {
-	setScaling(scaling.getX(), newYScaling);
-}
-
-const Vec2& Sprite::getScaling() const {
-	return scaling;
-}
-
-float Sprite::getXScaling() const {
-	return scaling.getX();
-}
-
-float Sprite::getYScaling() const {
-	return scaling.getY();
-}
-
-float Sprite::getAngle() const {
-	return angle;
-}
-
 void Sprite::setAngle(float newAngle) {
-	if(newAngle != angle) {
-		vertices.rotate(-angle);
-		angle = newAngle;
-		vertices.rotate(angle);
-		Vec2 tmp = vertices.getPosition();
-		GraphicBody::setPosition(tmp.getX(), tmp.getY());
-	}
-}
-
-void Sprite::addToAngle(float angleToAdd) {
-	if(angleToAdd) {
-		if(angleToAdd < 0.0f) {
-			angleToAdd += 360.0f;
-		} else if(angleToAdd > 360.0f) {
-			angleToAdd -= 360.0f;
-		}
-
-		angle += angleToAdd;
-
-		if(angle < 0.0f) {
-			angle += 360.0f;
-		} else if(angle > 360.0f) {
-			angle -= 360.0f;
-		}
-
-		vertices.rotate(angleToAdd);
+	if(newAngle != getAngle()) {
+		vertices.rotate(newAngle - getAngle());
+		GraphicBody::setAngle(newAngle);
 		Vec2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	}
@@ -433,8 +330,6 @@ void Sprite::copyFrom(const Sprite& src) {
 	if(this != &src && &src) {
 		clean();
 		vertices = src.vertices;
-		scaling = src.scaling;
-		angle = src.angle;
 		renderSteps.push_front(new RenderStep(*src.renderSteps.front()));
 		renderSteps.front()->setVerticesGroup(&vertices);
 		renderSteps.front()->updateVerticesData();
