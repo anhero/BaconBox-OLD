@@ -27,6 +27,8 @@ namespace RedBox {
 		 * opacity.
 		 * @param newScalingPerSecond Scaling per second to change the
 		 * particle's size.
+		 * @param newAnglePerSecond Rotation per second to change the particle's
+		 * angle.
 		 */
 		ParticlePhase(double newPhaseDuration,
 					  double newPhaseDurationVariance,

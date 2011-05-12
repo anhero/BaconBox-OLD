@@ -45,7 +45,7 @@ namespace RedBox {
 
 		/**
 		 * Assignation operator overloading.
-		 * @param Emitter to make a copy of.
+		 * @param src Emitter to make a copy of.
 		 * @return Instance of this Emitter.
 		 */
 		Emitter& operator=(const Emitter& src) {
@@ -230,7 +230,7 @@ namespace RedBox {
 		 * Starts a particle with the information about its generated angle and
 		 * shooting force. If the given pointer to the GraphicBody isn't
 		 * initialized, it will initialize it.
-		 * @param GraphicBody GraphicBody to have its values initialized to go in
+		 * @param graphicBody GraphicBody to have its values initialized to go in
 		 * the right direction with the right force.
 		 */
 		virtual void startParticle(T*& graphicBody) = 0;
@@ -238,14 +238,14 @@ namespace RedBox {
 		/**
 		 * Updates the particle. If the pointer recieved is null, the method
 		 * will not do anything.
-		 * @param GraphicBody Pointer to the GraphicBody to update.
+		 * @param graphicBody Pointer to the GraphicBody to update.
 		 */
 		virtual void updateParticle(T* graphicBody) = 0;
 
 		/**
 		 * Renders the particle. If the pointer recieved is null, the method
 		 * will not do anything.
-		 * @param GraphicBody Pointer to the GraphicBody to render.
+		 * @param graphicBody Pointer to the GraphicBody to render.
 		 */
 		virtual void renderParticle(T* graphicBody) = 0;
 	private:
@@ -260,8 +260,10 @@ namespace RedBox {
 			}
 			/**
 			 * Parameterized constructor.
-			 * @param newSprite Pointer to the graphic used for the particle.
-			 * @param newLifespan Time remaining for the sprite to be shown.
+			 * @param newGraphicBody Pointer to the graphic used for the particle.
+			 * @param newTimeLeft Time remaining for the particle.
+			 * @param newState Particle's initial state.
+			 * @see RedBox::ParticleState::Enum
 			 */
 			Particle(T* newGraphicBody, double newTimeLeft,
 			         ParticleState::Enum newState):

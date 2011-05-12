@@ -402,9 +402,9 @@ namespace RedBox {
 		 * line parallel to the X axis (cutting the Y axis at position indicated by linePosition.
 		 * @param linePosition Position of the line on the Y axis. (If the line have no boundaries, 
 		 * it will cut the Y axis at this position.
-		 * @param lowerXboundary Lower boundary of the line (a AABB with a maxX lower than 
+		 * @param lowerXBoundary Lower boundary of the line (a AABB with a maxX lower than
 		 * this value won't collide with the line). If the value is higher than higherXBoundary, the line is infinite.
-		 * @param higherXboundary Higher boundary of the line (a AABB with a minX higher than 
+		 * @param higherXBoundary Higher boundary of the line (a AABB with a minX higher than
 		 * this value won't collide with the line). If the value is lower than lowerXBoundary, the line is infinite.
 		 * @return return true if the GraphicBody was colliding
 		 */
@@ -415,9 +415,9 @@ namespace RedBox {
 		 * line parallel to the Y axis (cutting the X axis at position indicated by linePosition.
 		 * @param linePosition Position of the line on the X axis. (If the line have no boundaries, 
 		 * it will cut the X axis at this position.
-		 * @param lowerYboundary Lower boundary of the line (a AABB with a maxY lower than 
+		 * @param lowerYBoundary Lower boundary of the line (a AABB with a maxY lower than
 		 * this value won't collide with the line). If the value is higher than higherYBoundary, the line is infinite.
-		 * @param higherYboundary Higher boundary of the line (a AABB with a minY higher than 
+		 * @param higherYBoundary Higher boundary of the line (a AABB with a minY higher than
 		 * this value won't collide with the line). If the value is lower than lowerYBoundary, the line is infinite.
 		 * @return return true if the GraphicBody was colliding
 		 */
@@ -430,9 +430,9 @@ namespace RedBox {
 		 * @param aGraphicBody The graphic body you want to collide.
 		 * @param linePosition Position of the line on the Y axis. (If the line have no boundaries, 
 		 * it will cut the Y axis at this position.
-		 * @param lowerXboundary Lower boundary of the line (a AABB with a maxX lower than 
+		 * @param lowerXBoundary Lower boundary of the line (a AABB with a maxX lower than
 		 * this value won't collide with the line). If the value is higher than higherXBoundary, the line is infinite.
-		 * @param higherXboundary Higher boundary of the line (a AABB with a minX higher than 
+		 * @param higherXBoundary Higher boundary of the line (a AABB with a minX higher than
 		 * this value won't collide with the line). If the value is lower than lowerXBoundary, the line is infinite.
 		 * @return return true if the GraphicBody was colliding
 		 */
@@ -447,9 +447,9 @@ namespace RedBox {
 		 * @param aGraphicBody The graphic body you want to collide.
 		 * @param linePosition Position of the line on the X axis. (If the line have no boundaries, 
 		 * it will cut the X axis at this position.
-		 * @param lowerYboundary Lower boundary of the line (a AABB with a maxY lower than 
+		 * @param lowerYBoundary Lower boundary of the line (a AABB with a maxY lower than
 		 * this value won't collide with the line). If the value is higher than higherYBoundary, the line is infinite.
-		 * @param higherYboundary Higher boundary of the line (a AABB with a minY higher than 
+		 * @param higherYBoundary Higher boundary of the line (a AABB with a minY higher than
 		 * this value won't collide with the line). If the value is lower than lowerYBoundary, the line is infinite.
 		 * @return return true if the GraphicBody was colliding
 		 */

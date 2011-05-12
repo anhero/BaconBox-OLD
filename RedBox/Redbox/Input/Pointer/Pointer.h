@@ -134,7 +134,7 @@ namespace RedBox {
 		/**
 		 * Checks if the specified button was just released.
 		 * @param button Button to check.
-		 * @param cursofIndex Index of the cursor to check.
+		 * @param cursorIndex Index of the cursor to check.
 		 * @return True if the button was just released, false if not.
 		 */
 		bool isButtonReleased(CursorButton::Enum button, unsigned int cursorIndex = 0) const;

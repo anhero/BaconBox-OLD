@@ -110,6 +110,8 @@ namespace RedBox {
 		 * Loads a background music.
 		 * @param key Name to give to the background music.
 		 * @param filePath Path to the music file to load.
+		 * @param overwrite Flag checked to know if the loaded music will
+		 * oerwrite the existing music if the key already exists.
 		 * @return Pointer to the loaded music, NULL if the loading failed.
 		 */
 		static MusicInfo* loadMusic(const std::string& key,

@@ -54,7 +54,7 @@ namespace RedBox {
 
 		/**
 		 * Assignation operator overloading.
-		 * @param SpriteEmitter to make a copy of.
+		 * @param src SpriteEmitter to make a copy of.
 		 * @return Instance of this SpriteEmitter.
 		 */
 		SpriteEmitter& operator=(const SpriteEmitter& src);
@@ -71,14 +71,14 @@ namespace RedBox {
 		 */
 		Sprite* getDefaultSprite();
 	private:
-		/// Default sprite to make a copy of for each particle.
+		/// Pointer to the default sprite to make a copy of for each particle.
 		Sprite* defaultSprite;
 
 		/**
 		 * Updates the sprite's alpha using the given alpha to add to
 		 * the sprite's current alpha value.
 		 * @param deltaAlpha Alpha value to add to the sprite's alpha.
-		 * @param GraphicBody Sprite to have its alpha updated.
+		 * @param graphicBody Pointer to the Sprite to have its alpha updated.
 		 */
 		void updateAlpha(int16_t deltaAlpha, Sprite* graphicBody);
 
@@ -86,7 +86,7 @@ namespace RedBox {
 		 * Updates the sprite's size using the given scaling value to add
 		 * to the sprite's size scaling.
 		 * @param deltaScaling Scaling value to add to the GraphicBody's size.
-		 * @param GraphicBody Sprite to have its size updated.
+		 * @param graphicBody Pointer to the Sprite to have its size updated.
 		 */
 		void updateScaling(const Vec2& deltaScaling, Sprite* graphicBody);
 
@@ -109,20 +109,20 @@ namespace RedBox {
 		 * Starts a particle with the information about its generated angle and
 		 * shooting force. If the given pointer to the sprite isn't
 		 * initialized, it will initialize it.
-		 * @param GraphicBody GraphicBody to have its values initialized to go in
+		 * @param graphicBody GraphicBody to have its values initialized to go in
 		 * the right direction with the right force.
 		 */
 		void startParticle(Sprite*& graphicBody);
 
 		/**
 		 * Updates the particle.
-		 * @param GraphicBody Pointer to the sprite to update.
+		 * @param graphicBody Pointer to the sprite to update.
 		 */
 		void updateParticle(Sprite* graphicBody);
 
 		/**
 		 * Renders the particle.
-		 * @param GraphicBody Pointer to the sprite to render.
+		 * @param graphicBody Pointer to the sprite to render.
 		 */
 		void renderParticle(Sprite* graphicBody);
 

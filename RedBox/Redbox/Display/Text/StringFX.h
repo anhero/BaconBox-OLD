@@ -62,10 +62,10 @@ namespace RedBox{
 		
 		/** 
 		 * Set the color of the string effect.
-		 * @oaram red Red component of the color. The range is 0 to 255.
-		 * @oaram green Green component of the color. The range is 0 to 255.
-		 * @oaram blue Blue component of the color. The range is 0 to 255.
-		 * @oaram alpha Alpha component of the color. The range is 0 to 255.
+		 * @param red Red component of the color. The range is 0 to 255.
+		 * @param green Green component of the color. The range is 0 to 255.
+		 * @param blue Blue component of the color. The range is 0 to 255.
+		 * @param alpha Alpha component of the color. The range is 0 to 255.
 		 */
 		void setColor(int red, int green, int blue, int alpha);
 		

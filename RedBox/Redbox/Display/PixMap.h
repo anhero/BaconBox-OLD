@@ -129,8 +129,8 @@ namespace RedBox {
 		 * The current pixmap must be big enough to insert the sub pixmap or a
 		 * part of the sub pixmap will be cut out.
 		 * @param subBuffer buffer of the pixmap we want to insert.
-		 * @param width Width of the sub pixmap we want to insert.
-		 * @param height Height of the sub pixmap we want to insert.
+		 * @param subWidth Width of the sub pixmap we want to insert.
+		 * @param subHeight Height of the sub pixmap we want to insert.
 		 * @param xOffset The horizontal position were we want to insert the sub
 		 * pixmap. (0 correspond to the left
 		 * side of the current pixmap.)

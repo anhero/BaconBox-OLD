@@ -22,6 +22,7 @@ namespace RedBox {
 		 * polygons constructed are always regular.
 		 * @param nbSides Number of sides the polygon will have.
 		 * @param sideLength Length the polygon will have (in points).
+		 * @param color Polygon's color when rendered.
 		 * @return Pointer to the sprite constructed.
 		 */
 		static Sprite* makePolygon(unsigned int nbSides, float sideLength,
@@ -35,7 +36,15 @@ namespace RedBox {
 		 * @return Angle in radians converted from the degrees recieved.
 		 */
 		static inline float degreeToRadian(float degree);
+
+		/**
+		 * Default unaccessible constructor. Made private so the class cannot
+		 * be instantiated.
+		 */
 		SpriteFactory();
+		/**
+		 * Destructor.
+		 */
 		~SpriteFactory();
 	};
 }

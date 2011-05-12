@@ -65,7 +65,7 @@ namespace RedBox {
 		/**
 		 * Sets the minimum number of frames per second to be rendered. Cannot
 		 * have a higher number than the number of updates per second.
-		 * @param fpsMin Minimum number of frames per second.
+		 * @param newMinFps Minimum number of frames per second.
 		 */
 		static void setMinFps(unsigned int newMinFps);
 		/**

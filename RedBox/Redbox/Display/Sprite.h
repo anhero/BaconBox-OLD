@@ -40,7 +40,8 @@ namespace RedBox {
 		/**
 		 * Simple parameterized constructor. Does the same thing as the
 		 * constructor that recieves an key.
-		 * @param Pointer to the texture information to load the sprite with.
+		 * @param texInfo Pointer to the texture information to load the sprite
+		 * with.
 		 */
 		Sprite(TextureInfo* texInfo);
 
@@ -295,7 +296,7 @@ namespace RedBox {
 		/**
 		 * Adds an animation. Accepts a variable number of parameters for each
 		 * animation frame. For example, an animation of 7 frames could be added
-		 * as such :
+		 * as such:
 		 * addAnimation("myAnimationName", 0.2, -1, 7, 0, 1, 2, 4, 3, 5, 6);
 		 * @param name Animation's name used for identification when playing it.
 		 * @param timePerFrame Time in seconds that each frame lasts during the
@@ -303,8 +304,6 @@ namespace RedBox {
 		 * @param nbLoops Number of times the animation will play before
 		 * stopping. -1 means it will loop infinitely.
 		 * @param nbFrames Number of frames the animation has.
-		 * @param firstFrame Animation's first frame's index. Each of the
-		 * other parameters are the following frame indexes.
 		 */
 		void addAnimation(const std::string& name,
 						  double timePerFrame,

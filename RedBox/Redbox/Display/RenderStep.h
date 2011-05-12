@@ -128,10 +128,11 @@ namespace RedBox {
          * @param newMode New mode to be set.
          */
         void setMode(RenderStepMode::Enum newMode);
+
         /**
          * Adds a mode with the bitwise inclusive OR. More than one mode can
          * be added at the same time using the same operator.
-         * @param New mode to add.
+		 * @param newMode New mode to add.
          */
         void addMode(RenderStepMode::Enum newMode);
 		
