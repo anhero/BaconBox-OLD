@@ -1,7 +1,6 @@
 #!/bin/bash
 
 _name="OpenGL"
-_license="TODO" 
 
 
 #Stub for linking OpenGL...
