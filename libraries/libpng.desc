@@ -1,8 +1,8 @@
 #!/bin/bash
 
 _name="libpng"
-_license="TODO" 
-#TODO: Put license in here... and also find a use for it.
+_license="libpng License" 
+
 #_version="1.5.1"
 _version="1.4.5"
 _archive="${_name}-${_version}.tar.gz"
