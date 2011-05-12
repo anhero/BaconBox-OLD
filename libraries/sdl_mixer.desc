@@ -7,7 +7,23 @@ _archive="${_name}-1.2.11.tar.gz"
 _archive_url="http://www.libsdl.org/projects/SDL_mixer/release/${_archive}"
 _hash="65ada3d997fe85109191a5fb083f248c" 
 
+# Library configuration
 config_cmdline="--with-sdl-prefix=${libs_builddir}"
+config_cmdline="$config_cmdline --enable-music-ogg=no"
+config_cmdline="$config_cmdline --enable-music-ogg-tremor=yes"
+config_cmdline="$config_cmdline --enable-music-ogg-shared=no"
+
+config_cmdline="$config_cmdline --enable-music-mod=no"
+config_cmdline="$config_cmdline --enable-music-midi=no"
+config_cmdline="$config_cmdline --enable-music-timidity-midi=no"
+config_cmdline="$config_cmdline --enable-music-native-midi=no"
+config_cmdline="$config_cmdline --enable-music-native-midi-gpl=no"
+config_cmdline="$config_cmdline --enable-music-flac=no"
+config_cmdline="$config_cmdline --enable-music-flac-shared=no"
+config_cmdline="$config_cmdline --enable-music-mp3=no"
+config_cmdline="$config_cmdline --enable-music-mp3-shared=no"
+config_cmdline="$config_cmdline --enable-music-mp3-mad-gpl=no"
+
 
 load_base http.fetch
 load_base configuremakemake.build

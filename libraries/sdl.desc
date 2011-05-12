@@ -4,7 +4,7 @@ _name="SDL"
 _license="zlib" 
 _version="1.3.0-5538"
 _archive="${_name}-${_version}.tar.bz2"
-_archive_url="http://anhero.bitbucket.org/redbox/libraries/${_archive}"
+_archive_url="http://code.anhero.net/redbox/downloads/${_archive}"
 # _archive_url="http://www.libsdl.org/tmp/${_archive}"
 _hash="1f283b8e3fbe71d753c41604723bbb02" 
 

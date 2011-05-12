@@ -1,16 +1,11 @@
 #!/bin/bash
 
 _name="freetype"
-_license="TODO" 
-#TODO: Put license in here... and also find a use for it.
+_license="FreeType License" 
 _version="2.4.4"
-#_version="2.3.12"
-#_version="2.3.6"
 _archive="${_name}-${_version}.tar.bz2"
 _archive_url="http://downloads.sourceforge.net/sourceforge/freetype/${_archive}"
 _hash="b3e2b6e2f1c3e0dffa1fd2a0f848b671" #2.4.4
-#_hash="e974a82e5939be8e05ee65f07275d7c5" #2.3.12
-#_hash="fb182d508017cb608e9df8c7dca648dc" #2.3.6
 
 config_cmdline=" --enable-static=yes --enable-shared=no"
 
