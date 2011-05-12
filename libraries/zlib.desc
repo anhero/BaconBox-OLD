@@ -1,8 +1,8 @@
 #!/bin/bash
 
 _name="zlib"
-_license="TODO" 
-#TODO: Put license in here... and also find a use for it.
+_license="zlib license" 
+
 _version="1.2.5"
 _archive="${_name}-${_version}.tar.gz"
 _archive_url="http://downloads.sourceforge.net/sourceforge/libpng/${_archive}"
@@ -31,10 +31,6 @@ function build() {
 
 	#Running on MINGW32?
 	if [ "${MSYSTEM-}" == "MINGW32" ]; then
-		export BINARY_PATH="${libs_builddir}/bin"
-		export INCLUDE_PATH="${libs_builddir}/include"
-		export LIBRARY_PATH="${libs_builddir}/lib"
-
 		echo Mingw found.
 		make -fwin32/makefile.gcc \
 		&& make -fwin32/makefile.gcc install
