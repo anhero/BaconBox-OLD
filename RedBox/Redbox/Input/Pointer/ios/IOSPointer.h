@@ -1,6 +1,6 @@
 /**
  * @file
- * @ingroup
+ * @ingroup Input
  */
 #ifndef RB_IOS_POINTER_H
 #define RB_IOS_POINTER_H

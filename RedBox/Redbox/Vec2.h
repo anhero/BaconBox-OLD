@@ -100,7 +100,7 @@ namespace RedBox {
 		/**
 		 * Sets the vector's vertical value. If isPtr is set to true, the
 		 * pointed value will be changed.
-		 * @param newX New vector's vertical value.
+		 * @param newY New vector's vertical value.
 		 */
 		void setY(float newY);
 

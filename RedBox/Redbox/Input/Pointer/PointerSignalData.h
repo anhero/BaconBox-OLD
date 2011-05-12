@@ -18,8 +18,6 @@ namespace RedBox {
 		/**
 		 * Parameterized constructor.
 		 * @param newPointerState State of the pointer that sent the signal.
-		 * @param newCursorIndex Index of the cursor that is concerned by the
-		 * signal.
 		 */
 		PointerSignalData(const PointerState& newPointerState);
 		
@@ -29,20 +27,22 @@ namespace RedBox {
 		virtual ~PointerSignalData();
 		
 		/**
-		 * Return a vector of the position of the pointer.
+		 * Gets a vector of the pointer's position.
+		 * @return 2D vector of the pointer's position.
 		 */
-		Vec2 getPosition();
+		const Vec2& getPosition() const;
 		
 		/**
-		 * Return the x value of the position of the pointer.
+		 * Gets the pointer's horizontal position.
+		 * @return Pointer's horizontal position.
 		 */
-		float getXPosition();
+		float getXPosition() const;
 		
 		/**
-		 * Return the y value of the position of the pointer.
+		 * Gets the pointer's vertical position.
+		 * @return Pointer's vertical position.
 		 */
-		float getYPosition();
-		
+		float getYPosition() const;
 		
 		/// State of the pointing device that sent the signal.
 		const PointerState& pointerState;

@@ -394,15 +394,12 @@ namespace RedBox {
 		 * @return This function return a pair, the first value is a boolean (true if the objects are colliding),
 		 * the second value is a structure containing information about the collision. See CollisionData.
 		 */
-		static std::pair<bool, CollisionData> collide(GraphicBody* object1, GraphicBody* object2);
-
-		
-		
+		static std::pair<bool, CollisionData> collide(GraphicBody* object1,
+													  GraphicBody* object2);
 		
 		/**
 		 * Collide the current GraphicBody against the given horizontal line. The line must be a flat 
 		 * line parallel to the X axis (cutting the Y axis at position indicated by linePosition.
-		 * @param aGraphicBody The graphic body you want to collide.
 		 * @param linePosition Position of the line on the Y axis. (If the line have no boundaries, 
 		 * it will cut the Y axis at this position.
 		 * @param lowerXboundary Lower boundary of the line (a AABB with a maxX lower than 
@@ -411,11 +408,11 @@ namespace RedBox {
 		 * this value won't collide with the line). If the value is lower than lowerXBoundary, the line is infinite.
 		 * @return return true if the GraphicBody was colliding
 		 */
-		bool horizLineCollide(float linePosition, float lowerXBoundary = 1.0f, float higherXBoundary = -1.0f);
+		bool horizLineCollide(float linePosition, float lowerXBoundary = 1.0f,
+							  float higherXBoundary = -1.0f);
 		/**
 		 * Collide the current GraphicBody against the given vertical line. The line must be a flat 
 		 * line parallel to the Y axis (cutting the X axis at position indicated by linePosition.
-		 * @param aGraphicBody The graphic body you want to collide.
 		 * @param linePosition Position of the line on the X axis. (If the line have no boundaries, 
 		 * it will cut the X axis at this position.
 		 * @param lowerYboundary Lower boundary of the line (a AABB with a maxY lower than 
@@ -424,7 +421,8 @@ namespace RedBox {
 		 * this value won't collide with the line). If the value is lower than lowerYBoundary, the line is infinite.
 		 * @return return true if the GraphicBody was colliding
 		 */
-		bool vertLineCollide(float linePosition, float lowerYBoundary = 1.0f, float higherYBoundary = -1.0f);
+		bool vertLineCollide(float linePosition, float lowerYBoundary = 1.0f,
+							 float higherYBoundary = -1.0f);
 
 		/**
 		 * Collide the given GraphicBody against the given horizontal line. The line must be a flat 
@@ -438,7 +436,10 @@ namespace RedBox {
 		 * this value won't collide with the line). If the value is lower than lowerXBoundary, the line is infinite.
 		 * @return return true if the GraphicBody was colliding
 		 */
-		static bool horizLineCollide(GraphicBody * aGraphicBody, float linePosition, float lowerXBoundary = 1.0f, float higherXBoundary = -1.0f);
+		static bool horizLineCollide(GraphicBody * aGraphicBody,
+									 float linePosition,
+									 float lowerXBoundary = 1.0f,
+									 float higherXBoundary = -1.0f);
 	
 		/**
 		 * Collide the given GraphicBody against the given vertical line. The line must be a flat 
@@ -452,7 +453,10 @@ namespace RedBox {
 		 * this value won't collide with the line). If the value is lower than lowerYBoundary, the line is infinite.
 		 * @return return true if the GraphicBody was colliding
 		 */
-		static bool vertLineCollide(GraphicBody * aGraphicBody, float linePosition, float lowerYBoundary = 1.0f, float higherYBoundary = -1.0f);
+		static bool vertLineCollide(GraphicBody * aGraphicBody,
+									float linePosition,
+									float lowerYBoundary = 1.0f,
+									float higherYBoundary = -1.0f);
 
 		/**
 		 * Gets an AABB from the graphic body.
@@ -465,6 +469,7 @@ namespace RedBox {
 		 * acceleration until velocity reaches 0.
 		 */
 		void setDrag(const Vec2& newDrag);
+
 		/**
 		 * Gets the drag.
 		 * @return Vec2 containing the deceleration applied when there is no
@@ -485,18 +490,31 @@ namespace RedBox {
 		 */
 		virtual void setScaling(float xScaling, float yScaling);
 
+		/**
+		 * Adds some scaling to the current scaling applied.
+		 * @param scalingToAdd 2D vector containing the horizontal and vertical
+		 * scaling to add. For example, if you pass a Vec2(0.2f, 0.0f) to a
+		 * GraphicBody that already has a scaling of Vec2(1.3f, 1.0f), the
+		 * scaling will become Vec2(1.5f, 0.0f).
+		 */
 		void addToScaling(const Vec2& scalingToAdd);
+		/**
+		 * Adds some scaling to the current scaling applied.
+		 * @param xScaling Horizontal scaling to add.
+		 * @param yScaling Vertical scaling to add.
+		 * @see RedBox::GraphicBody::addToScaling(const Vec2& scalingToAdd)
+		 */
 		void addToScaling(float xScaling, float yScaling);
 
 		/**
 		 * Change the sprite's scaling.
-		 * @param xScaling New horizontal scaling to apply.
+		 * @param newXScaling New horizontal scaling to apply.
 		 */
 		void setXScaling(float newXScaling);
 
 		/**
 		 * Change the sprite's scaling.
-		 * @param yScaling New vertical scaling to apply.
+		 * @param newYScaling New vertical scaling to apply.
 		 */
 		void setYScaling(float newYScaling);
 
@@ -546,7 +564,7 @@ namespace RedBox {
 		 * as a parameter.
 		 * @param object1 object1 A GraphicBody object you want to collide to object2.
 		 * @param object2 A GraphicBody object you want to collide to object1
-		 * @param collisionData Structure containing information about the collision (see CollisionData)
+		 * @param collisionInfo Structure containing information about the collision (see CollisionData)
 		 * @return Return true if the two objects were colliding, false in the other case.
 		 */
 		static bool solveXCollision(GraphicBody* object1, GraphicBody* object2,
@@ -558,7 +576,7 @@ namespace RedBox {
 		 * as a parameter.
 		 * @param object1 object1 A GraphicBody object you want to collide to object2.
 		 * @param object2 A GraphicBody object you want to collide to object1
-		 * @param collisionData Structure containing information about the collision (see CollisionData)
+		 * @param collisionInfo Structure containing information about the collision (see CollisionData)
 		 * @return Return true if the two objects were colliding, false in the other case.
 		 */
 		static bool solveYCollision(GraphicBody* object1, GraphicBody* object2,

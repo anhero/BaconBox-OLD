@@ -10,15 +10,15 @@ PointerSignalData::~PointerSignalData() {
 }
 
 
-Vec2 PointerSignalData::getPosition(){
+const Vec2& PointerSignalData::getPosition() const {
 	return pointerState.getCursorState().getPosition();
 }
 
 
-float PointerSignalData::getXPosition(){
+float PointerSignalData::getXPosition() const {
 	return getPosition().getX();
 }
 
-float PointerSignalData::getYPosition(){
+float PointerSignalData::getYPosition() const {
 	return getPosition().getY();
 }

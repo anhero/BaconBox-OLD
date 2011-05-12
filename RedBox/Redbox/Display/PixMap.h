@@ -29,45 +29,66 @@ namespace RedBox {
 		 * @param src PixMap to make a copy of.
 		 */
 		PixMap(const PixMap& src);
+
 		/**
 		 * Constructor.
-		 * @param width width of the PixMap.
-		 * @param height Height of the PixMap.
-		 * @param colorFormat Color format of the buffer, it default to RGBA.
+		 * @param newWidth width of the PixMap.
+		 * @param newHeight Height of the PixMap.
+		 * @param newColorFormat Color format of the buffer, it default to RGBA.
 		 * (See the ColorFormat enum)
 		 */
 		PixMap(unsigned int newWidth, unsigned int newHeight,
-		       ColorFormat newColorFormat = RGBA);
+			   ColorFormat::Enum newColorFormat = ColorFormat::RGBA);
 
 		/**
 		 * Constructor. Create the PixMap with an existing buffer.
 		 * It does not copy the buffer, it use the same one, so
 		 * don't delete the original buffer if you are still
 		 * using a pixmap object constructed by this version of the constructor.
-		 * @param buffer the buffer that will be used as pixmap.
-		 * @param width width of the PixMap.
-		 * @param height Height of the PixMap.
-		 * @param colorFormat Color format of the buffer, it default to RGBA.
+		 * @param newBuffer the buffer that will be used as pixmap.
+		 * @param newWidth width of the PixMap.
+		 * @param newHeight Height of the PixMap.
+		 * @param newColorFormat Color format of the buffer, it default to RGBA.
 		 * (See the ColorFormat enum)
 		 */
 		PixMap(uint8_t* newBuffer, unsigned int newWidth,
-		       unsigned int newHeight, ColorFormat newColorFormat = RGBA);
+			   unsigned int newHeight,
+			   ColorFormat::Enum newColorFormat = ColorFormat::RGBA);
 
-		/// Destructor
+		/**
+		 * Destructor.
+		 */
 		~PixMap();
 
+		/**
+		 * Assignation operator overload.
+		 * @param src PixMap to make a copy of.
+		 */
 		PixMap& operator=(const PixMap& src);
 
-		/// Return the width of the PixMap
+		/**
+		 * Gets the PixMap's width.
+		 * @return PixMap's width (in pixels).
+		 */
 		unsigned int getWidth() const;
 
-		/// Return the height of the PixMap
+		/**
+		 * Gets the PixMap's height.
+		 * @return PixMap's height (in pixels).
+		 */
 		unsigned int getHeight() const;
 
-		/// Return the colorFormat (See the ColorFormat enum)
-		ColorFormat getColorFormat() const;
+		/**
+		 * Gets the PixMap's color format.
+		 * @return PixMap's corlor format.
+		 * @see RedBox::ColorFormat::Enum
+		 */
+		ColorFormat::Enum getColorFormat() const;
 
-		/// Return a pointer to the first value of the array.
+		/**
+		 * Gets the buffer.
+		 * @return Pointer to the buffer's first element.
+		 */
 		uint8_t* getBuffer();
 
 		/**
@@ -95,7 +116,7 @@ namespace RedBox {
 		unsigned int height;
 
 		/// Color format of the array (See ColorFormat enum)
-		ColorFormat colorFormat;
+		ColorFormat::Enum colorFormat;
 
 		/// Pointer to the first pixel of the PixMap
 		uint8_t* buffer;

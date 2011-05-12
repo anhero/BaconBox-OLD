@@ -2,8 +2,7 @@
  * @file
  * @ingroup Audio
  */
- 
-#ifndef RB_MUSIC_INF0_H
+#ifndef RB_MUSIC_INFO_H
 #define RB_MUSIC_INFO_H
 
 #include "PlatformFlagger.h"

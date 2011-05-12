@@ -6,14 +6,14 @@
 
 using namespace RedBox;
 
-PixMap::PixMap() : Object(), width(0), height(0), colorFormat(RGBA),
+PixMap::PixMap() : Object(), width(0), height(0), colorFormat(ColorFormat::RGBA),
 	buffer(NULL) {
 }
 
 PixMap::PixMap(const PixMap& src) : Object(src), width(src.width),
 	height(src.height), colorFormat(src.colorFormat), buffer(NULL) {
 	if(src.buffer) {
-		unsigned int bufferSize = width * height * ((colorFormat == RGBA) ? (16) : (1));
+		unsigned int bufferSize = width * height * ((colorFormat == ColorFormat::RGBA) ? (16) : (1));
 		buffer = new uint8_t[bufferSize];
 
 		for(unsigned int i = 0; i < bufferSize; ++i) {
@@ -23,17 +23,17 @@ PixMap::PixMap(const PixMap& src) : Object(src), width(src.width),
 }
 
 PixMap::PixMap(unsigned int newWidth, unsigned int newHeight,
-               ColorFormat newColorFormat) : Object(), width(newWidth),
+			   ColorFormat::Enum newColorFormat) : Object(), width(newWidth),
 	height(newHeight), colorFormat(newColorFormat), buffer(NULL) {
 	width = newWidth;
 	height = newHeight;
 	colorFormat = newColorFormat;
-	buffer = new uint8_t[width* height * ((colorFormat == RGBA) ? (16) : (1))];
+	buffer = new uint8_t[width* height * ((colorFormat == ColorFormat::RGBA) ? (16) : (1))];
 }
 
 PixMap::PixMap(uint8_t* newBuffer, unsigned int newWidth,
-               unsigned int newHeight, ColorFormat newColorFormat) : Object(),
-	width(newWidth), height(newHeight), colorFormat(newColorFormat),
+			   unsigned int newHeight, ColorFormat::Enum newColorFormat) :
+	Object(), width(newWidth), height(newHeight), colorFormat(newColorFormat),
 	buffer(newBuffer) {
 }
 
@@ -54,7 +54,7 @@ PixMap& PixMap::operator=(const PixMap& src) {
 		colorFormat = src.colorFormat;
 
 		if(src.buffer) {
-			unsigned int bufferSize = width * height * ((colorFormat == RGBA) ? (16) : (1));
+			unsigned int bufferSize = width * height * ((colorFormat == ColorFormat::RGBA) ? (16) : (1));
 			buffer = new uint8_t[bufferSize];
 
 			for(unsigned int i = 0; i < bufferSize; ++i) {
@@ -73,7 +73,7 @@ unsigned int PixMap::getHeight() const {
 	return height;
 }
 
-ColorFormat PixMap::getColorFormat() const {
+ColorFormat::Enum PixMap::getColorFormat() const {
 	return colorFormat;
 }
 
@@ -108,9 +108,9 @@ void PixMap::insertSubPixMap(uint8_t* subBuffer, unsigned int subWidth,
 
 		if(maxX > baseX && maxY > baseX) {
 
-			if(colorFormat == RGBA) {
+			if(colorFormat == ColorFormat::RGBA) {
 				pixelByteCount = 4;
-			} else if(colorFormat == Alpha) {
+			} else if(colorFormat == ColorFormat::ALPHA) {
 				pixelByteCount = 1;
 			}
 

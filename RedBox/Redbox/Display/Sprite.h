@@ -91,6 +91,7 @@ namespace RedBox {
         /**
          * Assignation operator overload.
          * @param src Sprite to make a copy of.
+		 * @return Reference to the modified sprite.
          */
         Sprite& operator=(const Sprite& src);
 
@@ -113,7 +114,6 @@ namespace RedBox {
          * Creates a vertex in the vertices group.
          * @param x Horizontal position.
          * @param y Vertical position.
-		 * @param parentBody
          */
         void createVertex(float x, float y);
 		
@@ -238,7 +238,7 @@ namespace RedBox {
 
 		/**
 		 * Gets the list of RenderStep's.
-		 * @return List of RenderStep used by the sprite.
+		 * @return Reference to the list of RenderSteps used by the sprite.
 		 */
 		std::list<RenderStep*>& getRenderSteps();
 		
@@ -251,39 +251,44 @@ namespace RedBox {
 		
 		/**
 		 * Gets the vertices group.
-		 * @return The sprite's group of vertices.
+		 * @return Reference to the sprite's group of vertices.
 		 */
 		VerticesGroup& getVertices();
 
 		/**
 		 * Gets the sprite's left side's position.
+		 * @return Sprite's left side's position.
 		 */
 		float getMinX() const;
 
 		/**
 		 * Gets the sprite's right side's position.
+		 * @return Sprite's right side's position.
 		 */
 		float getMaxX() const;
 
 		/**
 		 * Gets the sprite's top side's position.
+		 * @return Sprite's top side's position.
 		 */
 		float getMinY() const;
 
 		/**
 		 * Gets the sprite's bottom side's position.
+		 * @return Sprite's bottom side's position.
 		 */
 		float getMaxY() const;
 
 		/**
-		 * Gets a pointer to the main render step's render information. If there
-		 * aren't any render steps for the sprite, NULL is returned.
+		 * Gets a pointer to the main render step's render information.
+		 * @return Pointer to the main RenderStep's render information. Returns
+		 * NULL if there aren't any RenderSteps for the sprite.
 		 */
 		RenderInfo* getMainRenderInfo();
 		
 		/**
 		 * Sets the current animation.
-		 * @param name current animation's name.
+		 * @param name Name of the animation to play.
 		 */
 		void playAnimation(const std::string& name);
 		

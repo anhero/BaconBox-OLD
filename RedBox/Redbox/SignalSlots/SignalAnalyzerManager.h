@@ -17,7 +17,10 @@ namespace RedBox {
 	 */
 	class SignalAnalyzerManager {
 	public:
-
+		/**
+		 * Gets the singleton's instance.
+		 * @return Pointer to the singleton's instance.
+		 */
 		static SignalAnalyzerManager* getInstance();
 
 		/**
@@ -25,6 +28,10 @@ namespace RedBox {
 		 * passed to the manager, the manager takes care of freeing up the
 		 * memory
 		 * @param analyzerName Name to give to the analyzer.
+		 * @param analyzer Pointer to the analyzer to add to the manager.
+		 * @param overwrite Flag checked to know if the manager has to
+		 * overwrite the signal analyzer if there is already an analyzer with
+		 * the given name.
 		 */
 		void addSignalAnalyzer(const std::string& analyzerName,
 		                       SignalAnalyzer* analyzer,

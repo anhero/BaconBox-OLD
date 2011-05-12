@@ -1,186 +1,136 @@
-#include "PlatformFlagger.h"
-
 #include "NullAudioEngine.h"
 
 #include "Console.h"
 
-#include "ResourceManager.h"
 #include "SoundInfo.h"
 #include "MusicInfo.h"
-#include "AudioState.h"
 #include "NullAudio.h"
-#include "Sound.h"
+#include "ResourceManager.h"
 
 using namespace RedBox;
 
-NullAudioEngine* NullAudioEngine::instance = NULL;
-
-NullAudioEngine* NullAudioEngine::getInstance() {
-	if(instance == NULL) {
-		instance = new NullAudioEngine();
-	}
-
-	return instance;
-}
-
 SoundFX* NullAudioEngine::getSoundFX(const std::string& key, bool survive) {
-	NullAudio* nullSound = new NullAudio();
-	SoundFX* result = nullSound;
+	NullAudio* result = new NullAudio();
 
 	if(result) {
 		SoundInfo* info = ResourceManager::getSound(key);
 
 		if(info) {
-			//nullSound->load(info->data);
-
+			Console::Print("Got a sound effect from the key: " + key +
+						   " that must " + ((survive)?(""):("not ")) +
+						   "survive.");
 		} else {
 			delete result;
-			result = new NullAudio();
-			Console::Print("Tried to get a sound effect from an invalid key: " + key);
+			result = NULL;
+			Console::Print("Tried to get a sound effect from an invalid key: " +
+						   key);
 			Console::PrintTrace();
 		}
+
 		if(!survive) {
-			sounds.push_back(result);
+			audios.push_back(result);
 		}
 	} else {
-		Console::Print("Failed to allocate memory for the new sound effect: " + key);
-			Console::PrintTrace();
-	}
-
-	return result;
-}
-BackgroundMusic* NullAudioEngine::getBackgroundMusic(const std::string& key,
-        bool survive) {
-	NullAudio* nullMusic = new NullAudio();
-	BackgroundMusic* result = nullMusic;
-
-	if(result) {
-		MusicInfo* info = ResourceManager::getMusic(key);
-
-		if(info) {
-			//nullMusic->load(info->music);
-
-		} else {
-			delete result;
-			result = new NullAudio();
-			Console::Print("Tried to get a background music from an invalid key: " + key);
-			Console::PrintTrace();
-		}
-		if(!survive) {
-			sounds.push_back(result);
-		}
-	} else {
-		Console::Print("Failed to allocate memory for the new background music: " + key);
+		Console::Print("Failed to allocate memory for the new sound effect: " +
+					   key);
 		Console::PrintTrace();
 	}
 
 	return result;
 }
 
-void NullAudioEngine::askForDisconnect() {
-	disconnect = true;
+BackgroundMusic* NullAudioEngine::getBackgroundMusic(const std::string& key,
+													 bool survive) {
+	NullAudio* result = new NullAudio();
+
+	if(result) {
+		SoundInfo* info = ResourceManager::getSound(key);
+
+		if(info) {
+			Console::Print("Got a background music from the key: " + key +
+						   " that must " + ((survive)?(""):("not ")) +
+						   "survive.");
+		} else {
+			delete result;
+			result = NULL;
+			Console::Print("Tried to get a music from an invalid key: " + key);
+			Console::PrintTrace();
+		}
+
+		if(!survive) {
+			audios.push_back(result);
+		}
+	} else {
+		Console::Print("Failed to allocate memory for the new music: " + key);
+		Console::PrintTrace();
+	}
+
+	return result;
 }
 
-NullAudioEngine::NullAudioEngine() : SoundEngine(), MusicEngine(), disconnect(false) {
-	lastFadeTick = 0;
-	lastFadeTick -= lastFadeTick % NB_TICKS_PER_FADE;
+NullAudioEngine::NullAudioEngine() : SoundEngine(), MusicEngine() {
+	Console::Print("NullAudioEngine::NullAudioEngine()");
 }
 
 void NullAudioEngine::init() {
-	Console::Print("NullAudioEngine::init();");
+	Console::Print("NullAudioEngine::init()");
 }
 
 void NullAudioEngine::update() {
-	// We update the pause/resume fading.
-	if(true) {
-		lastFadeTick += NB_TICKS_PER_FADE;
-		fadeUpdate.shoot(lastFadeTick);
-
-		if(disconnect) {
-			fadeUpdate.disconnectAll();
-		}
-	}
-
 	// For each sound (music or sound effect).
-	std::list<Sound*>::iterator i = sounds.begin();
-	while(i != sounds.end()) {
+	std::list<NullAudio*>::iterator i = audios.begin();
+	while(i != audios.end()) {
 		// We make sure the pointer is valid.
 		if(*i) {
 			if((*i)->getCurrentState() == AudioState::STOPPED) {
 				delete *i;
-				i = sounds.erase(i);
+				i = audios.erase(i);
 			} else {
 				++i;
 			}
 		} else {
 			// If the pointer is invalid (which should not happen), we remove
 			// it from the list.
-			i = sounds.erase(i);
+			i = audios.erase(i);
 		}
 	}
 }
 
 NullAudioEngine::~NullAudioEngine() {
-	Mix_CloseAudio();
+	Console::Print("NullAudioEngine::~NullAudioEngine()");
 }
 
 SoundInfo* NullAudioEngine::loadSound(const std::string& filePath) {
-	SoundInfo* result = new SoundInfo();
-	result->data = Mix_LoadWAV(filePath.c_str());
-
-	// We make sure the sound file is correctly loaded.
-	if(!result->data) {
-		// We delete the resulting sound info.
-		delete result;
-		result = NULL;
-		Console::Print("Unable to load sound effect: " + filePath + " ...");
-		Console::PrintTrace();
-	}
-
-	return result;
+	Console::Print("NullAudioEngine::loadSound(filePath: " + filePath + ")");
+	return new SoundInfo();
 }
 
 SoundInfo* NullAudioEngine::loadSound(const SoundParameters& params) {
-	return loadSound(params.path);
+	Console::Print("NullAudioEngine::loadSound(params.name: " + params.name +
+				   ")");
+	return new SoundInfo();
 }
 
 bool NullAudioEngine::unloadSound(SoundInfo* sound) {
-	if(sound && sound->data) {
-		Mix_FreeChunk(sound->data);
-	}
-
+	Console::Print("NullAudioEngine::unloadSound(sound: " +
+				   Console::ToString(sound) + ")");
 	return true;
 }
 
 MusicInfo* NullAudioEngine::loadMusic(const std::string& filePath) {
-	MusicInfo* result = new MusicInfo();
-
-	if(result) {
-		result->music = Mix_LoadMUS(filePath.c_str());
-
-		if(!result->music) {
-			delete result;
-			result = NULL;
-			Console::Print("Unable to load music file: " + filePath + "... ");
-			Console::PrintTrace();
-		}
-	} else {
-		Console::Print("Could not allocate memory for the music info for the file: " + filePath);
-		Console::PrintTrace();
-	}
-
-	return result;
+	Console::Print("NullAudioEngine::loadMusic(filePath: " + filePath + ")");
+	return new MusicInfo();
 }
 
 MusicInfo* NullAudioEngine::loadMusic(const MusicParameters& params) {
-	return loadMusic(params.filePath);
+	Console::Print("NullAudioEngine::loadMusic(params.name: " + params.name +
+				   ")");
+	return new MusicInfo();
 }
 
 bool NullAudioEngine::unloadMusic(MusicInfo* music) {
-	if(music && music->music) {
-		Mix_FreeMusic(music->music);
-	}
-
+	Console::Print("NullAudioEngine::unloadMusic(music: " +
+				   Console::ToString(music) + ")");
 	return true;
 }
 

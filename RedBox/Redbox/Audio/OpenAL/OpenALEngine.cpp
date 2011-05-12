@@ -1,3 +1,7 @@
+#include "PlatformFlagger.h"
+
+#ifdef RB_OPENAL
+
 #include "OpenALEngine.h"
 
 #include <fstream>
@@ -6,6 +10,8 @@
 #include <cassert>
 
 #include "Console.h"
+
+#include "RBOpenAL.h"
 
 #include "BitHelper.h"
 #include "WavHeader.h"
@@ -299,3 +305,5 @@ void OpenALEngine::loadWav(const std::string& filePath,
 		Console::Print("Failed to open the file: " + filePath);
 	}
 }
+
+#endif

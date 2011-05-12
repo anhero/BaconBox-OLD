@@ -12,10 +12,12 @@ Vec2::Vec2() : Object(), isPtr(false) {
 	coordsVal.x = 0.0f;
 	coordsVal.y = 0.0f;
 }
+
 Vec2::Vec2(float pX, float pY) : Object(), isPtr(false) {
 	coordsVal.x = pX;
 	coordsVal.y = pY;
 }
+
 Vec2::Vec2(float* pX, float* pY) : Object(), isPtr(true) {
 	coordsPtr.x = pX;
 	coordsPtr.y = pY;
@@ -49,11 +51,13 @@ void Vec2::setXPtr(float* newXPtr) {
 		coordsPtr.x = newXPtr;
 	}
 }
+
 void Vec2::setYPtr(float* newYPtr) {
 	if(isPtr) {
 		coordsPtr.y = newYPtr;
 	}
 }
+
 void Vec2::setX(float newX) {
 	if(isPtr) {
 		*(coordsPtr.x) = newX;
@@ -61,6 +65,7 @@ void Vec2::setX(float newX) {
 		coordsVal.x = newX;
 	}
 }
+
 void Vec2::setY(float newY) {
 	if(isPtr) {
 		*(coordsPtr.y) = newY;
@@ -88,6 +93,7 @@ void Vec2::addToY(float yToAdd) {
 bool Vec2::getIsPtr() const {
 	return isPtr;
 }
+
 void Vec2::setIsPtr(bool newIsPtr) {
 	isPtr = newIsPtr;
 }
@@ -95,21 +101,27 @@ void Vec2::setIsPtr(bool newIsPtr) {
 const Vec2 Vec2::operator*(float scalar) const {
 	return Vec2(getX() * scalar, getY() * scalar);
 }
+
 const Vec2 Vec2::operator/(float scalar) const {
 	return Vec2(getX() / scalar, getY() / scalar);
 }
+
 const Vec2 Vec2::operator+(Vec2 b) const {
 	return Vec2(getX() + b.getX(), getY() + b.getY());
 }
+
 const Vec2 Vec2::operator-(Vec2 b) const {
 	return Vec2(getX() - b.getX(), getY() - b.getY());
 }
+
 const Vec2 Vec2::operator-() const {
 	return Vec2(-getX(), -getY());
 }
+
 const float Vec2::operator*(Vec2 b) const {
 	return getX() * b.getX() + getY() * b.getY();
 }
+
 Vec2& Vec2::operator=(const Vec2& b) {
 	Object::operator=(b);
 
@@ -120,29 +132,35 @@ Vec2& Vec2::operator=(const Vec2& b) {
 
 	return *this;
 }
+
 Vec2& Vec2::operator+=(const Vec2& b) {
 	setX(getX() + b.getX());
 	setY(getY() + b.getY());
 	return *this;
 }
+
 Vec2& Vec2::operator-=(const Vec2& b) {
 	setX(getX() - b.getX());
 	setY(getY() - b.getY());
 	return *this;
 }
+
 Vec2& Vec2::operator*=(float scalar) {
 	setX(getX() * scalar);
 	setY(getY() * scalar);
 	return *this;
 }
+
 Vec2& Vec2::operator/=(float scalar) {
 	setX(getX() / scalar);
 	setY(getY() / scalar);
 	return *this;
 }
+
 bool Vec2::operator==(const Vec2& b) const {
 	return getX() == b.getX() && getY() == b.getY();
 }
+
 bool Vec2::operator!=(const Vec2& b) const {
 	return getX() != b.getX() || getY() != b.getY();
 }
@@ -150,6 +168,7 @@ bool Vec2::operator!=(const Vec2& b) const {
 float Vec2::length() const {
 	return sqrtf(getX() * getX() + getY() * getY());
 }
+
 float Vec2::lengthSq() const {
 	return getX() * getX() + getY() * getY();
 }

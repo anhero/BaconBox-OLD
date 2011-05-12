@@ -26,7 +26,7 @@
  */
 
 /**
- * @defgroup TextDisplay
+ * @defgroup TextDisplay TextDisplay
  * @ingroup Display
  */
 

@@ -67,7 +67,7 @@ namespace RedBox {
 		/**
 		 * Resumes the music with a fade in effect. Will only resume if the
 		 * sound has been paused.
-		 * @param fadeOut Time the fade in effect will last (in seconds).
+		 * @param fadeIn Time the fade in effect will last (in seconds).
 		 */
 		virtual void resume(double fadeIn) = 0;
 	protected:

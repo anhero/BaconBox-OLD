@@ -95,7 +95,7 @@ namespace RedBox {
 
 		/**
 		 * Sets the vertex's vertical position.
-		 * @param xPos Vertex's new vertical position.
+		 * @param yPos Vertex's new vertical position.
 		 */
 		void setYPosition(float yPos);
 	private:

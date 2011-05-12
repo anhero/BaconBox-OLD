@@ -92,7 +92,7 @@ Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
 //			}
 //		}
 //		
-		PixMap * aPixMap = new PixMap(currentBitmapGlyph->bitmap.buffer, glyphWidth, glyphHeight, Alpha);
+		PixMap * aPixMap = new PixMap(currentBitmapGlyph->bitmap.buffer, glyphWidth, glyphHeight, ColorFormat::ALPHA);
 		aGlyph->setTextureInfo(ResourceManager::addTexture(key.str(), aPixMap));
 		aGlyph->setHoriAdvance(font->glyph->advance.x >> 6);
 		

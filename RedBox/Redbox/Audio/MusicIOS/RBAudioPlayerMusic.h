@@ -24,12 +24,14 @@ namespace RedBox {
 	public:
 		/**
 		 * Plays the music a given number of times.
-		 * @param nbTimes Number of times the sound will be played in loop. A
+		 * @param nbTimes Number of times the music will be played in loop. A
 		 * negative number is for infinite looping.
 		 */
 		void play(int nbTimes = -1);
 		/**
 		 * Same as the usual play method, but with a fade in effect.
+		 * @param nbTimes Number of times the music will be played in loop. A
+		 * negative number is for infinite looping.
 		 * @param fadeIn Time the fade in effect will last (in seconds).
 		 */
 		void play(int nbTimes, double fadeIn = 0.0);

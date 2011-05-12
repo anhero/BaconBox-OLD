@@ -196,7 +196,7 @@ namespace RedBox {
 		 * @param deltaY Adds this value to the vertices group's vertical
 		 * position.
 		 */
-		void moveY(float deltaX);
+		void moveY(float deltaY);
 
 		/**
 		 * Move the vertices group horizontally and vertically.

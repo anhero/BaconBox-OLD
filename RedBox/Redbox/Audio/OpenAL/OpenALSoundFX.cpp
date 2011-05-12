@@ -1,10 +1,13 @@
-#include "OpenALSoundFX.h"
+#include "PlatformFlagger.h"
 
-#include "OpenALEngine.h"
+#ifdef RB_OPENAL
+
+#include "OpenALSoundFX.h"
 
 #include <cassert>
 
-#include "Debug.h"
+#include "Console.h"
+#include "OpenALEngine.h"
 
 using namespace RedBox;
 
@@ -86,3 +89,4 @@ void OpenALSoundFX::load(ALuint bufferId) {
 	alSourcei(sourceId, AL_BUFFER, bufferId);
 }
 
+#endif

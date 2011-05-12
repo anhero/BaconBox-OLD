@@ -46,7 +46,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the buttonPress signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectButtonPress(desttype* pclass, void (desttype::*pmemfun)(PointerButtonSignalData)) {
@@ -59,7 +59,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the buttonHold signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectButtonHold(desttype* pclass, void (desttype::*pmemfun)(PointerButtonSignalData)) {
@@ -72,7 +72,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the buttonRelease signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectButtonRelease(desttype* pclass, void (desttype::*pmemfun)(PointerButtonSignalData)) {
@@ -85,7 +85,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the buttonPress signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectMove(desttype* pclass, void (desttype::*pmemfun)(PointerMoveSignalData)) {
@@ -97,7 +97,7 @@ namespace RedBox {
 
 		/**
 		 * Gets the cursor's position.
-		 * @param Index of the cursor to check.
+		 * @param cursorIndex Index of the cursor to check.
 		 * @return Cursor's position.
 		 */
 		const Vec2& getPosition(unsigned int cursorIndex = 0) const;
@@ -117,15 +117,16 @@ namespace RedBox {
 		/**
 		 * Checks if the specified button was just pressed.
 		 * @param button Button to check.
-		 * @param Index of the cursor to check.
+		 * @param cursorIndex Index of the cursor to check.
 		 * @return True if the button was just pressed, false if not.
 		 */
-		bool isButtonPressed(CursorButton::Enum button, unsigned int cursorIndex = 0) const;
+		bool isButtonPressed(CursorButton::Enum button,
+							 unsigned int cursorIndex = 0) const;
 
 		/**
 		 * Checks if the specified button is being held down.
 		 * @param button Button to check.
-		 * @param Index of the cursor to check.
+		 * @param cursorIndex Index of the cursor to check.
 		 * @return True if the button is being held down, false if not.
 		 */
 		bool isButtonHeld(CursorButton::Enum button, unsigned int cursorIndex = 0) const;
@@ -133,7 +134,7 @@ namespace RedBox {
 		/**
 		 * Checks if the specified button was just released.
 		 * @param button Button to check.
-		 * @param Index of the cursor to check.
+		 * @param cursofIndex Index of the cursor to check.
 		 * @return True if the button was just released, false if not.
 		 */
 		bool isButtonReleased(CursorButton::Enum button, unsigned int cursorIndex = 0) const;

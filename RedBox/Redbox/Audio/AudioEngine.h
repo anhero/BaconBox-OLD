@@ -59,6 +59,7 @@ namespace RedBox {
 		 * @param key Name of the music resource to play.
 		 * @param nbTimes Number of times to play the music (-1 for infinite
 		 * looping).
+		 * @param fadeIn Time the music takes to fade in to full volume.
 		 */
 		static void playBackgroundMusic(const std::string& key,
 										int nbTimes = -1,
@@ -68,15 +69,18 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		AudioEngine();
+
 		/**
 		 * Initializes the audio engine. Called by the static functions that
 		 * load the audio engines.
 		 */
 		virtual void init() = 0;
+
 		/**
 		 * Updates the necessary informations for the audio engine.
 		 */
 		virtual void update() = 0;
+
 		/**
 		 * Destructor. The audio engine can only be destroyed by the resource
 		 * manager.
@@ -85,8 +89,10 @@ namespace RedBox {
 	private:
 		/// Pointer to the sound engine singleton.
 		static SoundEngine* soundEngine;
+
 		/// Pointer to the music engine singleton.
 		static MusicEngine* musicEngine;
+
 		/**
 		 * Unloads the audio engines. Must be called after the resource manager
 		 * has unloaded everything related to the audio engine.

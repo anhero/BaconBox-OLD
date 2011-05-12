@@ -7,15 +7,18 @@
 #define RB_COLORFORMAT_H
 
 namespace RedBox{
-	/** 
-	 * Enum type representing the color component format.
-	 * Used internally to interpret buffers values.
-     * @ingroup Display
-     */
-	enum ColorFormat{
-		RGBA,
-		Alpha
-	};
+
+	namespace ColorFormat {
+		/**
+		 * Enum type representing the color component format.
+		 * Used internally to interpret buffers values.
+		 * @ingroup Display
+		 */
+		enum Enum {
+			RGBA,
+			ALPHA
+		};
+	}
 }
 
 #endif

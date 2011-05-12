@@ -156,10 +156,10 @@ TextureInfo * OpenGLDriver::loadTexture(PixMap * pixMap){
 	
 	GLint format;
 	
-	if(pixMap->getColorFormat() == RGBA){
+	if(pixMap->getColorFormat() == ColorFormat::RGBA){
 		format = GL_RGBA;
 	}
-	else if (pixMap->getColorFormat() == Alpha) {
+	else if (pixMap->getColorFormat() == ColorFormat::ALPHA) {
 		format = GL_ALPHA;
 	}
 	

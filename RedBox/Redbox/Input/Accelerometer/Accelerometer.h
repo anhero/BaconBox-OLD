@@ -29,7 +29,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the buttonPress signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectChange(desttype* pclass, void (desttype::*pmemfun)(AccelerometerSignalData)) {

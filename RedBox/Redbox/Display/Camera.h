@@ -59,7 +59,7 @@ namespace RedBox{
 
 		/**
 		 * Move the camera vertically.
-		 * @param x Number of pixels to move the camera vertically.
+		 * @param y Number of pixels to move the camera vertically.
 		 */
 		void moveY(float y);
 		

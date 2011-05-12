@@ -1,6 +1,6 @@
 /**
  * @file
- * @input
+ * @ingroup Input
  */
 #ifndef RB_GAME_PAD_RB
 #define RB_GAME_PAD_RB
@@ -35,7 +35,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the buttonPress signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectButtonPress(desttype* pclass, void (desttype::*pmemfun)(GamePadButtonSignalData)) {
@@ -48,7 +48,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the buttonHold signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectButtonHold(desttype* pclass, void (desttype::*pmemfun)(GamePadButtonSignalData)) {
@@ -61,7 +61,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the buttonRelease signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectButtonRelease(desttype* pclass, void (desttype::*pmemfun)(GamePadButtonSignalData)) {
@@ -74,7 +74,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the thumbstickMove signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectThumbStickMove(desttype* pclass, void (desttype::*pmemfun)(GamePadThumbstickSignalData)) {

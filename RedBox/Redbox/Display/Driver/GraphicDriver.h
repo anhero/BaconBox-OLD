@@ -27,7 +27,6 @@ namespace RedBox{
 		 * number of vertices. Color information will blend with the texture
 		 * (and background if alpha is not at max value of 255).
          * @param vertices Vertices to draw.
-         * @param textCoordArray Array of texture coordinate, every value must be in the range 0 to 1.
          * @param renderingInfo Object of type RenderInfo, containing colors array and textureID
          * @param nbVertices Number equal to the number of vertices to draw
          */
@@ -39,7 +38,6 @@ namespace RedBox{
 		 * rendering informations (colors array and textureID) and number of
 		 * vertices.
          * @param vertices Vertices to draw.
-         * @param textCoordArray Array of texture coordinate, every value must be in the range 0 to 1.
          * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
          * @param nbVertices Number equal to the number of vertices to draw.
          */
@@ -80,8 +78,20 @@ namespace RedBox{
 		 */
 		static void initializeGraphicDriver(int screenWidth, int screenHeight);
 		
+		/**
+		 * Pushes the current matrix on the stack.
+		 */
 		static void pushMatrix();
+
+		/**
+		 * Applies a translation on the current matrix.
+		 * @param translation 2D translation to apply.
+		 */
 		static void translate(const Vec2& translation);
+
+		/**
+		 * Pops the current matrix from the stack.
+		 */
 		static void popMatrix();
 		
 		/**

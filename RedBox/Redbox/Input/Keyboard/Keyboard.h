@@ -55,7 +55,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the keyPress signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectKeyPress(desttype* pclass, void (desttype::*pmemfun)(KeySignalData)) {
@@ -68,7 +68,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the keyHold signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectKeyHold(desttype* pclass, void (desttype::*pmemfun)(KeySignalData)) {
@@ -81,7 +81,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the keyRelease signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectKeyRelease(desttype* pclass, void (desttype::*pmemfun)(KeySignalData)) {
@@ -94,7 +94,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the keyMaskPress signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectKeyMaskPress(desttype* pclass, void (desttype::*pmemfun)(KeyMaskSignalData)) {
@@ -107,7 +107,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the keyMaskHold signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectKeyMaskHold(desttype* pclass, void (desttype::*pmemfun)(KeyMaskSignalData)) {
@@ -120,7 +120,7 @@ namespace RedBox {
 		/**
 		 * Connect a function callback to the keyMaskRelease signal.
 		 * @param pclass Pointer to the instance concerned by the signal.
-		 * @param pmemfum Pointer to the function to call.
+		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
 		static void connectKeyMaskRelease(desttype* pclass, void (desttype::*pmemfun)(KeyMaskSignalData)) {

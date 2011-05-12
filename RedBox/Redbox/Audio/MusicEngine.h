@@ -64,7 +64,7 @@ namespace RedBox {
 		virtual MusicInfo* loadMusic(const MusicParameters& params) = 0;
 		/**
 		 * Unloads music data.
-		 * @param sound Sound data that needs to be unloaded. Delete must not be
+		 * @param music Music data that needs to be unloaded. Delete must not be
 		 * called on it, the resource manager that calls this function takes
 		 * care of that.
 		 * @return True if the unloading was successful, false if not.
