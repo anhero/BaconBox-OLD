@@ -119,15 +119,15 @@ void Engine::pulse() {
 			// We call the focus methods if needed.
 			if(currentState != lastState) {
 				if(lastState) {
-					lastState->onLoseFocus();
+					lastState->internalOnLoseFocus();
 				}
 
-				currentState->onGetFocus();
+				currentState->internalOnGetFocus();
 			}
 
 			lastState = currentState;
 			// We update the current state.
-			currentState->update();
+			currentState->internalUpdate();
 			renderedSinceLastUpdate = false;
 			// We update the input manager.
 			InputManager::getInstance().update();
@@ -139,7 +139,7 @@ void Engine::pulse() {
 		}
 
 		if(!renderedSinceLastUpdate) {
-			currentState->render();
+			currentState->internalRender();
 			renderedSinceLastUpdate = true;
 			bufferSwapped = false;
 		}

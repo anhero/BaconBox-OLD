@@ -25,14 +25,22 @@ namespace RedBox {
 		friend class Engine;
 	public:
 		/**
-		 * Default constructor.
+		 * Default name given to states initialized with the default
+		 * constructor.
 		 */
-		State();
+		static const std::string DEFAULT_NAME;
+
+		/**
+		 * Simple parameterized constructor and default constructor.
+		 * @param newName Initial name to give to the state.
+		 */
+		State(const std::string& newName = DEFAULT_NAME);
 
 		/**
 		 * Destructor.
 		 */
 		virtual ~State();
+
 		/**
          * Adds a GraphicBody object to the multimap to begin rendering and
 		 * updating it. Once a GraphicBody is added with this function, it is
@@ -42,19 +50,23 @@ namespace RedBox {
 		 * GraphicBodys.
          */
 		void addGraphicBody(GraphicBody* aGraphicBody);
+
 		/**
          * Renders all the objects that need to be rendered.
          */
         virtual void render();
+
 		/**
          * Deletes, Updates and moves all concerns objects.
          */
         virtual void update();
+
 		/**
 		 * Gets the state's name.
 		 * @return State's name.
 		 */
 		const std::string& getName() const;
+
 		/**
 		 * Sets the state's name.
 		 * @param newName State's new name.
@@ -74,12 +86,14 @@ namespace RedBox {
 		const Color& getBackgroundColor() const;
 
 	protected:
-		///The camera object which prepare the scene before rendering any object.
+		/// The camera object which prepare the scene before rendering any object.
 		Camera camera;
+
 		/**
 		 * Method called by the engine when the state gets called to be played.
 		 */
 		virtual void onGetFocus();
+
 		/**
 		 * Method called by the engine when the state is not the current state
 		 * anymore.
@@ -105,6 +119,30 @@ namespace RedBox {
 		 * @param aGraphicBody Pointer to the GraphicBody to add.
 		 */
 		void addGraphicBodyDirect(GraphicBody* aGraphicBody);
+
+		/**
+		 * Private update method called by the Engine class.
+		 * @see RedBox::Engine
+		 */
+		void internalUpdate();
+
+		/**
+		 * Private render method called by the Engine class.
+		 * @see RedBox::Engine
+		 */
+		void internalRender();
+
+		/**
+		 * Private onGetFocus method called by the Engine class.
+		 * @see RedBox::Engine
+		 */
+		void internalOnGetFocus();
+
+		/**
+		 * Private onLoseFocus method called by the Engine class.
+		 * @see RedBox::Engine
+		 */
+		void internalOnLoseFocus();
 	};
 }
 #endif
