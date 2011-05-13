@@ -53,10 +53,6 @@ while [ $# -gt 0 ];do
 				export SDKVER="${1}"
 			fi
 			;;
-		"--build-system"|"--generator"|"-G")
-			shift;
-			generator="${1}"
-			;;
 		*)
       		params="${params}${1}"
 		esac
