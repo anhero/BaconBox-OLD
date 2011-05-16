@@ -160,33 +160,6 @@ namespace RedBox {
 		void setPosition(float x, float y);
 
 		/**
-		 * Moves the sprite horizontally.
-		 * @param deltaX Value to add to the sprite's horizontal position (in
-		 * pixels). Positive value moves the sprite to the right and a negative
-		 * value moves the sprite to the left.
-		 */
-		void moveX(float deltaX);
-
-		/**
-		 * Moves the sprite vertically.
-		 * @param deltaY Value to add to the sprite's vertical position (in
-		 * pixels). Positive value moves the sprite down and a negative value
-		 * moves the sprite up.
-		 */
-		void moveY(float deltaY);
-
-		/**
-		 * Moves the sprite horizontally and vertically.
-		 * @param deltaX Value to add to the sprite's horizontal position (in
-		 * pixels). Positive value moves the sprite to the right and a negative
-		 * value moves the sprite to the left.
-		 * @param deltaY Value to add to the sprite's vertical position (in
-		 * pixels). Positive value moves the sprite down and a negative value
-		 * moves the sprite up.
-		 */
-		void move(float deltaX, float deltaY);
-		
-		/**
 		 * Gets the sprite's width.
 		 * @return Sprite's width.
 		 */
@@ -203,7 +176,7 @@ namespace RedBox {
 		 * @return Pair containing the sprite's width and height. The first
 		 * member is the width and the second is the height.
 		 */
-		Vec2 getWidthHeight() const;
+		const Vec2 getWidthHeight() const;
 		
 		/**
 		 * Adds a rendering step. Does nothing if the recieved pointer is NULL.

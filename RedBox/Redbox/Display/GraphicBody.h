@@ -22,37 +22,46 @@ namespace RedBox {
 	class GraphicBody : public Object {
 		friend class State;
 	public:
+		/// Value used to represent an infinite maximum velocity.
 		static const float NO_MAX_VELOCITY = -1.0f;
+
 		/**
 		 * The default constructor.
 		 */
 		GraphicBody();
+
 		/**
 		 * The copy constructor.
 		 * @param src The GraphicBody to make a copy of.
 		 */
 		GraphicBody(const GraphicBody& src);
+
 		/**
 		 * The destructor.
 		 */
 		virtual ~GraphicBody();
+
 		/**
 		 * The assignment operator overload.
 		 * @param src The GraphicBody to make a copy of.
 		 */
 		GraphicBody& operator=(const GraphicBody& src);
+
 		/**
 		 * Updates the GraphicBody.
 		 */
 		virtual void update();
+
 		/**
 		 * Renders the GraphicBody.
 		 */
 		virtual void render() = 0;
+
 		/**
 		 * Gets the layer.
 		 */
 		const Layer& getLayer() const;
+
 		/**
 		 * Sets the layer.
 		 */
@@ -148,92 +157,120 @@ namespace RedBox {
 		void resetLayerChanged();
 
 		/**
-		 * Set the velocity vector
+		 * Sets the graphic body's velocity.
+		 * @param newVelocity New horizontal and vertical velocity.
 		 */
-		void setVelocity(const Vec2& velocity);
+		void setVelocity(const Vec2& newVelocity);
 
 		/**
-		 * Set the x factor of the velocity vector.
+		 * Sets the graphic body's horizontal and vertical velocity.
+		 * @param newXVelocity New horizontal velocity (in pixels per second).
+		 * @param newYVelocity New vertical velocity (in pixels per second).
 		 */
-		void setVelocityX(float xVelocity);
+		void setVelocity(float newXVelocity, float newYVelocity);
 
 		/**
-		 * Set the y factor of the velocity vector.
+		 * Sets the horizontal velocity.
+		 * @param newXVelocity New horizontal velocity (in pixels per second).
 		 */
-		void setVelocityY(float yVelocity);
+		void setXVelocity(float newXVelocity);
 
 		/**
-		 * Return the velocity vector
+		 * Sets the vertical velocity.
+		 * @param newYVelocity New vertical velocity (in pixels per second).
 		 */
-		const Vec2& getVelocity();
+		void setYVelocity(float newYVelocity);
 
 		/**
-		 * Return the x factor of the velocity vector
+		 * Gets the horizontal and vertical velocity.
+		 * @return 2D vector containing the graphic body's horizontal and
+		 * vertical velocity.
 		 */
-		float getVelocityX();
+		const Vec2& getVelocity() const;
 
 		/**
-		 * Return the y factor of the velocity vector
+		 * Gets the graphic body's horizontal velocity.
+		 * @return Horizontal velocity (in pixels per second).
 		 */
-		float getVelocityY();
+		float getXVelocity() const;
 
 		/**
-		 * Set the acceleration vector
+		 * Gets the graphic body's vertical velocity.
+		 * @return Vertical velocity (in pixels per second).
 		 */
-		void setAcceleration(const Vec2& acceleration);
+		float getYVelocity() const;
 
 		/**
-		 * Set the x factor of the accelaration vector.
+		 * Sets the graphic body's horizontal and vertical acceleration.
+		 * @param newAcceleration New horizontal and vertical acceleration.
 		 */
-		void setAccelerationX(float xAccelaration);
+		void setAcceleration(const Vec2& newAcceleration);
 
 		/**
-		 * Set the y factor of the accelaration vector.
+		 * Sets the graphic body's horizontal and vertical acceleration.
+		 * @param newXAcceleration New horizontal acceleration.
+		 * @param newYAcceleration New vertical acceleration.
 		 */
-		void setAccelerationY(float yAccelaration);
+		void setAcceleration(float newXAcceleration, float newYAcceleration);
 
 		/**
-		 * Return the acceleration vector
+		 * Sets the graphic body's horizontal acceleration.
+		 * @param newXAcceleration New horizontal acceleration.
 		 */
-		const Vec2& getAcceleration();
+		void setXAcceleration(float newXAcceleration);
 
 		/**
-		 * Return the x factor of the acceleration vector
+		 * Sets the graphic body's vertical acceleration.
+		 * @param newYAcceleration New vertical acceleration.
 		 */
-		float getAccelerationX();
+		void setYAcceleration(float newYAcceleration);
 
 		/**
-		 * Return the y factor of the acceleration vector
+		 * Gets the graphic body's horizontal and vertical acceleration.
+		 * @return 2D vector containing the graphic body's horizontal and
+		 * vertical acceleration.
 		 */
-		float getAccelerationY();
+		const Vec2& getAcceleration() const;
+
+		/**
+		 * Gets the graphic body's horizontal acceleration.
+		 * @return Horizontal acceleration.
+		 */
+		float getXAcceleration() const;
+
+		/**
+		 * Gets the graphic body's vertical acceleration.
+		 * @return Vertical acceleration.
+		 */
+		float getYAcceleration() const;
+
+		/**
+		 * Gets the graphic body's horizontal and vertical position.
+		 * @return 2D vector containing the horizontal and vertical position.
+		 */
+		const Vec2& getPosition() const;
 
 		/**
 		 * Gets the GraphicBody's horizontal position.
 		 * @return Horizontal position (in pixels). Lower value means more to
 		 * the left.
 		 */
-		virtual float getXPosition() const;
+		float getXPosition() const;
+
 		/**
 		 * Gets the GraphicBody's vertical position.
 		 * @return Vertical position (in pixels). Lower value means more at the
 		 * top.
 		 */
-		virtual float getYPosition() const;
-
-		virtual const Vec2& getPosition() const;
+		float getYPosition() const;
 
 		/**
-		 * Sets the GraphicBody's horizontal position.
-		 * @param x New horizontal position (in pixels). Lower value means more
-		 * to the left.
+		 * Sets the GraphicBody's horizontal and vertical position.
+		 * @param newPosition New horizontal and vertical position.
+		 * @see GraphicBody::setPosition(float x, float y)
 		 */
-		virtual void setXPosition(float x);
-		/**
-		 * Sets the GraphicBody's horizontal position.
-		 * @param y New vertical position (in pixels). Lower value means more at
-		 * the top.
-		 */
-		virtual void setYPosition(float y);
+		void setPosition(const Vec2& newPosition);
+
 		/**
 		 * Sets the GraphicBody's horizontal and vertical position.
 		 * @param x New horizontal position (in pixels). Lower value means more
@@ -244,64 +281,123 @@ namespace RedBox {
 		virtual void setPosition(float x, float y);
 
 		/**
-		 * Sets the GraphicBody's horizontal and vertical position.
-		 * @param newPosition New horizontal and vertical position.
-		 * @see GraphicBody::setPosition(float x, float y)
+		 * Sets the GraphicBody's horizontal position.
+		 * @param x New horizontal position (in pixels). Lower value means more
+		 * to the left.
 		 */
-		void setPosition(const Vec2& newPosition);
+		virtual void setXPosition(float x);
 
 		/**
-		 * Return x position before any movement was applied (at the start of the update)
+		 * Sets the graphic body's horizontal position.
+		 * @param y New vertical position (in pixels). Lower value means more at
+		 * the top.
 		 */
-		float getOldXPosition();
+		virtual void setYPosition(float y);
 
 		/**
-		 * Return y position before any movement was applied (at the start of the update)
+		 * Gets the graphic body's horizontal and vertical old position.
+		 * @return 2D vector containing the last position calculated.
 		 */
-		float getOldYPosition();
+		const Vec2& getOldPosition() const;
+
+		/**
+		 * Gets the horizontal position before any movement was applied (at the
+		 * start of the update).
+		 * @return Last horizontal position calculated.
+		 */
+		float getOldXPosition() const;
+
+		/**
+		 * Gets the vertical position before any movement was applied (at the
+		 * start of the update).
+		 * @return Last vertical position calculated.
+		 */
+		float getOldYPosition() const;
+
+		/**
+		 * Moves the GraphicBody horizontally and vertically.
+		 * @param delta 2D vector to add to the GraphicBody's position (in
+		 * pixels).
+		 * @see RedBox::GraphicBody::move(float deltaX, float deltaY)
+		 */
+		void move(const Vec2& delta);
+
+		/**
+		 * Moves the GraphicBody horizontally and vertically.
+		 * @param deltaX Value to add to the GraphicBody's horizontal position
+		 * (in pixels). Positive value moves the GraphicBody to the right and a
+		 * negative value moves the GraphicBody to the left.
+		 * @param deltaY Value to add to the GraphicBody's vertical position (in
+		 * pixels). Positive value moves the GraphicBody down and a negative
+		 * value moves the GraphicBody up.
+		 */
+		void move(float deltaX, float deltaY);
 
 		/**
 		 * Moves the GraphicBody horizontally.
-		 * @param deltaX Value to add to the GraphicBody's horizontal position (in
-		 * pixels). Positive value moves the GraphicBody to the right and a negative
-		 * value moves the GraphicBody to the left.
+		 * @param deltaX Value to add to the GraphicBody's horizontal position
+		 * (in pixels). Positive value moves the GraphicBody to the right and a
+		 * negative value moves the GraphicBody to the left.
 		 */
-		virtual void moveX(float deltaX);
+		void moveX(float deltaX);
 
 		/**
 		 * Moves the GraphicBody vertically.
 		 * @param deltaY Value to add to the GraphicBody's vertical position (in
-		 * pixels). Positive value moves the GraphicBody down and a negative value
-		 * moves the GraphicBody up.
+		 * pixels). Positive value moves the GraphicBody down and a negative
+		 * value moves the graphic body up.
 		 */
-		virtual void moveY(float deltaY);
+		void moveY(float deltaY);
 
 		/**
-		 * Moves the GraphicBody horizontally and vertically.
-		 * @param deltaX Value to add to the GraphicBody's horizontal position (in
-		 * pixels). Positive value moves the GraphicBody to the right and a negative
-		 * value moves the GraphicBody to the left.
-		 * @param deltaY Value to add to the GraphicBody's vertical position (in
-		 * pixels). Positive value moves the GraphicBody down and a negative value
-		 * moves the GraphicBody up.
+		 * Sets the graphic body's horizontal and vertical maximum velocity.
+		 * @param newMaxVelocity 2D vector containing the horizontal and
+		 * vertical maximum velocity. Maximum velocity should always be
+		 * positive, except for infinite maximum velocity, in which case it
+		 * would be -1.0f.
 		 */
-		virtual void move(float deltaX, float deltaY);
+		void setMaxVelocity(const Vec2& newMaxVelocity);
 
+		/**
+		 * Sets the graphic body's horizontal and vertical maximum velocity.
+		 * @param newMaxXVelocity New horizontal maximum velocity.
+		 * @param newMaxYVelocity New vertical maximum velocity.
+		 * @see RedBox::GraphicBody::setMaxVelocity(const Vec2& newMaxVelocity)
+		 */
+		void setMaxVelocity(float newMaxXVelocity, float newMaxYVelocity);
 
-		///Set the absolute maxmimum velocity in x (Maximum velocity in both x direction)
-		void setMaxVelocityX(float xVelocity);
+		/**
+		 * Sets the graphic body's horizontal maximum velocity.
+		 * @param newMaxXVelocity New maximum horizontal velocity. -1.0f for no
+		 * maximum velocity.
+		 */
+		void setMaxXVelocity(float newMaxXVelocity);
 
-		///Set the absolute maxmimum velocity in y (Maximum velocity in both y direction)
-		void setMaxVelocityY(float yVelocity);
+		/**
+		 * Sets the graphic body's vertical maximum velocity.
+		 * @param newMaxYVelocity New vertical maximum velocity. -1.0f for no
+		 * maximum velocity.
+		 */
+		void setMaxYVelocity(float newMaxYVelocity);
 
-		///Set the absolute maxmimum velocity in x and y (Maximum velocity in both direction for both axis)
-		void setMaxVelocity(float xVelocity, float yVelocity);
+		/**
+		 * Gets the graphic body's horizontal and vertical maximum velocity.
+		 * @return 2D vector containing the horizontal and vertical maximum
+		 * velocity.
+		 */
+		const Vec2& getMaxVelocity() const;
 
-		///Return the absolute maximum velocity in x (Maximum velocity in both x direction)
-		float getMaxVelocityX();
+		/**
+		 * Gets the graphic body's horizontal maximum velocity.
+		 * @return Horinzontal maximum velocity.
+		 */
+		float getMaxXVelocity() const;
 
-		///Return the absolute maximum velocity in y (Maximum velocity in both y direction)
-		float getMaxVelocityY();
+		/**
+		 * Gets the graphic body's vertical maximum velocity.
+		 * @return Horinzontal maximum velocity.
+		 */
+		float getMaxYVelocity() const;
 
 		/**
 		 * return GraphicBody's width.
@@ -312,7 +408,6 @@ namespace RedBox {
 		 * return GraphicBody's height.
 		 */
 		virtual float getHeight() const = 0;
-
 
 		/**
 		 * Use to set the collidableSides flag.
@@ -332,13 +427,13 @@ namespace RedBox {
 		 * Return true if the given sides are collidable sides.
 		 * @param sides Correct value are LEFT | RIGHT | TOP | BOTTOM | ALL
 		 */
-		bool IsCollidingSide(Side::Enum sides);
+		bool isCollidingSide(Side::Enum sides);
 
 		/**
 		* Return if the GraphicBody is a static one.
 		* A static object won't react to collision. (wall, floor, moving platform, etc.)
 		*/
-		bool getIsStatic();
+		bool getIsStatic() const;
 
 		/**
 		* Set if the GraphicBody is a static one.
@@ -350,12 +445,13 @@ namespace RedBox {
 		* Return the elasticity factor of the GraphicBody.
 		* Elasticity  will determine how should it bounce in a collision. Default value is 0 (Solid object)
 		*/
-		float getElasticity();
+		float getElasticity() const;
+
 		/**
 		* Set the elasticity factor of the GraphicBody.
 		* Elasticity  will determine how should it bounce in a collision. Default value is 0 (Solid object)
 		*/
-		void setElasticity(float elasticity);
+		void setElasticity(float newElasticity);
 
 		/**
 		 * Use this function to collide the current GraphicBody against another one.
@@ -395,12 +491,12 @@ namespace RedBox {
 		 * the second value is a structure containing information about the collision. See CollisionData.
 		 */
 		static std::pair<bool, CollisionData> collide(GraphicBody* object1,
-													  GraphicBody* object2);
-		
+		        GraphicBody* object2);
+
 		/**
-		 * Collide the current GraphicBody against the given horizontal line. The line must be a flat 
+		 * Collide the current GraphicBody against the given horizontal line. The line must be a flat
 		 * line parallel to the X axis (cutting the Y axis at position indicated by linePosition.
-		 * @param linePosition Position of the line on the Y axis. (If the line have no boundaries, 
+		 * @param linePosition Position of the line on the Y axis. (If the line have no boundaries,
 		 * it will cut the Y axis at this position.
 		 * @param lowerXBoundary Lower boundary of the line (a AABB with a maxX lower than
 		 * this value won't collide with the line). If the value is higher than higherXBoundary, the line is infinite.
@@ -409,11 +505,12 @@ namespace RedBox {
 		 * @return return true if the GraphicBody was colliding
 		 */
 		bool horizLineCollide(float linePosition, float lowerXBoundary = 1.0f,
-							  float higherXBoundary = -1.0f);
+		                      float higherXBoundary = -1.0f);
+
 		/**
-		 * Collide the current GraphicBody against the given vertical line. The line must be a flat 
+		 * Collide the current GraphicBody against the given vertical line. The line must be a flat
 		 * line parallel to the Y axis (cutting the X axis at position indicated by linePosition.
-		 * @param linePosition Position of the line on the X axis. (If the line have no boundaries, 
+		 * @param linePosition Position of the line on the X axis. (If the line have no boundaries,
 		 * it will cut the X axis at this position.
 		 * @param lowerYBoundary Lower boundary of the line (a AABB with a maxY lower than
 		 * this value won't collide with the line). If the value is higher than higherYBoundary, the line is infinite.
@@ -422,13 +519,13 @@ namespace RedBox {
 		 * @return return true if the GraphicBody was colliding
 		 */
 		bool vertLineCollide(float linePosition, float lowerYBoundary = 1.0f,
-							 float higherYBoundary = -1.0f);
+		                     float higherYBoundary = -1.0f);
 
 		/**
-		 * Collide the given GraphicBody against the given horizontal line. The line must be a flat 
+		 * Collide the given GraphicBody against the given horizontal line. The line must be a flat
 		 * line parallel to the X axis (cutting the Y axis at position indicated by linePosition.
 		 * @param aGraphicBody The graphic body you want to collide.
-		 * @param linePosition Position of the line on the Y axis. (If the line have no boundaries, 
+		 * @param linePosition Position of the line on the Y axis. (If the line have no boundaries,
 		 * it will cut the Y axis at this position.
 		 * @param lowerXBoundary Lower boundary of the line (a AABB with a maxX lower than
 		 * this value won't collide with the line). If the value is higher than higherXBoundary, the line is infinite.
@@ -436,16 +533,16 @@ namespace RedBox {
 		 * this value won't collide with the line). If the value is lower than lowerXBoundary, the line is infinite.
 		 * @return return true if the GraphicBody was colliding
 		 */
-		static bool horizLineCollide(GraphicBody * aGraphicBody,
-									 float linePosition,
-									 float lowerXBoundary = 1.0f,
-									 float higherXBoundary = -1.0f);
-	
+		static bool horizLineCollide(GraphicBody* aGraphicBody,
+		                             float linePosition,
+		                             float lowerXBoundary = 1.0f,
+		                             float higherXBoundary = -1.0f);
+
 		/**
-		 * Collide the given GraphicBody against the given vertical line. The line must be a flat 
+		 * Collide the given GraphicBody against the given vertical line. The line must be a flat
 		 * line parallel to the Y axis (cutting the X axis at position indicated by linePosition.
 		 * @param aGraphicBody The graphic body you want to collide.
-		 * @param linePosition Position of the line on the X axis. (If the line have no boundaries, 
+		 * @param linePosition Position of the line on the X axis. (If the line have no boundaries,
 		 * it will cut the X axis at this position.
 		 * @param lowerYBoundary Lower boundary of the line (a AABB with a maxY lower than
 		 * this value won't collide with the line). If the value is higher than higherYBoundary, the line is infinite.
@@ -453,15 +550,15 @@ namespace RedBox {
 		 * this value won't collide with the line). If the value is lower than lowerYBoundary, the line is infinite.
 		 * @return return true if the GraphicBody was colliding
 		 */
-		static bool vertLineCollide(GraphicBody * aGraphicBody,
-									float linePosition,
-									float lowerYBoundary = 1.0f,
-									float higherYBoundary = -1.0f);
+		static bool vertLineCollide(GraphicBody* aGraphicBody,
+		                            float linePosition,
+		                            float lowerYBoundary = 1.0f,
+		                            float higherYBoundary = -1.0f);
 
 		/**
 		 * Gets an AABB from the graphic body.
 		 */
-		AABB getAABB();
+		AABB getAABB() const;
 
 		/**
 		 * Sets the drag.
@@ -476,7 +573,7 @@ namespace RedBox {
 		 * acceleration until velocity reaches 0.
 		 */
 		const Vec2& getDrag() const;
-		
+
 		/**
 		 * Change the sprite's scaling.
 		 * @param newScaling New scaling to apply.
@@ -568,7 +665,7 @@ namespace RedBox {
 		 * @return Return true if the two objects were colliding, false in the other case.
 		 */
 		static bool solveXCollision(GraphicBody* object1, GraphicBody* object2,
-									CollisionData* collisionInfo);
+		                            CollisionData* collisionInfo);
 
 		/**
 		 * This function will solve the collision on the y axis. It will separate the objects and
@@ -580,7 +677,7 @@ namespace RedBox {
 		 * @return Return true if the two objects were colliding, false in the other case.
 		 */
 		static bool solveYCollision(GraphicBody* object1, GraphicBody* object2,
-									CollisionData* collisionInfo);
+		                            CollisionData* collisionInfo);
 
 
 		/// Position vector
@@ -601,11 +698,8 @@ namespace RedBox {
 		 */
 		Vec2 drag;
 
-		/// Maximum velocity in X
-		float maxVelocityX;
-
-		/// Maximum velocity in Y
-		float maxVelocityY;
+		/// Maximum horizontal and vertical velocity.
+		Vec2 maxVelocity;
 
 		/// Sprite scaling currently applied on the X and Y axis.
 		Vec2 scaling;

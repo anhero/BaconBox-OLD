@@ -26,17 +26,20 @@ namespace RedBox {
 		 */
 		friend std::ostream& operator<<(std::ostream& output, const Vec2& v);
 	public:
+		/// Vector pointing up with a length of one.
 		static const Vec2 UP;
 		/**
 		 * Default constructor. By default, the vector doesn't use pointers.
 		 */
 		Vec2();
+
 		/**
 		 * Parametrized vector with direct values.
 		 * @param pX Vector's horizontal value.
 		 * @param pY Vector's vertical value.
 		 */
 		Vec2(float pX, float pY);
+
 		/**
 		 * Parametrized vector with pointers. In OpenGL's case, the pointers
 		 * point to the values in the array used by OpenGL's functions.
@@ -44,39 +47,46 @@ namespace RedBox {
 		 * @param pY Vector's pointer to its vertical value.
 		 */
 		Vec2(float* pX, float* pY);
+
 		/**
 		 * Copy constructor. Makes the instance a copy of the recieved vector.
 		 * @param src Vector to make a copy of.
 		 */
 		Vec2(const Vec2& src);
+
 		/**
 		 * The destructor.
 		 */
 		~Vec2();
+
 		/**
 		 * Gets the vector's horizonal value. It reads either the pointer or
 		 * the direct value in the union depending on the boolean isPtr.
 		 * @return Vector's horizontal value.
 		 */
 		float getX() const;
+
 		/**
 		 * Gets the vector's vertical value. It reads either the pointer or
 		 * the direct value in the union depending on the boolean isPtr.
 		 * @return Vector's vertical value.
 		 */
 		float getY() const;
+
 		/**
 		 * Gets 2D vector's pointer to the x value.
 		 * @return Pointer to the x value, if the 2D vector doesn't keep
 		 * pointers, returns NULL.
 		 */
 		float* getXPtr();
+
 		/**
 		 * Gets 2D vector's pointer to the y value.
 		 * @return Pointer to the y value, if the 2D vector doesn't keep
 		 * pointers, returns NULL.
 		 */
 		float* getYPtr();
+
 		/**
 		 * Sets the pointer to the vector's horizontal value. If isPtr is set to
 		 * false, this function does nothing whatever is recieved as a
@@ -84,6 +94,7 @@ namespace RedBox {
 		 * @param newXPtr New pointer to the vector's horizontal value.
 		 */
 		void setXPtr(float* newXPtr);
+
 		/**
 		 * Sets the pointer to the vector's vertical value. If isPtr is set to
 		 * false, this function does nothing whatever is recieved as a
@@ -91,6 +102,16 @@ namespace RedBox {
 		 * @param newYPtr New pointer to the vector's vertical value.
 		 */
 		void setYPtr(float* newYPtr);
+
+		/**
+		 * Sets the pointers to the vector's horizontal and vertical value. If
+		 * isPtr is set to false, this function does nothing whatever is
+		 * recieved as a parameter.
+		 * @param newXPtr New pointer to the vector's horizontal value.
+		 * @param newYPtr New pointer to the vector's vertical value.
+		 */
+		void setXYPtr(float* newXPtr, float* newYPtr);
+
 		/**
 		 * Sets the vector's horizontal value. If isPtr is set to true, the
 		 * pointed value will be changed.
@@ -103,6 +124,14 @@ namespace RedBox {
 		 * @param newY New vector's vertical value.
 		 */
 		void setY(float newY);
+
+		/**
+		 * Sets the vector's horizontal and vertical values. If isPtr is set to
+		 * true, the pointed value will be changed.
+		 * @param newX New vector's horizontal value.
+		 * @param newY New vector's vertical value.
+		 */
+		void setXY(float newX, float newY);
 
 		/**
 		 * Adds a value to the x value.

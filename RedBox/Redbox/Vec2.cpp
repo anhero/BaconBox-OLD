@@ -58,6 +58,13 @@ void Vec2::setYPtr(float* newYPtr) {
 	}
 }
 
+void Vec2::setXYPtr(float *newXPtr, float *newYPtr) {
+	if(isPtr) {
+		coordsPtr.x = newXPtr;
+		coordsPtr.y = newYPtr;
+	}
+}
+
 void Vec2::setX(float newX) {
 	if(isPtr) {
 		*(coordsPtr.x) = newX;
@@ -70,6 +77,16 @@ void Vec2::setY(float newY) {
 	if(isPtr) {
 		*(coordsPtr.y) = newY;
 	} else {
+		coordsVal.y = newY;
+	}
+}
+
+void Vec2::setXY(float newX, float newY) {
+	if(isPtr) {
+		*(coordsPtr.x) = newX;
+		*(coordsPtr.y) = newY;
+	} else {
+		coordsVal.x = newX;
 		coordsVal.y = newY;
 	}
 }

@@ -117,25 +117,15 @@ void Sprite::setXPosition(float x) {
 	GraphicBody::setXPosition(x);
 	vertices.setXPosition(x);
 }
+
 void Sprite::setYPosition(float y) {
 	GraphicBody::setYPosition(y);
 	vertices.setYPosition(y);
 }
+
 void Sprite::setPosition(float x, float y) {
 	GraphicBody::setPosition(x, y);
 	vertices.setPosition(x, y);
-}
-void Sprite::moveX(float deltaX) {
-	GraphicBody::moveX(deltaX);
-	vertices.moveX(deltaX);
-}
-void Sprite::moveY(float deltaY) {
-	GraphicBody::moveY(deltaY);
-	vertices.moveY(deltaY);
-}
-void Sprite::move(float deltaX, float deltaY) {
-	GraphicBody::move(deltaX, deltaY);
-	vertices.move(deltaX, deltaY);
 }
 
 float Sprite::getWidth() const {
@@ -146,7 +136,7 @@ float Sprite::getHeight() const {
 	return vertices.getHeight();
 }
 
-Vec2 Sprite::getWidthHeight() const {
+const Vec2 Sprite::getWidthHeight() const {
 	return vertices.getWidthHeight();
 }
 
