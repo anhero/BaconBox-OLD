@@ -15,7 +15,7 @@ Color::Color() : Object() {
 	operator=(BLACK);
 }
 
-Color::Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) :
+Color::Color(int32_t red, int32_t green, int32_t blue, int32_t alpha) :
 Object() {
 	setRGBA(red, green, blue, alpha);
 }
@@ -71,23 +71,23 @@ uint8_t Color::getAlpha() const {
 	return colors[A];
 }
 
-void Color::setRed(uint8_t red) {
-	colors[R] = (red & MAX_COMPONENT_VALUE);
+void Color::setRed(int32_t red) {
+	colors[R] = getWithinRange(red);
 }
 
-void Color::setGreen(uint8_t green) {
-	colors[G] = green;
+void Color::setGreen(int32_t green) {
+	colors[G] = getWithinRange(green);
 }
 
-void Color::setBlue(uint8_t blue) {
-	colors[B] = blue;
+void Color::setBlue(int32_t blue) {
+	colors[B] = getWithinRange(blue);
 }
 
-void Color::setAlpha(uint8_t alpha) {
-	colors[A] = alpha;
+void Color::setAlpha(int32_t alpha) {
+	colors[A] = getWithinRange(alpha);
 }
 
-void Color::setRGB(uint8_t red, uint8_t green, uint8_t blue) {
+void Color::setRGB(int32_t red, int32_t green, int32_t blue) {
 	setRed(red);
 	setGreen(green);
 	setBlue(blue);
@@ -99,7 +99,7 @@ void Color::setRGB(uint32_t rgb) {
 		   static_cast<uint8_t>(rgb & 0x0000ff));
 }
 
-void Color::setRGBA(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) {
+void Color::setRGBA(int32_t red, int32_t green, int32_t blue, int32_t alpha) {
 	setRGB(red, green, blue);
 	setAlpha(alpha);
 }
@@ -113,6 +113,10 @@ void Color::setRGBA(uint32_t rgba) {
 
 const uint8_t* Color::getComponents() const {
 	return colors;
+}
+
+uint8_t Color::getWithinRange(int32_t component) {
+	return static_cast<uint8_t>((component < 0) ? (0) : ((component > MAX_COMPONENT_VALUE_32) ? (MAX_COMPONENT_VALUE) : (component)) );
 }
 
 namespace RedBox {

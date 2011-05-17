@@ -23,7 +23,9 @@ namespace RedBox {
 		/// Number of components each color has.
 		static const unsigned int NB_COMPONENTS = 4;
 		/// Maximum value a component can have.
-		static const unsigned int MAX_COMPONENT_VALUE = 0xff;
+		static const uint8_t MAX_COMPONENT_VALUE = 0xff;
+		/// Maximum value a component can have.
+		static const uint8_t MAX_COMPONENT_VALUE_32 = 0xff;
 		/// Black color (0, 0, 0, 255).
 		static const Color BLACK;
 		/// White color (255, 255, 255, 255).
@@ -62,8 +64,8 @@ namespace RedBox {
 		 * @param blue Blue component.
 		 * @param alpha Alpha component.
 		 */
-		Color(uint8_t red, uint8_t green, uint8_t blue,
-			  uint8_t alpha = MAX_COMPONENT_VALUE);
+		Color(int32_t red, int32_t green, int32_t blue,
+			  int32_t alpha = MAX_COMPONENT_VALUE);
 
 		/**
 		 * Parameterized constructor with one parameter.
@@ -131,7 +133,7 @@ namespace RedBox {
 		 * given are used.
 		 * @param red New red component.
 		 */
-		void setRed(uint8_t red);
+		void setRed(int32_t red);
 
 		/**
 		 * Sets the color's green component. Takes care of validating the
@@ -139,7 +141,7 @@ namespace RedBox {
 		 * value given are used.
 		 * @param green New green component.
 		 */
-		void setGreen(uint8_t green);
+		void setGreen(int32_t green);
 
 		/**
 		 * Sets the color's blue component. Takes care of validating the value
@@ -147,7 +149,7 @@ namespace RedBox {
 		 * given are used.
 		 * @param blue New blue component.
 		 */
-		void setBlue(uint8_t blue);
+		void setBlue(int32_t blue);
 
 		/**
 		 * Sets the color's alpha component. Takes care of validating the
@@ -155,7 +157,7 @@ namespace RedBox {
 		 * value given are used.
 		 * @param alpha New alpha component.
 		 */
-		void setAlpha(uint8_t alpha);
+		void setAlpha(int32_t alpha);
 
 		/**
 		 * Sets the color's red, green and blue components. Simply calls
@@ -164,7 +166,7 @@ namespace RedBox {
 		 * @param green New green component.
 		 * @param blue New blue component.
 		 */
-		void setRGB(uint8_t red, uint8_t green, uint8_t blue);
+		void setRGB(int32_t red, int32_t green, int32_t blue);
 
 		/**
 		 * Set the first 3 components with one integer.
@@ -180,7 +182,7 @@ namespace RedBox {
 		 * @param blue New blue component.
 		 * @param alpha New alpha component.
 		 */
-		void setRGBA(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha);
+		void setRGBA(int32_t red, int32_t green, int32_t blue, int32_t alpha);
 		
 		/**
 		 * Set the 4 components with one integer.
@@ -196,6 +198,13 @@ namespace RedBox {
 	private:
 		/// Color components.
 		uint8_t colors[NB_COMPONENTS];
+
+		/**
+		 * Makes a given component within the required range (0 to 255).
+		 * @param component Component value to put within range.
+		 * @return The clamped value.
+		 */
+		static uint8_t getWithinRange(int32_t component);
 	};
 }
 
