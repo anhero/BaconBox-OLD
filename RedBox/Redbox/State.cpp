@@ -43,7 +43,7 @@ State::~State() {
 void State::addGraphicBody(GraphicBody* aGraphicBody) {
 	if(aGraphicBody) {
 		if(!aGraphicBody->isInState) {
-			toAdd.push_back(aGraphicBody);
+			toAdd.push_front(aGraphicBody);
 		} else {
 			Console::Print("Tried to add a GraphicBody that is already in a state.");
 		}
