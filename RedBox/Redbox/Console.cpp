@@ -2,8 +2,9 @@
 #include "Console.h"
 
 using namespace RedBox;
+using namespace std;
 
-void Console::Print(string text) {
+void Console::Print(const string& text) {
 	std::cout << text << std::endl;
 }
 
@@ -33,17 +34,17 @@ void Console::Warn(string text) {
 
 void Console::_Printf(string file, int line, string formatString, ...) {
 	va_list args;
-	va_start (args, formatString);
+	va_start(args, formatString);
 	std::cout << file << "@" << line << ": ";
-	vfprintf (stdout, formatString.c_str(), args);
+	vfprintf(stdout, formatString.c_str(), args);
 	std::cout << std::endl;
-	va_end (args);
+	va_end(args);
 }
 void Console::Printf(string formatString, ...) {
 	va_list args;
-	va_start (args, formatString);
-	vfprintf (stdout, formatString.c_str(), args);
+	va_start(args, formatString);
+	vfprintf(stdout, formatString.c_str(), args);
 	std::cout << std::endl;
-	va_end (args);
+	va_end(args);
 }
 
