@@ -10,6 +10,16 @@ namespace RedBox {
 	 */
 	namespace Key {
 		typedef int Enum;
+		
+		/**
+		 * Get the char from a key.
+		 * @param key Key to get the char of. Must be an alphabet letter (A-Z
+		 * key codes).
+		 * @return Char equivalent to the key. If the key recieved is not a
+		 * letter from A to Z, it returns the null character '\0'.
+		 */
+		char toChar(Enum key);
+		
 		const Enum INVALID = -1;
 		const Enum A = 0;
 		const Enum ADD = 1;
