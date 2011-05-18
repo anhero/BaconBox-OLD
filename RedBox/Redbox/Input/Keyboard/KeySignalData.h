@@ -31,6 +31,9 @@ namespace RedBox {
 		
 		/// Key concerned by the signal.
 		const Key::Enum key;
+		
+		/// Key char associated with the key.
+		const char keyChar;
 	};
 }
 
