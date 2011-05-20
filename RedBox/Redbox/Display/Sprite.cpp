@@ -349,9 +349,9 @@ void Sprite::setMainAlpha(int alpha){
 	Color mainColor = getMainColor();
 	setMainColor(Color(mainColor.getRed(), mainColor.getGreen(), mainColor.getBlue(), alpha));
 }
-void Sprite::setTexture(TextureInfo * aTextureInfo){
-	getMainRenderInfo()->loadTexCoords(&vertices, aTextureInfo->imageWidth, aTextureInfo->imageHeight, 1, aTextureInfo);
-}
-void Sprite::setTexture(std::string key){
-	setTexture(ResourceManager::getTexture(key));
-}
+//void Sprite::setTexture(TextureInfo * aTextureInfo){
+//	getMainRenderInfo()->loadTexCoords(&vertices, aTextureInfo->imageWidth, aTextureInfo->imageHeight, 1, aTextureInfo);
+//}
+//void Sprite::setTexture(std::string key){
+//	setTexture(ResourceManager::getTexture(key));
+//}
