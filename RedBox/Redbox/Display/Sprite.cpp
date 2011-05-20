@@ -340,3 +340,12 @@ void Sprite::clearRenderSteps() {
 	renderSteps.clear();
 }
 
+Color Sprite::getMainColor(){
+	RenderStep* mainRenderStep = getMainRenderStep();
+	return mainRenderStep->getRenderInfo().getColor();
+}
+
+void Sprite::setMainAlpha(int alpha){
+	Color mainColor = getMainColor();
+	setMainColor(Color(mainColor.getRed(), mainColor.getGreen(), mainColor.getBlue(), alpha));
+}

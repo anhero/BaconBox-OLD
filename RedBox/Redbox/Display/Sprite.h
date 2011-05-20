@@ -224,6 +224,16 @@ namespace RedBox {
 		void setMainColor(const Color& color);
 		
 		/**
+		 * Set the alpha component on the main renderstep.
+		 */
+		void setMainAlpha(int alpha);
+		
+		/**
+		 * Return a Color object containing the color component of the main RenderStep.
+		 */
+		Color getMainColor();
+		
+		/**
 		 * Gets the vertices group.
 		 * @return Reference to the sprite's group of vertices.
 		 */
