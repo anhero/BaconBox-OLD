@@ -306,6 +306,9 @@ namespace RedBox {
 		 * it makes the sprite rotate counter-clockwise.
 		 */
 		void setAngle(float newAngle);
+		
+		void setTexture(TextureInfo * aTextureInfo);
+		void setTexture(std::string key);
 	private:
         /**
 		 * List containing the rendering steps. The first RenderStep in the list
