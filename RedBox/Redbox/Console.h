@@ -17,9 +17,9 @@
 
 // Defines for line numbers and filename...
 // Sadly, can't be done by some other magic...
-#define Console__print(a)    Console::_Print(__FILE__, __LINE__, a);
-#define Console__printf(...) Console::_Printf(__FILE__, __LINE__, __VA_ARGS__);
-#define Console__log(a)      Console::_Log(__FILE__, __LINE__, #a, a);
+#define Console__print(a)    Console::_print(__FILE__, __LINE__, a);
+#define Console__printf(...) Console::_printf(__FILE__, __LINE__, __VA_ARGS__);
+#define Console__log(a)      Console::_log(__FILE__, __LINE__, #a, a);
 
 namespace RedBox {
 	class Console {
