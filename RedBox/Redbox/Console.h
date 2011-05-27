@@ -17,9 +17,9 @@
 
 // Defines for line numbers and filename...
 // Sadly, can't be done by some other magic...
-#define Console__Print(a)    Console::_Print(__FILE__, __LINE__, a);
-#define Console__Printf(...) Console::_Printf(__FILE__, __LINE__, __VA_ARGS__);
-#define Console__Log(a)      Console::_Log(__FILE__, __LINE__, #a, a);
+#define Console__print(a)    Console::_Print(__FILE__, __LINE__, a);
+#define Console__printf(...) Console::_Printf(__FILE__, __LINE__, __VA_ARGS__);
+#define Console__log(a)      Console::_Log(__FILE__, __LINE__, #a, a);
 
 namespace RedBox {
 	class Console {
@@ -29,7 +29,7 @@ namespace RedBox {
 		 *
 		 * @param text Text to print.
 		 */
-		static void Print(const std::string& text);
+		static void print(const std::string& text);
 		/**
 		 * Used by the macro to print text with file and line number information.
 		 *
@@ -37,7 +37,7 @@ namespace RedBox {
 		 * @param line Line number of caller.
 		 * @param text Text to print.
 		 */
-		static void _Print(std::string file, int line, std::string text);
+		static void _print(std::string file, int line, std::string text);
 		/**
 		 * Used by the macro to print variable name and value with file and line number information.
 		 *
@@ -46,19 +46,19 @@ namespace RedBox {
 		 * @param varname Name of the variable to print.
 		 * @param value Value of the printed variableé
 		 */
-		static void _Log(std::string file, int line, std::string varname,
+		static void _log(std::string file, int line, std::string varname,
 						 std::string value);
 		/**
 		 * Prints the stack trace from caller's point of view.
 		 */
-		static void PrintTrace(int max = 63);
+		static void printTrace(int max = 63);
 		/**
 		 * Prints formatted as printf would.
 		 *
 		 * @param formatString Format string, as in printf.
 		 * @param ... Things as parameters.
 		 */
-		static void Printf(std::string formatString, ...);
+		static void printf(std::string formatString, ...);
 		/**
 		 * Used by the macro to print formatted text with file and line number information.
 		 *
@@ -67,7 +67,7 @@ namespace RedBox {
 		 * @param formatString Format string, as in printf.
 		 * @param ... Things as parameters.
 		 */
-		static void _Printf(std::string file, int line, std::string formatString, ...);
+		static void _printf(std::string file, int line, std::string formatString, ...);
 		/**
 		 * Prints warning information on the console.
 		 *
@@ -75,7 +75,7 @@ namespace RedBox {
 		 *
 		 * @param text Text to print.
 		 */
-		static void Warn(std::string text);
+		static void warn(std::string text);
 		/**
 		 * Prints information on the console.
 		 *
@@ -83,7 +83,7 @@ namespace RedBox {
 		 *
 		 * @param text Text to print.
 		 */
-		static void Info(std::string text);
+		static void info(std::string text);
 		/**
 		 * Prints error information on the console.
 		 *
@@ -91,11 +91,11 @@ namespace RedBox {
 		 *
 		 * @param text Text to print.
 		 */
-		static void Error(std::string text);
+		static void error(std::string text);
 		/**
 		 * Convert type to string.
 		 */
-		template<class T> static std::string ToString(T i) {
+		template<class T> static std::string toString(T i) {
 			std::stringstream ss;
 			ss << i;
 			return ss.str();

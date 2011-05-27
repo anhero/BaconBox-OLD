@@ -156,7 +156,7 @@ void RenderStep::playAnimation(const std::string& name) {
 		animCounter = 0.0;
 		isPaused = false;
 	} else {
-		Console::Print("Tried play an animation which does not exist for the concerned RenderStep: " + name);
+		Console::print("Tried play an animation which does not exist for the concerned RenderStep: " + name);
 	}
 }
 

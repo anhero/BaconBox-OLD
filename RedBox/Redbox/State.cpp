@@ -45,10 +45,10 @@ void State::addGraphicBody(GraphicBody* aGraphicBody) {
 		if(!aGraphicBody->isInState) {
 			toAdd.push_front(aGraphicBody);
 		} else {
-			Console::Print("Tried to add a GraphicBody that is already in a state.");
+			Console::print("Tried to add a GraphicBody that is already in a state.");
 		}
 	} else {
-		Console::Print("Tried to add an invalid GraphicBody (" + Console::ToString(aGraphicBody) + ") to the state.");
+		Console::print("Tried to add an invalid GraphicBody (" + Console::toString(aGraphicBody) + ") to the state.");
 	}
 }
 
@@ -89,7 +89,7 @@ void State::addGraphicBodyDirect(GraphicBody* aGraphicBody) {
 															aGraphicBody));
 		aGraphicBody->isInState = true;
 	} else {
-		Console::Print("Tried to add a GraphicBody that is already in a state.");
+		Console::print("Tried to add a GraphicBody that is already in a state.");
 	}
 }
 

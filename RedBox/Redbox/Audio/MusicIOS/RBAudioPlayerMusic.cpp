@@ -19,8 +19,8 @@ void RBAudioPlayerMusic::play(int nbTimes, double fadeIn) {
 			[bgm fadeInPlay:nbTimes :static_cast<float>(fadeIn)];
 			playedOnce = true;
 		} else {
-			Console::Print("Tried to play a music with an invalid fade in time : " +
-				Console::ToString(fadeIn) + " sec.");
+			Console::print("Tried to play a music with an invalid fade in time : " +
+				Console::toString(fadeIn) + " sec.");
 		}
 	}
 }
@@ -34,8 +34,8 @@ void RBAudioPlayerMusic::stop(double fadeOut) {
 	if(fadeOut >= 0.0) {
 		[bgm fadeOutStop:static_cast<float>(fadeOut)];
 	} else {
-		Console::Print("Tried to stop a music with an invalid fade out time : " +
-			  Console::ToString(fadeOut) + " sec.");
+		Console::print("Tried to stop a music with an invalid fade out time : " +
+			  Console::toString(fadeOut) + " sec.");
 	}
 }
 
@@ -48,8 +48,8 @@ void RBAudioPlayerMusic::pause(double fadeOut) {
 	if(fadeOut >= 0.0) {
 		[bgm fadeOutPause:static_cast<float>(fadeOut)];
 	} else {
-		Console::Print("Tried to pause a music with an invalid fade out time : " +
-			  Console::ToString(fadeOut) + " sec.");
+		Console::print("Tried to pause a music with an invalid fade out time : " +
+			  Console::toString(fadeOut) + " sec.");
 	}
 }
 
@@ -63,8 +63,8 @@ void RBAudioPlayerMusic::resume(double fadeIn) {
 		[bgm fadeInResume:static_cast<float>(fadeIn)];
 		playedOnce = true;
 	} else {
-		Console::Print("Tried to resume a music with an invalid fade in time : " +
-			  Console::ToString(fadeIn) + " sec.");
+		Console::print("Tried to resume a music with an invalid fade in time : " +
+			  Console::toString(fadeIn) + " sec.");
 	}
 }
 

@@ -93,7 +93,7 @@ bool VerticesGroup::containsVertices(Vertex* firstVertex, Vertex* secondVertex) 
 
 Vec2 VerticesGroup::getWidthHeight() const {
 	if(vertices.empty()) {
-		Console::Print("Tried to get the width and the height of an empty VerticesGroup.");
+		Console::print("Tried to get the width and the height of an empty VerticesGroup.");
 		return Vec2();
 	}
 
@@ -124,7 +124,7 @@ Vec2 VerticesGroup::getWidthHeight() const {
 
 float VerticesGroup::getWidth() const {
 	if(vertices.empty()) {
-		Console::Print("Tried to get the width of an empty VerticesGroup.");
+		Console::print("Tried to get the width of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -147,7 +147,7 @@ float VerticesGroup::getWidth() const {
 
 float VerticesGroup::getHeight() const {
 	if(vertices.empty()) {
-		Console::Print("Tried to get the height of an empty VerticesGroup.");
+		Console::print("Tried to get the height of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -170,7 +170,7 @@ float VerticesGroup::getHeight() const {
 
 float VerticesGroup::getXPosition() const {
 	if(vertices.empty()) {
-		Console::Print("Tried to get the horizontal position of an empty VerticesGroup.");
+		Console::print("Tried to get the horizontal position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -188,7 +188,7 @@ float VerticesGroup::getXPosition() const {
 }
 float VerticesGroup::getXPositionCenter() const {
 	if(vertices.empty()) {
-		Console::Print("Tried to get the horizontal position of an empty VerticesGroup.");
+		Console::print("Tried to get the horizontal position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -211,7 +211,7 @@ float VerticesGroup::getXPositionCenter() const {
 
 float VerticesGroup::getYPosition() const {
 	if(vertices.empty()) {
-		Console::Print("Tried to get the vertical position of an empty VerticesGroup.");
+		Console::print("Tried to get the vertical position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -230,7 +230,7 @@ float VerticesGroup::getYPosition() const {
 
 float VerticesGroup::getYPositionCenter() const {
 	if(vertices.empty()) {
-		Console::Print("Tried to get the height of an empty VerticesGroup.");
+		Console::print("Tried to get the height of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -253,7 +253,7 @@ float VerticesGroup::getYPositionCenter() const {
 
 Vec2 VerticesGroup::getPosition() const {
 	if(vertices.empty()) {
-		Console::Print("Tried to get the position of an empty VerticesGroup.");
+		Console::print("Tried to get the position of an empty VerticesGroup.");
 		return Vec2();
 	}
 
@@ -277,7 +277,7 @@ Vec2 VerticesGroup::getPosition() const {
 
 Vec2 VerticesGroup::getPositionCenter() const {
 	if(vertices.size() == 0) {
-		Console::Print("Tried to get the position of the center of an empty VerticesGroup.");
+		Console::print("Tried to get the position of the center of an empty VerticesGroup.");
 		return Vec2();
 	}
 
@@ -347,7 +347,7 @@ void VerticesGroup::moveY(float deltaY) {
 
 void VerticesGroup::move(float deltaX, float deltaY) {
 	if(vertices.empty()) {
-		Console::Print("Tried to move an empty vertices group.");
+		Console::print("Tried to move an empty vertices group.");
 	}
 
 	// We create the vector we'll add to every vertices.

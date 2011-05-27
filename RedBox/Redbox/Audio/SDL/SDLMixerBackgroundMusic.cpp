@@ -36,8 +36,8 @@ void SDLMixerBackgroundMusic::play(int nbTimes) {
 			looping = (nbTimes == -1);
 			neverPlayed = false;
 		} else {
-			Console::Print("Error playing a music with Mix_PlayMusic(): " + std::string(Mix_GetError()));
-			Console::PrintTrace();
+			Console::print("Error playing a music with Mix_PlayMusic(): " + std::string(Mix_GetError()));
+			Console::printTrace();
 		}
 	}
 }
@@ -102,8 +102,8 @@ void SDLMixerBackgroundMusic::play(int nbTimes, double fadeIn) {
 			looping = (nbTimes == -1);
 			neverPlayed = false;
 		} else {
-			Console::Print("Error playing a music with Mix_FadeInMusic(): " + std::string(Mix_GetError()));
-			Console::PrintTrace();
+			Console::print("Error playing a music with Mix_FadeInMusic(): " + std::string(Mix_GetError()));
+			Console::printTrace();
 		}
 	}
 }

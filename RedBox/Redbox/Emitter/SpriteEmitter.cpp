@@ -86,7 +86,7 @@ Sprite* SpriteEmitter::initParticle() {
 	if(defaultSprite) {
 		return new Sprite(*defaultSprite);
 	} else {
-		Console::Print("Initializing a particle without a default sprite.");
+		Console::print("Initializing a particle without a default sprite.");
 		return NULL;
 	}
 }

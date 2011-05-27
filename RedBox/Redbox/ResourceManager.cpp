@@ -43,9 +43,9 @@ TextureInfo* ResourceManager::addTexture(const std::string& key, PixMap* aPixmap
 
 			// We load the new texture.
 			texInfo = textures[key] = GraphicDriver::loadTexture(aPixmap);
-			Console::Print("Overwrote the existing texture named " + key + ".");
+			Console::print("Overwrote the existing texture named " + key + ".");
 		} else {
-			Console::Print("Can't load texture with key: " + key +
+			Console::print("Can't load texture with key: " + key +
 			               " texture is already loaded");
 			texInfo = textures[key];
 		}
@@ -108,10 +108,10 @@ SoundInfo* ResourceManager::loadSound(const std::string& key,
 				// We load the sound effect and we overwrite the existing sound
 				// effect.
 				newSnd = sounds[key] = AudioEngine::getSoundEngine()->loadSound(filePath);
-				Console::Print("Overwrote the existing sound effect named " + key +
+				Console::print("Overwrote the existing sound effect named " + key +
 				               ".");
 			} else {
-				Console::Print("Couldn't load the sound effect named " + key +
+				Console::print("Couldn't load the sound effect named " + key +
 				               " found at " + filePath +
 				               " because a sound with that name already exists.");
 				newSnd = sounds[key];
@@ -128,7 +128,7 @@ SoundInfo* ResourceManager::loadSound(const std::string& key,
 			}
 		}
 	} else {
-		Console::Print("Couldn't load the sound effect named " + key + " found at " +
+		Console::print("Couldn't load the sound effect named " + key + " found at " +
 		               filePath + " because the sound engine couldn't be loaded.");
 	}
 
@@ -154,10 +154,10 @@ SoundInfo* ResourceManager::loadSound(const SoundParameters& params,
 				// We load the sound effect and we overwrite the existing sound
 				// effect.
 				newSnd = sounds[params.name] = AudioEngine::getSoundEngine()->loadSound(params);
-				Console::Print("Overwrote the existing sound effect named " +
+				Console::print("Overwrote the existing sound effect named " +
 				               params.name + ".");
 			} else {
-				Console::Print("Couldn't load the sound effect named " + params.name +
+				Console::print("Couldn't load the sound effect named " + params.name +
 				               " because a sound with that name already exists.");
 				newSnd = sounds[params.name];
 			}
@@ -174,7 +174,7 @@ SoundInfo* ResourceManager::loadSound(const SoundParameters& params,
 			}
 		}
 	} else {
-		Console::Print("Couldn't load the sound effect named " + params.name +
+		Console::print("Couldn't load the sound effect named " + params.name +
 		               " because the sound engine couldn't be loaded.");
 	}
 
@@ -200,10 +200,10 @@ MusicInfo* ResourceManager::loadMusic(const std::string& key,
 
 				// We load the music and we overwrite the existing music.
 				newBgm = musics[key] = AudioEngine::getMusicEngine()->loadMusic(filePath);
-				Console::Print("Overwrote the existing music named " + key +
+				Console::print("Overwrote the existing music named " + key +
 				               ".");
 			} else {
-				Console::Print("Couldn't load the music named " + key +
+				Console::print("Couldn't load the music named " + key +
 				               " found at " + filePath +
 				               " because a music with that name already exists.");
 				newBgm = musics[key];
@@ -220,7 +220,7 @@ MusicInfo* ResourceManager::loadMusic(const std::string& key,
 			}
 		}
 	} else {
-		Console::Print("Couldn't load the music named " + key + " found at " +
+		Console::print("Couldn't load the music named " + key + " found at " +
 		               filePath + " because the sound engine couldn't be loaded.");
 	}
 
@@ -245,9 +245,9 @@ MusicInfo* ResourceManager::loadMusic(const MusicParameters& params,
 
 				// We load the music and we overwrite the existing music.
 				newBgm = musics[params.name] = AudioEngine::getMusicEngine()->loadMusic(params);
-				Console::Print("Overwrote the existing music named " + params.name + ".");
+				Console::print("Overwrote the existing music named " + params.name + ".");
 			} else {
-				Console::Print("Couldn't load the music named " + params.name +
+				Console::print("Couldn't load the music named " + params.name +
 				               " because a music with that name already exists.");
 				newBgm = musics[params.name];
 			}
@@ -263,7 +263,7 @@ MusicInfo* ResourceManager::loadMusic(const MusicParameters& params,
 			}
 		}
 	} else {
-		Console::Print("Couldn't load the music named " + params.name +
+		Console::print("Couldn't load the music named " + params.name +
 		               " because the sound engine couldn't be loaded.");
 	}
 
@@ -283,10 +283,10 @@ void ResourceManager::removeSound(const std::string& key) {
 			// We remove it from the map.
 			sounds.erase(snd);
 		} else {
-			Console::Print("The sound effect named " + key + " could not be removed because the audio engine failed to unload it.");
+			Console::print("The sound effect named " + key + " could not be removed because the audio engine failed to unload it.");
 		}
 	} else {
-		Console::Print("The sound effect named " + key + " could not be removed because it doesn't exist.");
+		Console::print("The sound effect named " + key + " could not be removed because it doesn't exist.");
 	}
 }
 
@@ -303,10 +303,10 @@ void ResourceManager::removeMusic(const std::string& key) {
 			// We remove it from the map.
 			musics.erase(music);
 		} else {
-			Console::Print("The music named " + key + " could not be removed because the audio engine failed to unload it.");
+			Console::print("The music named " + key + " could not be removed because the audio engine failed to unload it.");
 		}
 	} else {
-		Console::Print("The music named " + key + " could not be removed because it doesn't exist.");
+		Console::print("The music named " + key + " could not be removed because it doesn't exist.");
 	}
 }
 
@@ -326,9 +326,9 @@ Font* ResourceManager::loadFont(const std::string& key, const std::string& path,
 
 			// We load the new font.
 			aFont = fonts[key] = new Font(key, path);
-			Console::Print("Overwrote the existing font named " + key + ".");
+			Console::print("Overwrote the existing font named " + key + ".");
 		} else {
-			Console::Print("Can't load font with key: " + key +
+			Console::print("Can't load font with key: " + key +
 			               " font is already loaded");
 			aFont = fonts[key];
 		}
@@ -411,7 +411,7 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath) {
 	FILE* PNG_file = fopen(filePath.c_str(), "rb");
 
 	if(PNG_file == NULL) {
-		Console::Print("Unable to open this png file : " + filePath);
+		Console::print("Unable to open this png file : " + filePath);
 		return false;
 	}
 
@@ -420,32 +420,32 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath) {
 	fread(PNG_header, 1, PNG_HEADER_SIZE, PNG_file);
 
 	if(png_sig_cmp(PNG_header, 0, PNG_HEADER_SIZE) != 0) {
-		Console::Print("Trying to load a non png file as a png file. Path to file :" + filePath);
+		Console::print("Trying to load a non png file as a png file. Path to file :" + filePath);
 	}
 
 	png_structp PNG_reader
 	= png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
 	if(PNG_reader == NULL) {
-		Console::Print("Cannot read this png file " + filePath);
+		Console::print("Cannot read this png file " + filePath);
 	}
 
 	png_infop PNG_info = png_create_info_struct(PNG_reader);
 
 	if(PNG_info == NULL) {
-		Console::Print("Cannot extract info from this png file : " + filePath);
+		Console::print("Cannot extract info from this png file : " + filePath);
 		png_destroy_read_struct(&PNG_reader, NULL, NULL);
 	}
 
 	png_infop PNG_end_info = png_create_info_struct(PNG_reader);
 
 	if(PNG_end_info == NULL) {
-		Console::Print("Cannot extract end info from this png file : " + filePath);
+		Console::print("Cannot extract end info from this png file : " + filePath);
 		png_destroy_read_struct(&PNG_reader, &PNG_info, NULL);
 	}
 
 	if(setjmp(png_jmpbuf(PNG_reader))) {
-		Console::Print("Cannot load this png file " + filePath);
+		Console::print("Cannot load this png file " + filePath);
 		png_destroy_read_struct(&PNG_reader, &PNG_info, &PNG_end_info);
 	}
 

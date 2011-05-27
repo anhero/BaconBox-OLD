@@ -4,35 +4,35 @@
 using namespace RedBox;
 using namespace std;
 
-void Console::Print(const string& text) {
+void Console::print(const string& text) {
 	std::cout << text << std::endl;
 }
 
-void Console::PrintTrace(int max) {
+void Console::printTrace(int max) {
 	Console::print_stacktrace(stdout, max);
 }
 
-void Console::_Log(string file, int line, string varname, string value) {
+void Console::_log(string file, int line, string varname, string value) {
 	std::cout << file << "@" << line << ": " << varname << " == " << value << std::endl;
 }
 
-void Console::_Print(string file, int line, string text) {
+void Console::_print(string file, int line, string text) {
 	std::cout << file << "@" << line << ": " << text << std::endl;
 }
 
-void Console::Error(string text) {
-	Console::Print("Error: " + text);
+void Console::error(string text) {
+	Console::print("Error: " + text);
 }
 
-void Console::Info(string text) {
-	Console::Print("Info: " + text);
+void Console::info(string text) {
+	Console::print("Info: " + text);
 }
 
-void Console::Warn(string text) {
-	Console::Print("Warn: " + text);
+void Console::warn(string text) {
+	Console::print("Warn: " + text);
 }
 
-void Console::_Printf(string file, int line, string formatString, ...) {
+void Console::_printf(string file, int line, string formatString, ...) {
 	va_list args;
 	va_start(args, formatString);
 	std::cout << file << "@" << line << ": ";
@@ -40,7 +40,7 @@ void Console::_Printf(string file, int line, string formatString, ...) {
 	std::cout << std::endl;
 	va_end(args);
 }
-void Console::Printf(string formatString, ...) {
+void Console::printf(string formatString, ...) {
 	va_list args;
 	va_start(args, formatString);
 	vfprintf(stdout, formatString.c_str(), args);

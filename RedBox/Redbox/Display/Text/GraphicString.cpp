@@ -30,8 +30,8 @@ void GraphicString::setText(const RB_String32 & text){
 		needReset = true;
 	}
 	else{
-		Console::Print("Trying to set text with no font loaded.");
-		Console::PrintTrace();
+		Console::print("Trying to set text with no font loaded.");
+		Console::printTrace();
 	}
 }
 

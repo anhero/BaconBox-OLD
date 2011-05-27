@@ -123,7 +123,7 @@ void OpenALEngine::init() {
 				// We set the listener's position.
 				alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
 			} else {
-				Console::Print("Failed to activate the OpenAL context.");
+				Console::print("Failed to activate the OpenAL context.");
 				// We close the device here because the destructor does not
 				// close the device if no context was created.
 				alcCloseDevice(device);
@@ -132,13 +132,13 @@ void OpenALEngine::init() {
 				alcDestroyContext(context);
 			}
 		} else {
-			Console::Print("Failed to create the OpenAL context.");
+			Console::print("Failed to create the OpenAL context.");
 			// We close the device here because the destructor does not
 			// close the device if no context was created.
 			alcCloseDevice(device);
 		}
 	} else {
-		Console::Print("Failed to open the OpenAL audio device.");
+		Console::print("Failed to open the OpenAL audio device.");
 	}
 }
 
@@ -288,21 +288,21 @@ void OpenALEngine::loadWav(const std::string& filePath,
 					// We delete the buffer and set it to NULL.
 					delete[] bufferData;
 					bufferData = NULL;
-					Console::Print("Failed to read the buffer data from the wave file: " +
+					Console::print("Failed to read the buffer data from the wave file: " +
 						  filePath);
 				}
 			} else {
 				char* format = reinterpret_cast<char*>(&wav.format);
-				Console::Print("Unknown wav format : " + format[0] + format[1] + format[2] + format[3]);
+				Console::print("Unknown wav format : " + format[0] + format[1] + format[2] + format[3]);
 			}
 		} else {
 			char* chunkId = reinterpret_cast<char*>(&wav.chunkId);
-			Console::Print("Unknown wav chunk ID : " + chunkId[0] + chunkId[1] + chunkId[2] + chunkId[3]);
+			Console::print("Unknown wav chunk ID : " + chunkId[0] + chunkId[1] + chunkId[2] + chunkId[3]);
 		}
 		// We close the file.
 		binFile.close();
 	} else {
-		Console::Print("Failed to open the file: " + filePath);
+		Console::print("Failed to open the file: " + filePath);
 	}
 }
 

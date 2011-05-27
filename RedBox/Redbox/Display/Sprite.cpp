@@ -22,7 +22,7 @@ Sprite::Sprite(const std::string& imageKey): GraphicBody() {
 		          texInfo->imageHeight,
 		          1);
 	} else {
-		Console::Print("Tried to construct a sprite from an invalid image key: " + imageKey);
+		Console::print("Tried to construct a sprite from an invalid image key: " + imageKey);
 	}
 }
 
@@ -33,7 +33,7 @@ Sprite::Sprite(TextureInfo* texInfo): GraphicBody() {
 		          texInfo->imageHeight,
 		          1);
 	} else {
-		Console::Print("Tried to construct a sprite from an invalid texture information: " + Console::ToString(texInfo));
+		Console::print("Tried to construct a sprite from an invalid texture information: " + Console::toString(texInfo));
 	}
 }
 
@@ -144,7 +144,7 @@ RenderStep* Sprite::addRenderStep(RenderStep* newRenderStep) {
 	if(newRenderStep) {
 		renderSteps.push_back(newRenderStep);
 	} else {
-		Console::Print("Tried to add an NULL RenderStep to a Sprite.");
+		Console::print("Tried to add an NULL RenderStep to a Sprite.");
 	}
 
 	return newRenderStep;
@@ -168,10 +168,10 @@ void Sprite::removeRenderStep(RenderStep* renderStep) {
 
 		// If it wasn't found, we warn the user.
 		if(notFound) {
-			Console::Print("Tried to remove a RenderStep from a Sprite which does not contain it: " + Console::ToString(renderStep));
+			Console::print("Tried to remove a RenderStep from a Sprite which does not contain it: " + Console::toString(renderStep));
 		}
 	} else {
-		Console::Print("Tried to remove a NULL RenderStep pointer from a sprite.");
+		Console::print("Tried to remove a NULL RenderStep pointer from a sprite.");
 	}
 }
 
@@ -231,7 +231,7 @@ void Sprite::construct(TextureInfo* texInfo,
 		        nbFrames);
 		renderSteps.push_back(initialRenderStep);
 	} else {
-		Console::Print("Failed to load a sprite with the following texture information: " + Console::ToString(texInfo));
+		Console::print("Failed to load a sprite with the following texture information: " + Console::toString(texInfo));
 	}
 }
 
@@ -288,7 +288,7 @@ void Sprite::addAnimation(const std::string& name,
 
 		getMainRenderInfo()->addAnimation(name, framesVector, timePerFrame, nbLoops);
 	} else {
-		Console::Print("Failed to add the animation named : " + name);
+		Console::print("Failed to add the animation named : " + name);
 	}
 }
 
@@ -299,7 +299,7 @@ void Sprite::setScaling(float xScaling, float yScaling) {
 		Vec2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	} else {
-		Console::Print("Tried to set a scaling of 0 to a sprite.");
+		Console::print("Tried to set a scaling of 0 to a sprite.");
 	}
 }
 

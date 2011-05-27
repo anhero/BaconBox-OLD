@@ -16,24 +16,24 @@ SoundFX* NullAudioEngine::getSoundFX(const std::string& key, bool survive) {
 		SoundInfo* info = ResourceManager::getSound(key);
 
 		if(info) {
-			Console::Print("Got a sound effect from the key: " + key +
+			Console::print("Got a sound effect from the key: " + key +
 						   " that must " + ((survive)?(""):("not ")) +
 						   "survive.");
 		} else {
 			delete result;
 			result = NULL;
-			Console::Print("Tried to get a sound effect from an invalid key: " +
+			Console::print("Tried to get a sound effect from an invalid key: " +
 						   key);
-			Console::PrintTrace();
+			Console::printTrace();
 		}
 
 		if(!survive) {
 			audios.push_back(result);
 		}
 	} else {
-		Console::Print("Failed to allocate memory for the new sound effect: " +
+		Console::print("Failed to allocate memory for the new sound effect: " +
 					   key);
-		Console::PrintTrace();
+		Console::printTrace();
 	}
 
 	return result;
@@ -47,33 +47,33 @@ BackgroundMusic* NullAudioEngine::getBackgroundMusic(const std::string& key,
 		SoundInfo* info = ResourceManager::getSound(key);
 
 		if(info) {
-			Console::Print("Got a background music from the key: " + key +
+			Console::print("Got a background music from the key: " + key +
 						   " that must " + ((survive)?(""):("not ")) +
 						   "survive.");
 		} else {
 			delete result;
 			result = NULL;
-			Console::Print("Tried to get a music from an invalid key: " + key);
-			Console::PrintTrace();
+			Console::print("Tried to get a music from an invalid key: " + key);
+			Console::printTrace();
 		}
 
 		if(!survive) {
 			audios.push_back(result);
 		}
 	} else {
-		Console::Print("Failed to allocate memory for the new music: " + key);
-		Console::PrintTrace();
+		Console::print("Failed to allocate memory for the new music: " + key);
+		Console::printTrace();
 	}
 
 	return result;
 }
 
 NullAudioEngine::NullAudioEngine() : SoundEngine(), MusicEngine() {
-	Console::Print("NullAudioEngine::NullAudioEngine()");
+	Console::print("NullAudioEngine::NullAudioEngine()");
 }
 
 void NullAudioEngine::init() {
-	Console::Print("NullAudioEngine::init()");
+	Console::print("NullAudioEngine::init()");
 }
 
 void NullAudioEngine::update() {
@@ -97,40 +97,40 @@ void NullAudioEngine::update() {
 }
 
 NullAudioEngine::~NullAudioEngine() {
-	Console::Print("NullAudioEngine::~NullAudioEngine()");
+	Console::print("NullAudioEngine::~NullAudioEngine()");
 }
 
 SoundInfo* NullAudioEngine::loadSound(const std::string& filePath) {
-	Console::Print("NullAudioEngine::loadSound(filePath: " + filePath + ")");
+	Console::print("NullAudioEngine::loadSound(filePath: " + filePath + ")");
 	return new SoundInfo();
 }
 
 SoundInfo* NullAudioEngine::loadSound(const SoundParameters& params) {
-	Console::Print("NullAudioEngine::loadSound(params.name: " + params.name +
+	Console::print("NullAudioEngine::loadSound(params.name: " + params.name +
 				   ")");
 	return new SoundInfo();
 }
 
 bool NullAudioEngine::unloadSound(SoundInfo* sound) {
-	Console::Print("NullAudioEngine::unloadSound(sound: " +
-				   Console::ToString(sound) + ")");
+	Console::print("NullAudioEngine::unloadSound(sound: " +
+				   Console::toString(sound) + ")");
 	return true;
 }
 
 MusicInfo* NullAudioEngine::loadMusic(const std::string& filePath) {
-	Console::Print("NullAudioEngine::loadMusic(filePath: " + filePath + ")");
+	Console::print("NullAudioEngine::loadMusic(filePath: " + filePath + ")");
 	return new MusicInfo();
 }
 
 MusicInfo* NullAudioEngine::loadMusic(const MusicParameters& params) {
-	Console::Print("NullAudioEngine::loadMusic(params.name: " + params.name +
+	Console::print("NullAudioEngine::loadMusic(params.name: " + params.name +
 				   ")");
 	return new MusicInfo();
 }
 
 bool NullAudioEngine::unloadMusic(MusicInfo* music) {
-	Console::Print("NullAudioEngine::unloadMusic(music: " +
-				   Console::ToString(music) + ")");
+	Console::print("NullAudioEngine::unloadMusic(music: " +
+				   Console::toString(music) + ")");
 	return true;
 }
 

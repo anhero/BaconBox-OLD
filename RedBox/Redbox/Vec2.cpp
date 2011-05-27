@@ -192,7 +192,7 @@ float Vec2::lengthSq() const {
 
 void Vec2::normalize() {
 	if(getX() == 0.0f && getY() == 0.0f) {
-		Console::Print("Normalization failed, vector has no lenght\n");
+		Console::print("Normalization failed, vector has no lenght\n");
 	}
 
 	float len = 1.0f / length();

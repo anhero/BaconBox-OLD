@@ -43,17 +43,17 @@ SoundFX* SDLMixerEngine::getSoundFX(const std::string& key, bool survive) {
 		} else {
 			delete result;
 			result = new NullAudio();
-			Console::Print("Tried to get a sound effect from an invalid key: "
+			Console::print("Tried to get a sound effect from an invalid key: "
 					+ key);
-			Console::PrintTrace();
+			Console::printTrace();
 		}
 		if(!survive) {
 			sounds.push_back(result);
 		}
 	} else {
-		Console::Print("Failed to allocate memory for the new sound effect: "
+		Console::print("Failed to allocate memory for the new sound effect: "
 				+ key);
-			Console::PrintTrace();
+			Console::printTrace();
 	}
 
 	return result;
@@ -72,17 +72,17 @@ BackgroundMusic* SDLMixerEngine::getBackgroundMusic(const std::string& key,
 		} else {
 			delete result;
 			result = new NullAudio();
-			Console::Print("Tried to get a background music from an invalid key: "
+			Console::print("Tried to get a background music from an invalid key: "
 					+ key);
-			Console::PrintTrace();
+			Console::printTrace();
 		}
 		if(!survive) {
 			sounds.push_back(result);
 		}
 	} else {
-		Console::Print("Failed to allocate memory for the new background music: "
+		Console::print("Failed to allocate memory for the new background music: "
 				+ key);
-		Console::PrintTrace();
+		Console::printTrace();
 	}
 
 	return result;
@@ -107,8 +107,8 @@ void SDLMixerEngine::init() {
 		// We set the number of sound effect channels.
 		Mix_AllocateChannels(SDLMixerEngine::NB_SOUND_CHANNELS);
 	} else {
-		Console::Print("Unable to initialize audio: " + std::string(Mix_GetError()));
-		Console::PrintTrace();
+		Console::print("Unable to initialize audio: " + std::string(Mix_GetError()));
+		Console::printTrace();
 	}
 }
 
@@ -155,9 +155,9 @@ SoundInfo* SDLMixerEngine::loadSound(const std::string& filePath) {
 		// We delete the resulting sound info.
 		delete result;
 		result = NULL;
-		Console::Print("Unable to load sound effect: " + filePath);
-		Console::Print(" with SDL_mixer error: " + std::string(Mix_GetError()));
-		Console::PrintTrace();
+		Console::print("Unable to load sound effect: " + filePath);
+		Console::print(" with SDL_mixer error: " + std::string(Mix_GetError()));
+		Console::printTrace();
 	}
 
 	return result;
@@ -184,14 +184,14 @@ MusicInfo* SDLMixerEngine::loadMusic(const std::string& filePath) {
 		if(!result->music) {
 			delete result;
 			result = NULL;
-			Console::Print("Unable to load music file: " + filePath);
-			Console::Print(" with the SDL_mixer error: " + std::string(Mix_GetError()));
-		Console::PrintTrace();
+			Console::print("Unable to load music file: " + filePath);
+			Console::print(" with the SDL_mixer error: " + std::string(Mix_GetError()));
+		Console::printTrace();
 		}
 	} else {
-		Console::Print("Could not allocate memory for the music info for the file: "
+		Console::print("Could not allocate memory for the music info for the file: "
 		        + filePath);
-		Console::PrintTrace();
+		Console::printTrace();
 	}
 
 	return result;
