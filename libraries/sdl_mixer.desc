@@ -7,11 +7,15 @@ _archive="${_name}-1.2.11.tar.gz"
 _archive_url="http://www.libsdl.org/projects/SDL_mixer/release/${_archive}"
 _hash="65ada3d997fe85109191a5fb083f248c" 
 
+#Flags for this library
+CFLAGS="-I${libs_builddir}/include -logg -lvorbis -lvorbisfile -lvorbisenc"
+CXXFLAGS="$CFLAGS"
+
 # Library configuration
-config_cmdline="--with-sdl-prefix=${libs_builddir}"
-config_cmdline="$config_cmdline --enable-music-ogg=no"
-config_cmdline="$config_cmdline --enable-music-ogg-tremor=yes"
-config_cmdline="$config_cmdline --enable-music-ogg-shared=no"
+config_cmdline="--with-sdl-prefix=${libs_builddir} --enable-shared=no"
+config_cmdline="$config_cmdline --enable-music-ogg=yes"
+config_cmdline="$config_cmdline --enable-music-ogg-tremor=no"
+#config_cmdline="$config_cmdline --enable-music-ogg-shared=no"
 
 config_cmdline="$config_cmdline --enable-music-mod=no"
 config_cmdline="$config_cmdline --enable-music-midi=no"
@@ -24,6 +28,9 @@ config_cmdline="$config_cmdline --enable-music-mp3=no"
 config_cmdline="$config_cmdline --enable-music-mp3-shared=no"
 config_cmdline="$config_cmdline --enable-music-mp3-mad-gpl=no"
 
+SDL_CONFIG="${libs_builddir}/bin/sdl-config"
+SDLLIBS="-Wl,-Bstatic $(${SDL_CONFIG} --static-libs) -Wl,-Bdynamic"
+
 
 load_base http.fetch
 load_base configuremakemake.build
@@ -31,8 +38,85 @@ load_base configuremakemake.build
 copy_function build __build
 
 function build() {
-	SDL_CONFIG="${libs_builddir}/bin/sdl-config"
-	SDLLIBS="-Wl,-Bstatic $(${SDL_CONFIG} --static-libs) -Wl,-Bdynamic"
-
+	pushd "${lib_workdir}/${_name}-${_version}/"
+	#Do the patching!
+	patch -p0 <<'EOPATCH'
+--- configure.orig	2009-11-12 01:44:13.000000000 -0500
++++ configure	2011-05-27 14:46:28.241182601 -0400
+@@ -13268,70 +13268,8 @@
+   have_ogg_hdr=yes
+ fi
+ 
++ac_cv_lib_vorbisfile_ov_open_callbacks=yes
+ 
+-        { $as_echo "$as_me:$LINENO: checking for ov_open_callbacks in -lvorbisfile" >&5
+-$as_echo_n "checking for ov_open_callbacks in -lvorbisfile... " >&6; }
+-if test "${ac_cv_lib_vorbisfile_ov_open_callbacks+set}" = set; then
+-  $as_echo_n "(cached) " >&6
+-else
+-  ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lvorbisfile  $LIBS"
+-cat >conftest.$ac_ext <<_ACEOF
+-/* confdefs.h.  */
+-_ACEOF
+-cat confdefs.h >>conftest.$ac_ext
+-cat >>conftest.$ac_ext <<_ACEOF
+-/* end confdefs.h.  */
+-
+-/* Override any GCC internal prototype to avoid an error.
+-   Use char because int might match the return type of a GCC
+-   builtin and then its argument prototype would still apply.  */
+-#ifdef __cplusplus
+-extern "C"
+-#endif
+-char ov_open_callbacks ();
+-int
+-main ()
+-{
+-return ov_open_callbacks ();
+-  ;
+-  return 0;
+-}
+-_ACEOF
+-rm -f conftest.$ac_objext conftest$ac_exeext
+-if { (ac_try="$ac_link"
+-case "(($ac_try" in
+-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+-  *) ac_try_echo=$ac_try;;
+-esac
+-eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
+-$as_echo "$ac_try_echo") >&5
+-  (eval "$ac_link") 2>conftest.er1
+-  ac_status=$?
+-  grep -v '^ *+' conftest.er1 >conftest.err
+-  rm -f conftest.er1
+-  cat conftest.err >&5
+-  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+-  (exit $ac_status); } && {
+-	 test -z "$ac_c_werror_flag" ||
+-	 test ! -s conftest.err
+-       } && test -s conftest$ac_exeext && {
+-	 test "$cross_compiling" = yes ||
+-	 $as_test_x conftest$ac_exeext
+-       }; then
+-  ac_cv_lib_vorbisfile_ov_open_callbacks=yes
+-else
+-  $as_echo "$as_me: failed program was:" >&5
+-sed 's/^/| /' conftest.$ac_ext >&5
+-
+-	ac_cv_lib_vorbisfile_ov_open_callbacks=no
+-fi
+-
+-rm -rf conftest.dSYM
+-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
+-      conftest$ac_exeext conftest.$ac_ext
+-LIBS=$ac_check_lib_save_LIBS
+-fi
+ { $as_echo "$as_me:$LINENO: result: $ac_cv_lib_vorbisfile_ov_open_callbacks" >&5
+ $as_echo "$ac_cv_lib_vorbisfile_ov_open_callbacks" >&6; }
+ if test "x$ac_cv_lib_vorbisfile_ov_open_callbacks" = x""yes; then
+EOPATCH
+	popd
+	#Then build
 	__build
 }

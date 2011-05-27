@@ -75,8 +75,13 @@ else(iphone)
 	if(WIN32)
 		list(APPEND RedBox_libraries_list mingw32 m user32 gdi32 winmm imm32 ole32 oleaut32 version uuid)
 	endif(WIN32)
-	list(APPEND RedBox_libraries_list SDL)
 	list(APPEND RedBox_libraries_list SDL_mixer)
+	#TODO: Have an option to allow or disallow vorbis...
+	list(APPEND RedBox_libraries_list vorbisenc)
+	list(APPEND RedBox_libraries_list vorbisfile)
+	list(APPEND RedBox_libraries_list vorbis)
+	list(APPEND RedBox_libraries_list ogg)
+	list(APPEND RedBox_libraries_list SDL)
 endif(iphone)
 
 
