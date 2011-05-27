@@ -10,6 +10,8 @@ _archive_url="http://bitbucket.org/anhero/${_name}/get/${_archive}"
 _hash="0c4157a9cf7d300f230d146ba94f0568" #tar.bz2
 _hash="a1468d47d93b1551656a042ac3894fee" #tar.gz
 
+WGET_FLAGS="--no-check-certificate"
+
 load_base http.fetch
 
 function build() {

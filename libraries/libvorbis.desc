@@ -1,0 +1,19 @@
+#!/bin/bash
+
+_name="libvorbis"
+_license="BSD-style"
+_version="1.3.2"
+_archive="${_name}-${_version}.tar.gz"
+
+_archive_url="http://downloads.xiph.org/releases/vorbis/${_archive}"
+
+_hash="c870b9bd5858a0ecb5275c14486d9554"
+
+OGG_CFLAGS="-llibogg.a"
+
+config_cmdline="--disable-oggtest"
+config_cmdline="$config_cmdline --enable-shared=no"
+config_cmdline="$config_cmdline --with-ogg=${libs_builddir}";
+
+load_base http.fetch
+load_base configuremakemake.build
