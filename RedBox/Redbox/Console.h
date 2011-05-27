@@ -10,8 +10,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <execinfo.h>
-#include <cxxabi.h>
+
+#include "PlatformFlagger.h"
+
+#ifndef RB_WIN32
+	#include <execinfo.h>
+	#include <cxxabi.h>
+#endif
 
 #include <stdarg.h>
 
@@ -30,6 +35,8 @@ namespace RedBox {
 		// published under the WTFPL v2.0
 		// Previous credits applies only to private function print_stacktrace.
 		/** Print a demangled stack backtrace of the caller function to FILE* out. */
+
+		#ifndef RB_WIN32
 		static inline void print_stacktrace(FILE *out = stderr, unsigned int max_frames = 63)
 		{
 			const int stackOffset = 2;
@@ -109,6 +116,11 @@ namespace RedBox {
 			free(funcname);
 			free(symbollist);
 		}
+		#else
+		static inline void print_stacktrace(FILE *out = stderr, unsigned int max_frames = 63) {
+			fprintf(out, "Stacktrace unavailable on this platform...\r\n");
+		}
+		#endif
 
 		public:
 			/**

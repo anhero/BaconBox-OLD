@@ -11,7 +11,9 @@ endif(NOT CMAKE_BUILD_TYPE)
 #Define the DEBUG symbol if necessary.
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	ADD_DEFINITIONS("-DDEBUG")
-	set(CMAKE_CXX_FLAGS_DEBUG "-g -rdynamic")
+	if(NOT WIN32)
+		set(CMAKE_CXX_FLAGS_DEBUG "-g -rdynamic")
+	endif(NOT WIN32)
 endif("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 
 if("${CMAKE_GENERATOR}" STREQUAL "Xcode")
