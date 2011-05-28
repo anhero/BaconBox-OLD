@@ -11,7 +11,9 @@ _hash="1f283b8e3fbe71d753c41604723bbb02"
 load_base http.fetch
 load_base configuremakemake.build
 
-config_cmdline="--enable-shared=no"
+if [[ "$(uname -s)" != "Darwin" ]]; then
+	config_cmdline="--enable-shared=no"
+fi
 
 copy_function build __build
 
