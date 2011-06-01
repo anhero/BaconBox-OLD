@@ -1,13 +1,20 @@
+#include "PlatformFlagger.h"
+
 #ifndef RB_CONSOLE_H
 #define RB_CONSOLE_H
 
 // @TODO: Backtrace magic for other platforms than GCC... (clang?, msvc)
 // @TODO: Stack trace in an object to allow more manipulation?
 
+#include "PlatformFlagger.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <execinfo.h>
-#include <cxxabi.h>
+
+#ifdef RB_HAS_GCC_STACKTRACE
+	#include <execinfo.h>
+	#include <cxxabi.h>
+#endif
 
 #include <stdarg.h>
 
@@ -101,6 +108,7 @@ namespace RedBox {
 			return ss.str();
 		}
 	private:
+#ifdef RB_HAS_GCC_STACKTRACE
 		// stacktrace.h (c) 2008, Timo Bingmann from http://idlebox.net/
 		// published under the WTFPL v2.0
 		// Previous credits applies only to private function print_stacktrace.
@@ -178,6 +186,11 @@ namespace RedBox {
 			free(funcname);
 			free(symbollist);
 		}
+#else
+		static inline void print_stacktrace(FILE* out = stderr, unsigned int max_frames = 63) {
+			fprintf(out, ">> No stacktrace method available\n");
+		}
+#endif
 	};
 }
 

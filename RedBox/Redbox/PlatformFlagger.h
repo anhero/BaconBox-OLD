@@ -18,12 +18,20 @@
 /* ****************************************************************************
  * System-specific defines
  */
+//Android platform
+#ifdef __ANDROID__
+#define RB_ANDROID
+#endif
+
 //Linux systems
 #ifdef linux
 	#define RB_LINUX
 
 	#define RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
 	#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
+#ifndef RB_ANDROID
+	#define RB_HAS_GCC_STACKTRACE
+#endif
 #endif // linux
 
 //Windows systems
@@ -72,7 +80,7 @@
 		#define RB_TIME_HELPER_INCLUDE "IOSTimeHelper.h"
 	#endif
 
-
+	#define RB_HAS_GCC_STACKTRACE
 #endif // __APPLE__
 
 /* ****************************************************************************
@@ -130,6 +138,9 @@
 	#define RB_POINTER_IMPL new IOSPointer()
 	#define RB_POINTER_INCLUDE "IOSPointer.h"
 #endif
+
+
+
 
 /*
 //Mac platform (without SDL or Qt) (currently unsupported)
