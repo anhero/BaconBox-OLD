@@ -53,7 +53,9 @@ namespace RedBox {
 		BackgroundMusic* getBackgroundMusic(const std::string& key,
 		                                    bool survive = true);
 		/**
-		 * Gets NullaudioEngine's instance. Retuns NULL if it isn't constructed.
+		 * Gets NullaudioEngine's instance. 
+		 * @return Pointer to the Null audio engine's instance or NULL if it
+		 * isn't constructed.
 		 */
 		static NullAudioEngine* getInstance();
 

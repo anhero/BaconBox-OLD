@@ -71,12 +71,14 @@ BackgroundMusic* NullAudioEngine::getBackgroundMusic(const std::string& key,
 }
 
 NullAudioEngine* NullAudioEngine::getInstance() {
-	return NullAudioEngine::instance;
+	if(!instance) {
+		instance = new NullAudioEngine();
+	}
+	return instance;
 }
 
 NullAudioEngine::NullAudioEngine() : SoundEngine(), MusicEngine() {
 	Console::print("NullAudioEngine::NullAudioEngine()");
-	NullAudioEngine::instance = this;
 }
 
 void NullAudioEngine::init() {
