@@ -68,9 +68,11 @@ else(iphone)
 	include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
 	INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
 
-	FIND_PACKAGE(OpenAL REQUIRED)
-	list(APPEND RedBox_IncludeDir_list ${OPENAL_INCLUDE_DIR})
-	list(APPEND RedBox_libraries_list ${OPENAL_LIBRARY})
+	#pthreads seems to be only needed on Linux for SDL.
+	if("${CMAKE_SYSTEM}" MATCHES "Linux")
+		find_package (Threads)
+		list(APPEND RedBox_libraries_list ${CMAKE_THREAD_LIBS_INIT})
+	endif("${CMAKE_SYSTEM}" MATCHES "Linux")
 	
 	FIND_PACKAGE(OpenGL REQUIRED)
 	list(APPEND RedBox_IncludeDir_list ${OPENGL_INCLUDE_DIR})
