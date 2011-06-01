@@ -35,6 +35,9 @@ if(iphone)
 		list(APPEND RedBox_libraries_list ${${framework}_LIBRARY_FWK})
 	endforeach(framework)
 	include(${RedBox_SOURCE_DIR}/RedBox/Sources.cmake)
+
+elseif(ANDROID)
+	#TODO
 elseif(QT)
 	set(QT_USE_QTOPENGL TRUE)   
 	set(QT 1)	
@@ -139,25 +142,8 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 	RedBox
 	png
 	freetype
-	#	vorbisidec
 	z
 	${RedBox_libraries_list}
 	)
-
-	#list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
-	#list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
-	#list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisidec.a)
-	#list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libz.a)
-	#if(SDL)
-	#	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL.a)
-	#endif(SDL)
-		
-#file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
-#add_custom_command(TARGET RedBox POST_BUILD 
-#	COMMAND $ENV{_BASH_INTERPRETER} ${RedBox_SOURCE_DIR}/script/linkscript.sh
-#					${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib/libRedBox.a
-#					${RedBox_Dependencies}
-#					${RedBox_BINARY_DIR}/temp/${CMAKE_BUILD_TYPE}/libRedBox.a)
-
 
 

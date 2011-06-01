@@ -48,9 +48,10 @@ while [ $# -gt 0 ];do
 				if [ "${1}" == "" ]; then
 					echo "This target need a sdk version number. See ./configure --help for usage." && exit 1
 				fi
-					
-
 				export SDKVER="${1}"
+
+			#elif [  "${target}" == "android" ] ; then 
+			
 			fi
 			;;
 		*)
@@ -95,6 +96,21 @@ elif [  "${target}" == "iphoneSimulator" ]; then
 			"${configurePath}/configure-iphone-simulator" "-G${generator}" "${params}"
 		fi
 	fi
+elif  [ "${target}" == "android" ]; then
+	if [  "${params}" == "" ]; then
+		if [  "${generator}" == "" ]; then
+			"${configurePath}/configure-android"
+		else
+			"${configurePath}/configure-android" "-G${generator}"
+		fi
+	else
+		if [  "${generator}" == "" ]; then
+			"${configurePath}/configure-android" "${params}"
+		else
+			"${configurePath}/configure-android" "-G${generator}" "${params}"
+		fi
+	fi
+
 else
 	if [  "${params}" == "" ]; then
 		if [  "${generator}" == "" ]; then

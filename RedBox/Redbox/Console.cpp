@@ -1,6 +1,6 @@
 
 #include "Console.h"
-
+#ifndef RB_ANDROID
 using namespace RedBox;
 using namespace std;
 
@@ -48,3 +48,7 @@ void Console::printf(string formatString, ...) {
 	va_end(args);
 }
 
+
+
+
+#endif

@@ -9,6 +9,8 @@
 
 using namespace RedBox;
 
+NullAudioEngine* NullAudioEngine::instance = NULL;
+
 SoundFX* NullAudioEngine::getSoundFX(const std::string& key, bool survive) {
 	NullAudio* result = new NullAudio();
 
@@ -68,8 +70,13 @@ BackgroundMusic* NullAudioEngine::getBackgroundMusic(const std::string& key,
 	return result;
 }
 
+NullAudioEngine* NullAudioEngine::getInstance() {
+	return NullAudioEngine::instance;
+}
+
 NullAudioEngine::NullAudioEngine() : SoundEngine(), MusicEngine() {
 	Console::print("NullAudioEngine::NullAudioEngine()");
+	NullAudioEngine::instance = this;
 }
 
 void NullAudioEngine::init() {
