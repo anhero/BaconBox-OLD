@@ -4,9 +4,13 @@
 libraries=( ${libraries[@]-} 'zlib' )
 libraries=( ${libraries[@]-} 'freetype' )
 libraries=( ${libraries[@]-} 'libpng' )
-libraries=( ${libraries[@]-} 'libogg' )
-libraries=( ${libraries[@]-} 'libvorbis' )
-#libraries=( ${libraries[@]-} 'libvorbis-tremor' )
+
+if [ ${libs_target-} != "ios" ]; then
+	libraries=( ${libraries[@]-} 'libogg' )
+	libraries=( ${libraries[@]-} 'libvorbis' )
+	#libraries=( ${libraries[@]-} 'libvorbis-tremor' )
+fi
+
 if [ ${libs_target-} != "ios" ]; then
 	libraries=( ${libraries[@]-} 'sdl' )
 	libraries=( ${libraries[@]-} 'sdl_mixer' )
