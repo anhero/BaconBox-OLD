@@ -37,30 +37,30 @@ int Layer::getZ() const {
 	return z;
 }
 
-const Vec2& Layer::getScrollFactor() const {
-	return scrollFactor;
-}
-
 void Layer::setZ(int newZ) {
 	z = newZ;
+}
+
+const Vec2& Layer::getScrollFactor() const {
+	return scrollFactor;
 }
 
 void Layer::setScrollFactor(const Vec2& newScrollFactor) {
 	scrollFactor = newScrollFactor;
 }
 
-void Layer::setXScrollFactor(float newXScrollFactor) {
-	scrollFactor.setX(newXScrollFactor);
-}
-
-void Layer::setYScrollFactor(float newYScrollFactor) {
-	scrollFactor.setY(newYScrollFactor);
-}
-
 float Layer::getXScrollFactor() const {
 	return scrollFactor.getX();
 }
 
+void Layer::setXScrollFactor(float newXScrollFactor) {
+	scrollFactor.setX(newXScrollFactor);
+}
+
 float Layer::getYScrollFactor() const {
 	return scrollFactor.getY();
+}
+
+void Layer::setYScrollFactor(float newYScrollFactor) {
+	scrollFactor.setY(newYScrollFactor);
 }
