@@ -33,20 +33,8 @@ Camera& Camera::operator=(const Camera& src) {
 	return *this;
 }
 
-void Camera::move(float x, float y) {
-	position += Vec2(x, y);
-}
-
-void Camera::move(const Vec2& moveVector) {
-	position += moveVector;
-}
-
-void Camera::moveX(float x) {
-	position.addToX(x);
-}
-
-void Camera::moveY(float y) {
-	position.addToY(y);
+const Vec2& Camera::getPosition() const {
+	return position;
 }
 
 void Camera::setPosition(float x, float y) {
@@ -57,34 +45,51 @@ void Camera::setPosition(const Vec2 &newPosition) {
 	position = newPosition;
 }
 
+void Camera::move(float x, float y) {
+	position += Vec2(x, y);
+}
+
+void Camera::move(const Vec2& moveVector) {
+	position += moveVector;
+}
+
 float Camera::getXPosition() const {
 	return position.getX();
+}
+
+void Camera::setXPosition(float newXPosition) {
+	position.setX(newXPosition);
+}
+
+void Camera::moveX(float x) {
+	position.addToX(x);
 }
 
 float Camera::getYPosition() const {
 	return position.getY();
 }
 
-const Vec2& Camera::getPosition() const {
-	return position;
+void Camera::moveY(float y) {
+	position.addToY(y);
 }
 
-void Camera::resetAngle() {
-	angle = 0.0f;
+float Camera::getAngle() const {
+	return angle;
 }
 
 void Camera::setAngle(float newAngle) {
 	angle = newAngle;
 }
 
-float Camera::getAngle() const {
-	return angle;
-}
 void Camera::rotateLeft(float rotationAngle) {
 	angle -= rotationAngle;
 }
 void Camera::rotateRight(float rotationAngle) {
 	angle += rotationAngle;
+}
+
+void Camera::resetAngle() {
+	angle = 0.0f;
 }
 
 void Camera::setBackgroundColor(const Color& newBackgroundColor) {
@@ -95,18 +100,20 @@ const Color& Camera::getBackgroundColor() const {
 	return backgroundColor;
 }
 
+float Camera::getZoomFactor() const {
+	return zoomFactor;
+}
+
+void Camera::setZoomFactor(float newZoomFactor) {
+	zoomFactor = newZoomFactor;
+}
+
 void Camera::zoom(float factor) {
 	zoomFactor *= factor;
 }
-void Camera::setZoom(float factor) {
-	zoomFactor = factor;
-}
+
 void Camera::resetZoom() {
 	zoomFactor = 1.0f;
-}
-
-float Camera::getZoom() const {
-	return zoomFactor;
 }
 
 void Camera::shake(float intensity, double duration, bool forceReset,
