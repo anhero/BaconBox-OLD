@@ -89,7 +89,7 @@ namespace RedBox {
 		 * stopping. -1 means it will loop infinitely.
 		 */
 		void addAnimation(const std::string& name,
-						  const std::vector<unsigned int> frames,
+						  const std::vector<unsigned int>& frames,
 						  double timePerFrame,
 						  int nbLoops = -1);
 		/**

@@ -114,13 +114,29 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 }
 
 void RenderInfo::addAnimation(const std::string& name,
-                              const std::vector<unsigned int> frames,
+							  const std::vector<unsigned int>& frames,
                               double timePerFrame,
                               int nbLoops) {
-	// We add the animation to the map and we check if it was successfully
-	// added.
-	if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(frames, timePerFrame, nbLoops))).second)) {
-		Console::print("Failed to add the animation named : " + name);
+	// We check if the frames are within bounds, if not, we don't add the
+	// animation and we print an error message.
+	bool okay = true;
+	std::vector<unsigned int>::const_iterator i = frames.begin();
+	while(okay && i != frames.end()) {
+		if(*i >= texCoords.size()) {
+			okay = false;
+		} else {
+			++i;
+		}
+	}
+	if(okay) {
+		// We add the animation to the map and we check if it was successfully
+		// added.
+		if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(frames, timePerFrame, nbLoops))).second)) {
+			Console::print("Failed to add the animation named : " + name);
+			Console::printTrace();
+		}
+	} else {
+		Console::print("Failed to add the animation named \"" + name + "\" because it contains at least one frame index that is too high.");
 		Console::printTrace();
 	}
 }

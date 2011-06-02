@@ -177,6 +177,8 @@ void Sprite::removeRenderStep(RenderStep* renderStep) {
 
 RenderStep* Sprite::getMainRenderStep() {
 	if(renderSteps.empty()) {
+		Console::print("Tried to get the main render step of a sprite that doesn't have any render steps, returning NULL.");
+		Console::printTrace();
 		return NULL;
 	} else {
 		return renderSteps.front();
@@ -205,8 +207,13 @@ std::list<RenderStep*>& Sprite::getRenderSteps() {
 
 void Sprite::setMainColor(const Color& color) {
 	RenderStep* mainRenderStep = getMainRenderStep();
-	mainRenderStep->addMode(RenderStepMode::COLOR);
-	mainRenderStep->setColor(color);
+	if(mainRenderStep) {
+		mainRenderStep->addMode(RenderStepMode::COLOR);
+		mainRenderStep->setColor(color);
+	} else {
+		Console::print("Tried to set the color of a sprite that has no render steps.");
+		Console::printTrace();
+	}
 }
 VerticesGroup& Sprite::getVertices() {
 	return vertices;
@@ -252,43 +259,56 @@ float Sprite::getMaxY() const {
 }
 
 RenderInfo* Sprite::getMainRenderInfo() {
-	if(getMainRenderStep()) {
-		return &getMainRenderStep()->getRenderInfo();
-	} else {
+	if(renderSteps.empty()) {
+		Console::print("Tried to get the main render information of a sprite that doesn't have a main render step, returning NULL.");
+		Console::printTrace();
 		return NULL;
+	} else {
+		return &getMainRenderStep()->getRenderInfo();
 	}
 }
 
 void Sprite::playAnimation(const std::string& name) {
-	getMainRenderStep()->playAnimation(name);
+	if(renderSteps.empty()) {
+		Console::print("Tried to play an animation on a sprite that doesn't have any main render step.");
+		Console::printTrace();
+	} else {
+		getMainRenderStep()->playAnimation(name);
+	}
 }
 
 void Sprite::addAnimation(const std::string& name,
                           double timePerFrame,
                           int nbLoops,
                           unsigned int nbFrames, ...) {
-
-
-	std::vector<unsigned int> framesVector(nbFrames);
-
-	// We make sure it is trying to add an animation with at least one frame.
-	if(nbFrames >= 1) {
-		// We set the frame numbers to the added animation using the variable
-		// parameters.
-		va_list frames;
-		va_start(frames, nbFrames);
-
-		for(std::vector<unsigned int>::iterator i = framesVector.begin();
-		        i != framesVector.end();
-		        ++i) {
-			*i = va_arg(frames, unsigned int);
-		}
-
-		va_end(frames);
-
-		getMainRenderInfo()->addAnimation(name, framesVector, timePerFrame, nbLoops);
+	// We make sure there is a main render step.
+	if(renderSteps.empty()) {
+		Console::print("Tried to add an animation to a sprite that doesn't have a main render step.");
+		Console::printTrace();
 	} else {
-		Console::print("Failed to add the animation named : " + name);
+		std::vector<unsigned int> framesVector(nbFrames);
+
+		// We make sure it is trying to add an animation with at least one frame.
+		if(nbFrames >= 1) {
+			// We set the frame numbers to the added animation using the variable
+			// parameters.
+			va_list frames;
+			va_start(frames, nbFrames);
+
+			// We read the animation's frame indexes.
+			for(std::vector<unsigned int>::iterator i = framesVector.begin();
+					i != framesVector.end();
+					++i) {
+				*i = va_arg(frames, unsigned int);
+			}
+
+			va_end(frames);
+
+			getMainRenderInfo()->addAnimation(name, framesVector, timePerFrame, nbLoops);
+		} else {
+			Console::print("Failed to add the animation named \"" + name + "\" because it specified that it had 0 frames.");
+			Console::printTrace();
+		}
 	}
 }
 

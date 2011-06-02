@@ -64,15 +64,14 @@ TextureInfo* ResourceManager::loadTexture(const std::string& key,
         bool overwrite) {
 
 	PixMap* aPixMap = loadPixMap(filePath);
-	TextureInfo* texInfo = addTexture(key, aPixMap, overwrite);
-	delete aPixMap;
-	return texInfo;
+	if(aPixMap) {
+		TextureInfo* texInfo = addTexture(key, aPixMap, overwrite);
+		delete aPixMap;
+		return texInfo;
+	} else {
+		return NULL;
+	}
 }
-
-
-
-
-
 
 TextureInfo* ResourceManager::getTexture(const std::string& key) {
 	return textures[key];
