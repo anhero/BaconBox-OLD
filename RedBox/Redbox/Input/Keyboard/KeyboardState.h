@@ -25,6 +25,7 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		KeyboardState();
+
 		/**
 		 * Destructor.
 		 */

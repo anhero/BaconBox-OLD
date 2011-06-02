@@ -16,7 +16,9 @@
 
 namespace RedBox {
 	/**
-	 * Represents a GraphicBody object assiociated with its layer.
+	 * Represents a GraphicBody object assiociated with its layer. This is the
+	 * type that the state contains. Classes like GraphicString, Sprite and
+	 * IEmitter are derived from this class.
 	 * @ingroup Display
 	 */
 	class GraphicBody : public Object {
@@ -322,6 +324,7 @@ namespace RedBox {
 		 * @param deltaY Value to add to the GraphicBody's vertical position (in
 		 * pixels). Positive value moves the GraphicBody down and a negative
 		 * value moves the GraphicBody up.
+		 * @see RedBox::GraphicBody::move(const Vec2& delta);
 		 * @see RedBox::GraphicBody::position
 		 */
 		void move(float deltaX, float deltaY);
@@ -591,6 +594,7 @@ namespace RedBox {
 		 * Gets the drag.
 		 * @return Vec2 containing the deceleration applied when there is no
 		 * acceleration until velocity reaches 0.
+		 * @see RedBox::GraphicBody::drag
 		 */
 		const Vec2& getDrag() const;
 
@@ -598,18 +602,21 @@ namespace RedBox {
 		 * Sets the drag.
 		 * @param newDrag New drag. Deceleration applied when there is no
 		 * acceleration until velocity reaches 0.
+		 * @see RedBox::GraphicBody::drag
 		 */
 		void setDrag(const Vec2& newDrag);
 
 		/**
 		 * Get the sprite's scaling.
 		 * @return 2D vector containing the sprite's scaling currently applied.
+		 * @see RedBox::GraphicBody::scaling
 		 */
 		const Vec2& getScaling() const;
 
 		/**
 		 * Change the sprite's scaling.
 		 * @param newScaling New scaling to apply.
+		 * @see RedBox::GraphicBody::scaling
 		 */
 		void setScaling(const Vec2& newScaling);
 
@@ -617,6 +624,7 @@ namespace RedBox {
 		 * Change the sprite's scaling.
 		 * @param xScaling New horizontal scaling to apply.
 		 * @param yScaling New vertical scaling to apply.
+		 * @see RedBox::GraphicBody::scaling
 		 */
 		virtual void setScaling(float xScaling, float yScaling);
 
@@ -626,6 +634,7 @@ namespace RedBox {
 		 * scaling to add. For example, if you pass a Vec2(0.2f, 0.0f) to a
 		 * GraphicBody that already has a scaling of Vec2(1.3f, 1.0f), the
 		 * scaling will become Vec2(1.5f, 0.0f).
+		 * @see RedBox::GraphicBody::scaling
 		 */
 		void addToScaling(const Vec2& scalingToAdd);
 
@@ -634,30 +643,35 @@ namespace RedBox {
 		 * @param xScaling Horizontal scaling to add.
 		 * @param yScaling Vertical scaling to add.
 		 * @see RedBox::GraphicBody::addToScaling(const Vec2& scalingToAdd)
+		 * @see RedBox::GraphicBody::scaling
 		 */
 		void addToScaling(float xScaling, float yScaling);
 
 		/**
 		 * Get the sprite's horizontal scaling.
 		 * @return Sprite's horizontal scaling currently applied.
+		 * @see RedBox::GraphicBody::scaling
 		 */
 		float getXScaling() const;
 
 		/**
 		 * Change the sprite's scaling.
 		 * @param newXScaling New horizontal scaling to apply.
+		 * @see RedBox::GraphicBody::scaling
 		 */
 		void setXScaling(float newXScaling);
 
 		/**
 		 * Get the sprite's vertical scaling.
 		 * @return Sprite's vertical scaling currently applied.
+		 * @see RedBox::GraphicBody::scaling
 		 */
 		float getYScaling() const;
 
 		/**
 		 * Change the sprite's scaling.
 		 * @param newYScaling New vertical scaling to apply.
+		 * @see RedBox::GraphicBody::scaling
 		 */
 		void setYScaling(float newYScaling);
 
@@ -665,6 +679,7 @@ namespace RedBox {
 		 * Gets the sprite's current rotation angle.
 		 * @return Sprite's current rotation angle. As the angle increments, it
 		 * rotates counter-clockwise.
+		 * @see RedBox::GraphicBody::angle
 		 */
 		float getAngle() const;
 
@@ -672,6 +687,7 @@ namespace RedBox {
 		 * Sets the sprite's rotation angle.
 		 * @param newAngle Sprite's new rotation angle. As the angle increments,
 		 * it makes the sprite rotate counter-clockwise.
+		 * @see RedBox::GraphicBody::angle
 		 */
 		virtual void setAngle(float newAngle);
 
@@ -680,6 +696,7 @@ namespace RedBox {
 		 * @param angleToAdd Angle to add to the sprite's current rotation
 		 * angle. If the angle goes over 360 or under 0, it is automatically
 		 * wrapped around.
+		 * @see RedBox::GraphicBody::angle
 		 */
 		void addToAngle(float angleToAdd);
 

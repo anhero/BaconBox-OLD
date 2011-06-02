@@ -12,7 +12,7 @@ GraphicBody::GraphicBody() : Object(),
 	maxVelocity(Vec2(NO_MAX_VELOCITY, NO_MAX_VELOCITY)),
 	scaling(Vec2(1.0f, 1.0f)), angle(0.0f), layer(Layer()), toBeDeleted(false),
 	layerChanged(false), isInState(false), collidableSides(Side::ALL),
-	elasticity(0.0f), staticObject(false), drag(Vec2(0.0f, 0.0f)) {
+	elasticity(0.0f), staticBody(false), drag(Vec2(0.0f, 0.0f)) {
 }
 
 GraphicBody::GraphicBody(const GraphicBody& src) : Object(src) {
@@ -422,8 +422,8 @@ void GraphicBody::addToAngle(float angleToAdd) {
 std::pair<bool, CollisionData> GraphicBody::collide(GraphicBody* body1,
 													GraphicBody* body2) {
 	CollisionData currentCollisionData;
-	currentCollisionData.obj1 = object1;
-	currentCollisionData.obj2 = object2;
+	currentCollisionData.obj1 = body1;
+	currentCollisionData.obj2 = body2;
 
 	if(body1 != body2) {
 		bool collideInX = solveXCollision(body1, body2, &currentCollisionData);
@@ -528,7 +528,7 @@ bool GraphicBody::vertLineCollide(GraphicBody* aGraphicBody, float linePosition,
 
 bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, CollisionData* collisionInfo) {
 	// We check if both instance are static
-	if(object1->getIsStatic() && object2->getIsStatic()) {
+	if(object1->isStaticBody() && object2->isStaticBody()) {
 		return false;
 	}
 
@@ -585,7 +585,7 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 		float obj1v = object1->getVelocity().getX();
 		float obj2v = object2->getVelocity().getX();
 
-		if(!object1->getIsStatic() && !object2->getIsStatic()) {
+		if(!object1->isStaticBody() && !object2->isStaticBody()) {
 			overlap *= 0.5f;
 
 			object1->moveX(-overlap);
@@ -595,11 +595,11 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 
 			object1->setXVelocity(average + (obj2v - average) * object1->getElasticity());
 			object2->setXVelocity(average + (obj1v - average) * object2->getElasticity());
-		} else if(!object1->getIsStatic()) {
+		} else if(!object1->isStaticBody()) {
 			object1->moveX(-overlap);
 			object1->setXVelocity(obj2v - (obj1v * object1->getElasticity()));
 
-		} else if(!object2->getIsStatic()) {
+		} else if(!object2->isStaticBody()) {
 			object2->moveX(overlap);
 			object2->setXVelocity(obj1v - (obj2v * object2->getElasticity()));
 		}
@@ -613,7 +613,7 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 
 bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, CollisionData* collisionInfo) {
 	//We check if both instance are static
-	if(object1->getIsStatic() && object2->getIsStatic()) {
+	if(object1->isStaticBody() && object2->isStaticBody()) {
 		return false;
 	}
 
@@ -672,7 +672,7 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 		float obj1v = object1->getVelocity().getY();
 		float obj2v = object2->getVelocity().getY();
 
-		if(!object1->getIsStatic() && !object2->getIsStatic()) {
+		if(!object1->isStaticBody() && !object2->isStaticBody()) {
 			overlap *= 0.5f;
 			object1->moveY(-overlap);
 			object2->moveY(overlap);
@@ -682,7 +682,7 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 			object1->setYVelocity(average + (obj2v - average) * object1->getElasticity());
 			object2->setYVelocity(average + (obj1v - average) * object2->getElasticity());
 
-		} else if(!object1->getIsStatic()) {
+		} else if(!object1->isStaticBody()) {
 			object1->moveY(-overlap);
 			object1->setYVelocity(obj2v - (obj1v * object1->getElasticity()));
 
@@ -691,7 +691,7 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 				object1->setXPosition(object1->getXPosition() + (object2->getXPosition() - object2->getOldXPosition()));
 			}
 
-		} else if(!object2->getIsStatic()) {
+		} else if(!object2->isStaticBody()) {
 			object2->moveY(overlap);
 			object2->setYVelocity(obj1v - (obj2v * object2->getElasticity()));
 
@@ -726,6 +726,6 @@ void GraphicBody::copyFrom(const GraphicBody& src) {
 		toBeDeleted = false;
 		layerChanged = true;
 		isInState = false;
-		staticObject = src.staticObject;
+		staticBody = src.staticBody;
 	}
 }
