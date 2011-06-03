@@ -14,6 +14,7 @@ if [ -n "${target_crosscompile-}" ]; then
 		config_cmdline=$config_cmdline" --host=${configure_host}"
 	fi
 fi
+CFLAGS="-std=gnu99 ${CFLAGS-}"
 
 load_base http.fetch
 load_base configuremakemake.build

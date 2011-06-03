@@ -11,5 +11,13 @@ _hash="5a9fcabc9a1b7c6f1cd75ddc78f36c56"
 
 config_cmdline="--enable-shared=no"
 
+
+#Host
+if [ -n "${target_crosscompile-}" ]; then
+	if [[ -n "${configure_host-}" ]]; then
+		config_cmdline="${config_cmdline-} --host=${configure_host}"
+	fi
+fi
+
 load_base http.fetch
 load_base configuremakemake.build

@@ -11,9 +11,10 @@ if [ ${libs_target-} != "ios" ]; then
 	#libraries=( ${libraries[@]-} 'libvorbis-tremor' )
 fi
 
-if [ ${libs_target-} != "ios" ]; then
+if [ ${libs_target-} != "ios" -a ${libs_target-} != "android" ]; then
 	libraries=( ${libraries[@]-} 'sdl' )
 	libraries=( ${libraries[@]-} 'sdl_mixer' )
 fi
+
 libraries=( ${libraries[@]-} 'sigly' )
 
