@@ -108,36 +108,73 @@ namespace RedBox {
 		 * Tells the engine the buffer was swapped.
 		 */
 		static void setBufferSwapped();
+
+		static const std::string& getApplicationPath();
 	private:
 		/// Map of states in the engine.
-		static std::map<std::string, State*> states;
+		std::map<std::string, State*> states;
+
 		/// Pointer to the current state being played.
-		static State* currentState;
+		State* currentState;
+
 		/// Pointer to the last updated state.
-		static State* lastState;
+		State* lastState;
+
 		/// Time at which the last update was called on the current state.
-		static double lastUpdate;
+		double lastUpdate;
+
 		/// Internal update count between each render.
-		static unsigned int loops;
+		unsigned int loops;
+
 		/// Time at which the next update can be called.
-		static double nextUpdate;
+		double nextUpdate;
+
 		/// Delay between each update called on the current state.
-		static double updateDelay;
+		double updateDelay;
+
 		/// Minimum renders that can be skipped between updates.
-		static unsigned int minFps;
+		unsigned int minFps;
+
 		/// Flag to set when the buffer needs to be swapped.
-		static bool bufferSwapped;
+		bool bufferSwapped;
+
 		/**
 		 * Flag used to limit rendering so it doesn't render more times than
 		 * it updates.
 		 */
-		static bool renderedSinceLastUpdate;
-		///The path to the current application binary.
-		static std::string applicationPath;
+		bool renderedSinceLastUpdate;
+
+		/// Path to the current application binary.
+		std::string applicationPath;
+
 		/// Screen's width.
-		static int screenWidth;
+		int screenWidth;
+
 		/// Screen's height.
-		static int screenHeight;
+		int screenHeight;
+
+		/**
+		 * Gets the engine singleton instance.
+		 * @return Reference to the engine's singleton.
+		 */
+		static Engine& getInstance();
+
+		/**
+		 * Deletes the state pointed by the pair's second member.
+		 * @param state Pair to have its state pointed by the second member
+		 * deleted.
+		 */
+		static void deleteState(const std::pair<std::string, State*>& state);
+
+		/**
+		 * Default constructor.
+		 */
+		Engine();
+
+		/**
+		 * Destructor.
+		 */
+		~Engine();
 	};
 }
 

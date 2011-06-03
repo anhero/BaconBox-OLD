@@ -26,7 +26,7 @@ std::string ResourcePathHandler::getResourcePathFor(const std::string& item) {
 	[pool release];
 #else
 	
-	path = Engine::applicationPath;
+	path = Engine::getApplicationPath();
 	
 #ifdef RB_MAC_PLATFORM
 	path = path + "/../Resources/" + item;

@@ -1,6 +1,7 @@
 #include "Engine.h"
 
 #include <cassert>
+#include <algorithm>
 
 #include "TimeHelper.h"
 #include "GraphicDriver.h"
@@ -16,134 +17,123 @@
 #include <libgen.h>
 using namespace RedBox;
 
-std::string Engine::applicationPath = "";
-
-
-std::map<std::string, State*> Engine::states = std::map<std::string, State*>();
-State* Engine::currentState = NULL;
-State* Engine::lastState = NULL;
-double Engine::lastUpdate = 0.0;
-unsigned int Engine::loops = 0;
-double Engine::nextUpdate = 0;
-double Engine::updateDelay = 1.0 / DEFAULT_UPDATES_PER_SECOND;
-unsigned int Engine::minFps = DEFAULT_MIN_FRAMES_PER_SECOND;
-bool Engine::bufferSwapped = false;
-bool Engine::renderedSinceLastUpdate = false;
 sigly::Signal2<int, int> Engine::onInitialize = sigly::Signal2<int, int>();
-int Engine::screenWidth = 0;
-int Engine::screenHeight = 0;
 
 State* Engine::addState(State* newState) {
+	Engine& engine = getInstance();
 	if(newState) {
-		if(states.empty()) {
-			currentState = newState;
+		if(engine.states.empty()) {
+			engine.currentState = newState;
 		} else {
 			newState->deactivateSlots();
 		}
 
-		states.insert(std::pair<std::string, State*>(newState->getName(), newState));
+		engine.states.insert(std::pair<std::string, State*>(newState->getName(), newState));
 	}
 
 	return newState;
 }
 
 void Engine::removeState(const std::string& name) {
-	std::map<std::string, State*>::iterator toDelete = states.find(name);
+	Engine& engine = getInstance();
+	std::map<std::string, State*>::iterator toDelete = engine.states.find(name);
 
-	if(currentState != toDelete->second) {
+	if(engine.currentState != toDelete->second) {
 		if(toDelete->second) {
 			delete toDelete->second;
 		}
 
-		states.erase(toDelete);
+		engine.states.erase(toDelete);
 	}
 }
 
 State* Engine::playState(const std::string& name) {
+	Engine& engine = getInstance();
 	// We make sure the state asked for exists.
-	std::map<std::string, State*>::iterator it = states.find(name);
+	std::map<std::string, State*>::iterator it = engine.states.find(name);
 
-	if(it != states.end()) {
-		currentState = it->second;
+	if(it != engine.states.end()) {
+		engine.currentState = it->second;
 	} else {
 		Console::print("State \"" + name +
 		        "\" doesn't exist so it cannot be played.");
 	}
 
-	return currentState;
+	return engine.currentState;
 }
 
 State* Engine::getCurrentState() {
-	return currentState;
+	return getInstance().currentState;
 }
 
 unsigned int Engine::getMinFps() {
-	return minFps;
+	return getInstance().minFps;
 }
 
 double Engine::getUpdatesPerSecond() {
-	assert(updateDelay);
-	return 1.0 / updateDelay;
+	assert(getInstance().updateDelay);
+	return 1.0 / getInstance().updateDelay;
 }
 
 double Engine::getUpdateDelay() {
-	return updateDelay;
+	return getInstance().updateDelay;
 }
 
 void Engine::setMinFps(unsigned int newMinFps) {
-	minFps = newMinFps;
+	getInstance().minFps = newMinFps;
 }
 
 void Engine::setUpdatesPerSecond(double updatesPerSecond) {
 	if(updatesPerSecond) {
 		// Calculate the update delay.
-		updateDelay = 1.0 / static_cast<double>(updatesPerSecond);
+		getInstance().updateDelay = 1.0 / static_cast<double>(updatesPerSecond);
 	}
 }
 
 void Engine::pulse() {
+	Engine& engine = getInstance();
 	// We make sure the pointer to the current state is valid.
-	if(currentState) {
+	if(engine.currentState) {
 		TimeHelper::getInstance().refreshTime();
 
 		// We update the time from TimeHelper.
-		if(!nextUpdate) {
-			nextUpdate = TimeHelper::getInstance().getSinceStartComplete();
+		if(!engine.nextUpdate) {
+			engine.nextUpdate = TimeHelper::getInstance().getSinceStartComplete();
 		}
 
-		loops = 0;
+		engine.loops = 0;
 
-		while(TimeHelper::getInstance().getSinceStartComplete() > nextUpdate &&
-		        loops < minFps) {
+		while(TimeHelper::getInstance().getSinceStartComplete() > engine.nextUpdate &&
+				engine.loops < engine.minFps) {
 			// We refresh the time.
 			TimeHelper::getInstance().refreshTime();
 
 			// We call the focus methods if needed.
-			if(currentState != lastState) {
-				if(lastState) {
-					lastState->internalOnLoseFocus();
+			if(engine.currentState != engine.lastState) {
+				if(engine.lastState) {
+					engine.lastState->internalOnLoseFocus();
 				}
 
-				currentState->internalOnGetFocus();
+				engine.currentState->internalOnGetFocus();
 			}
 
-			lastState = currentState;
+			engine.lastState = engine.currentState;
 			// We update the current state.
-			currentState->internalUpdate();
-			renderedSinceLastUpdate = false;
+			engine.currentState->internalUpdate();
+			engine.renderedSinceLastUpdate = false;
 			// We update the input manager.
 			InputManager::getInstance().update();
 			// We update the timers.
 			TimerManager::update();
-			nextUpdate += updateDelay;
-			lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
-			++loops;
+			engine.nextUpdate += engine.updateDelay;
+			engine.lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
+			++engine.loops;
 		}
 
-		if(!renderedSinceLastUpdate) {
-			currentState->internalRender();
-			renderedSinceLastUpdate = true;
-			bufferSwapped = false;
+		if(!engine.renderedSinceLastUpdate) {
+			engine.currentState->internalRender();
+			engine.renderedSinceLastUpdate = true;
+			engine.bufferSwapped = false;
 		}
 
 		if(AudioEngine::getSoundEngine()) {
@@ -157,35 +147,62 @@ void Engine::pulse() {
 }
 
 void Engine::initializeEngine(int newScreenWidth, int newScreenHeight) {
-	screenWidth = newScreenWidth;
-	screenHeight = newScreenHeight;
+	Engine& engine = getInstance();
+	engine.screenWidth = newScreenWidth;
+	engine.screenHeight = newScreenHeight;
 	TimeHelper::getInstance();
 	InputManager::getInstance();
-	onInitialize.shoot(screenWidth, screenHeight);
-	GraphicDriver::initializeGraphicDriver(screenWidth, screenHeight);
+	onInitialize.shoot(engine.screenWidth, engine.screenHeight);
+	GraphicDriver::initializeGraphicDriver(engine.screenWidth, engine.screenHeight);
 	Font::initializeFontRenderer();
 }
 
 double Engine::getSinceLastUpdate() {
-	return TimeHelper::getInstance().getSinceStartComplete() - lastUpdate;
+	return TimeHelper::getInstance().getSinceStartComplete() - getInstance().lastUpdate;
 }
 
 int Engine::getScreenWidth() {
-	return screenWidth;
+	return getInstance().screenWidth;
 }
 
 int Engine::getScreenHeight() {
-	return screenHeight;
+	return getInstance().screenHeight;
 }
 
 bool Engine::isBufferSwapped() {
-	return bufferSwapped;
+	return getInstance().bufferSwapped;
 }
 
 void Engine::setBufferSwapped() {
-	bufferSwapped = true;
+	getInstance().bufferSwapped = true;
+}
+
+const std::string& Engine::getApplicationPath() {
+	return getInstance().applicationPath;
 }
 
 void Engine::application(int argc, char* argv[]) {
-	applicationPath = dirname(argv[0]);
+	getInstance().applicationPath = dirname(argv[0]);
+}
+
+Engine& Engine::getInstance() {
+	static Engine instance;
+	return instance;
+}
+
+void Engine::deleteState(const std::pair<std::string, State *>& state) {
+	if(state.second) {
+		delete state.second;
+	}
+}
+
+Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0),
+loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
+minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false),
+renderedSinceLastUpdate(false), screenWidth(0), screenHeight(0) {
+}
+
+Engine::~Engine() {
+	// We delete the states.
+	std::for_each(states.begin(), states.end(), Engine::deleteState);
 }
