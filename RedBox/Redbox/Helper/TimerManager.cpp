@@ -1,6 +1,7 @@
 #include "TimerManager.h"
 
 #include <cassert>
+#include <algorithm>
 
 #include "Timer.h"
 
@@ -20,10 +21,12 @@ void TimerManager::removeTimer(Timer *timer) {
 
 void TimerManager::update() {
 	// We update the timers.
-	for(std::set<Timer*>::iterator i = timers.begin(); i != timers.end(); ++i) {
-		if(*i) {
-			(*i)->update();
-		}
+	std::for_each(timers.begin(), timers.end(), TimerManager::updateTimer);
+}
+
+void TimerManager::updateTimer(Timer *timer) {
+	if(timer) {
+		timer->update();
 	}
 }
 

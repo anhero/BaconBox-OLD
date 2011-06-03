@@ -140,19 +140,6 @@ namespace RedBox {
         std::string name;
 		
 		/**
-		 * Deletes the given graphic body pointer if it isn't NULL.
-		 * @param aGraphicBody Pointer to the the graphic body to delete.
-		 */
-		static void deleteGraphicBody(GraphicBody* aGraphicBody);
-
-		/**
-		 * Deletes the graphic body from the pair's second member (the pointer).
-		 * @param body Pair containing the pointer to the graphic body to
-		 * delete.
-		 */
-		static void deleteGraphicBodyFromPair(const std::pair<Layer, GraphicBody*>& body);
-
-		/**
 		 * Adds a GraphicBody in the multimap of GraphicBodys. It will then be
 		 * able to be updated and rendered correctly.
 		 * @param aGraphicBody Pointer to the GraphicBody to add.

@@ -5,6 +5,7 @@
 
 #include "TimeHelper.h"
 #include "GraphicDriver.h"
+#include "DeleteHelper.h"
 
 #include "Font.h"
 
@@ -190,12 +191,6 @@ Engine& Engine::getInstance() {
 	return instance;
 }
 
-void Engine::deleteState(const std::pair<std::string, State *>& state) {
-	if(state.second) {
-		delete state.second;
-	}
-}
-
 Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0),
 loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
 minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false),
@@ -204,5 +199,5 @@ renderedSinceLastUpdate(false), screenWidth(0), screenHeight(0) {
 
 Engine::~Engine() {
 	// We delete the states.
-	std::for_each(states.begin(), states.end(), Engine::deleteState);
+	std::for_each(states.begin(), states.end(), DeletePointerFromPair());
 }

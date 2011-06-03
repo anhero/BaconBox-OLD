@@ -5,6 +5,7 @@
 
 #include "Console.h"
 #include "GraphicDriver.h"
+#include "DeleteHelper.h"
 
 using namespace RedBox;
 
@@ -17,14 +18,14 @@ name(newName) {
 State::~State() {
 	// We delete all the graphic bodies from the list of GraphicBodys that need
 	// to be deleted.
-	std::for_each(toDelete.begin(), toDelete.end(), State::deleteGraphicBody);
+	std::for_each(toDelete.begin(), toDelete.end(), DeletePointer());
 
 	// We delete the graphic bodies that were waiting to be added.
-	std::for_each(toAdd.begin(), toAdd.end(), State::deleteGraphicBody);
+	std::for_each(toAdd.begin(), toAdd.end(), DeletePointer());
 
 	// We delete the graphic bodies.
 	std::for_each(graphicBodies.begin(), graphicBodies.end(),
-				  State::deleteGraphicBodyFromPair);
+				  DeletePointerFromPair());
 }
 
 void State::addGraphicBody(GraphicBody* aGraphicBody) {
@@ -66,18 +67,6 @@ void State::onGetFocus() {
 }
 
 void State::onLoseFocus() {
-}
-
-void State::deleteGraphicBody(GraphicBody *aGraphicBody) {
-	if(aGraphicBody) {
-		delete aGraphicBody;
-	}
-}
-
-void State::deleteGraphicBodyFromPair(const std::pair<Layer, GraphicBody *>& body) {
-	if(body.second) {
-		delete body.second;
-	}
 }
 
 void State::addGraphicBodyDirect(GraphicBody* aGraphicBody) {
@@ -124,7 +113,7 @@ void State::internalUpdate() {
 
 	// We delete all the graphic bodies from the list of GraphicBodys that need
 	// to be deleted.
-	std::for_each(toDelete.begin(), toDelete.end(), State::deleteGraphicBody);
+	std::for_each(toDelete.begin(), toDelete.end(), DeletePointer());
 	// We clear the list.
 	toDelete.clear();
 

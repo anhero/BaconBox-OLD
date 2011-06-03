@@ -160,13 +160,6 @@ namespace RedBox {
 		static Engine& getInstance();
 
 		/**
-		 * Deletes the state pointed by the pair's second member.
-		 * @param state Pair to have its state pointed by the second member
-		 * deleted.
-		 */
-		static void deleteState(const std::pair<std::string, State*>& state);
-
-		/**
 		 * Default constructor.
 		 */
 		Engine();

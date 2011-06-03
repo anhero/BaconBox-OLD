@@ -34,6 +34,12 @@ namespace RedBox {
 		 * Updates the timers.
 		 */
 		static void update();
+
+		/**
+		 * Calls the update method on the given timer if the pointer isn't NULL.
+		 * @param timer Pointer to the timer to update.
+		 */
+		static void updateTimer(Timer* timer);
 		/**
 		 * Private default constructor to make sure no one instantiates this
 		 * class.
