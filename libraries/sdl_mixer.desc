@@ -14,6 +14,12 @@ if [[ "$(uname -s)" != "Darwin" ]]; then
 	config_cmdline="${config_cmdline-} --enable-shared=no"
 fi
 
+if [ -n "${target_crosscompile-}" ]; then
+	if [[ -n "${configure_host-}" ]]; then
+		config_cmdline=$config_cmdline" --host=${configure_host}"
+	fi
+fi
+
 config_cmdline="$config_cmdline --enable-music-ogg=yes"
 config_cmdline="$config_cmdline --enable-music-ogg-tremor=no"
 #config_cmdline="$config_cmdline --enable-music-ogg-shared=no"
