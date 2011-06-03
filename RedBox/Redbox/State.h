@@ -102,14 +102,22 @@ namespace RedBox {
 	private:
 		/// Container type for the graphic bodies.
 		typedef std::multimap<Layer, GraphicBody*, Layer::LessCompare> BodyMap;
+
 		/// Temporarily stores the GraphicBody objects to be deleted.
         std::list<GraphicBody*> toDelete;
+
 		/// Temporarily stores the GraphicBody objects to be added.
 		std::list<GraphicBody*> toAdd;
-		/// Temporarily stores the GraphicBody objects that need to change their Z value.
+
+		/**
+		 * Temporarily stores the GraphicBody objects that need to change their
+		 * Z value.
+		 */
 		std::list<GraphicBody*> layerChange;
+
 		/// Stores all the GraphicBodys active GraphicBodys objects.
 		BodyMap graphicBodies;
+
 		/// State's name, used as an identifier.
         std::string name;
 		

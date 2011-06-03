@@ -45,6 +45,8 @@ namespace RedBox {
 		 * Parameterized constructor.
 		 * @param newZ Starting z value for the layer.
 		 * @param newScrollFactor Starting scroll factor for the layer.
+		 * @see RedBox::Layer::z
+		 * @see RedBox::Layer::scrollFactor
 		 */
 		Layer(int newZ, const Vec2& newScrollFactor);
 
@@ -57,18 +59,42 @@ namespace RedBox {
 		/**
 		 * Assignation operator overload.
 		 * @param src Layer to make a copy of.
+		 * @return Reference to the modified Layer.
 		 */
 		Layer& operator=(const Layer& src);
 
+		/**
+		 * Comparison operator definition.
+		 * @param other Layer to compare with.
+		 * @return True if the layers have the same z and scroll factor, false
+		 * if not.
+		 */
 		bool operator==(const Layer& other);
+
+		/**
+		 * Comparison operator definition. Opposite result than operator==()
+		 * @param other Layer to compare with.
+		 * @return True if the layers have a different z or scroll factor, false
+		 * if not.
+		 * @see RedBox::Layer::operator==(const Layer& other)
+		 */
 		bool operator!=(const Layer& other);
 
 		/**
 		 * Gets the layer's z coordinate.
 		 * @return Z coordinate. The higher the value the closer the layer will
 		 * be.
+		 * @see RedBox::Layer::z
 		 */
 		int getZ() const;
+
+		/**
+		 * Sets the graphic body's coordinate.
+		 * @param newZ New z coordinate. The higher the value closer the graphic
+		 * body will be.
+		 * @see RedBox::Layer::z
+		 */
+		void setZ(int newZ);
 
 		/**
 		 * Gets the layer's scroll factor.
@@ -79,20 +105,23 @@ namespace RedBox {
 		const Vec2& getScrollFactor() const;
 
 		/**
-		 * Sets the graphic body's coordinate.
-		 * @param newZ New z coordinate. The higher the value closer the graphic
-		 * body will be.
-		 */
-		void setZ(int newZ);
-
-		/**
 		 * Sets the layer's scroll factor.
 		 * @param newScrollFactor New horizontal and vertical scroll factor. A
 		 * value higher than 1 means the layer will move faster as if it were
 		 * closer to the camera and between 1 and 0 means it will move as
 		 * if it were far from the camera.
+		 * @see RedBox::Layer::scrollFactor
 		 */
 		void setScrollFactor(const Vec2& newScrollFactor);
+
+		/**
+		 * Gets the layer's horizontal scroll factor.
+		 * @return Horizontal scroll factor. A value higher than 1 means the
+		 * layer will move faster as if it were closer to the camera, between 1
+		 * and 0 means it will move as if it were far from the camera.
+		 * @see RedBox::Layer::scrollFactor
+		 */
+		float getXScrollFactor() const;
 
 		/**
 		 * Sets the layer's horizontal scroll factor.
@@ -100,8 +129,18 @@ namespace RedBox {
 		 * than 1 means the layer will move faster as if it were closer to the
 		 * camera and between 1 and 0 means it will move as if it were far from
 		 * the camera.
+		 * @see RedBox::Layer::scrollFactor
 		 */
 		void setXScrollFactor(float newXScrollFactor);
+
+		/**
+		 * Gets the layer's vertical scroll factor.
+		 * @return Vertical scroll factor. A value higher than 1 means the
+		 * layer will move faster as if it were closer to the camera, between 1
+		 * and 0 means it will move as if it were far from the camera.
+		 * @see RedBox::Layer::scrollFactor
+		 */
+		float getYScrollFactor() const;
 
 		/**
 		 * Sets the layer's vertical scroll factor.
@@ -109,24 +148,9 @@ namespace RedBox {
 		 * than 1 means the layer will move faster as if it were closer to the
 		 * camera and between 1 and 0 means it will move as if it were far from
 		 * the camera.
+		 * @see RedBox::Layer::scrollFactor
 		 */
 		void setYScrollFactor(float newYScrollFactor);
-
-		/**
-		 * Gets the layer's horizontal scroll factor.
-		 * @return Horizontal scroll factor. A value higher than 1 means the
-		 * layer will move faster as if it were closer to the camera, between 1
-		 * and 0 means it will move as if it were far from the camera.
-		 */
-		float getXScrollFactor() const;
-
-		/**
-		 * Gets the layer's vertical scroll factor.
-		 * @return Vertical scroll factor. A value higher than 1 means the
-		 * layer will move faster as if it were closer to the camera, between 1
-		 * and 0 means it will move as if it were far from the camera.
-		 */
-		float getYScrollFactor() const;
 
 	private:
 		/// Z coordinate. Lower value means more to the front of the camera.
@@ -134,7 +158,13 @@ namespace RedBox {
 
 		/**
 		 * Scroll factor. Factor applied to the bodies' coordinates to have
-		 * parallax scrolling. Lower values means "farther" from the camera.
+		 * parallax scrolling. Lower values means "farther" from the camera. An
+		 * horizontal scroll factor of 0 would mean the body would not move
+		 * horizontally whatever the camera does. A value higher than 1 means
+		 * the layer will move faster as if it were closer to the camera and
+		 * between 1 and 0 means it will move as if it were far from the camera.
+		 * By default, all bodies have a scroll factor of 1 both horizontally
+		 * and vertically.
 		 */
 		Vec2 scrollFactor;
 	};

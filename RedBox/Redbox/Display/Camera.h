@@ -18,29 +18,60 @@ namespace RedBox{
      */
 	class Camera : public Object {
 	public:
+		/**
+		 * The possible axes on which the camera can shake.
+		 */
 		enum ShakeAxes {
 			BOTH_AXES,
 			HORIZONTAL_AXIS,
 			VERTICAL_AXIS
 		};
 
-		///Default Constructor
+		/**
+		 * Default constructor.
+		 */
 		Camera();
 
 		/**
 		 * Copy constructor.
+		 * @param Camera to make a copy of.
 		 */
 		Camera(const Camera& src);
 
 		/**
 		 * Assignation operator overload.
+		 * @param src Camera to make a copy of.
+		 * @return Camera resulting of the copy.
 		 */
 		Camera& operator=(const Camera& src);
+		
+		/**
+		 * Gets the camera's position.
+		 * @return Vector containing the camera's position.
+		 * @see RedBox::Camera::position
+		 */
+		const Vec2& getPosition() const;
+
+		/**
+		 * Sets camera's position.
+		 * @param x Set the horizontal position of the camera.
+		 * @param y Set the vertical position of the camera.
+		 * @see RedBox::Camera::position
+		 */
+		void setPosition(float x, float y);
+
+		/**
+		 * Sets the camera's position.
+		 * @param newPosition Camera's new position.
+		 * @see RedBox::Camera::position
+		 */
+		void setPosition(const Vec2& newPosition);
 		
 		/**
 		 * Moves the camera.
 		 * @param x Value to move the camera on the x axis.
 		 * @param y Value to move the camera on the y axis.
+		 * @see RedBox::Camera::position
 		 */
 		void move(float x, float y);
 
@@ -48,86 +79,129 @@ namespace RedBox{
 		 * Move the camera.
 		 * @param moveVector 2D vector containing the number of pixels to move
 		 * the camera.
+		 * @see RedBox::Camera::position
 		 */
 		void move(const Vec2& moveVector);
 
 		/**
+		 * Gets the camera's horizontal position.
+		 * @return Camera's horizontal position.
+		 * @see RedBox::Camera::position
+		 */
+		float getXPosition() const;
+
+		/**
+		 * Sets the camera's horizontal position.
+		 * @param newXPosition New horizontal position.
+		 * @see RedBox::Camera::position
+		 */
+		void setXPosition(float newXPosition);
+
+		/**
 		 * Move the camera horizontally.
 		 * @param x Number of pixels to move the camera horizontally.
+		 * @see RedBox::Camera::position
 		 */
 		void moveX(float x);
 
 		/**
-		 * Move the camera vertically.
-		 * @param y Number of pixels to move the camera vertically.
+		 * Gets the camera's vertical position.
+		 * @return Camera's vertical position.
+		 * @see RedBox::Camera::position
 		 */
-		void moveY(float y);
-		
-		/**
-		 * Set the position of the camera.
-		 * @param x Set the x position of the camera.
-		 * @param y Set the y position of the camera.
-		 */
-		void setPosition(float x, float y);
-		void setPosition(const Vec2& newPosition);
-		
-		/// Return the camera's position on the x axis
-		float getXPosition() const;
-		
-		/// Return the camera's position on the y axis
 		float getYPosition() const;
 
-		const Vec2& getPosition() const;
-		
-		/// Reset the angle of the camera at the default value: 0
-		void resetAngle();
-		
-		/// Set the angle of the camera to the given degree angle.
-		void setAngle(float newAngle);
-		
-		/// Return the angle value of the camera in degree.
+		/**
+		 * Sets the camera's vertical position.
+		 * @param newYPosition New vertical position.
+		 * @see RedBox::Camera::position
+		 */
+		void setYPosition(float newYPosition);
+
+		/**
+		 * Move the camera vertically.
+		 * @param y Number of pixels to move the camera vertically.
+		 * @see RedBox::Camera::position
+		 */
+		void moveY(float y);
+
+		/**
+		 * Gets the camera's current rotation angle.
+		 * @return Camera's angle.
+		 * @see RedBox::Camera::angle
+		 */
 		float getAngle() const;
-		
-		/// Rotate the camera counter-clockwise with the given degree value.
+
+		/**
+		 * Sets the camera's angle.
+		 * @param newAngle Camera's new angle.
+		 * @see RedBox::Camera::angle
+		 */
+		void setAngle(float newAngle);
+
+		/**
+		 * Rotate the camera counter-clockwise with the given degree value.
+		 * @param rotationAngle Angle to have to camera rotate
+		 * counter-clockwise.
+		 * @see RedBox::Camera::angle
+		 */
 		void rotateLeft(float rotationAngle);
 		
-		/// Rotate the camera cockwise with the given degree value.
+		/**
+		 * Rotate the camera clockwise with the given degree value.
+		 * @param rotationAngle Angle to have to camera rotate clockwise.
+		 * @see RedBox::Camera::angle
+		 */
 		void rotateRight(float rotationAngle);
 
 		/**
-		 * Sets the camera's background color.
-		 * @param newBackgroundColor Camera's new background color.
+		 * Resets the camera's angle to the default value (0 degrees).
+		 * @see RedBox::Camera::angle
 		 */
-		void setBackgroundColor(const Color& newBackgroundColor);
-		
+		void resetAngle();
+
 		/**
 		 * Gets the camera's background color.
 		 * @return Camera's background color.
+		 * @see RedBox::Camera::backgroundColor
 		 */
 		const Color& getBackgroundColor() const;
 
 		/**
-		 * Multiply the zoom factor by the given value.
-		 * @param factor 1 does nothing, less than 1 zoom out, more than 1
-		 * zoom in.
+		 * Sets the camera's background color.
+		 * @param newBackgroundColor Camera's new background color.
+		 * @see RedBox::Camera::backgroundColor
 		 */
-		void zoom(float factor);
+		void setBackgroundColor(const Color& newBackgroundColor);
 		
-		/**
-		 * Set the zoom factor with the given value.
-		 * @param factor 1 does nothing, less than 1 zoom out, more than 1
-		 * zoom in.
-		 */
-		void setZoom(float factor);
-
 		/**
 		 * Gets the zoom factor.
 		 * @return Camera's zoom factor. less than 1 is zoomed out, more than
 		 * 1 is zoomed in.
+		 * @see RedBox::Camera::zoomFactor
 		 */
-		float getZoom() const;
+		float getZoomFactor() const;
+
+		/**
+		 * Sets the zoom factor with the given value.
+		 * @param newZoomFactor 1.0 is the default, less than 1 zooms out, more
+		 * than 1 zooms in.
+		 * @see RedBox::Camera::zoomFactor
+		 */
+		void setZoomFactor(float newZoomFactor);
+
+		/**
+		 * Multiply the zoom factor by the given value.
+		 * @param factor 1 does nothing, less than 1 zooms out, more than 1
+		 * zooms in.
+		 * @see RedBox::Camera::zoomFactor
+		 */
+		void zoom(float factor);
 		
-		/// Set the zoom factor to the default value: 1.
+		/**
+		 * Resets the zoom factor to the default value (1.0).
+		 * @see RedBox::Camera::zoomFactor
+		 */
 		void resetZoom();
 		
 		/**
@@ -153,12 +227,33 @@ namespace RedBox{
 		 */
 		void update();
 
-		/// Prepare the scene according to the position, angle and zoom factor of the camera.
+		/**
+		 * Prepare the scene according to the camera's position, angle and zoom
+		 * factor
+		 */
 		void render();
 
+		/**
+		 * Converts screen coordinates to world coordinates.
+		 * @param positionOnScreen Position relative to the camera's position to
+		 * convert to world coordinates.
+		 * @return 2D vector containing the world coordinates equivalent to the
+		 * given parameter.
+		 * @see RedBox::Camera::position
+		 */
 		Vec2 screenToWorld(const Vec2& positionOnScreen);
 
+		/**
+		 * Converts world coordinates to screen coordinates.
+		 * @param positionInWorld Absolute position unrelated to the camera's
+		 * position that needs to be converted into a position relative to the
+		 * camera's position..
+		 * @return 2D vector containing the screen coordinates equivalent to the
+		 * given parameter.
+		 * @see RedBox::Camera::position
+		 */
 		Vec2 worldToScreen(const Vec2& positionInWorld);
+
 	private:
 		/// Camera's position.
 		Vec2 position;

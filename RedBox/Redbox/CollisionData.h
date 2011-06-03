@@ -13,7 +13,7 @@ namespace RedBox{
 	
 	class GraphicBody;
 	/** 
-	 * This structure is used to return collision data 
+	 * This structure is used to return collision data.
      */
 	struct CollisionData{
 		/// Side of the collision on object 1
@@ -24,9 +24,11 @@ namespace RedBox{
 		float overlap;
 		/// First colliding object
 		GraphicBody* obj1;
-		///Second colliding object
+		/// Second colliding object
 		GraphicBody* obj2;
-		/// Constructor
+		/**
+		 * Default constructor.
+		 */
 		CollisionData():sideObj1(0), sideObj2(0), overlap(0), obj1(NULL), obj2(NULL){}
 	};
 }

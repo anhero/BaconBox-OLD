@@ -125,7 +125,7 @@ void RenderStep::addMode(RenderStepMode::Enum newMode) {
 }
 
 void RenderStep::removeMode(RenderStepMode::Enum mode) {
-	//Magic line fliping to 0 every flag passed with the mode parameter.
+	// Magic line fliping to 0 every flag passed with the mode parameter.
 	mode = ~(~(mode) | (mode));
 }
 
@@ -156,7 +156,8 @@ void RenderStep::playAnimation(const std::string& name) {
 		animCounter = 0.0;
 		isPaused = false;
 	} else {
-		Console::print("Tried play an animation which does not exist for the concerned RenderStep: " + name);
+		Console::print("Tried to play an animation which does not exist for the concerned RenderStep: " + name);
+		Console::printTrace();
 	}
 }
 
