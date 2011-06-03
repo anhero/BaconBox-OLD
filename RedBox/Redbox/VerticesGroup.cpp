@@ -49,23 +49,6 @@ void VerticesGroup::addVertices(unsigned int nbVertices, ...) {
 	}
 }
 
-void VerticesGroup::deleteVertex(Vertex* vertexToDelete) {
-	// We remove the vertex from the list, but we take note of its pointer to
-	// its x value.
-	float* xPtr = NULL;
-	std::list<Vertex>::iterator itr = vertices.begin();
-
-	while(itr != vertices.end()) {
-		if(vertexToDelete == &(*itr)) {
-			xPtr = itr->getPosition().getXPtr();
-			vertices.erase(itr);
-			itr = vertices.end();
-		} else {
-			itr++;
-		}
-	}
-}
-
 std::list<Vertex>& VerticesGroup::getVertices() {
 	return vertices;
 }

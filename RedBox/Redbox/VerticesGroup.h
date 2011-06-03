@@ -76,12 +76,6 @@ namespace RedBox {
 		void addVertices(unsigned int nbVertices, ...);
 
 		/**
-		 * Removes a vertex. Causes the vertices group to be rebuilt.
-		 * @param vertexToDelete Pointer to the vertex to delete.
-		 */
-		void deleteVertex(Vertex* vertexToDelete);
-
-		/**
 		 * Gets the vertices. The vertices' values are actually pointers that
 		 * point to the values in verticesData.
 		 * @return Dynamic array containing the vertices.
