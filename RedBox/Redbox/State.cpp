@@ -1,6 +1,7 @@
 #include "State.h"
 
 #include <cassert>
+#include <algorithm>
 
 #include "Console.h"
 #include "GraphicDriver.h"
@@ -14,30 +15,16 @@ name(newName) {
 }
 
 State::~State() {
-	// We delete all the GraphicBodys from the list of GraphicBodys that need
+	// We delete all the graphic bodies from the list of GraphicBodys that need
 	// to be deleted.
-	for(std::list<GraphicBody*>::iterator i = toDelete.begin();
-		i != toDelete.end();
-		++i) {
-		if(*i) {
-			delete *i;
-		}
-	}
-	// We delete the GraphicBodys that were waiting to be added.
-	for(std::list<GraphicBody*>::iterator i = toAdd.begin(); i != toAdd.end();
-		i++) {
-		if(*i) {
-			delete *i;
-		}
-	}
+	std::for_each(toDelete.begin(), toDelete.end(), State::deleteGraphicBody);
 
-	// We delete the GraphicBodys.
-	for(BodyMap::iterator i = graphicBodies.begin(); i != graphicBodies.end();
-		++i) {
-		if(i->second) {
-			delete i->second;
-		}
-	}
+	// We delete the graphic bodies that were waiting to be added.
+	std::for_each(toAdd.begin(), toAdd.end(), State::deleteGraphicBody);
+
+	// We delete the graphic bodies.
+	std::for_each(graphicBodies.begin(), graphicBodies.end(),
+				  State::deleteGraphicBodyFromPair);
 }
 
 void State::addGraphicBody(GraphicBody* aGraphicBody) {
@@ -81,6 +68,18 @@ void State::onGetFocus() {
 void State::onLoseFocus() {
 }
 
+void State::deleteGraphicBody(GraphicBody *aGraphicBody) {
+	if(aGraphicBody) {
+		delete aGraphicBody;
+	}
+}
+
+void State::deleteGraphicBodyFromPair(const std::pair<Layer, GraphicBody *>& body) {
+	if(body.second) {
+		delete body.second;
+	}
+}
+
 void State::addGraphicBodyDirect(GraphicBody* aGraphicBody) {
 	assert(aGraphicBody);
 	if(!aGraphicBody->isInState) {
@@ -94,13 +93,12 @@ void State::addGraphicBodyDirect(GraphicBody* aGraphicBody) {
 }
 
 void State::internalUpdate() {
-	// We add the GraphicBodys to the multimap.
-	for(std::list<GraphicBody*>::iterator i = toAdd.begin(); i != toAdd.end();
-		i++) {
-		addGraphicBodyDirect(*i);
-	}
+	// We add the graphic bodies to the multimap.
+	std::for_each(toAdd.begin(), toAdd.end(), std::bind1st(std::mem_fun(&State::addGraphicBodyDirect), this));
+	// We clear the temporary list of graphic bodies to add.
 	toAdd.clear();
-	// We loop through each of the GraphicBodys to update them.
+
+	// We update the graphic bodies.
 	for(BodyMap::iterator i = graphicBodies.begin(); i != graphicBodies.end();
 		i++) {
 		// We check if the delete flag is on.
@@ -124,17 +122,13 @@ void State::internalUpdate() {
 		}
 	}
 
-	// We delete all the GraphicBodys from the list of GraphicBodys that need
+	// We delete all the graphic bodies from the list of GraphicBodys that need
 	// to be deleted.
-	for(std::list<GraphicBody*>::iterator i = toDelete.begin();
-		i != toDelete.end();
-		++i) {
-		delete *i;
-	}
+	std::for_each(toDelete.begin(), toDelete.end(), State::deleteGraphicBody);
 	// We clear the list.
 	toDelete.clear();
 
-	// Put the GraphicBodys which have had their z changed back into the
+	// Put the graphic bodies which have had their z changed back into the
 	// multimap.
 	for(std::list<GraphicBody*>::iterator i = layerChange.begin();
 		i != layerChange.end();

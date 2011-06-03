@@ -18,8 +18,13 @@ namespace RedBox {
 	/**
 	 * Represents a GraphicBody object assiociated with its layer. This is the
 	 * type that the state contains. Classes like GraphicString, Sprite and
-	 * IEmitter are derived from this class.
+	 * IEmitter are derived from this class. To use a graphic body, you have
+	 * to initialize it and then add it to a state. The state will take care of
+	 * its destruction when needed. The same graphic body cannot be in two
+	 * different states. If you want to remove a graphic body from a state, you
+	 * call setToBeDeleted(true) on the graphic body.
 	 * @ingroup Display
+	 * @see RedBox::State
 	 */
 	class GraphicBody : public Object {
 		friend class State;

@@ -35,27 +35,33 @@ void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat* vertices,
 
 void OpenGLDriver::drawShapeWithTexture(GLfloat* vertices,
 										RenderInfo& renderingInfo,
-										unsigned int nbVertices){
-	glBindTexture(GL_TEXTURE_2D, renderingInfo.getTexInfo().textureId);
-	
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	
-	
-	
-	glTexCoordPointer(2, GL_FLOAT, 0, &(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0]));
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	
-	glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-	
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisable(GL_BLEND);
-	glDisable(GL_TEXTURE_2D);
+										unsigned int nbVertices) {
+	// We make sure there is a valid texture information.
+	if(renderingInfo.getTexInfo()) {
+		glBindTexture(GL_TEXTURE_2D, renderingInfo.getTexInfo()->textureId);
+
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		glVertexPointer(2, GL_FLOAT, 0, vertices);
+		glEnableClientState(GL_VERTEX_ARRAY);
+
+
+
+		glTexCoordPointer(2, GL_FLOAT, 0, &(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0]));
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
+	} else {
+		// We draw the shape without the texture.
+		drawShapeWithColor(vertices, renderingInfo, nbVertices);
+	}
 }
 
 void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,

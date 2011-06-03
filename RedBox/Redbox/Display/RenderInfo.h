@@ -39,6 +39,7 @@ namespace RedBox {
 
 		/**
 		 * Copy constructor.
+		 * @param src RenderInfo to make a copy of.
 		 */
 		RenderInfo(const RenderInfo& src);
 
@@ -53,6 +54,8 @@ namespace RedBox {
 		 * @param nbFrames Number of frames of texture coordinates to generate.
 		 * will start loading.
          * @param newColor Array to use to set the RenderInfo's color.
+		 * @see RedBox::RenderInfo::color
+		 * @see RedBox::RenderInfo::texInfo
          */
         RenderInfo(TextureInfo* newTexInfo,
 				   VerticesGroup* vertices,
@@ -73,6 +76,7 @@ namespace RedBox {
 		 * pixels).
 		 * @param nbFrames Number of frames of texture coordinates to generate.
 		 * @param newTexInfo Pointer to the information about the texture.
+		 * @see RedBox::RenderInfo::texInfo
 		 */
 		void loadTexCoords(VerticesGroup* vertices,
 						   unsigned int frameWidth,
@@ -87,11 +91,13 @@ namespace RedBox {
 		 * animation.
 		 * @param nbLoops Number of times the animation will play before 
 		 * stopping. -1 means it will loop infinitely.
+		 * @see RedBox::RenderInfo::animations
 		 */
 		void addAnimation(const std::string& name,
 						  const std::vector<unsigned int>& frames,
 						  double timePerFrame,
 						  int nbLoops = -1);
+
 		/**
 		 * Adds an animation. Accepts a variable number of parameters for each
 		 * animation frame. For example, an animation of 7 frames could be added
@@ -103,6 +109,7 @@ namespace RedBox {
 		 * @param nbLoops Number of times the animation will play before
 		 * stopping. -1 means it will loop infinitely.
 		 * @param nbFrames Number of frames the animation has.
+		 * @see RedBox::RenderInfo::animations
 		 */
 		void addAnimation(const std::string& name,
 						  double timePerFrame,
@@ -113,20 +120,24 @@ namespace RedBox {
 		 * parameters.
 		 * @param name Animation's name used for identification when playing it.
 		 * @param newAnimation Animation parameters for the new animation.
+		 * @see RedBox::RenderInfo::animations
 		 */
 		void addAnimation(const std::string& name,
 						  const AnimationParameters& newAnimation);
+
 		/**
 		 * Gets the color.
-		 * @return The RenderInfo's color.
+		 * @return RenderInfo's color.
 		 */
 		const Color& getColor() const;
+
 		/**
 		 * Gets the texture info. Returns the texture information pointed by
 		 * the texInfo pointer.
-		 * @return RenderStep's texture's information.
+		 * @return Pointer to the RenderInfo's texture's information.
 		 */
-		TextureInfo& getTexInfo();
+		const TextureInfo* getTexInfo() const;
+
 		/**
 		 * Gets the vector of texture coordinates.
 		 * @return Vector of texture coordinates.
@@ -137,69 +148,82 @@ namespace RedBox {
 		 * @param newColor The RenderInfo's new color.
 		 */
 		void setColor(const Color& newColor);
+
 		/**
 		 * Sets the texture information.
 		 * @param newTexInfo Pointer to the new texture information.
 		 */
 		void setTexInfo(TextureInfo* newTexInfo);
+
 		/**
 		 * Checks wether an animation exists or not.
 		 * @param name Name of the animation to check.
 		 * @return True if the animation exists, false if not.
 		 */
 		bool animationExists(const std::string& name) const;
+
 		/**
 		 * Gets the animation parameters of a specific animation.
 		 * @param name Name of the animation to get.
 		 * @return Animation parameters asked for.
 		 */
 		AnimationParameters* getAnimationParameters(const std::string& name);
+
 		/**
 		 * Gets the animation parameters of a specific animation.
 		 * @param name Name of the animation to get.
 		 * @return Animation parameters asked for.
 		 */
 		const AnimationParameters* getAnimationParameters(const std::string& name) const;
+
 		/**
 		 * Changes the frame to be shown.
 		 */
 		void setCurrentFrame(unsigned int newCurrentFrame);
+
 		/**
 		 * Gets the index of the current animation frame.
 		 * @return Index of the current animation frame.
 		 */
 		unsigned int getCurrentFrame() const;
+
 		/**
 		 * Checks if the RenderInfo is animated.
 		 * @return True if the RenderInfo contains animations and thus is
 		 * animated.
 		 */
 		bool isAnimated() const;
+
 		/**
 		 * Increments the frame index. If it goes over the number of available
 		 * frames, it resets to 0.
 		 */
 		void incrementFrame();
+
 		/**
 		 * Gets the name of the RenderInfo's current animation.
 		 * @return Current animation's name.
 		 */
 		const std::string& getCurrentAnimation() const;
+
 		/**
 		 * Sets the current animation.
 		 * @param name current animation's name.
 		 */
 		void setCurrentAnimation(const std::string& name);
+
 		/**
 		 * Resets the counter of number of loops done for the animation.
 		 */
 		void resetCurrentNbLoops();
+
 		/**
 		 * Gets the default frame index.
 		 * @return Index of the default frame to show when the RenderInfo isn't
 		 * animated.
 		 */
 		unsigned int getDefaultFrame() const;
+
 		/**
 		 * Sets the default frame index.
 		 * @param newDefaultFrame Index of the new default frame to show when
@@ -212,20 +236,25 @@ namespace RedBox {
          * is alpha.
          */
 		Color color;
+
         /// Pointer to the texture information.
         TextureInfo* texInfo;
+
 		/**
 		 * Vector containing the texture's coordinates for each animation frame.
 		 * For example, to get a vector of texture coordinates for the 3rd
 		 * frame, you'd do texCoords[2].
 		 */
 		std::vector< std::vector<float> > texCoords;
+
 		/**
 		 * Current frame at which the animation is currently.
 		 */
 		unsigned int currentFrame;
+
 		/// Current number of times the animation has looped.
 		int currentNbLoops;
+
 		/// Index of the frame to show when the RenderInfo isn't animated.
 		unsigned int defaultFrame;
 		/**
@@ -234,6 +263,7 @@ namespace RedBox {
 		 * animations["animationName"].
 		 */
 		std::map<std::string, AnimationParameters> animations;
+
 		/// Name of the animation currently playing.
 		std::string currentAnimation;
     };

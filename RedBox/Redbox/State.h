@@ -52,36 +52,52 @@ namespace RedBox {
 		void addGraphicBody(GraphicBody* aGraphicBody);
 
 		/**
-         * Renders all the objects that need to be rendered.
+		 * Renders all the objects that need to be rendered. You have to
+		 * overload this method if you want to add custom code to it. You don't
+		 * have to call the parent render function inside your implementation.
+		 * The internal render code happens in internalRender, which then calls
+		 * this render method.
+		 * @see RedBox::State::internalRender()
          */
         virtual void render();
 
 		/**
-         * Deletes, Updates and moves all concerns objects.
+		 * Deletes, Updates and moves all concerns objects. You have to
+		 * overload this method if you want to add custom code to it. You don't
+		 * have to call the parent update function inside your implementation.
+		 * The internal update code happens in internalUpdate, which then calls
+		 * this update method.
+		 * @see RedBox::State::internalUpdate()
          */
         virtual void update();
 
 		/**
 		 * Gets the state's name.
 		 * @return State's name.
+		 * @see RedBox::State::name
 		 */
 		const std::string& getName() const;
 
 		/**
 		 * Sets the state's name.
 		 * @param newName State's new name.
+		 * @see RedBox::State::name
 		 */
 		void setName(const std::string& newName);
 
 		/**
 		 * Sets the state's background color.
 		 * @param newBackgroundColor State's new background color.
+		 * @see RedBox::State::camera
+		 * @see RedBox::Camera::backgroundColor
 		 */
 		void setBackgroundColor(const Color& newBackgroundColor);
 
 		/**
 		 * Gets the state's background color.
 		 * @return State's background color.
+		 * @see RedBox::State::camera
+		 * @see RedBox::Camera::backgroundColor
 		 */
 		const Color& getBackgroundColor() const;
 
@@ -91,12 +107,14 @@ namespace RedBox {
 
 		/**
 		 * Method called by the engine when the state gets called to be played.
+		 * @see RedBox::State::internalOnGetFocus()
 		 */
 		virtual void onGetFocus();
 
 		/**
 		 * Method called by the engine when the state is not the current state
 		 * anymore.
+		 * @see RedBox::State::internalOnLoseFocus()
 		 */
 		virtual void onLoseFocus();
 	private:
@@ -121,6 +139,19 @@ namespace RedBox {
 		/// State's name, used as an identifier.
         std::string name;
 		
+		/**
+		 * Deletes the given graphic body pointer if it isn't NULL.
+		 * @param aGraphicBody Pointer to the the graphic body to delete.
+		 */
+		static void deleteGraphicBody(GraphicBody* aGraphicBody);
+
+		/**
+		 * Deletes the graphic body from the pair's second member (the pointer).
+		 * @param body Pair containing the pointer to the graphic body to
+		 * delete.
+		 */
+		static void deleteGraphicBodyFromPair(const std::pair<Layer, GraphicBody*>& body);
+
 		/**
 		 * Adds a GraphicBody in the multimap of GraphicBodys. It will then be
 		 * able to be updated and rendered correctly.

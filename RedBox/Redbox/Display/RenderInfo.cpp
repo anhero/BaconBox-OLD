@@ -182,8 +182,8 @@ const Color& RenderInfo::getColor() const {
 	return color;
 }
 
-TextureInfo& RenderInfo::getTexInfo() {
-	return *texInfo;
+const TextureInfo* RenderInfo::getTexInfo() const {
+	return texInfo;
 }
 
 std::vector<std::vector<float> >& RenderInfo::getTexCoords() {

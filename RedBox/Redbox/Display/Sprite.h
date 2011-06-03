@@ -21,8 +21,16 @@ namespace RedBox {
 	class RenderStep;
 	class RenderInfo;
     /** 
-     * Represents a sprite.
+	 * Represents a sprite. A is used to display animated or non-animated
+	 * images or display colored shapes. To use a sprite, initialize it and
+	 * pass it to a State. A sprite can only be in one state at a time. Once
+	 * you have given the pointer to the state, you don't have to worry about
+	 * deleting it, the state takes care of that for you. To remove a sprite
+	 * from a state, simply call setToBeDeleted(true), which is inherited from
+	 * GraphicBody.
      * @ingroup Display
+	 * @see RedBox::GraphicBody
+	 * @see RedBox::State
      */
 	class Sprite : public GraphicBody {
     public:
@@ -42,6 +50,7 @@ namespace RedBox {
 		 * constructor that recieves an key.
 		 * @param texInfo Pointer to the texture information to load the sprite
 		 * with.
+		 * @see RedBox::RenderInfo::texInfo
 		 */
 		Sprite(TextureInfo* texInfo);
 

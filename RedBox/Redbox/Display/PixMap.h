@@ -24,6 +24,7 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		PixMap();
+
 		/**
 		 * Copy constructor.
 		 * @param src PixMap to make a copy of.
@@ -31,20 +32,23 @@ namespace RedBox {
 		PixMap(const PixMap& src);
 
 		/**
-		 * Constructor.
-		 * @param newWidth width of the PixMap.
+		 * Parameterized constructor.
+		 * @param newWidth Width of the PixMap.
 		 * @param newHeight Height of the PixMap.
-		 * @param newColorFormat Color format of the buffer, it default to RGBA.
-		 * (See the ColorFormat enum)
+		 * @param newColorFormat Color format of the buffer, it defaults to
+		 * RGBA.
+		 * @see RedBox::PixMap::width
+		 * @see RedBox::PixMap::height
+		 * @see RedBox::ColorFormat::Enum
 		 */
 		PixMap(unsigned int newWidth, unsigned int newHeight,
 			   ColorFormat::Enum newColorFormat = ColorFormat::RGBA);
 
 		/**
-		 * Constructor. Create the PixMap with an existing buffer.
-		 * It does not copy the buffer, it use the same one, so
-		 * don't delete the original buffer if you are still
-		 * using a pixmap object constructed by this version of the constructor.
+		 * Constructor. Creates the PixMap with an existing buffer. It does not
+		 * copy the buffer, it use the same one, so don't delete the original
+		 * buffer if you are still using a pixmap object constructed by this
+		 * version of the constructor.
 		 * @param newBuffer the buffer that will be used as pixmap.
 		 * @param newWidth width of the PixMap.
 		 * @param newHeight Height of the PixMap.
@@ -69,11 +73,13 @@ namespace RedBox {
 		/**
 		 * Gets the PixMap's width.
 		 * @return PixMap's width (in pixels).
+		 * @see RedBox::PixMap::width
 		 */
 		unsigned int getWidth() const;
 
 		/**
 		 * Gets the PixMap's height.
+		 * @see RedBox::PixMap::height
 		 * @return PixMap's height (in pixels).
 		 */
 		unsigned int getHeight() const;
@@ -81,6 +87,7 @@ namespace RedBox {
 		/**
 		 * Gets the PixMap's color format.
 		 * @return PixMap's corlor format.
+		 * @see RedBox::PixMap::colorFormat
 		 * @see RedBox::ColorFormat::Enum
 		 */
 		ColorFormat::Enum getColorFormat() const;
@@ -88,6 +95,7 @@ namespace RedBox {
 		/**
 		 * Gets the buffer.
 		 * @return Pointer to the buffer's first element.
+		 * @see RedBox::PixMap::buffer
 		 */
 		uint8_t* getBuffer();
 

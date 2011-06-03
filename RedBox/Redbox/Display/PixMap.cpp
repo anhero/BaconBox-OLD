@@ -6,8 +6,8 @@
 
 using namespace RedBox;
 
-PixMap::PixMap() : Object(), width(0), height(0), colorFormat(ColorFormat::RGBA),
-	buffer(NULL) {
+PixMap::PixMap() : Object(), width(0), height(0),
+	colorFormat(ColorFormat::RGBA), buffer(NULL) {
 }
 
 PixMap::PixMap(const PixMap& src) : Object(src), width(src.width),
@@ -23,7 +23,7 @@ PixMap::PixMap(const PixMap& src) : Object(src), width(src.width),
 }
 
 PixMap::PixMap(unsigned int newWidth, unsigned int newHeight,
-			   ColorFormat::Enum newColorFormat) : Object(), width(newWidth),
+               ColorFormat::Enum newColorFormat) : Object(), width(newWidth),
 	height(newHeight), colorFormat(newColorFormat), buffer(NULL) {
 	width = newWidth;
 	height = newHeight;
@@ -32,7 +32,7 @@ PixMap::PixMap(unsigned int newWidth, unsigned int newHeight,
 }
 
 PixMap::PixMap(uint8_t* newBuffer, unsigned int newWidth,
-			   unsigned int newHeight, ColorFormat::Enum newColorFormat) :
+               unsigned int newHeight, ColorFormat::Enum newColorFormat) :
 	Object(), width(newWidth), height(newHeight), colorFormat(newColorFormat),
 	buffer(newBuffer) {
 }
