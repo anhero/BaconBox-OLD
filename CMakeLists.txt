@@ -153,4 +153,30 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 	${RedBox_libraries_list}
 	)
 
+# Creating the "convenience" library out of cmake.
 
+# List of static libraries to include
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libz.a)
+if(SDL)
+	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL.a)
+	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL_mixer.a)
+endif(SDL)
+
+# Note: Do not duplicate symbols; vorbis and ogg were already linked in
+# SDL_mixer, if they are added again, it won't work properly. This is known
+# to be true on Linux.
+
+file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+
+# Add the call to the script.
+# If the script won't be executed by bash on your platform, please define
+# _BASH_INTERPRETER outside of cmake so it works properly. This is an issue
+# on Windows.
+add_custom_command(TARGET RedBox POST_BUILD
+	COMMAND $ENV{_BASH_INTERPRETER} ${RedBox_SOURCE_DIR}/script/linkscript.sh
+		${RedBox_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}/libRedBox.a
+		${RedBox_Dependencies}
+		${RedBox_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}/libRedBox.a
+)
