@@ -109,6 +109,12 @@ namespace RedBox {
 		 */
 		static void setBufferSwapped();
 
+		/**
+		 * Calls the standard C exit function at the end of the pulse.
+		 * @param exitCode Exit code to pass to the standard exit function.
+		 */
+		static void exitApplication(int exitCode = 0);
+
 		static const std::string& getApplicationPath();
 	private:
 		/// Map of states in the engine.
@@ -137,6 +143,12 @@ namespace RedBox {
 
 		/// Flag to set when the buffer needs to be swapped.
 		bool bufferSwapped;
+
+		/// Flag to set when the application needs to exit.
+		bool needsExit;
+
+		/// Exit code to use when exiting the application
+		int tmpExitCode;
 
 		/**
 		 * Flag used to limit rendering so it doesn't render more times than

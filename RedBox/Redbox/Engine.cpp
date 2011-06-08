@@ -1,6 +1,7 @@
 #include "Engine.h"
 
 #include <cassert>
+#include <cstdlib>
 #include <algorithm>
 
 #include "TimeHelper.h"
@@ -145,6 +146,10 @@ void Engine::pulse() {
 			AudioEngine::getMusicEngine()->update();
 		}
 	}
+
+	if(engine.needsExit) {
+		exit(engine.tmpExitCode);
+	}
 }
 
 void Engine::initializeEngine(int newScreenWidth, int newScreenHeight) {
@@ -178,6 +183,11 @@ void Engine::setBufferSwapped() {
 	getInstance().bufferSwapped = true;
 }
 
+void Engine::exitApplication(int exitCode) {
+	getInstance().needsExit = true;
+	getInstance().tmpExitCode = exitCode;
+}
+
 const std::string& Engine::getApplicationPath() {
 	return getInstance().applicationPath;
 }
@@ -194,7 +204,8 @@ Engine& Engine::getInstance() {
 Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0),
 loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
 minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false),
-renderedSinceLastUpdate(false), screenWidth(0), screenHeight(0) {
+renderedSinceLastUpdate(false), screenWidth(0), screenHeight(0),
+needsExit(false), tmpExitCode(0) {
 }
 
 Engine::~Engine() {
