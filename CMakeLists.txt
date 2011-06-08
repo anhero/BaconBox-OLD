@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 2.6)
 project(RedBox)
 
+# Default build is SDL. If none set, set SDL
+if(NOT iphone AND NOT QT AND NOT SDL)
+	set(SDL 1)
+endif(NOT iphone AND NOT QT AND NOT SDL)
+
 #We force the build type to be at least debug
 if(NOT CMAKE_BUILD_TYPE)
   SET(CMAKE_BUILD_TYPE Debug CACHE STRING
