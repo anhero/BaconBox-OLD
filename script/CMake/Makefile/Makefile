@@ -10,6 +10,9 @@ RM    := rm -rf
 all: ./build/Makefile
 	@ $(MAKE) -C build
 
+install: ./build/Makefile
+	@ $(MAKE) -C build install
+
 ./build/Makefile:
 	@ (cd build >/dev/null 2>&1 && cmake ..)
 

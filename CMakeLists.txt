@@ -180,3 +180,42 @@ add_custom_command(TARGET RedBox POST_BUILD
 		${RedBox_Dependencies}
 		${RedBox_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}/libRedBox.a
 )
+
+
+IF("${CMAKE_GENERATOR}" MATCHES "Unix Makefiles")
+	OPTION(INSTALL_LIBS "Set when you want to install libraries" ON)
+ELSE()
+	IF(APPLE AND FRAMEWORK)
+		OPTION(INSTALL_LIBS "Set when you want to install libraries" ON)
+	ELSE()
+#by default, don't enable the 'INSTALL' option for Xcode and MSVC projectfiles
+		OPTION(INSTALL_LIBS "Set when you want to install libraries" OFF)
+	ENDIF()
+ENDIF()
+
+
+
+MESSAGE( STATUS )
+MESSAGE( STATUS "-------------------------------------------------------------------------------" )
+MESSAGE( STATUS "BUILD_SHARED_LIBS = ${BUILD_SHARED_LIBS}" )
+MESSAGE( STATUS "CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX}" )
+MESSAGE( STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}" )
+MESSAGE( STATUS "CMAKE_MODULE_PATH = ${CMAKE_MODULE_PATH}" )
+MESSAGE( STATUS "${PROJECT_NAME}_DEPENDS = \"${${PROJECT_NAME}_DEPENDS}\"" )
+MESSAGE( STATUS "${PROJECT_NAME}_SOURCE_DIR = \"${${PROJECT_NAME}_SOURCE_DIR}\"" )
+MESSAGE( STATUS "BUILD_WITH = \"${BUILD_WITH}\"" )
+MESSAGE( STATUS "INSTALL_DOC = ${INSTALL_DOC}" )
+MESSAGE( STATUS "Change a value with: cmake -D<Variable>=<Value>" )
+MESSAGE( STATUS "-------------------------------------------------------------------------------" )
+MESSAGE( STATUS )
+
+# Installation rules
+# install library
+INSTALL( TARGETS ${PROJECT_NAME} DESTINATION lib PERMISSIONS
+OWNER_READ OWNER_WRITE OWNER_EXECUTE
+GROUP_READ GROUP_EXECUTE
+WORLD_READ WORLD_EXECUTE )
+# install include files
+INSTALL( DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/include"
+DESTINATION . PATTERN "*~" EXCLUDE EXCLUDE )
+
