@@ -37,7 +37,7 @@ namespace RedBox {
 		/**
 		 * Parameterized constructor. Initializes the sprite emitter to use
 		 * the given sprite as the default sprite for each particle.
-		 * @param newDefaultSprite New default sprite
+		 * @param newDefaultSprite Pointer to the new default sprite
 		 */
 		SpriteEmitter(Sprite* newDefaultSprite);
 

@@ -3,14 +3,14 @@
 using namespace RedBox;
 
 IEmitter::IEmitter(): GraphicBody(), nbParticles(0), nbParticlesToShoot(-1),
-lifeSpan(-1.0), elapsedTime(0.0), isActive(false), angle(0.0f),
+lifeSpan(-1.0), elapsedTime(0.0), active(false), angle(0.0f),
 angleVariance(0.0f), force(0.0f), forceVariance(0.0f), emitRate(0.0),
 emitCounter(0.0), birthPhase(ParticlePhase()), lifePhase(ParticlePhase()),
 dyingPhase(ParticlePhase()), dieOnDeactivate(false) {
 }
 IEmitter::IEmitter(const IEmitter& src): GraphicBody(src),
 nbParticles(src.nbParticles), nbParticlesToShoot(src.nbParticlesToShoot),
-lifeSpan(src.lifeSpan), elapsedTime(src.elapsedTime), isActive(src.isActive),
+lifeSpan(src.lifeSpan), elapsedTime(src.elapsedTime), active(src.active),
 angle(src.angle), angleVariance(src.angleVariance), force(src.force),
 forceVariance(src.forceVariance), emitRate(src.emitRate),
 emitCounter(src.emitCounter), birthPhase(src.birthPhase),
@@ -43,8 +43,8 @@ double IEmitter::getElapsedTime() const {
 	return elapsedTime;
 }
 
-bool IEmitter::getIsActive() const {
-	return isActive;
+bool IEmitter::isActive() const {
+	return active;
 }
 
 float IEmitter::getAngle() const {
@@ -89,11 +89,11 @@ void IEmitter::setLifeSpan(double newLifeSpan) {
 }
 
 void IEmitter::activate() {
-	isActive = true;
+	active = true;
 }
 
 void IEmitter::deactivate() {
-	isActive = false;
+	active = false;
 }
 
 void IEmitter::setAngle(float newAngle) {
@@ -140,7 +140,7 @@ void IEmitter::clean() {
 	nbParticlesToShoot = -1;
 	lifeSpan = 0.0;
 	elapsedTime = 0.0;
-	isActive = true;
+	active = true;
 	angle = 0.0f;
 	angleVariance = 0.0f;
 	force = 0.0f;
@@ -159,7 +159,7 @@ void IEmitter::copyFrom(const IEmitter& src) {
 			nbParticlesToShoot = src.nbParticlesToShoot;
 			lifeSpan = src.lifeSpan;
 			elapsedTime = src.elapsedTime;
-			isActive = src.isActive;
+			active = src.active;
 			angle = src.angle;
 			angleVariance = src.angleVariance;
 			force = src.force;
@@ -176,8 +176,8 @@ void IEmitter::copyFrom(const IEmitter& src) {
 }
 
 float IEmitter::getWidth() const {
-	return 1;
+	return 1.0f;
 }
 float IEmitter::getHeight() const{
-	return 1;
+	return 1.0f;
 }

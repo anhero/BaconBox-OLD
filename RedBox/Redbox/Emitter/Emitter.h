@@ -59,7 +59,7 @@ namespace RedBox {
 		 */
 		virtual void update() {
 			// We make sure that the sprite emitter is active and has a valid emitRate.
-			if(isActive && emitRate > 0.0 &&
+			if(active && emitRate > 0.0 &&
 			        (nbParticlesToShoot == -1 || nbParticlesToShoot > 0)) {
 				float rate = 1.0 / emitRate;
 				emitCounter += Engine::getSinceLastUpdate();
@@ -158,7 +158,7 @@ namespace RedBox {
 		virtual void render() {
 			// We check that the emitter is active before rendering the
 			// particles.
-			if(isActive) {
+			if(active) {
 				for(typename std::vector<Particle>::iterator i = particles.begin();
 				        i != particles.end(); i++) {
 					if(i->timeLeft > 0.0) {
@@ -168,7 +168,6 @@ namespace RedBox {
 			}
 		}
 
-
 		/**
 		 * Gets the maximum number of particles.
 		 * @return Maximum number of particles an emitter can have at the
@@ -177,6 +176,7 @@ namespace RedBox {
 		unsigned int getNbMaxParticles() const {
 			return particles.size();
 		}
+
 		/**
 		 * Sets the maximum number of particles.
 		 * @param newNbMaxParticles Maximum number of particles the sprite
@@ -203,6 +203,7 @@ namespace RedBox {
 		 * @param graphicBody GraphicBody to have its alpha updated.
 		 */
 		virtual void updateAlpha(int16_t deltaAlpha, T* graphicBody) = 0;
+
 		/**
 		 * Updates the GraphicBody's size using the given scaling value to add
 		 * to the GraphicBody's size scaling.
@@ -307,6 +308,7 @@ namespace RedBox {
 			/// Flag used to know in which phase the particle is.
 			ParticleState::Enum state;
 
+			/// Counter used for the fading in and out.
 			float alphaCounter;
 		private:
 			/**
@@ -355,6 +357,10 @@ namespace RedBox {
 		/// Vector containing the particles used to shoot.
 		std::vector<Particle> particles;
 
+		/**
+		 * Finds the first dead particle in the vector of particles.
+		 * @return Iterator to the first dead particle found.
+		 */
 		typename std::vector<Particle>::iterator findFirstDeadParticle() {
 			if(nbParticles >= particles.size()) {
 				return particles.end();
@@ -375,6 +381,11 @@ namespace RedBox {
 			}
 		}
 
+		/**
+		 * Finds an available particle and shoots it.
+		 * @return True if there was a particle available to shoot and it was
+		 * successfully shot, false if not.
+		 */
 		bool shootParticle() {
 			// We try to get a dead particle.
 			typename std::vector<Particle>::iterator deadParticle = findFirstDeadParticle();
@@ -391,6 +402,9 @@ namespace RedBox {
 			}
 		}
 
+		/**
+		 * Deletes the emitter if it is done shooting the particles.
+		 */
 		void deleteIfPossible() {
 			if(nbParticlesToShoot == 0) {
 				bool notFound = true;
@@ -420,6 +434,7 @@ namespace RedBox {
 		void clean() {
 			particles.clear();
 		}
+
 		/**
 		 * Makes a copy of the recieved emitter.
 		 */
