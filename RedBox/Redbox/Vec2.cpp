@@ -103,7 +103,7 @@ void Vec2::addToY(float yToAdd) {
 	if(isPtr) {
 		*(coordsPtr.y) += yToAdd;
 	} else {
-		coordsVal.y = yToAdd;
+		coordsVal.y += yToAdd;
 	}
 }
 

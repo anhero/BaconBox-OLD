@@ -778,6 +778,8 @@ namespace RedBox {
 									float higherYBoundary = -1.0f);
 
 	private:
+
+		static float computeVelocity(float velocity, float acceleration, float drag, float max);
 		/**
 		 * This function will solve the collision on the x axis. It will
 		 * separate the objects and return information about the collision by
@@ -811,7 +813,6 @@ namespace RedBox {
 		 */
 		static bool solveYCollision(GraphicBody* object1, GraphicBody* object2,
 		                            CollisionData* collisionInfo);
-
 
 		/**
 		 * Horizontal and vertical position. Position (0, 0) is at the upper
