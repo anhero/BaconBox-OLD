@@ -17,6 +17,9 @@
 #include "TimerManager.h"
 #include "Console.h"
 #include <libgen.h>
+
+#include RB_MAINWINDOW_INCLUDE
+
 using namespace RedBox;
 
 sigly::Signal2<int, int> Engine::onInitialize = sigly::Signal2<int, int>();
@@ -188,6 +191,10 @@ void Engine::exitApplication(int exitCode) {
 	getInstance().tmpExitCode = exitCode;
 }
 
+void Engine::showMainWindow() {
+	MainWindow::getInstance().show();
+}
+
 const std::string& Engine::getApplicationPath() {
 	return getInstance().applicationPath;
 }
@@ -206,6 +213,7 @@ loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
 minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false),
 renderedSinceLastUpdate(false), screenWidth(0), screenHeight(0),
 needsExit(false), tmpExitCode(0) {
+	MainWindow::getInstance().setCaption("An unnamed RedBox application");
 }
 
 Engine::~Engine() {

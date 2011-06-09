@@ -105,6 +105,9 @@
 	#define RB_POINTER_INCLUDE "SDLPointer.h"
 	#define RB_INPUT_MANAGER_IMPL RedBox::SDLInputManager
 	#define RB_INPUT_MANAGER_INCLUDE "SDLInputManager.h"
+
+	#define RB_MAINWINDOW_IMPL SDLMainWindow::getInstance()
+	#define RB_MAINWINDOW_INCLUDE "SDLMainWindow.h"
 #endif
 
 //Qt platform

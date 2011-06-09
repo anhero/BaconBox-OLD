@@ -1,6 +1,7 @@
 get_filename_component(Display_dir ${CMAKE_CURRENT_LIST_FILE} PATH)
 include(${Display_dir}/Driver/Sources.cmake)
 include(${Display_dir}/Text/Sources.cmake)
+include(${Display_dir}/Window/Sources.cmake)
 
 file(GLOB RedBox_RedBox_Display_Headers ${Display_dir}/*.h)
 file(GLOB RedBox_RedBox_Display_Sources ${Display_dir}/*.cpp)
