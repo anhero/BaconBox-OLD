@@ -163,10 +163,10 @@ if(SDL)
 	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL.a)
 	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL_mixer.a)
 endif(SDL)
-
-# Note: Do not duplicate symbols; vorbis and ogg were already linked in
-# SDL_mixer, if they are added again, it won't work properly. This is known
-# to be true on Linux.
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libogg.a)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbis.a)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisenc.a)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisfile.a)
 
 file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
 
