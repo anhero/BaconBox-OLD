@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# Sanity checks
+
 CMAKE=$(which cmake)
 if [ "${CMAKE}" == "" ]; then
 	echo "CMake is not correctly installed and is necessary to build this project." && exit 1
@@ -10,7 +12,7 @@ if [ "${LIBBUILDTOOL}" == "" ]; then
 	echo "LibBuildTool is not correctly installed and is necessary to build the dependencies of this project." && exit 1
 fi
 
-
+# Help function
 function print_help() {
 	#@ function print_help
 	#@ Prints help for libbuildtool.
@@ -18,23 +20,28 @@ function print_help() {
 	local this="$(basename ${0})"
 	echo "
 Usage:
-     -t | --target <name>   Configure the project for the <name> target.
-						   Current supported target:
-                           - current (default)
+     -t | --target <name>
+            Configures the project for the <name> target.
+            Currently supported targets:
+                - current (default)
+                - iphoneOS (You must specify a sdk version like this:
+                    \`./configure -t iphoneOS 4.3\`
+                  where 4.3 is the sdk version number.
+                - iphoneSimulator (You must specify a sdk version like this:
+                    \`./configure -t iphoneSimulator 4.3\`
+                  where 4.3 is the sdk version number.
 
-                           - iphoneOS (You must specify a sdk version like this: './configure -t iphoneOS 4.3' 
-                           where 4.3 is the sdk version number.
+     --prefix <path>
+	        Specify where to install files when calling make install.
 
-                           - iphoneSimulator (You must specify a sdk version like this: './configure -t iphoneSimulator 4.3' 
-                           where 4.3 is the sdk version number.
-
-	-G |--build-system | --generator Specify which Cmake generator to use	
+     -G     Specify which Cmake generator to use
 	"
 }
 
-# Parameters array
+# Initializing parameters array
 params=( )
 
+# Parameters parsing
 while [ $# -gt 0 ];do
 	case "$1" in
 		"--help"|"-h"|"-?")
@@ -54,9 +61,6 @@ while [ $# -gt 0 ];do
 					echo "This target need a sdk version number. See ./configure --help for usage." && exit 1
 				fi
 				export SDKVER="${1}"
-
-			#elif [  "${target}" == "android" ] ; then 
-			
 			fi
 			;;
 		*)
@@ -65,16 +69,20 @@ while [ $# -gt 0 ];do
 	shift;
 done
 
+#Defining default target, if not set
+if [ -z "${target}" ]; then
+	target="SDL"
+fi
+#Adding target to cache entries.
+params=( ${params[@]} "-D${target}=1" )
+
+# Defining the prefix for cmake
 if [[ -n "${PREFIX-}" ]]; then
 	params=( "${params[@]}" "-DCMAKE_INSTALL_PREFIX=$PREFIX" )
 fi
 
-#./CMake/configureScript/configure-iphone
-#./script/CMake/configureScript/configure-iphone -GXcode
-
-mkdir build
+mkdir -p build
 cp ./script/CMake/Makefile/Makefile .
-configurePath="./script/CMake/configureScript"
 
 
 if [[ -n "${VERBOSE-}" && "${VERBOSE-}" != "0" ]]; then
@@ -84,63 +92,14 @@ if [[ -n "${VERBOSE-}" && "${VERBOSE-}" != "0" ]]; then
 	done
 fi
 
+configurePath="./script/CMake/configureScript"
+
 if [[ "${target}" == "iphoneOS" ]]; then
-	if [[ "${params[@]}" == "" ]]; then
-		if [[ "${generator}" == "" ]]; then
-			"${configurePath}/configure-iphone"
-		else
-			"${configurePath}/configure-iphone" "-G${generator}"
-		fi
-	else
-		if [[ "${generator}" == "" ]]; then
-			"${configurePath}/configure-iphone" "${params[@]}"
-		else
-			"${configurePath}/configure-iphone" "-G${generator}" "${params[@]}"
-		fi
-	fi
+	"${configurePath}/configure-iphone" "${params[@]}"
 elif [[ "${target}" == "iphoneSimulator" ]]; then
-	if [[ "${params[@]}" == "" ]]; then
-		if [[ "${generator}" == "" ]]; then
-			"${configurePath}/configure-iphone-simulator"
-		else
-			"${configurePath}/configure-iphone-simulator" "-G${generator}"
-		fi
-	else
-		if [[ "${generator}" == "" ]]; then
-			"${configurePath}/configure-iphone-simulator" "${params[@]}"
-		else
-			"${configurePath}/configure-iphone-simulator" "-G${generator}" "${params[@]}"
-		fi
-	fi
-elif  [[ "${target}" == "android" ]]; then
-	if [[ "${params[@]}" == "" ]]; then
-		if [[  "${generator}" == "" ]]; then
-			"${configurePath}/configure-android"
-		else
-			"${configurePath}/configure-android" "-G${generator}"
-		fi
-	else
-		if [[ "${generator}" == "" ]]; then
-			"${configurePath}/configure-android" "${params[@]}"
-		else
-			"${configurePath}/configure-android" "-G${generator}" "${params[@]}"
-		fi
-	fi
-
+	"${configurePath}/configure-iphone-simulator" "${params[@]}"
+elif [[ "${target}" == "android" ]]; then
+	"${configurePath}/configure-android" "${params[@]}"
 else
-	if [[ "${params[@]}" == "" ]]; then
-		if [[  "${generator}" == "" ]]; then
-			"${configurePath}/configure-current"
-		else
-			"${configurePath}/configure-current" "-G${generator}"
-		fi
-	else
-		if [[ "${generator}" == "" ]]; then
-			"${configurePath}/configure-current" "${params[@]}"
-		else
-			"${configurePath}/configure-current" "-G${generator}" "${params[@]}"
-		fi
-	fi
-
+	"${configurePath}/configure-current" "${params[@]}"
 fi
-
