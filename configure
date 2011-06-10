@@ -32,13 +32,18 @@ Usage:
 	"
 }
 
-params=""
+# Parameters array
+params=( )
 
 while [ $# -gt 0 ];do
 	case "$1" in
 		"--help"|"-h"|"-?")
 			print_help
 			exit 0
+			;;
+		"--prefix")
+			shift;
+			PREFIX=$1
 			;;
 		"--target"|"-t")
 			shift;
@@ -55,11 +60,14 @@ while [ $# -gt 0 ];do
 			fi
 			;;
 		*)
-      		params="${params}${1}"
+			params=( "${params[@]}" "${1}" )
 		esac
 	shift;
 done
 
+if [[ -n "${PREFIX-}" ]]; then
+	params=( "${params[@]}" "-DCMAKE_INSTALL_PREFIX=$PREFIX" )
+fi
 
 #./CMake/configureScript/configure-iphone
 #./script/CMake/configureScript/configure-iphone -GXcode
@@ -68,65 +76,71 @@ mkdir build
 cp ./script/CMake/Makefile/Makefile .
 configurePath="./script/CMake/configureScript"
 
-if [  "${target}" == "iphoneOS" ]; then
-	if [  "${params}" == "" ]; then
-		if [  "${generator}" == "" ]; then
+
+if [[ -n "${VERBOSE-}" && "${VERBOSE-}" != "0" ]]; then
+	echo "Final parameters list to be passed to cmake: "
+	for param in "${params[@]}"; do
+		echo " > ""$param"
+	done
+fi
+
+if [[ "${target}" == "iphoneOS" ]]; then
+	if [[ "${params[@]}" == "" ]]; then
+		if [[ "${generator}" == "" ]]; then
 			"${configurePath}/configure-iphone"
 		else
 			"${configurePath}/configure-iphone" "-G${generator}"
 		fi
 	else
-		if [  "${generator}" == "" ]; then
-			"${configurePath}/configure-iphone" "${params}"
+		if [[ "${generator}" == "" ]]; then
+			"${configurePath}/configure-iphone" "${params[@]}"
 		else
-			"${configurePath}/configure-iphone" "-G${generator}" "${params}"
+			"${configurePath}/configure-iphone" "-G${generator}" "${params[@]}"
 		fi
 	fi
-elif [  "${target}" == "iphoneSimulator" ]; then
-	if [  "${params}" == "" ]; then
-		if [  "${generator}" == "" ]; then
+elif [[ "${target}" == "iphoneSimulator" ]]; then
+	if [[ "${params[@]}" == "" ]]; then
+		if [[ "${generator}" == "" ]]; then
 			"${configurePath}/configure-iphone-simulator"
 		else
 			"${configurePath}/configure-iphone-simulator" "-G${generator}"
 		fi
 	else
-		if [  "${generator}" == "" ]; then
-			"${configurePath}/configure-iphone-simulator" "${params}"
+		if [[ "${generator}" == "" ]]; then
+			"${configurePath}/configure-iphone-simulator" "${params[@]}"
 		else
-			"${configurePath}/configure-iphone-simulator" "-G${generator}" "${params}"
+			"${configurePath}/configure-iphone-simulator" "-G${generator}" "${params[@]}"
 		fi
 	fi
-elif  [ "${target}" == "android" ]; then
-	if [  "${params}" == "" ]; then
-		if [  "${generator}" == "" ]; then
+elif  [[ "${target}" == "android" ]]; then
+	if [[ "${params[@]}" == "" ]]; then
+		if [[  "${generator}" == "" ]]; then
 			"${configurePath}/configure-android"
 		else
 			"${configurePath}/configure-android" "-G${generator}"
 		fi
 	else
-		if [  "${generator}" == "" ]; then
-			"${configurePath}/configure-android" "${params}"
+		if [[ "${generator}" == "" ]]; then
+			"${configurePath}/configure-android" "${params[@]}"
 		else
-			"${configurePath}/configure-android" "-G${generator}" "${params}"
+			"${configurePath}/configure-android" "-G${generator}" "${params[@]}"
 		fi
 	fi
 
 else
-	if [  "${params}" == "" ]; then
-		if [  "${generator}" == "" ]; then
+	if [[ "${params[@]}" == "" ]]; then
+		if [[  "${generator}" == "" ]]; then
 			"${configurePath}/configure-current"
 		else
 			"${configurePath}/configure-current" "-G${generator}"
 		fi
 	else
-		if [  "${generator}" == "" ]; then
-			"${configurePath}/configure-current" "${params}"
+		if [[ "${generator}" == "" ]]; then
+			"${configurePath}/configure-current" "${params[@]}"
 		else
-			"${configurePath}/configure-current" "-G${generator}" "${params}"
+			"${configurePath}/configure-current" "-G${generator}" "${params[@]}"
 		fi
 	fi
 
 fi
-
-
 

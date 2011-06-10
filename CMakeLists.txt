@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 2.6)
 project(RedBox)
 
+# Default build is SDL. If none set, set SDL
+if(NOT iphone AND NOT QT AND NOT SDL)
+	set(SDL 1)
+endif(NOT iphone AND NOT QT AND NOT SDL)
+
 #We force the build type to be at least debug
 if(NOT CMAKE_BUILD_TYPE)
   SET(CMAKE_BUILD_TYPE Debug CACHE STRING
@@ -148,4 +153,69 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 	${RedBox_libraries_list}
 	)
 
+# Creating the "convenience" library out of cmake.
+
+# List of static libraries to include
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libfreetype.a)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libpng.a)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libz.a)
+if(SDL)
+	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL.a)
+	list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libSDL_mixer.a)
+endif(SDL)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libogg.a)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbis.a)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisenc.a)
+list(APPEND RedBox_Dependencies ${RedBox_BINARY_DIR}/Dependencies/lib/libvorbisfile.a)
+
+file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+
+# Add the call to the script.
+# If the script won't be executed by bash on your platform, please define
+# _BASH_INTERPRETER outside of cmake so it works properly. This is an issue
+# on Windows.
+add_custom_command(TARGET RedBox POST_BUILD
+	COMMAND $ENV{_BASH_INTERPRETER} ${RedBox_SOURCE_DIR}/script/linkscript.sh
+		${RedBox_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}/libRedBox.a
+		${RedBox_Dependencies}
+		${RedBox_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}/libRedBox.a
+)
+
+
+IF("${CMAKE_GENERATOR}" MATCHES "Unix Makefiles")
+	OPTION(INSTALL_LIBS "Set when you want to install libraries" ON)
+ELSE()
+	IF(APPLE AND FRAMEWORK)
+		OPTION(INSTALL_LIBS "Set when you want to install libraries" ON)
+	ELSE()
+#by default, don't enable the 'INSTALL' option for Xcode and MSVC projectfiles
+		OPTION(INSTALL_LIBS "Set when you want to install libraries" OFF)
+	ENDIF()
+ENDIF()
+
+
+
+MESSAGE( STATUS )
+MESSAGE( STATUS "-------------------------------------------------------------------------------" )
+MESSAGE( STATUS "BUILD_SHARED_LIBS = ${BUILD_SHARED_LIBS}" )
+MESSAGE( STATUS "CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX}" )
+MESSAGE( STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}" )
+MESSAGE( STATUS "CMAKE_MODULE_PATH = ${CMAKE_MODULE_PATH}" )
+MESSAGE( STATUS "${PROJECT_NAME}_DEPENDS = \"${${PROJECT_NAME}_DEPENDS}\"" )
+MESSAGE( STATUS "${PROJECT_NAME}_SOURCE_DIR = \"${${PROJECT_NAME}_SOURCE_DIR}\"" )
+MESSAGE( STATUS "BUILD_WITH = \"${BUILD_WITH}\"" )
+MESSAGE( STATUS "INSTALL_DOC = ${INSTALL_DOC}" )
+MESSAGE( STATUS "Change a value with: cmake -D<Variable>=<Value>" )
+MESSAGE( STATUS "-------------------------------------------------------------------------------" )
+MESSAGE( STATUS )
+
+# Installation rules
+# install library
+INSTALL( TARGETS ${PROJECT_NAME} DESTINATION lib PERMISSIONS
+OWNER_READ OWNER_WRITE OWNER_EXECUTE
+GROUP_READ GROUP_EXECUTE
+WORLD_READ WORLD_EXECUTE )
+# install include files
+INSTALL( DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/include"
+DESTINATION . PATTERN "*~" EXCLUDE EXCLUDE )
 

@@ -115,6 +115,11 @@ namespace RedBox {
 		 */
 		static void exitApplication(int exitCode = 0);
 
+		/**
+		 * Shows the window and starts the application.
+		 */
+		static void showMainWindow();
+
 		static const std::string& getApplicationPath();
 	private:
 		/// Map of states in the engine.
