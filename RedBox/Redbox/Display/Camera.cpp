@@ -152,9 +152,9 @@ void Camera::render() {
 }
 
 Vec2 Camera::screenToWorld(const Vec2& positionOnScreen) {
-	return positionOnScreen + position;
+	return positionOnScreen * (1.0f / zoomFactor) + position;
 }
 
 Vec2 Camera::worldToScreen(const Vec2& positionInWorld) {
-	return positionInWorld - position;
+	return (positionInWorld - position) * (1.0f / zoomFactor);
 }
