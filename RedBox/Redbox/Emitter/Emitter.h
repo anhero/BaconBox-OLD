@@ -27,7 +27,7 @@ namespace RedBox {
 		/**
 		 * Default constructor.
 		 */
-		Emitter(): IEmitter() {
+		Emitter(): IEmitter(), particles(std::vector<Particle>(10)) {
 		}
 
 		/**
