@@ -120,7 +120,20 @@ namespace RedBox {
 		 */
 		static void showMainWindow();
 
+		/**
+		 * Gets the application's path in the filesystem.
+		 */
 		static const std::string& getApplicationPath();
+
+		/**
+		 * Gets the application's argument count, generally as passed to main.
+		 */
+		static int& getApplicationArgc();
+
+		/**
+		 * Gets the application's argument values, generally as passed to main.
+		 */
+		static char** getApplicationArgv();
 	private:
 		/// Map of states in the engine.
 		std::map<std::string, State*> states;
@@ -169,6 +182,12 @@ namespace RedBox {
 
 		/// Screen's height.
 		int screenHeight;
+
+		/// A copy of argc
+		static int argc;
+
+		/// A copy of argv
+		static char** argv;
 
 		/**
 		 * Gets the engine singleton instance.

@@ -199,7 +199,23 @@ const std::string& Engine::getApplicationPath() {
 	return getInstance().applicationPath;
 }
 
+
+int Engine::argc;
+char** Engine::argv;
+
+int& Engine::getApplicationArgc() {
+	return Engine::argc;
+}
+
+char** Engine::getApplicationArgv() {
+	return Engine::argv;
+}
+
+
 void Engine::application(int argc, char* argv[]) {
+	Engine::argc = argc;
+	Engine::argv = argv;
+
 	getInstance().applicationPath = dirname(argv[0]);
 }
 
