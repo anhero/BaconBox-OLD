@@ -8,14 +8,14 @@
 
 using namespace RedBox;
 
-GraphicBody::GraphicBody() : Object(),
+GraphicBody::GraphicBody() : Body(),
 	maxVelocity(Vec2(NO_MAX_VELOCITY, NO_MAX_VELOCITY)),
 	scaling(Vec2(1.0f, 1.0f)), angle(0.0f), layer(Layer()), toBeDeleted(false),
 	layerChanged(false), isInState(false), collidableSides(Side::ALL),
 	elasticity(0.0f), staticBody(false), drag(Vec2(0.0f, 0.0f)) {
 }
 
-GraphicBody::GraphicBody(const GraphicBody& src) : Object(src) {
+GraphicBody::GraphicBody(const GraphicBody& src) : Body(src) {
 	copyFrom(src);
 }
 
@@ -23,7 +23,7 @@ GraphicBody::~GraphicBody() {
 }
 
 GraphicBody& GraphicBody::operator=(const GraphicBody& src) {
-	Object::operator=(src);
+	Body::operator=(src);
 	copyFrom(src);
 	return *this;
 }
@@ -280,7 +280,7 @@ std::pair<bool, std::list<CollisionData> > GraphicBody::collide(std::list<Graphi
 	bool collide = false;
 
 	for(std::list<GraphicBody*>::iterator i = GraphicBodys.begin(); i != GraphicBodys.end();
-			i++) {
+	        i++) {
 		std::pair<bool, CollisionData> collisionPair = this->collide(*i);
 
 		if(collisionPair.first) {
@@ -306,6 +306,7 @@ float GraphicBody::computeVelocity(float velocity, float acceleration, float dra
 		velocity += acceleration * Engine::getSinceLastUpdate();
 	} else if(drag) {
 		float tmpDrag = drag * Engine::getSinceLastUpdate();
+
 		if(velocity - tmpDrag > 0.0f) {
 			velocity -= tmpDrag;
 		} else if(velocity + tmpDrag < 0.0f) {
@@ -314,6 +315,7 @@ float GraphicBody::computeVelocity(float velocity, float acceleration, float dra
 			velocity = 0.0f;
 		}
 	}
+
 	if(velocity && max != NO_MAX_VELOCITY) {
 		if(velocity > max) {
 			velocity = max;
@@ -321,6 +323,7 @@ float GraphicBody::computeVelocity(float velocity, float acceleration, float dra
 			velocity = -max;
 		}
 	}
+
 	return velocity;
 }
 
@@ -404,7 +407,7 @@ void GraphicBody::addToAngle(float angleToAdd) {
 }
 
 std::pair<bool, CollisionData> GraphicBody::collide(GraphicBody* body1,
-													GraphicBody* body2) {
+        GraphicBody* body2) {
 	CollisionData currentCollisionData;
 	currentCollisionData.obj1 = body1;
 	currentCollisionData.obj2 = body2;
@@ -413,22 +416,22 @@ std::pair<bool, CollisionData> GraphicBody::collide(GraphicBody* body1,
 		bool collideInX = solveXCollision(body1, body2, &currentCollisionData);
 		bool collideInY = solveYCollision(body1, body2, &currentCollisionData);
 		return std::pair<bool, CollisionData>(collideInX || collideInY,
-											  currentCollisionData);
+		                                      currentCollisionData);
 	} else {
 		return std::pair<bool, CollisionData>(false, currentCollisionData);
 	}
 }
 
 std::pair<bool, std::list<CollisionData> > GraphicBody::collide(std::list<GraphicBody*> graphicBodies1,
-																std::list<GraphicBody*> graphicBodies2) {
+        std::list<GraphicBody*> graphicBodies2) {
 	std::list<CollisionData> collisionInfo;
 	bool collide = false;
 
 	for(std::list<GraphicBody*>::iterator i = graphicBodies1.begin();
-		i != graphicBodies1.end(); ++i) {
+	        i != graphicBodies1.end(); ++i) {
 
 		for(std::list<GraphicBody*>::iterator j = graphicBodies2.begin();
-			j != graphicBodies2.end(); ++j) {
+		        j != graphicBodies2.end(); ++j) {
 
 			if(*i != *j) {
 				std::pair<bool, CollisionData> collisionPair = GraphicBody::collide(*i, *j);
@@ -533,14 +536,14 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 		tmpWidth2 = object2->getWidth();
 
 		AABB obj1AABB(object1->getXPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)),
-					  object1->getXPosition() + tmpWidth1 + obj1DeltaAbs,
-					  object1->getOldYPosition(),
-					  object1->getOldYPosition() + object1->getHeight());
+		              object1->getXPosition() + tmpWidth1 + obj1DeltaAbs,
+		              object1->getOldYPosition(),
+		              object1->getOldYPosition() + object1->getHeight());
 
 		AABB obj2AABB(object2->getXPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)),
-					  object2->getXPosition() + tmpWidth2 + obj2DeltaAbs,
-					  object2->getOldYPosition(),
-					  object2->getOldYPosition() + object2->getHeight());
+		              object2->getXPosition() + tmpWidth2 + obj2DeltaAbs,
+		              object2->getOldYPosition(),
+		              object2->getOldYPosition() + object2->getHeight());
 
 		if(obj1AABB.overlaps(obj2AABB)) {
 
@@ -589,6 +592,7 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 			} else {
 				object1->setXPosition(object2->getXPosition() + tmpWidth2 + overlap * object1->getElasticity());
 			}
+
 			object1->setXVelocity(obj2v - (obj1v * object1->getElasticity()));
 
 		} else if(!object2->isStaticBody()) {
@@ -597,6 +601,7 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 			} else {
 				object2->setXPosition(object1->getXPosition() + tmpWidth1 - overlap * object2->getElasticity());
 			}
+
 			object2->setXVelocity(obj1v - (obj2v * object2->getElasticity()));
 		}
 
@@ -628,14 +633,14 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 		// We create AABBs of the old position with the updated vertical
 		// position.
 		AABB obj1AABB(object1->getXPosition(),
-					  object1->getXPosition() + object1->getWidth(),
-					  object1->getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)),
-					  object1->getYPosition() + tmpHeight1 + obj1DeltaAbs);
+		              object1->getXPosition() + object1->getWidth(),
+		              object1->getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)),
+		              object1->getYPosition() + tmpHeight1 + obj1DeltaAbs);
 
 		AABB obj2AABB(object2->getXPosition(),
-					  object2->getXPosition() + object2->getWidth(),
-					  object2->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)),
-					  object2->getYPosition() + tmpHeight2 + obj2DeltaAbs);
+		              object2->getXPosition() + object2->getWidth(),
+		              object2->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)),
+		              object2->getYPosition() + tmpHeight2 + obj2DeltaAbs);
 
 
 		// We check if the objects are colliding.
@@ -689,6 +694,7 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 			} else {
 				object1->setYPosition(object2->getYPosition() + tmpHeight2 + overlap * object1->getElasticity());
 			}
+
 			object1->setYVelocity(obj2v - (obj1v * object1->getElasticity()));
 
 			//Handle horizontal moving static object EX. moving platform
@@ -702,6 +708,7 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 			} else {
 				object2->setYPosition(object1->getYPosition() + tmpHeight1 - overlap * object2->getElasticity());
 			}
+
 			object2->setYVelocity(obj1v - (obj2v * object2->getElasticity()));
 
 			// Handle horizontal moving static object EX. moving platform

@@ -19,7 +19,7 @@
 #include <libgen.h>
 using namespace RedBox;
 
-sigly::Signal2<int, int> Engine::onInitialize = sigly::Signal2<int, int>();
+sigly::Signal2<unsigned int, unsigned int> Engine::onInitialize = sigly::Signal2<unsigned int, unsigned int>();
 
 State* Engine::addState(State* newState) {
 	Engine& engine = getInstance();
@@ -152,7 +152,8 @@ void Engine::pulse() {
 	}
 }
 
-void Engine::initializeEngine(int newScreenWidth, int newScreenHeight) {
+void Engine::initializeEngine(unsigned int newScreenWidth,
+							  unsigned int newScreenHeight) {
 	Engine& engine = getInstance();
 	engine.screenWidth = newScreenWidth;
 	engine.screenHeight = newScreenHeight;
@@ -167,11 +168,11 @@ double Engine::getSinceLastUpdate() {
 	return TimeHelper::getInstance().getSinceStartComplete() - getInstance().lastUpdate;
 }
 
-int Engine::getScreenWidth() {
+unsigned int Engine::getScreenWidth() {
 	return getInstance().screenWidth;
 }
 
-int Engine::getScreenHeight() {
+unsigned int Engine::getScreenHeight() {
 	return getInstance().screenHeight;
 }
 

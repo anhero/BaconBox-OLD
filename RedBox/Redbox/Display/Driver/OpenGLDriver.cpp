@@ -118,17 +118,19 @@ void OpenGLDriver::popMatrix() {
 	glPopMatrix();
 }
 
-void OpenGLDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
+void OpenGLDriver::initializeGraphicDriver(unsigned int screenWidth,
+										   unsigned int screenHeight) {
 	glShadeModel(GL_FLAT);
 	
-	glViewport(0,0,screenWidth, screenHeight);
+	glViewport(0, 0, static_cast<int>(screenWidth),
+			   static_cast<int>(screenHeight));
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 #ifdef RB_IPHONE_PLATFORM
-	glOrthof(0, screenWidth, screenHeight, 0, -1, 1);
+	glOrthof(0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
 #else
-	glOrtho(0, screenWidth, screenHeight, 0, -1, 1);
+	glOrtho(0.0, static_cast<double>(screenWidth), static_cast<double>(screenHeight), 0.0, -1.0, 1.0);
 #endif
 #if defined(RB_MAC_PLATFORM) && defined(RB_SDL)
 	int swapInterval = 1;

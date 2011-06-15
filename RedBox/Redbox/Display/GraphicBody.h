@@ -7,7 +7,7 @@
 
 #include <list>
 
-#include "Object.h"
+#include "Body.h"
 #include "Vec2.h"
 #include "Side.h"
 #include "CollisionData.h"
@@ -26,7 +26,7 @@ namespace RedBox {
 	 * @ingroup Display
 	 * @see RedBox::State
 	 */
-	class GraphicBody : public Object {
+	class GraphicBody : public Body {
 		friend class State;
 	public:
 		/// Value used to represent an infinite maximum velocity.

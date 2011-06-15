@@ -5,7 +5,7 @@
 #ifndef RB_CAMERA_H
 #define RB_CAMERA_H
 
-#include "Object.h"
+#include "Body.h"
 #include "Color.h"
 #include "Vec2.h"
 
@@ -16,7 +16,8 @@ namespace RedBox{
 	 * to the left before rendering.
      * @ingroup Display
      */
-	class Camera : public Object {
+	class Camera : public Body {
+		friend class State;
 	public:
 		/**
 		 * The possible axes on which the camera can shake.
@@ -31,6 +32,13 @@ namespace RedBox{
 		 * Default constructor.
 		 */
 		Camera();
+
+		/**
+		 * Parameterized constructor specifying its width and height.
+		 * @param newWidth Camera's initial width.
+		 * @param newHeight Camera's initial height.
+		 */
+		Camera(unsigned int newWidth, unsigned int newHeight);
 
 		/**
 		 * Copy constructor.
@@ -223,17 +231,6 @@ namespace RedBox{
 				   bool forceReset = true, ShakeAxes axes = BOTH_AXES);
 
 		/**
-		 * Updates the camera's shaking.
-		 */
-		void update();
-
-		/**
-		 * Prepare the scene according to the camera's position, angle and zoom
-		 * factor
-		 */
-		void render();
-
-		/**
 		 * Converts screen coordinates to world coordinates.
 		 * @param positionOnScreen Position relative to the camera's position to
 		 * convert to world coordinates.
@@ -254,10 +251,22 @@ namespace RedBox{
 		 */
 		Vec2 worldToScreen(const Vec2& positionInWorld);
 
+		/**
+		 * Gets the camera's width (not considering the zoom factor).
+		 * @return Camera's width.
+		 */
+		int getWidth() const;
+
+		/**
+		 * Gets the camera's height (not considering the zoom factor).
+		 * @return Camera's height.
+		 */
+		int getHeight() const;
+
 	private:
 		/// Camera's position.
 		Vec2 position;
-		
+
 		/// Angle of the camera.
 		float angle;
 		
@@ -272,14 +281,29 @@ namespace RedBox{
 		 * the screen size.
 		 */
 		float shakeIntensity;
+
 		/// Time at which the shaking started.
 		double shakeStart;
+
 		/// Time the shaking must take before stopping.
 		double shakeDuration;
+
 		/// Axis on which the shaking takes place.
 		ShakeAxes shakeAxes;
+
 		/// Offset used when the camera is shaking.
 		Vec2 offset;
+
+		/**
+		 * Updates the camera's shaking.
+		 */
+		void update();
+
+		/**
+		 * Prepare the scene according to the camera's position, angle and zoom
+		 * factor
+		 */
+		void render();
 	};
 }
 

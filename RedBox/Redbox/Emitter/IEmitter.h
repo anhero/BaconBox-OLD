@@ -106,23 +106,23 @@ namespace RedBox {
 		double getElapsedTime() const;
 
 		/**
-		 * Checks the emitter is active.
+		 * Checks the emitter is started.
 		 * @return True if the emitter is active, false if not.
 		 */
-		bool isActive() const;
+		bool isStarted() const;
 		
 		/**
-		 * Activate the emitter. Will re deactivate itself if the life span or
-		 * the number of particles to shoot are at 0. Does nothing if already
+		 * Starts the emitter. Will re deactivate itself if the life span or the
+		 * number of particles to shoot are at 0. Does nothing if already
 		 * active.
 		 */
-		void activate();
+		void start();
 
 		/**
-		 * Deactivates the emitter. It is put on hold and will restart noramlly
-		 * when re-activated. Does nothing if already deactivated.
+		 * Stops the emitter. It is put on hold and will restart noramlly when
+		 * re-activated. Does nothing if already deactivated.
 		 */
-		void deactivate();
+		void stop();
 
 		/**
 		 * Gets the angle (in degrees) at which the particles will be shot.
@@ -286,8 +286,8 @@ namespace RedBox {
 		double elapsedTime;
 
 		/// Flag at true if the emitter is active, false if it is not.
-		bool active;
-		
+		bool started;
+
 		/// Angle (in degrees) at which the emitter emits particles.
 		float angle;
 
