@@ -29,7 +29,7 @@ namespace RedBox {
 		 * @param width The width of the window.
 		 * @param height The height of the window
 		 */
-		virtual void onRedBoxInit(int width, int height)=0;
+		virtual void onRedBoxInit(unsigned int width, unsigned int height)=0;
 		/**
 		 * Activates and opens the window.
 		 */

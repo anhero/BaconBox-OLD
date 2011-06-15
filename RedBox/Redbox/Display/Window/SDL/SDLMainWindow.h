@@ -16,7 +16,7 @@ namespace RedBox {
 	public:
 		/// Gets the singleton instance of SDLMainWindow.
 		static SDLMainWindow& getInstance();
-		void onRedBoxInit(int width, int height);
+		void onRedBoxInit(unsigned int width, unsigned int height);
 		void show();
 		void setCaption(const std::string& caption);
 	private:

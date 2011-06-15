@@ -32,7 +32,7 @@ namespace RedBox {
 	protected:
 		void initializeGL();
 		void paintGL();
-		void resizeGL(int width, int height);
+		void resizeGL(unsigned int width, unsigned int height);
 
 	private slots:
 		void animate();
@@ -59,7 +59,7 @@ namespace RedBox {
 	public:
 		/// Gets the singleton instance of QtMainWindow.
 		static QtMainWindow& getInstance();
-		void onRedBoxInit(int width, int height);
+		void onRedBoxInit(unsigned int width, unsigned int height);
 		void show();
 		void setCaption(const std::string& caption);
 	private:

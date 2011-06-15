@@ -27,7 +27,7 @@ QtMainWindow& QtMainWindow::getInstance() {
 	return instance;
 }
 
-void QtMainWindow::onRedBoxInit(int width, int height) {
+void QtMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
 	//Do nothing... It's all done in the MyMainWindow's function.
 }
 
@@ -135,7 +135,7 @@ void QtRedBoxWidget::paintGL() {
 	RedBox::Engine::pulse();
 }
 
-void QtRedBoxWidget::resizeGL(int width, int height) {
+void QtRedBoxWidget::resizeGL(unsigned int width, unsigned int height) {
 }
 
 void QtRedBoxWidget::animate() {

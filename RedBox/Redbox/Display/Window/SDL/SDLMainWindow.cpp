@@ -15,7 +15,7 @@ SDLMainWindow& SDLMainWindow::getInstance() {
 	return instance;
 }
 
-void SDLMainWindow::onRedBoxInit(int width, int height) {
+void SDLMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
 	SDL_SetVideoMode(width, height, 32, SDL_OPENGL);
 	InputManager::getInstance().setNbKeyboards(1);
 	InputManager::getInstance().setNbPointers(1);
