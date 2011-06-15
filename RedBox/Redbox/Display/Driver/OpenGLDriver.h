@@ -94,7 +94,8 @@ namespace RedBox {
 		 * @param screenHeight Height of the screen. A camera with a zoom factor of 1, will
 		 * show "screenHeight" pixels in height
 		 */
-		static void initializeGraphicDriver(int screenWidth, int screenHeight);
+		static void initializeGraphicDriver(unsigned int screenWidth,
+											unsigned int screenHeight);
 		
 		/**
 		 * Load a texture into graphic memory.

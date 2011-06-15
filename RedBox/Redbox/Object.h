@@ -16,16 +16,19 @@ namespace RedBox {
 		Object();
 		/**
 		 * Copy constructor.
+		 * @param src Object to make a copy of.
 		 */
 		Object(const Object& src);
-		/**
-		 * Assignation operator overload.
-		 */
-		Object& operator=(const Object& src);
 		/**
 		 * Destructor.
 		 */
 		virtual ~Object();
+		/**
+		 * Assignation operator overload.
+		 * @param src Object to make a copy of.
+		 * @return Reference to the modified instance.
+		 */
+		Object& operator=(const Object& src);
 	};
 }
 

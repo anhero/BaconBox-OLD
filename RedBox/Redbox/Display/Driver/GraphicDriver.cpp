@@ -68,7 +68,7 @@ void GraphicDriver::popMatrix() {
 #endif
 }
 
-void GraphicDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
+void GraphicDriver::initializeGraphicDriver(unsigned int screenWidth, unsigned int screenHeight) {
 #ifdef RB_OPENGL
 	OpenGLDriver::initializeGraphicDriver(screenWidth, screenHeight);
 #endif

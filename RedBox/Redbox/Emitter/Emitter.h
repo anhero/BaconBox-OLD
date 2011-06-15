@@ -27,7 +27,7 @@ namespace RedBox {
 		/**
 		 * Default constructor.
 		 */
-		Emitter(): IEmitter() {
+		Emitter(): IEmitter(), particles(std::vector<Particle>(10)) {
 		}
 
 		/**
@@ -59,7 +59,7 @@ namespace RedBox {
 		 */
 		virtual void update() {
 			// We make sure that the sprite emitter is active and has a valid emitRate.
-			if(active && emitRate > 0.0 &&
+			if(started && emitRate > 0.0 &&
 			        (nbParticlesToShoot == -1 || nbParticlesToShoot > 0)) {
 				float rate = 1.0 / emitRate;
 				emitCounter += Engine::getSinceLastUpdate();
@@ -80,7 +80,7 @@ namespace RedBox {
 					elapsedTime += Engine::getSinceLastUpdate();
 
 					if(lifeSpan < elapsedTime) {
-						deactivate();
+						stop();
 					}
 				}
 			}
@@ -156,9 +156,9 @@ namespace RedBox {
 		 * Renders the emitter and its particles.
 		 */
 		virtual void render() {
-			// We check that the emitter is active before rendering the
+			// We check that the emitter is started before rendering the
 			// particles.
-			if(active) {
+			if(started) {
 				for(typename std::vector<Particle>::iterator i = particles.begin();
 				        i != particles.end(); i++) {
 					if(i->timeLeft > 0.0) {
@@ -419,7 +419,7 @@ namespace RedBox {
 				}
 
 				if(notFound) {
-					deactivate();
+					stop();
 
 					if(dieOnDeactivate) {
 						this->setToBeDeleted(true);

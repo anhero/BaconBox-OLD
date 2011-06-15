@@ -3,14 +3,15 @@
 using namespace RedBox;
 
 IEmitter::IEmitter(): GraphicBody(), nbParticles(0), nbParticlesToShoot(-1),
-lifeSpan(-1.0), elapsedTime(0.0), active(false), angle(0.0f),
-angleVariance(0.0f), force(0.0f), forceVariance(0.0f), emitRate(0.0),
-emitCounter(0.0), birthPhase(ParticlePhase()), lifePhase(ParticlePhase()),
-dyingPhase(ParticlePhase()), dieOnDeactivate(false) {
+lifeSpan(-1.0), elapsedTime(0.0), started(false), angle(0.0f),
+angleVariance(360.0f), force(200.0f), forceVariance(25.0f), emitRate(5.0),
+emitCounter(0.0), birthPhase(ParticlePhase(0.25, 0.0, 1000)),
+lifePhase(ParticlePhase(0.25, 0.1)), dyingPhase(ParticlePhase(0.5, 0.0, -1000)),
+dieOnDeactivate(false) {
 }
 IEmitter::IEmitter(const IEmitter& src): GraphicBody(src),
 nbParticles(src.nbParticles), nbParticlesToShoot(src.nbParticlesToShoot),
-lifeSpan(src.lifeSpan), elapsedTime(src.elapsedTime), active(src.active),
+lifeSpan(src.lifeSpan), elapsedTime(src.elapsedTime), started(src.started),
 angle(src.angle), angleVariance(src.angleVariance), force(src.force),
 forceVariance(src.forceVariance), emitRate(src.emitRate),
 emitCounter(src.emitCounter), birthPhase(src.birthPhase),
@@ -43,8 +44,8 @@ double IEmitter::getElapsedTime() const {
 	return elapsedTime;
 }
 
-bool IEmitter::isActive() const {
-	return active;
+bool IEmitter::isStarted() const {
+	return started;
 }
 
 float IEmitter::getAngle() const {
@@ -88,12 +89,12 @@ void IEmitter::setLifeSpan(double newLifeSpan) {
 	lifeSpan = newLifeSpan;
 }
 
-void IEmitter::activate() {
-	active = true;
+void IEmitter::start() {
+	started = true;
 }
 
-void IEmitter::deactivate() {
-	active = false;
+void IEmitter::stop() {
+	started = false;
 }
 
 void IEmitter::setAngle(float newAngle) {
@@ -140,7 +141,7 @@ void IEmitter::clean() {
 	nbParticlesToShoot = -1;
 	lifeSpan = 0.0;
 	elapsedTime = 0.0;
-	active = true;
+	started = false;
 	angle = 0.0f;
 	angleVariance = 0.0f;
 	force = 0.0f;
@@ -159,7 +160,7 @@ void IEmitter::copyFrom(const IEmitter& src) {
 			nbParticlesToShoot = src.nbParticlesToShoot;
 			lifeSpan = src.lifeSpan;
 			elapsedTime = src.elapsedTime;
-			active = src.active;
+			started = src.started;
 			angle = src.angle;
 			angleVariance = src.angleVariance;
 			force = src.force;
