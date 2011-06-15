@@ -2,6 +2,8 @@ get_filename_component(Display_Window_dir ${CMAKE_CURRENT_LIST_FILE} PATH)
 
 if(SDL)
 	include(${Display_Window_dir}/SDL/Sources.cmake)
+elseif(QT)
+	include(${Display_Window_dir}/Qt/Sources.cmake)
 endif(SDL)
 
 file(GLOB RedBox_RedBox_Display_Window_Headers ${Display_Window_dir}/*.h)

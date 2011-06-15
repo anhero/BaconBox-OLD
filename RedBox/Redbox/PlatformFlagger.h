@@ -126,6 +126,9 @@
 	#define RB_KEYBOARD_INCLUDE "QtKeyboard.h"
 	#define RB_POINTER_IMPL new QtPointer()
 	#define RB_POINTER_INCLUDE "QtPointer.h"
+
+	#define RB_MAINWINDOW_IMPL QtMainWindow::getInstance()
+	#define RB_MAINWINDOW_INCLUDE "QtMainWindow.h"
 #endif
 
 //iOS platform

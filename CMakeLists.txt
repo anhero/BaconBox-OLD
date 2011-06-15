@@ -55,7 +55,8 @@ elseif(QT)
 	INCLUDE( ${QT_USE_FILE} )
 
 	qt4_wrap_cpp(RedBox_QT_MOC_sources ${RedBox_QT_MOC_headers})
-	  
+	QT4_WRAP_UI( RedBox_QT_uis_headers ${RedBox_QT_uis} )
+	
 	INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
 
 	FIND_PACKAGE(OpenAL REQUIRED)
@@ -63,6 +64,7 @@ elseif(QT)
 	list(APPEND RedBox_libraries_list ${OPENAL_LIBRARY})
 
 	list(APPEND RedBoxSources ${RedBox_QT_MOC_sources})
+	list(APPEND RedBoxHeaders ${RedBox_QT_uis_headers})
 
 	list(APPEND RedBox_IncludeDir_list ${QT_INCLUDE_DIR} ${QT_QTOPENGL_INCLUDE_DIR})
 	list(APPEND RedBox_libraries_list ${QT_LIBRARIES})
