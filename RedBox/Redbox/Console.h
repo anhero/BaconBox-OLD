@@ -8,15 +8,15 @@
 
 #include "PlatformFlagger.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 
 #ifdef RB_HAS_GCC_STACKTRACE
 	#include <execinfo.h>
 	#include <cxxabi.h>
 #endif
 
-#include <stdarg.h>
+#include <cstdarg>
 
 #include <iostream>
 #include <string>
@@ -32,11 +32,51 @@ namespace RedBox {
 	class Console {
 	public:
 		/**
-		 * Prints text on the console.
+		 * Prints text in the console.
 		 *
-		 * @param text Text to print.
+		 * @param input Value to print.
 		 */
-		static void print(const std::string& text);
+		template <typename T>
+		static void print(const T& input) {
+			std::cout << input << std::endl;
+		}
+
+		/**
+		 * Prints warning information on the console.
+		 *
+		 * This usually only differ by style.
+		 *
+		 * @param input Text to print.
+		 */
+		template <typename T>
+		static void warn(const T& input) {
+			std::cout << "Warn: " << input << std::endl;
+		}
+
+		/**
+		 * Prints information on the console.
+		 *
+		 * This usually only differ by style.
+		 *
+		 * @param input Text to print.
+		 */
+		template <typename T>
+		static void info(const T& input) {
+			std::cout << "Info: " << input << std::endl;
+		}
+
+		/**
+		 * Prints error information on the console.
+		 *
+		 * This usually only differ by style.
+		 *
+		 * @param input Text to print.
+		 */
+		template <typename T>
+		static void error(const T& input) {
+			std::cerr << "Error: " << input << std::endl;
+		}
+
 		/**
 		 * Used by the macro to print text with file and line number information.
 		 *
@@ -45,6 +85,7 @@ namespace RedBox {
 		 * @param text Text to print.
 		 */
 		static void _print(std::string file, int line, std::string text);
+
 		/**
 		 * Used by the macro to print variable name and value with file and line number information.
 		 *
@@ -55,10 +96,12 @@ namespace RedBox {
 		 */
 		static void _log(std::string file, int line, std::string varname,
 						 std::string value);
+
 		/**
 		 * Prints the stack trace from caller's point of view.
 		 */
 		static void printTrace(int max = 63);
+
 		/**
 		 * Prints formatted as printf would.
 		 *
@@ -66,6 +109,7 @@ namespace RedBox {
 		 * @param ... Things as parameters.
 		 */
 		static void printf(std::string formatString, ...);
+
 		/**
 		 * Used by the macro to print formatted text with file and line number information.
 		 *
@@ -75,30 +119,7 @@ namespace RedBox {
 		 * @param ... Things as parameters.
 		 */
 		static void _printf(std::string file, int line, std::string formatString, ...);
-		/**
-		 * Prints warning information on the console.
-		 *
-		 * This usually only differ by style.
-		 *
-		 * @param text Text to print.
-		 */
-		static void warn(std::string text);
-		/**
-		 * Prints information on the console.
-		 *
-		 * This usually only differ by style.
-		 *
-		 * @param text Text to print.
-		 */
-		static void info(std::string text);
-		/**
-		 * Prints error information on the console.
-		 *
-		 * This usually only differ by style.
-		 *
-		 * @param text Text to print.
-		 */
-		static void error(std::string text);
+
 		/**
 		 * Convert type to string.
 		 */
