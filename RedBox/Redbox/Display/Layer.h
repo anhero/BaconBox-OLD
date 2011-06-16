@@ -115,6 +115,20 @@ namespace RedBox {
 		void setScrollFactor(const Vec2& newScrollFactor);
 
 		/**
+		 * Sets the layer's scroll factor.
+		 * @param newXScrollFactor New horizontal scroll factor. A value higher
+		 * than 1 means the layer will move faster as if it were closer to the
+		 * camera and between 1 and 0 means it will move as if it were far from
+		 * the camera.
+		 * @param newYScrollFactor New vertical scroll factor. A value higher
+		 * than 1 means the layer will move faster as if it were closer to the
+		 * camera and between 1 and 0 means it will move as if it were far from
+		 * the camera.
+		 * @see RedBox::Layer::scrollFactor
+		 */
+		void setScrollFactor(float newXScrollFactor, float newYScrollFactor);
+
+		/**
 		 * Gets the layer's horizontal scroll factor.
 		 * @return Horizontal scroll factor. A value higher than 1 means the
 		 * layer will move faster as if it were closer to the camera, between 1

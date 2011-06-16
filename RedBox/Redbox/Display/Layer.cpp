@@ -49,6 +49,10 @@ void Layer::setScrollFactor(const Vec2& newScrollFactor) {
 	scrollFactor = newScrollFactor;
 }
 
+void Layer::setScrollFactor(float newXScrollFactor, float newYScrollFactor) {
+	scrollFactor.setXY(newXScrollFactor, newYScrollFactor);
+}
+
 float Layer::getXScrollFactor() const {
 	return scrollFactor.getX();
 }

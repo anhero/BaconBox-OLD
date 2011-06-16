@@ -76,6 +76,11 @@ void GraphicBody::setScrollFactor(const Vec2& newScrollFactor) {
 	layer.setScrollFactor(newScrollFactor);
 }
 
+void GraphicBody::setScrollFactor(float newXScrollFactor,
+								  float newYScrollFactor) {
+	layer.setScrollFactor(newXScrollFactor, newYScrollFactor);
+}
+
 float GraphicBody::getXScrollFactor() const {
 	return layer.getXScrollFactor();
 }
