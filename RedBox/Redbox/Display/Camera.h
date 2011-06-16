@@ -238,30 +238,96 @@ namespace RedBox{
 		 * given parameter.
 		 * @see RedBox::Camera::position
 		 */
-		Vec2 screenToWorld(const Vec2& positionOnScreen);
+		Vec2 screenToWorld(const Vec2& positionOnScreen) const;
+
+		/**
+		 * Converts screen coordinates to world coordinates.
+		 * @param x Horizontal position relative to the camera's position to
+		 * convert to world coordinates.
+		 * @param y Vertical position relative to the camera's position to
+		 * convert to world coordinates.
+		 * @return 2D vector containing the world coordinates equivalent to the
+		 * given parameters.
+		 * @see RedBox::Camera::position
+		 */
+		Vec2 screenToWorld(float x, float y) const;
+
+		/**
+		 * Converts an horizontal screen coordinate to world coordinate.
+		 * @param x Horizontal position relative to the camera's position to
+		 * convert to world coordinates.
+		 * @return Horizontal world coordinate equivalent to the given screen
+		 * coordinate.
+		 */
+		float screenToWorldX(float x) const;
+
+		/**
+		 * Converts a vertical screen coordinate to world coordinate.
+		 * @param y Vertical position relative to the camera's position to
+		 * convert to world coordinates.
+		 * @return Vertical world coordinate equivalent to the given screen
+		 * coordinate.
+		 */
+		float screenToWorldY(float y) const;
 
 		/**
 		 * Converts world coordinates to screen coordinates.
 		 * @param positionInWorld Absolute position unrelated to the camera's
 		 * position that needs to be converted into a position relative to the
-		 * camera's position..
+		 * camera's position.
 		 * @return 2D vector containing the screen coordinates equivalent to the
 		 * given parameter.
 		 * @see RedBox::Camera::position
 		 */
-		Vec2 worldToScreen(const Vec2& positionInWorld);
+		Vec2 worldToScreen(const Vec2& positionInWorld) const;
+
+		/**
+		 * Converts world coordinates to screen coordinates.
+		 * @param x Absolute horizontal position unrelated to the camera's
+		 * position that needs to be converted into a position relative to the
+		 * camera's position.
+		 * @param y Absolute vertical position unrelated to the camera's
+		 * position that needs to be converted into a position relative to the
+		 * camera's position.
+		 * @return 2D vector containing the screen coordinates equivalent to the
+		 * given parameter.
+		 * @see RedBox::Camera::position
+		 */
+		Vec2 worldToScreen(float x, float y) const;
+
+		/**
+		 * Converts an horizontal world coordinate to a screen coordinate.
+		 * @param x Absolute horizontal position unrelated to the camera's
+		 * position that needs to be converted into a position relative to the
+		 * camera's position.
+		 * @return Horizontal screen coordinate equivalent to the given world
+		 * coordinate.
+		 * @see RedBox::Camera::position
+		 */
+		float worldToScreenX(float x) const;
+
+		/**
+		 * Converts a vertical world coordinate to a screen coordinate.
+		 * @param y Absolute vertical position unrelated to the camera's
+		 * position that needs to be converted into a position relative to the
+		 * camera's position.
+		 * @return Vertical screen coordinate equivalent to the given world
+		 * coordinate.
+		 * @see RedBox::Camera::position
+		 */
+		float worldToScreenY(float y) const;
 
 		/**
 		 * Gets the camera's width (not considering the zoom factor).
 		 * @return Camera's width.
 		 */
-		int getWidth() const;
+		unsigned int getWidth() const;
 
 		/**
 		 * Gets the camera's height (not considering the zoom factor).
 		 * @return Camera's height.
 		 */
-		int getHeight() const;
+		unsigned int getHeight() const;
 
 	private:
 		/// Camera's position.
