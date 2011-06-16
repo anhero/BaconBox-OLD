@@ -77,7 +77,7 @@ void GraphicBody::setScrollFactor(const Vec2& newScrollFactor) {
 }
 
 void GraphicBody::setScrollFactor(float newXScrollFactor,
-								  float newYScrollFactor) {
+                                  float newYScrollFactor) {
 	layer.setScrollFactor(newXScrollFactor, newYScrollFactor);
 }
 
@@ -463,33 +463,27 @@ bool GraphicBody::horizLineCollide(GraphicBody* aGraphicBody, float linePosition
 		float delta = aGraphicBody->getYPosition() - aGraphicBody->getOldYPosition();
 		float tmpHeight = aGraphicBody->getHeight();
 
-		// We check if the body is between the higher and the lower boundaries.
-		if(aGraphicBody->getXPosition() < higherXBoundary &&
-		   aGraphicBody->getXPosition() + aGraphicBody->getWidth() > lowerXBoundary) {
-			if(delta > 0.0f &&
-					aGraphicBody->getOldYPosition() + tmpHeight < linePosition &&
-					aGraphicBody->getYPosition() + tmpHeight >= linePosition) {
-				if(aGraphicBody->getYAcceleration() > 0 &&
-						aGraphicBody->getYVelocity() > 0 &&
-						aGraphicBody->getElasticity() <= 0.0f) {
-				}
-				// Collision while going down.
+		// We check if the body overlaps with the horizontal line.
+		if(aGraphicBody->getAABB().horizLineOverlaps(linePosition, lowerXBoundary, higherXBoundary)) {
+			// If the body is going down.
+			if(delta > 0.0f) {
+				// We put the body's bottom at the line's position.
 				aGraphicBody->setYPosition(linePosition - tmpHeight);
-
-				aGraphicBody->setYVelocity(-aGraphicBody->getYVelocity() * aGraphicBody->getElasticity());
-
-				result = true;
-			} else if(delta < 0.0f &&
-					  aGraphicBody->getOldYPosition() > linePosition &&
-					  aGraphicBody->getYPosition() <= linePosition) {
-				// Collision while going up.
+				// If the body is going up.
+			} else if(delta < 0.0f) {
+				// We put the body's top at the line's position.
 				aGraphicBody->setYPosition(linePosition);
-
-				aGraphicBody->setYVelocity(-aGraphicBody->getYVelocity() * aGraphicBody->getElasticity());
-
-				result = true;
+			} else if(aGraphicBody->getYPosition() + tmpHeight * 0.5f < linePosition) {
+				aGraphicBody->setYPosition(linePosition - tmpHeight);
+			} else {
+				aGraphicBody->setYPosition(linePosition);
 			}
+
+			aGraphicBody->setYVelocity(-aGraphicBody->getYVelocity() * aGraphicBody->getElasticity());
+
+			result = true;
 		}
+
 	}
 
 	return result;
@@ -501,29 +495,28 @@ bool GraphicBody::vertLineCollide(GraphicBody* aGraphicBody, float linePosition,
 
 	// We make sure the given graphic body is valid.
 	if(aGraphicBody && !aGraphicBody->isStaticBody()) {
-		float delta = aGraphicBody->getXPosition() - aGraphicBody->getOldXPosition();
+		float delta = aGraphicBody->getYPosition() - aGraphicBody->getOldYPosition();
 		float tmpWidth = aGraphicBody->getWidth();
 
-		// We check if the body is between the higher and lower boundaries.
-		if(aGraphicBody->getYPosition() < higherYBoundary &&
-				aGraphicBody->getYPosition() + aGraphicBody->getHeight() > lowerYBoundary) {
-			if(delta > 0.0f &&
-			        aGraphicBody->getOldXPosition() + tmpWidth < linePosition &&
-			        aGraphicBody->getXPosition() + tmpWidth >= linePosition) {
-				// Collision while going to the right.
+		// We check if the body overlaps with the horizontal line.
+		if(aGraphicBody->getAABB().vertLineOverlaps(linePosition, lowerYBoundary, higherYBoundary)) {
+			// If the body is going down.
+			if(delta > 0.0f) {
+				// We put the body's bottom at the line's position.
 				aGraphicBody->setXPosition(linePosition - tmpWidth);
-
-				aGraphicBody->setXVelocity(-aGraphicBody->getXVelocity() * aGraphicBody->getElasticity());
-				result = true;
-			} else if(delta < 0.0f &&
-			          aGraphicBody->getOldXPosition() > linePosition &&
-			          aGraphicBody->getXPosition() <= linePosition) {
-				// Collision while going to the left.
+				// If the body is going up.
+			} else if(delta < 0.0f) {
+				// We put the body's top at the line's position.
 				aGraphicBody->setXPosition(linePosition);
-
-				aGraphicBody->setXVelocity(-aGraphicBody->getXVelocity() * aGraphicBody->getElasticity());
-				result = true;
+			} else if(aGraphicBody->getXPosition() + tmpWidth * 0.5f < linePosition) {
+				aGraphicBody->setXPosition(linePosition - tmpWidth);
+			} else {
+				aGraphicBody->setXPosition(linePosition);
 			}
+
+			aGraphicBody->setXVelocity(-aGraphicBody->getXVelocity() * aGraphicBody->getElasticity());
+
+			result = true;
 		}
 
 	}
@@ -643,13 +636,13 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 		// position.
 		AABB obj1AABB(object1->getXPosition(),
 		              object1->getXPosition() + object1->getWidth(),
-					  object1->getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)),
-					  object1->getYPosition() + tmpHeight1 + obj1DeltaAbs);
+		              object1->getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)),
+		              object1->getYPosition() + tmpHeight1 + obj1DeltaAbs);
 
 		AABB obj2AABB(object2->getXPosition(),
 		              object2->getXPosition() + object2->getWidth(),
-					  object2->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)),
-					  object2->getYPosition() + tmpHeight2 + obj2DeltaAbs);
+		              object2->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)),
+		              object2->getYPosition() + tmpHeight2 + obj2DeltaAbs);
 
 
 		// We check if the objects are colliding.
