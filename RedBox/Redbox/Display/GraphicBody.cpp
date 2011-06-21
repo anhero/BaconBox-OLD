@@ -6,6 +6,8 @@
 
 #include <algorithm>
 
+#include "Random.h"
+
 #define RB_OVERLAP_BIAS 4.0f
 
 using namespace RedBox;
@@ -495,7 +497,7 @@ bool GraphicBody::vertLineCollide(GraphicBody* aGraphicBody, float linePosition,
 
 	// We make sure the given graphic body is valid.
 	if(aGraphicBody && !aGraphicBody->isStaticBody()) {
-		float delta = aGraphicBody->getYPosition() - aGraphicBody->getOldYPosition();
+		float delta = aGraphicBody->getXPosition() - aGraphicBody->getOldXPosition();
 		float tmpWidth = aGraphicBody->getWidth();
 
 		// We check if the body overlaps with the horizontal line.
@@ -508,7 +510,7 @@ bool GraphicBody::vertLineCollide(GraphicBody* aGraphicBody, float linePosition,
 			} else if(delta < 0.0f) {
 				// We put the body's top at the line's position.
 				aGraphicBody->setXPosition(linePosition);
-			} else if(aGraphicBody->getOldXPosition() + tmpWidth * 0.5f < linePosition) {
+			} else if(aGraphicBody->getXPosition() + tmpWidth * 0.5f < linePosition) {
 				aGraphicBody->setXPosition(linePosition - tmpWidth);
 			} else {
 				aGraphicBody->setXPosition(linePosition);
