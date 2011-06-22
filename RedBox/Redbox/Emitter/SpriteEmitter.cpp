@@ -102,6 +102,9 @@ void SpriteEmitter::startParticle(Sprite*& graphicBody) {
 		shootVec.setLength(force + Random::getRandomFloat(0.0f, forceVariance));
 		shootVec.rotate(angle + Random::getRandomFloat(-angleVariance, angleVariance));
 		graphicBody->setVelocity(shootVec);
+		graphicBody->setMainColor(defaultSprite->getMainColor());
+		graphicBody->setAngle(defaultSprite->getAngle());
+		graphicBody->setScaling(graphicBody->getScaling());
 	}
 }
 

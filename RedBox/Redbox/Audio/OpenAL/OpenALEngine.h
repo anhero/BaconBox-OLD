@@ -32,6 +32,20 @@ namespace RedBox {
 		friend class AudioEngine;
 	public:
 		/**
+		 * Converts the RedBox volume to its OpenAL equivalent.
+		 * @param openALVolume OpenAL volume to convert.
+		 * @return RedBox volume equivalent to the OpenAL volume given.
+		 */
+		static int openALToRedBoxVolume(float openALVolume);
+
+		/**
+		 * Converts the OpenAL volume to its RedBox equivalent.
+		 * @param redBoxVolume RedBox volume to convert.
+		 * @return OpenAL volume equivalent to the RedBox volume given.
+		 */
+		static float redBoxToOpenALVolume(int redBoxVolume);
+
+		/**
 		 * Sets the default device to use for audio output. Must be called
 		 * before initializing the engine.
 		 * @param newDevice Name of the device to set as the default device.

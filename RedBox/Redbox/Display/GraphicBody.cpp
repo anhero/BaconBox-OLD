@@ -4,6 +4,10 @@
 #include <cfloat>
 #include <cmath>
 
+#include <algorithm>
+
+#include "Random.h"
+
 #define RB_OVERLAP_BIAS 4.0f
 
 using namespace RedBox;
@@ -72,6 +76,11 @@ const Vec2& GraphicBody::getScrollFactor() const {
 
 void GraphicBody::setScrollFactor(const Vec2& newScrollFactor) {
 	layer.setScrollFactor(newScrollFactor);
+}
+
+void GraphicBody::setScrollFactor(float newXScrollFactor,
+                                  float newYScrollFactor) {
+	layer.setScrollFactor(newXScrollFactor, newYScrollFactor);
 }
 
 float GraphicBody::getXScrollFactor() const {
@@ -449,68 +458,72 @@ std::pair<bool, std::list<CollisionData> > GraphicBody::collide(std::list<Graphi
 }
 
 bool GraphicBody::horizLineCollide(GraphicBody* aGraphicBody, float linePosition, float lowerXBoundary, float higherXBoundary) {
-	bool colliding = false;
+	bool result = false;
 
-	float delta = aGraphicBody->getYPosition() - aGraphicBody->getOldYPosition();
+	// We make sure the given graphic body is valid.
+	if(aGraphicBody && !aGraphicBody->isStaticBody()) {
+		float delta = aGraphicBody->getYPosition() - aGraphicBody->getOldYPosition();
+		float tmpHeight = aGraphicBody->getHeight();
 
-	float deltaABS = fabsf(delta);
-	float overlap = 0.0f;
+		// We check if the body overlaps with the horizontal line.
+		if(aGraphicBody->getAABB().horizLineOverlaps(linePosition, lowerXBoundary, higherXBoundary)) {
+			// If the body is going down.
+			if(delta > 0.0f) {
+				// We put the body's bottom at the line's position.
+				aGraphicBody->setYPosition(linePosition - tmpHeight);
+				// If the body is going up.
+			} else if(delta < 0.0f) {
+				// We put the body's top at the line's position.
+				aGraphicBody->setYPosition(linePosition);
+			} else if(aGraphicBody->getYPosition() + tmpHeight * 0.5f < linePosition) {
+				aGraphicBody->setYPosition(linePosition - tmpHeight);
+			} else {
+				aGraphicBody->setYPosition(linePosition);
+			}
 
-	AABB rect(aGraphicBody->getOldXPosition(),
-	          aGraphicBody->getOldXPosition() + aGraphicBody->getWidth(),
-	          aGraphicBody->getYPosition() - ((delta > 0.0f) ? (delta) : (0.0f)),
-	          aGraphicBody->getYPosition() + aGraphicBody->getHeight() + deltaABS);
+			aGraphicBody->setYVelocity(-aGraphicBody->getYVelocity() * aGraphicBody->getElasticity());
 
-
-	if(rect.horizLineOverlaps(linePosition, lowerXBoundary, higherXBoundary)) {
-		if(delta > 0.0f) {
-			overlap = aGraphicBody->getYPosition() + aGraphicBody->getHeight() - linePosition;
-		} else if(delta < 0.0f) {
-			overlap = aGraphicBody->getYPosition() - linePosition;
-
+			result = true;
 		}
 
-		if(overlap) {
-			float objv = aGraphicBody->getVelocity().getY();
-			aGraphicBody->moveY(-overlap);
-			aGraphicBody->setYVelocity(-(objv * aGraphicBody->getElasticity()));
-			colliding = true;
-		}
 	}
 
-	return colliding;
+	return result;
 }
 
-bool GraphicBody::vertLineCollide(GraphicBody* aGraphicBody, float linePosition, float lowerYBoundary, float higherYBoundary) {
-	bool colliding = false;
-	float delta = aGraphicBody->getXPosition() - aGraphicBody->getOldXPosition();
+bool GraphicBody::vertLineCollide(GraphicBody* aGraphicBody, float linePosition,
+                                  float lowerYBoundary, float higherYBoundary) {
+	bool result = false;
 
-	float deltaABS = fabsf(delta);
-	float overlap = 0.0f;
+	// We make sure the given graphic body is valid.
+	if(aGraphicBody && !aGraphicBody->isStaticBody()) {
+		float delta = aGraphicBody->getXPosition() - aGraphicBody->getOldXPosition();
+		float tmpWidth = aGraphicBody->getWidth();
 
-	AABB rect(aGraphicBody->getXPosition() - ((delta > 0.0f) ? (delta) : (0.0f)),
-	          aGraphicBody->getXPosition() + aGraphicBody->getWidth() + deltaABS,
-	          aGraphicBody->getOldYPosition(),
-	          aGraphicBody->getOldYPosition() + aGraphicBody->getHeight());
+		// We check if the body overlaps with the horizontal line.
+		if(aGraphicBody->getAABB().vertLineOverlaps(linePosition, lowerYBoundary, higherYBoundary)) {
+			// If the body is going down.
+			if(delta > 0.0f) {
+				// We put the body's bottom at the line's position.
+				aGraphicBody->setXPosition(linePosition - tmpWidth);
+				// If the body is going up.
+			} else if(delta < 0.0f) {
+				// We put the body's top at the line's position.
+				aGraphicBody->setXPosition(linePosition);
+			} else if(aGraphicBody->getXPosition() + tmpWidth * 0.5f < linePosition) {
+				aGraphicBody->setXPosition(linePosition - tmpWidth);
+			} else {
+				aGraphicBody->setXPosition(linePosition);
+			}
 
+			aGraphicBody->setXVelocity(-aGraphicBody->getXVelocity() * aGraphicBody->getElasticity());
 
-	if(rect.vertLineOverlaps(linePosition, lowerYBoundary, higherYBoundary)) {
-		if(delta > 0.0f) {
-			overlap = aGraphicBody->getXPosition() + aGraphicBody->getWidth() - linePosition;
-		} else if(delta < 0.0f) {
-			overlap = aGraphicBody->getXPosition() - linePosition;
-
+			result = true;
 		}
 
-		if(overlap) {
-			float objv = aGraphicBody->getVelocity().getX();
-			aGraphicBody->moveX(-overlap);
-			aGraphicBody->setXVelocity(-(objv * aGraphicBody->getElasticity()));
-			colliding = true;
-		}
 	}
 
-	return colliding;
+	return result;
 }
 
 bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, CollisionData* collisionInfo) {
@@ -587,20 +600,11 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 			object1->setXVelocity(average + (obj2v - average) * object1->getElasticity());
 			object2->setXVelocity(average + (obj1v - average) * object2->getElasticity());
 		} else if(!object1->isStaticBody()) {
-			if(collisionInfo->sideObj1 & Side::RIGHT) {
-				object1->setXPosition(object2->getXPosition() - tmpWidth1 + overlap * object1->getElasticity());
-			} else {
-				object1->setXPosition(object2->getXPosition() + tmpWidth2 + overlap * object1->getElasticity());
-			}
-
+			object1->moveX(-overlap);
 			object1->setXVelocity(obj2v - (obj1v * object1->getElasticity()));
 
 		} else if(!object2->isStaticBody()) {
-			if(collisionInfo->sideObj2 & Side::RIGHT) {
-				object2->setXPosition(object1->getXPosition() - tmpWidth2 - overlap * object2->getElasticity());
-			} else {
-				object2->setXPosition(object1->getXPosition() + tmpWidth1 - overlap * object2->getElasticity());
-			}
+			object2->moveX(overlap);
 
 			object2->setXVelocity(obj1v - (obj2v * object2->getElasticity()));
 		}
@@ -689,13 +693,9 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 			object2->setYVelocity(average + (obj1v - average) * object2->getElasticity());
 
 		} else if(!object1->isStaticBody()) {
-			if(collisionInfo->sideObj1 & Side::BOTTOM) {
-				object1->setYPosition(object2->getYPosition() - tmpHeight1 + overlap * object1->getElasticity());
-			} else {
-				object1->setYPosition(object2->getYPosition() + tmpHeight2 + overlap * object1->getElasticity());
-			}
+			object1->moveY(-overlap);
 
-			object1->setYVelocity(obj2v - (obj1v * object1->getElasticity()));
+			object1->setYVelocity(obj2v - obj1v * object1->getElasticity());
 
 			//Handle horizontal moving static object EX. moving platform
 			if(obj1Delta > obj2Delta) {
@@ -703,18 +703,13 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 			}
 
 		} else if(!object2->isStaticBody()) {
-			if(collisionInfo->sideObj2 & Side::BOTTOM) {
-				object2->setYPosition(object1->getYPosition() - tmpHeight2 - overlap * object2->getElasticity());
-			} else {
-				object2->setYPosition(object1->getYPosition() + tmpHeight1 - overlap * object2->getElasticity());
-			}
+			object2->moveY(overlap);
 
-			object2->setYVelocity(obj1v - (obj2v * object2->getElasticity()));
+			object2->setYVelocity(obj1v - obj2v * object2->getElasticity());
 
 			// Handle horizontal moving static object EX. moving platform
 			if(obj1Delta < obj2Delta) {
 				object2->setXPosition(object2->getXPosition() + object1->getXPosition() - object1->getOldXPosition());
-
 			}
 		}
 

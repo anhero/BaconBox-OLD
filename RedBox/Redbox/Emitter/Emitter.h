@@ -104,37 +104,43 @@ namespace RedBox {
 
 					switch(i->state) {
 					case ParticleState::BIRTH:
-						i->alphaCounter += Engine::getSinceLastUpdate() * birthPhase.alphaPerSecond;
+						i->alphaCounter += Engine::getSinceLastUpdate() * i->alphaPerSecond;
 						updateAlpha(static_cast<int16_t>(floorf(i->alphaCounter)), i->graphicBody);
 						i->alphaCounter = fmodf(i->alphaCounter, 1.0f);
-						updateScaling(birthPhase.scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
-						updateRotation(birthPhase.anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
+						updateScaling(i->scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
+						updateRotation(i->anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
 
 						if(i->timeLeft <= 0.0) {
 							i->state = ParticleState::LIFE;
 							i->timeLeft = lifePhase.phaseDuration + Random::getRandomDouble(0.0, lifePhase.phaseDurationVariance);
+							i->alphaPerSecond = lifePhase.alphaPerSecond + Random::getRandomFloat(0.0f, lifePhase.alphaPerSecondVariance);
+							i->scalingPerSecond = lifePhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getY()));
+							i->anglePerSecond = lifePhase.anglePerSecond + Random::getRandomFloat(0.0f, lifePhase.anglePerSecondVariance);
 						}
 
 						break;
 					case ParticleState::LIFE:
-						i->alphaCounter += Engine::getSinceLastUpdate() * lifePhase.alphaPerSecond;
+						i->alphaCounter += Engine::getSinceLastUpdate() * i->alphaPerSecond;
 						updateAlpha(static_cast<int16_t>(floorf(i->alphaCounter)), i->graphicBody);
 						i->alphaCounter = fmodf(i->alphaCounter, 1.0f);
-						updateScaling(lifePhase.scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
-						updateRotation(lifePhase.anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
+						updateScaling(i->scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
+						updateRotation(i->anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
 
 						if(i->timeLeft <= 0.0) {
 							i->state = ParticleState::DYING;
 							i->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
+							i->alphaPerSecond = dyingPhase.alphaPerSecond + Random::getRandomFloat(0.0f, dyingPhase.alphaPerSecondVariance);
+							i->scalingPerSecond = dyingPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
+							i->anglePerSecond = dyingPhase.anglePerSecond + Random::getRandomFloat(0.0f, dyingPhase.anglePerSecondVariance);
 						}
 
 						break;
 					case ParticleState::DYING:
-						i->alphaCounter += Engine::getSinceLastUpdate() * dyingPhase.alphaPerSecond;
+						i->alphaCounter += Engine::getSinceLastUpdate() * i->alphaPerSecond;
 						updateAlpha(static_cast<int16_t>(floorf(i->alphaCounter)), i->graphicBody);
 						i->alphaCounter = fmodf(i->alphaCounter, 1.0f);
-						updateScaling(dyingPhase.scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
-						updateRotation(dyingPhase.anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
+						updateScaling(i->scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
+						updateRotation(i->anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
 
 						if(i->timeLeft <= 0.0) {
 							i->state = ParticleState::DEAD;
@@ -257,7 +263,10 @@ namespace RedBox {
 			/**
 			 * Default constructor.
 			 */
-			Particle(): graphicBody(NULL), timeLeft(0.0), state(ParticleState::DEAD) {
+			Particle(): graphicBody(NULL), timeLeft(0.0),
+				state(ParticleState::DEAD), alphaCounter(0.0f),
+				alphaPerSecond(0.0f), scalingPerSecond(Vec2()),
+				anglePerSecond(0.0f) {
 			}
 			/**
 			 * Parameterized constructor.
@@ -267,9 +276,10 @@ namespace RedBox {
 			 * @see RedBox::ParticleState::Enum
 			 */
 			Particle(T* newGraphicBody, double newTimeLeft,
-			         ParticleState::Enum newState):
+			         ParticleState::Enum newState) :
 				graphicBody(newGraphicBody), timeLeft(newTimeLeft),
-				state(newState), alphaCounter(0.0f) {
+				state(newState), alphaCounter(0.0f), alphaPerSecond(0.0f),
+				scalingPerSecond(Vec2()), anglePerSecond(0.0f) {
 			}
 
 			/**
@@ -277,7 +287,10 @@ namespace RedBox {
 			 * @param src Particle to make a copy of.
 			 */
 			Particle(const Particle& src) : graphicBody(NULL),
-				timeLeft(src.timeLeft), state(src.state), alphaCounter(0.0f) {
+				timeLeft(src.timeLeft), state(src.state), alphaCounter(0.0f),
+				alphaPerSecond(src.alphaPerSecond),
+				scalingPerSecond(src.scalingPerSecond),
+				anglePerSecond(src.anglePerSecond) {
 				if(src.graphicBody) {
 					graphicBody = new T(*src.graphicBody);
 				}
@@ -310,6 +323,15 @@ namespace RedBox {
 
 			/// Counter used for the fading in and out.
 			float alphaCounter;
+
+			/// Alpha per second.
+			float alphaPerSecond;
+
+			/// Horizontal and vertical scaling per second.
+			Vec2 scalingPerSecond;
+
+			/// Rotation angle per second.
+			float anglePerSecond;
 		private:
 			/**
 			 * Frees up all the memory used by the GraphicBody.
@@ -395,6 +417,9 @@ namespace RedBox {
 				startParticle(deadParticle->graphicBody);
 				deadParticle->timeLeft = birthPhase.phaseDuration + Random::getRandomDouble(0.0, birthPhase.phaseDurationVariance);
 				deadParticle->state = ParticleState::BIRTH;
+				deadParticle->alphaPerSecond = birthPhase.alphaPerSecond + Random::getRandomFloat(0.0f, birthPhase.alphaPerSecondVariance);
+				deadParticle->scalingPerSecond = birthPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getY()));
+				deadParticle->anglePerSecond = birthPhase.anglePerSecond + Random::getRandomFloat(0.0f, birthPhase.anglePerSecondVariance);
 				++nbParticles;
 				return true;
 			} else {

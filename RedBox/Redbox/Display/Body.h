@@ -6,6 +6,7 @@
 #define RB_BODY_H
 
 #include "Object.h"
+#include "Vec2.h"
 
 namespace RedBox {
 	/**

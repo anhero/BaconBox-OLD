@@ -26,6 +26,26 @@ using namespace RedBox;
 
 OpenALEngine* OpenALEngine::instance = NULL;
 
+int OpenALEngine::openALToRedBoxVolume(float openALVolume) {
+	if(openALVolume < 0.0f) {
+		return Sound::MIN_VOLUME;
+	} else if(openALVolume > 1.0f) {
+		return Sound::MAX_VOLUME;
+	} else {
+		return static_cast<int>(openALVolume * static_cast<float>(Sound::MAX_VOLUME));
+	}
+}
+
+float OpenALEngine::redBoxToOpenALVolume(int redBoxVolume) {
+	if(redBoxVolume < Sound::MIN_VOLUME) {
+		return 0.0f;
+	} else if(redBoxVolume > Sound::MAX_VOLUME) {
+		return 1.0f;
+	} else {
+		return static_cast<float>(redBoxVolume) / static_cast<float>(Sound::MAX_VOLUME);
+	}
+}
+
 void OpenALEngine::setDefaultDevice(const std::string& newDevice) {
 	defaultDevice = newDevice;
 }

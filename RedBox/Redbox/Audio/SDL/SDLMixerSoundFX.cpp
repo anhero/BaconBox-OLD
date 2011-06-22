@@ -2,6 +2,7 @@
 
 #ifdef RB_SDL
 
+#include "SDLMixerEngine.h"
 #include "SDLMixerSoundFX.h"
 
 using namespace RedBox;
@@ -18,6 +19,7 @@ void SDLMixerSoundFX::play(int nbTimes) {
 		looping = nbTimes == LOOPING;
 		nbTimes -= ((looping) ? (0) : (1));
 		channel = Mix_PlayChannel(-1, data, nbTimes);
+		Mix_Volume(channel, SDLMixerEngine::redBoxToSdlVolume(getVolume()));
 	}
 }
 
@@ -44,6 +46,13 @@ void SDLMixerSoundFX::resume() {
 bool SDLMixerSoundFX::isLooping() {
 	// We make sure that the channel is looping AND that it is not paused.
 	return looping && channel && Mix_Playing(channel);
+}
+
+void SDLMixerSoundFX::setVolume(int newVolume) {
+	this->Sound::setVolume(newVolume);
+	if(channel != -1) {
+		Mix_Volume(channel, SDLMixerEngine::redBoxToSdlVolume(getVolume()));
+	}
 }
 
 AudioState::Enum SDLMixerSoundFX::getCurrentState() const {

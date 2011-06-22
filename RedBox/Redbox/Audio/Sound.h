@@ -16,6 +16,12 @@ namespace RedBox {
 	class Sound {
 		friend class AudioEngine;
 	public:
+		/// Minimum volume level.
+		static const int MIN_VOLUME = 0;
+
+		/// Maximum volume level.
+		static const int MAX_VOLUME = 100;
+
 		/**
 		 * Plays the sound a given number of times.
 		 * @param nbTimes Number of times the sound will be played in loop. A
@@ -41,6 +47,23 @@ namespace RedBox {
 		 * @return True if the sound is currently playing infinitely.
 		 */
 		virtual bool isLooping() = 0;
+
+		/**
+		 * Gets the sound's volume.
+		 * @return Sound's current volume level.
+		 * @see RedBox::Sound::volume
+		 */
+		int getVolume() const;
+
+		/**
+		 * Sets the sound's volume level.
+		 * @param newVolume New volume level. If the new volume is out of
+		 * bounds, it will be set to the closest bound (minimum if it's under 0
+		 * or maximum if it's over 100).
+		 * @see RedBox::Sound::volume
+		 */
+		virtual void setVolume(int newVolume);
+
 		/**
 		 * Gets the sound's current state. Used to know if it is at its initial
 		 * state, currently playing, paused, etc.
@@ -59,6 +82,9 @@ namespace RedBox {
 		 * Default constructor. Can only be called by the audio engine.
 		 */
 		Sound();
+	private:
+		/// Value between 0 and 100 for the volume level. 100 is the maximum.
+		int volume;
 	};
 }
 

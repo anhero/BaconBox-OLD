@@ -37,6 +37,20 @@ namespace RedBox {
 		 */
 		static SDLMixerEngine* getInstance();
 
+		/**
+		 * Converts the SDL volume to its RedBox equivalent.
+		 * @param sdlVolume SDL volume to convert.
+		 * @return RedBox volume equivalent to the given SDL volume.
+		 */
+		static int sdlToRedBoxVolume(int sdlVolume);
+
+		/**
+		 * Converts the RedBox volume to its SDL equivalent.
+		 * @param redBoxVolume RedBox volume to convert.
+		 * @return SDL volume equivalent to the given RedBox volume.
+		 */
+		static int redBoxToSdlVolume(int redBoxVolume);
+
 		/// Signal when pause/resume fading needs updating for a music.
 		sigly::Signal1<unsigned int> fadeUpdate;
 

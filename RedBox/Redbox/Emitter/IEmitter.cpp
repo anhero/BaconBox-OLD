@@ -5,8 +5,9 @@ using namespace RedBox;
 IEmitter::IEmitter(): GraphicBody(), nbParticles(0), nbParticlesToShoot(-1),
 lifeSpan(-1.0), elapsedTime(0.0), started(false), angle(0.0f),
 angleVariance(360.0f), force(200.0f), forceVariance(25.0f), emitRate(5.0),
-emitCounter(0.0), birthPhase(ParticlePhase(0.25, 0.0, 1000)),
-lifePhase(ParticlePhase(0.25, 0.1)), dyingPhase(ParticlePhase(0.5, 0.0, -1000)),
+emitCounter(0.0), birthPhase(ParticlePhase(0.25, 0.0, 1000.0f)),
+lifePhase(ParticlePhase(0.25, 0.1)),
+dyingPhase(ParticlePhase(0.5, 0.0, -1000.0f)),
 dieOnDeactivate(false) {
 }
 IEmitter::IEmitter(const IEmitter& src): GraphicBody(src),

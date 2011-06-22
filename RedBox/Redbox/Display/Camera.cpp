@@ -71,6 +71,10 @@ float Camera::getYPosition() const {
 	return position.getY();
 }
 
+void Camera::setYPosition(float newYPosition) {
+	position.setY(newYPosition);
+}
+
 void Camera::moveY(float y) {
 	position.addToY(y);
 }
@@ -107,7 +111,10 @@ float Camera::getZoomFactor() const {
 }
 
 void Camera::setZoomFactor(float newZoomFactor) {
+	unsigned int tmpWidth = getWidth(), tmpHeight = getHeight();
 	zoomFactor = newZoomFactor;
+	setXPosition(getXPosition() + static_cast<float>(tmpWidth - getWidth()) * 0.5f);
+	setYPosition(getYPosition() + static_cast<float>(tmpHeight - getHeight()) * 0.5f);
 }
 
 void Camera::zoom(float factor) {
@@ -128,20 +135,52 @@ void Camera::shake(float intensity, double duration, bool forceReset,
 	}
 }
 
-Vec2 Camera::screenToWorld(const Vec2& positionOnScreen) {
+Vec2 Camera::screenToWorld(const Vec2& positionOnScreen) const {
 	return positionOnScreen * (1.0f / zoomFactor) + position;
 }
 
-Vec2 Camera::worldToScreen(const Vec2& positionInWorld) {
+Vec2 Camera::screenToWorld(float x, float y) const {
+	return Vec2(x, y) * (1.0f / zoomFactor) + position;
+}
+
+float Camera::screenToWorldX(float x) const {
+	return x * (1.0f / zoomFactor) + position.getX();
+}
+
+float Camera::screenToWorldY(float y) const {
+	return y * (1.0f / zoomFactor) + position.getY();
+}
+
+Vec2 Camera::worldToScreen(const Vec2& positionInWorld) const {
 	return (positionInWorld - position) * (1.0f / zoomFactor);
 }
 
-int Camera::getWidth() const {
-	return Engine::getScreenWidth();
+Vec2 Camera::worldToScreen(float x, float y) const {
+	return (Vec2(x, y) - position) * (1.0f / zoomFactor);
 }
 
-int Camera::getHeight() const {
-	return Engine::getScreenHeight();
+float Camera::worldToScreenX(float x) const {
+	return (x - position.getX()) * (1.0f / zoomFactor);
+}
+
+float Camera::worldToScreenY(float y) const {
+	return (y - position.getY()) * (1.0f / zoomFactor);
+}
+
+unsigned int Camera::getWidth() const {
+	if(zoomFactor != 0.0f) {
+		return static_cast<unsigned int>(static_cast<float>(Engine::getScreenWidth()) / fabsf(zoomFactor));
+	} else {
+		return 0;
+	}
+}
+
+unsigned int Camera::getHeight() const {
+	if(zoomFactor != 0.0f) {
+		return static_cast<unsigned int>(static_cast<float>(Engine::getScreenHeight()) / fabsf(zoomFactor));
+	} else {
+		return 0;
+	}
 }
 
 void Camera::update() {

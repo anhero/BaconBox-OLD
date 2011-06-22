@@ -159,6 +159,8 @@ namespace RedBox {
 		 */
 		void setYPosition(float y);
 
+		using GraphicBody::setPosition;
+
 		/**
 		 * Sets the sprite's horizontal and vertical position.
 		 * @param x New horizontal position (in pixels). Lower value means more
@@ -301,6 +303,8 @@ namespace RedBox {
 						  double timePerFrame,
 						  int nbLoops,
 						  unsigned int nbFrames, ... );
+
+		using GraphicBody::setScaling;
 
 		/**
 		 * Change the sprite's scaling.
