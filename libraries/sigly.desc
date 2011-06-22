@@ -3,12 +3,12 @@
 _name="sigly"
 _license="MIT" 
 
-_version="7d996592f52e"
-_archive="${_version}.tar.gz"
-_archive_url="http://bitbucket.org/anhero/${_name}/get/${_archive}"
+_version="0.1"
+_archive="${_name}-${_version}-src.tar.gz"
+_archive_url="http://bitbucket.org/anhero/${_name}/downloads/{$_archive}"
 
 _hash="0c4157a9cf7d300f230d146ba94f0568" #tar.bz2
-_hash="a1468d47d93b1551656a042ac3894fee" #tar.gz
+_hash="883f632001de9d06771ea80648daf412" #tar.gz
 
 WGET_FLAGS="--no-check-certificate"
 
