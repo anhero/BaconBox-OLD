@@ -48,6 +48,16 @@ namespace RedBox {
 		 * not).
 		 */
 		bool isLooping();
+
+		/**
+		 * Sets the sound effect's volume level.
+		 * @param newVolume New volume level. If the new volume is out of
+		 * bounds, it will be set to the closest bound (minimum if it's under 0
+		 * or maximum if it's over 100).
+		 * @see RedBox::Sound::volume
+		 */
+		void setVolume(int newVolume);
+
 		/**
 		 * Gets the sound effect's current state. Queries OpenAL for the sound's
 		 * current state.

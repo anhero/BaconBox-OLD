@@ -6,7 +6,7 @@ Body::Body() : Object(), active(true), visible(true), enabled(true) {
 }
 
 Body::Body(const Body& src) : Object(src), active(src.active),
-visible(src.visible), enabled(src.enabled) {
+	visible(src.visible), enabled(src.enabled) {
 }
 
 Body::~Body() {
@@ -14,11 +14,13 @@ Body::~Body() {
 
 Body& Body::operator=(const Body& src) {
 	Object::operator=(src);
+
 	if(this != &src) {
 		active = src.active;
 		visible = src.visible;
 		enabled = src.enabled;
 	}
+
 	return *this;
 }
 

@@ -30,6 +30,26 @@ SDLMixerEngine* SDLMixerEngine::getInstance() {
 	return instance;
 }
 
+int SDLMixerEngine::sdlToRedBoxVolume(int sdlVolume) {
+	if(sdlVolume < 0) {
+		return Sound::MIN_VOLUME;
+	} else if(sdlVolume > MIX_MAX_VOLUME) {
+		return Sound::MAX_VOLUME;
+	} else {
+		return (sdlVolume * Sound::MAX_VOLUME) / MIX_MAX_VOLUME;
+	}
+}
+
+int SDLMixerEngine::redBoxToSdlVolume(int redBoxVolume) {
+	if(redBoxVolume < Sound::MIN_VOLUME) {
+		return 0;
+	} else if(redBoxVolume > Sound::MAX_VOLUME) {
+		return MIX_MAX_VOLUME;
+	} else {
+		return (redBoxVolume * MIX_MAX_VOLUME) / Sound::MAX_VOLUME;
+	}
+}
+
 SoundFX* SDLMixerEngine::getSoundFX(const std::string& key, bool survive) {
 	SDLMixerSoundFX* sdlSound = new SDLMixerSoundFX();
 	SoundFX* result = sdlSound;

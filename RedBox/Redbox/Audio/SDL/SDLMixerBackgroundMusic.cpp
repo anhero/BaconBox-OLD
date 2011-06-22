@@ -32,6 +32,7 @@ void SDLMixerBackgroundMusic::play(int nbTimes) {
 		Mix_HaltMusic();
 
 		if(!Mix_PlayMusic(music, nbTimes)) {
+			Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(getVolume()));
 			currentMusic = this;
 			looping = (nbTimes == -1);
 			neverPlayed = false;
@@ -60,12 +61,23 @@ void SDLMixerBackgroundMusic::pause() {
 void SDLMixerBackgroundMusic::resume() {
 	if(music) {
 		resetPauseResumeFade();
+		Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(getVolume()));
 		Mix_ResumeMusic();
 	}
 }
 
 bool SDLMixerBackgroundMusic::isLooping() {
 	return looping && currentMusic == this && Mix_PlayingMusic();
+}
+
+void SDLMixerBackgroundMusic::setVolume(int newVolume) {
+	this->Sound::setVolume(newVolume);
+	AudioState::Enum currentState = getCurrentState();
+	if(currentState == AudioState::PLAYING ||
+			currentState == AudioState::FADING_IN ||
+			currentState == AudioState::FADING_OUT) {
+		Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(getVolume()));
+	}
 }
 
 AudioState::Enum SDLMixerBackgroundMusic::getCurrentState() const {
@@ -98,6 +110,7 @@ void SDLMixerBackgroundMusic::play(int nbTimes, double fadeIn) {
 		Mix_HaltMusic();
 
 		if(!Mix_FadeInMusic(music, nbTimes, static_cast<int>(fadeIn * 1000.0))) {
+			Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(getVolume()));
 			currentMusic = this;
 			looping = (nbTimes == -1);
 			neverPlayed = false;
@@ -154,7 +167,7 @@ void SDLMixerBackgroundMusic::fadeUpdate(unsigned int ticks) {
 			// If the fading is over.
 			if(ticks - fadeStart > fadeTime) {
 				if(fadeType == FADE_IN) {
-					newVolume = MIX_MAX_VOLUME;
+					newVolume = SDLMixerEngine::redBoxToSdlVolume(getVolume());
 				}
 
 				pauseResumeFading = false;
@@ -163,10 +176,10 @@ void SDLMixerBackgroundMusic::fadeUpdate(unsigned int ticks) {
 			} else {
 				// If we are fading in.
 				if(fadeType == FADE_IN) {
-					newVolume = static_cast<int>(static_cast<double>(ticks - fadeStart) / static_cast<double>(fadeTime) * static_cast<double>(MIX_MAX_VOLUME));
+					newVolume = static_cast<int>(static_cast<double>(ticks - fadeStart) / static_cast<double>(fadeTime) * static_cast<double>(SDLMixerEngine::redBoxToSdlVolume(getVolume())));
 				} else {
 					// If we are fading out.
-					newVolume = MIX_MAX_VOLUME - static_cast<int>(static_cast<double>(ticks - fadeStart) / static_cast<double>(fadeTime) * static_cast<double>(MIX_MAX_VOLUME));
+					newVolume = SDLMixerEngine::redBoxToSdlVolume(getVolume()) - static_cast<int>(static_cast<double>(ticks - fadeStart) / static_cast<double>(fadeTime) * static_cast<double>(SDLMixerEngine::redBoxToSdlVolume(getVolume())));
 				}
 			}
 
@@ -174,7 +187,7 @@ void SDLMixerBackgroundMusic::fadeUpdate(unsigned int ticks) {
 				Mix_VolumeMusic(newVolume);
 			} else {
 				pause();
-				Mix_VolumeMusic(MIX_MAX_VOLUME);
+				Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(getVolume()));
 			}
 		}
 	} else {
@@ -186,7 +199,7 @@ void SDLMixerBackgroundMusic::resetPauseResumeFade() {
 	pauseResumeFading = false;
 	fadeTime = 0;
 	fadeStart = 0;
-	Mix_VolumeMusic(MIX_MAX_VOLUME);
+	Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(getVolume()));
 }
 
 #endif

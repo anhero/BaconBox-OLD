@@ -53,6 +53,16 @@ namespace RedBox {
 		 * @return True if the sound is currently playing infinitely.
 		 */
 		bool isLooping();
+
+		/**
+		 * Sets the sound effect's volume level.
+		 * @param newVolume New volume level. If the new volume is out of
+		 * bounds, it will be set to the closest bound (minimum if it's under 0
+		 * or maximum if it's over 100).
+		 * @see RedBox::Sound::volume
+		 */
+		void setVolume(int newVolume);
+
 		/**
 		 * Gets the sound's current state. Used to know if it is at its initial
 		 * state, currently playing, paused, etc.
@@ -67,16 +77,22 @@ namespace RedBox {
 	private:
 		/// Constant used to signify infinite looping.
 		static const int LOOPING = -1;
+
 		/// Contant used to signify an invalid or automatic sound channel.
 		static const int INVALID_CHANNEL = -1;
+
 		/// Signal sent when a channel is done.
 		static sigly::Signal1<int> haltChannel;
+
 		/// Set to true if the sound effect is currently looping infinitely.
 		bool looping;
+
 		/// Number of the channel the sound is being played on.
 		int channel;
+
 		/// Pointer to the sound's data.
 		Mix_Chunk* data;
+
 		/// Set to false until the sound has played at least once.
 		bool hasPlayed;
 

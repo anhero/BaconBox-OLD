@@ -61,6 +61,16 @@ namespace RedBox {
 		 * @return True if the sound is currently playing infinitely.
 		 */
 		bool isLooping();
+
+		/**
+		 * Sets the music's volume level.
+		 * @param newVolume New volume level. If the new volume is out of
+		 * bounds, it will be set to the closest bound (minimum if it's under 0
+		 * or maximum if it's over 100).
+		 * @see RedBox::Sound::volume
+		 */
+		void setVolume(int newVolume);
+
 		/**
 		 * Gets the sound's current state. Used to know if it is at its initial
 		 * state, currently playing, paused, etc.
@@ -99,17 +109,22 @@ namespace RedBox {
 		 * pause.
 		 */
 		static const bool FADE_OUT = true;
+
 		/**
 		 * Used by the fadeType boolean to mean the music is fading in on
 		 * pause.
 		 */
 		static const bool FADE_IN = false;
+
 		/// Pointer to the current music being played.
 		static SDLMixerBackgroundMusic* currentMusic;
+
 		/// Set to true if the current music is on pause.
 		static bool isBeingPaused;
+
 		/// Pointer to the music to play.
 		Mix_Music* music;
+
 		/// Set to true if the music is infinitely looping.
 		bool looping;
 		/**
@@ -120,13 +135,16 @@ namespace RedBox {
 
 		/// Set to true if the music is currently fading in our out of pause.
 		bool pauseResumeFading;
+
 		/**
 		 * Set to true if it is fading out into pause, or false if it is
 		 * fading in to resume.
 		 */
 		bool fadeType;
+
 		/// Time the pause/resume fading has to take.
 		unsigned int fadeTime;
+
 		/// Time at which the pause/resume fading started.
 		unsigned int fadeStart;
 

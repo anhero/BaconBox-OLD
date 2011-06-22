@@ -21,11 +21,15 @@ void OpenALSoundFX::play(int nbTimes) {
 		} else {
 			nbTimesLeft = nbTimes - 1;
 		}
+
 		ALint state;
 		alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
+
 		if(state != AL_PAUSED) {
 			alSourceRewind(sourceId);
 		}
+
+		alSourcef(sourceId, AL_GAIN, OpenALEngine::redBoxToOpenALVolume(getVolume()));
 		// We start playing the sound.
 		alSourcePlay(sourceId);
 	}
@@ -42,6 +46,7 @@ void OpenALSoundFX::pause() {
 void OpenALSoundFX::resume() {
 	ALint state;
 	alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
+
 	// We only want to resume if the sound was actually paused.
 	if(state == AL_PAUSED) {
 		alSourcePlay(sourceId);
@@ -54,24 +59,31 @@ bool OpenALSoundFX::isLooping() {
 	return static_cast<bool>(looping);
 }
 
+void OpenALSoundFX::setVolume(int newVolume) {
+	this->Sound::setVolume(newVolume);
+	alSourcef(sourceId, AL_GAIN, OpenALEngine::redBoxToOpenALVolume(newVolume));
+}
+
 AudioState::Enum OpenALSoundFX::getCurrentState() const {
 	ALint state;
 	AudioState::Enum result;
 	alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
-	switch (state) {
-		case AL_INITIAL:
-			result = AudioState::INITIAL;
-			break;
-		case AL_PLAYING:
-			result = AudioState::PLAYING;
-			break;
-		case AL_PAUSED:
-			result = AudioState::PAUSED;
-			break;
-		default:
-			result = AudioState::STOPPED;
-			break;
+
+	switch(state) {
+	case AL_INITIAL:
+		result = AudioState::INITIAL;
+		break;
+	case AL_PLAYING:
+		result = AudioState::PLAYING;
+		break;
+	case AL_PAUSED:
+		result = AudioState::PAUSED;
+		break;
+	default:
+		result = AudioState::STOPPED;
+		break;
 	}
+
 	return result;
 }
 
@@ -79,8 +91,8 @@ OpenALSoundFX::~OpenALSoundFX() {
 	alDeleteSources(1, &sourceId);
 }
 
-OpenALSoundFX::OpenALSoundFX(): SoundFX(), sourceId(0), survives(false), 
-nbTimesLeft(0){
+OpenALSoundFX::OpenALSoundFX(): SoundFX(), sourceId(0), survives(false),
+	nbTimesLeft(0) {
 }
 
 void OpenALSoundFX::load(ALuint bufferId) {
