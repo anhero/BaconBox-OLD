@@ -16,7 +16,7 @@ load_base http.fetch
 
 function build() {
 	echo -n 'Copying sigly... '
-	cd "${lib_workdir}/anhero-${_pkgdir}" || exit 1
+	cd "${lib_workdir}/${_pkgdir}-src" || exit 1
 	mkdir -p "${libs_builddir}/include/"
 	mv sigly.h "${libs_builddir}/include/" || exit 1
 	echo done.
