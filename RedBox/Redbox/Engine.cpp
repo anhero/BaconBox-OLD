@@ -2,8 +2,10 @@
 
 #include <cassert>
 #include <cstdlib>
+
 #include <algorithm>
 
+#include "PlatformFlagger.h"
 #include "TimeHelper.h"
 #include "GraphicDriver.h"
 #include "DeleteHelper.h"
@@ -22,6 +24,7 @@
 
 using namespace RedBox;
 
+const double Engine::DEFAULT_UPDATES_PER_SECOND = 60.0;
 sigly::Signal2<unsigned int, unsigned int> Engine::onInitialize = sigly::Signal2<unsigned int, unsigned int>();
 
 State* Engine::addState(State* newState) {

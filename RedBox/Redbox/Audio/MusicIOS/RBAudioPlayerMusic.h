@@ -69,6 +69,16 @@ namespace RedBox {
 		 * @return True if the music is currently looping infinitely.
 		 */
 		bool isLooping();
+		
+		/**
+		 * Sets the music's volume level.
+		 * @param newVolume New volume level. If the new volume is out of
+		 * bounds, it will be set to the closest bound (minimum if it's under 0
+		 * or maximum if it's over 100).
+		 * @see RedBox::Sound::volume
+		 */
+		void setVolume(int newVolume);
+		
 		/**
 		 * Gets the music's current state. Used to know if it is at its initial
 		 * state, currently playing, paused or stopped.

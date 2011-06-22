@@ -27,6 +27,7 @@ typedef enum {
 - (void)resume;
 - (void)pause;
 - (void)stop;
+- (void)setVolume:(float)newVolume;
 - (void)fadeOutStop:(float)time;
 - (void)fadeOutStop;
 - (void)fadeOutPause:(float)time;

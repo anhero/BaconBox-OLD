@@ -6,7 +6,7 @@
 #include "AudioState.h"
 #include "NullAudio.h"
 
-#include "Debug.h"
+#include "Console.h"
 
 using namespace RedBox;
 

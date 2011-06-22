@@ -44,6 +44,10 @@
 	[BGMusic stop];
 }
 
+- (void)setVolume:(float)newVolume {
+	realVolume = newVolume;
+}
+
 - (void)fadeOutStop:(float)time{
 	if(time == 0.0 || BGMusic.volume == 0.0) {
 		[self stop];

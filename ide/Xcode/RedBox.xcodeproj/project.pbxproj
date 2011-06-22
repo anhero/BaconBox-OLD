@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		245EAF10134E62CD002F0596 /* sigly.h in Headers */ = {isa = PBXBuildFile; fileRef = 245EAF0F134E62CD002F0596 /* sigly.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		24AFD43513B24D2400702BEE /* Layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24AFD43313B24D2400702BEE /* Layer.cpp */; };
+		24AFD43613B24D2400702BEE /* Layer.h in Headers */ = {isa = PBXBuildFile; fileRef = 24AFD43413B24D2400702BEE /* Layer.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		24AFD43A13B24D7E00702BEE /* Console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24AFD43813B24D7E00702BEE /* Console.cpp */; };
+		24AFD43B13B24D7E00702BEE /* Console.h in Headers */ = {isa = PBXBuildFile; fileRef = 24AFD43913B24D7E00702BEE /* Console.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		24AFD43D13B24E7800702BEE /* DeleteHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 24AFD43C13B24E7800702BEE /* DeleteHelper.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		516FE65013744AE60055E0EB /* AABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 516FE54C13744AE60055E0EB /* AABB.cpp */; };
 		516FE65113744AE60055E0EB /* AABB.h in Headers */ = {isa = PBXBuildFile; fileRef = 516FE54D13744AE60055E0EB /* AABB.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		516FE65213744AE60055E0EB /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 516FE54F13744AE60055E0EB /* AudioEngine.cpp */; };
@@ -180,8 +185,6 @@
 		516FE6FD13744AE60055E0EB /* PointerSignalData.h in Headers */ = {isa = PBXBuildFile; fileRef = 516FE62313744AE60055E0EB /* PointerSignalData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		516FE6FE13744AE60055E0EB /* PointerState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 516FE62413744AE60055E0EB /* PointerState.cpp */; };
 		516FE6FF13744AE60055E0EB /* PointerState.h in Headers */ = {isa = PBXBuildFile; fileRef = 516FE62513744AE60055E0EB /* PointerState.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		516FE70613744AE60055E0EB /* Layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 516FE63413744AE60055E0EB /* Layer.cpp */; };
-		516FE70713744AE60055E0EB /* Layer.h in Headers */ = {isa = PBXBuildFile; fileRef = 516FE63513744AE60055E0EB /* Layer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		516FE70813744AE60055E0EB /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 516FE63613744AE60055E0EB /* Object.cpp */; };
 		516FE70913744AE60055E0EB /* Object.h in Headers */ = {isa = PBXBuildFile; fileRef = 516FE63713744AE60055E0EB /* Object.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		516FE70A13744AE60055E0EB /* PlatformFlagger.h in Headers */ = {isa = PBXBuildFile; fileRef = 516FE63913744AE60055E0EB /* PlatformFlagger.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -220,6 +223,11 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		245EAF0F134E62CD002F0596 /* sigly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sigly.h; path = ../../libraries/ios/universal/include/sigly.h; sourceTree = "<group>"; };
+		24AFD43313B24D2400702BEE /* Layer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Layer.cpp; sourceTree = "<group>"; };
+		24AFD43413B24D2400702BEE /* Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layer.h; sourceTree = "<group>"; };
+		24AFD43813B24D7E00702BEE /* Console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Console.cpp; sourceTree = "<group>"; };
+		24AFD43913B24D7E00702BEE /* Console.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Console.h; sourceTree = "<group>"; };
+		24AFD43C13B24E7800702BEE /* DeleteHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteHelper.h; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -416,8 +424,6 @@
 		516FE62513744AE60055E0EB /* PointerState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointerState.h; sourceTree = "<group>"; };
 		516FE62E13744AE60055E0EB /* Sources.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sources.cmake; sourceTree = "<group>"; };
 		516FE63313744AE60055E0EB /* Sources.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sources.cmake; sourceTree = "<group>"; };
-		516FE63413744AE60055E0EB /* Layer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Layer.cpp; sourceTree = "<group>"; };
-		516FE63513744AE60055E0EB /* Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layer.h; sourceTree = "<group>"; };
 		516FE63613744AE60055E0EB /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
 		516FE63713744AE60055E0EB /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object.h; sourceTree = "<group>"; };
 		516FE63913744AE60055E0EB /* PlatformFlagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformFlagger.h; sourceTree = "<group>"; };
@@ -525,6 +531,8 @@
 				516FE54D13744AE60055E0EB /* AABB.h */,
 				516FE54E13744AE60055E0EB /* Audio */,
 				516FE57E13744AE60055E0EB /* CollisionData.h */,
+				24AFD43813B24D7E00702BEE /* Console.cpp */,
+				24AFD43913B24D7E00702BEE /* Console.h */,
 				516FE57F13744AE60055E0EB /* Debug.h */,
 				516FE58013744AE60055E0EB /* Display */,
 				516FE5AE13744AE60055E0EB /* Emitter */,
@@ -533,8 +541,6 @@
 				516FE5BB13744AE60055E0EB /* Factory.h */,
 				516FE5BC13744AE60055E0EB /* Helper */,
 				516FE5E213744AE60055E0EB /* Input */,
-				516FE63413744AE60055E0EB /* Layer.cpp */,
-				516FE63513744AE60055E0EB /* Layer.h */,
 				516FE63613744AE60055E0EB /* Object.cpp */,
 				516FE63713744AE60055E0EB /* Object.h */,
 				516FE63813744AE60055E0EB /* Physic */,
@@ -644,6 +650,8 @@
 				516FE58813744AE60055E0EB /* Driver */,
 				516FE58F13744AE60055E0EB /* GraphicBody.cpp */,
 				516FE59013744AE60055E0EB /* GraphicBody.h */,
+				24AFD43313B24D2400702BEE /* Layer.cpp */,
+				24AFD43413B24D2400702BEE /* Layer.h */,
 				516FE59113744AE60055E0EB /* PixMap.cpp */,
 				516FE59213744AE60055E0EB /* PixMap.h */,
 				516FE59413744AE60055E0EB /* RenderInfo.cpp */,
@@ -724,6 +732,7 @@
 			children = (
 				516FE5BD13744AE60055E0EB /* BitHelper.cpp */,
 				516FE5BE13744AE60055E0EB /* BitHelper.h */,
+				24AFD43C13B24E7800702BEE /* DeleteHelper.h */,
 				516FE5BF13744AE60055E0EB /* ios */,
 				516FE5C313744AE60055E0EB /* libc */,
 				516FE5C713744AE60055E0EB /* MathHelper.cpp */,
@@ -932,6 +941,7 @@
 				516FE65313744AE60055E0EB /* AudioEngine.h in Headers */,
 				516FE65413744AE60055E0EB /* AudioState.h in Headers */,
 				516FE65613744AE60055E0EB /* BackgroundMusic.h in Headers */,
+				24AFD43B13B24D7E00702BEE /* Console.h in Headers */,
 				516FE65813744AE60055E0EB /* MusicEngine.h in Headers */,
 				516FE65A13744AE60055E0EB /* MusicInfo.h in Headers */,
 				516FE65C13744AE60055E0EB /* RBAudioPlayerEngine.h in Headers */,
@@ -952,6 +962,7 @@
 				516FE67913744AE60055E0EB /* SoundParameters.h in Headers */,
 				516FE67A13744AE60055E0EB /* CollisionData.h in Headers */,
 				516FE67B13744AE60055E0EB /* Debug.h in Headers */,
+				24AFD43D13B24E7800702BEE /* DeleteHelper.h in Headers */,
 				516FE67D13744AE60055E0EB /* AnimationParameters.h in Headers */,
 				516FE67F13744AE60055E0EB /* Camera.h in Headers */,
 				516FE68113744AE60055E0EB /* Color.h in Headers */,
@@ -1020,7 +1031,7 @@
 				516FE6FB13744AE60055E0EB /* PointerMoveSignalData.h in Headers */,
 				516FE6FD13744AE60055E0EB /* PointerSignalData.h in Headers */,
 				516FE6FF13744AE60055E0EB /* PointerState.h in Headers */,
-				516FE70713744AE60055E0EB /* Layer.h in Headers */,
+				24AFD43613B24D2400702BEE /* Layer.h in Headers */,
 				516FE70913744AE60055E0EB /* Object.h in Headers */,
 				516FE70A13744AE60055E0EB /* PlatformFlagger.h in Headers */,
 				516FE70C13744AE60055E0EB /* ResourceManager.h in Headers */,
@@ -1183,7 +1194,6 @@
 				516FE6FA13744AE60055E0EB /* PointerMoveSignalData.cpp in Sources */,
 				516FE6FC13744AE60055E0EB /* PointerSignalData.cpp in Sources */,
 				516FE6FE13744AE60055E0EB /* PointerState.cpp in Sources */,
-				516FE70613744AE60055E0EB /* Layer.cpp in Sources */,
 				516FE70813744AE60055E0EB /* Object.cpp in Sources */,
 				516FE70B13744AE60055E0EB /* ResourceManager.cpp in Sources */,
 				516FE70E13744AE60055E0EB /* SignalAnalyzer.cpp in Sources */,
@@ -1193,6 +1203,8 @@
 				516FE71613744AE60055E0EB /* Vec2.cpp in Sources */,
 				516FE71813744AE60055E0EB /* Vertex.cpp in Sources */,
 				516FE71A13744AE60055E0EB /* VerticesGroup.cpp in Sources */,
+				24AFD43513B24D2400702BEE /* Layer.cpp in Sources */,
+				24AFD43A13B24D7E00702BEE /* Console.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

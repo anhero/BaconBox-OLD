@@ -68,16 +68,14 @@
 		#define RB_MAC_PLATFORM
 	#endif
 
-	//Time on OSX
-	#ifdef RB_MAC_PLATFORM
-		#define RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
-		#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
-	#endif
-
 	//Time on iOS
 	#ifdef RB_IPHONE_PLATFORM
 		#define RB_TIME_HELPER_IMPL RedBox::IOSTimeHelper
 		#define RB_TIME_HELPER_INCLUDE "IOSTimeHelper.h"
+	#elif defined(RB_MAC_PLATFORM)
+		// Time on Mac OS X
+		#define RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
+		#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
 	#endif
 
 	#define RB_HAS_GCC_STACKTRACE

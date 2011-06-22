@@ -72,6 +72,11 @@ bool RBAudioPlayerMusic::isLooping() {
 	return [bgm isLooping];
 }
 
+void RBAudioPlayerMusic::setVolume(int newVolume) {
+	this->Sound::setVolume(newVolume);
+	[bgm setVolume:(static_cast<float>(getVolume()) / static_cast<float>(Sound::MAX_VOLUME))];
+}
+
 AudioState::Enum RBAudioPlayerMusic::getCurrentState() const {
 	if(!playedOnce) {
 		return AudioState::INITIAL;

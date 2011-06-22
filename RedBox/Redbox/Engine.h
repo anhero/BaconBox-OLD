@@ -19,7 +19,7 @@ namespace RedBox {
 	class Engine {
 		friend class ResourcePathHandler;
 	public:
-		static const double DEFAULT_UPDATES_PER_SECOND = 60.0;
+		static const double DEFAULT_UPDATES_PER_SECOND;
 		static const unsigned int DEFAULT_MIN_FRAMES_PER_SECOND = 5;
 		///This function must be called by the main function. The main function arguments must be passed this function
 		static void application(int argc, char* argv[]);
