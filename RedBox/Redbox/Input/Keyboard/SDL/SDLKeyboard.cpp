@@ -327,10 +327,10 @@ void SDLKeyboard::fillMappings() {
 	mappings[SDL_SCANCODE_RALT] = Key::RIGHT_ALT; /**< alt gr, option */
 	mappings[SDL_SCANCODE_RGUI] = Key::RIGHT_WINDOWS; /**< windows, command (apple), meta */
 	
-	/*mappings[SDL_SCANCODE_MODE] = Key::;    /**< I'm not sure if this is really not covered 
-	 *   by any of the aboveKey::; but since there's a 
-	 *   special KMOD_MODE for it I'm adding it here
-	 */
+	//mappings[SDL_SCANCODE_MODE] = Key::;    /**< I'm not sure if this is really not covered
+	// *   by any of the aboveKey::; but since there's a
+	// *   special KMOD_MODE for it I'm adding it here
+	// */
 	
 	/*@}*//*Usage page 0x07*/
 	
@@ -370,8 +370,8 @@ void SDLKeyboard::fillMappings() {
 	
 	//mappings[SDL_SCANCODE_BRIGHTNESSDOWN] = Key::;
 	//mappings[SDL_SCANCODE_BRIGHTNESSUP] = Key::;
-	/*mappings[SDL_SCANCODE_DISPLAYSWITCH] = Key::; /**< display mirroring/dual display 
-	 switchKey::; video mode switch */
+	//mappings[SDL_SCANCODE_DISPLAYSWITCH] = Key::; /**< display mirroring/dual display
+	// switchKey::; video mode switch */
 	//mappings[SDL_SCANCODE_KBDILLUMTOGGLE] = Key::;
 	//mappings[SDL_SCANCODE_KBDILLUMDOWN] = Key::;
 	//mappings[SDL_SCANCODE_KBDILLUMUP] = Key::;

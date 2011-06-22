@@ -55,5 +55,7 @@ std::string ResourcePathHandler::getDocumentPath() {
 	return documentPath;
 #elif defined(RB_QT)
 	return QDesktopServices::storageLocation(QDesktopServices::DataLocation).toStdString();
+#else
+	return std::string();
 #endif
 }

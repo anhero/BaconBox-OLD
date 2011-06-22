@@ -44,6 +44,7 @@ PixMap::~PixMap() {
 }
 
 PixMap& PixMap::operator=(const PixMap& src) {
+	this->Object::operator=(src);
 	if(this != &src) {
 		if(buffer) {
 			delete [] buffer;
@@ -62,6 +63,7 @@ PixMap& PixMap::operator=(const PixMap& src) {
 			}
 		}
 	}
+	return *this;
 }
 
 

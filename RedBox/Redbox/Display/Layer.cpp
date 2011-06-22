@@ -23,6 +23,7 @@ Layer& Layer::operator=(const Layer& src) {
 		z = src.z;
 		scrollFactor = src.scrollFactor;
 	}
+	return *this;
 }
 
 bool Layer::operator==(const Layer& other) {

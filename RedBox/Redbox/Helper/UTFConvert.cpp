@@ -118,7 +118,7 @@ RB_String32 UTFConvert::decodeUTF8(std::string UTF8String){
 			i += 2;
 		}
 		// 0xxxxxxx
-		else if(*i < MASK1BYTE)
+		else if(!(*i & MASK1BYTE))
 		{
 			a32Char = *i;
 			i += 1;

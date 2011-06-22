@@ -14,9 +14,9 @@ using namespace RedBox;
 
 GraphicBody::GraphicBody() : Body(),
 	maxVelocity(Vec2(NO_MAX_VELOCITY, NO_MAX_VELOCITY)),
-	scaling(Vec2(1.0f, 1.0f)), angle(0.0f), layer(Layer()), toBeDeleted(false),
-	layerChanged(false), isInState(false), collidableSides(Side::ALL),
-	elasticity(0.0f), staticBody(false), drag(Vec2(0.0f, 0.0f)) {
+	scaling(Vec2(1.0f, 1.0f)), angle(0.0f), collidableSides(Side::ALL),
+	elasticity(0.0f), staticBody(false), toBeDeleted(false),
+	layerChanged(false), isInState(false) {
 }
 
 GraphicBody::GraphicBody(const GraphicBody& src) : Body(src) {

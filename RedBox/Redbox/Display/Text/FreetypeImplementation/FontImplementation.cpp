@@ -83,7 +83,7 @@ Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
 		std::stringstream key;
 		key << name << "-" << size << "-" << unicodeValue;
 		
-		int bufferSize = glyphWidth*glyphHeight;
+		//int bufferSize = glyphWidth*glyphHeight;
 
 //		uint8_t * reversedBuffer = new uint8_t[bufferSize];
 //		for (int i = 0; i < glyphHeight; i++) {
