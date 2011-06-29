@@ -164,6 +164,35 @@ namespace RedBox {
 		static bool vertLineOverlaps(AABB & rect, float linePosition,
 									 float lowerYBoundary = 1.0f,
 									 float higherYBoundary = -1.0f);
+
+		/**
+		 * Gets the AABB's left side's coordinate.
+		 * @return Left side's coordinate.
+		 * @see RedBox::AABB::minX
+		 */
+		float getMinX() const;
+
+		/**
+		 * Gets the AABB's right side's coordinate.
+		 * @return Right side's coordinate.
+		 * @see RedBox::AABB::maxX
+		 */
+		float getMaxX() const;
+
+		/**
+		 * Gets the AABB's top side's coordinate.
+		 * @return Top side's coordinate.
+		 * @see RedBox::AABB::minY
+		 */
+		float getMinY() const;
+
+		/**
+		 * Gets the AABB's bottom side's coordinate.
+		 * @return Bottom side's coordinate.
+		 * @see RedBox::AABB::maxY
+		 */
+		float getMaxY() const;
+
 	private:
 		/// Left side's coordinate.
 		float minX;

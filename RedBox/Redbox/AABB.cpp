@@ -83,11 +83,23 @@ bool AABB::vertLineOverlaps(AABB & rect, float linePosition, float lowerYBoundar
 	
 }
 
-
 bool AABB::horizLineOverlaps(float linePosition, float lowerYBoundary, float higherYBoundary){
 	return horizLineOverlaps(*this, linePosition, lowerYBoundary, higherYBoundary);
 }
 
 bool AABB::vertLineOverlaps(float linePosition, float lowerXBoundary, float higherXBoundary){
 	return vertLineOverlaps(*this, linePosition, lowerXBoundary, higherXBoundary);
+}
+
+float AABB::getMinX() const {
+	return minX;
+}
+float AABB::getMaxX() const {
+	return maxX;
+}
+float AABB::getMinY() const {
+	return minY;
+}
+float AABB::getMaxY() const {
+	return maxY;
 }

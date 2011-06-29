@@ -717,6 +717,61 @@ namespace RedBox {
 		void addToAngle(float angleToAdd);
 
 		/**
+		 * Gets the body's colliding box's offset.
+		 * @return 2D Vector containing the horizontal and vertical offset.
+		 * @see RedBox::GraphicBody::offset
+		 */
+		const Vec2& getOffset() const;
+
+		/**
+		 * Sets the body's colliding box's offset.
+		 * @param newOffset New offset to add to the position when detecting
+		 * collisions.
+		 * @see RedBox::GraphicBody::offset
+		 */
+		void setOffset(const Vec2& newOffset);
+
+		/**
+		 * Sets the body's colliding box's horizontal and vertical offset.
+		 * @param newXOffset New horizontal offset to add to the position when
+		 * detecting collisions.
+		 * @param newYOffset New vertical offset to add to the position when
+		 * detecting collisions.
+		 * @see RedBox::GraphicBody::offset
+		 */
+		void setOffset(float newXOffset, float newYOffset);
+
+		/**
+		 * Gets the body's colliding box's horizontal offset.
+		 * @return Current horizontal offset.
+		 * @see RedBox::GraphicBody::offset
+		 */
+		float getXOffset() const;
+
+		/**
+		 * Sets the body's colliding box's horizontal offset.
+		 * @param newYOffset New vertical offset to add to the position when
+		 * detecting collisions.
+		 * @see RedBox::GraphicBody::offset
+		 */
+		void setXOffset(float newXOffset);
+
+		/**
+		 * Gets the body's colliding box's vertical offset.
+		 * @return Current vertical offset.
+		 * @see RedBox::GraphicBody::offset
+		 */
+		float getYOffset() const;
+
+		/**
+		 * Sets the body's colliding box's horizontal offset.
+		 * @param newYOffset New vertical offset to add to the position when
+		 * detecting collisions.
+		 * @see RedBox::GraphicBody::offset
+		 */
+		void setYOffset(float newYOffset);
+
+		/**
 		 * Use this function to collide  two GraphicBody against each other. It
 		 * will test if they are colliding, and return a pair containing
 		 * collision information.
@@ -909,6 +964,16 @@ namespace RedBox {
 		 * bodies.
 		 */
 		bool isInState;
+
+		/// 2D vector added to the position when detecting collisions.
+		Vec2 offset;
+
+		/**
+		 * Size of the colliding box compared to the body's actual size. To make
+		 * the colliding box half the body's size, this vector would be set at
+		 * (0.5f, 0.5f).
+		 */
+		Vec2 collidingBoxRatio;
 
 		/**
 		 * Resets the layer changed status.

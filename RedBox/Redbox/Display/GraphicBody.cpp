@@ -16,7 +16,7 @@ GraphicBody::GraphicBody() : Body(),
 	maxVelocity(Vec2(NO_MAX_VELOCITY, NO_MAX_VELOCITY)),
 	scaling(Vec2(1.0f, 1.0f)), angle(0.0f), collidableSides(Side::ALL),
 	elasticity(0.0f), staticBody(false), toBeDeleted(false),
-	layerChanged(false), isInState(false) {
+	layerChanged(false), isInState(false), collidingBoxRatio(1.0f, 1.0f) {
 }
 
 GraphicBody::GraphicBody(const GraphicBody& src) : Body(src) {
@@ -415,6 +415,34 @@ void GraphicBody::addToAngle(float angleToAdd) {
 	setAngle(angle + angleToAdd);
 }
 
+const Vec2& GraphicBody::getOffset() const {
+	return offset;
+}
+
+void GraphicBody::setOffset(const Vec2& newOffset) {
+	offset = newOffset;
+}
+
+void GraphicBody::setOffset(float newXOffset, float newYOffset) {
+	offset.setXY(newXOffset, newYOffset);
+}
+
+float GraphicBody::getXOffset() const {
+	return offset.getX();
+}
+
+void GraphicBody::setXOffset(float newXOffset) {
+	offset.setX(newXOffset);
+}
+
+float GraphicBody::getYOffset() const {
+	return offset.getX();
+}
+
+void GraphicBody::setYOffset(float newYOffset) {
+	offset.setY(newYOffset);
+}
+
 std::pair<bool, CollisionData> GraphicBody::collide(GraphicBody* body1,
         GraphicBody* body2) {
 	CollisionData currentCollisionData;
@@ -460,6 +488,10 @@ std::pair<bool, std::list<CollisionData> > GraphicBody::collide(std::list<Graphi
 bool GraphicBody::horizLineCollide(GraphicBody* aGraphicBody, float linePosition, float lowerXBoundary, float higherXBoundary) {
 	bool result = false;
 
+	linePosition -= aGraphicBody->getYOffset();
+	lowerXBoundary -= aGraphicBody->getXOffset();
+	higherXBoundary -= aGraphicBody->getXOffset();
+
 	// We make sure the given graphic body is valid.
 	if(aGraphicBody && !aGraphicBody->isStaticBody()) {
 		float delta = aGraphicBody->getYPosition() - aGraphicBody->getOldYPosition();
@@ -494,6 +526,10 @@ bool GraphicBody::horizLineCollide(GraphicBody* aGraphicBody, float linePosition
 bool GraphicBody::vertLineCollide(GraphicBody* aGraphicBody, float linePosition,
                                   float lowerYBoundary, float higherYBoundary) {
 	bool result = false;
+
+	linePosition -= aGraphicBody->getXOffset();
+	lowerYBoundary -= aGraphicBody->getYOffset();
+	higherYBoundary -= aGraphicBody->getYOffset();
 
 	// We make sure the given graphic body is valid.
 	if(aGraphicBody && !aGraphicBody->isStaticBody()) {
@@ -548,22 +584,22 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 		tmpWidth1 = object1->getWidth();
 		tmpWidth2 = object2->getWidth();
 
-		AABB obj1AABB(object1->getXPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)),
-		              object1->getXPosition() + tmpWidth1 + obj1DeltaAbs,
-		              object1->getOldYPosition(),
-		              object1->getOldYPosition() + object1->getHeight());
+		AABB obj1AABB(object1->getXPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)) + object1->getXOffset(),
+					  object1->getXPosition() + tmpWidth1 + obj1DeltaAbs + object1->getXOffset(),
+					  object1->getOldYPosition() + object1->getYOffset(),
+					  object1->getOldYPosition() + object1->getHeight() + object1->getYOffset());
 
-		AABB obj2AABB(object2->getXPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)),
-		              object2->getXPosition() + tmpWidth2 + obj2DeltaAbs,
-		              object2->getOldYPosition(),
-		              object2->getOldYPosition() + object2->getHeight());
+		AABB obj2AABB(object2->getXPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)) + object2->getXOffset(),
+					  object2->getXPosition() + tmpWidth2 + obj2DeltaAbs + object2->getXOffset(),
+					  object2->getOldYPosition() + object2->getYOffset(),
+					  object2->getOldYPosition() + object2->getHeight() + object2->getYOffset());
 
 		if(obj1AABB.overlaps(obj2AABB)) {
 
 			float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + RB_OVERLAP_BIAS;
 
 			if(obj1Delta > obj2Delta) {
-				overlap = object1->getXPosition() + tmpWidth1 - object2->getXPosition();
+				overlap = (object1->getXPosition() + object1->getXOffset()) + tmpWidth1 - (object2->getXPosition() + object2->getXOffset());
 
 				if(overlap > maxOverlap || !object1->isCollidingSide(Side::RIGHT) || !object2->isCollidingSide(Side::LEFT)) {
 					overlap = 0.0f;
@@ -586,8 +622,8 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 	}
 
 	if(overlap) {
-		float obj1v = object1->getVelocity().getX();
-		float obj2v = object2->getVelocity().getX();
+		float obj1v = object1->getXVelocity();
+		float obj2v = object2->getXVelocity();
 
 		if(!object1->isStaticBody() && !object2->isStaticBody()) {
 			overlap *= 0.5f;
@@ -636,15 +672,15 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 		tmpHeight2 = object2->getHeight();
 		// We create AABBs of the old position with the updated vertical
 		// position.
-		AABB obj1AABB(object1->getXPosition(),
-		              object1->getXPosition() + object1->getWidth(),
-		              object1->getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)),
-		              object1->getYPosition() + tmpHeight1 + obj1DeltaAbs);
+		AABB obj1AABB(object1->getXPosition() + object1->getXOffset(),
+					  object1->getXPosition() + object1->getWidth() + object1->getXOffset(),
+					  object1->getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)) + object1->getYOffset(),
+					  object1->getYPosition() + tmpHeight1 + obj1DeltaAbs + object1->getYOffset());
 
-		AABB obj2AABB(object2->getXPosition(),
-		              object2->getXPosition() + object2->getWidth(),
-		              object2->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)),
-		              object2->getYPosition() + tmpHeight2 + obj2DeltaAbs);
+		AABB obj2AABB(object2->getXPosition() + object2->getXOffset(),
+					  object2->getXPosition() + object2->getWidth() + object2->getXOffset(),
+					  object2->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)) + object2->getYOffset(),
+					  object2->getYPosition() + tmpHeight2 + obj2DeltaAbs + object2->getYOffset());
 
 
 		// We check if the objects are colliding.
@@ -655,7 +691,7 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 			// If the first object is moving to the bottom faster than the
 			// second body.
 			if(obj1Delta > obj2Delta) {
-				overlap = object1->getYPosition() + tmpHeight1 - object2->getYPosition();
+				overlap = (object1->getYPosition() + object1->getYOffset()) + tmpHeight1 - (object2->getYPosition() + object2->getYOffset());
 
 				if(overlap > maxOverlap || !object1->isCollidingSide(Side::BOTTOM) || !object2->isCollidingSide(Side::TOP)) {
 					overlap = 0.0f;
@@ -733,10 +769,12 @@ void GraphicBody::copyFrom(const GraphicBody& src) {
 		maxVelocity = src.maxVelocity;
 		scaling = src.scaling;
 		angle = src.angle;
+		staticBody = src.staticBody;
 		layer = src.layer;
 		toBeDeleted = false;
 		layerChanged = true;
 		isInState = false;
-		staticBody = src.staticBody;
+		offset = src.offset;
+		collidingBoxRatio = src.collidingBoxRatio;
 	}
 }
