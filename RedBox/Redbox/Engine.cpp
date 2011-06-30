@@ -171,7 +171,8 @@ void Engine::initializeEngine(unsigned int newScreenWidth,
 }
 
 double Engine::getSinceLastUpdate() {
-	return TimeHelper::getInstance().getSinceStartComplete() - getInstance().lastUpdate;
+	Engine& engine = getInstance();
+	return (engine.lastUpdate) ? (TimeHelper::getInstance().getSinceStartComplete() - engine.lastUpdate) : (engine.lastUpdate);
 }
 
 unsigned int Engine::getScreenWidth() {
