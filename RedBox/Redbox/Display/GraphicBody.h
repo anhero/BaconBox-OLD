@@ -51,6 +51,7 @@ namespace RedBox {
 		/**
 		 * The assignment operator overload.
 		 * @param src The GraphicBody to make a copy of.
+		 * @return Reference to the modified graphic body.
 		 */
 		GraphicBody& operator=(const GraphicBody& src);
 
@@ -623,21 +624,21 @@ namespace RedBox {
 		void setDrag(const Vec2& newDrag);
 
 		/**
-		 * Get the sprite's scaling.
+		 * Get the graphic body's scaling.
 		 * @return 2D vector containing the sprite's scaling currently applied.
 		 * @see RedBox::GraphicBody::scaling
 		 */
 		const Vec2& getScaling() const;
 
 		/**
-		 * Change the sprite's scaling.
+		 * Change the graphic body's scaling.
 		 * @param newScaling New scaling to apply.
 		 * @see RedBox::GraphicBody::scaling
 		 */
 		void setScaling(const Vec2& newScaling);
 
 		/**
-		 * Change the sprite's scaling.
+		 * Change the graphic body's scaling.
 		 * @param xScaling New horizontal scaling to apply.
 		 * @param yScaling New vertical scaling to apply.
 		 * @see RedBox::GraphicBody::scaling
@@ -692,17 +693,17 @@ namespace RedBox {
 		void setYScaling(float newYScaling);
 
 		/**
-		 * Gets the sprite's current rotation angle.
-		 * @return Sprite's current rotation angle. As the angle increments, it
-		 * rotates counter-clockwise.
+		 * Gets the graphic body's current rotation angle.
+		 * @return Graphic body's current rotation angle. As the angle
+		 * increments, it rotates counter-clockwise.
 		 * @see RedBox::GraphicBody::angle
 		 */
 		float getAngle() const;
 
 		/**
-		 * Sets the sprite's rotation angle.
-		 * @param newAngle Sprite's new rotation angle. As the angle increments,
-		 * it makes the sprite rotate counter-clockwise.
+		 * Sets the graphic body's rotation angle.
+		 * @param newAngle Graphic body's new rotation angle. As the angle
+		 * increments, it makes the graphic body rotate counter-clockwise.
 		 * @see RedBox::GraphicBody::angle
 		 */
 		virtual void setAngle(float newAngle);
