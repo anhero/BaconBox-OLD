@@ -9,7 +9,8 @@
 #include "Color.h"
 #include "Vec2.h"
 
-namespace RedBox{
+namespace RedBox {
+	class GraphicBody;
 	/** 
 	 * Represent the camera. This class prepare the scene to mimic a the effect of a camera. 
 	 * If we "move" this object to the right, every object will shift
@@ -328,6 +329,13 @@ namespace RedBox{
 		 * @return Camera's height.
 		 */
 		unsigned int getHeight() const;
+
+		/**
+		 * Makes the given body collide within the camera.
+		 * @param body Pointer to the graphic body that needs to stay within the
+		 * camera.
+		 */
+		bool collideInside(GraphicBody* body);
 
 	private:
 		/// Camera's position.

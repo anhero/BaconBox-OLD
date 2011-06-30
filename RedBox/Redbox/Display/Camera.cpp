@@ -1,9 +1,12 @@
 #include "Camera.h"
+
+#include <cmath>
+
 #include "GraphicDriver.h"
 #include "TimeHelper.h"
 #include "Random.h"
 #include "Engine.h"
-#include <cmath>
+#include "GraphicBody.h"
 
 using namespace RedBox;
 
@@ -181,6 +184,51 @@ unsigned int Camera::getHeight() const {
 	} else {
 		return 0;
 	}
+}
+
+bool Camera::collideInside(GraphicBody* body) {
+	bool result = false;
+	if(body->getXPosition() <= getXPosition()) {
+		// Body is too much to the left.
+		if(body->getXVelocity() < 0.0f) {
+			body->setXVelocity(-body->getXVelocity() * body->getElasticity());
+		}
+
+		body->setXPosition(getXPosition());
+
+		result = true;
+	} else if(body->getXPosition() + body->getWidth() >= getXPosition() + static_cast<float>(getWidth())) {
+		// Body is too much to the right.
+		if(body->getXVelocity() > 0.0f) {
+			body->setXVelocity(-body->getXVelocity() * body->getElasticity());
+		}
+
+		body->setXPosition(getXPosition() + static_cast<float>(getWidth()) - body->getWidth());
+
+		result = true;
+	}
+
+	if(body->getYPosition() <= getYPosition()) {
+		// Body is too much to the top.
+		if(body->getYVelocity() < 0.0f) {
+			body->setYVelocity(-body->getYVelocity() * body->getElasticity());
+		}
+
+		body->setYPosition(getYPosition());
+
+		result = true;
+	} else if(body->getYPosition() + body->getHeight() >= getYPosition() + static_cast<float>(getHeight())) {
+		// Body is too much to the bottom.
+		if(body->getYVelocity() > 0.0f) {
+			body->setYVelocity(-body->getYVelocity() * body->getElasticity());
+		}
+
+		body->setYPosition(getYPosition() + static_cast<float>(getHeight()) - body->getHeight());
+
+		result = true;
+	}
+
+	return result;
 }
 
 void Camera::update() {
