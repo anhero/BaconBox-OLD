@@ -772,6 +772,59 @@ namespace RedBox {
 		void setYOffset(float newYOffset);
 
 		/**
+		 * Gets the horizontal and vertical colliding box ratios.
+		 * @return 2D vector containing the horizontal and vertical colliding
+		 * box ratios.
+		 * @see RedBox::GraphicBody::collidingBoxRatio;
+		 */
+		const Vec2& getCollidingBoxRatio() const;
+
+		/**
+		 * Sets the horizontal and vertical colliding box ratios.
+		 * @param newCollidingBoxRatio 2D vector containing the horizontal and
+		 * vertical colliding box ratios.
+		 * @see RedBox::GraphicBody::collidingBoxRatio
+		 */
+		void setCollidingBoxRatio(const Vec2& newCollidingBoxRatio);
+
+		/**
+		 * Sets the horizontal and vertical colliding box ratios.
+		 * @param newXCollidingBoxRatio New horizontal colliding box ratio.
+		 * @param newYCollidingBoxRatio New vertical colliding box ratio.
+		 * @see RedBox::GraphicBody::collidingBoxRatio
+		 */
+		void setCollidingBoxRatio(float newXCollidingBoxRatio,
+								  float newYCollidingBoxRatio);
+
+		/**
+		 * Gets the horizontal colliding box ratios.
+		 * @return 2D vector containing the horizontal colliding box ratio.
+		 * @see RedBox::GraphicBody::collidingBoxRatio;
+		 */
+		float getXCollidingBoxRatio() const;
+
+		/**
+		 * Sets the horizontal colliding box ratios.
+		 * @param newXCollidingBoxRatio New horizontal colliding box ratio.
+		 * @see RedBox::GraphicBody::collidingBoxRatio
+		 */
+		void setXCollidingBoxRatio(float newXCollidingBoxRatio);
+
+		/**
+		 * Gets the vertical colliding box ratios.
+		 * @return 2D vector containing the vertical colliding box ratio.
+		 * @see RedBox::GraphicBody::collidingBoxRatio;
+		 */
+		float getYCollidingBoxRatio() const;
+
+		/**
+		 * Sets the vertical colliding box ratios.
+		 * @param newYCollidingBoxRatio New vertical colliding box ratio.
+		 * @see RedBox::GraphicBody::collidingBoxRatio
+		 */
+		void setYCollidingBoxRatio(float newYCollidingBoxRatio);
+
+		/**
 		 * Use this function to collide  two GraphicBody against each other. It
 		 * will test if they are colliding, and return a pair containing
 		 * collision information.

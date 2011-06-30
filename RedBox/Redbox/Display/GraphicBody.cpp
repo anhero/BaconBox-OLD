@@ -337,7 +337,7 @@ float GraphicBody::computeVelocity(float velocity, float acceleration, float dra
 }
 
 AABB GraphicBody::getAABB() const {
-	return AABB(getXPosition(), getXPosition() + getWidth(), getYPosition(), getYPosition() + getHeight());
+	return AABB(getXPosition(), getXPosition() + getWidth() * getXCollidingBoxRatio(), getYPosition(), getYPosition() + getHeight() * getYCollidingBoxRatio());
 }
 
 const Vec2& GraphicBody::getDrag() const {
@@ -443,6 +443,35 @@ void GraphicBody::setYOffset(float newYOffset) {
 	offset.setY(newYOffset);
 }
 
+const Vec2& GraphicBody::getCollidingBoxRatio() const {
+	return collidingBoxRatio;
+}
+
+void GraphicBody::setCollidingBoxRatio(const Vec2& newCollidingBoxRatio) {
+	collidingBoxRatio = newCollidingBoxRatio;
+}
+
+void GraphicBody::setCollidingBoxRatio(float newXCollidingBoxRatio,
+									   float newYCollidingBoxRatio) {
+	collidingBoxRatio.setXY(newXCollidingBoxRatio, newYCollidingBoxRatio);
+}
+
+float GraphicBody::getXCollidingBoxRatio() const {
+	return collidingBoxRatio.getX();
+}
+
+void GraphicBody::setXCollidingBoxRatio(float newXCollidingBoxRatio) {
+	collidingBoxRatio.setX(newXCollidingBoxRatio);
+}
+
+float GraphicBody::getYCollidingBoxRatio() const {
+	return collidingBoxRatio.getY();
+}
+
+void GraphicBody::setYCollidingBoxRatio(float newYCollidingBoxRatio) {
+	collidingBoxRatio.setY(newYCollidingBoxRatio);
+}
+
 std::pair<bool, CollisionData> GraphicBody::collide(GraphicBody* body1,
         GraphicBody* body2) {
 	CollisionData currentCollisionData;
@@ -495,7 +524,7 @@ bool GraphicBody::horizLineCollide(GraphicBody* aGraphicBody, float linePosition
 	// We make sure the given graphic body is valid.
 	if(aGraphicBody && !aGraphicBody->isStaticBody()) {
 		float delta = aGraphicBody->getYPosition() - aGraphicBody->getOldYPosition();
-		float tmpHeight = aGraphicBody->getHeight();
+		float tmpHeight = aGraphicBody->getHeight() * aGraphicBody->getYCollidingBoxRatio();
 
 		// We check if the body overlaps with the horizontal line.
 		if(aGraphicBody->getAABB().horizLineOverlaps(linePosition, lowerXBoundary, higherXBoundary)) {
@@ -534,7 +563,7 @@ bool GraphicBody::vertLineCollide(GraphicBody* aGraphicBody, float linePosition,
 	// We make sure the given graphic body is valid.
 	if(aGraphicBody && !aGraphicBody->isStaticBody()) {
 		float delta = aGraphicBody->getXPosition() - aGraphicBody->getOldXPosition();
-		float tmpWidth = aGraphicBody->getWidth();
+		float tmpWidth = aGraphicBody->getWidth() * aGraphicBody->getXCollidingBoxRatio();
 
 		// We check if the body overlaps with the horizontal line.
 		if(aGraphicBody->getAABB().vertLineOverlaps(linePosition, lowerYBoundary, higherYBoundary)) {
@@ -581,18 +610,18 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 		// We create AABBs of the old position with the updated horizontal
 		//position.
 
-		tmpWidth1 = object1->getWidth();
-		tmpWidth2 = object2->getWidth();
+		tmpWidth1 = object1->getWidth() * object1->getXCollidingBoxRatio();
+		tmpWidth2 = object2->getWidth() * object2->getXCollidingBoxRatio();
 
 		AABB obj1AABB(object1->getXPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)) + object1->getXOffset(),
 					  object1->getXPosition() + tmpWidth1 + obj1DeltaAbs + object1->getXOffset(),
 					  object1->getOldYPosition() + object1->getYOffset(),
-					  object1->getOldYPosition() + object1->getHeight() + object1->getYOffset());
+					  object1->getOldYPosition() + object1->getHeight() * object1->getYCollidingBoxRatio() + object1->getYOffset());
 
 		AABB obj2AABB(object2->getXPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)) + object2->getXOffset(),
 					  object2->getXPosition() + tmpWidth2 + obj2DeltaAbs + object2->getXOffset(),
 					  object2->getOldYPosition() + object2->getYOffset(),
-					  object2->getOldYPosition() + object2->getHeight() + object2->getYOffset());
+					  object2->getOldYPosition() + object2->getHeight() * object2->getYCollidingBoxRatio() + object2->getYOffset());
 
 		if(obj1AABB.overlaps(obj2AABB)) {
 
@@ -668,17 +697,17 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 		float obj1DeltaAbs = fabs(obj1Delta);
 		float obj2DeltaAbs = fabs(obj2Delta);
 
-		tmpHeight1 = object1->getHeight();
-		tmpHeight2 = object2->getHeight();
+		tmpHeight1 = object1->getHeight() * object1->getYCollidingBoxRatio();
+		tmpHeight2 = object2->getHeight() * object2->getYCollidingBoxRatio();
 		// We create AABBs of the old position with the updated vertical
 		// position.
 		AABB obj1AABB(object1->getXPosition() + object1->getXOffset(),
-					  object1->getXPosition() + object1->getWidth() + object1->getXOffset(),
+					  object1->getXPosition() + object1->getWidth() * object1->getXCollidingBoxRatio() + object1->getXOffset(),
 					  object1->getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)) + object1->getYOffset(),
 					  object1->getYPosition() + tmpHeight1 + obj1DeltaAbs + object1->getYOffset());
 
 		AABB obj2AABB(object2->getXPosition() + object2->getXOffset(),
-					  object2->getXPosition() + object2->getWidth() + object2->getXOffset(),
+					  object2->getXPosition() + object2->getWidth() * object2->getXCollidingBoxRatio() + object2->getXOffset(),
 					  object2->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)) + object2->getYOffset(),
 					  object2->getYPosition() + tmpHeight2 + obj2DeltaAbs + object2->getYOffset());
 
