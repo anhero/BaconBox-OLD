@@ -31,7 +31,13 @@ function build() {
 
 	#Running on MINGW32?
 	if [ "${MSYSTEM-}" == "MINGW32" ]; then
-		echo Mingw found.
+		echo MinGW found.
+
+		#Splitting LIBRARY_PATH on ':' and keeping first one...
+		#The win32 makefile is weird (to me)
+		SPLIT_PATH=("${LIBRARY_PATH//:/}")
+		export LIBRARY_PATH="${SPLIT_PATH[0]}"
+
 		make -fwin32/makefile.gcc \
 		&& make -fwin32/makefile.gcc install
 	else
