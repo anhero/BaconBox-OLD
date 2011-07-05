@@ -97,21 +97,10 @@ elif [  "${target}" == "iphoneSimulator" ]; then
 		fi
 	fi
 elif  [ "${target}" == "android" ]; then
-	if [  "${params}" == "" ]; then
-		if [  "${generator}" == "" ]; then
-			"${configurePath}/configure-android"
-		else
-			"${configurePath}/configure-android" "-G${generator}"
-		fi
-	else
-		if [  "${generator}" == "" ]; then
-			"${configurePath}/configure-android" "${params}"
-		else
-			"${configurePath}/configure-android" "-G${generator}" "${params}"
-		fi
-	fi
 
-else
+	
+			"${configurePath}/configure-android" "-G${generator}" "${params}"
+		else
 	if [  "${params}" == "" ]; then
 		if [  "${generator}" == "" ]; then
 			"${configurePath}/configure-current"

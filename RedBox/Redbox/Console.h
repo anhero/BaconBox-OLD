@@ -17,10 +17,13 @@
 #endif
 
 #include <stdarg.h>
-
+#ifndef RB_ANDROID
 #include <iostream>
-#include <string>
+
+#endif
 #include <sstream>
+
+#include <string>
 
 // Defines for line numbers and filename...
 // Sadly, can't be done by some other magic...
@@ -99,6 +102,7 @@ namespace RedBox {
 		 * @param text Text to print.
 		 */
 		static void error(std::string text);
+		
 		/**
 		 * Convert type to string.
 		 */

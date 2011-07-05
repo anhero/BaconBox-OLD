@@ -1,14 +1,10 @@
 LOCAL_PATH := $(call my-dir)
 
-###########################
-#
-# SDL shared library
-#
-###########################
-
 include $(CLEAR_VARS)
 
+
 LOCAL_MODULE := RedBox 
+
 
 
 LOCAL_SRC_FILES := \
@@ -17,8 +13,6 @@ LOCAL_SRC_FILES := \
 	$(wildcard $(LOCAL_PATH)/RedBox/RedBox/*.cpp) \
 	$(wildcard $(LOCAL_PATH)/RedBox/RedBox/Audio/*.cpp) \
 	$(wildcard $(LOCAL_PATH)/RedBox/RedBox/Display/*.cpp) \
-	$(wildcard $(LOCAL_PATH)/RedBox/RedBox/Display/Text/*.cpp) \
-	$(wildcard $(LOCAL_PATH)/RedBox/RedBox/Display/Text/FreetypeImplementation/*.cpp) \
 	$(wildcard $(LOCAL_PATH)/RedBox/RedBox/Display/Driver/*.cpp) \
 	$(wildcard $(LOCAL_PATH)/RedBox/RedBox/Emitter/*.cpp) \
 	$(wildcard $(LOCAL_PATH)/RedBox/RedBox/Helper/*.cpp) \
@@ -36,8 +30,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/RedBox/ \
 	$(LOCAL_PATH)/RedBox/RedBox/ \
 	$(LOCAL_PATH)/RedBox/RedBox/Audio/ \
 	$(LOCAL_PATH)/RedBox/RedBox/Display/ \
-	$(LOCAL_PATH)/RedBox/RedBox/Display/Text/ \
-	$(LOCAL_PATH)/RedBox/RedBox/Display/Text/FreetypeImplementation/ \
 	$(LOCAL_PATH)/RedBox/RedBox/Display/Driver/ \
 	$(LOCAL_PATH)/RedBox/RedBox/Emitter/ \
 	$(LOCAL_PATH)/RedBox/RedBox/Helper/ \
@@ -52,9 +44,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/RedBox/ \
 
 
 
-
-
-
-LOCAL_LDLIBS := -ldl -lGLESv1_CM -llog
+LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/libraries/current/lib) \
+                 -lGLESv1_CM -llog -lz \
+                 -lpng 
 
 include $(BUILD_SHARED_LIBRARY)
+

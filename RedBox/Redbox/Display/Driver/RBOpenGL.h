@@ -16,6 +16,9 @@
 #include <QtOpenGL>
 #elif defined(RB_MAC_PLATFORM)
 #include <OpenGL/gl.h>
+#elif defined(RB_ANDROID)
+#include <GLES/gl.h>
+#include <GLES/glext.h>
 #else
 #include <GL/gl.h>
 #endif

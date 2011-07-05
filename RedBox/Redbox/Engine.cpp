@@ -4,9 +4,9 @@
 
 #include "TimeHelper.h"
 #include "GraphicDriver.h"
-
-#include "Font.h"
-
+#ifndef RB_ANDROID
+	#include "Font.h"
+#endif
 #include "AudioEngine.h"
 #include "SoundEngine.h"
 #include "MusicEngine.h"
@@ -163,7 +163,9 @@ void Engine::initializeEngine(int newScreenWidth, int newScreenHeight) {
 	InputManager::getInstance();
 	onInitialize.shoot(screenWidth, screenHeight);
 	GraphicDriver::initializeGraphicDriver(screenWidth, screenHeight);
+#ifndef RB_ANDROID
 	Font::initializeFontRenderer();
+#endif
 }
 
 double Engine::getSinceLastUpdate() {
