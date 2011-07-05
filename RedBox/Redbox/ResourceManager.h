@@ -11,8 +11,9 @@
 
 #include "SoundParameters.h"
 #include "MusicParameters.h"
-#include "Font.h"
-
+#ifndef RB_ANDROID
+	#include "Font.h"
+#endif
 #include "PixMap.h"
 
 namespace RedBox {
@@ -144,6 +145,7 @@ namespace RedBox {
 		 */
 		static void removeMusic(const std::string& key);
 
+#ifndef RB_ANDROID
 		/**
 		 * Load the font at the specified path and put it in the fonts' map.
 		 * @param key Name of the font, it will be the key of the fonts' map.
@@ -167,7 +169,7 @@ namespace RedBox {
 		 * @param key Key of the font to remove.
 		 */
 		static void removeFont(const std::string& key);
-
+#endif
 		/**
 		 * Unloads everything in the ResourceManager.
 		 */
@@ -187,9 +189,10 @@ namespace RedBox {
 
 		/// Map associating the musics' names and their information.
 		static std::map<std::string, MusicInfo*> musics;
-
+#ifndef RB_ANDROID
 		/// Map  associating the fonts' names and their information.
 		static std::map<std::string, Font*> fonts;
+#endif
 	};
 }
 

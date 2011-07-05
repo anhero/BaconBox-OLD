@@ -24,8 +24,9 @@ using namespace RedBox;
 std::map<std::string, TextureInfo*> ResourceManager::textures = std::map<std::string, TextureInfo*>();
 std::map<std::string, SoundInfo*> ResourceManager::sounds = std::map<std::string, SoundInfo*>();
 std::map<std::string, MusicInfo*> ResourceManager::musics = std::map<std::string, MusicInfo*>();
+#ifndef RB_ANDROID
 std::map<std::string, Font*> ResourceManager::fonts = std::map<std::string, Font*>();
-
+#endif
 TextureInfo* ResourceManager::addTexture(const std::string& key, PixMap* aPixmap,
         bool overwrite) {
 	TextureInfo* texInfo = NULL;
@@ -308,7 +309,7 @@ void ResourceManager::removeMusic(const std::string& key) {
 		Console::print("The music named " + key + " could not be removed because it doesn't exist.");
 	}
 }
-
+#ifndef RB_ANDROID
 Font* ResourceManager::loadFont(const std::string& key, const std::string& path, bool overwrite) {
 	Font* aFont = NULL;
 
@@ -359,7 +360,7 @@ void ResourceManager::removeFont(const std::string& key) {
 
 	fonts.erase(i);
 }
-
+#endif
 void ResourceManager::unloadAll() {
 	// We unload the textures.
 	for(std::map<std::string, TextureInfo*>::iterator i = textures.begin();
@@ -389,7 +390,7 @@ void ResourceManager::unloadAll() {
 	}
 
 	musics.clear();
-
+#ifndef RB_ANDROID
 	// We unload the fonts.
 	for(std::map<std::string, Font*>::iterator i = fonts.begin();
 	        i != fonts.end();
@@ -398,6 +399,7 @@ void ResourceManager::unloadAll() {
 	}
 
 	fonts.clear();
+#endif
 }
 
 PixMap* ResourceManager::loadPixMap(const std::string& filePath) {

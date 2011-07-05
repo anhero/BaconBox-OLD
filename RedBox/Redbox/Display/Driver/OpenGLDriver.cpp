@@ -95,6 +95,7 @@ void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
 				 clampColorComponent(backgroundColor.getGreen()),
 				 clampColorComponent(backgroundColor.getBlue()),
 				 1.0f);
+
     glClear( GL_COLOR_BUFFER_BIT);
 	
 	glMatrixMode(GL_MODELVIEW);
@@ -127,7 +128,7 @@ void OpenGLDriver::initializeGraphicDriver(unsigned int screenWidth,
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-#ifdef RB_IPHONE_PLATFORM
+#ifdef RB_OPENGLES
 	glOrthof(0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
 #else
 	glOrtho(0.0, static_cast<double>(screenWidth), static_cast<double>(screenHeight), 0.0, -1.0, 1.0);

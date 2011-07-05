@@ -21,6 +21,8 @@
 //Android platform
 #ifdef __ANDROID__
 #define RB_ANDROID
+#define RB_OPENGL
+#define RB_OPENGLES
 #endif
 
 //Linux systems
@@ -57,11 +59,13 @@
 	#if TARGET_IPHONE_SIMULATOR
 		#define RB_IPHONE_PLATFORM
 		#define RB_IPHONE_SIMULATOR_PLATFORM
+		#define RB_OPENGLES
 	#endif // TARGET_IPHONE_SIMULATOR
 
 	#if TARGET_OS_IPHONE
 		#define RB_IPHONE_PLATFORM
 		#define RB_IPHONE_DEVICE_PLATFORM
+		#define RB_OPENGLES
 	#endif // TARGET_OS_IPHONE
 
 	#if TARGET_OS_MAC
