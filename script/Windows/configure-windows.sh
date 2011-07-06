@@ -21,6 +21,16 @@ if [ -d build ]; then
 	exit 0
 fi
 
+if [ ! -d libraries/current ]; then
+	echo "Libbuildtool wasn't called; calling it."
+	ORIGDIR="$(pwd)"
+	cd libraries
+	libbuildtool || ( echo Problem with libbuildtool, bailing out. ; exit 1)
+	cp -prf "$(uname -s)/$(uname -m)" current
+	echo "Back to $ORIGDIR"
+	cd "$ORIGDIR"
+fi
+
 #######################################
 # Stripping MSYS from path for cmake...
 ORIGPATH="$PATH"
