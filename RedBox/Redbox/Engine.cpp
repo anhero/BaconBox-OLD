@@ -222,7 +222,6 @@ char** Engine::getApplicationArgv() {
 void Engine::application(int argc, char* argv[]) {
 	Engine::argc = argc;
 	Engine::argv = argv;
-
 	getInstance().applicationPath = dirname(argv[0]);
 }
 

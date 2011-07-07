@@ -41,7 +41,8 @@ namespace RedBox {
 		 * @param caption The text used to replace the title.
 		 */
 		virtual void setCaption(const std::string& caption)=0;
-	protected:
+        
+    protected:
 		/**
 		 * The constructor. When implementing a MainWindow, do any
 		 * initialization in here.

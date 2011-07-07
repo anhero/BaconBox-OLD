@@ -54,7 +54,7 @@
 	#include "TargetConditionals.h"
 
 	#define RB_APPLE_PLATFORM
-
+    #define RB_OPENGL
 	//More detailed platforms
 	#if TARGET_IPHONE_SIMULATOR
 		#define RB_IPHONE_PLATFORM
@@ -145,6 +145,9 @@
 	//Input engine for iOS
 	#define RB_POINTER_IMPL new IOSPointer()
 	#define RB_POINTER_INCLUDE "IOSPointer.h"
+    
+    #define RB_MAINWINDOW_INCLUDE "IOSMainWindow.h"
+    #define RB_MAINWINDOW_IMPL IOSMainWindow::getInstance()
 #endif
 
 
