@@ -1,3 +1,7 @@
+#include "PlatformFlagger.h"
+
+#ifdef RB_AV_AUDIO_PLAYER
+
 #include "RBAudioPlayerMusic.h"
 
 #include "Console.h"
@@ -102,3 +106,5 @@ void RBAudioPlayerMusic::load(std::string const& filePath) {
 		bgm = [[RBAudioPlayerMusicDelegate alloc] initWithPath:[NSString stringWithCString:tmp]];
 	}
 }
+
+#endif

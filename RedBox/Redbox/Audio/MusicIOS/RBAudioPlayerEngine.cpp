@@ -1,3 +1,7 @@
+#include "PlatformFlagger.h"
+
+#ifdef RB_AV_AUDIO_PLAYER
+
 #include "RBAudioPlayerEngine.h"
 
 #include "RBAudioPlayerMusic.h"
@@ -64,3 +68,5 @@ MusicInfo* RBAudioPlayerEngine::loadMusic(const MusicParameters& params) {
 bool RBAudioPlayerEngine::unloadMusic(MusicInfo* music) {
 	return true;
 }
+
+#endif

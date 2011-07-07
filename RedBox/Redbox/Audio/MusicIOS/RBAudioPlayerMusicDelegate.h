@@ -1,6 +1,10 @@
 #ifndef RB_AV_AUDIO_PLAYER_MUSIC_DELEGATE_H
 #define RB_AV_AUDIO_PLAYER_MUSIC_DELEGATE_H
 
+#include "PlatformFlagger.h"
+
+#ifdef RB_AV_AUDIO_PLAYER
+
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
@@ -41,4 +45,6 @@ typedef enum {
 - (BOOL)isStopped;
 
 @end
+
+#endif // RB_AV_AUDIO_PLAYER
 #endif

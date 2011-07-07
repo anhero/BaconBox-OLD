@@ -138,9 +138,14 @@
 	
 	//Sound engine for iOS
 	#define RB_OPENAL
-	#define RB_AV_AUDIO_PLAYER
 	#define RB_SOUND_ENGINE new OpenALEngine()
 	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+
+	//Music engine for iOS
+	#define RB_AV_AUDIO_PLAYER
+	#define RB_MUSIC_ENGINE new RBAudioPlayerEngine()
+	#define RB_MUSIC_ENGINE_INCLUDE "RBAudioPlayerEngine.h"
+	
 
 	//Input engine for iOS
 	#define RB_POINTER_IMPL new IOSPointer()

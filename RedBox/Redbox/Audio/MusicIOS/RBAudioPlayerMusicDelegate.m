@@ -1,3 +1,7 @@
+#include "PlatformFlagger.h"
+
+#ifdef RB_AV_AUDIO_PLAYER
+
 #import "RBAudioPlayerMusicDelegate.h"
 
 @implementation RBAudioPlayerMusicDelegate
@@ -161,3 +165,5 @@
 }
 
 @end
+
+#endif

@@ -5,6 +5,9 @@
 #ifndef RB_RB_AUDIO_PLAYER_ENGINE_H
 #define RB_RB_AUDIO_PLAYER_ENGINE_H
 
+#include "PlatformFlagger.h"
+#ifdef RB_AV_AUDIO_PLAYER
+
 #include <string>
 #include <list>
 
@@ -86,4 +89,5 @@ namespace RedBox {
 	};
 }
 
+#endif // RB_AV_AUDIO_PLAYER
 #endif
