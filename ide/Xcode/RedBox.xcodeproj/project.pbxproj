@@ -225,6 +225,12 @@
 		51927C0E11D5EA5000C65B15 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		51927C0F11D5EA5000C65B15 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		51927C1011D5EA5100C65B15 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		519C702413C65F8A00B6C161 /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 519C701E13C65F8A00B6C161 /* EAGLView.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		519C702513C65F8A00B6C161 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 519C701F13C65F8A00B6C161 /* EAGLView.m */; };
+		519C702613C65F8A00B6C161 /* RedBoxAppAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 519C702013C65F8A00B6C161 /* RedBoxAppAppDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		519C702713C65F8A00B6C161 /* RedBoxAppAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 519C702113C65F8A00B6C161 /* RedBoxAppAppDelegate.m */; };
+		519C702813C65F8A00B6C161 /* RedBoxAppViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 519C702213C65F8A00B6C161 /* RedBoxAppViewController.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		519C702913C65F8A00B6C161 /* RedBoxAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 519C702313C65F8A00B6C161 /* RedBoxAppViewController.m */; };
 		7EF711F1132D35C100524FBB /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711ED132D35C100524FBB /* libfreetype.a */; };
 		7EF711F2132D35C100524FBB /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711EE132D35C100524FBB /* libpng.a */; };
 /* End PBXBuildFile section */
@@ -448,6 +454,12 @@
 		516FE64E13744AE60055E0EB /* RedBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBox.h; sourceTree = "<group>"; };
 		517BDCDD11B04CA80095F001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		517D7C3210F87AB10022BBF2 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		519C701E13C65F8A00B6C161 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		519C701F13C65F8A00B6C161 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
+		519C702013C65F8A00B6C161 /* RedBoxAppAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxAppAppDelegate.h; sourceTree = "<group>"; };
+		519C702113C65F8A00B6C161 /* RedBoxAppAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedBoxAppAppDelegate.m; sourceTree = "<group>"; };
+		519C702213C65F8A00B6C161 /* RedBoxAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBoxAppViewController.h; sourceTree = "<group>"; };
+		519C702313C65F8A00B6C161 /* RedBoxAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedBoxAppViewController.m; sourceTree = "<group>"; };
 		51A9351410E8934500D144F4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7EF711ED132D35C100524FBB /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../libraries/build/lib/libfreetype.a; sourceTree = "<group>"; };
 		7EF711EE132D35C100524FBB /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../libraries/build/lib/libpng.a; sourceTree = "<group>"; };
@@ -524,6 +536,12 @@
 		5161994713C4CDE200D5C76D /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				519C701E13C65F8A00B6C161 /* EAGLView.h */,
+				519C701F13C65F8A00B6C161 /* EAGLView.m */,
+				519C702013C65F8A00B6C161 /* RedBoxAppAppDelegate.h */,
+				519C702113C65F8A00B6C161 /* RedBoxAppAppDelegate.m */,
+				519C702213C65F8A00B6C161 /* RedBoxAppViewController.h */,
+				519C702313C65F8A00B6C161 /* RedBoxAppViewController.m */,
 				5161994813C4CE1800D5C76D /* IOSMainWindow.cpp */,
 				5161994913C4CE1800D5C76D /* IOSMainWindow.h */,
 			);
@@ -1049,6 +1067,9 @@
 				512AD25A13C6311F009D9324 /* LineBody.h in Headers */,
 				512AD25E13C63869009D9324 /* NullAudioEngine.h in Headers */,
 				512AD25513C630EF009D9324 /* Body.h in Headers */,
+				519C702413C65F8A00B6C161 /* EAGLView.h in Headers */,
+				519C702613C65F8A00B6C161 /* RedBoxAppAppDelegate.h in Headers */,
+				519C702813C65F8A00B6C161 /* RedBoxAppViewController.h in Headers */,
 				516FE71B13744AE60055E0EB /* VerticesGroup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1217,6 +1238,9 @@
 				512AD25413C630EF009D9324 /* Body.cpp in Sources */,
 				512AD25913C6311F009D9324 /* LineBody.cpp in Sources */,
 				512AD25D13C63869009D9324 /* NullAudioEngine.cpp in Sources */,
+				519C702513C65F8A00B6C161 /* EAGLView.m in Sources */,
+				519C702713C65F8A00B6C161 /* RedBoxAppAppDelegate.m in Sources */,
+				519C702913C65F8A00B6C161 /* RedBoxAppViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

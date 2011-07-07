@@ -5,6 +5,7 @@
 
 #include "RBOpenGL.h"
 #include "Engine.h"
+#include "RedBoxAppAppDelegate.h"
 #import <UIKit/UIKit.h>
 
 using namespace RedBox;
@@ -30,6 +31,11 @@ void IOSMainWindow::setCaption(const std::string& caption) {
 	
 void IOSMainWindow::show() {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    //Need the next to lines of code to prevent the dead code strip 
+    //from striping the RedBoxAppDelegate Class
+    RedBoxAppAppDelegate * appDelegate = [RedBoxAppAppDelegate alloc];
+    [appDelegate release];
+    
 	UIApplicationMain(Engine::getApplicationArgc(), Engine::getApplicationArgv(), nil, @"RedBoxAppAppDelegate");
     [pool release];
 }
