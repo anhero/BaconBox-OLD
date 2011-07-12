@@ -5,6 +5,7 @@
 
 #include "RBOpenGL.h"
 #include "Engine.h"
+#include "InputManager.h"
 #include "RedBoxAppAppDelegate.h"
 #import <UIKit/UIKit.h>
 
@@ -18,7 +19,7 @@ IOSMainWindow& IOSMainWindow::getInstance() {
 void IOSMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
 	//SDL_SetVideoMode(width, height, 32, SDL_OPENGL);
 	//InputManager::getInstance().setNbKeyboards(1);
-	//InputManager::getInstance().setNbPointers(1);
+	InputManager::getInstance().setNbPointers(1);
 }
 
 IOSMainWindow::IOSMainWindow() : MainWindow() {
