@@ -102,8 +102,8 @@ void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
 	glLoadIdentity();
 	
 	glRotatef(angle, 0, 0, 1);
-	glTranslatef(-(position.getX()), -(position.getY()), 0);
 	glScalef(zoom, zoom, 1);
+	glTranslatef(-(position.getX()), -(position.getY()), 0);
 
 }
 

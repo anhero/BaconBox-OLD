@@ -114,10 +114,10 @@ float Camera::getZoomFactor() const {
 }
 
 void Camera::setZoomFactor(float newZoomFactor) {
-	unsigned int tmpWidth = getWidth(), tmpHeight = getHeight();
+	Vec2 center(getXPosition() + static_cast<float>(getWidth()) * 0.5f, getYPosition() + static_cast<float>(getHeight()) * 0.5f);
 	zoomFactor = newZoomFactor;
-	setXPosition(getXPosition() + static_cast<float>(tmpWidth - getWidth()) * 0.5f);
-	setYPosition(getYPosition() + static_cast<float>(tmpHeight - getHeight()) * 0.5f);
+	setXPosition(center.getX() - static_cast<float>(getWidth()) * 0.5f);
+	setYPosition(center.getY() - static_cast<float>(getHeight()) * 0.5f);
 }
 
 void Camera::zoom(float factor) {
