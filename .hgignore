@@ -1,5 +1,8 @@
 syntax: glob
 
+Makefile
+Icon?
+
 #Generated Doc
 glob:meta/documentation/generated/
 
@@ -15,7 +18,7 @@ xcuserdata/
 build
 
 RedBoxApp-build*/*
-
+RedBox-build*/*
 
 *.pbxuser
 *.perspective
@@ -56,6 +59,6 @@ Release
 #.a libraries
 *.a
 
-
+glob:libraries/current
 #libbuildtool ignore rules
 regexp:^libraries/.*/.*$
