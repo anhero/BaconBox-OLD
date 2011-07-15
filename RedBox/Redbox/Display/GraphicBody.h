@@ -628,6 +628,49 @@ namespace RedBox {
 		void setDrag(const Vec2& newDrag);
 
 		/**
+		 * Sets the drag.
+		 * @param newXDrag New horizontal drag. Deceleration applied when there
+		 * is no horizontal acceleration until horizontal velocity reaches 0.
+		 * @param newYDrag New vertical drag. Deceleration applied when there is
+		 * no vertical acceleration until vertical velocity reaches 0.
+		 * @see RedBox::GraphicBody::drag
+		 */
+		void setDrag(float newXDrag, float newYDrag);
+
+		/**
+		 * Gets the horizontal drag.
+		 * @return Float containing the horizontal deceleration applied when
+		 * there is no horizontal acceleration until horizontal velocity reaches
+		 * 0.
+		 * @see RedBox::GraphicBody::drag
+		 */
+		float getXDrag() const;
+
+		/**
+		 * Sets the horizontal drag.
+		 * @param newXDrag New horizontal drag. Deceleration applied when there
+		 * is no horizontal acceleration until horizontal velocity reaches 0.
+		 * @see RedBox::GraphicBody::drag
+		 */
+		void setXDrag(float newXDrag);
+
+		/**
+		 * Gets the vertical drag.
+		 * @return Float containing the vertical deceleration applied when
+		 * there is no vertical acceleration until vertical velocity reaches 0.
+		 * @see RedBox::GraphicBody::drag
+		 */
+		float getYDrag() const;
+
+		/**
+		 * Sets the vertical drag.
+		 * @param newYDrag New vertical drag. Deceleration applied when there is
+		 * no vertical acceleration until vertical velocity reaches 0.
+		 * @see RedBox::GraphicBody::drag
+		 */
+		void setYDrag(float newYDrag);
+
+		/**
 		 * Get the graphic body's scaling.
 		 * @return 2D vector containing the sprite's scaling currently applied.
 		 * @see RedBox::GraphicBody::scaling

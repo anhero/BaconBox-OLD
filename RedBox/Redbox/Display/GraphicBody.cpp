@@ -348,6 +348,26 @@ void GraphicBody::setDrag(const Vec2& newDrag) {
 	drag = newDrag;
 }
 
+void GraphicBody::setDrag(float newXDrag, float newYDrag) {
+	drag.setXY(newXDrag, newYDrag);
+}
+
+float GraphicBody::getXDrag() const {
+	return drag.getX();
+}
+
+void GraphicBody::setXDrag(float newXDrag) {
+	drag.setX(newXDrag);
+}
+
+float GraphicBody::getYDrag() const {
+	return drag.getY();
+}
+
+void GraphicBody::setYDrag(float newYDrag) {
+	drag.setY(newYDrag);
+}
+
 const Vec2& GraphicBody::getScaling() const {
 	return scaling;
 }
