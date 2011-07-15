@@ -23,7 +23,7 @@ PixMap::PixMap(const PixMap& src) : Object(src), width(src.width),
 }
 
 PixMap::PixMap(unsigned int newWidth, unsigned int newHeight,
-               ColorFormat::Enum newColorFormat) : Object(), width(newWidth),
+			   ColorFormat newColorFormat) : Object(), width(newWidth),
 	height(newHeight), colorFormat(newColorFormat), buffer(NULL) {
 	width = newWidth;
 	height = newHeight;
@@ -32,7 +32,7 @@ PixMap::PixMap(unsigned int newWidth, unsigned int newHeight,
 }
 
 PixMap::PixMap(uint8_t* newBuffer, unsigned int newWidth,
-               unsigned int newHeight, ColorFormat::Enum newColorFormat) :
+			   unsigned int newHeight, ColorFormat newColorFormat) :
 	Object(), width(newWidth), height(newHeight), colorFormat(newColorFormat),
 	buffer(newBuffer) {
 }
@@ -75,7 +75,7 @@ unsigned int PixMap::getHeight() const {
 	return height;
 }
 
-ColorFormat::Enum PixMap::getColorFormat() const {
+ColorFormat PixMap::getColorFormat() const {
 	return colorFormat;
 }
 

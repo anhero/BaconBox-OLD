@@ -42,7 +42,7 @@ namespace RedBox {
 		 * @see RedBox::ColorFormat::Enum
 		 */
 		PixMap(unsigned int newWidth, unsigned int newHeight,
-			   ColorFormat::Enum newColorFormat = ColorFormat::RGBA);
+			   ColorFormat newColorFormat = ColorFormat::RGBA);
 
 		/**
 		 * Constructor. Creates the PixMap with an existing buffer. It does not
@@ -57,7 +57,7 @@ namespace RedBox {
 		 */
 		PixMap(uint8_t* newBuffer, unsigned int newWidth,
 			   unsigned int newHeight,
-			   ColorFormat::Enum newColorFormat = ColorFormat::RGBA);
+			   ColorFormat newColorFormat = ColorFormat::RGBA);
 
 		/**
 		 * Destructor.
@@ -90,7 +90,7 @@ namespace RedBox {
 		 * @see RedBox::PixMap::colorFormat
 		 * @see RedBox::ColorFormat::Enum
 		 */
-		ColorFormat::Enum getColorFormat() const;
+		ColorFormat getColorFormat() const;
 
 		/**
 		 * Gets the buffer.
@@ -124,7 +124,7 @@ namespace RedBox {
 		unsigned int height;
 
 		/// Color format of the array (See ColorFormat enum)
-		ColorFormat::Enum colorFormat;
+		ColorFormat colorFormat;
 
 		/// Pointer to the first pixel of the PixMap
 		uint8_t* buffer;
