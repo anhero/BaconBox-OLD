@@ -28,7 +28,8 @@ RenderStep::RenderStep(TextureInfo* newTexInfo,
                        bool newDeleteVerticesGroup): Object(),
 	info(RenderInfo(newTexInfo, newVertices, frameWidth, frameHeight, nbFrames,
 	                newColor)),
-	mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE),
+	mode(FlagSet<RenderStepMode>(RenderStepMode::SHAPE) |
+		FlagSet<RenderStepMode>(RenderStepMode::TEXTURE)),
 	vertices(newVertices),
 	deleteVerticesGroup(newDeleteVerticesGroup),
 	isPaused(false), animCounter(0.0) {
@@ -47,9 +48,12 @@ RenderStep::RenderStep(const std::string& key,
                        unsigned int frameHeight,
                        unsigned int nbFrames,
                        bool newDeleteVerticesGroup): Object(),
-	info(RenderInfo(ResourceManager::getTexture(key), newVertices, frameWidth, frameHeight, nbFrames)),
-	mode(RenderStepMode::SHAPE | RenderStepMode::TEXTURE), vertices(newVertices),
-	deleteVerticesGroup(newDeleteVerticesGroup), isPaused(false), animCounter(0.0) {
+	info(RenderInfo(ResourceManager::getTexture(key), newVertices, frameWidth,
+					frameHeight, nbFrames)),
+	mode(FlagSet<RenderStepMode>(RenderStepMode::SHAPE) |
+		FlagSet<RenderStepMode>(RenderStepMode::TEXTURE)),
+	vertices(newVertices), deleteVerticesGroup(newDeleteVerticesGroup),
+	isPaused(false), animCounter(0.0) {
 	if(vertices) {
 		vertices->updateDataFromVertices(verticesData);
 	}
@@ -74,15 +78,21 @@ void RenderStep::render() {
 	updateVerticesData();
 
 	if(verticesData.size()) {
-		// We use the bitwise inclusive OR to combine different modes.
-		if(mode == (RenderStepMode::SHAPE | RenderStepMode::TEXTURE | RenderStepMode::COLOR)) {
-			GraphicDriver::drawShapeWithTextureAndColor(verticesData, info,
-			        vertices->getVertices().size());
-		} else if(mode == (RenderStepMode::SHAPE | RenderStepMode::TEXTURE)) {
-			GraphicDriver::drawShapeWithTextureAndColor(verticesData, info,
-			        vertices->getVertices().size());
-		} else if(mode == (RenderStepMode::SHAPE | RenderStepMode::COLOR)) {
-			GraphicDriver::drawShapeWithColor(verticesData, info, vertices->getVertices().size());
+		// We check which graphic driver method to use.
+		if(mode.isSet(RenderStepMode::SHAPE)) {
+			if(mode.isSet(RenderStepMode::TEXTURE)) {
+				if(mode.isSet(RenderStepMode::COLOR)) {
+					GraphicDriver::drawShapeWithTextureAndColor(verticesData,
+																info,
+																vertices->getVertices().size());
+				} else {
+					GraphicDriver::drawShapeWithTextureAndColor(verticesData,
+																info,
+																vertices->getVertices().size());
+				}
+			} else if(mode.isSet(RenderStepMode::COLOR)) {
+				GraphicDriver::drawShapeWithColor(verticesData, info, vertices->getVertices().size());
+			}
 		}
 	}
 }
@@ -112,21 +122,32 @@ void RenderStep::setRenderInfo(const RenderInfo& newRenderInfo) {
 	info = newRenderInfo;
 }
 
-RenderStepMode::Enum RenderStep::getMode() const {
+const FlagSet<RenderStepMode>& RenderStep::getMode() const {
 	return mode;
 }
 
-void RenderStep::setMode(RenderStepMode::Enum newMode) {
+void RenderStep::setMode(const FlagSet<RenderStepMode>& newMode) {
 	mode = newMode;
 }
 
-void RenderStep::addMode(RenderStepMode::Enum newMode) {
+void RenderStep::setMode(const RenderStepMode& newMode) {
+	mode = FlagSet<RenderStepMode>(newMode);
+}
+
+void RenderStep::addMode(const FlagSet<RenderStepMode>& newMode) {
 	mode |= newMode;
 }
 
-void RenderStep::removeMode(RenderStepMode::Enum mode) {
-	// Magic line fliping to 0 every flag passed with the mode parameter.
-	mode = ~(~(mode) | (mode));
+void RenderStep::addMode(const RenderStepMode& newMode) {
+	mode.set(newMode);
+}
+
+void RenderStep::removeMode(const FlagSet<RenderStepMode>& modeToRemove) {
+	mode.reset(modeToRemove);
+}
+
+void RenderStep::removeMode(const RenderStepMode& modeToRemove) {
+	mode.reset(modeToRemove);
 }
 
 bool RenderStep::isDeleteVerticesGroup() const {
@@ -249,12 +270,12 @@ namespace RedBox {
 		output << "{info: " << r.info << ", mode: ";
 		bool needsPipe = false;
 
-		if(r.mode & RenderStepMode::SHAPE) {
+		if(r.mode.isSet(RenderStepMode::SHAPE)) {
 			needsPipe = true;
 			output << "RenderStepMode::SHAPE";
 		}
 
-		if(r.mode & RenderStepMode::TEXTURE) {
+		if(r.mode.isSet(RenderStepMode::TEXTURE)) {
 			if(needsPipe) {
 				output << "|";
 			} else {
@@ -264,7 +285,7 @@ namespace RedBox {
 			output << "RenderStepMode::TEXTURE";
 		}
 
-		if(r.mode & RenderStepMode::COLOR) {
+		if(r.mode.isSet(RenderStepMode::COLOR)) {
 			if(needsPipe) {
 				output << "|";
 			}

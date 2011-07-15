@@ -32,7 +32,8 @@ Sprite* SpriteFactory::makePolygon(unsigned int nbSides, float sideLength,
 		ren->setVerticesGroup(&result->getVertices());
 		ren->setDeleteVerticesGroup(false);
 		ren->setColor(color);
-		ren->setMode(RenderStepMode::SHAPE | RenderStepMode::COLOR);
+		ren->setMode(FlagSet<RenderStepMode>(RenderStepMode::SHAPE) |
+					 FlagSet<RenderStepMode>(RenderStepMode::COLOR));
 		result->addRenderStep(ren);
 
 		return result;

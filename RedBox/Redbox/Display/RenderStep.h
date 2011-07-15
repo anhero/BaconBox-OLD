@@ -16,6 +16,7 @@
 #include "GraphicBody.h"
 #include "RenderStepMode.h"
 #include "Color.h"
+#include "FlagSet.h"
 
 namespace RedBox {
 	class VerticesGroup;
@@ -132,30 +133,51 @@ namespace RedBox {
          * Gets the rendering mode.
          * @return Current rendering mode.
          */
-        RenderStepMode::Enum getMode() const;
+		const FlagSet<RenderStepMode>& getMode() const;
 
         /**
          * Sets the rendering mode.
          * @param newMode New mode to be set.
          */
-        void setMode(RenderStepMode::Enum newMode);
+		void setMode(const FlagSet<RenderStepMode>& newMode);
+
+		/**
+		 * Sets the rendering mode.
+		 * @param newMode New mode to be set.
+		 */
+		void setMode(const RenderStepMode& newMode);
 
         /**
          * Adds a mode with the bitwise inclusive OR. More than one mode can
          * be added at the same time using the same operator.
 		 * @param newMode New mode to add.
          */
-        void addMode(RenderStepMode::Enum newMode);
+		void addMode(const FlagSet<RenderStepMode>& newMode);
 		
 		/**
-		 * Flip off given mode flages.
+		 * Adds a mode with the bitwise inclusive OR. More than one mode can
+		 * be added at the same time using the same operator.
+		 * @param newMode New mode to add.
+		 */
+		void addMode(const RenderStepMode& newMode);
+
+		/**
+		 * Flip off given mode flags.
 		 * @param mode Mode(s) to flip off. You can pass more than one flag like
 		 * this: (Flag1 | Flag2).
 		 * @see RedBox::RenderStep::mode
 		 */
-		void removeMode(RenderStepMode::Enum mode);
+		void removeMode(const FlagSet<RenderStepMode>& modeToRemove);
 
-        /**
+		/**
+		 * Flip off given mode flag.
+		 * @param mode Mode(s) to flip off. You can pass more than one flag like
+		 * this: (Flag1 | Flag2).
+		 * @see RedBox::RenderStep::mode
+		 */
+		void removeMode(const RenderStepMode& modeToRemove);
+
+		/**
          * Checks if the RenderStep needs to delete its vertices in its
          * destructor.
          * @return True if it needs to delete, false if not.
@@ -254,7 +276,7 @@ namespace RedBox {
          * Render mode to be used for this rendering step. Modes can be
          * combined with the bitwise inclusive OR.
          */
-		RenderStepMode::Enum mode;
+		FlagSet<RenderStepMode> mode;
 
         /**
 		 * Pointer to the vertices group that contains the vertices this render
