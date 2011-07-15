@@ -121,10 +121,14 @@ namespace RedBox {
 
 		/**
 		 * Sets the graphic body's scroll factor.
-		 * @param x New horizontal scroll factor. A value higher than 1 means
-		 * the graphic body will move faster as if it were closer to the camera
-		 * and between 1 and 0 means it will move as if it were far from the
-		 * camera.
+		 * @param newXScrollFactor New horizontal scroll factor. A value higher
+		 * than 1 means the graphic body will move faster as if it were closer
+		 * to the camera and between 1 and 0 means it will move as if it were
+		 * far from the camera.
+		 * @param newYScrollFactor New vertical scroll factor. A value higher
+		 * than 1 means the graphic body will move faster as if it were closer
+		 * to the camera and between 1 and 0 means it will move as if it were
+		 * far from the camera.
 		 * @see RedBox::GraphicBody::layer
 		 * @see RedBox::Layer::scrollFactor
 		 */
@@ -751,7 +755,7 @@ namespace RedBox {
 
 		/**
 		 * Sets the body's colliding box's horizontal offset.
-		 * @param newYOffset New vertical offset to add to the position when
+		 * @param newXOffset New vertical offset to add to the position when
 		 * detecting collisions.
 		 * @see RedBox::GraphicBody::offset
 		 */

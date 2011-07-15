@@ -29,6 +29,9 @@ namespace RedBox {
 		 * particle's size.
 		 * @param newAnglePerSecond Rotation per second to change the particle's
 		 * angle.
+		 * @param newAlphaPerSecondVariance Alpha per second variance.
+		 * @param newScalingPerSecondVariance Scaling per second variance.
+		 * @param newAnglePerSecondVariance Rotation angle per second variance.
 		 */
 		ParticlePhase(double newPhaseDuration,
 					  double newPhaseDurationVariance,
