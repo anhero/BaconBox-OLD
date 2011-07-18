@@ -97,12 +97,12 @@ namespace RedBox {
 				}
 
 				// We update the particles depending on their phase.
-				ParticleState::Enum tmpState;
+				ParticleState tmpState = ParticleState::DEAD;
 
 				do {
 					tmpState = i->state;
 
-					switch(i->state) {
+					switch(i->state.underlying()) {
 					case ParticleState::BIRTH:
 						i->alphaCounter += Engine::getSinceLastUpdate() * i->alphaPerSecond;
 						updateAlpha(static_cast<int16_t>(floorf(i->alphaCounter)), i->graphicBody);
@@ -276,7 +276,7 @@ namespace RedBox {
 			 * @see RedBox::ParticleState::Enum
 			 */
 			Particle(T* newGraphicBody, double newTimeLeft,
-			         ParticleState::Enum newState) :
+					 ParticleState newState) :
 				graphicBody(newGraphicBody), timeLeft(newTimeLeft),
 				state(newState), alphaCounter(0.0f), alphaPerSecond(0.0f),
 				scalingPerSecond(Vec2()), anglePerSecond(0.0f) {
@@ -319,7 +319,7 @@ namespace RedBox {
 			double timeLeft;
 
 			/// Flag used to know in which phase the particle is.
-			ParticleState::Enum state;
+			ParticleState state;
 
 			/// Counter used for the fading in and out.
 			float alphaCounter;
