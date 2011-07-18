@@ -48,7 +48,7 @@ namespace RedBox {
 		 * @return Sound's current state.
 		 * @see RedBox::AudioState::Enum
 		 */
-		AudioState::Enum getCurrentState() const;
+		AudioState getCurrentState() const;
 		/**
 		 * Play the music with a fade in effect.
 		 * @param nbTimes Number of times to play the music in loop. Negative

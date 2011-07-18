@@ -72,7 +72,7 @@ bool SDLMixerBackgroundMusic::isLooping() {
 
 void SDLMixerBackgroundMusic::setVolume(int newVolume) {
 	this->Sound::setVolume(newVolume);
-	AudioState::Enum currentState = getCurrentState();
+	AudioState currentState = getCurrentState();
 	if(currentState == AudioState::PLAYING ||
 			currentState == AudioState::FADING_IN ||
 			currentState == AudioState::FADING_OUT) {
@@ -80,7 +80,7 @@ void SDLMixerBackgroundMusic::setVolume(int newVolume) {
 	}
 }
 
-AudioState::Enum SDLMixerBackgroundMusic::getCurrentState() const {
+AudioState SDLMixerBackgroundMusic::getCurrentState() const {
 	if(neverPlayed || !music) {
 		return AudioState::INITIAL;
 	} else if(currentMusic == this && Mix_PlayingMusic()) {

@@ -67,9 +67,9 @@ namespace RedBox {
 		 * Gets the sound's current state. Used to know if it is at its initial
 		 * state, currently playing, paused, etc.
 		 * @return Sound's current state.
-		 * @see RedBox::AudioState::Enum
+		 * @see RedBox::AudioState
 		 */
-		AudioState::Enum getCurrentState() const;
+		AudioState getCurrentState() const;
 		/**
 		 * Destructor.
 		 */

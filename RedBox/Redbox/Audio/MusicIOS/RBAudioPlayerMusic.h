@@ -87,9 +87,9 @@ namespace RedBox {
 		 * Gets the music's current state. Used to know if it is at its initial
 		 * state, currently playing, paused or stopped.
 		 * @return Sound effect's current state.
-		 * @see RedBox::AudioState::Enum
+		 * @see RedBox::AudioState
 		 */
-		AudioState::Enum getCurrentState() const;
+		AudioState getCurrentState() const;
 		/**
 		 * Destructor. Does not delete the music data, only the music source.
 		 * This is done to be able to have many musics playing the same

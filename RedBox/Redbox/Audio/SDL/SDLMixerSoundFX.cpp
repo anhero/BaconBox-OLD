@@ -55,8 +55,8 @@ void SDLMixerSoundFX::setVolume(int newVolume) {
 	}
 }
 
-AudioState::Enum SDLMixerSoundFX::getCurrentState() const {
-	AudioState::Enum result = AudioState::INITIAL;
+AudioState SDLMixerSoundFX::getCurrentState() const {
+	AudioState result = AudioState::INITIAL;
 
 	if(hasPlayed) {
 		if(channel == -1) {

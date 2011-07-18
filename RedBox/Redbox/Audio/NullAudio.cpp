@@ -25,7 +25,7 @@ bool NullAudio::isLooping() {
 	return false;
 }
 
-AudioState::Enum NullAudio::getCurrentState() const {
+AudioState NullAudio::getCurrentState() const {
 	Console::print("Getting a NullAudio object's audio state, returning STOPPED");
 	return AudioState::STOPPED;
 }

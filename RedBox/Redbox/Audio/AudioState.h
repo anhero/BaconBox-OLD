@@ -5,6 +5,8 @@
 #ifndef RB_AUDIO_STATE_H
 #define RB_AUDIO_STATE_H
 
+#include "SafeEnum.h"
+
 namespace RedBox {
 	/**
 	 * Represents the state of a sound effect or a background music. When one is
@@ -13,8 +15,8 @@ namespace RedBox {
 	 * music, it set at PAUSED. When a sound is done being played, it is set at
 	 * STOPPED.
 	 */
-	namespace AudioState {
-		enum Enum {
+	struct AudioStateDef {
+		enum type {
 			INITIAL,
 			PLAYING,
 			PAUSED,
@@ -22,7 +24,8 @@ namespace RedBox {
 			FADING_IN,
 			FADING_OUT
 		};
-	}
+	};
+	typedef SafeEnum<AudioStateDef> AudioState;
 }
 
 #endif
