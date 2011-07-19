@@ -11,6 +11,9 @@ _hash="c870b9bd5858a0ecb5275c14486d9554"
 
 OGG_CFLAGS="-llibogg.a"
 
+# Fix for a lion bug where it is set to -O4, causing compilation bugs.
+CFLAGS="${CFLAGS-} -O2"
+
 config_cmdline="--disable-oggtest"
 config_cmdline="$config_cmdline --enable-shared=no"
 config_cmdline="$config_cmdline --with-ogg=${libs_builddir}";
