@@ -12,12 +12,7 @@ if [ ${libs_target-} != "ios" ]; then
 fi
 
 if [ ${libs_target-} != "ios" -a ${libs_target-} != "android" ]; then
-	# Temporary measure for Lion incompatibilities.
-	if [[ "$(uname -s)" == "Darwin" && "$(uname -r)" == "11.0.0" ]]; then
-		libraries=( ${libraries[@]-} 'sdl12' )
-	else
-		libraries=( ${libraries[@]-} 'sdl' )
-	fi
+	libraries=( ${libraries[@]-} 'sdl' )
 	libraries=( ${libraries[@]-} 'sdl_mixer' )
 fi
 
