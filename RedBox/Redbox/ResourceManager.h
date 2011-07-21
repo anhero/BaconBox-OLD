@@ -56,6 +56,23 @@ namespace RedBox {
 		static TextureInfo* loadTexture(const std::string& key,
 		                                const std::string& filePath,
 		                                bool overwrite = false);
+        
+        /**
+		 * Loads a texture from a file and assigns a representative key to it.
+         * This version of the loadTexture function need a relative path from the resource folder,
+         * you don't need to use an absolue path or to pass your filename through 
+         * ResourcePathHandler::getResourcePathFor.
+		 * @param key Key used to identify this new texture.
+		 * @param relativePath RelativePath (from the resource folder)to the file containing the texture.
+		 * @param overwrite When set to true, it will delete any existing
+		 * texture at the specified key. (False (default) will print an error if
+		 * the key is occupied).
+		 * @return Pointer to the loaded texture, NULL if the texture failed to
+		 * load.
+		 */
+        static TextureInfo* loadTextureRelativePath(const std::string& key,
+		                                const std::string& relativePath,
+		                                bool overwrite = false);
 
 		/**
 		 * Gets the information about the asked texture. Uses the texture's key

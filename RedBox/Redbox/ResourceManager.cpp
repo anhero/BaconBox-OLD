@@ -11,7 +11,7 @@
 #include "SoundEngine.h"
 #include "MusicEngine.h"
 #include "GraphicDriver.h"
-
+#include "ResourcePathHandler.h"
 
 //For LibPNG
 #include <stdio.h>
@@ -72,6 +72,12 @@ TextureInfo* ResourceManager::loadTexture(const std::string& key,
 	} else {
 		return NULL;
 	}
+}
+
+TextureInfo* ResourceManager::loadTextureRelativePath(const std::string& key,
+                                     const std::string& relativePath,
+                                     bool overwrite){
+    return loadTexture(key, ResourcePathHandler::getResourcePathFor(relativePath), overwrite);
 }
 
 TextureInfo* ResourceManager::getTexture(const std::string& key) {
