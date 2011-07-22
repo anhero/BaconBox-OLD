@@ -1,12 +1,11 @@
 #!/bin/bash
 
 _name="SDL"
-_license="zlib" 
-_version="1.3.0-5538"
+_license="zlib"
+_version="1.3-5573"
 _archive="${_name}-${_version}.tar.bz2"
-_archive_url="http://code.anhero.net/redbox/downloads/${_archive}"
-# _archive_url="http://www.libsdl.org/tmp/${_archive}"
-_hash="1f283b8e3fbe71d753c41604723bbb02" 
+_archive_url="http://anhero.net/stuff/${_archive}"
+_hash="18003e33e4e05663ce1219b639a5bba4"
 
 load_base http.fetch
 load_base configuremakemake.build
@@ -226,5 +225,32 @@ EOF
  { echo "$as_me:$LINENO: checking for void*" >&5
 EOF
 
+	#Patch to make this work with OS X Lion
+	patch -p1 <<'EOF'
+--- a/include/SDL_opengl.h	Mon Jul 18 14:55:24 2011 -0700
++++ b/include/SDL_opengl.h	Wed Jul 20 14:50:14 2011 -0400
+@@ -46,6 +46,9 @@
+ #endif
+ #if defined(__MACOSX__)
+ #include <OpenGL/gl.h>          /* Header File For The OpenGL Library */
++#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
++#include <OpenGL/OpenGL.h>  /* Required only on osx lion to define GLhandleARB */
++#endif
+ #define __X_GL_H
+ #else
+ #include <GL/gl.h>              /* Header File For The OpenGL Library */
+@@ -5118,7 +5121,10 @@
+ #ifndef GL_ARB_shader_objects
+ /* GL types for program/shader text and shader object handles */
+ typedef char GLcharARB;
+-typedef unsigned int GLhandleARB;
++#if !defined(MAC_OS_X_VERSION_10_7) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7
++typedef unsigned int GLhandleARB; /* On MacOSX 10.7 and higher, this variable is defined regardless
++                                   of whether GL_ARB_shader_objects is defined or not */
++#endif
+ #endif
+ 
+ /* GL type for "half" precision (s10e5) float data in host memory */
+EOF
 	__build
 }

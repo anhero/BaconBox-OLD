@@ -11,6 +11,8 @@ _hash="5a9fcabc9a1b7c6f1cd75ddc78f36c56"
 
 config_cmdline="--enable-shared=no"
 
+# Fix for a lion bug where it is set to -O4, causing compilation bugs.
+CFLAGS="${CFLAGS-} -O2"
 
 #Host
 if [ -n "${target_crosscompile-}" ]; then
