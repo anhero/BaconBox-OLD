@@ -221,9 +221,40 @@ namespace RedBox {
 		/**
 		 * Gets the hue for the current color.
 		 * When a pure shade gray, white or black, hue will be 0.
-		 * @return Hue of the color.
+		 * @return Hue of the color, between 0 and 360 degrees.
 		 */
 		float getHue() const;
+
+		/**
+		 * Gets the HSV Saturation of the current color.
+		 * @return Saturation of the color, between 0 and 1.
+		 */
+		float getSaturation() const;
+
+		/**
+		 * Gets the HSV "Value" of the current color. This is also called
+		 * Brightness.
+		 * @return Value of the color, between 0 and 1.
+		 */
+		float getValue() const;
+
+		/**
+		 * Sets the hue of the current color.
+		 * @param hue The new hue to apply
+		 */
+		void setHue(float hue);
+
+		/**
+		 * Sets the HSV saturation of the current color.
+		 * @param saturation The new saturation to apply
+		 */
+		void setSaturation(float saturation);
+
+		/**
+		 * Sets the HSV "value" of the current color.
+		 * @param hue The new value to apply
+		 */
+		void setValue(float value);
 
 	private:
 		/// Color components.

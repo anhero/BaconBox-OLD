@@ -257,6 +257,34 @@ float Color::getHue() const {
 	return hue;
 }
 
+float Color::getSaturation() const {
+	return getHSV().S;
+}
+
+float Color::getValue() const {
+	return getHSV().V;
+}
+
+void Color::setHue(float hue) {
+	Color::HSV color = getHSV();
+	color.H = hue;
+	setHSV(color);
+}
+
+void Color::setSaturation(float saturation){
+	Color::HSV color = getHSV();
+	color.S = saturation;
+	setHSV(color);
+}
+
+void Color::setValue(float value){
+	Color::HSV color = getHSV();
+	color.V = value;
+	setHSV(color);
+}
+
+
+
 uint8_t Color::getWithinRange(int32_t component) {
 	return static_cast<uint8_t>((component < 0) ? (0) : ((component > MAX_COMPONENT_VALUE_32) ? (MAX_COMPONENT_VALUE) : (component)) );
 }
