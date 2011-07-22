@@ -51,6 +51,16 @@ namespace RedBox {
 			A
 		};
 
+		/// HSV color components.
+		struct HSV {
+			/// Hue component. Between 0 and 360 degrees.
+			float H;
+			/// Saturation component. Between 0 and 1.
+			float S;
+			/// Value component. Between 0 and 1.
+			float V;
+		};
+
 		/**
 		 * Default constructor. Initializes the color to BLACK.
 		 */
@@ -195,6 +205,26 @@ namespace RedBox {
 		 * @return Array containing the four components in the order RGBA.
 		 */
 		const uint8_t* getComponents() const;
+
+		/**
+		 * Gets the color as HSV representation.
+		 * @return HSV struct of values.
+		 */
+		HSV getHSV() const;
+
+		/**
+		 * Sets the color from HSV representation.
+		 * @param color The color as an HSV struct.
+		 */
+		void setHSV(HSV color);
+
+		/**
+		 * Gets the hue for the current color.
+		 * When a pure shade gray, white or black, hue will be 0.
+		 * @return Hue of the color.
+		 */
+		float getHue() const;
+
 	private:
 		/// Color components.
 		uint8_t colors[NB_COMPONENTS];
