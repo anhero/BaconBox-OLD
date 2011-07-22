@@ -25,7 +25,7 @@ namespace RedBox {
 		/// Maximum value a component can have.
 		static const uint8_t MAX_COMPONENT_VALUE = 0xff;
 		/// Maximum value a component can have.
-		static const int32_t MAX_COMPONENT_VALUE_32 = 0xff;
+		static const uint8_t MAX_COMPONENT_VALUE_32 = 0xff;
 		/// Black color (0, 0, 0, 255).
 		static const Color BLACK;
 		/// White color (255, 255, 255, 255).
@@ -194,18 +194,17 @@ namespace RedBox {
 		 * Directly gets the color's array of components.
 		 * @return Array containing the four components in the order RGBA.
 		 */
-		const float* getComponents() const;
+		const uint8_t* getComponents() const;
 	private:
-		static const float UNCLAMPED_MAX;
 		/// Color components.
-		float colors[NB_COMPONENTS];
+		uint8_t colors[NB_COMPONENTS];
 
 		/**
 		 * Makes a given component within the required range (0 to 255).
 		 * @param component Component value to put within range.
 		 * @return The clamped value.
 		 */
-		static float getWithinRange(int32_t component);
+		static uint8_t getWithinRange(int32_t component);
 	};
 }
 
