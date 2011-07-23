@@ -67,6 +67,48 @@ namespace RedBox {
 		static void drawShapeWithColor(GLfloat* vertices,
 									   RenderInfo& renderingInfo,
 									   unsigned int nbVertices);
+        
+        /**
+         * Draw the alpha component of the given vertices and texture to the 
+         * alpha component of the frame buffer, so the next call to any
+         * "drawMaskedShape..." functions can use the given mask as it's inversed
+         * alpha value.
+         * @param vertices Array of vertices to draw, must have this form (X1, Y1,
+		 * X2, Y2, Xn, Yn). The order must be clock wise
+         * @param renderingInfo Object of type RenderInfo, containing the color
+		 * array, texture coordinates and textureID.
+         * @param nbVertices Number of vertices to draw.
+         */
+        void drawMaskShapeWithTexture(GLfloat* vertices,
+                                    RenderInfo& renderingInfo,
+                                    unsigned int nbVertices);
+        /**
+         * Draw the alpha component of the given vertices and texture to the 
+         * alpha component of the frame buffer, so the next call to any
+         * "drawMaskedShape..." functions can use the given mask as it's inversed
+         * alpha value.This version of the function will also use the alpha component of 
+         * the shape's color (in addition to the texture alpha component).
+         * @param vertices Array of vertices to draw. They have to be like this:
+		 * [x1, y1, x2, y2, x3, y3, ...]. The order must be clockwise.
+		 * @param renderingInfo Contains the information about the shape's
+		 * color.
+		 * @param nbVertices Number of vertices the array contains.
+		 */
+        void drawMaskShapeWithTextureAndColor(GLfloat* vertices,
+                                             RenderInfo& renderingInfo,
+                                             unsigned int nbVertices);
+        
+        void drawMaskedShapeWithColor(GLfloat* vertices,
+                                      RenderInfo& renderingInfo,
+                                      unsigned int nbVertices);
+        
+        void drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
+                                                RenderInfo& renderingInfo,
+                                                unsigned int nbVertices);
+        
+        void drawMaskedShapeWithTexture(GLfloat* vertices,
+                                        RenderInfo& renderingInfo,
+                                        unsigned int nbVertices);
 		
 		/**
 		 * Prepare the scene before rendering object.

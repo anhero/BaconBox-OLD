@@ -13,7 +13,8 @@ namespace RedBox {
 		enum type {
 			SHAPE,
 			TEXTURE,
-			COLOR
+			COLOR,
+            MASKED
 		};
 	};
 	typedef SafeEnum<RenderStepModeDef> RenderStepMode;
