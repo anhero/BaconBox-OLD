@@ -97,15 +97,54 @@ namespace RedBox {
         void drawMaskShapeWithTextureAndColor(GLfloat* vertices,
                                              RenderInfo& renderingInfo,
                                              unsigned int nbVertices);
-        
+        /**
+         * Draw the giver shape masked by using a blend between the alpha 
+         * component of the shape and the inversed alpha component 
+         * of the color buffer. So if a mask has been rendered with any 
+         * "drawMaskShape..." function, the given shape will apear through
+         * the transparent part of the mask.
+         * This version of the function render with a color only (ignore
+         * the texture id).
+         * @param vertices Array of vertices to draw. They have to be like this:
+		 * [x1, y1, x2, y2, x3, y3, ...]. The order must be clockwise.
+		 * @param renderingInfo Contains the information about the shape's
+		 * color.
+		 * @param nbVertices Number of vertices the array contains.
+		 */
         void drawMaskedShapeWithColor(GLfloat* vertices,
                                       RenderInfo& renderingInfo,
                                       unsigned int nbVertices);
         
+        /**
+         * Draw the giver shape masked by using a blend between the alpha 
+         * component of the shape and the inversed alpha component 
+         * of the color buffer. So if a mask has been rendered with any 
+         * "drawMaskShape..." function, the given shape will apear through
+         * the transparent part of the mask.
+         * This version of the function render with a texture and a color.
+         * @param vertices Array of vertices to draw. They have to be like this:
+		 * [x1, y1, x2, y2, x3, y3, ...]. The order must be clockwise.
+		 * @param renderingInfo Contains the information about the shape's
+		 * color.
+		 * @param nbVertices Number of vertices the array contains.
+		 */
         void drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
                                                 RenderInfo& renderingInfo,
                                                 unsigned int nbVertices);
-        
+        /**
+         * Draw the giver shape masked by using a blend between the alpha 
+         * component of the shape and the inversed alpha component 
+         * of the color buffer. So if a mask has been rendered with any 
+         * "drawMaskShape..." function, the given shape will apear through
+         * the transparent part of the mask.
+         * This version of the function render with texture only (ignore the
+         * color array).
+         * @param vertices Array of vertices to draw. They have to be like this:
+		 * [x1, y1, x2, y2, x3, y3, ...]. The order must be clockwise.
+		 * @param renderingInfo Contains the information about the shape's
+		 * color.
+		 * @param nbVertices Number of vertices the array contains.
+		 */
         void drawMaskedShapeWithTexture(GLfloat* vertices,
                                         RenderInfo& renderingInfo,
                                         unsigned int nbVertices);
