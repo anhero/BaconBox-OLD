@@ -236,6 +236,7 @@ namespace RedBox {
 		
 		/**
 		 * Set the alpha component on the main renderstep.
+         * Range is from 0 to 255.
 		 */
 		void setMainAlpha(int alpha);
 		
@@ -319,6 +320,26 @@ namespace RedBox {
 		 * it makes the sprite rotate counter-clockwise.
 		 */
 		void setAngle(float newAngle);
+        
+        /** 
+        * Similar to the render function except that it will only
+        * render to the alpha component of the color buffer. It is
+        * used to mask the next rendered sprite (if the next sprite
+        * is set as a masked sprite).
+        */
+        void mask();
+        
+        /**
+         * Undo what the mask function did. This function
+         * MUST be once after the masked sprite has been rendered.
+         */
+        void unmask();
+        
+        
+        /**
+         * Set the sprite used to mask the parent renderstep. 
+         */
+        void setMask(Sprite * aMask);
 		
 //		void setTexture(TextureInfo * aTextureInfo);
 //		void setTexture(std::string key);
@@ -346,6 +367,8 @@ namespace RedBox {
 					   unsigned int frameWidth,
 					   unsigned int frameHeight,
 					   unsigned int nbFrames = 1);
+        
+        
         /**
          * Resets the sprite. Also frees up all allocated memory.
          */

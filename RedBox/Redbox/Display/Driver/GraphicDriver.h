@@ -54,7 +54,101 @@ namespace RedBox{
 		static void drawShapeWithColor(std::vector<float>& vertices,
 									   RenderInfo& renderingInfo,
 									   unsigned int nbVertices);
-		
+        
+        
+        
+        /**
+         * Draw the alpha component of the given vertices and texture to the 
+         * alpha component of the frame buffer, so the next call to any
+         * "drawMaskedShape..." functions can use the given mask as it's inversed
+         * alpha value.
+         * @param vertices Vertices to draw.
+         * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
+         * @param nbVertices Number equal to the number of vertices to draw.
+         
+         */
+        static void drawMaskShapeWithTexture(std::vector<float>& vertices,
+                                             RenderInfo& renderingInfo,
+                                             unsigned int nbVertices);
+        
+        /**
+         * Reset the alpha channel to it's original state after a call
+         * to any "drawMask..." function.
+         * @param vertices Vertices to draw.
+         * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
+         * @param nbVertices Number equal to the number of vertices to draw.
+         
+         */
+        static void unmask(std::vector<float>& vertices,
+                           RenderInfo& renderingInfo,
+                           unsigned int nbVertices);
+        
+        /**
+         * Draw the alpha component of the given vertices and texture to the 
+         * alpha component of the frame buffer, so the next call to any
+         * "drawMaskedShape..." functions can use the given mask as it's inversed
+         * alpha value.This version of the function will also use the alpha component of 
+         * the shape's color (in addition to the texture alpha component).
+         * @param vertices Vertices to draw.
+         * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
+         * @param nbVertices Number equal to the number of vertices to draw.
+         
+         */
+        static void drawMaskShapeWithTextureAndColor(std::vector<float>& vertices,
+                                                     RenderInfo& renderingInfo,
+                                                     unsigned int nbVertices);
+        
+        /**
+         * Draw the giver shape masked by using a blend between the alpha 
+         * component of the shape and the inversed alpha component 
+         * of the color buffer. So if a mask has been rendered with any 
+         * "drawMaskShape..." function, the given shape will apear through
+         * the transparent part of the mask.
+         * This version of the function render with a color only (ignore
+         * the texture id).
+         * @param vertices Vertices to draw.
+         * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
+         * @param nbVertices Number equal to the number of vertices to draw.
+         
+         */
+        static void drawMaskedShapeWithColor(std::vector<float>& vertices,
+                                             RenderInfo& renderingInfo,
+                                             unsigned int nbVertices);
+        
+        /**
+         * Draw the giver shape masked by using a blend between the alpha 
+         * component of the shape and the inversed alpha component 
+         * of the color buffer. So if a mask has been rendered with any 
+         * "drawMaskShape..." function, the given shape will apear through
+         * the transparent part of the mask.
+         * This version of the function render with a texture and a color.
+         * @param vertices Vertices to draw.
+         * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
+         * @param nbVertices Number equal to the number of vertices to draw.
+         
+         */
+        static void drawMaskedShapeWithTextureAndColor(std::vector<float>& vertices,
+                                                       RenderInfo& renderingInfo,
+                                                       unsigned int nbVertices);
+        
+        
+		/**
+         * Draw the giver shape masked by using a blend between the alpha 
+         * component of the shape and the inversed alpha component 
+         * of the color buffer. So if a mask has been rendered with any 
+         * "drawMaskShape..." function, the given shape will apear through
+         * the transparent part of the mask.
+         * This version of the function render with texture only (ignore the
+         * color array).
+         * @param vertices Array of vertices to draw. They have to be like this:
+		 * [x1, y1, x2, y2, x3, y3, ...]. The order must be clockwise.
+		 * @param renderingInfo Contains the information about the shape's
+		 * color.
+		 * @param nbVertices Number of vertices the array contains.
+		 */
+        static void drawMaskedShapeWithTexture(std::vector<float>& vertices,
+                                               RenderInfo& renderingInfo,
+                                               unsigned int nbVertices);
 		/**
 		 * Prepare the scene before rendering object.
 		 * It clear the draw buffer and reset the transformation matrix with the given

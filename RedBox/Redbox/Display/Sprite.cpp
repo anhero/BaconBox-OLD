@@ -83,6 +83,26 @@ void Sprite::render() {
 	}
 }
 
+void Sprite::mask(){
+	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
+        i != renderSteps.end();
+        i++) {
+		if(*i) {
+			(*i)->mask();
+		}
+	}
+}
+
+void Sprite::unmask(){
+    for(std::list<RenderStep*>::iterator i = renderSteps.begin();
+        i != renderSteps.end();
+        i++) {
+		if(*i) {
+			(*i)->unmask();
+		}
+	}
+}
+
 void Sprite::update() {
 	GraphicBody::update();
 
@@ -369,6 +389,33 @@ void Sprite::setMainAlpha(int alpha){
 	Color mainColor = getMainColor();
 	setMainColor(Color(mainColor.getRed(), mainColor.getGreen(), mainColor.getBlue(), alpha));
 }
+
+
+void Sprite::setMask(Sprite * aMask){
+    if(aMask != NULL){
+    for(std::list<RenderStep*>::iterator i = renderSteps.begin();
+        i != renderSteps.end();
+        i++) {
+		if(*i) {
+			(*i)->setMask(aMask);
+            (*i)->addMode(RenderStepMode::MASKED);
+
+		}
+	}
+    }
+    else{
+        for(std::list<RenderStep*>::iterator i = renderSteps.begin();
+            i != renderSteps.end();
+            i++) {
+            if(*i) {
+                (*i)->removeMode(RenderStepMode::MASKED);
+            }
+        }
+    }
+}
+
+
+
 //void Sprite::setTexture(TextureInfo * aTextureInfo){
 //	getMainRenderInfo()->loadTexCoords(&vertices, aTextureInfo->imageWidth, aTextureInfo->imageHeight, 1, aTextureInfo);
 //}
