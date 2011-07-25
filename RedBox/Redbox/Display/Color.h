@@ -25,7 +25,7 @@ namespace RedBox {
 		/// Maximum value a component can have.
 		static const uint8_t MAX_COMPONENT_VALUE = 0xff;
 		/// Maximum value a component can have.
-		static const int32_t MAX_COMPONENT_VALUE_32 = 0xff;
+		static const uint8_t MAX_COMPONENT_VALUE_32 = 0xff;
 		/// Black color (0, 0, 0, 255).
 		static const Color BLACK;
 		/// White color (255, 255, 255, 255).
@@ -49,6 +49,16 @@ namespace RedBox {
 			G,
 			B,
 			A
+		};
+
+		/// HSV color components.
+		struct HSV {
+			/// Hue component. Between 0 and 360 degrees.
+			float H;
+			/// Saturation component. Between 0 and 1.
+			float S;
+			/// Value component. Between 0 and 1.
+			float V;
 		};
 
 		/**
@@ -194,18 +204,68 @@ namespace RedBox {
 		 * Directly gets the color's array of components.
 		 * @return Array containing the four components in the order RGBA.
 		 */
-		const float* getComponents() const;
+		const uint8_t* getComponents() const;
+
+		/**
+		 * Gets the color as HSV representation.
+		 * @return HSV struct of values.
+		 */
+		HSV getHSV() const;
+
+		/**
+		 * Sets the color from HSV representation.
+		 * @param color The color as an HSV struct.
+		 */
+		void setHSV(HSV color);
+
+		/**
+		 * Gets the hue for the current color.
+		 * When a pure shade gray, white or black, hue will be 0.
+		 * @return Hue of the color, between 0 and 360 degrees.
+		 */
+		float getHue() const;
+
+		/**
+		 * Gets the HSV Saturation of the current color.
+		 * @return Saturation of the color, between 0 and 1.
+		 */
+		float getSaturation() const;
+
+		/**
+		 * Gets the HSV "Value" of the current color. This is also called
+		 * Brightness.
+		 * @return Value of the color, between 0 and 1.
+		 */
+		float getValue() const;
+
+		/**
+		 * Sets the hue of the current color.
+		 * @param hue The new hue to apply
+		 */
+		void setHue(float hue);
+
+		/**
+		 * Sets the HSV saturation of the current color.
+		 * @param saturation The new saturation to apply
+		 */
+		void setSaturation(float saturation);
+
+		/**
+		 * Sets the HSV "value" of the current color.
+		 * @param hue The new value to apply
+		 */
+		void setValue(float value);
+
 	private:
-		static const float UNCLAMPED_MAX;
 		/// Color components.
-		float colors[NB_COMPONENTS];
+		uint8_t colors[NB_COMPONENTS];
 
 		/**
 		 * Makes a given component within the required range (0 to 255).
 		 * @param component Component value to put within range.
 		 * @return The clamped value.
 		 */
-		static float getWithinRange(int32_t component);
+		static uint8_t getWithinRange(int32_t component);
 	};
 }
 
