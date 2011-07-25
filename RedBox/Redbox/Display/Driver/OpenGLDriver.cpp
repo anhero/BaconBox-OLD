@@ -18,15 +18,15 @@ void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat* vertices,
 												unsigned int nbVertices) {
 	if(renderingInfo.getColor().getAlpha() > 0) {
 		//@TODO: Check for possible optimizations
-		const float* tempColor = renderingInfo.getColor().getComponents();
-		float color[nbVertices * 4];
+		const uint8_t* tempColor = renderingInfo.getColor().getComponents();
+		uint8_t color[nbVertices * 4];
 		unsigned int componentCount = nbVertices * 4;
 		for	(unsigned int i = 0; i < componentCount; i++) {
 			color[i] = tempColor[i % 4];
 		}
 
 		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(4, GL_FLOAT, 0, color);
+		glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
 		drawShapeWithTexture(vertices, renderingInfo, nbVertices);
 
 		glDisableClientState(GL_COLOR_ARRAY);
@@ -312,10 +312,10 @@ void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,
 									  RenderInfo &renderingInfo,
 									  unsigned int nbVertices) {
 	if(renderingInfo.getColor().getAlpha() > 0) {
-		const float* tempColor = renderingInfo.getColor().getComponents();
+		const uint8_t* tempColor = renderingInfo.getColor().getComponents();
+		uint8_t color[nbVertices * 4];
 		unsigned int componentCount = nbVertices * 4;
-		float color[componentCount];
-		for(unsigned int i = 0; i < componentCount; ++i) {
+		for	(unsigned int i = 0; i < componentCount; i++) {
 			color[i] = tempColor[i % 4];
 		}
 		glEnableClientState(GL_COLOR_ARRAY);
@@ -323,7 +323,7 @@ void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,
 		glEnable(GL_BLEND);
 		glBlendFuncSeparate (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO,GL_ONE);
 		glEnableClientState(GL_VERTEX_ARRAY);
-		glColorPointer(4, GL_FLOAT, 0, color);
+		glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
 
 		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
 
