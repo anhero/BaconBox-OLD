@@ -79,9 +79,22 @@ namespace RedBox {
 		 * array, texture coordinates and textureID.
          * @param nbVertices Number of vertices to draw.
          */
-        void drawMaskShapeWithTexture(GLfloat* vertices,
+        static void drawMaskShapeWithTexture(GLfloat* vertices,
                                     RenderInfo& renderingInfo,
                                     unsigned int nbVertices);
+        
+        /**
+         * Reset the alpha channel to it's original state after a call
+         * to any "drawMask..." function.
+         * @param vertices Array of vertices to draw, must have this form (X1, Y1,
+		 * X2, Y2, Xn, Yn). The order must be clock wise
+         * @param renderingInfo Object of type RenderInfo, containing the color
+		 * array, texture coordinates and textureID.
+         * @param nbVertices Number of vertices to draw.
+         */
+        static void unmask(GLfloat* vertices,
+                    RenderInfo& renderingInfo,
+                    unsigned int nbVertices);
         /**
          * Draw the alpha component of the given vertices and texture to the 
          * alpha component of the frame buffer, so the next call to any
@@ -94,7 +107,7 @@ namespace RedBox {
 		 * color.
 		 * @param nbVertices Number of vertices the array contains.
 		 */
-        void drawMaskShapeWithTextureAndColor(GLfloat* vertices,
+        static void drawMaskShapeWithTextureAndColor(GLfloat* vertices,
                                              RenderInfo& renderingInfo,
                                              unsigned int nbVertices);
         /**
@@ -111,7 +124,7 @@ namespace RedBox {
 		 * color.
 		 * @param nbVertices Number of vertices the array contains.
 		 */
-        void drawMaskedShapeWithColor(GLfloat* vertices,
+        static void drawMaskedShapeWithColor(GLfloat* vertices,
                                       RenderInfo& renderingInfo,
                                       unsigned int nbVertices);
         
@@ -128,7 +141,7 @@ namespace RedBox {
 		 * color.
 		 * @param nbVertices Number of vertices the array contains.
 		 */
-        void drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
+        static void drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
                                                 RenderInfo& renderingInfo,
                                                 unsigned int nbVertices);
         /**
@@ -145,7 +158,7 @@ namespace RedBox {
 		 * color.
 		 * @param nbVertices Number of vertices the array contains.
 		 */
-        void drawMaskedShapeWithTexture(GLfloat* vertices,
+        static void drawMaskedShapeWithTexture(GLfloat* vertices,
                                         RenderInfo& renderingInfo,
                                         unsigned int nbVertices);
 		

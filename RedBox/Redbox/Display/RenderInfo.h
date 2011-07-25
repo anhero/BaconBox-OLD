@@ -14,6 +14,7 @@
 #include "Object.h"
 #include "AnimationParameters.h"
 #include "Color.h"
+#include "Sprite.h"
 
 namespace RedBox {
 	class VerticesGroup;
@@ -125,6 +126,16 @@ namespace RedBox {
 		void addAnimation(const std::string& name,
 						  const AnimationParameters& newAnimation);
 
+        /**
+         * Set the sprite used to mask the parent renderstep. 
+         */
+        void setMask(Sprite * aMask);
+        
+        /**
+         * Return the sprite used to mask the parent renderstep. 
+         */
+        Sprite * getMask();
+        
 		/**
 		 * Gets the color.
 		 * @return RenderInfo's color.
@@ -236,6 +247,9 @@ namespace RedBox {
          * is alpha.
          */
 		Color color;
+        
+        //Pointer to a mask sprite. Pointer is NULL if the parent renderstep is not masked.
+        Sprite * mask;
 
         /// Pointer to the texture information.
         TextureInfo* texInfo;

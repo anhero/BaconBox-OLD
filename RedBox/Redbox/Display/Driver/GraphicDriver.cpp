@@ -41,6 +41,61 @@ void GraphicDriver::drawShapeWithColor(std::vector<float>& vertices,
 #endif
 }
 
+
+void GraphicDriver::drawMaskShapeWithTexture(std::vector<float>& vertices,
+									   RedBox::RenderInfo &renderingInfo,
+									   unsigned int nbVertices) {
+#ifdef RB_OPENGL
+	OpenGLDriver::drawMaskShapeWithTexture(&(*(vertices.begin())), renderingInfo,
+									 nbVertices);
+#endif
+}
+
+void GraphicDriver::unmask(std::vector<float>& vertices,
+                                             RedBox::RenderInfo &renderingInfo,
+                                             unsigned int nbVertices) {
+#ifdef RB_OPENGL
+	OpenGLDriver::unmask(&(*(vertices.begin())), renderingInfo,
+                                           nbVertices);
+#endif
+}
+
+void GraphicDriver::drawMaskShapeWithTextureAndColor(std::vector<float>& vertices,
+                           RedBox::RenderInfo &renderingInfo,
+                           unsigned int nbVertices) {
+#ifdef RB_OPENGL
+	OpenGLDriver::drawMaskShapeWithTextureAndColor(&(*(vertices.begin())), renderingInfo,
+                         nbVertices);
+#endif
+}
+
+void GraphicDriver::drawMaskedShapeWithColor(std::vector<float>& vertices,
+                                                     RedBox::RenderInfo &renderingInfo,
+                                                     unsigned int nbVertices) {
+#ifdef RB_OPENGL
+	OpenGLDriver::drawMaskedShapeWithColor(&(*(vertices.begin())), renderingInfo,
+                                                   nbVertices);
+#endif
+}
+
+void GraphicDriver::drawMaskedShapeWithTextureAndColor(std::vector<float>& vertices,
+                                             RedBox::RenderInfo &renderingInfo,
+                                             unsigned int nbVertices) {
+#ifdef RB_OPENGL
+	OpenGLDriver::drawMaskedShapeWithTextureAndColor(&(*(vertices.begin())), renderingInfo,
+                                           nbVertices);
+#endif
+}
+
+void GraphicDriver::drawMaskedShapeWithTexture(std::vector<float>& vertices,
+                                                       RedBox::RenderInfo &renderingInfo,
+                                                       unsigned int nbVertices) {
+#ifdef RB_OPENGL
+	OpenGLDriver::drawMaskedShapeWithTexture(&(*(vertices.begin())), renderingInfo,
+                                                     nbVertices);
+#endif
+}
+
 void GraphicDriver::prepareScene(const Vec2& position, float angle, float zoom,
 								 const Color& backgroundColor) {
 

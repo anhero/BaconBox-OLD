@@ -73,7 +73,17 @@ RenderStep& RenderStep::operator=(const RenderStep& src) {
 RenderStep::~RenderStep() {
 	clean();
 }
+void RenderStep::mask(){
+    if(verticesData.size()) {
+        GraphicDriver::drawMaskShapeWithTextureAndColor(verticesData,info, vertices->getVertices().size());
+	}			
+}
 
+void RenderStep::unmask(){
+    if(verticesData.size()) {
+        GraphicDriver::unmask(verticesData,info, vertices->getVertices().size());
+	}
+}
 void RenderStep::render() {
 	updateVerticesData();
 
@@ -81,7 +91,15 @@ void RenderStep::render() {
 		// We check which graphic driver method to use.
 		if(mode.isSet(RenderStepMode::SHAPE)) {
 			if(mode.isSet(RenderStepMode::TEXTURE)) {
-				if(mode.isSet(RenderStepMode::COLOR)) {
+				if (mode.isSet(RenderStepMode::MASKED)) {
+                    Sprite* mask = getMask();
+                    mask->mask();
+                    GraphicDriver::drawMaskedShapeWithTextureAndColor(verticesData,
+																info,
+																vertices->getVertices().size());
+                    mask->unmask();
+                }
+                else if(mode.isSet(RenderStepMode::COLOR)) {
 					GraphicDriver::drawShapeWithTextureAndColor(verticesData,
 																info,
 																vertices->getVertices().size());
@@ -221,6 +239,7 @@ void RenderStep::updateVerticesData() {
 	}
 }
 
+
 void RenderStep::addVertexPtr(Vertex* vertexPtr) {
 	verticesPtr.push_back(vertexPtr);
 }
@@ -259,6 +278,13 @@ void RenderStep::copyFrom(const RenderStep& src) {
 		isPaused = false;
 		animCounter = 0.0;
 	}
+}
+
+Sprite * RenderStep::getMask(){
+    return info.getMask();
+}
+void RenderStep::setMask(Sprite * aMask){
+    info.setMask(aMask);
 }
 
 void RenderStep::setColor(const Color& newColor) {
