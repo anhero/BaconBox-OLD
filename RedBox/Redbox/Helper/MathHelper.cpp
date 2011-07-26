@@ -27,3 +27,8 @@ float MathHelper::modFloat(float dividend, float divisor) {
 float MathHelper::degreesToRadians(float degrees) {
 	return degrees * 0.0174532925f;
 }
+
+unsigned int MathHelper::roundUpDivision(unsigned int dividend,
+										 unsigned int divisor) {
+	return ((dividend % divisor) ? (dividend / divisor + 1) : (dividend / divisor));
+}
