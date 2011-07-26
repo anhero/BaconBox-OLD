@@ -11,13 +11,13 @@
 using namespace RedBox;
 
 RenderInfo::RenderInfo(): Object(), color(Color::WHITE), texInfo(NULL),
-	currentFrame(0), currentNbLoops(0), defaultFrame(0) {
+	currentFrame(0), currentNbLoops(0), defaultFrame(0), mask(NULL){
 }
 
 RenderInfo::RenderInfo(const RenderInfo& src) : Object(), color(src.color),
 	texInfo(src.texInfo), texCoords(src.texCoords), currentFrame(src.currentFrame),
 	currentNbLoops(src.currentNbLoops), defaultFrame(src.defaultFrame),
-	animations(src.animations), currentAnimation(src.currentAnimation) {
+	animations(src.animations), currentAnimation(src.currentAnimation), mask(src.mask) {
 }
 
 RenderInfo::RenderInfo(TextureInfo* newTexInfo,
@@ -27,8 +27,16 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
                        unsigned int nbFrames,
                        const Color& newColor) : Object(), color(newColor),
 	texInfo(newTexInfo), texCoords(std::vector< std::vector<float> >(nbFrames)),
-	currentFrame(0), currentNbLoops(0), defaultFrame(0) {
+	currentFrame(0), currentNbLoops(0), defaultFrame(0), mask(NULL) {
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
+}
+
+void RenderInfo::setMask(Sprite * aMask){
+    mask = aMask;
+}
+
+Sprite * RenderInfo::getMask(){
+    return mask;
 }
 
 void RenderInfo::loadTexCoords(VerticesGroup* vertices,

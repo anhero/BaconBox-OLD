@@ -115,6 +115,30 @@ namespace RedBox {
 		 * Updates the the RenderStep.
 		 */
 		virtual void update();
+        
+        /** 
+         * Similar to the render function except that it will only
+         * render to the alpha component of the color buffer. It is
+         * used to mask the next rendered sprite (if the next sprite
+         * is set as a masked sprite).
+         */
+        void mask();
+        
+        /**
+         * Undo what the mask function did. This function
+         * MUST be once after the masked sprite has been rendered.
+         */
+        void unmask();
+        
+        /**
+         * Set the sprite used to mask the parent renderstep. 
+         */
+        void setMask(Sprite * aMask);
+        
+        /**
+         * Return the sprite used to mask the parent renderstep. 
+         */
+        Sprite * getMask();
 
         /**
          * Accessor for the rendering information.
