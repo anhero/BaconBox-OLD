@@ -65,8 +65,11 @@ void OpenGLDriver::drawMaskShapeWithTexture(GLfloat* vertices,
                             glEnable(GL_TEXTURE_2D);
                             glEnable(GL_BLEND);
     
-                            glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
-                            
+#ifdef RB_OPENGLES
+    glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
+#else
+    glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
+#endif
                             glVertexPointer(2, GL_FLOAT, 0, vertices);
                             glEnableClientState(GL_VERTEX_ARRAY);
     
@@ -90,7 +93,11 @@ void OpenGLDriver::unmask(GLfloat* vertices,
     glVertexPointer(2, GL_FLOAT, 0, vertices);
     glEnableClientState(GL_VERTEX_ARRAY);
     
+#ifdef RB_OPENGLES
+    glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE,GL_ONE);
+#else
     glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE,GL_ONE);
+#endif
     uint8_t color[nbVertices * 4];
     for	(unsigned int i = 0; i < nbVertices; i++) {
         color[4*(i+1)-1] = 255;
@@ -116,7 +123,11 @@ void OpenGLDriver::drawMaskedShapeWithColor(GLfloat* vertices,
         
 		glEnable(GL_BLEND);
         //First render (we must use the minimum alpha between the source and destination and let the RGB component unchanged).
-		glBlendEquationSeparate(GL_FUNC_ADD,GL_MIN);
+#ifdef RB_OPENGLES
+    glBlendEquationSeparateOES(GL_FUNC_ADD_OES,GL_MIN_EXT);
+#else
+    glBlendEquationSeparate(GL_FUNC_ADD,GL_MIN);
+#endif
         glBlendFunc(GL_ZERO, GL_ONE);
         
 		glVertexPointer(2, GL_FLOAT, 0, vertices);
@@ -134,7 +145,11 @@ void OpenGLDriver::drawMaskedShapeWithColor(GLfloat* vertices,
             for	(unsigned int i = 0; i < componentCount; i++) {
                 color[i] = tempColor[i % 4];
             }
+#ifdef RB_OPENGLES
+            glBlendEquationOES(GL_FUNC_ADD_OES);
+#else
             glBlendEquation(GL_FUNC_ADD);
+#endif
             glBlendFunc(GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA);
             
             glEnableClientState(GL_COLOR_ARRAY);
@@ -147,7 +162,11 @@ void OpenGLDriver::drawMaskedShapeWithColor(GLfloat* vertices,
         //Third render, we must reset the alpha channel and leave the RGB channels unchanged.
         glDisable(GL_TEXTURE_2D);
         glEnableClientState(GL_COLOR_ARRAY);
-        glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
+#ifdef RB_OPENGLES
+    glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
+#else
+    glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
+#endif
         uint8_t color[nbVertices * 4];
         for	(unsigned int i = 0; i < nbVertices; i++) {
 			color[4*(i+1)-1] = 255;
@@ -174,7 +193,11 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
         //First render (we must use the minimum alpha between the source and destination and let the RGB component unchanged).
+#ifdef RB_OPENGLES
+		glBlendEquationSeparateOES(GL_FUNC_ADD_OES,GL_MIN_EXT);
+#else
 		glBlendEquationSeparate(GL_FUNC_ADD,GL_MIN);
+#endif
         glBlendFunc(GL_ZERO, GL_ONE);
         
 		glVertexPointer(2, GL_FLOAT, 0, vertices);
@@ -194,7 +217,11 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
             for	(unsigned int i = 0; i < componentCount; i++) {
                 color[i] = tempColor[i % 4];
             }
-        glBlendEquation(GL_FUNC_ADD);
+#ifdef RB_OPENGLES
+            glBlendEquationOES(GL_FUNC_ADD_OES);
+#else
+            glBlendEquation(GL_FUNC_ADD);
+#endif
         glBlendFunc(GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA);
             
         glEnableClientState(GL_COLOR_ARRAY);
@@ -207,7 +234,11 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
         //Third render, we must reset the alpha channel and leave the RGB channels unchanged.
         glDisable(GL_TEXTURE_2D);
         glEnableClientState(GL_COLOR_ARRAY);
+#ifdef RB_OPENGLES
+        glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
+#else
         glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
+#endif
         uint8_t color[nbVertices * 4];
         for	(unsigned int i = 0; i < nbVertices; i++) {
 			color[4*(i+1)-1] = 255;
@@ -239,7 +270,11 @@ void OpenGLDriver::drawMaskedShapeWithTexture(GLfloat* vertices,
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
         //First render (we must use the minimum alpha between the source and destination and let the RGB component unchanged).
+#ifdef RB_OPENGLES
+		glBlendEquationSeparateOES(GL_FUNC_ADD_OES,GL_MIN_EXT);
+#else
 		glBlendEquationSeparate(GL_FUNC_ADD,GL_MIN);
+#endif
         glBlendFunc(GL_ZERO, GL_ONE);
         
 		glVertexPointer(2, GL_FLOAT, 0, vertices);
@@ -251,14 +286,22 @@ void OpenGLDriver::drawMaskedShapeWithTexture(GLfloat* vertices,
 		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
         
         //Second render, we must render the color according to the buffer alpha channel,
+#ifdef RB_OPENGLES
+        glBlendEquationOES(GL_FUNC_ADD_OES);
+#else
         glBlendEquation(GL_FUNC_ADD);
+#endif
         glBlendFunc(GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA);
         glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
         
         //Third render, we must reset the alpha channel and leave the RGB channels unchanged.
         glDisable(GL_TEXTURE_2D);
         glEnableClientState(GL_COLOR_ARRAY);
+#ifdef RB_OPENGLES
+        glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
+#else
         glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
+#endif
         uint8_t color[nbVertices * 4];
         for	(unsigned int i = 0; i < nbVertices; i++) {
 			color[4*(i+1)-1] = 255;
@@ -287,7 +330,11 @@ void OpenGLDriver::drawShapeWithTexture(GLfloat* vertices,
 
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
+#ifdef RB_OPENGLES
+		glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
+#else
 		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
+#endif
 
 		glVertexPointer(2, GL_FLOAT, 0, vertices);
 		glEnableClientState(GL_VERTEX_ARRAY);
@@ -322,7 +369,11 @@ void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,
 		glEnableClientState(GL_COLOR_ARRAY);
 		glVertexPointer(2, GL_FLOAT, 0, vertices);
 		glEnable(GL_BLEND);
+#ifdef RB_OPENGLES
+		glBlendFuncSeparateOES (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO,GL_ONE);
+#else
 		glBlendFuncSeparate (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO,GL_ONE);
+#endif
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
 
