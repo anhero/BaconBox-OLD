@@ -24,6 +24,10 @@ namespace RedBox {
 		friend class AudioEngine;
 		friend class ResourceManager;
 	public:
+		/**
+		 * Gets a reference to the RBAudioPlayerEngine singleton.
+		 * @return Reference to the current singleton.
+		 */
 		static RBAudioPlayerEngine& getInstance();
 		/**
 		 * Constructs a background music. Gets the music's data associated with
@@ -42,6 +46,12 @@ namespace RedBox {
 		 */
 		BackgroundMusic* getBackgroundMusic(const std::string& key,
 											bool survive = true);
+		/**
+		 * Sets the engine's global music volume.
+		 * @param newMusicVolume Engine's new global music volume level.
+		 * @see RedBox::AudioEngine::musicVolume
+		 */
+		void setMusicVolume(int newMusicVolume);
 	private:
 		/**
 		 * List of pointers to the musics that are to be deleted automatically

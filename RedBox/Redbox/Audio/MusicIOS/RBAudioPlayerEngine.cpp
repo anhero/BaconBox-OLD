@@ -36,6 +36,10 @@ BackgroundMusic* RBAudioPlayerEngine::getBackgroundMusic(std::string const &key,
 	}
 }
 
+void RBAudioPlayerEngine::setMusicVolume(int newMusicVolume) {
+	this->MusicEngine::setMusicVolume(newMusicVolume);
+}
+
 RBAudioPlayerEngine::RBAudioPlayerEngine(): MusicEngine() {
 }
 
