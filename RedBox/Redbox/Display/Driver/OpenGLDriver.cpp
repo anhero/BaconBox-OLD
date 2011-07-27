@@ -64,7 +64,8 @@ void OpenGLDriver::drawMaskShapeWithTexture(GLfloat* vertices,
 
                             glEnable(GL_TEXTURE_2D);
                             glEnable(GL_BLEND);
-                            glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ZERO, GL_ONE_MINUS_SRC_ALPHA);
+    
+                            glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
                             
                             glVertexPointer(2, GL_FLOAT, 0, vertices);
                             glEnableClientState(GL_VERTEX_ARRAY);

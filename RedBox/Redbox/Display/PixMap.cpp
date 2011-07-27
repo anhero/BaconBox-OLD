@@ -13,7 +13,7 @@ PixMap::PixMap() : Object(), width(0), height(0),
 PixMap::PixMap(const PixMap& src) : Object(src), width(src.width),
 	height(src.height), colorFormat(src.colorFormat), buffer(NULL) {
 	if(src.buffer) {
-		unsigned int bufferSize = width * height * ((colorFormat == ColorFormat::RGBA) ? (16) : (1));
+		unsigned int bufferSize = width * height * ((colorFormat == ColorFormat::RGBA) ? (4) : (1));
 		buffer = new uint8_t[bufferSize];
 
 		for(unsigned int i = 0; i < bufferSize; ++i) {
@@ -28,7 +28,7 @@ PixMap::PixMap(unsigned int newWidth, unsigned int newHeight,
 	width = newWidth;
 	height = newHeight;
 	colorFormat = newColorFormat;
-	buffer = new uint8_t[width* height * ((colorFormat == ColorFormat::RGBA) ? (16) : (1))];
+	buffer = new uint8_t[width* height * ((colorFormat == ColorFormat::RGBA) ? (4) : (1))];
 }
 
 PixMap::PixMap(uint8_t* newBuffer, unsigned int newWidth,
@@ -64,6 +64,40 @@ PixMap& PixMap::operator=(const PixMap& src) {
 		}
 	}
 	return *this;
+}
+
+void PixMap::convertTo(ColorFormat format){
+    uint8_t* tempBuffer;
+    int pixelCount = width* height;
+    bool successful = false;
+
+    if (this->colorFormat == ColorFormat::RGBA && format == ColorFormat::ALPHA) {
+        tempBuffer= new uint8_t[pixelCount];
+        
+        for (int i = 0; i< pixelCount; i++) {
+                tempBuffer[i] = buffer[i*4];
+        }
+        colorFormat = ColorFormat::ALPHA;
+        successful = true;
+
+    }
+    else if( this->colorFormat == ColorFormat::ALPHA && format == ColorFormat::RGBA){
+        tempBuffer= new uint8_t[pixelCount * 4];
+        for (int i = 0; i< pixelCount; i++) {
+            for (int j =0; j<3; j++) {
+                tempBuffer[i*4 + j] = buffer[i];
+            }
+            tempBuffer[i*4+3] = 255;
+        }
+        colorFormat = ColorFormat::RGBA;
+        successful = true;
+        
+    }
+    
+    if (successful) {
+    delete buffer;
+    buffer = tempBuffer;
+    }
 }
 
 

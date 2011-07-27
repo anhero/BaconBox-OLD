@@ -116,6 +116,10 @@ namespace RedBox {
 		 */
 		void insertSubPixMap(PixMap* subPixMap, unsigned int xOffset = 0,
 		                     unsigned int yOffset = 0);
+        
+        
+        ///Convert the current PixMap to the given format.
+        void convertTo(ColorFormat colorFormat);
 	private:
 		/// Width of the PixMap
 		unsigned int width;
