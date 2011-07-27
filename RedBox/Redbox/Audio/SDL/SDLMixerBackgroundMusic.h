@@ -32,6 +32,9 @@ namespace RedBox {
 		 * is halted or is done playing.
 		 */
 		static void stoppedCurrentMusic();
+
+		static void setSDLMusicVolume(int newRedBoxVolume);
+		static void setSDLMusicVolumeNoConvert(int newSDLVolume);
 		/**
 		 * Destructor.
 		 */

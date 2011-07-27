@@ -19,7 +19,7 @@ namespace RedBox {
 	 * functions.
 	 * @ingroup Audio
 	 */
-	class MusicEngine : public AudioEngine {
+	class MusicEngine : public virtual AudioEngine {
 		friend class ResourceManager;
 		friend class AudioEngine;
 	public:
@@ -39,6 +39,20 @@ namespace RedBox {
 		 */
 		virtual BackgroundMusic* getBackgroundMusic(const std::string& key, 
 													bool survive = true) = 0;
+
+		/**
+		 * Gets the engine's global music volume.
+		 * @return Engine's current global music volume level.
+		 * @see RedBox::AudioEngine::musicVolume
+		 */
+		int getMusicVolume() const;
+
+		/**
+		 * Sets the engine's global music volume.
+		 * @param newMusicVolume Engine's new global music volume level.
+		 * @see RedBox::AudioEngine::musicVolume
+		 */
+		virtual void setMusicVolume(int newMusicVolume);
 	protected:
 		/**
 		 * Default constructor. Engine initialization is specifically done in
@@ -70,6 +84,9 @@ namespace RedBox {
 		 * @return True if the unloading was successful, false if not.
 		 */
 		virtual bool unloadMusic(MusicInfo* music) = 0;
+	private:
+		/// Value between 0 and 100 for the volume level. 100 is the maximum.
+		int musicVolume;
 	};
 }
 

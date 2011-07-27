@@ -41,9 +41,9 @@ int SDLMixerEngine::sdlToRedBoxVolume(int sdlVolume) {
 }
 
 int SDLMixerEngine::redBoxToSdlVolume(int redBoxVolume) {
-	if(redBoxVolume < Sound::MIN_VOLUME) {
+	if(redBoxVolume <= Sound::MIN_VOLUME) {
 		return 0;
-	} else if(redBoxVolume > Sound::MAX_VOLUME) {
+	} else if(redBoxVolume >= Sound::MAX_VOLUME) {
 		return MIX_MAX_VOLUME;
 	} else {
 		return (redBoxVolume * MIX_MAX_VOLUME) / Sound::MAX_VOLUME;
@@ -112,7 +112,15 @@ void SDLMixerEngine::askForDisconnect() {
 	disconnect = true;
 }
 
-SDLMixerEngine::SDLMixerEngine() : SoundEngine(), MusicEngine(), disconnect(false) {
+void SDLMixerEngine::setMusicVolume(int newMusicVolume) {
+	this->MusicEngine::setMusicVolume(newMusicVolume);
+	if(SDLMixerBackgroundMusic::currentMusic) {
+		Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(static_cast<int>(static_cast<float>(SDLMixerBackgroundMusic::currentMusic->getVolume()) * static_cast<float>(getMusicVolume()) / static_cast<float>(Sound::MAX_VOLUME))));
+	}
+}
+
+SDLMixerEngine::SDLMixerEngine() : SoundEngine(), MusicEngine(),
+	disconnect(false) {
 	lastFadeTick = SDL_GetTicks();
 	lastFadeTick -= lastFadeTick % NB_TICKS_PER_FADE;
 }

@@ -23,6 +23,7 @@ void AudioEngine::loadAudioEngine() {
 	loadSoundEngine();
 	loadMusicEngine();
 }
+
 void AudioEngine::loadSoundEngine() {
 	if(soundEngine == NULL) {
 		soundEngine = RB_SOUND_ENGINE;
@@ -31,6 +32,7 @@ void AudioEngine::loadSoundEngine() {
 		}
 	}
 }
+
 void AudioEngine::loadMusicEngine() {
 	if(musicEngine == NULL) {
 		musicEngine = RB_MUSIC_ENGINE;
@@ -39,12 +41,14 @@ void AudioEngine::loadMusicEngine() {
 		}
 	}
 }
+
 SoundEngine* AudioEngine::getSoundEngine() {
 	if(!soundEngine) {
 		loadSoundEngine();
 	}
 	return soundEngine;
 }
+
 MusicEngine* AudioEngine::getMusicEngine() {
 	if(!musicEngine) {
 		loadMusicEngine();

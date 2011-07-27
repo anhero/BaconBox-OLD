@@ -94,6 +94,12 @@ namespace RedBox {
 		 * fadeUpdate signal.
 		 */
 		void askForDisconnect();
+		/**
+		 * Sets the engine's global music volume.
+		 * @param newMusicVolume Engine's new global music volume level.
+		 * @see RedBox::AudioEngine::musicVolume
+		 */
+		void setMusicVolume(int newMusicVolume);
 	private:
 		/// Playback frequency
 		static const int AUDIO_RATE = 44100;

@@ -19,7 +19,7 @@ namespace RedBox {
 	 * functions.
 	 * @ingroup Audio
 	 */
-	class SoundEngine : public AudioEngine {
+	class SoundEngine : public virtual AudioEngine {
 		friend class ResourceManager;
 		friend class AudioEngine;
 	public:
