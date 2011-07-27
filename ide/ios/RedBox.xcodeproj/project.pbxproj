@@ -290,9 +290,7 @@
 		5163E9B713E0C80000E9D134 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		5163E9B813E0C80000E9D134 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		5163E9B913E0C80000E9D134 /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
-		5163E9BA13E0C80000E9D134 /* Color.cpp.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Color.cpp.orig; sourceTree = "<group>"; };
 		5163E9BB13E0C80000E9D134 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
-		5163E9BC13E0C80000E9D134 /* Color.h.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Color.h.orig; sourceTree = "<group>"; };
 		5163E9BD13E0C80000E9D134 /* ColorFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorFormat.h; sourceTree = "<group>"; };
 		5163E9BF13E0C80000E9D134 /* GraphicDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicDriver.cpp; sourceTree = "<group>"; };
 		5163E9C013E0C80000E9D134 /* GraphicDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicDriver.h; sourceTree = "<group>"; };
@@ -633,9 +631,7 @@
 				5163E9B713E0C80000E9D134 /* Camera.cpp */,
 				5163E9B813E0C80000E9D134 /* Camera.h */,
 				5163E9B913E0C80000E9D134 /* Color.cpp */,
-				5163E9BA13E0C80000E9D134 /* Color.cpp.orig */,
 				5163E9BB13E0C80000E9D134 /* Color.h */,
-				5163E9BC13E0C80000E9D134 /* Color.h.orig */,
 				5163E9BD13E0C80000E9D134 /* ColorFormat.h */,
 				5163E9BE13E0C80000E9D134 /* Driver */,
 				5163E9C713E0C80000E9D134 /* GraphicBody.cpp */,
