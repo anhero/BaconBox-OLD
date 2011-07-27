@@ -99,43 +99,36 @@ SoundInfo* ResourceManager::loadSound(const std::string& key,
                                       bool overwrite) {
 	SoundInfo* newSnd = NULL;
 
-	// We make sure the sound engine is loaded and that there already isn't
-	// any sound effect with the same name.
-	if(AudioEngine::getSoundEngine()) {
-		if(sounds.find(key) != sounds.end()) {
-			if(overwrite) {
-				// We delete the existing sound effect.
-				newSnd = sounds[key];
+	if(sounds.find(key) != sounds.end()) {
+		if(overwrite) {
+			// We delete the existing sound effect.
+			newSnd = sounds[key];
 
-				if(newSnd) {
-					delete newSnd;
-				}
-
-				// We load the sound effect and we overwrite the existing sound
-				// effect.
-				newSnd = sounds[key] = AudioEngine::getSoundEngine()->loadSound(filePath);
-				Console::print("Overwrote the existing sound effect named " + key +
-				               ".");
-			} else {
-				Console::print("Couldn't load the sound effect named " + key +
-				               " found at " + filePath +
-				               " because a sound with that name already exists.");
-				newSnd = sounds[key];
-			}
-		} else {
-			// We load the sound effect.
-			newSnd = AudioEngine::getSoundEngine()->loadSound(filePath);
-
-			// If it was loaded correctly.
 			if(newSnd) {
-				// We insert it into the map of sound effects with its
-				// corresponding key.
-				sounds.insert(std::pair<std::string, SoundInfo*>(key, newSnd));
+				delete newSnd;
 			}
+
+			// We load the sound effect and we overwrite the existing sound
+			// effect.
+			newSnd = sounds[key] = AudioEngine::getSoundEngine().loadSound(filePath);
+			Console::print("Overwrote the existing sound effect named " + key +
+						   ".");
+		} else {
+			Console::print("Couldn't load the sound effect named " + key +
+						   " found at " + filePath +
+						   " because a sound with that name already exists.");
+			newSnd = sounds[key];
 		}
 	} else {
-		Console::print("Couldn't load the sound effect named " + key + " found at " +
-		               filePath + " because the sound engine couldn't be loaded.");
+		// We load the sound effect.
+		newSnd = AudioEngine::getSoundEngine().loadSound(filePath);
+
+		// If it was loaded correctly.
+		if(newSnd) {
+			// We insert it into the map of sound effects with its
+			// corresponding key.
+			sounds.insert(std::pair<std::string, SoundInfo*>(key, newSnd));
+		}
 	}
 
 	return newSnd;
@@ -145,43 +138,36 @@ SoundInfo* ResourceManager::loadSound(const SoundParameters& params,
                                       bool overwrite) {
 	SoundInfo* newSnd = NULL;
 
-	// We make sure the sound engine is loaded and that there already isn't
-	// any sound effect with the same name.
-	if(AudioEngine::getSoundEngine()) {
-		if(sounds.find(params.name) != sounds.end()) {
-			if(overwrite) {
-				// We delete the existing sound effect.
-				newSnd = sounds[params.name];
+	if(sounds.find(params.name) != sounds.end()) {
+		if(overwrite) {
+			// We delete the existing sound effect.
+			newSnd = sounds[params.name];
 
-				if(newSnd) {
-					delete newSnd;
-				}
-
-				// We load the sound effect and we overwrite the existing sound
-				// effect.
-				newSnd = sounds[params.name] = AudioEngine::getSoundEngine()->loadSound(params);
-				Console::print("Overwrote the existing sound effect named " +
-				               params.name + ".");
-			} else {
-				Console::print("Couldn't load the sound effect named " + params.name +
-				               " because a sound with that name already exists.");
-				newSnd = sounds[params.name];
-			}
-		} else {
-			// We load the sound effect.
-			newSnd = AudioEngine::getSoundEngine()->loadSound(params);
-
-			// If it was loaded correctly.
 			if(newSnd) {
-				// We insert it into the map of sound effects with its
-				// corresponding key.
-				sounds.insert(std::pair<std::string, SoundInfo*>(params.name,
-				              newSnd));
+				delete newSnd;
 			}
+
+			// We load the sound effect and we overwrite the existing sound
+			// effect.
+			newSnd = sounds[params.name] = AudioEngine::getSoundEngine().loadSound(params);
+			Console::print("Overwrote the existing sound effect named " +
+						   params.name + ".");
+		} else {
+			Console::print("Couldn't load the sound effect named " + params.name +
+						   " because a sound with that name already exists.");
+			newSnd = sounds[params.name];
 		}
 	} else {
-		Console::print("Couldn't load the sound effect named " + params.name +
-		               " because the sound engine couldn't be loaded.");
+		// We load the sound effect.
+		newSnd = AudioEngine::getSoundEngine().loadSound(params);
+
+		// If it was loaded correctly.
+		if(newSnd) {
+			// We insert it into the map of sound effects with its
+			// corresponding key.
+			sounds.insert(std::pair<std::string, SoundInfo*>(params.name,
+						  newSnd));
+		}
 	}
 
 	return newSnd;
@@ -192,42 +178,35 @@ MusicInfo* ResourceManager::loadMusic(const std::string& key,
                                       bool overwrite) {
 	MusicInfo* newBgm = NULL;
 
-	// We make sure the sound engine is loaded and that there already isn't
-	// any music with the same name.
-	if(AudioEngine::getMusicEngine()) {
-		if(musics.find(key) != musics.end()) {
-			if(overwrite) {
-				// We delete the existing music.
-				newBgm = musics[key];
+	if(musics.find(key) != musics.end()) {
+		if(overwrite) {
+			// We delete the existing music.
+			newBgm = musics[key];
 
-				if(newBgm) {
-					delete newBgm;
-				}
-
-				// We load the music and we overwrite the existing music.
-				newBgm = musics[key] = AudioEngine::getMusicEngine()->loadMusic(filePath);
-				Console::print("Overwrote the existing music named " + key +
-				               ".");
-			} else {
-				Console::print("Couldn't load the music named " + key +
-				               " found at " + filePath +
-				               " because a music with that name already exists.");
-				newBgm = musics[key];
-			}
-		} else {
-			// We load the music.
-			newBgm = AudioEngine::getMusicEngine()->loadMusic(filePath);
-
-			// If it was loaded correctly.
 			if(newBgm) {
-				// We insert it into the map of musics with its corresponding
-				// key.
-				musics.insert(std::pair<std::string, MusicInfo*>(key, newBgm));
+				delete newBgm;
 			}
+
+			// We load the music and we overwrite the existing music.
+			newBgm = musics[key] = AudioEngine::getMusicEngine().loadMusic(filePath);
+			Console::print("Overwrote the existing music named " + key +
+						   ".");
+		} else {
+			Console::print("Couldn't load the music named " + key +
+						   " found at " + filePath +
+						   " because a music with that name already exists.");
+			newBgm = musics[key];
 		}
 	} else {
-		Console::print("Couldn't load the music named " + key + " found at " +
-		               filePath + " because the sound engine couldn't be loaded.");
+		// We load the music.
+		newBgm = AudioEngine::getMusicEngine().loadMusic(filePath);
+
+		// If it was loaded correctly.
+		if(newBgm) {
+			// We insert it into the map of musics with its corresponding
+			// key.
+			musics.insert(std::pair<std::string, MusicInfo*>(key, newBgm));
+		}
 	}
 
 	return newBgm;
@@ -237,40 +216,33 @@ MusicInfo* ResourceManager::loadMusic(const MusicParameters& params,
                                       bool overwrite) {
 	MusicInfo* newBgm = NULL;
 
-	// We make sure the sound engine is loaded and that there already isn't
-	// any music with the same name.
-	if(AudioEngine::getMusicEngine()) {
-		if(musics.find(params.name) != musics.end()) {
-			if(overwrite) {
-				// We delete the existing music.
-				newBgm = musics[params.name];
+	if(musics.find(params.name) != musics.end()) {
+		if(overwrite) {
+			// We delete the existing music.
+			newBgm = musics[params.name];
 
-				if(newBgm) {
-					delete newBgm;
-				}
-
-				// We load the music and we overwrite the existing music.
-				newBgm = musics[params.name] = AudioEngine::getMusicEngine()->loadMusic(params);
-				Console::print("Overwrote the existing music named " + params.name + ".");
-			} else {
-				Console::print("Couldn't load the music named " + params.name +
-				               " because a music with that name already exists.");
-				newBgm = musics[params.name];
-			}
-		} else {
-			// We load the music.
-			newBgm = AudioEngine::getMusicEngine()->loadMusic(params);
-
-			// If it was loaded correctly.
 			if(newBgm) {
-				// We insert it into the map of musics with its corresponding
-				// key.
-				musics.insert(std::pair<std::string, MusicInfo*>(params.name, newBgm));
+				delete newBgm;
 			}
+
+			// We load the music and we overwrite the existing music.
+			newBgm = musics[params.name] = AudioEngine::getMusicEngine().loadMusic(params);
+			Console::print("Overwrote the existing music named " + params.name + ".");
+		} else {
+			Console::print("Couldn't load the music named " + params.name +
+						   " because a music with that name already exists.");
+			newBgm = musics[params.name];
 		}
 	} else {
-		Console::print("Couldn't load the music named " + params.name +
-		               " because the sound engine couldn't be loaded.");
+		// We load the music.
+		newBgm = AudioEngine::getMusicEngine().loadMusic(params);
+
+		// If it was loaded correctly.
+		if(newBgm) {
+			// We insert it into the map of musics with its corresponding
+			// key.
+			musics.insert(std::pair<std::string, MusicInfo*>(params.name, newBgm));
+		}
 	}
 
 	return newBgm;
@@ -283,7 +255,7 @@ void ResourceManager::removeSound(const std::string& key) {
 	// We check if the sound effect asked exists and we ask the sound engine to
 	// unload the data.
 	if(snd != sounds.end()) {
-		if(AudioEngine::getSoundEngine()->unloadSound(snd->second)) {
+		if(AudioEngine::getSoundEngine().unloadSound(snd->second)) {
 			// We delete it.
 			delete(snd->second);
 			// We remove it from the map.
@@ -303,7 +275,7 @@ void ResourceManager::removeMusic(const std::string& key) {
 	// We check if the music asked exists and we ask the music engine to
 	// unload the data.
 	if(music != musics.end()) {
-		if(AudioEngine::getMusicEngine()->unloadMusic(music->second)) {
+		if(AudioEngine::getMusicEngine().unloadMusic(music->second)) {
 			// We delete it.
 			delete(music->second);
 			// We remove it from the map.
@@ -381,7 +353,7 @@ void ResourceManager::unloadAll() {
 	for(std::map<std::string, SoundInfo*>::iterator i = sounds.begin();
 	        i != sounds.end();
 	        i++) {
-		AudioEngine::getSoundEngine()->unloadSound(i->second);
+		AudioEngine::getSoundEngine().unloadSound(i->second);
 		delete i->second;
 	}
 
@@ -391,7 +363,7 @@ void ResourceManager::unloadAll() {
 	for(std::map<std::string, MusicInfo*>::iterator i = musics.begin();
 	        i != musics.end();
 	        i++) {
-		AudioEngine::getMusicEngine()->unloadMusic(i->second);
+		AudioEngine::getMusicEngine().unloadMusic(i->second);
 		delete i->second;
 	}
 

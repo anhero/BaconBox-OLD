@@ -119,9 +119,8 @@
 
 	//Sound engine for Qt
 	#define RB_OPENAL
+	#define RB_SOUND_ENGINE OpenALEngine::getInstance()
 	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
-	#define RB_SOUND_ENGINE new OpenALEngine()
-	#define RB_MUSIC_ENGINE NULL
 
 	//Input engine for Qt
 	#define RB_KEYBOARD_IMPL new QtKeyboard()
@@ -138,12 +137,12 @@
 	
 	//Sound engine for iOS
 	#define RB_OPENAL
-	#define RB_SOUND_ENGINE new OpenALEngine()
+	#define RB_SOUND_ENGINE OpenALEngine::getInstance()
 	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
 
 	//Music engine for iOS
 	#define RB_AV_AUDIO_PLAYER
-	#define RB_MUSIC_ENGINE new RBAudioPlayerEngine()
+	#define RB_MUSIC_ENGINE RBAudioPlayerEngine::getInstance()
 	#define RB_MUSIC_ENGINE_INCLUDE "RBAudioPlayerEngine.h"
 	
 

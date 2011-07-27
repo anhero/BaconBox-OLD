@@ -7,8 +7,6 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_SDL
-
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
 
@@ -122,7 +120,5 @@ namespace RedBox {
 		void onChannelHalt(int channelHalted);
 	};
 }
-
-#endif // RB_SDL
 
 #endif

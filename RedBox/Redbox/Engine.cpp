@@ -144,13 +144,9 @@ void Engine::pulse() {
 			engine.bufferSwapped = false;
 		}
 
-		if(AudioEngine::getSoundEngine()) {
-			AudioEngine::getSoundEngine()->update();
-		}
+		AudioEngine::getSoundEngine().update();
 
-		if(AudioEngine::getMusicEngine()) {
-			AudioEngine::getMusicEngine()->update();
-		}
+		AudioEngine::getMusicEngine().update();
 	}
 
 	if(engine.needsExit) {

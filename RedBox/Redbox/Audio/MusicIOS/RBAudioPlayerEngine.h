@@ -6,7 +6,6 @@
 #define RB_RB_AUDIO_PLAYER_ENGINE_H
 
 #include "PlatformFlagger.h"
-#ifdef RB_AV_AUDIO_PLAYER
 
 #include <string>
 #include <list>
@@ -25,6 +24,7 @@ namespace RedBox {
 		friend class AudioEngine;
 		friend class ResourceManager;
 	public:
+		static RBAudioPlayerEngine& getInstance();
 		/**
 		 * Constructs a background music. Gets the music's data associated with
 		 * the key. In AVAudioPlayerEngine's case, the music is really loaded
@@ -57,11 +57,6 @@ namespace RedBox {
 		 */
 		~RBAudioPlayerEngine();
 		/**
-		 * Initializes the audio engine. Called by the static functions that
-		 * load the audio engines.
-		 */
-		void init();
-		/**
 		 * Updates the necessary informations for the audio engine.
 		 */
 		void update();
@@ -88,6 +83,4 @@ namespace RedBox {
 		bool unloadMusic(MusicInfo* music);
 	};
 }
-
-#endif // RB_AV_AUDIO_PLAYER
 #endif

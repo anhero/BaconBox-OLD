@@ -1,9 +1,8 @@
+#include "SDLMixerSoundFX.h"
+
 #include "PlatformFlagger.h"
 
-#ifdef RB_SDL
-
 #include "SDLMixerEngine.h"
-#include "SDLMixerSoundFX.h"
 
 using namespace RedBox;
 
@@ -95,5 +94,3 @@ void SDLMixerSoundFX::onChannelHalt(int channelHalted) {
 		channel = INVALID_CHANNEL;
 	}
 }
-
-#endif

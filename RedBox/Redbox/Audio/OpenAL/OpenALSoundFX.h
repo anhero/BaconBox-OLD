@@ -7,8 +7,6 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_OPENAL
-
 #include <vector>
 
 #include "RBOpenAL.h"
@@ -90,6 +88,4 @@ namespace RedBox {
 		void load(ALuint bufferId);
 	};
 }
-
-#endif
 #endif

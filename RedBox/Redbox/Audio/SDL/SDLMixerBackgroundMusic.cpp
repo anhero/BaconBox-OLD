@@ -1,7 +1,3 @@
-#include "PlatformFlagger.h"
-
-#ifdef RB_SDL
-
 #include "SDLMixerBackgroundMusic.h"
 
 #include <SDL/SDL.h>
@@ -24,11 +20,11 @@ void SDLMixerBackgroundMusic::stoppedCurrentMusic() {
 }
 
 void SDLMixerBackgroundMusic::setSDLMusicVolume(int newRedBoxVolume) {
-	Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(static_cast<int>(static_cast<float>(newRedBoxVolume) * static_cast<float>(AudioEngine::getMusicEngine()->getMusicVolume()) / static_cast<float>(Sound::MAX_VOLUME))));
+	Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(static_cast<int>(static_cast<float>(newRedBoxVolume) * static_cast<float>(AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(Sound::MAX_VOLUME))));
 }
 
 void SDLMixerBackgroundMusic::setSDLMusicVolumeNoConvert(int newSDLVolume) {
-	Mix_VolumeMusic(static_cast<int>(static_cast<float>(newSDLVolume) * static_cast<float>(SDLMixerEngine::redBoxToSdlVolume(AudioEngine::getMusicEngine()->getMusicVolume())) / static_cast<float>(SDLMixerEngine::redBoxToSdlVolume(Sound::MAX_VOLUME))));
+	Mix_VolumeMusic(static_cast<int>(static_cast<float>(newSDLVolume) * static_cast<float>(SDLMixerEngine::redBoxToSdlVolume(AudioEngine::getMusicEngine().getMusicVolume())) / static_cast<float>(SDLMixerEngine::redBoxToSdlVolume(Sound::MAX_VOLUME))));
 }
 
 
@@ -143,7 +139,7 @@ void SDLMixerBackgroundMusic::pause(double fadeOut) {
 		fadeTime = static_cast<unsigned int>(fadeOut * 1000.0);
 		fadeStart = SDL_GetTicks();
 		fadeType = FADE_OUT;
-		SDLMixerEngine::getInstance()->fadeUpdate.connect(this, &SDLMixerBackgroundMusic::fadeUpdate);
+		SDLMixerEngine::getInstance().fadeUpdate.connect(this, &SDLMixerBackgroundMusic::fadeUpdate);
 	}
 }
 
@@ -153,7 +149,7 @@ void SDLMixerBackgroundMusic::resume(double fadeIn) {
 		fadeTime = static_cast<unsigned int>(fadeIn * 1000.0);
 		fadeStart = SDL_GetTicks();
 		fadeType = FADE_IN;
-		SDLMixerEngine::getInstance()->fadeUpdate.connect(this, &SDLMixerBackgroundMusic::fadeUpdate);
+		SDLMixerEngine::getInstance().fadeUpdate.connect(this, &SDLMixerBackgroundMusic::fadeUpdate);
 		setSDLMusicVolume(0);
 		Mix_ResumeMusic();
 	}
@@ -200,7 +196,7 @@ void SDLMixerBackgroundMusic::fadeUpdate(unsigned int ticks) {
 			}
 		}
 	} else {
-		SDLMixerEngine::getInstance()->askForDisconnect();
+		SDLMixerEngine::getInstance().askForDisconnect();
 	}
 }
 
@@ -210,5 +206,3 @@ void SDLMixerBackgroundMusic::resetPauseResumeFade() {
 	fadeStart = 0;
 	setSDLMusicVolume(getVolume());
 }
-
-#endif

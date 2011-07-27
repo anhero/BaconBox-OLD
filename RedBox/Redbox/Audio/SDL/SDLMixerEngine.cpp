@@ -1,8 +1,6 @@
-#include "PlatformFlagger.h"
-
-#ifdef RB_SDL
-
 #include "SDLMixerEngine.h"
+
+#include "PlatformFlagger.h"
 
 #include <SDL/SDL.h>
 
@@ -20,13 +18,8 @@
 
 using namespace RedBox;
 
-SDLMixerEngine* SDLMixerEngine::instance = NULL;
-
-SDLMixerEngine* SDLMixerEngine::getInstance() {
-	if(instance == NULL) {
-		instance = new SDLMixerEngine();
-	}
-
+SDLMixerEngine& SDLMixerEngine::getInstance() {
+	static SDLMixerEngine instance;
 	return instance;
 }
 
@@ -123,9 +116,6 @@ SDLMixerEngine::SDLMixerEngine() : SoundEngine(), MusicEngine(),
 	disconnect(false) {
 	lastFadeTick = SDL_GetTicks();
 	lastFadeTick -= lastFadeTick % NB_TICKS_PER_FADE;
-}
-
-void SDLMixerEngine::init() {
 	// We initialize SDL_mixer.
 	if(!Mix_OpenAudio(SDLMixerEngine::AUDIO_RATE, SDLMixerEngine::AUDIO_FORMAT, SDLMixerEngine::AUDIO_CHANNELS, SDLMixerEngine::AUDIO_BUFFERS)) {
 		// We set the function to call when a music is stopped.
@@ -138,6 +128,10 @@ void SDLMixerEngine::init() {
 		Console::print("Unable to initialize audio: " + std::string(Mix_GetError()));
 		Console::printTrace();
 	}
+}
+
+SDLMixerEngine::~SDLMixerEngine() {
+	Mix_CloseAudio();
 }
 
 void SDLMixerEngine::update() {
@@ -168,10 +162,6 @@ void SDLMixerEngine::update() {
 			i = sounds.erase(i);
 		}
 	}
-}
-
-SDLMixerEngine::~SDLMixerEngine() {
-	Mix_CloseAudio();
 }
 
 SoundInfo* SDLMixerEngine::loadSound(const std::string& filePath) {
@@ -236,5 +226,3 @@ bool SDLMixerEngine::unloadMusic(MusicInfo* music) {
 
 	return true;
 }
-
-#endif

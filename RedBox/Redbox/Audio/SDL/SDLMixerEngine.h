@@ -7,8 +7,6 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_SDL
-
 #include <stdint.h>
 
 #include <list>
@@ -35,7 +33,7 @@ namespace RedBox {
 		 * Gets the singleton instance.
 		 * @return Pointer to the audio engine's instance.
 		 */
-		static SDLMixerEngine* getInstance();
+		static SDLMixerEngine& getInstance();
 
 		/**
 		 * Converts the SDL volume to its RedBox equivalent.
@@ -117,9 +115,6 @@ namespace RedBox {
 		 */
 		static const unsigned int NB_TICKS_PER_FADE = 100;
 
-		/// Singleton instance.
-		static SDLMixerEngine* instance;
-
 		/// Last tick at which the fade update was called.
 		unsigned int lastFadeTick;
 		/// Flag used to ask to be disconnected from the fadeUpdate signal.
@@ -136,21 +131,15 @@ namespace RedBox {
 		SDLMixerEngine();
 
 		/**
-		 * Initializes the audio engine. Called by the static functions that
-		 * load the audio engines.
+		 * Destructor. The audio engine can only be destroyed by the resource
+		 * manager.
 		 */
-		void init();
+		~SDLMixerEngine();
 
 		/**
 		 * Updates the necessary informations for the audio engine.
 		 */
 		void update();
-
-		/**
-		 * Destructor. The audio engine can only be destroyed by the resource
-		 * manager.
-		 */
-		~SDLMixerEngine();
 
 		/**
 		 * Loads sound data from a file.
@@ -201,7 +190,5 @@ namespace RedBox {
 		bool unloadMusic(MusicInfo* music);
 	};
 }
-
-#endif
 
 #endif

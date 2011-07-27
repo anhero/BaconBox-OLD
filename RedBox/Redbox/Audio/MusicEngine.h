@@ -55,20 +55,22 @@ namespace RedBox {
 		virtual void setMusicVolume(int newMusicVolume);
 	protected:
 		/**
-		 * Default constructor. Engine initialization is specifically done in
-		 * the init() method inherited from AudioEngine.
+		 * Default constructor.
 		 */
 		MusicEngine();
+
 		/**
 		 * Destructor. Unloads the music engine.
 		 */
 		virtual ~MusicEngine();
+
 		/**
 		 * Loads music data from a file.
 		 * @param filePath Path to the music file to load.
 		 * @return Pointer to the music data loaded.
 		 */
 		virtual MusicInfo* loadMusic(const std::string& filePath) = 0;
+
 		/**
 		 * Loads music data from engine specific parameters.
 		 * @param params Parameters to use to load the music data. Each engine
@@ -76,6 +78,7 @@ namespace RedBox {
 		 * @return Pointer to the music data loaded.
 		 */
 		virtual MusicInfo* loadMusic(const MusicParameters& params) = 0;
+
 		/**
 		 * Unloads music data.
 		 * @param music Music data that needs to be unloaded. Delete must not be

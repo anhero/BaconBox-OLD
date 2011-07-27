@@ -9,7 +9,10 @@
 
 using namespace RedBox;
 
-NullAudioEngine* NullAudioEngine::instance = NULL;
+NullAudioEngine& NullAudioEngine::getInstance() {
+	static NullAudioEngine instance;
+	return instance;
+}
 
 SoundFX* NullAudioEngine::getSoundFX(const std::string& key, bool survive) {
 	NullAudio* result = new NullAudio();
@@ -70,19 +73,12 @@ BackgroundMusic* NullAudioEngine::getBackgroundMusic(const std::string& key,
 	return result;
 }
 
-NullAudioEngine* NullAudioEngine::getInstance() {
-	if(!instance) {
-		instance = new NullAudioEngine();
-	}
-	return instance;
-}
-
 NullAudioEngine::NullAudioEngine() : SoundEngine(), MusicEngine() {
 	Console::print("NullAudioEngine::NullAudioEngine()");
 }
 
-void NullAudioEngine::init() {
-	Console::print("NullAudioEngine::init()");
+NullAudioEngine::~NullAudioEngine() {
+	Console::print("NullAudioEngine::~NullAudioEngine()");
 }
 
 void NullAudioEngine::update() {
@@ -103,10 +99,6 @@ void NullAudioEngine::update() {
 			i = audios.erase(i);
 		}
 	}
-}
-
-NullAudioEngine::~NullAudioEngine() {
-	Console::print("NullAudioEngine::~NullAudioEngine()");
 }
 
 SoundInfo* NullAudioEngine::loadSound(const std::string& filePath) {

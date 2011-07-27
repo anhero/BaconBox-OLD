@@ -24,7 +24,10 @@
 
 using namespace RedBox;
 
-OpenALEngine* OpenALEngine::instance = NULL;
+OpenALEngine& OpenALEngine::getInstance() {
+	static OpenALEngine instance;
+	return instance;
+}
 
 int OpenALEngine::openALToRedBoxVolume(float openALVolume) {
 	if(openALVolume < 0.0f) {
@@ -65,10 +68,6 @@ const std::vector<std::string>& OpenALEngine::getDeviceList() {
 	return deviceList;
 }
 
-OpenALEngine* OpenALEngine::getInstance() {
-	return instance;
-}
-
 SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
 	SoundInfo* sndInfo = ResourceManager::getSound(key);
 	if(sndInfo) {
@@ -86,44 +85,6 @@ SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
 }
 
 OpenALEngine::OpenALEngine(): SoundEngine() {
-	assert(!OpenALEngine::instance);
-	OpenALEngine::instance = this;
-}
-
-OpenALEngine::~OpenALEngine() {
-	// We delete all the sources.
-	ALint bufferId;
-	ALuint tmp;
-	for(std::list<OpenALSoundFX*>::iterator i = sources.begin();
-		i != sources.end(); i++) {
-		// We make sure the source hasn't already been released.
-		if (alIsSource((*i)->sourceId)) {
-			// We make sure its buffer will be deleted.
-			alGetSourcei((*i)->sourceId, AL_BUFFER, &bufferId);
-			// We delete de source.
-			alDeleteSources(1, &((*i)->sourceId));
-			// We delete its buffer, if possible.
-			if(bufferId != AL_NONE) {
-				tmp = static_cast<ALuint>(bufferId);
-				alDeleteBuffers(1, &tmp);
-			}
-		}
-	}
-	sources.clear();
-	// We get the current context.
-	ALCcontext* context = alcGetCurrentContext();
-	// We check if it is valid.
-	if(context) {
-		ALCdevice* device = alcGetContextsDevice(context);
-		alcMakeContextCurrent(NULL);
-		alcDestroyContext(context);
-		if(device) {
-			alcCloseDevice(device);
-		}
-	}
-}
-
-void OpenALEngine::init() {
 	ALCdevice* device = NULL;
 	// We open the device.
 	if(defaultDevice.empty()) {
@@ -159,6 +120,39 @@ void OpenALEngine::init() {
 		}
 	} else {
 		Console::print("Failed to open the OpenAL audio device.");
+	}
+}
+
+OpenALEngine::~OpenALEngine() {
+	// We delete all the sources.
+	ALint bufferId;
+	ALuint tmp;
+	for(std::list<OpenALSoundFX*>::iterator i = sources.begin();
+		i != sources.end(); i++) {
+		// We make sure the source hasn't already been released.
+		if (alIsSource((*i)->sourceId)) {
+			// We make sure its buffer will be deleted.
+			alGetSourcei((*i)->sourceId, AL_BUFFER, &bufferId);
+			// We delete de source.
+			alDeleteSources(1, &((*i)->sourceId));
+			// We delete its buffer, if possible.
+			if(bufferId != AL_NONE) {
+				tmp = static_cast<ALuint>(bufferId);
+				alDeleteBuffers(1, &tmp);
+			}
+		}
+	}
+	sources.clear();
+	// We get the current context.
+	ALCcontext* context = alcGetCurrentContext();
+	// We check if it is valid.
+	if(context) {
+		ALCdevice* device = alcGetContextsDevice(context);
+		alcMakeContextCurrent(NULL);
+		alcDestroyContext(context);
+		if(device) {
+			alcCloseDevice(device);
+		}
 	}
 }
 

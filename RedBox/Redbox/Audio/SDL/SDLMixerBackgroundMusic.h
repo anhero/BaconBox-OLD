@@ -7,8 +7,6 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_SDL
-
 #include <stdint.h>
 
 #include <SDL/SDL_mixer.h>
@@ -33,12 +31,20 @@ namespace RedBox {
 		 */
 		static void stoppedCurrentMusic();
 
-		static void setSDLMusicVolume(int newRedBoxVolume);
-		static void setSDLMusicVolumeNoConvert(int newSDLVolume);
 		/**
-		 * Destructor.
+		 * Sets SDL's music volume taking into account the global music volume.
+		 * @param newRedBoxVolume RedBox volume to set to SDL after taking
+		 * into account the global music volume.
 		 */
-		~SDLMixerBackgroundMusic();
+		static void setSDLMusicVolume(int newRedBoxVolume);
+
+		/**
+		 * Sets SDL's music volume taking into account the global music volume.
+		 * @param newSDLVolume SDL volume to set to SDL after taking
+		 * into account the global music volume.
+		 */
+		static void setSDLMusicVolumeNoConvert(int newSDLVolume);
+
 		/**
 		 * Plays the sound a given number of times.
 		 * @param nbTimes Number of times the sound will be played in loop. A
@@ -158,6 +164,11 @@ namespace RedBox {
 		SDLMixerBackgroundMusic();
 
 		/**
+		 * Destructor.
+		 */
+		~SDLMixerBackgroundMusic();
+
+		/**
 		 * Sets the music.
 		 * @param newMusic Pointer to the music to set.
 		 */
@@ -179,7 +190,5 @@ namespace RedBox {
 		void resetPauseResumeFade();
 	};
 }
-
-#endif
 
 #endif
