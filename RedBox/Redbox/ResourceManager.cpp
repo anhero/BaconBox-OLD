@@ -61,10 +61,10 @@ TextureInfo* ResourceManager::addTexture(const std::string& key, PixMap* aPixmap
 
 
 TextureInfo* ResourceManager::loadTexture(const std::string& key,
-        const std::string& filePath,
+        const std::string& filePath, ColorFormat colorFormat,
         bool overwrite) {
 
-	PixMap* aPixMap = loadPixMap(filePath);
+	PixMap* aPixMap = loadPixMap(filePath, colorFormat);
 	if(aPixMap) {
 		TextureInfo* texInfo = addTexture(key, aPixMap, overwrite);
 		delete aPixMap;
@@ -76,8 +76,9 @@ TextureInfo* ResourceManager::loadTexture(const std::string& key,
 
 TextureInfo* ResourceManager::loadTextureRelativePath(const std::string& key,
                                      const std::string& relativePath,
+                                           ColorFormat colorFormat,
                                      bool overwrite){
-    return loadTexture(key, ResourcePathHandler::getResourcePathFor(relativePath), overwrite);
+    return loadTexture(key, ResourcePathHandler::getResourcePathFor(relativePath), colorFormat, overwrite);
 }
 
 TextureInfo* ResourceManager::getTexture(const std::string& key) {
@@ -380,8 +381,12 @@ void ResourceManager::unloadAll() {
 #endif
 }
 
-PixMap* ResourceManager::loadPixMap(const std::string& filePath) {
-	return loadPixMapFromPNG(filePath);
+PixMap* ResourceManager::loadPixMap(const std::string& filePath, ColorFormat colorFormat) {
+	PixMap* pixmap = loadPixMapFromPNG(filePath);
+    if (colorFormat == ColorFormat::ALPHA) {
+        pixmap->convertTo(ColorFormat::ALPHA);
+    }
+    return pixmap;
 }
 
 PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath) {

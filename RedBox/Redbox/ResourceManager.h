@@ -47,6 +47,8 @@ namespace RedBox {
 		 * Loads a texture from a file and assigns a representative key to it.
 		 * @param key Key used to identify this new texture.
 		 * @param filePath Path to the file containing the texture.
+         * @param colorFormat Used to select the internal colorFormat of the texture. If you choose ALPHA while loading
+         * an RGBA image, the engine will use the red channel and strip the 3 other channel.
 		 * @param overwrite When set to true, it will delete any existing
 		 * texture at the specified key. (False (default) will print an error if
 		 * the key is occupied).
@@ -55,6 +57,7 @@ namespace RedBox {
 		 */
 		static TextureInfo* loadTexture(const std::string& key,
 		                                const std::string& filePath,
+                                        ColorFormat colorFormat = ColorFormat::RGBA,
 		                                bool overwrite = false);
         
         /**
@@ -64,6 +67,8 @@ namespace RedBox {
          * ResourcePathHandler::getResourcePathFor.
 		 * @param key Key used to identify this new texture.
 		 * @param relativePath RelativePath (from the resource folder)to the file containing the texture.
+         * @param colorFormat Used to select the internal colorFormat of the texture. If you choose ALPHA while loading
+         * an RGBA image, the engine will use the red channel and strip the 3 other channel. 
 		 * @param overwrite When set to true, it will delete any existing
 		 * texture at the specified key. (False (default) will print an error if
 		 * the key is occupied).
@@ -71,8 +76,9 @@ namespace RedBox {
 		 * load.
 		 */
         static TextureInfo* loadTextureRelativePath(const std::string& key,
-		                                const std::string& relativePath,
-		                                bool overwrite = false);
+                                                    const std::string& relativePath, 
+                                                    ColorFormat colorFormat = ColorFormat::RGBA,
+                                                    bool overwrite = false);
 
 		/**
 		 * Gets the information about the asked texture. Uses the texture's key
@@ -193,7 +199,7 @@ namespace RedBox {
 		static void unloadAll();
 	private:
 		///Create a PixMap from an image file at the given path.
-		static PixMap* loadPixMap(const std::string& filePath);
+		static PixMap* loadPixMap(const std::string& filePath, ColorFormat colorFormat);
 
 		///Create a PixMap from a PNG file at the given path.
 		static PixMap* loadPixMapFromPNG(const std::string& filePath);
