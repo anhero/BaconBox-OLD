@@ -1,8 +1,12 @@
 #include "GraphicString.h"
+
+#include <algorithm>
+
 #include "TextureInfo.h"
 #include "Console.h"
 #include "UTFConvert.h"
 #include "Font.h"
+#include "DeleteHelper.h"
 
 using namespace RedBox;
 
@@ -10,7 +14,7 @@ GraphicString::GraphicString(Font* newFont, const Vec2& newPosition,
 							 TextAlignment newAlignment,
 							 TextDirection newDirection) :
 	GraphicBody(newPosition), font(newFont), color(Color::BLACK),
-	needReset(false), alignment(newAlignment), direction(newDirection),
+	 needReset(false), alignment(newAlignment), direction(newDirection),
 	widthCache(0.0f) {
 	setString();
 }
@@ -39,7 +43,7 @@ const Color& GraphicString::getColor() const {
 
 void GraphicString::setColor(const Color& newColor) {
 	color = newColor;
-	needReset = true;
+	setColor();
 }
 
 TextAlignment GraphicString::getAlignment() const {
@@ -48,7 +52,7 @@ TextAlignment GraphicString::getAlignment() const {
 
 void GraphicString::setAlignment(TextAlignment newAlignment) {
 	alignment = newAlignment;
-	needReset = true;
+	setPosition();
 }
 
 TextDirection GraphicString::getDirection() const {
@@ -57,7 +61,7 @@ TextDirection GraphicString::getDirection() const {
 
 void GraphicString::setDirection(TextDirection newDirection) {
 	direction = newDirection;
-	needReset = true;
+	setPosition();
 }
 
 void GraphicString::setText(const std::string& text) {
@@ -67,7 +71,7 @@ void GraphicString::setText(const std::string& text) {
 void GraphicString::setText(const RB_String32& text) {
 	internalString = text;
 
-	if(font != NULL) {
+	if(font) {
 		flushCharacters();
 
 		for(RB_String32::const_iterator i = text.begin(); i != text.end(); i++) {
@@ -82,9 +86,9 @@ void GraphicString::setText(const RB_String32& text) {
 			characters.push_back(std::pair<Glyph*, Sprite*>(aGlyph, aSprite));
 		}
 
-		needReset = true;
+		setString();
 	} else {
-		Console::print("Trying to set text with no font loaded.");
+		Console::print("Trying to set text to a GraphicString without any font set.");
 		Console::printTrace();
 	}
 }
@@ -116,18 +120,18 @@ void GraphicString::setPointSize(int pointSize, int dpi) {
 
 void GraphicString::setAutomaticLineHeight() {
 	font->setAutomaticLineHeight();
-	needReset = true;
+	setPosition();
 }
 
 void GraphicString::setManualLineHeight(int lineHeight) {
 	font->setManualLineHeight(lineHeight);
-	needReset = true;
+	setPosition();
 }
 
 void GraphicString::update() {
 	for(std::list<std::pair<Glyph*, Sprite*> >::iterator i = characters.begin();
 		i != characters.end(); i++) {
-		//We need to check for null pointer since space does not have sprite
+		// We need to check for null pointer since space does not have sprite.
 		if(i->second != NULL) {
 			i->second->update();
 		}
@@ -139,8 +143,8 @@ void GraphicString::render() {
 		setString();
 	}
 
-	for(std::list<std::pair<Glyph*, Sprite*> >::iterator i = characters.begin();
-		i != characters.end(); i++) {
+	for(GlyphList::iterator i = characters.begin(); i != characters.end();
+		++i) {
 		// We need to check for null pointer since space does not have sprite.
 		if(i->second != NULL) {
 			i->second->render();
@@ -149,44 +153,21 @@ void GraphicString::render() {
 }
 
 float RedBox::GraphicString::getWidth() const {
-	return this->widthCache;
+	return widthCache;
 }
 
 float RedBox::GraphicString::getHeight() const {
-	return this->font->getLineHeight();
+	if(font) {
+		return font->getLineHeight();
+	} else {
+		return 0.0f;
+	}
 }
 
 void GraphicString::setString() {
-	std::list<std::pair<Glyph*, Sprite*> >::iterator i;
-	std::list<std::pair<Glyph*, Sprite*> >::iterator begin = characters.begin();
-	std::list<std::pair<Glyph*, Sprite*> >::iterator end = characters.end();
-
-	for(i = begin; i != end; i++) {
-		//We do not delete the glyph, it would break the glyph cache.
-		//Also we must check for null pointer, since space does not have sprite
-		if(i->second != NULL) {
-			i->second->setMainColor(color);
-		}
-	}
-
+	setColor();
 	setPosition();
 	needReset = false;
-}
-
-void GraphicString::flushCharacters() {
-	std::list<std::pair<Glyph*, Sprite*> >::iterator i;
-	std::list<std::pair<Glyph*, Sprite*> >::iterator begin = characters.begin();
-	std::list<std::pair<Glyph*, Sprite*> >::iterator end = characters.end();
-
-	for(i = begin; i != end; i++) {
-		//We do not delete the glyph, it would break the glyph cache.
-		//Also we must check for null pointer, since space does not have sprite
-		if(i->second != NULL) {
-			delete i->second;
-		}
-	}
-
-	characters.clear();
 }
 
 void GraphicString::setPosition() {
@@ -201,11 +182,8 @@ void GraphicString::setPosition() {
 			//If the direction is left to right we iterate to set the position (we pretend it's left align first, since we need
 			// to get the ending position to calculate the adjustment factor.
 			if(direction == TextDirection::LEFT_TO_RIGHT) {
-				std::list<std::pair<Glyph*, Sprite*> >::iterator i;
-				std::list<std::pair<Glyph*, Sprite*> >::iterator begin = characters.begin();
-				std::list<std::pair<Glyph*, Sprite*> >::iterator end = characters.end();
-
-				for(i = begin; i != end; i++) {
+				for(GlyphList::iterator i = characters.begin();
+					i != characters.end(); ++i) {
 					//We need to check for null pointer since space does not have sprite
 					if(i->second != NULL) {
 						i->second->setPosition(x + i->first->horizontalBearing.getX(), y + lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY());
@@ -217,11 +195,8 @@ void GraphicString::setPosition() {
 			//If the direction is right to left we iterate to set the position (we pretend it's left align first, since we need
 			// to get the ending position to calculate the adjustment factor.
 			else if(direction == TextDirection::RIGHT_TO_LEFT) {
-				std::list<std::pair<Glyph*, Sprite*> >::reverse_iterator i;
-				std::list<std::pair<Glyph*, Sprite*> >::reverse_iterator begin = characters.rbegin();
-				std::list<std::pair<Glyph*, Sprite*> >::reverse_iterator end = characters.rend();
-
-				for(i = begin; i != end; i++) {
+				for(GlyphList::iterator i = characters.begin();
+					i != characters.end(); ++i) {
 					//We need to check for null pointer since space does not have sprite
 					if(i->second != NULL) {
 						i->second->setPosition(x + i->first->horizontalBearing.getX(), y + lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY());
@@ -233,7 +208,8 @@ void GraphicString::setPosition() {
 
 			float xAdjustment = (alignment == TextAlignment::LEFT) ? (0.0f) : ((alignment == TextAlignment::RIGHT) ? (this->GraphicBody::getXPosition() - x) : ((this->GraphicBody::getXPosition() - x) * 0.5f));
 
-			for(std::list<std::pair<Glyph*, Sprite*> >::iterator i = characters.begin(); i != characters.end(); i++) {
+			for(GlyphList::iterator i = characters.begin();
+				i != characters.end(); ++i) {
 				//We need to check for null pointer since space does not have sprite
 				if(i->second != NULL) {
 					i->second->moveX(xAdjustment);
@@ -250,3 +226,21 @@ void GraphicString::setPosition() {
 		widthCache = x;
 	}
 }
+
+void GraphicString::setColor() {
+	for(GlyphList::iterator i = characters.begin();
+		i != characters.end(); ++i) {
+		// We do not delete the glyph, it would break the glyph cache.
+		// Also we must check for null pointer, since space does not have sprite
+		if(i->second) {
+			i->second->setMainColor(color);
+		}
+	}
+
+}
+
+void GraphicString::flushCharacters() {
+	std::for_each(characters.begin(), characters.end(), DeletePointerFromPair());
+	characters.clear();
+}
+

@@ -213,6 +213,8 @@ namespace RedBox {
 		 */
 		void setString();
 	private:
+		typedef std::list<std::pair<Glyph*, Sprite*> > GlyphList;
+
 		/// Rendering font.
 		Font* font;
 
@@ -245,7 +247,7 @@ namespace RedBox {
 		std::list<StringFX> renderEffects;
 
 		/// List of sprite representing each glyph.
-		std::list<std::pair<Glyph*, Sprite*> > characters;
+		GlyphList characters;
 
 		/// Calculated width of the string
 		float widthCache;
@@ -256,6 +258,11 @@ namespace RedBox {
 		 * It's a bit more expensive in operation, but it's cleaner this way.
 		 */
 		void setPosition();
+
+		/**
+		 * Refreshes the main color for all glyphs.
+		 */
+		void setColor();
 
 		/**
 		 * Frees memory occupied by the sprites in the character list and
