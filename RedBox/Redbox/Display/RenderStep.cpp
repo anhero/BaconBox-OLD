@@ -91,24 +91,24 @@ void RenderStep::render() {
 		// We check which graphic driver method to use.
 		if(mode.isSet(RenderStepMode::SHAPE)) {
 			if(mode.isSet(RenderStepMode::TEXTURE)) {
-				if (mode.isSet(RenderStepMode::MASKED)) {
+				if (mode.isSet(RenderStepMode::MASKED) || mode.isSet(RenderStepMode::INVERSE_MASKED)) {
                     Sprite* mask = getMask();
                     mask->mask();
+                    //MASKED+TEXTURE
+                    bool inversed = mode.isSet(RenderStepMode::INVERSE_MASKED);
                     GraphicDriver::drawMaskedShapeWithTextureAndColor(verticesData,
 																info,
-																vertices->getVertices().size());
+																vertices->getVertices().size(), inversed);
                     mask->unmask();
                 }
-                else if(mode.isSet(RenderStepMode::COLOR)) {
-					GraphicDriver::drawShapeWithTextureAndColor(verticesData,
-																info,
-																vertices->getVertices().size());
-				} else {
+                else {
+                    //TEXTURE
 					GraphicDriver::drawShapeWithTextureAndColor(verticesData,
 																info,
 																vertices->getVertices().size());
 				}
 			} else if(mode.isSet(RenderStepMode::COLOR)) {
+                //COLOR ONLY
 				GraphicDriver::drawShapeWithColor(verticesData, info, vertices->getVertices().size());
 			}
 		}

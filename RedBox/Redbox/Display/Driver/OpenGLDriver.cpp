@@ -13,6 +13,7 @@
 
 using namespace RedBox;
 
+
 void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat* vertices,
 												RenderInfo& renderingInfo,
 												unsigned int nbVertices) {
@@ -33,7 +34,69 @@ void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat* vertices,
 	}
 }
 
+void OpenGLDriver::drawShapeWithTexture(GLfloat* vertices,
+										RenderInfo& renderingInfo,
+										unsigned int nbVertices) {
+	// We make sure there is a valid texture information.
+	if(renderingInfo.getTexInfo()) {
+		glBindTexture(GL_TEXTURE_2D, renderingInfo.getTexInfo()->textureId);
+        
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+#ifdef RB_OPENGLES
+		glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
+#else
+		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
+#endif
+        
+		glVertexPointer(2, GL_FLOAT, 0, vertices);
+		glEnableClientState(GL_VERTEX_ARRAY);
+        
+        
+        
+		glTexCoordPointer(2, GL_FLOAT, 0, &(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0]));
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        
+		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
+        
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
+	} else {
+		// We draw the shape without the texture.
+		drawShapeWithColor(vertices, renderingInfo, nbVertices);
+	}
+}
 
+void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,
+									  RenderInfo &renderingInfo,
+									  unsigned int nbVertices) {
+	if(renderingInfo.getColor().getAlpha() > 0) {
+		const uint8_t* tempColor = renderingInfo.getColor().getComponents();
+		uint8_t color[nbVertices * 4];
+		unsigned int componentCount = nbVertices * 4;
+		for	(unsigned int i = 0; i < componentCount; i++) {
+			color[i] = tempColor[i % 4];
+		}
+		glEnableClientState(GL_COLOR_ARRAY);
+		glVertexPointer(2, GL_FLOAT, 0, vertices);
+		glEnable(GL_BLEND);
+#ifdef RB_OPENGLES
+		glBlendFuncSeparateOES (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO,GL_ONE);
+#else
+		glBlendFuncSeparate (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO,GL_ONE);
+#endif
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
+        
+		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
+        
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisable(GL_BLEND);
+		glDisableClientState(GL_COLOR_ARRAY);
+	}
+}
 
 void OpenGLDriver::drawMaskShapeWithTextureAndColor(GLfloat* vertices,
                             RenderInfo& renderingInfo,
@@ -111,88 +174,44 @@ void OpenGLDriver::unmask(GLfloat* vertices,
     
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisable(GL_BLEND);
-    
-    
-    
 }
-void OpenGLDriver::drawMaskedShapeWithColor(GLfloat* vertices,
-                              RenderInfo& renderingInfo,
-                              unsigned int nbVertices){
-    
-   		
-        
-		glEnable(GL_BLEND);
-        //First render (we must use the minimum alpha between the source and destination and let the RGB component unchanged).
-#ifdef RB_OPENGLES
-    glBlendEquationSeparateOES(GL_FUNC_ADD_OES,GL_MIN_EXT);
-#else
-    glBlendEquationSeparate(GL_FUNC_ADD,GL_MIN);
-#endif
-        glBlendFunc(GL_ZERO, GL_ONE);
-        
-		glVertexPointer(2, GL_FLOAT, 0, vertices);
-		glEnableClientState(GL_VERTEX_ARRAY);
-        
-        
-		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-        
-        //Second render, we must render the color according to the buffer alpha channel,
-        if(renderingInfo.getColor().getAlpha() > 0) {
-            //@TODO: Check for possible optimizations
-            const uint8_t* tempColor = renderingInfo.getColor().getComponents();
-            uint8_t color[nbVertices * 4];
-            unsigned int componentCount = nbVertices * 4;
-            for	(unsigned int i = 0; i < componentCount; i++) {
-                color[i] = tempColor[i % 4];
-            }
-#ifdef RB_OPENGLES
-            glBlendEquationOES(GL_FUNC_ADD_OES);
-#else
-            glBlendEquation(GL_FUNC_ADD);
-#endif
-            glBlendFunc(GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA);
-            
-            glEnableClientState(GL_COLOR_ARRAY);
-            glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
-            
-            glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-            
-            glDisableClientState(GL_COLOR_ARRAY);
-        }
-        //Third render, we must reset the alpha channel and leave the RGB channels unchanged.
-        glDisable(GL_TEXTURE_2D);
-        glEnableClientState(GL_COLOR_ARRAY);
-#ifdef RB_OPENGLES
-    glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
-#else
-    glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
-#endif
-        uint8_t color[nbVertices * 4];
-        for	(unsigned int i = 0; i < nbVertices; i++) {
-			color[4*(i+1)-1] = 255;
-		}
-        glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-    
-        glDisableClientState(GL_COLOR_ARRAY);
-        
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisable(GL_BLEND);
-	
-    
-}
+
 
 void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
                                         RenderInfo& renderingInfo,
-                                        unsigned int nbVertices){
+                                        unsigned int nbVertices, bool inversedMask){
     
-    // We make sure there is a valid texture information.
-	if(renderingInfo.getTexInfo()) {
+    glEnable(GL_BLEND);
+
+    if (inversedMask) {
+        //First render, if are drawing an invered mask, we must prepare the alpha buffer.
+        glDisable(GL_TEXTURE_2D);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glBlendEquationSeparate(GL_FUNC_ADD,GL_FUNC_ADD);
+        
+#ifdef RB_OPENGLES
+        glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
+#else
+        glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE_MINUS_DST_ALPHA, GL_ZERO);
+#endif
+        uint8_t color2[nbVertices * 4];
+        for	(unsigned int i = 0;  i < nbVertices * 4; i++) {
+            color2[i] = 255;
+        }
+        glVertexPointer(2, GL_FLOAT, 0, vertices);
+        glEnableClientState(GL_VERTEX_ARRAY);   
+        
+        glColorPointer(4, GL_UNSIGNED_BYTE, 0, color2);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
+        
+        glDisableClientState(GL_COLOR_ARRAY);
+    }
+    
+        // We make sure there is a valid texture information.
 		glBindTexture(GL_TEXTURE_2D, renderingInfo.getTexInfo()->textureId);
         
 		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-        //First render (we must use the minimum alpha between the source and destination and let the RGB component unchanged).
+        //Second render (we must use the minimum alpha between the source and destination and let the RGB component unchanged).
 #ifdef RB_OPENGLES
 		glBlendEquationSeparateOES(GL_FUNC_ADD_OES,GL_MIN_EXT);
 #else
@@ -208,7 +227,7 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
         
 		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
         
-        //Second render, we must render the color according to the buffer alpha channel,
+        //Third render, we must render the color according to the buffer alpha channel,
         if(renderingInfo.getColor().getAlpha() > 0) {
             //@TODO: Check for possible optimizations
             const uint8_t* tempColor = renderingInfo.getColor().getComponents();
@@ -231,7 +250,7 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
             
         glDisableClientState(GL_COLOR_ARRAY);
         }
-        //Third render, we must reset the alpha channel and leave the RGB channels unchanged.
+        //Fourth render, we must reset the alpha channel and leave the RGB channels unchanged.
         glDisable(GL_TEXTURE_2D);
         glEnableClientState(GL_COLOR_ARRAY);
 #ifdef RB_OPENGLES
@@ -251,139 +270,11 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisable(GL_BLEND);
-	} else {
-		// We draw the shape without the texture.
-		drawMaskedShapeWithColor(vertices, renderingInfo, nbVertices);
-	}
     
 }
 
-void OpenGLDriver::drawMaskedShapeWithTexture(GLfloat* vertices,
-                                RenderInfo& renderingInfo,
-                                unsigned int nbVertices){
-    
-    
-    // We make sure there is a valid texture information.
-	if(renderingInfo.getTexInfo()) {
-		glBindTexture(GL_TEXTURE_2D, renderingInfo.getTexInfo()->textureId);
-        
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-        //First render (we must use the minimum alpha between the source and destination and let the RGB component unchanged).
-#ifdef RB_OPENGLES
-		glBlendEquationSeparateOES(GL_FUNC_ADD_OES,GL_MIN_EXT);
-#else
-		glBlendEquationSeparate(GL_FUNC_ADD,GL_MIN);
-#endif
-        glBlendFunc(GL_ZERO, GL_ONE);
-        
-		glVertexPointer(2, GL_FLOAT, 0, vertices);
-		glEnableClientState(GL_VERTEX_ARRAY);
-        
-		glTexCoordPointer(2, GL_FLOAT, 0, &(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0]));
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        
-		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-        
-        //Second render, we must render the color according to the buffer alpha channel,
-#ifdef RB_OPENGLES
-        glBlendEquationOES(GL_FUNC_ADD_OES);
-#else
-        glBlendEquation(GL_FUNC_ADD);
-#endif
-        glBlendFunc(GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-        
-        //Third render, we must reset the alpha channel and leave the RGB channels unchanged.
-        glDisable(GL_TEXTURE_2D);
-        glEnableClientState(GL_COLOR_ARRAY);
-#ifdef RB_OPENGLES
-        glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
-#else
-        glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
-#endif
-        uint8_t color[nbVertices * 4];
-        for	(unsigned int i = 0; i < nbVertices; i++) {
-			color[4*(i+1)-1] = 255;
-		}
-        glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-        
-        glDisableClientState(GL_COLOR_ARRAY);
-        
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisable(GL_BLEND);
-	} else {
-		// We draw the shape without the texture.
-		drawMaskedShapeWithColor(vertices, renderingInfo, nbVertices);
-	}
-    
-}
-
-void OpenGLDriver::drawShapeWithTexture(GLfloat* vertices,
-										RenderInfo& renderingInfo,
-										unsigned int nbVertices) {
-	// We make sure there is a valid texture information.
-	if(renderingInfo.getTexInfo()) {
-		glBindTexture(GL_TEXTURE_2D, renderingInfo.getTexInfo()->textureId);
-
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-#ifdef RB_OPENGLES
-		glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
-#else
-		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
-#endif
-
-		glVertexPointer(2, GL_FLOAT, 0, vertices);
-		glEnableClientState(GL_VERTEX_ARRAY);
 
 
-
-		glTexCoordPointer(2, GL_FLOAT, 0, &(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0]));
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisable(GL_BLEND);
-		glDisable(GL_TEXTURE_2D);
-	} else {
-		// We draw the shape without the texture.
-		drawShapeWithColor(vertices, renderingInfo, nbVertices);
-	}
-}
-
-void OpenGLDriver::drawShapeWithColor(GLfloat* vertices,
-									  RenderInfo &renderingInfo,
-									  unsigned int nbVertices) {
-	if(renderingInfo.getColor().getAlpha() > 0) {
-		const uint8_t* tempColor = renderingInfo.getColor().getComponents();
-		uint8_t color[nbVertices * 4];
-		unsigned int componentCount = nbVertices * 4;
-		for	(unsigned int i = 0; i < componentCount; i++) {
-			color[i] = tempColor[i % 4];
-		}
-		glEnableClientState(GL_COLOR_ARRAY);
-		glVertexPointer(2, GL_FLOAT, 0, vertices);
-		glEnable(GL_BLEND);
-#ifdef RB_OPENGLES
-		glBlendFuncSeparateOES (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO,GL_ONE);
-#else
-		glBlendFuncSeparate (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO,GL_ONE);
-#endif
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glColorPointer(4, GL_UNSIGNED_BYTE, 0, color);
-
-		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisable(GL_BLEND);
-		glDisableClientState(GL_COLOR_ARRAY);
-	}
-}
 
 void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
 								const Color& backgroundColor) {

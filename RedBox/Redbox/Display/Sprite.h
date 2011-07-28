@@ -337,9 +337,12 @@ namespace RedBox {
         
         
         /**
-         * Set the sprite used to mask the parent renderstep. 
+         * Set the sprite used to mask the parent renderstep.
+         * @param aMask A mask sprite.
+         * @param inversed Set this parameter to true if you want to inverse the effect of the mask.
+         * false by default.
          */
-        void setMask(Sprite * aMask);
+        void setMask(Sprite * aMask, bool inversed =false);
 		
 //		void setTexture(TextureInfo * aTextureInfo);
 //		void setTexture(std::string key);

@@ -391,14 +391,21 @@ void Sprite::setMainAlpha(int alpha){
 }
 
 
-void Sprite::setMask(Sprite * aMask){
+void Sprite::setMask(Sprite * aMask, bool inversed){
     if(aMask != NULL){
     for(std::list<RenderStep*>::iterator i = renderSteps.begin();
         i != renderSteps.end();
         i++) {
 		if(*i) {
 			(*i)->setMask(aMask);
-            (*i)->addMode(RenderStepMode::MASKED);
+            if (inversed) {
+                (*i)->addMode(RenderStepMode::INVERSE_MASKED);
+
+            }
+            else{
+                (*i)->addMode(RenderStepMode::MASKED);
+
+            }
 
 		}
 	}

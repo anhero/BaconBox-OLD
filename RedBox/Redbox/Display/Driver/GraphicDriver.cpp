@@ -69,30 +69,14 @@ void GraphicDriver::drawMaskShapeWithTextureAndColor(std::vector<float>& vertice
 #endif
 }
 
-void GraphicDriver::drawMaskedShapeWithColor(std::vector<float>& vertices,
-                                                     RedBox::RenderInfo &renderingInfo,
-                                                     unsigned int nbVertices) {
-#ifdef RB_OPENGL
-	OpenGLDriver::drawMaskedShapeWithColor(&(*(vertices.begin())), renderingInfo,
-                                                   nbVertices);
-#endif
-}
 
 void GraphicDriver::drawMaskedShapeWithTextureAndColor(std::vector<float>& vertices,
-                                             RedBox::RenderInfo &renderingInfo,
-                                             unsigned int nbVertices) {
+                                                       RenderInfo& renderingInfo,
+                                                       unsigned int nbVertices, 
+                                                       bool inversedMask) {
 #ifdef RB_OPENGL
 	OpenGLDriver::drawMaskedShapeWithTextureAndColor(&(*(vertices.begin())), renderingInfo,
-                                           nbVertices);
-#endif
-}
-
-void GraphicDriver::drawMaskedShapeWithTexture(std::vector<float>& vertices,
-                                                       RedBox::RenderInfo &renderingInfo,
-                                                       unsigned int nbVertices) {
-#ifdef RB_OPENGL
-	OpenGLDriver::drawMaskedShapeWithTexture(&(*(vertices.begin())), renderingInfo,
-                                                     nbVertices);
+                                                   nbVertices, inversedMask);
 #endif
 }
 
