@@ -11,4 +11,7 @@
 
 @property (nonatomic, retain) IBOutlet RedBoxAppViewController *viewController;
 
+
++ (void)setViewController:(RedBoxAppViewController*) controller;
+
 @end

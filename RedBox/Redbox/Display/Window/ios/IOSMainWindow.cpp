@@ -17,9 +17,17 @@ IOSMainWindow& IOSMainWindow::getInstance() {
 }
 
 void IOSMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
 	//SDL_SetVideoMode(width, height, 32, SDL_OPENGL);
 	//InputManager::getInstance().setNbKeyboards(1);
 	InputManager::getInstance().setNbPointers(1);
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    RedBoxAppViewController* viewController = [[RedBoxAppViewController alloc] initWithFrame:screenBounds];
+    [RedBoxAppAppDelegate setViewController:viewController];
+    [pool release];
+
 }
 
 IOSMainWindow::IOSMainWindow() : MainWindow() {

@@ -5,6 +5,9 @@
 #import "RedBoxAppViewController.h"
 #include <RedBox.h>
 #include <RedBox/GraphicDriver.h>
+
+static RedBoxAppViewController *redBoxViewController = nil;
+
 @implementation RedBoxAppAppDelegate
 
 
@@ -12,12 +15,20 @@
 
 @synthesize viewController;
 
++ (void)setViewController:(RedBoxAppViewController*) controller {
+    redBoxViewController = controller;
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    self.window = [[[UIWindow alloc] initWithFrame: screenBounds] autorelease];
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if(redBoxViewController == nil){
+        redBoxViewController = [[[RedBoxAppViewController alloc] initWithFrame:screenBounds] autorelease];
+    }
     
-    self.viewController = [[[RedBoxAppViewController alloc] initWithFrame:screenBounds] autorelease];
+    self.window = [[[UIWindow alloc] initWithFrame: screenBounds] autorelease];
+    self.viewController = redBoxViewController;
     self.window.rootViewController = self.viewController;
     [window addSubview:viewController.view];
     [window makeKeyAndVisible];
