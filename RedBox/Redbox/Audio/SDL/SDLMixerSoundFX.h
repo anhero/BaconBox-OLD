@@ -24,6 +24,7 @@ namespace RedBox {
 	class SDLMixerSoundFX : public SoundFX, public sigly::HasSlots<> {
 		friend class SDLMixerEngine;
 		friend class sigly::Signal1<int>;
+		friend class sigly::Signal0<>;
 	public:
 		static void channelHalted(int channel);
 		/**
@@ -118,6 +119,16 @@ namespace RedBox {
 		 * instances's, we set the instance's channel to -1.
 		 */
 		void onChannelHalt(int channelHalted);
+
+		/**
+		 * Called when the global sound volume is changed.
+		 */
+		void soundVolumeChanged();
+
+		/**
+		 * Refreshes the volume on the sound effect's channel.
+		 */
+		void refreshVolume(int newVolume);
 	};
 }
 

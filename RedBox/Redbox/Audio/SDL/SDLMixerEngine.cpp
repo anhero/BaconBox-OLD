@@ -112,6 +112,11 @@ void SDLMixerEngine::setMusicVolume(int newMusicVolume) {
 	}
 }
 
+void SDLMixerEngine::setSoundVolume(int newSoundVolume) {
+	this->SoundEngine::setSoundVolume(newSoundVolume);
+	soundVolumeChange();
+}
+
 SDLMixerEngine::SDLMixerEngine() : SoundEngine(), MusicEngine(),
 	disconnect(false) {
 	lastFadeTick = SDL_GetTicks();

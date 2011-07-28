@@ -18,7 +18,7 @@ void SDLMixerSoundFX::play(int nbTimes) {
 		looping = nbTimes == LOOPING;
 		nbTimes -= ((looping) ? (0) : (1));
 		channel = Mix_PlayChannel(-1, data, nbTimes);
-		Mix_Volume(channel, SDLMixerEngine::redBoxToSdlVolume(getVolume()));
+		refreshVolume(getVolume());
 	}
 }
 
@@ -49,16 +49,14 @@ bool SDLMixerSoundFX::isLooping() {
 
 void SDLMixerSoundFX::setVolume(int newVolume) {
 	this->Sound::setVolume(newVolume);
-	if(channel != -1) {
-		Mix_Volume(channel, SDLMixerEngine::redBoxToSdlVolume(getVolume()));
-	}
+	refreshVolume(getVolume());
 }
 
 AudioState SDLMixerSoundFX::getCurrentState() const {
 	AudioState result = AudioState::INITIAL;
 
 	if(hasPlayed) {
-		if(channel == -1) {
+		if(channel == INVALID_CHANNEL) {
 			result = AudioState::STOPPED;
 		} else {
 			if(Mix_Playing(channel)) {
@@ -78,6 +76,7 @@ SDLMixerSoundFX::~SDLMixerSoundFX() {
 SDLMixerSoundFX::SDLMixerSoundFX() : SoundFX(), looping(false), channel(-1),
 	data(NULL), hasPlayed(false) {
 	haltChannel.connect(this, &SDLMixerSoundFX::onChannelHalt);
+	SDLMixerEngine::getInstance().soundVolumeChange.connect(this, &SDLMixerSoundFX::soundVolumeChanged);
 }
 
 void SDLMixerSoundFX::load(Mix_Chunk* newData) {
@@ -92,5 +91,15 @@ void SDLMixerSoundFX::onChannelHalt(int channelHalted) {
 	// We take note if our channel is stopped.
 	if(channelHalted == channel) {
 		channel = INVALID_CHANNEL;
+	}
+}
+
+void SDLMixerSoundFX::soundVolumeChanged() {
+	refreshVolume(getVolume());
+}
+
+void SDLMixerSoundFX::refreshVolume(int newVolume) {
+	if(channel != INVALID_CHANNEL) {
+		Mix_Volume(channel, SDLMixerEngine::redBoxToSdlVolume(static_cast<int>(static_cast<float>(newVolume) * (static_cast<float>(SDLMixerEngine::getInstance().getSoundVolume()) / static_cast<float>(Sound::MAX_VOLUME)))));
 	}
 }

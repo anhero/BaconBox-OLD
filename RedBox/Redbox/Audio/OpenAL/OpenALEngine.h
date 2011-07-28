@@ -68,6 +68,13 @@ namespace RedBox {
 		 * effect after he has started playing it.
 		 */
 		SoundFX* getSoundFX(const std::string& key, bool survive);
+		
+		/**
+		 * Sets the global sound effects volume.
+		 * @param newSoundVolume New global sound effects volume.
+		 * @see RedBox::SoundEngine::soundVolume;
+		 */
+		void setSoundVolume(int newSoundVolume);
 	private:
 		/// Chunk ID wav files should have.
 		static const uint32_t CHUNK_ID_RIFF = 1179011410;

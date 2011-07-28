@@ -84,6 +84,11 @@ SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
 	}
 }
 
+void OpenALEngine::setSoundVolume(int newSoundVolume) {
+	this->SoundEngine::setSoundVolume(newSoundVolume);
+	alListenerf(AL_GAIN, static_cast<float>(getSoundVolume()) / static_cast<float>(Sound::MAX_VOLUME));
+}
+
 OpenALEngine::OpenALEngine(): SoundEngine() {
 	ALCdevice* device = NULL;
 	// We open the device.

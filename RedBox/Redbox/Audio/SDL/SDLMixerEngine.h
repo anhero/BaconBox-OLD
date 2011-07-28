@@ -52,6 +52,9 @@ namespace RedBox {
 		/// Signal when pause/resume fading needs updating for a music.
 		sigly::Signal1<unsigned int> fadeUpdate;
 
+		/// Signal when the global sound volume is changed.
+		sigly::Signal0<> soundVolumeChange;
+
 		/**
 		 * Constructs a sound effect. Gets the sound's data associated with the
 		 * key.
@@ -98,6 +101,13 @@ namespace RedBox {
 		 * @see RedBox::AudioEngine::musicVolume
 		 */
 		void setMusicVolume(int newMusicVolume);
+
+		/**
+		 * Sets the global sound effects volume.
+		 * @param newSoundVolume New global sound effects volume.
+		 * @see RedBox::SoundEngine::soundVolume;
+		 */
+		void setSoundVolume(int newSoundVolume);
 	private:
 		/// Playback frequency
 		static const int AUDIO_RATE = 44100;
