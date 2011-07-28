@@ -8,10 +8,6 @@
 #include "SafeEnum.h"
 
 namespace RedBox {
-	/**
-	 * Text direction, usually from left to right, but can be from right to left
-	 * for some languages.
-	 */
 	struct TextDirectionDef {
 		enum type {
 			LEFT_TO_RIGHT,
@@ -19,6 +15,11 @@ namespace RedBox {
 			// TODO: UP_TO_DOWN
 		};
 	};
+	/**
+	 * Text direction, usually from left to right, but can be from right to left
+	 * for some languages.
+	 * @ingroup TextDisplay
+	 */
 	typedef SafeEnum<TextDirectionDef> TextDirection;
 }
 

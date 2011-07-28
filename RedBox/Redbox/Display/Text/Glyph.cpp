@@ -1,53 +1,22 @@
 #include "Glyph.h"
-#include "Console.h"
 
 using namespace RedBox;
 
-
-void Glyph::setHoriAdvance(int horiAdvance){
-	this->horiAdvance = horiAdvance;
+Glyph::Glyph() : Object(), textureInfo(NULL) {
 }
 
-int Glyph::getXAdvance(){
-	return horiAdvance;
+Glyph::Glyph(const Glyph& src) : Object(src), advance(src.advance),
+	horizontalBearing(src.horizontalBearing), size(src.size),
+	textureInfo(src.textureInfo) {
 }
 
-void Glyph::setHoriBearingX(int horiBearingX){
-	this->horiBearingX = horiBearingX;
-}
-
-int Glyph::getHoriBearingX(){
-	return horiBearingX;
-}
-
-void Glyph::setHoriBearingY(int topDisplacement){
-	this->horiBearingY = topDisplacement;
-}
-
-int Glyph::getHoriBearingY(){
-	return horiBearingY;
-
-}
-
-void Glyph::setTextureInfo( TextureInfo * textureInfo){
-	this->textureInfo = textureInfo;
-}
-TextureInfo * Glyph::getTextureInfo(){
-	return textureInfo;
-}
-
-int Glyph::getHeight(){
-	return height;
-}
-
-void Glyph::setHeight(int height){
-	this->height = height;
-}
-
-int Glyph::getWidth(){
-	return width;
-}
-
-void Glyph::setWidth(int width){
-	this->width = width;
+Glyph& Glyph::operator=(const Glyph& src) {
+	this->Object::operator=(src);
+	if(this != &src) {
+		advance = src.advance;
+		horizontalBearing = src.horizontalBearing;
+		size = src.size;
+		textureInfo = textureInfo;
+	}
+	return *this;
 }

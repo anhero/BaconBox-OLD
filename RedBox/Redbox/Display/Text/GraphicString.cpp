@@ -72,11 +72,11 @@ void GraphicString::setText(const RB_String32& text) {
 
 		for(RB_String32::const_iterator i = text.begin(); i != text.end(); i++) {
 			Glyph* aGlyph = font->getGlyph(*i);
-			TextureInfo* glyphTextureInfo = aGlyph->getTextureInfo();
+			TextureInfo* glyphTextureInfo = aGlyph->textureInfo;
 			Sprite* aSprite = NULL;
 
-			if(aGlyph->getWidth() != 0) {
-				aSprite = new Sprite(glyphTextureInfo, aGlyph->getWidth(), aGlyph->getHeight());
+			if(aGlyph->size.getX() != 0) {
+				aSprite = new Sprite(glyphTextureInfo, aGlyph->size.getX(), aGlyph->size.getY());
 			}
 
 			characters.push_back(std::pair<Glyph*, Sprite*>(aGlyph, aSprite));
@@ -208,10 +208,10 @@ void GraphicString::setPosition() {
 				for(i = begin; i != end; i++) {
 					//We need to check for null pointer since space does not have sprite
 					if(i->second != NULL) {
-						i->second->setPosition(x + i->first->getHoriBearingX(), y + lineHeight + (i->first->getHeight() - i->first->getHoriBearingY()) - i->first->getHeight());
+						i->second->setPosition(x + i->first->horizontalBearing.getX(), y + lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY());
 					}
 
-					x += static_cast<float>(i->first->getXAdvance());
+					x += static_cast<float>(i->first->advance.getX());
 				}
 			}
 			//If the direction is right to left we iterate to set the position (we pretend it's left align first, since we need
@@ -224,10 +224,10 @@ void GraphicString::setPosition() {
 				for(i = begin; i != end; i++) {
 					//We need to check for null pointer since space does not have sprite
 					if(i->second != NULL) {
-						i->second->setPosition(x + i->first->getHoriBearingX(), y + lineHeight + (i->first->getHeight() - i->first->getHoriBearingY()) - i->first->getHeight());
+						i->second->setPosition(x + i->first->horizontalBearing.getX(), y + lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY());
 					}
 
-					x += static_cast<float>(i->first->getXAdvance());
+					x += static_cast<float>(i->first->advance.getX());
 				}
 			}
 
@@ -242,7 +242,7 @@ void GraphicString::setPosition() {
 
 			if(characters.size() > 0) {
 				// We add the last glyph's width to the position...
-				x += static_cast<float>((--characters.end())->first->getXAdvance());
+				x += static_cast<float>((--characters.end())->first->advance.getX());
 			}
 		}
 

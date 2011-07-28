@@ -8,9 +8,6 @@
 #include "SafeEnum.h"
 
 namespace RedBox {
-	/**
-	 * Different text alignments used for graphic strings.
-	 */
 	struct TextAlignmentDef {
 		enum type {
 			LEFT,
@@ -18,6 +15,10 @@ namespace RedBox {
 			CENTER
 		};
 	};
+	/**
+	 * Different text alignments used for graphic strings.
+	 * @ingroup TextDisplay
+	 */
 	typedef SafeEnum<TextAlignmentDef> TextAlignment;
 }
 
