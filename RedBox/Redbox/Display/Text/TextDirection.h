@@ -1,0 +1,25 @@
+/**
+ * @file
+ * @ingroup TextDisplay
+ */
+#ifndef RB_TEXT_DIRECTION_H
+#define RB_TEXT_DIRECTION_H
+
+#include "SafeEnum.h"
+
+namespace RedBox {
+	/**
+	 * Text direction, usually from left to right, but can be from right to left
+	 * for some languages.
+	 */
+	struct TextDirectionDef {
+		enum type {
+			LEFT_TO_RIGHT,
+			RIGHT_TO_LEFT
+			// TODO: UP_TO_DOWN
+		};
+	};
+	typedef SafeEnum<TextDirectionDef> TextDirection;
+}
+
+#endif

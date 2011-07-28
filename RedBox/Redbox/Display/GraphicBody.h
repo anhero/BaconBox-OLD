@@ -35,7 +35,7 @@ namespace RedBox {
 		/**
 		 * The default constructor.
 		 */
-		GraphicBody();
+		GraphicBody(const Vec2& newPosition = Vec2());
 
 		/**
 		 * The copy constructor.

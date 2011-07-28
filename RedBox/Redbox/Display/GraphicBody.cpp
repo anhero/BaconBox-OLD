@@ -12,8 +12,8 @@
 
 using namespace RedBox;
 
-GraphicBody::GraphicBody() : Body(),
-	maxVelocity(Vec2(NO_MAX_VELOCITY, NO_MAX_VELOCITY)),
+GraphicBody::GraphicBody(const Vec2& newPosition) : Body(),
+	position(newPosition), maxVelocity(Vec2(NO_MAX_VELOCITY, NO_MAX_VELOCITY)),
 	scaling(Vec2(1.0f, 1.0f)), angle(0.0f), collidableSides(Side::ALL),
 	elasticity(0.0f), staticBody(false), toBeDeleted(false),
 	layerChanged(false), isInState(false), collidingBoxRatio(1.0f, 1.0f) {
