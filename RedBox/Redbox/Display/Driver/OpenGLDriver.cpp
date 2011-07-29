@@ -187,7 +187,12 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
         //First render, if are drawing an invered mask, we must prepare the alpha buffer.
         glDisable(GL_TEXTURE_2D);
         glEnableClientState(GL_COLOR_ARRAY);
+#ifdef RB_OPENGLES
+        glBlendEquationSeparateOES(GL_FUNC_ADD_OES,GL_FUNC_ADD_OES);
+#else
         glBlendEquationSeparate(GL_FUNC_ADD,GL_FUNC_ADD);
+#endif
+
         
 #ifdef RB_OPENGLES
         glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE,GL_ZERO);
