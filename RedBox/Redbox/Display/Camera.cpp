@@ -12,7 +12,8 @@ using namespace RedBox;
 
 Camera::Camera(): Body(), position(Vec2()), angle(0), zoomFactor(1.0f),
 	backgroundColor(Color::BLACK), shakeIntensity(0.0f),
-	shakeStart(0.0), shakeDuration(0.0), shakeAxes(BOTH_AXES), offset(Vec2()) {
+	shakeStart(0.0), shakeDuration(0.0), shakeAxes(ShakeAxes::BOTH_AXES),
+	offset(Vec2()) {
 }
 
 Camera::Camera(const Camera& src) : Body(), position(src.position),
@@ -238,13 +239,13 @@ void Camera::update() {
 		// We set random offsets to the camera.
 		float tmpIntensity = (timeSinceStarted == 0.0) ? (shakeIntensity) : ((1.0f - ((TimeHelper::getInstance().getSinceStart() - shakeStart) / shakeDuration)) * shakeIntensity);
 
-		if(shakeAxes == BOTH_AXES || shakeAxes == HORIZONTAL_AXIS) {
+		if(shakeAxes == ShakeAxes::BOTH_AXES || shakeAxes == ShakeAxes::HORIZONTAL_AXIS) {
 			offset.setX(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(Engine::getScreenWidth()));
 		} else {
 			offset.setX(0.0f);
 		}
 
-		if(shakeAxes == BOTH_AXES || shakeAxes == VERTICAL_AXIS) {
+		if(shakeAxes == ShakeAxes::BOTH_AXES || shakeAxes == ShakeAxes::VERTICAL_AXIS) {
 			offset.setY(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(Engine::getScreenHeight()));
 		} else {
 			offset.setY(0.0f);
