@@ -121,11 +121,11 @@ void Camera::setZoomFactor(float newZoomFactor) {
 }
 
 void Camera::zoom(float factor) {
-	zoomFactor *= factor;
+	setZoomFactor(zoomFactor * factor);
 }
 
 void Camera::resetZoom() {
-	zoomFactor = 1.0f;
+	setZoomFactor(1.0f);
 }
 
 void Camera::shake(float intensity, double duration, bool forceReset,
