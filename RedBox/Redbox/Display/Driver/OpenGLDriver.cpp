@@ -386,3 +386,4 @@ float OpenGLDriver::clampColorComponent(unsigned int component) {
 }
 
 #endif //RB_OPENGL
+
