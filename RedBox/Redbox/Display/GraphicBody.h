@@ -10,6 +10,7 @@
 #include "Body.h"
 #include "Vec2.h"
 #include "Side.h"
+#include "FlagSet.h"
 #include "CollisionData.h"
 #include "Layer.h"
 #include "AABB.h"
@@ -31,6 +32,8 @@ namespace RedBox {
 	public:
 		/// Value used to represent an infinite maximum velocity.
 		static const float NO_MAX_VELOCITY = -1.0f;
+
+		static const FlagSet<Side> ALL_SIDES;
 
 		/**
 		 * The default constructor.
@@ -499,23 +502,7 @@ namespace RedBox {
 		 * @return Possible return flag : LEFT | RIGHT | TOP | BOTTOM
 		 * @see RedBox::GraphicBody::collidableSides
 		 */
-		Side::Enum getCollidableSides();
-
-		/**
-		 * Return true if the given sides are collidable sides.
-		 * @param sides Correct value are LEFT | RIGHT | TOP | BOTTOM | ALL
-		 * @see RedBox::GraphicBody::collidableSides
-		 */
-		bool isCollidingSide(Side::Enum sides);
-
-		/**
-		 * Use to set the collidableSides flag. Used to set which side of a
-		 * sprite should collide and which should not.
-		 * @param collidableSides Correct values are LEFT, RIGHT, TOP, BOTTOM or
-		 * ALL.
-		 * @see RedBox::GraphicBody::collidableSides
-		 */
-		void setCollidableSides(Side::Enum collidableSides);
+		FlagSet<Side>& getCollidableSides();
 
 		/**
 		 * Checks if the graphic body is static or not.
@@ -945,7 +932,6 @@ namespace RedBox {
 									float higherYBoundary = -1.0f);
 
 	private:
-
 		static float computeVelocity(float velocity, float acceleration, float drag, float max);
 		/**
 		 * This function will solve the collision on the x axis. It will
@@ -1025,7 +1011,7 @@ namespace RedBox {
 		 * Contain "Side" flag (see Side.h). It tells which side can collide. A
 		 * side that can't collide will let a sprite pass through.
 		 */
-		Side::Enum collidableSides;
+		FlagSet<Side> collidableSides;
 
 		/**
 		 * Elasticity factor of the GraphicBody, will determine how should it

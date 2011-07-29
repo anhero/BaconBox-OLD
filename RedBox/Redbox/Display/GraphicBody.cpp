@@ -12,9 +12,22 @@
 
 using namespace RedBox;
 
+FlagSet<Side> initAllSides();
+
+const FlagSet<Side> GraphicBody::ALL_SIDES = initAllSides();
+
+FlagSet<Side> initAllSides() {
+	FlagSet<Side> result;
+	result.set(Side::LEFT);
+	result.set(Side::RIGHT);
+	result.set(Side::TOP);
+	result.set(Side::BOTTOM);
+	return result;
+}
+
 GraphicBody::GraphicBody(const Vec2& newPosition) : Body(),
 	position(newPosition), maxVelocity(Vec2(NO_MAX_VELOCITY, NO_MAX_VELOCITY)),
-	scaling(Vec2(1.0f, 1.0f)), angle(0.0f), collidableSides(Side::ALL),
+	scaling(Vec2(1.0f, 1.0f)), angle(0.0f), collidableSides(ALL_SIDES),
 	elasticity(0.0f), staticBody(false), toBeDeleted(false),
 	layerChanged(false), isInState(false), collidingBoxRatio(1.0f, 1.0f) {
 }
@@ -252,16 +265,8 @@ void GraphicBody::setMaxYVelocity(float newMaxYVelocity) {
 	maxVelocity.setY(newMaxYVelocity);
 }
 
-Side::Enum GraphicBody::getCollidableSides() {
+FlagSet<Side>& GraphicBody::getCollidableSides() {
 	return collidableSides;
-}
-
-bool GraphicBody::isCollidingSide(Side::Enum sides) {
-	return collidableSides & sides;
-}
-
-void GraphicBody::setCollidableSides(Side::Enum collidableSides) {
-	this->collidableSides = collidableSides;
 }
 
 bool GraphicBody::isStaticBody() const {
@@ -650,21 +655,21 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 			if(obj1Delta > obj2Delta) {
 				overlap = (object1->getXPosition() + object1->getXOffset()) + tmpWidth1 - (object2->getXPosition() + object2->getXOffset());
 
-				if(overlap > maxOverlap || !object1->isCollidingSide(Side::RIGHT) || !object2->isCollidingSide(Side::LEFT)) {
+				if(overlap > maxOverlap || !object1->collidableSides.isSet(Side::RIGHT) || !object2->collidableSides.isSet(Side::LEFT)) {
 					overlap = 0.0f;
 				} else {
-					collisionInfo->sideObj1 |= Side::RIGHT;
-					collisionInfo->sideObj2 |= Side::LEFT;
+					collisionInfo->sideObj1 = Side::RIGHT;
+					collisionInfo->sideObj2 = Side::LEFT;
 				}
 
 			} else if(obj1Delta < obj2Delta) {
 				overlap = object1->getXPosition() - tmpWidth2 - object2->getXPosition();
 
-				if((-overlap > maxOverlap) || !object1->isCollidingSide(Side::LEFT) || !object2->isCollidingSide(Side::RIGHT)) {
+				if((-overlap > maxOverlap) || !object1->collidableSides.isSet(Side::LEFT) || !object2->collidableSides.isSet(Side::RIGHT)) {
 					overlap = 0.0f;
 				} else {
-					collisionInfo->sideObj1 |= Side::LEFT;
-					collisionInfo->sideObj2 |= Side::RIGHT;
+					collisionInfo->sideObj1 = Side::LEFT;
+					collisionInfo->sideObj2 = Side::RIGHT;
 				}
 			}
 		}
@@ -742,21 +747,21 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 			if(obj1Delta > obj2Delta) {
 				overlap = (object1->getYPosition() + object1->getYOffset()) + tmpHeight1 - (object2->getYPosition() + object2->getYOffset());
 
-				if(overlap > maxOverlap || !object1->isCollidingSide(Side::BOTTOM) || !object2->isCollidingSide(Side::TOP)) {
+				if(overlap > maxOverlap || !object1->collidableSides.isSet(Side::BOTTOM) || !object2->collidableSides.isSet(Side::TOP)) {
 					overlap = 0.0f;
 				} else {
-					collisionInfo->sideObj1 |= Side::BOTTOM;
-					collisionInfo->sideObj2 |= Side::TOP;
+					collisionInfo->sideObj1 = Side::BOTTOM;
+					collisionInfo->sideObj2 = Side::TOP;
 				}
 
 			} else if(obj1Delta < obj2Delta) {
 				overlap = object1->getYPosition() - tmpHeight2 - object2->getYPosition();
 
-				if(-overlap > maxOverlap || !object1->isCollidingSide(Side::TOP) || !object2->isCollidingSide(Side::BOTTOM)) {
+				if(-overlap > maxOverlap || !object1->collidableSides.isSet(Side::TOP) || !object2->collidableSides.isSet(Side::BOTTOM)) {
 					overlap = 0.0f;
 				} else {
-					collisionInfo->sideObj1 |= Side::TOP;
-					collisionInfo->sideObj2 |= Side::BOTTOM;
+					collisionInfo->sideObj1 = Side::TOP;
+					collisionInfo->sideObj2 = Side::BOTTOM;
 				}
 			}
 
