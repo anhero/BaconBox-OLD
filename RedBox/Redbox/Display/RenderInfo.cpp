@@ -7,17 +7,19 @@
 #include "VerticesGroup.h"
 #include "Console.h"
 #include "MathHelper.h"
+#include "Sprite.h"
 
 using namespace RedBox;
 
-RenderInfo::RenderInfo(): Object(), color(Color::WHITE), texInfo(NULL),
-	currentFrame(0), currentNbLoops(0), defaultFrame(0), mask(NULL){
+RenderInfo::RenderInfo(): Object(), color(Color::WHITE), mask(NULL),
+	texInfo(NULL), currentFrame(0), currentNbLoops(0), defaultFrame(0) {
 }
 
 RenderInfo::RenderInfo(const RenderInfo& src) : Object(), color(src.color),
-	texInfo(src.texInfo), texCoords(src.texCoords), currentFrame(src.currentFrame),
-	currentNbLoops(src.currentNbLoops), defaultFrame(src.defaultFrame),
-	animations(src.animations), currentAnimation(src.currentAnimation), mask(src.mask) {
+	mask(src.mask),	texInfo(src.texInfo), texCoords(src.texCoords),
+	currentFrame(src.currentFrame),	currentNbLoops(src.currentNbLoops),
+	defaultFrame(src.defaultFrame),	animations(src.animations),
+	currentAnimation(src.currentAnimation) {
 }
 
 RenderInfo::RenderInfo(TextureInfo* newTexInfo,
@@ -26,17 +28,10 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
                        unsigned int frameHeight,
                        unsigned int nbFrames,
                        const Color& newColor) : Object(), color(newColor),
-	texInfo(newTexInfo), texCoords(std::vector< std::vector<float> >(nbFrames)),
-	currentFrame(0), currentNbLoops(0), defaultFrame(0), mask(NULL) {
+	mask(NULL), texInfo(newTexInfo),
+	texCoords(std::vector< std::vector<float> >(nbFrames)), currentFrame(0),
+	currentNbLoops(0), defaultFrame(0) {
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
-}
-
-void RenderInfo::setMask(Sprite * aMask){
-    mask = aMask;
-}
-
-Sprite * RenderInfo::getMask(){
-    return mask;
 }
 
 void RenderInfo::loadTexCoords(VerticesGroup* vertices,
@@ -184,6 +179,14 @@ void RenderInfo::addAnimation(const std::string& name,
 		Console::print("Failed to add the animation named : " + name);
 		Console::printTrace();
 	}
+}
+
+void RenderInfo::setMask(Sprite* newMask){
+	mask = newMask;
+}
+
+Sprite* RenderInfo::getMask(){
+	return mask;
 }
 
 const Color& RenderInfo::getColor() const {

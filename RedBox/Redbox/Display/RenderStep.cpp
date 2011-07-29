@@ -12,6 +12,7 @@
 #include "Vertex.h"
 #include "VerticesGroup.h"
 #include "Engine.h"
+#include "Sprite.h"
 
 using namespace RedBox;
 
