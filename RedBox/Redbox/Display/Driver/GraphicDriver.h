@@ -160,7 +160,8 @@ namespace RedBox{
 		 * @param backgroundColor The scene's background color.
 		 */
 		static void prepareScene(const Vec2& position, float angle, float zoom,
-								 const Color& backgroundColor);
+								 const Color& backgroundColor,
+								 const Vec2& rotationCenterOffset);
 
 		/**
 		 * Initialize the drawing backend an prepare the coordinate system with the given

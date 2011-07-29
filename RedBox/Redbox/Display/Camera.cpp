@@ -257,5 +257,5 @@ void Camera::update() {
 }
 
 void Camera::render() {
-	GraphicDriver::prepareScene(position + offset, angle, zoomFactor, backgroundColor);
+	GraphicDriver::prepareScene(position + offset, angle, zoomFactor, backgroundColor, Vec2(static_cast<float>(getWidth()) * 0.5f, static_cast<float>(getHeight()) * 0.5f));
 }

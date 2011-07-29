@@ -175,7 +175,8 @@ namespace RedBox {
 		 * (the scene's background color). The alpha component is ignored.
 		 */
 		static void prepareScene(const Vec2& position, float angle, float zoom,
-								 const Color& backgroundColor);
+								 const Color& backgroundColor,
+								 const Vec2& rotationCenterOffset);
 		
 		static void pushMatrix();
 		static void translate(const Vec2& translation);
