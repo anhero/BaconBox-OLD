@@ -1,5 +1,6 @@
 #include "GraphicString.h"
 
+#include <cmath>
 #include <algorithm>
 
 #include "TextureInfo.h"
@@ -173,8 +174,10 @@ void GraphicString::setString() {
 void GraphicString::setPosition() {
 	if(font) {
 		int lineHeight = font->getLineHeight();
-		float x = this->GraphicBody::getXPosition();
-		float y = this->GraphicBody::getYPosition();
+		float x = floorf(this->GraphicBody::getXPosition());
+		float y = floorf(this->GraphicBody::getYPosition());
+		//float x = this->GraphicBody::getXPosition();
+		//float y = this->GraphicBody::getYPosition();
 
 		//We check if the direction is horizontal (alignment adjustement are different for
 		//vertical direction.
@@ -189,7 +192,7 @@ void GraphicString::setPosition() {
 						i->second->setPosition(x + i->first->horizontalBearing.getX(), y + lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY());
 					}
 
-					x += static_cast<float>(i->first->advance.getX());
+					x += i->first->advance.getX();
 				}
 			}
 			//If the direction is right to left we iterate to set the position (we pretend it's left align first, since we need
@@ -202,7 +205,7 @@ void GraphicString::setPosition() {
 						i->second->setPosition(x + i->first->horizontalBearing.getX(), y + lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY());
 					}
 
-					x += static_cast<float>(i->first->advance.getX());
+					x += i->first->advance.getX();
 				}
 			}
 
@@ -218,7 +221,7 @@ void GraphicString::setPosition() {
 
 			if(characters.size() > 0) {
 				// We add the last glyph's width to the position...
-				x += static_cast<float>((--characters.end())->first->advance.getX());
+				x += (--characters.end())->first->advance.getX();
 			}
 		}
 
