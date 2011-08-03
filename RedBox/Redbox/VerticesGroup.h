@@ -94,10 +94,9 @@ namespace RedBox {
 		 * the distance between the lowest and the highest vertex. Using this
 		 * function to get the width AND the height is faster than calling
 		 * getWidth() and getHeight() separately.
-		 * @return First element in the pair contains the width and the second
-		 * the height.
+		 * @return Vec2 containing the width and height.
 		 */
-		Vec2 getWidthHeight() const;
+		Vec2 getSize() const;
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex.

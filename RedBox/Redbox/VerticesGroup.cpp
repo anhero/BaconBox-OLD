@@ -74,7 +74,7 @@ bool VerticesGroup::containsVertices(Vertex* firstVertex, Vertex* secondVertex) 
 
 
 
-Vec2 VerticesGroup::getWidthHeight() const {
+Vec2 VerticesGroup::getSize() const {
 	if(vertices.empty()) {
 		Console::print("Tried to get the width and the height of an empty VerticesGroup.");
 		return Vec2();

@@ -63,7 +63,7 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 				float offsetX = 0.0f, offsetY = 0.0f;
 				Vec2 position = vertices->getPosition();
 				// We get the width and the height of the of the vertices group.
-				Vec2 size = vertices->getWidthHeight();
+				Vec2 size = vertices->getSize();
 				unsigned int tmpSize = vertices->getVertices().size(), j = 0;
 				std::list<Vertex>& tmpVertices = vertices->getVertices();
 

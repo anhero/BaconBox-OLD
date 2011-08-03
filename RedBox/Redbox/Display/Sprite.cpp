@@ -156,8 +156,8 @@ float Sprite::getHeight() const {
 	return vertices.getHeight();
 }
 
-const Vec2 Sprite::getWidthHeight() const {
-	return vertices.getWidthHeight();
+const Vec2 Sprite::getSize() const {
+	return vertices.getSize();
 }
 
 RenderStep* Sprite::addRenderStep(RenderStep* newRenderStep) {

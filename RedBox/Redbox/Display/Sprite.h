@@ -185,7 +185,7 @@ namespace RedBox {
 		 * @return Pair containing the sprite's width and height. The first
 		 * member is the width and the second is the height.
 		 */
-		const Vec2 getWidthHeight() const;
+		const Vec2 getSize() const;
 		
 		/**
 		 * Adds a rendering step. Does nothing if the recieved pointer is NULL.
