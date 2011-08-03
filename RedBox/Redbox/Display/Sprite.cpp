@@ -133,19 +133,9 @@ float Sprite::getYPositionCenter() const {
 	return getYPosition() + getHeight() * 0.5f;
 }
 
-void Sprite::setXPosition(float x) {
-	GraphicBody::setXPosition(x);
-	vertices.setXPosition(x);
-}
-
-void Sprite::setYPosition(float y) {
-	GraphicBody::setYPosition(y);
-	vertices.setYPosition(y);
-}
-
-void Sprite::setPosition(float x, float y) {
-	GraphicBody::setPosition(x, y);
-	vertices.setPosition(x, y);
+void Sprite::setPosition(float newXPosition, float newYPosition) {
+	GraphicBody::setPosition(newXPosition, newYPosition);
+	vertices.setPosition(newXPosition, newYPosition);
 }
 
 const Vec2 Sprite::getSize() const {

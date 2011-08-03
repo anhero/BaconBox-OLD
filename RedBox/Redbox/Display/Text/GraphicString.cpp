@@ -99,16 +99,6 @@ void GraphicString::setPosition(float newXPosition, float newYPosition) {
 	needReset = true;
 }
 
-void GraphicString::setXPosition(float newXPosition) {
-	this->GraphicBody::setXPosition(newXPosition);
-	needReset = true;
-}
-
-void GraphicString::setYPosition(float newYPosition) {
-	this->GraphicBody::setYPosition(newYPosition);
-	needReset = true;
-}
-
 void GraphicString::setPixelSize(int pixelSize) {
 	font->setPixelSize(pixelSize);
 	setText(internalString);

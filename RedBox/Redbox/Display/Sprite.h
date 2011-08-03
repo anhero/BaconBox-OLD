@@ -143,20 +143,6 @@ namespace RedBox {
 		 */
 		float getYPositionCenter() const;
 
-		/**
-		 * Sets the sprite's horizontal position.
-		 * @param x New horizontal position (in pixels). Lower value means more
-		 * to the left.
-		 */
-		void setXPosition(float x);
-
-		/**
-		 * Sets the sprite's horizontal position.
-		 * @param y New vertical position (in pixels). Lower value means more at
-		 * the top.
-		 */
-		void setYPosition(float y);
-
 		using GraphicBody::setPosition;
 
 		/**

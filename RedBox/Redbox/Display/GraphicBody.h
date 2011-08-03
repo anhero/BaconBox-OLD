@@ -367,7 +367,7 @@ namespace RedBox {
 		 * means more to the left.
 		 * @see RedBox::GraphicBody::position
 		 */
-		virtual void setXPosition(float newXPosition);
+		void setXPosition(float newXPosition);
 
 		/**
 		 * Moves the graphic body horizontally.
@@ -392,7 +392,7 @@ namespace RedBox {
 		 * means more at the top.
 		 * @see RedBox::GraphicBody::position
 		 */
-		virtual void setYPosition(float newYPosition);
+		void setYPosition(float newYPosition);
 
 		/**
 		 * Moves the GraphicBody vertically.

@@ -206,7 +206,7 @@ float GraphicBody::getXPosition() const {
 }
 
 void GraphicBody::setXPosition(float newXPosition) {
-	position.setX(newXPosition);
+	setPosition(newXPosition, getYPosition());
 }
 
 void GraphicBody::moveX(float deltaX) {
@@ -218,7 +218,7 @@ float GraphicBody::getYPosition() const {
 }
 
 void GraphicBody::setYPosition(float newYPosition) {
-	position.setY(newYPosition);
+	setPosition(getXPosition(), newYPosition);
 }
 
 void GraphicBody::moveY(float deltaY) {

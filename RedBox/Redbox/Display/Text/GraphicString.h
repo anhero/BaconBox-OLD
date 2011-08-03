@@ -24,7 +24,7 @@ namespace RedBox {
 	 * to the screen.
 	 * @ingroup Group
 	 */
-	class GraphicString : public GraphicBody{
+	class GraphicString : public GraphicBody {
 	public:
 		/**
 		 * Parameterized constructor.
@@ -148,20 +148,6 @@ namespace RedBox {
 		 * line "height" and a top-left, middle-left, bottom-left origin.
 		 */
 		void setPosition(float newXPosition, float newYPosition);
-
-		/**
-		 * Sets the GraphicString's horizontal position.
-		 * @param newXPosition New horizontal position.
-		 * @see RedBox::GraphicString::setPosition(float newXPosition, newYPosition)
-		 */
-		void setXPosition(float newXPosition);
-
-		/**
-		 * Sets the GraphicString's vertical position.
-		 * @param newXPosition New vertical position.
-		 * @see RedBox::GraphicString::setPosition(float newXPosition, newYPosition)
-		 */
-		void setYPosition(float newYPosition);
 
 		/**
 		 * Set the string size in pixel.

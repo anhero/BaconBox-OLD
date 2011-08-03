@@ -43,16 +43,6 @@ void SimpleButton::setPosition(float newXPosition, float newYPosition) {
 	buttonSprite.setPosition(newXPosition, newYPosition);
 }
 
-void SimpleButton::setXPosition(float newXPosition) {
-	this->GraphicBody::setXPosition(newXPosition);
-	buttonSprite.setXPosition(newXPosition);
-}
-
-void SimpleButton::setYPosition(float newYPosition) {
-	this->GraphicBody::setYPosition(newYPosition);
-	buttonSprite.setYPosition(newYPosition);
-}
-
 float SimpleButton::getWidth() const {
 	return buttonSprite.getWidth();
 }

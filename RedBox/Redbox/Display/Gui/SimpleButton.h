@@ -85,20 +85,6 @@ namespace RedBox {
 		void setPosition(float newXPosition, float newYPosition);
 
 		/**
-		 * Sets the simple button's horizontal position.
-		 * @param newXPosition New horizontal position (in pixels). Lower value
-		 * means more to the left.
-		 */
-		void setXPosition(float newXPosition);
-
-		/**
-		 * Sets the simple button's horizontal position.
-		 * @param newYPosition New vertical position (in pixels). Lower value
-		 * means more at the top.
-		 */
-		void setYPosition(float newYPosition);
-
-		/**
 		 * Gets the simple button's width.
 		 * @return Width in pixels (by default).
 		 */
