@@ -151,6 +151,80 @@ float VerticesGroup::getHeight() const {
 	return maxY - minY;
 }
 
+Vec2 VerticesGroup::getPosition() const {
+	if(vertices.empty()) {
+		Console::print("Tried to get the position of an empty VerticesGroup.");
+		return Vec2();
+	}
+
+	Vec2 result(vertices.front().getXPosition(),
+				vertices.front().getYPosition());
+
+	// We find the smallest vertical and horizontal position.
+	for(std::list<Vertex>::const_iterator i = vertices.begin();
+			i != vertices.end(); i++) {
+		if(i->getXPosition() < result.getX()) {
+			result.setX(i->getXPosition());
+		}
+
+		if(i->getYPosition() < result.getY()) {
+			result.setY(i->getYPosition());
+		}
+	}
+
+	return result;
+}
+
+Vec2 VerticesGroup::getPositionCenter() const {
+	if(vertices.size() == 0) {
+		Console::print("Tried to get the position of the center of an empty VerticesGroup.");
+		return Vec2();
+	}
+
+	float minX = vertices.front().getXPosition(),
+		  minY = vertices.front().getYPosition(),
+		  maxX = vertices.front().getXPosition(),
+		  maxY = vertices.front().getYPosition();
+
+	// We find the minimum and the maximum coordinates.
+	for(std::list<Vertex>::const_iterator i = vertices.begin();
+			i != vertices.end(); i++) {
+		if(i->getXPosition() < minX) {
+			minX = i->getXPosition();
+		} else if(i->getXPosition() > maxX) {
+			maxX = i->getXPosition();
+		}
+
+		if(i->getYPosition() < minY) {
+			minY = i->getYPosition();
+		} else if(i->getYPosition() > maxY) {
+			maxY = i->getYPosition();
+		}
+	}
+
+	// We return the width and the height.
+	return Vec2(minX + (maxX - minX) * 0.5f, minY + (maxY - minY) * 0.5f);
+}
+
+void VerticesGroup::setPosition(float newXPosition, float newYPosition) {
+	move(Vec2(newXPosition, newYPosition) - getPosition());
+}
+
+void VerticesGroup::move(float deltaX, float deltaY) {
+	if(vertices.empty()) {
+		Console::print("Tried to move an empty vertices group.");
+	}
+
+	for(std::list<Vertex>::iterator i = vertices.begin();
+		i != vertices.end(); i++) {
+		i->getPosition().addToXY(deltaX, deltaY);
+	}
+}
+
+void VerticesGroup::move(const Vec2& delta) {
+	move(delta.getX(), delta.getY());
+}
+
 float VerticesGroup::getXPosition() const {
 	if(vertices.empty()) {
 		Console::print("Tried to get the horizontal position of an empty VerticesGroup.");
@@ -190,6 +264,14 @@ float VerticesGroup::getXPositionCenter() const {
 
 	// We return their difference which results in the width.
 	return minX + (maxX - minX) * 0.5f;
+}
+
+void VerticesGroup::setXPosition(float newXPosition) {
+	moveX(newXPosition - getXPosition());
+}
+
+void VerticesGroup::moveX(float deltaX) {
+	move(deltaX, 0.0f);
 }
 
 float VerticesGroup::getYPosition() const {
@@ -234,112 +316,12 @@ float VerticesGroup::getYPositionCenter() const {
 	return minY + (maxY - minY) * 0.5f;
 }
 
-Vec2 VerticesGroup::getPosition() const {
-	if(vertices.empty()) {
-		Console::print("Tried to get the position of an empty VerticesGroup.");
-		return Vec2();
-	}
-
-	Vec2 result(vertices.front().getXPosition(),
-	            vertices.front().getYPosition());
-
-	// We find the smallest vertical and horizontal position.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
-	        i != vertices.end(); i++) {
-		if(i->getXPosition() < result.getX()) {
-			result.setX(i->getXPosition());
-		}
-
-		if(i->getYPosition() < result.getY()) {
-			result.setY(i->getYPosition());
-		}
-	}
-
-	return result;
-}
-
-Vec2 VerticesGroup::getPositionCenter() const {
-	if(vertices.size() == 0) {
-		Console::print("Tried to get the position of the center of an empty VerticesGroup.");
-		return Vec2();
-	}
-
-	float minX = vertices.front().getXPosition(),
-	      minY = vertices.front().getYPosition(),
-	      maxX = vertices.front().getXPosition(),
-	      maxY = vertices.front().getYPosition();
-
-	// We find the minimum and the maximum coordinates.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
-	        i != vertices.end(); i++) {
-		if(i->getXPosition() < minX) {
-			minX = i->getXPosition();
-		} else if(i->getXPosition() > maxX) {
-			maxX = i->getXPosition();
-		}
-
-		if(i->getYPosition() < minY) {
-			minY = i->getYPosition();
-		} else if(i->getYPosition() > maxY) {
-			maxY = i->getYPosition();
-		}
-	}
-
-	// We return the width and the height.
-	return Vec2(minX + (maxX - minX) * 0.5f, minY + (maxY - minY) * 0.5f);
-}
-
-void VerticesGroup::setXPosition(float x) {
-	Vec2 vec(x - getXPosition(), 0.0f);
-
-	for(std::list<Vertex>::iterator i = vertices.begin();
-	        i != vertices.end(); i++) {
-		i->getPosition() += vec;
-
-	}
-}
-
-void VerticesGroup::setYPosition(float y) {
-	Vec2 vec(0.0f, y - getYPosition());
-
-	for(std::list<Vertex>::iterator i = vertices.begin();
-	        i != vertices.end(); i++) {
-		i->getPosition() += vec;
-
-	}
-}
-
-void VerticesGroup::setPosition(float x, float y) {
-	// We calculate the vector we'll add to every vertices.
-	Vec2 position = getPosition();
-	Vec2 vec(x - position.getX(), y - position.getY());
-
-	for(std::list<Vertex>::iterator i = vertices.begin();
-	        i != vertices.end(); i++) {
-		i->getPosition() += vec;
-	}
-}
-
-void VerticesGroup::moveX(float deltaX) {
-	move(deltaX, 0.0f);
+void VerticesGroup::setYPosition(float newYPosition) {
+	moveY(newYPosition - getYPosition());
 }
 
 void VerticesGroup::moveY(float deltaY) {
 	move(0.0f, deltaY);
-}
-
-void VerticesGroup::move(float deltaX, float deltaY) {
-	if(vertices.empty()) {
-		Console::print("Tried to move an empty vertices group.");
-	}
-
-	// We create the vector we'll add to every vertices.
-	Vec2 deltaVec(deltaX, deltaY);
-
-	for(std::list<Vertex>::iterator i = vertices.begin();
-	        i != vertices.end(); i++) {
-		i->getPosition() += deltaVec;
-	}
 }
 
 void VerticesGroup::scale(const Vec2& factor) {

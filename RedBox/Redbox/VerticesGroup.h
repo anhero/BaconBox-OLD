@@ -111,34 +111,6 @@ namespace RedBox {
 		float getHeight() const;
 
 		/**
-		 * Gets the horizontal position. Higher position value means it is more
-		 * to the right.
-		 * @return Horizontal position (in pixels) of the left side.
-		 */
-		float getXPosition() const;
-
-		/**
-		 * Gets the center's horizontal position. Higher position value means it
-		 * is more to the right.
-		 * @return Horizontal position (in pixels) of the center.
-		 */
-		float getXPositionCenter() const;
-
-		/**
-		 * Gets the vertical position. Higher position value means it is lower
-		 * on the screen.
-		 * @return Vertical position (in pixels) of the top side.
-		 */
-		float getYPosition() const;
-
-		/**
-		 * Gets the center's horizontal position. Higher position value means it
-		 * is more to the bottom.
-		 * @return Center's horizontal position (in pixels).
-		 */
-		float getYPositionCenter() const;
-
-		/**
 		 * Gets the vertices group's position. (0, 0) is at the upper left
 		 * corner.
 		 * @return Pair containing the horizontal position and the vertical
@@ -155,27 +127,50 @@ namespace RedBox {
 		Vec2 getPositionCenter() const;
 
 		/**
-		 * Sets the horizontal position.
-		 * @param x New horizontal position, corresponds to the vertices group's
-		 * new left position (in pixels).
-		 */
-		void setXPosition(float x);
-
-		/**
-		 * Sets the vertical position.
-		 * @param y New vertical position, corresponds to the verices group's
-		 * new top position (in pixels).
-		 */
-		void setYPosition(float y);
-
-		/**
 		 * Sets the horizontal and vertical position.
 		 * @param x New horizontal position, corresponds to the vertices group's
 		 * new left position (in pixels).
 		 * @param y New vertical position, corresponds to the verices group's
 		 * new top position (in pixels).
 		 */
-		void setPosition(float x, float y);
+		void setPosition(float newXPosition, float newYPosition);
+
+		/**
+		 * Moves the vertices group horizontally and vertically.
+		 * @param delta Adds this Vec2's horizontal and vertical value to the
+		 * vertices group's horizontal and vertical position.
+		 */
+		void move(const Vec2& delta);
+
+		/**
+		 * Moves the vertices group horizontally and vertically.
+		 * @param deltaX Adds this value to the vertices group's horizontal
+		 * position.
+		 * @param deltaY Adds this value to the vertices group's vertical
+		 * position.
+		 */
+		void move(float deltaX, float deltaY);
+
+		/**
+		 * Gets the horizontal position. Higher position value means it is more
+		 * to the right.
+		 * @return Horizontal position (in pixels) of the left side.
+		 */
+		float getXPosition() const;
+
+		/**
+		 * Gets the center's horizontal position. Higher position value means it
+		 * is more to the right.
+		 * @return Horizontal position (in pixels) of the center.
+		 */
+		float getXPositionCenter() const;
+
+		/**
+		 * Sets the horizontal position.
+		 * @param x New horizontal position, corresponds to the vertices group's
+		 * new left position (in pixels).
+		 */
+		void setXPosition(float newXPosition);
 
 		/**
 		 * Move the vertices group horizontally.
@@ -185,20 +180,32 @@ namespace RedBox {
 		void moveX(float deltaX);
 
 		/**
+		 * Gets the vertical position. Higher position value means it is lower
+		 * on the screen.
+		 * @return Vertical position (in pixels) of the top side.
+		 */
+		float getYPosition() const;
+
+		/**
+		 * Gets the center's horizontal position. Higher position value means it
+		 * is more to the bottom.
+		 * @return Center's horizontal position (in pixels).
+		 */
+		float getYPositionCenter() const;
+
+		/**
+		 * Sets the vertical position.
+		 * @param y New vertical position, corresponds to the verices group's
+		 * new top position (in pixels).
+		 */
+		void setYPosition(float newYPosition);
+
+		/**
 		 * Move the vertices group vertically.
 		 * @param deltaY Adds this value to the vertices group's vertical
 		 * position.
 		 */
 		void moveY(float deltaY);
-
-		/**
-		 * Move the vertices group horizontally and vertically.
-		 * @param deltaX Adds this value to the vertices group's horizontal
-		 * position.
-		 * @param deltaY Adds this value to the vertices group's vertical
-		 * position.
-		 */
-		void move(float deltaX, float deltaY);
 
 		/**
 		 * Scales the width and height of the vertices group using the center

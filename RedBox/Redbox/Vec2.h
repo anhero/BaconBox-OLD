@@ -144,6 +144,14 @@ namespace RedBox {
 		 * @param yToAdd Value to add to y.
 		 */
 		void addToY(float yToAdd);
+
+		/**
+		 * Adds values to the x and y values.
+		 * @param xToAdd Value to add to x.
+		 * @param yToAdd Value to add to y.
+		 */
+		void addToXY(float xToAdd, float yToAdd);
+
 		/**
 		 * Does the vector store pointers? If not, it means it directly stores
 		 * the values.
@@ -151,6 +159,7 @@ namespace RedBox {
 		 * direct values.
 		 */
 		bool getIsPtr() const;
+
 		/**
 		 * Sets if the vector stores pointers or direct values.
 		 * @param newIsPtr True makes the vector read its values as pointers,

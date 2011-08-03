@@ -148,16 +148,16 @@ void Sprite::setPosition(float x, float y) {
 	vertices.setPosition(x, y);
 }
 
+const Vec2 Sprite::getSize() const {
+	return vertices.getSize();
+}
+
 float Sprite::getWidth() const {
 	return vertices.getWidth();
 }
 
 float Sprite::getHeight() const {
 	return vertices.getHeight();
-}
-
-const Vec2 Sprite::getSize() const {
-	return vertices.getSize();
 }
 
 RenderStep* Sprite::addRenderStep(RenderStep* newRenderStep) {
