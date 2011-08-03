@@ -128,10 +128,10 @@ namespace RedBox {
 
 		/**
 		 * Sets the horizontal and vertical position.
-		 * @param x New horizontal position, corresponds to the vertices group's
-		 * new left position (in pixels).
-		 * @param y New vertical position, corresponds to the verices group's
-		 * new top position (in pixels).
+		 * @param newXPosition New horizontal position, corresponds to the
+		 * vertices group's new left position (in pixels).
+		 * @param newYPosition New vertical position, corresponds to the
+		 * vertices group's new top position (in pixels).
 		 */
 		void setPosition(float newXPosition, float newYPosition);
 
@@ -167,8 +167,8 @@ namespace RedBox {
 
 		/**
 		 * Sets the horizontal position.
-		 * @param x New horizontal position, corresponds to the vertices group's
-		 * new left position (in pixels).
+		 * @param newXPosition New horizontal position, corresponds to the
+		 * vertices group's new left position (in pixels).
 		 */
 		void setXPosition(float newXPosition);
 
@@ -195,8 +195,8 @@ namespace RedBox {
 
 		/**
 		 * Sets the vertical position.
-		 * @param y New vertical position, corresponds to the verices group's
-		 * new top position (in pixels).
+		 * @param newYPosition New vertical position, corresponds to the
+		 * vertices group's new top position (in pixels).
 		 */
 		void setYPosition(float newYPosition);
 
