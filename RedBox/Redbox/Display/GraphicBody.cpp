@@ -189,8 +189,8 @@ void GraphicBody::setPosition(const Vec2& newPosition) {
 	setPosition(newPosition.getX(), newPosition.getY());
 }
 
-void GraphicBody::setPosition(float x, float y) {
-	position.setXY(x, y);
+void GraphicBody::setPosition(float newXPosition, float newYPosition) {
+	position.setXY(newXPosition, newYPosition);
 }
 
 void GraphicBody::move(const Vec2& delta) {
@@ -205,8 +205,8 @@ float GraphicBody::getXPosition() const {
 	return position.getX();
 }
 
-void GraphicBody::setXPosition(float x) {
-	position.setX(x);
+void GraphicBody::setXPosition(float newXPosition) {
+	position.setX(newXPosition);
 }
 
 void GraphicBody::moveX(float deltaX) {
@@ -217,8 +217,8 @@ float GraphicBody::getYPosition() const {
 	return position.getY();
 }
 
-void GraphicBody::setYPosition(float y) {
-	position.setY(y);
+void GraphicBody::setYPosition(float newYPosition) {
+	position.setY(newYPosition);
 }
 
 void GraphicBody::moveY(float deltaY) {
@@ -342,7 +342,7 @@ float GraphicBody::computeVelocity(float velocity, float acceleration, float dra
 }
 
 AABB GraphicBody::getAABB() const {
-	return AABB(getXPosition(), getXPosition() + getWidth() * getXCollidingBoxRatio(), getYPosition(), getYPosition() + getHeight() * getYCollidingBoxRatio());
+	return AABB(getXPosition() + getXOffset(), getXPosition() + getXOffset() + getWidth() * getXCollidingBoxRatio(), getYPosition() + getYOffset(), getYPosition() + getYOffset() + getHeight() * getYCollidingBoxRatio());
 }
 
 const Vec2& GraphicBody::getDrag() const {
@@ -542,9 +542,9 @@ std::pair<bool, std::list<CollisionData> > GraphicBody::collide(std::list<Graphi
 bool GraphicBody::horizLineCollide(GraphicBody* aGraphicBody, float linePosition, float lowerXBoundary, float higherXBoundary) {
 	bool result = false;
 
-	linePosition -= aGraphicBody->getYOffset();
-	lowerXBoundary -= aGraphicBody->getXOffset();
-	higherXBoundary -= aGraphicBody->getXOffset();
+	//linePosition -= aGraphicBody->getYOffset();
+	//lowerXBoundary -= aGraphicBody->getXOffset();
+	//higherXBoundary -= aGraphicBody->getXOffset();
 
 	// We make sure the given graphic body is valid.
 	if(aGraphicBody && !aGraphicBody->isStaticBody()) {
@@ -581,9 +581,9 @@ bool GraphicBody::vertLineCollide(GraphicBody* aGraphicBody, float linePosition,
                                   float lowerYBoundary, float higherYBoundary) {
 	bool result = false;
 
-	linePosition -= aGraphicBody->getXOffset();
-	lowerYBoundary -= aGraphicBody->getYOffset();
-	higherYBoundary -= aGraphicBody->getYOffset();
+	//linePosition -= aGraphicBody->getXOffset();
+	//lowerYBoundary -= aGraphicBody->getYOffset();
+	//higherYBoundary -= aGraphicBody->getYOffset();
 
 	// We make sure the given graphic body is valid.
 	if(aGraphicBody && !aGraphicBody->isStaticBody()) {

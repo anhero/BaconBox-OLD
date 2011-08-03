@@ -13,45 +13,45 @@ using namespace RedBox;
 Sprite::Sprite(): GraphicBody() {
 }
 
-Sprite::Sprite(const std::string& imageKey): GraphicBody() {
-	TextureInfo* texInfo = ResourceManager::getTexture(imageKey);
+Sprite::Sprite(const std::string& textureKey): GraphicBody() {
+	TextureInfo* textureInfo = ResourceManager::getTexture(textureKey);
 
-	if(texInfo) {
-		construct(texInfo,
-		          texInfo->imageWidth,
-		          texInfo->imageHeight,
+	if(textureInfo) {
+		construct(textureInfo,
+				  textureInfo->imageWidth,
+				  textureInfo->imageHeight,
 		          1);
 	} else {
-		Console::print("Tried to construct a sprite from an invalid image key: " + imageKey);
+		Console::print("Tried to construct a sprite from an invalid image key: " + textureKey);
 	}
 }
 
-Sprite::Sprite(TextureInfo* texInfo): GraphicBody() {
-	if(texInfo) {
-		construct(texInfo,
-		          texInfo->imageWidth,
-		          texInfo->imageHeight,
+Sprite::Sprite(TextureInfo* textureInfo): GraphicBody() {
+	if(textureInfo) {
+		construct(textureInfo,
+				  textureInfo->imageWidth,
+				  textureInfo->imageHeight,
 		          1);
 	} else {
-		Console::print("Tried to construct a sprite from an invalid texture information: " + Console::toString(texInfo));
+		Console::print("Tried to construct a sprite from an invalid texture information: " + Console::toString(textureInfo));
 	}
 }
 
-Sprite::Sprite(const std::string& imageKey,
+Sprite::Sprite(const std::string& textureKey,
                unsigned int frameWidth,
                unsigned int frameHeight,
 			   unsigned int nbFrames): GraphicBody() {
-	construct(ResourceManager::getTexture(imageKey),
+	construct(ResourceManager::getTexture(textureKey),
 	          frameWidth,
 	          frameHeight,
 	          nbFrames);
 }
 
-Sprite::Sprite(TextureInfo* texInfo,
+Sprite::Sprite(TextureInfo* textureInfo,
                unsigned int frameWidth,
                unsigned int frameHeight,
 			   unsigned int nbFrames): GraphicBody() {
-	construct(texInfo,
+	construct(textureInfo,
 	          frameWidth,
 	          frameHeight,
 	          nbFrames);

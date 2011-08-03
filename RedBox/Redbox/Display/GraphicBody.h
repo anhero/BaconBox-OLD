@@ -323,13 +323,13 @@ namespace RedBox {
 
 		/**
 		 * Sets the GraphicBody's horizontal and vertical position.
-		 * @param x New horizontal position (in pixels). Lower value means more
-		 * to the left.
-		 * @param y New vertical position (in pixels). Lower value means more at
-		 * the top.
+		 * @param newXPosition New horizontal position (in pixels). Lower value
+		 * means more to the left.
+		 * @param newYPosition New vertical position (in pixels). Lower value
+		 * means more at the top.
 		 * @see RedBox::GraphicBody::position
 		 */
-		virtual void setPosition(float x, float y);
+		virtual void setPosition(float newXPosition, float newYPosition);
 
 		/**
 		 * Moves the GraphicBody horizontally and vertically.
@@ -363,14 +363,14 @@ namespace RedBox {
 
 		/**
 		 * Sets the GraphicBody's horizontal position.
-		 * @param x New horizontal position (in pixels). Lower value means more
-		 * to the left.
+		 * @param newXPosition New horizontal position (in pixels). Lower value
+		 * means more to the left.
 		 * @see RedBox::GraphicBody::position
 		 */
-		virtual void setXPosition(float x);
+		virtual void setXPosition(float newXPosition);
 
 		/**
-		 * Moves the GraphicBody horizontally.
+		 * Moves the graphic body horizontally.
 		 * @param deltaX Value to add to the GraphicBody's horizontal position
 		 * (in pixels). Positive value moves the GraphicBody to the right and a
 		 * negative value moves the GraphicBody to the left.
@@ -379,7 +379,7 @@ namespace RedBox {
 		void moveX(float deltaX);
 
 		/**
-		 * Gets the GraphicBody's vertical position.
+		 * Gets the graphic body's vertical position.
 		 * @return Vertical position (in pixels). Lower value means more at the
 		 * top.
 		 * @see RedBox::GraphicBody::position
@@ -388,11 +388,11 @@ namespace RedBox {
 
 		/**
 		 * Sets the graphic body's horizontal position.
-		 * @param y New vertical position (in pixels). Lower value means more at
-		 * the top.
+		 * @param newYPosition New vertical position (in pixels). Lower value
+		 * means more at the top.
 		 * @see RedBox::GraphicBody::position
 		 */
-		virtual void setYPosition(float y);
+		virtual void setYPosition(float newYPosition);
 
 		/**
 		 * Moves the GraphicBody vertically.

@@ -35,15 +35,15 @@ void NullGraphicsDriver::initializeGraphicDriver(int screenWidth, int screenHeig
 }
 
 
-TextureInfo * NullGraphicsDriver::loadTexture(PixMap * pixMap){
+TextureInfo * NullGraphicsDriver::loadTexture(PixMap* pixMap){
 	//@TODO: Check this...
 	
-	TextureInfo* texInfo = new TextureInfo();
+	TextureInfo* textureInfo = new TextureInfo();
 	
-	texInfo->imageWidth = pixMap->getWidth();
-	texInfo->imageHeight = pixMap->getHeight();
+	textureInfo->imageWidth = pixMap->getWidth();
+	textureInfo->imageHeight = pixMap->getHeight();
 	
-	return texInfo;
+	return textureInfo;
 }
 
 float NullGraphicsDriver::clampColorComponent(unsigned int component) {
