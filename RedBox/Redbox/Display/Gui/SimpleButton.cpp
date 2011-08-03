@@ -54,11 +54,15 @@ float SimpleButton::getHeight() const {
 void SimpleButton::setScaling(float newXScaling, float newYScaling) {
 	this->GraphicBody::setScaling(newXScaling, newYScaling);
 	buttonSprite.setScaling(newXScaling, newYScaling);
+	this->GraphicBody::setPosition(buttonSprite.getXPosition(),
+								   buttonSprite.getYPosition());
 }
 
 void SimpleButton::setAngle(float newAngle) {
 	this->GraphicBody::setAngle(newAngle);
 	buttonSprite.setAngle(newAngle);
+	this->GraphicBody::setPosition(buttonSprite.getXPosition(),
+								   buttonSprite.getYPosition());
 }
 
 void SimpleButton::onPress() {
