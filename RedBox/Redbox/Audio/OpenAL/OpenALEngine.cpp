@@ -1,11 +1,9 @@
-#include "PlatformFlagger.h"
-
-#ifdef RB_OPENAL
-
 #include "OpenALEngine.h"
 
-#include <fstream>
+#include "PlatformFlagger.h"
 
+#include <fstream>
+#include <algorithm>
 #include <cstring>
 #include <cassert>
 
@@ -55,7 +53,7 @@ void OpenALEngine::setDefaultDevice(const std::string& newDevice) {
 
 const std::vector<std::string>& OpenALEngine::getDeviceList() {
 	// We only fill the list if it hasn't been filled yet.
-	if(deviceList.size() == 0) {
+	if(deviceList.empty()) {
 		// Gets the list of all devices.
 		const ALchar* devices = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
 		if(devices) {
@@ -133,7 +131,7 @@ OpenALEngine::~OpenALEngine() {
 	ALint bufferId;
 	ALuint tmp;
 	for(std::list<OpenALSoundFX*>::iterator i = sources.begin();
-		i != sources.end(); i++) {
+		i != sources.end(); ++i) {
 		// We make sure the source hasn't already been released.
 		if (alIsSource((*i)->sourceId)) {
 			// We make sure its buffer will be deleted.
@@ -238,16 +236,30 @@ bool OpenALEngine::unloadSound(SoundInfo* sound) {
 	return !alIsBuffer(sound->bufferId);
 }
 
+class PredBufferSource {
+public:
+	PredBufferSource(ALuint newBuffer) : buffer(newBuffer) {
+	}
+	bool operator () (OpenALSoundFX* sfx) const {
+		bool result = false;
+		if(sfx) {
+			ALint tmpBuffer;
+            alGetSourcei(sfx->getSourceId(), AL_BUFFER, &tmpBuffer);
+			if(static_cast<ALuint>(tmpBuffer) == buffer) {
+                alDeleteSources(1, &(sfx->getSourceId()));
+                result = true;
+			}
+		}
+		return result;
+	}
+private:
+	ALuint buffer;
+};
+
 void OpenALEngine::deleteBufferSources(ALuint buffer) {
 	ALint tmpBuffer;
-	for(std::list<OpenALSoundFX*>::iterator i = sources.begin();
-		i != sources.end(); i++) {
-		alGetSourcei((*i)->sourceId, AL_BUFFER, &tmpBuffer);
-		if (static_cast<ALuint>(tmpBuffer) == buffer) {
-			alDeleteSources(1, &((*i)->sourceId));
-			sources.erase(i);
-		}
-	}
+	std::list<OpenALSoundFX*>::iterator pos = std::remove_if(sources.begin(), sources.end(), PredBufferSource(buffer));
+	sources.erase(pos, sources.end());
 }
 
 void OpenALEngine::loadWav(const std::string& filePath,
@@ -324,5 +336,3 @@ void OpenALEngine::loadWav(const std::string& filePath,
 		Console::print("Failed to open the file: " + filePath);
 	}
 }
-
-#endif
