@@ -16,7 +16,7 @@ namespace RedBox {
 							 const AnimationParameters& a) {
 		output << "{timePerFrame: ";
 		output << a.timePerFrame << ", nbLoops: " << a.nbLoops << ", frames: [";
-		for(std::vector<unsigned int>::const_iterator i = a.frames.begin(); i != a.frames.end(); i++) {
+		for(std::vector<unsigned int>::const_iterator i = a.frames.begin(); i != a.frames.end(); ++i) {
 			if(i != a.frames.begin()) {
 				output << ", ";
 			}

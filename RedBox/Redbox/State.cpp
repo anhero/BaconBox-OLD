@@ -90,7 +90,7 @@ void State::internalUpdate() {
 
 	// We update the graphic bodies.
 	for(BodyMap::iterator i = graphicBodies.begin(); i != graphicBodies.end();
-	        i++) {
+		++i) {
 		// We check if the delete flag is on.
 		if(i->second->isToBeDeleted()) {
 			// We put the GraphicBody in the list of GraphicBodys to delete.
@@ -124,8 +124,8 @@ void State::internalUpdate() {
 	// Put the graphic bodies which have had their z changed back into the
 	// multimap.
 	for(std::list<GraphicBody*>::iterator i = layerChange.begin();
-	        i != layerChange.end();
-	        i++) {
+	    i != layerChange.end();
+		++i) {
 		graphicBodies.insert(std::pair<Layer, GraphicBody*>((*i)->getLayer(), *i));
 	}
 
@@ -134,6 +134,7 @@ void State::internalUpdate() {
 	if(camera.isEnabled() && camera.isActive()) {
 		camera.update();
 	}
+
 	update();
 }
 
@@ -149,7 +150,7 @@ void State::internalRender() {
 		                              -(1.0f - graphicBodies.begin()->second->getLayer().getScrollFactor().getY()) * camera.getYPosition()));
 
 		for(BodyMap::iterator i = graphicBodies.begin();
-		        i != graphicBodies.end(); i++) {
+			i != graphicBodies.end(); ++i) {
 			if(i->second->isEnabled() && i->second->isVisible()) {
 				if(lastLayer != i->first) {
 					GraphicDriver::popMatrix();

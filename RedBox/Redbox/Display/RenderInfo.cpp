@@ -69,13 +69,14 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 
 				// For each frame to load.
 				for(std::vector<std::vector<float> >::iterator i = texCoords.begin();
-				        i != texCoords.end(); i++) {
+					i != texCoords.end(); ++i) {
 
 					// We set the number of coordinates.
 					i->resize(tmpSize * 2);
 					j = 0;
 
-					for(std::list<Vertex>::iterator j2 = tmpVertices.begin(); j2 != tmpVertices.end(); j2++) {
+					for(std::list<Vertex>::iterator j2 = tmpVertices.begin();
+						j2 != tmpVertices.end(); ++j2) {
 						(*i)[j] = offsetX + (j2->getXPosition() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth);
 						++j;
 						(*i)[j] = offsetY + (j2->getYPosition() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight);
@@ -310,14 +311,16 @@ namespace RedBox {
 		output << "{color: " << r.color << ", texInfo: " << r.texInfo <<
 		       ", texCoords: [";
 
-		for(std::vector< std::vector<float> >::const_iterator i = r.texCoords.begin(); i != r.texCoords.end(); i++) {
+		for(std::vector< std::vector<float> >::const_iterator i = r.texCoords.begin();
+			i != r.texCoords.end(); ++i) {
 			if(i != r.texCoords.begin()) {
 				output << ", ";
 			}
 
 			output << "[";
 
-			for(std::vector<float>::const_iterator j = i->begin(); j != i->end(); j++) {
+			for(std::vector<float>::const_iterator j = i->begin();
+				j != i->end(); ++j) {
 				if(j != i->begin()) {
 					output << ", ";
 				}
@@ -330,7 +333,8 @@ namespace RedBox {
 
 		output << "], currentFrame: " << r.currentFrame << ", animations: [";
 
-		for(std::map<std::string, AnimationParameters>::const_iterator i = r.animations.begin(); i != r.animations.end(); i++) {
+		for(std::map<std::string, AnimationParameters>::const_iterator i = r.animations.begin();
+			i != r.animations.end(); ++i) {
 			if(i != r.animations.begin()) {
 				output << ", ";
 			}

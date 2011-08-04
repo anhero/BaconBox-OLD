@@ -293,8 +293,8 @@ std::pair<bool, std::list<CollisionData> > GraphicBody::collide(std::list<Graphi
 	std::list<CollisionData> collisionInfo;
 	bool collide = false;
 
-	for(std::list<GraphicBody*>::iterator i = GraphicBodys.begin(); i != GraphicBodys.end();
-	        i++) {
+	for(std::list<GraphicBody*>::iterator i = GraphicBodys.begin();
+		i != GraphicBodys.end(); ++i) {
 		std::pair<bool, CollisionData> collisionPair = this->collide(*i);
 
 		if(collisionPair.first) {
@@ -623,14 +623,14 @@ bool GraphicBody::solveXCollision(GraphicBody* object1, GraphicBody* object2, Co
 	}
 
 	// We calculate object delta
-	float overlap = 0.0f, tmpWidth1 = 0.0f, tmpWidth2 = 0.0f;
-	float obj1Delta = object1->getXPosition() - object1->getOldXPosition();
-	float obj2Delta = object2->getXPosition() - object2->getOldXPosition();
+	float overlap = 0.0f,
+			obj1Delta = object1->getXPosition() - object1->getOldXPosition(),
+			obj2Delta = object2->getXPosition() - object2->getOldXPosition();
 
 	if(obj1Delta != obj2Delta) {
 		// We calculate absolute delta
-		float obj1DeltaAbs = fabs(obj1Delta);
-		float obj2DeltaAbs = fabs(obj2Delta);
+		float obj1DeltaAbs = fabs(obj1Delta), obj2DeltaAbs = fabs(obj2Delta),
+				tmpWidth1 = 0.0f, tmpWidth2 = 0.0f;
 
 		// We create AABBs of the old position with the updated horizontal
 		//position.
@@ -713,14 +713,14 @@ bool GraphicBody::solveYCollision(GraphicBody* object1, GraphicBody* object2, Co
 	}
 
 	//We calculate object delta
-	float overlap = 0.0f, tmpHeight1 = 0.0f, tmpHeight2 = 0.0f;
-	float obj1Delta = object1->getYPosition() - object1->getOldYPosition();
-	float obj2Delta = object2->getYPosition() - object2->getOldYPosition();
+	float overlap = 0.0f,
+			obj1Delta = object1->getYPosition() - object1->getOldYPosition(),
+			obj2Delta = object2->getYPosition() - object2->getOldYPosition();
 
 	if(obj1Delta != obj2Delta) {
 		//We calculate absolute delta
-		float obj1DeltaAbs = fabs(obj1Delta);
-		float obj2DeltaAbs = fabs(obj2Delta);
+		float obj1DeltaAbs = fabs(obj1Delta), obj2DeltaAbs = fabs(obj2Delta),
+				tmpHeight1 = 0.0f, tmpHeight2 = 0.0f;
 
 		tmpHeight1 = object1->getHeight() * object1->getYCollidingBoxRatio();
 		tmpHeight2 = object2->getHeight() * object2->getYCollidingBoxRatio();

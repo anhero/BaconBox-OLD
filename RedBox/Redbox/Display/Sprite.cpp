@@ -18,8 +18,8 @@ Sprite::Sprite(const std::string& textureKey): GraphicBody() {
 
 	if(textureInfo) {
 		construct(textureInfo,
-				  textureInfo->imageWidth,
-				  textureInfo->imageHeight,
+		          textureInfo->imageWidth,
+		          textureInfo->imageHeight,
 		          1);
 	} else {
 		Console::print("Tried to construct a sprite from an invalid image key: " + textureKey);
@@ -29,8 +29,8 @@ Sprite::Sprite(const std::string& textureKey): GraphicBody() {
 Sprite::Sprite(TextureInfo* textureInfo): GraphicBody() {
 	if(textureInfo) {
 		construct(textureInfo,
-				  textureInfo->imageWidth,
-				  textureInfo->imageHeight,
+		          textureInfo->imageWidth,
+		          textureInfo->imageHeight,
 		          1);
 	} else {
 		Console::print("Tried to construct a sprite from an invalid texture information: " + Console::toString(textureInfo));
@@ -40,7 +40,7 @@ Sprite::Sprite(TextureInfo* textureInfo): GraphicBody() {
 Sprite::Sprite(const std::string& textureKey,
                unsigned int frameWidth,
                unsigned int frameHeight,
-			   unsigned int nbFrames): GraphicBody() {
+               unsigned int nbFrames): GraphicBody() {
 	construct(ResourceManager::getTexture(textureKey),
 	          frameWidth,
 	          frameHeight,
@@ -50,7 +50,7 @@ Sprite::Sprite(const std::string& textureKey,
 Sprite::Sprite(TextureInfo* textureInfo,
                unsigned int frameWidth,
                unsigned int frameHeight,
-			   unsigned int nbFrames): GraphicBody() {
+               unsigned int nbFrames): GraphicBody() {
 	construct(textureInfo,
 	          frameWidth,
 	          frameHeight,
@@ -75,28 +75,25 @@ Sprite& Sprite::operator=(const Sprite& src) {
 void Sprite::render() {
 	// We render the render steps.
 	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-	        i != renderSteps.end();
-	        i++) {
+	        i != renderSteps.end(); ++i) {
 		if(*i) {
 			(*i)->render();
 		}
 	}
 }
 
-void Sprite::mask(){
+void Sprite::mask() {
 	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-        i != renderSteps.end();
-        i++) {
+	        i != renderSteps.end(); ++i) {
 		if(*i) {
 			(*i)->mask();
 		}
 	}
 }
 
-void Sprite::unmask(){
-    for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-        i != renderSteps.end();
-        i++) {
+void Sprite::unmask() {
+	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
+	        i != renderSteps.end(); ++i) {
 		if(*i) {
 			(*i)->unmask();
 		}
@@ -108,8 +105,7 @@ void Sprite::update() {
 
 	// We update the render steps.
 	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-	        i != renderSteps.end();
-	        i++) {
+	        i != renderSteps.end(); ++i) {
 		if(*i) {
 			(*i)->update();
 		}
@@ -217,6 +213,7 @@ std::list<RenderStep*>& Sprite::getRenderSteps() {
 
 void Sprite::setMainColor(const Color& color) {
 	RenderStep* mainRenderStep = getMainRenderStep();
+
 	if(mainRenderStep) {
 		mainRenderStep->addMode(RenderStepMode::COLOR);
 		mainRenderStep->setColor(color);
@@ -232,7 +229,7 @@ VerticesGroup& Sprite::getVertices() {
 void Sprite::construct(TextureInfo* texInfo,
                        unsigned int frameWidth,
                        unsigned int frameHeight,
-					   unsigned int nbFrames) {
+                       unsigned int nbFrames) {
 	if(texInfo) {
 		// Generates the square vertices from the frame width and height.
 		vertices.addVertices(4,
@@ -307,8 +304,8 @@ void Sprite::addAnimation(const std::string& name,
 
 			// We read the animation's frame indexes.
 			for(std::vector<unsigned int>::iterator i = framesVector.begin();
-					i != framesVector.end();
-					++i) {
+			        i != framesVector.end();
+			        ++i) {
 				*i = va_arg(frames, unsigned int);
 			}
 
@@ -360,8 +357,7 @@ void Sprite::copyFrom(const Sprite& src) {
 
 void Sprite::clearRenderSteps() {
 	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-	        i != renderSteps.end();
-	        i++) {
+	        i != renderSteps.end(); ++i) {
 		if(*i) {
 			delete *i;
 		}
@@ -370,38 +366,34 @@ void Sprite::clearRenderSteps() {
 	renderSteps.clear();
 }
 
-Color Sprite::getMainColor(){
+Color Sprite::getMainColor() {
 	RenderStep* mainRenderStep = getMainRenderStep();
 	return mainRenderStep->getRenderInfo().getColor();
 }
 
-void Sprite::setMainAlpha(int alpha){
+void Sprite::setMainAlpha(int alpha) {
 	Color mainColor = getMainColor();
 	setMainColor(Color(mainColor.getRed(), mainColor.getGreen(), mainColor.getBlue(), alpha));
 }
 
 
-void Sprite::setMask(Sprite * aMask){
-    if(aMask != NULL){
-    for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-        i != renderSteps.end();
-        i++) {
-		if(*i) {
-			(*i)->setMask(aMask);
-            (*i)->addMode(RenderStepMode::MASKED);
-
+void Sprite::setMask(Sprite* aMask) {
+	if(aMask != NULL) {
+		for(std::list<RenderStep*>::iterator i = renderSteps.begin();
+		        i != renderSteps.end(); ++i) {
+			if(*i) {
+				(*i)->setMask(aMask);
+				(*i)->addMode(RenderStepMode::MASKED);
+			}
+		}
+	} else {
+		for(std::list<RenderStep*>::iterator i = renderSteps.begin();
+		        i != renderSteps.end(); ++i) {
+			if(*i) {
+				(*i)->removeMode(RenderStepMode::MASKED);
+			}
 		}
 	}
-    }
-    else{
-        for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-            i != renderSteps.end();
-            i++) {
-            if(*i) {
-                (*i)->removeMode(RenderStepMode::MASKED);
-            }
-        }
-    }
 }
 
 

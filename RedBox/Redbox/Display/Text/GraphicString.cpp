@@ -75,7 +75,8 @@ void GraphicString::setText(const RB_String32& text) {
 	if(font) {
 		flushCharacters();
 
-		for(RB_String32::const_iterator i = text.begin(); i != text.end(); i++) {
+		for(RB_String32::const_iterator i = text.begin(); i != text.end();
+			++i) {
 			Glyph* aGlyph = font->getGlyph(*i);
 			TextureInfo* glyphTextureInfo = aGlyph->textureInfo;
 			Sprite* aSprite = NULL;
@@ -121,7 +122,7 @@ void GraphicString::setManualLineHeight(int lineHeight) {
 
 void GraphicString::update() {
 	for(std::list<std::pair<Glyph*, Sprite*> >::iterator i = characters.begin();
-		i != characters.end(); i++) {
+		i != characters.end(); ++i) {
 		// We need to check for null pointer since space does not have sprite.
 		if(i->second != NULL) {
 			i->second->update();
@@ -209,7 +210,7 @@ void GraphicString::setPosition() {
 				}
 			}
 
-			if(characters.size() > 0) {
+			if(!characters.empty()) {
 				// We add the last glyph's width to the position...
 				x += (--characters.end())->first->advance.getX();
 			}

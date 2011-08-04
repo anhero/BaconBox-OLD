@@ -131,8 +131,6 @@ void PixMap::insertSubPixMap(uint8_t* subBuffer, unsigned int subWidth,
                              unsigned int subHeight, unsigned int xOffset,
                              unsigned int yOffset) {
 	if(subWidth > 0u && subHeight > 0u) {
-		unsigned int pixelByteCount;
-
 		unsigned int currentWidth = width;
 		unsigned int currentHeight = height;
 
@@ -143,6 +141,7 @@ void PixMap::insertSubPixMap(uint8_t* subBuffer, unsigned int subWidth,
 		unsigned int baseY = std::max(yOffset, 0u);
 
 		if(maxX > baseX && maxY > baseX) {
+			unsigned int pixelByteCount;
 
 			if(colorFormat == ColorFormat::RGBA) {
 				pixelByteCount = 4;
