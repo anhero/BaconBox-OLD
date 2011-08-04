@@ -394,6 +394,7 @@ void Sprite::setMask(Sprite* aMask, bool inversed) {
 			}
 		}
 	}
+}
 
 
 
