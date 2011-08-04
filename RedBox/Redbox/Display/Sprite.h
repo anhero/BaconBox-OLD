@@ -41,26 +41,24 @@ namespace RedBox {
 
 		/**
 		 * Simple parameterized constructor.
-		 * @param imageKey Key to the texture to create a sprite from.
+		 * @param textureKey Key to the texture to create a sprite from.
 		 */
-		Sprite(const std::string& imageKey);
+		Sprite(const std::string& textureKey);
 
 		/**
 		 * Simple parameterized constructor. Does the same thing as the
 		 * constructor that recieves an key.
-		 * @param texInfo Pointer to the texture information to load the sprite
+		 * @param textureInfo Pointer to the texture information to load the sprite
 		 * with.
 		 * @see RedBox::RenderInfo::texInfo
 		 */
-		Sprite(TextureInfo* texInfo);
+		Sprite(TextureInfo* textureInfo);
 
 		/**
-		 * Parameterized constructor. Loads a sprite using the image in the 
-		 * ResourceManager with the corresponding key. Only takes the asked
-		 * part of the image with the given width and height. Using the offsets,
-		 * can also take a part of the image that is not at the upper left
-		 * corner.
-		 * @param imageKey Image's key in the ResourceManager to use for the
+		 * Parameterized constructor. Loads a sprite using the texture in the
+		 * resource manager with the corresponding key. Only takes the asked
+		 * part of the texture with the given width and height.
+		 * @param textureKey Texture's key in the ResourceManager to use for the
 		 * constructed sprite.
 		 * @param frameWidth Width of the frames to read from the image (in 
 		 * pixels).
@@ -69,17 +67,17 @@ namespace RedBox {
 		 * @param nbFrames Number of frames the sprite will load (for
 		 * animations)
 		 */
-		Sprite(const std::string& imageKey,
+		Sprite(const std::string& textureKey,
 			   unsigned int frameWidth,
 			   unsigned int frameHeight,
 			   unsigned int nbFrames = 1);
 
 		/**
-		 * Parameterized constructor. Loads a sprite using a TextureInfo. Only
-		 * takes the asked part of the image with the given width and height.
-		 * Using the offsets, can also take a part of the image that is not at
-		 * the upper left corner.
-		 * @param texInfo TextureInfo to load the sprite from.
+		 * Parameterized constructor. Loads a sprite using a pointer to a
+		 * TextureInfo. Only takes the asked part of the texture with the given
+		 * width and height.
+		 * @param textureInfo Pointer to the texture information to load the
+		 * sprite from.
 		 * @param frameWidth Width of the frames to read from the image (in 
 		 * pixels).
 		 * @param frameHeight Height of the frames to read from the image (in
@@ -87,7 +85,7 @@ namespace RedBox {
 		 * @param nbFrames Number of frames the sprite will load (for
 		 * animations).
 		 */
-		Sprite(TextureInfo* texInfo,
+		Sprite(TextureInfo* textureInfo,
 			   unsigned int frameWidth,
 			   unsigned int frameHeight,
 			   unsigned int nbFrames = 1);
@@ -145,20 +143,6 @@ namespace RedBox {
 		 */
 		float getYPositionCenter() const;
 
-		/**
-		 * Sets the sprite's horizontal position.
-		 * @param x New horizontal position (in pixels). Lower value means more
-		 * to the left.
-		 */
-		void setXPosition(float x);
-
-		/**
-		 * Sets the sprite's horizontal position.
-		 * @param y New vertical position (in pixels). Lower value means more at
-		 * the top.
-		 */
-		void setYPosition(float y);
-
 		using GraphicBody::setPosition;
 
 		/**
@@ -187,7 +171,7 @@ namespace RedBox {
 		 * @return Pair containing the sprite's width and height. The first
 		 * member is the width and the second is the height.
 		 */
-		const Vec2 getWidthHeight() const;
+		const Vec2 getSize() const;
 		
 		/**
 		 * Adds a rendering step. Does nothing if the recieved pointer is NULL.

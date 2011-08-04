@@ -7,17 +7,19 @@
 #include "VerticesGroup.h"
 #include "Console.h"
 #include "MathHelper.h"
+#include "Sprite.h"
 
 using namespace RedBox;
 
-RenderInfo::RenderInfo(): Object(), color(Color::WHITE), texInfo(NULL),
-	currentFrame(0), currentNbLoops(0), defaultFrame(0), mask(NULL){
+RenderInfo::RenderInfo(): Object(), color(Color::WHITE), mask(NULL),
+	texInfo(NULL), currentFrame(0), currentNbLoops(0), defaultFrame(0) {
 }
 
 RenderInfo::RenderInfo(const RenderInfo& src) : Object(), color(src.color),
-	texInfo(src.texInfo), texCoords(src.texCoords), currentFrame(src.currentFrame),
-	currentNbLoops(src.currentNbLoops), defaultFrame(src.defaultFrame),
-	animations(src.animations), currentAnimation(src.currentAnimation), mask(src.mask) {
+	mask(src.mask),	texInfo(src.texInfo), texCoords(src.texCoords),
+	currentFrame(src.currentFrame),	currentNbLoops(src.currentNbLoops),
+	defaultFrame(src.defaultFrame),	animations(src.animations),
+	currentAnimation(src.currentAnimation) {
 }
 
 RenderInfo::RenderInfo(TextureInfo* newTexInfo,
@@ -26,17 +28,10 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
                        unsigned int frameHeight,
                        unsigned int nbFrames,
                        const Color& newColor) : Object(), color(newColor),
-	texInfo(newTexInfo), texCoords(std::vector< std::vector<float> >(nbFrames)),
-	currentFrame(0), currentNbLoops(0), defaultFrame(0), mask(NULL) {
+	mask(NULL), texInfo(newTexInfo),
+	texCoords(std::vector< std::vector<float> >(nbFrames)), currentFrame(0),
+	currentNbLoops(0), defaultFrame(0) {
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
-}
-
-void RenderInfo::setMask(Sprite * aMask){
-    mask = aMask;
-}
-
-Sprite * RenderInfo::getMask(){
-    return mask;
 }
 
 void RenderInfo::loadTexCoords(VerticesGroup* vertices,
@@ -68,19 +63,20 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 				float offsetX = 0.0f, offsetY = 0.0f;
 				Vec2 position = vertices->getPosition();
 				// We get the width and the height of the of the vertices group.
-				Vec2 size = vertices->getWidthHeight();
+				Vec2 size = vertices->getSize();
 				unsigned int tmpSize = vertices->getVertices().size(), j = 0;
 				std::list<Vertex>& tmpVertices = vertices->getVertices();
 
 				// For each frame to load.
 				for(std::vector<std::vector<float> >::iterator i = texCoords.begin();
-				        i != texCoords.end(); i++) {
+					i != texCoords.end(); ++i) {
 
 					// We set the number of coordinates.
 					i->resize(tmpSize * 2);
 					j = 0;
 
-					for(std::list<Vertex>::iterator j2 = tmpVertices.begin(); j2 != tmpVertices.end(); j2++) {
+					for(std::list<Vertex>::iterator j2 = tmpVertices.begin();
+						j2 != tmpVertices.end(); ++j2) {
 						(*i)[j] = offsetX + (j2->getXPosition() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth);
 						++j;
 						(*i)[j] = offsetY + (j2->getYPosition() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight);
@@ -184,6 +180,14 @@ void RenderInfo::addAnimation(const std::string& name,
 		Console::print("Failed to add the animation named : " + name);
 		Console::printTrace();
 	}
+}
+
+void RenderInfo::setMask(Sprite* newMask){
+	mask = newMask;
+}
+
+Sprite* RenderInfo::getMask(){
+	return mask;
 }
 
 const Color& RenderInfo::getColor() const {
@@ -307,14 +311,16 @@ namespace RedBox {
 		output << "{color: " << r.color << ", texInfo: " << r.texInfo <<
 		       ", texCoords: [";
 
-		for(std::vector< std::vector<float> >::const_iterator i = r.texCoords.begin(); i != r.texCoords.end(); i++) {
+		for(std::vector< std::vector<float> >::const_iterator i = r.texCoords.begin();
+			i != r.texCoords.end(); ++i) {
 			if(i != r.texCoords.begin()) {
 				output << ", ";
 			}
 
 			output << "[";
 
-			for(std::vector<float>::const_iterator j = i->begin(); j != i->end(); j++) {
+			for(std::vector<float>::const_iterator j = i->begin();
+				j != i->end(); ++j) {
 				if(j != i->begin()) {
 					output << ", ";
 				}
@@ -327,7 +333,8 @@ namespace RedBox {
 
 		output << "], currentFrame: " << r.currentFrame << ", animations: [";
 
-		for(std::map<std::string, AnimationParameters>::const_iterator i = r.animations.begin(); i != r.animations.end(); i++) {
+		for(std::map<std::string, AnimationParameters>::const_iterator i = r.animations.begin();
+			i != r.animations.end(); ++i) {
 			if(i != r.animations.begin()) {
 				output << ", ";
 			}

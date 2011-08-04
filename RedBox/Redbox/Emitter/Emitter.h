@@ -87,7 +87,7 @@ namespace RedBox {
 
 			// We update the particles that still have a lifespan remaining.
 			for(typename std::vector<Particle>::iterator i = particles.begin();
-			        i != particles.end(); i++) {
+				i != particles.end(); ++i) {
 				// We check if it is still alive.
 				if(i->timeLeft > 0.0) {
 					// We update the sprite.
@@ -166,7 +166,7 @@ namespace RedBox {
 			// particles.
 			if(started) {
 				for(typename std::vector<Particle>::iterator i = particles.begin();
-				        i != particles.end(); i++) {
+					i != particles.end(); ++i) {
 					if(i->timeLeft > 0.0) {
 						renderParticle(i->graphicBody);
 					}
@@ -191,7 +191,7 @@ namespace RedBox {
 		void setNbMaxParticles(unsigned int newNbMaxParticles) {
 			// We make sure to free the memory if we reduce the number of
 			// maximum particles.
-			if(particles.size() > 0) {
+			if(!particles.empty()) {
 				for(unsigned int i = particles.size() - 1; i >= newNbMaxParticles; i--) {
 					if(particles[i].graphicBody) {
 						delete particles[i].graphicBody;
@@ -308,7 +308,26 @@ namespace RedBox {
 			 * @param src Particle to make a copy of.
 			 */
 			Particle& operator=(const Particle& src) {
-				copyFrom(src);
+				if(this != &src) {
+					if(&src) {
+						clearGraphicBody();
+
+						if(src.graphicBody) {
+							graphicBody = new T(*src.graphicBody);
+						} else {
+							graphicBody = NULL;
+						}
+
+						timeLeft = src.timeLeft;
+						state = src.state;
+						alphaCounter = src.alphaCounter;
+						alphaPerSecond = src.alphaPerSecond;
+						scalingPerSecond = src.scalingPerSecond;
+						anglePerSecond = src.anglePerSecond;
+					} else {
+						clean();
+					}
+				}
 				return *this;
 			}
 
@@ -351,29 +370,6 @@ namespace RedBox {
 				timeLeft = 0.0;
 				state = ParticleState::DEAD;
 			}
-
-			/**
-			 * Makes a copy of the recieved particle.
-			 * @param src Particle to make a copy of.
-			 */
-			void copyFrom(const Particle& src) {
-				if(this != &src) {
-					if(&src) {
-						clearGraphicBody();
-
-						if(src.graphicBody) {
-							graphicBody = new T(*src.graphicBody);
-						} else {
-							graphicBody = NULL;
-						}
-
-						timeLeft = src.timeLeft;
-						state = src.state;
-					} else {
-						clean();
-					}
-				}
-			}
 		};
 
 		/// Vector containing the particles used to shoot.
@@ -395,7 +391,7 @@ namespace RedBox {
 					if(i->state == ParticleState::DEAD) {
 						notFound = false;
 					} else {
-						i++;
+						++i;
 					}
 				}
 

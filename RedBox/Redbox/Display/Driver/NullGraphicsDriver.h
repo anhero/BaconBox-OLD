@@ -77,7 +77,8 @@ namespace RedBox {
 		 */
 		static void prepareScene(int xTranslation, int yTranslation,
 								 int angle, float zoom,
-								 const Color& backgroundColor);
+								 const Color& backgroundColor,
+								 const Vec2& rotationCenterOffset);
 		
 		/**
 		 * Initialize the drawing backend an prepare the coordinate system with the given

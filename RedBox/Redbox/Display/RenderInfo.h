@@ -14,11 +14,11 @@
 #include "Object.h"
 #include "AnimationParameters.h"
 #include "Color.h"
-#include "Sprite.h"
 
 namespace RedBox {
 	class VerticesGroup;
 	class TextureInfo;
+	class Sprite;
     /**
      * Struct contaning rendering information.
      * @ingroup Display
@@ -127,18 +127,23 @@ namespace RedBox {
 						  const AnimationParameters& newAnimation);
 
         /**
-         * Set the sprite used to mask the parent renderstep. 
+		 * Sets the sprite used to mask the parent render step.
+		 * @param newMask Pointer to the new sprite to use as a mask.
+		 * @see RedBox::RenderInfo::mask
          */
-        void setMask(Sprite * aMask);
+		void setMask(Sprite* newMask);
         
         /**
-         * Return the sprite used to mask the parent renderstep. 
+		 * Gets the sprite used to mask the parent render step.
+		 * @return Pointer to the sprite that serves as a mask.
+		 * @see RedBox::RenderInfo::mask
          */
-        Sprite * getMask();
+		Sprite* getMask();
         
 		/**
 		 * Gets the color.
 		 * @return RenderInfo's color.
+		 * @see RedBox::RenderInfo::color
 		 */
 		const Color& getColor() const;
 
@@ -248,8 +253,11 @@ namespace RedBox {
          */
 		Color color;
         
-        //Pointer to a mask sprite. Pointer is NULL if the parent renderstep is not masked.
-        Sprite * mask;
+		/**
+		 * Pointer to a mask sprite. Pointer is NULL if the parent render step
+		 * is not masked.
+		 */
+		Sprite* mask;
 
         /// Pointer to the texture information.
         TextureInfo* texInfo;

@@ -81,10 +81,12 @@ void GraphicDriver::drawMaskedShapeWithTextureAndColor(std::vector<float>& verti
 }
 
 void GraphicDriver::prepareScene(const Vec2& position, float angle, float zoom,
-								 const Color& backgroundColor) {
+								 const Color& backgroundColor,
+								 const Vec2& rotationCenterOffset) {
 
 #ifdef RB_OPENGL
-	OpenGLDriver::prepareScene(position, angle, zoom, backgroundColor);
+	OpenGLDriver::prepareScene(position, angle, zoom, backgroundColor,
+							   rotationCenterOffset);
 #endif
 
 }

@@ -93,17 +93,14 @@ Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
 //		}
 //		
 		PixMap * aPixMap = new PixMap(currentBitmapGlyph->bitmap.buffer, glyphWidth, glyphHeight, ColorFormat::ALPHA);
-		aGlyph->setTextureInfo(ResourceManager::addTexture(key.str(), aPixMap));
-		aGlyph->setHoriAdvance(font->glyph->advance.x >> 6);
+		aGlyph->textureInfo = ResourceManager::addTexture(key.str(), aPixMap);
+		aGlyph->advance.setX(static_cast<float>(font->glyph->advance.x >> 6));
 		
+		aGlyph->size.setXY(static_cast<float>(glyphWidth), static_cast<float>(glyphHeight));
 		
-		aGlyph->setWidth(glyphWidth);
-		aGlyph->setHeight(glyphHeight);
-		
-		aGlyph->setHoriBearingX( font->glyph->bitmap_left);
-		
-		aGlyph->setHoriBearingY( font->glyph->bitmap_top);
-		
+		aGlyph->horizontalBearing.setXY(static_cast<float>(font->glyph->bitmap_left),
+										static_cast<float>(font->glyph->bitmap_top));
+
 		i = (glyphCache.insert(std::pair<std::string, 
 							   std::map<RB_Char32, Glyph*>* >(size, new std::map<RB_Char32, Glyph*>()) )).first;
 		

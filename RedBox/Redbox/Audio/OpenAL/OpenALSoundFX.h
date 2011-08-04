@@ -7,8 +7,6 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_OPENAL
-
 #include <vector>
 
 #include "RBOpenAL.h"
@@ -68,6 +66,13 @@ namespace RedBox {
 		 * Destructor.
 		 */
 		~OpenALSoundFX();
+
+        /**
+         * Gets the sound effect's source ID.
+         * @return Sound effect's source ID.
+         * @see RedBox::OpenALSoundFX::sourceId
+         */
+        ALuint& getSourceId();
 	private:
 		/// OpenAL ID of the sound source.
 		ALuint sourceId;
@@ -90,6 +95,4 @@ namespace RedBox {
 		void load(ALuint bufferId);
 	};
 }
-
-#endif
 #endif

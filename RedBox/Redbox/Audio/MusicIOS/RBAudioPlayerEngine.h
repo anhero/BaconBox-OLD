@@ -6,7 +6,6 @@
 #define RB_RB_AUDIO_PLAYER_ENGINE_H
 
 #include "PlatformFlagger.h"
-#ifdef RB_AV_AUDIO_PLAYER
 
 #include <string>
 #include <list>
@@ -26,6 +25,11 @@ namespace RedBox {
 		friend class ResourceManager;
 	public:
 		/**
+		 * Gets a reference to the RBAudioPlayerEngine singleton.
+		 * @return Reference to the current singleton.
+		 */
+		static RBAudioPlayerEngine& getInstance();
+		/**
 		 * Constructs a background music. Gets the music's data associated with
 		 * the key. In AVAudioPlayerEngine's case, the music is really loaded
 		 * here rather than in MusicInfo.
@@ -42,6 +46,12 @@ namespace RedBox {
 		 */
 		BackgroundMusic* getBackgroundMusic(const std::string& key,
 											bool survive = true);
+		/**
+		 * Sets the engine's global music volume.
+		 * @param newMusicVolume Engine's new global music volume level.
+		 * @see RedBox::AudioEngine::musicVolume
+		 */
+		void setMusicVolume(int newMusicVolume);
 	private:
 		/**
 		 * List of pointers to the musics that are to be deleted automatically
@@ -56,11 +66,6 @@ namespace RedBox {
 		 * Destructor.
 		 */
 		~RBAudioPlayerEngine();
-		/**
-		 * Initializes the audio engine. Called by the static functions that
-		 * load the audio engines.
-		 */
-		void init();
 		/**
 		 * Updates the necessary informations for the audio engine.
 		 */
@@ -88,6 +93,4 @@ namespace RedBox {
 		bool unloadMusic(MusicInfo* music);
 	};
 }
-
-#endif // RB_AV_AUDIO_PLAYER
 #endif

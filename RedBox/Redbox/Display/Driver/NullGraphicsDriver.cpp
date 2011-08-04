@@ -26,23 +26,24 @@ void NullGraphicsDriver::drawShapeWithColor(float* vertices,
 }
 
 void NullGraphicsDriver::prepareScene(int xTranslation, int yTranslation,
-								int angle, float zoom,
-								const Color& backgroundColor) {
+									  int angle, float zoom,
+									  const Color& backgroundColor,
+									  const Vec2& rotationCenterOffset) {
 }
 
 void NullGraphicsDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
 }
 
 
-TextureInfo * NullGraphicsDriver::loadTexture(PixMap * pixMap){
+TextureInfo * NullGraphicsDriver::loadTexture(PixMap* pixMap){
 	//@TODO: Check this...
 	
-	TextureInfo* texInfo = new TextureInfo();
+	TextureInfo* textureInfo = new TextureInfo();
 	
-	texInfo->imageWidth = pixMap->getWidth();
-	texInfo->imageHeight = pixMap->getHeight();
+	textureInfo->imageWidth = pixMap->getWidth();
+	textureInfo->imageHeight = pixMap->getHeight();
 	
-	return texInfo;
+	return textureInfo;
 }
 
 float NullGraphicsDriver::clampColorComponent(unsigned int component) {

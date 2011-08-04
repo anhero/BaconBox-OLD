@@ -31,12 +31,23 @@ namespace RedBox {
 		static float modFloat(float dividend, float divisor);
 
 		/**
-		 * Convert the given number in degrees to radian.
+		 * Converts the given number in degrees to radian.
+		 * @param degrees Angle in degrees to convert.
+		 * @return Angle converted to radian.
 		 */
 		static float degreesToRadians(float degrees);
 		
 		/// Constant for PI.
 		static const float PI;
+
+		/**
+		 * Executes a division, but rounds up instead of down.
+		 * @param dividend Division's dividend.
+		 * @param divisor Division's divisor.
+		 * @return Quotient rounded up if it would have decimals.
+		 */
+		static unsigned int roundUpDivision(unsigned int dividend,
+											unsigned int divisor);
 		
 	private:
 		/// Constant used for converting degrees to radians.

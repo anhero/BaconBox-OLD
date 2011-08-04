@@ -7,8 +7,6 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_AV_AUDIO_PLAYER
-
 #include <string>
 
 #include "RBAudioPlayerMusicDelegate.h"
@@ -97,10 +95,17 @@ namespace RedBox {
 		 */
 		~RBAudioPlayerMusic();
 	private:
+		/// Pointer to the music being currently played.
+		static RBAudioPlayerMusic* currentMusic;
 		/// Pointer to the objective-C background music.
 		RBAudioPlayerMusicDelegate* bgm;
 		/// Used to keep track if the music is at the INITIAL state.
 		bool playedOnce;
+		
+		/**
+		 * Refreshes the volume taking into account the global music volume.
+		 */
+		static void refreshVolume();
 		/**
 		 * Default constructor. Can only be called by the audio engine.
 		 */
@@ -112,6 +117,4 @@ namespace RedBox {
 		void load(const std::string& filePath);
 	};
 }
-
-#endif // RB_AV_AUDIO_PLAYER
 #endif

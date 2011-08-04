@@ -10,6 +10,7 @@
 #include "Body.h"
 #include "Vec2.h"
 #include "Side.h"
+#include "FlagSet.h"
 #include "CollisionData.h"
 #include "Layer.h"
 #include "AABB.h"
@@ -32,10 +33,12 @@ namespace RedBox {
 		/// Value used to represent an infinite maximum velocity.
 		static const float NO_MAX_VELOCITY = -1.0f;
 
+		static const FlagSet<Side> ALL_SIDES;
+
 		/**
 		 * The default constructor.
 		 */
-		GraphicBody();
+		GraphicBody(const Vec2& newPosition = Vec2());
 
 		/**
 		 * The copy constructor.
@@ -320,13 +323,13 @@ namespace RedBox {
 
 		/**
 		 * Sets the GraphicBody's horizontal and vertical position.
-		 * @param x New horizontal position (in pixels). Lower value means more
-		 * to the left.
-		 * @param y New vertical position (in pixels). Lower value means more at
-		 * the top.
+		 * @param newXPosition New horizontal position (in pixels). Lower value
+		 * means more to the left.
+		 * @param newYPosition New vertical position (in pixels). Lower value
+		 * means more at the top.
 		 * @see RedBox::GraphicBody::position
 		 */
-		virtual void setPosition(float x, float y);
+		virtual void setPosition(float newXPosition, float newYPosition);
 
 		/**
 		 * Moves the GraphicBody horizontally and vertically.
@@ -360,14 +363,14 @@ namespace RedBox {
 
 		/**
 		 * Sets the GraphicBody's horizontal position.
-		 * @param x New horizontal position (in pixels). Lower value means more
-		 * to the left.
+		 * @param newXPosition New horizontal position (in pixels). Lower value
+		 * means more to the left.
 		 * @see RedBox::GraphicBody::position
 		 */
-		virtual void setXPosition(float x);
+		void setXPosition(float newXPosition);
 
 		/**
-		 * Moves the GraphicBody horizontally.
+		 * Moves the graphic body horizontally.
 		 * @param deltaX Value to add to the GraphicBody's horizontal position
 		 * (in pixels). Positive value moves the GraphicBody to the right and a
 		 * negative value moves the GraphicBody to the left.
@@ -376,7 +379,7 @@ namespace RedBox {
 		void moveX(float deltaX);
 
 		/**
-		 * Gets the GraphicBody's vertical position.
+		 * Gets the graphic body's vertical position.
 		 * @return Vertical position (in pixels). Lower value means more at the
 		 * top.
 		 * @see RedBox::GraphicBody::position
@@ -385,11 +388,11 @@ namespace RedBox {
 
 		/**
 		 * Sets the graphic body's horizontal position.
-		 * @param y New vertical position (in pixels). Lower value means more at
-		 * the top.
+		 * @param newYPosition New vertical position (in pixels). Lower value
+		 * means more at the top.
 		 * @see RedBox::GraphicBody::position
 		 */
-		virtual void setYPosition(float y);
+		void setYPosition(float newYPosition);
 
 		/**
 		 * Moves the GraphicBody vertically.
@@ -499,23 +502,7 @@ namespace RedBox {
 		 * @return Possible return flag : LEFT | RIGHT | TOP | BOTTOM
 		 * @see RedBox::GraphicBody::collidableSides
 		 */
-		Side::Enum getCollidableSides();
-
-		/**
-		 * Return true if the given sides are collidable sides.
-		 * @param sides Correct value are LEFT | RIGHT | TOP | BOTTOM | ALL
-		 * @see RedBox::GraphicBody::collidableSides
-		 */
-		bool isCollidingSide(Side::Enum sides);
-
-		/**
-		 * Use to set the collidableSides flag. Used to set which side of a
-		 * sprite should collide and which should not.
-		 * @param collidableSides Correct values are LEFT, RIGHT, TOP, BOTTOM or
-		 * ALL.
-		 * @see RedBox::GraphicBody::collidableSides
-		 */
-		void setCollidableSides(Side::Enum collidableSides);
+		FlagSet<Side>& getCollidableSides();
 
 		/**
 		 * Checks if the graphic body is static or not.
@@ -945,7 +932,6 @@ namespace RedBox {
 									float higherYBoundary = -1.0f);
 
 	private:
-
 		static float computeVelocity(float velocity, float acceleration, float drag, float max);
 		/**
 		 * This function will solve the collision on the x axis. It will
@@ -1025,7 +1011,7 @@ namespace RedBox {
 		 * Contain "Side" flag (see Side.h). It tells which side can collide. A
 		 * side that can't collide will let a sprite pass through.
 		 */
-		Side::Enum collidableSides;
+		FlagSet<Side> collidableSides;
 
 		/**
 		 * Elasticity factor of the GraphicBody, will determine how should it

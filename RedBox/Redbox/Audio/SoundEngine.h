@@ -19,7 +19,7 @@ namespace RedBox {
 	 * functions.
 	 * @ingroup Audio
 	 */
-	class SoundEngine : public AudioEngine {
+	class SoundEngine : public virtual AudioEngine {
 		friend class ResourceManager;
 		friend class AudioEngine;
 	public:
@@ -39,6 +39,20 @@ namespace RedBox {
 		 * sound effect returned is at the INITIAL state.
 		 */
 		virtual SoundFX* getSoundFX(const std::string& key, bool survive = true) = 0;
+
+		/**
+		 * Gets the global sound effects volume.
+		 * @return Current global sound effects volume.
+		 * @see RedBox::SoundEngine::soundVolume;
+		 */
+		int getSoundVolume() const;
+
+		/**
+		 * Sets the global sound effects volume.
+		 * @param newSoundVolume New global sound effects volume.
+		 * @see RedBox::SoundEngine::soundVolume;
+		 */
+		virtual void setSoundVolume(int newSoundVolume);
 	protected:
 		/**
 		 * Default constructor. Engine initialization is specifically done in
@@ -70,6 +84,8 @@ namespace RedBox {
 		 * @return True if the unloading was successful, false if not.
 		 */
 		virtual bool unloadSound(SoundInfo* sound) = 0;
+	private:
+		int soundVolume;
 	};
 }
 

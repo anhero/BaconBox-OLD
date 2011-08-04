@@ -7,8 +7,6 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_OPENAL
-
 #include <stdint.h>
 
 #include <string>
@@ -31,6 +29,11 @@ namespace RedBox {
 	class OpenALEngine: public SoundEngine {
 		friend class AudioEngine;
 	public:
+		/**
+		 * Gets OpenALEngine's instance.
+		 * @return Reference to the OpenAL sound engine.
+		 */
+		static OpenALEngine& getInstance();
 		/**
 		 * Converts the RedBox volume to its OpenAL equivalent.
 		 * @param openALVolume OpenAL volume to convert.
@@ -57,10 +60,6 @@ namespace RedBox {
 		 */
 		const std::vector<std::string>& getDeviceList();
 		/**
-		 * Gets OpenALEngine's instance. Retuns NULL if it isn't constructed.
-		 */
-		static OpenALEngine* getInstance();
-		/**
 		 * Gets a sound effect. Initializes a sound effect from already loaded
 		 * sound effect data.
 		 * @param key Key to the sound effect data to use for the sound effect.
@@ -69,13 +68,18 @@ namespace RedBox {
 		 * effect after he has started playing it.
 		 */
 		SoundFX* getSoundFX(const std::string& key, bool survive);
+		
+		/**
+		 * Sets the global sound effects volume.
+		 * @param newSoundVolume New global sound effects volume.
+		 * @see RedBox::SoundEngine::soundVolume;
+		 */
+		void setSoundVolume(int newSoundVolume);
 	private:
 		/// Chunk ID wav files should have.
 		static const uint32_t CHUNK_ID_RIFF = 1179011410;
 		/// Format the wav files should have.
 		static const uint32_t FORMAT_WAVE = 1163280727;
-		/// OpenALEngine's main instance.
-		static OpenALEngine* instance;
 		/// Device to load.
 		std::string defaultDevice;
 		/// List of devices available.
@@ -92,10 +96,6 @@ namespace RedBox {
 		 * Destructor, closes OpenAL.
 		 */
 		~OpenALEngine();
-		/**
-		 * Initializes OpenAL.
-		 */
-		void init();
 		/**
 		 * Updates OpenAL.
 		 */
@@ -144,6 +144,4 @@ namespace RedBox {
 							ALsizei& freq);
 	};
 }
-
-#endif
 #endif

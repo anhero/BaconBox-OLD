@@ -282,7 +282,8 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
 
 
 void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
-								const Color& backgroundColor) {
+								const Color& backgroundColor,
+								const Vec2& rotationCenterOffset) {
 	glClearColor(clampColorComponent(backgroundColor.getRed()),
 				 clampColorComponent(backgroundColor.getGreen()),
 				 clampColorComponent(backgroundColor.getBlue()),
@@ -293,8 +294,10 @@ void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-	glRotatef(angle, 0, 0, 1);
 	glScalef(zoom, zoom, 1);
+	glTranslatef(rotationCenterOffset.getX(), rotationCenterOffset.getY(), 0);
+	glRotatef(angle, 0, 0, 1);
+	glTranslatef(-rotationCenterOffset.getX(), -rotationCenterOffset.getY(), 0);
 	glTranslatef(-(position.getX()), -(position.getY()), 0);
 
 }

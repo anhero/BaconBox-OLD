@@ -7,6 +7,7 @@
 #include "SDLInputManager.h"
 #include "RBOpenGL.h"
 #include "Engine.h"
+#include "SDLMixerEngine.h"
 
 using namespace RedBox;
 
@@ -23,6 +24,7 @@ void SDLMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
 
 SDLMainWindow::SDLMainWindow() : MainWindow() {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	SDLMixerEngine::getInstance();
 }
 
 void SDLMainWindow::setCaption(const std::string& caption) {
