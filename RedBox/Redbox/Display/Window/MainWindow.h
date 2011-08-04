@@ -17,6 +17,7 @@ namespace RedBox {
 	 */
 	class MainWindow : public sigly::HasSlots<> {
 	public:
+		static const std::string DEFAULT_NAME;
 		/**
 		 * Gets the singleton instance of the currently implemented
 		 * MainWindow.

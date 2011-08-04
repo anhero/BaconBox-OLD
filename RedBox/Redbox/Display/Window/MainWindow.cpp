@@ -5,6 +5,8 @@
 
 using namespace RedBox;
 
+const std::string MainWindow::DEFAULT_NAME = std::string("An unnamed RedBox application");
+
 MainWindow& MainWindow::getInstance() {
 	return RB_MAINWINDOW_IMPL;
 }

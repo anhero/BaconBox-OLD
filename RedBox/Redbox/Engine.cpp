@@ -230,7 +230,7 @@ Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0),
 loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
 minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false), needsExit(false),
 tmpExitCode(0), renderedSinceLastUpdate(false), screenWidth(0), screenHeight(0) {
-	MainWindow::getInstance().setCaption("An unnamed RedBox application");
+	MainWindow::getInstance().setCaption(MainWindow::DEFAULT_NAME);
 }
 
 Engine::~Engine() {
