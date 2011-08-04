@@ -32,8 +32,10 @@ namespace RedBox {
 		 */
 		~SDLMainWindow();
 
+		/// Handle to the main window.
 		SDL_Window* mainWindow;
 
+		/// Handle to the OpenGL context in the main window.
 		SDL_GLContext mainContext;
 	};
 }
