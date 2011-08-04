@@ -6,6 +6,9 @@
 #define RB_SDL_MAIN_WINDOW_H
 
 #include <sigly.h>
+
+#include <SDL/SDL.h>
+
 #include "MainWindow.h"
 
 namespace RedBox {
@@ -28,6 +31,12 @@ namespace RedBox {
 		 * Properly quits calling SDL_Quit.
 		 */
 		~SDLMainWindow();
+
+		/// Handle to the main window.
+		SDL_Window* mainWindow;
+
+		/// Handle to the OpenGL context in the main window.
+		SDL_GLContext mainContext;
 	};
 }
 

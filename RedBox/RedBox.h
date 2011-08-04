@@ -11,6 +11,12 @@
  */
 
 /**
+ * @defgroup GUI GUI
+ * @ingroup Display
+ * @brief GUI controls like buttons and checkboxes.
+ */
+
+/**
  * @defgroup Math Math
  * @brief Classes that have mathematical purposes.
  */
@@ -47,6 +53,7 @@
 #include <RedBox/Engine.h>
 #include <RedBox/ResourceManager.h>
 #include <RedBox/ResourcePathHandler.h>
+#include <Redbox/SimpleButton.h>
 #include <RedBox/Sprite.h>
 #include <RedBox/LineBody.h>
 #include <RedBox/Stopwatch.h>

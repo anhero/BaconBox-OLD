@@ -3,8 +3,6 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_AV_AUDIO_PLAYER
-
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
@@ -40,11 +38,11 @@ typedef enum {
 - (void)fadeInPlay;
 - (void)fadeInResume:(float)time;
 - (void)fadeInResume;
+- (void)refreshVolume;
 - (BOOL)isLooping;
 - (BOOL)isPaused;
 - (BOOL)isStopped;
 
 @end
 
-#endif // RB_AV_AUDIO_PLAYER
 #endif

@@ -7,8 +7,6 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_SDL
-
 #include <stdint.h>
 
 #include <list>
@@ -35,7 +33,7 @@ namespace RedBox {
 		 * Gets the singleton instance.
 		 * @return Pointer to the audio engine's instance.
 		 */
-		static SDLMixerEngine* getInstance();
+		static SDLMixerEngine& getInstance();
 
 		/**
 		 * Converts the SDL volume to its RedBox equivalent.
@@ -53,6 +51,9 @@ namespace RedBox {
 
 		/// Signal when pause/resume fading needs updating for a music.
 		sigly::Signal1<unsigned int> fadeUpdate;
+
+		/// Signal when the global sound volume is changed.
+		sigly::Signal0<> soundVolumeChange;
 
 		/**
 		 * Constructs a sound effect. Gets the sound's data associated with the
@@ -94,6 +95,19 @@ namespace RedBox {
 		 * fadeUpdate signal.
 		 */
 		void askForDisconnect();
+		/**
+		 * Sets the engine's global music volume.
+		 * @param newMusicVolume Engine's new global music volume level.
+		 * @see RedBox::AudioEngine::musicVolume
+		 */
+		void setMusicVolume(int newMusicVolume);
+
+		/**
+		 * Sets the global sound effects volume.
+		 * @param newSoundVolume New global sound effects volume.
+		 * @see RedBox::SoundEngine::soundVolume;
+		 */
+		void setSoundVolume(int newSoundVolume);
 	private:
 		/// Playback frequency
 		static const int AUDIO_RATE = 44100;
@@ -111,9 +125,6 @@ namespace RedBox {
 		 */
 		static const unsigned int NB_TICKS_PER_FADE = 100;
 
-		/// Singleton instance.
-		static SDLMixerEngine* instance;
-
 		/// Last tick at which the fade update was called.
 		unsigned int lastFadeTick;
 		/// Flag used to ask to be disconnected from the fadeUpdate signal.
@@ -130,21 +141,15 @@ namespace RedBox {
 		SDLMixerEngine();
 
 		/**
-		 * Initializes the audio engine. Called by the static functions that
-		 * load the audio engines.
+		 * Destructor. The audio engine can only be destroyed by the resource
+		 * manager.
 		 */
-		void init();
+		~SDLMixerEngine();
 
 		/**
 		 * Updates the necessary informations for the audio engine.
 		 */
 		void update();
-
-		/**
-		 * Destructor. The audio engine can only be destroyed by the resource
-		 * manager.
-		 */
-		~SDLMixerEngine();
 
 		/**
 		 * Loads sound data from a file.
@@ -195,7 +200,5 @@ namespace RedBox {
 		bool unloadMusic(MusicInfo* music);
 	};
 }
-
-#endif
 
 #endif

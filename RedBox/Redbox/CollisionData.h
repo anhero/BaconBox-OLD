@@ -17,9 +17,9 @@ namespace RedBox{
      */
 	struct CollisionData{
 		/// Side of the collision on object 1
-		Side::Enum sideObj1;
+		Side sideObj1;
 		/// Side of the collision on object 2
-		Side::Enum sideObj2;
+		Side sideObj2;
 		/// Overlapping amount
 		float overlap;
 		/// First colliding object
@@ -29,7 +29,9 @@ namespace RedBox{
 		/**
 		 * Default constructor.
 		 */
-		CollisionData():sideObj1(0), sideObj2(0), overlap(0), obj1(NULL), obj2(NULL){}
+		CollisionData() : sideObj1(Side::LEFT), sideObj2(Side::RIGHT),
+			overlap(0), obj1(NULL), obj2(NULL) {
+		}
 	};
 }
 

@@ -13,45 +13,45 @@ using namespace RedBox;
 Sprite::Sprite(): GraphicBody() {
 }
 
-Sprite::Sprite(const std::string& imageKey): GraphicBody() {
-	TextureInfo* texInfo = ResourceManager::getTexture(imageKey);
+Sprite::Sprite(const std::string& textureKey): GraphicBody() {
+	TextureInfo* textureInfo = ResourceManager::getTexture(textureKey);
 
-	if(texInfo) {
-		construct(texInfo,
-		          texInfo->imageWidth,
-		          texInfo->imageHeight,
+	if(textureInfo) {
+		construct(textureInfo,
+		          textureInfo->imageWidth,
+		          textureInfo->imageHeight,
 		          1);
 	} else {
-		Console::print("Tried to construct a sprite from an invalid image key: " + imageKey);
+		Console::print("Tried to construct a sprite from an invalid image key: " + textureKey);
 	}
 }
 
-Sprite::Sprite(TextureInfo* texInfo): GraphicBody() {
-	if(texInfo) {
-		construct(texInfo,
-		          texInfo->imageWidth,
-		          texInfo->imageHeight,
+Sprite::Sprite(TextureInfo* textureInfo): GraphicBody() {
+	if(textureInfo) {
+		construct(textureInfo,
+		          textureInfo->imageWidth,
+		          textureInfo->imageHeight,
 		          1);
 	} else {
-		Console::print("Tried to construct a sprite from an invalid texture information: " + Console::toString(texInfo));
+		Console::print("Tried to construct a sprite from an invalid texture information: " + Console::toString(textureInfo));
 	}
 }
 
-Sprite::Sprite(const std::string& imageKey,
+Sprite::Sprite(const std::string& textureKey,
                unsigned int frameWidth,
                unsigned int frameHeight,
-			   unsigned int nbFrames): GraphicBody() {
-	construct(ResourceManager::getTexture(imageKey),
+               unsigned int nbFrames): GraphicBody() {
+	construct(ResourceManager::getTexture(textureKey),
 	          frameWidth,
 	          frameHeight,
 	          nbFrames);
 }
 
-Sprite::Sprite(TextureInfo* texInfo,
+Sprite::Sprite(TextureInfo* textureInfo,
                unsigned int frameWidth,
                unsigned int frameHeight,
-			   unsigned int nbFrames): GraphicBody() {
-	construct(texInfo,
+               unsigned int nbFrames): GraphicBody() {
+	construct(textureInfo,
 	          frameWidth,
 	          frameHeight,
 	          nbFrames);
@@ -75,28 +75,25 @@ Sprite& Sprite::operator=(const Sprite& src) {
 void Sprite::render() {
 	// We render the render steps.
 	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-	        i != renderSteps.end();
-	        i++) {
+	    i != renderSteps.end(); ++i) {
 		if(*i) {
 			(*i)->render();
 		}
 	}
 }
 
-void Sprite::mask(){
+void Sprite::mask() {
 	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-        i != renderSteps.end();
-        i++) {
+	    i != renderSteps.end(); ++i) {
 		if(*i) {
 			(*i)->mask();
 		}
 	}
 }
 
-void Sprite::unmask(){
-    for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-        i != renderSteps.end();
-        i++) {
+void Sprite::unmask() {
+	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
+	    i != renderSteps.end(); ++i) {
 		if(*i) {
 			(*i)->unmask();
 		}
@@ -108,8 +105,7 @@ void Sprite::update() {
 
 	// We update the render steps.
 	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-	        i != renderSteps.end();
-	        i++) {
+	    i != renderSteps.end(); ++i) {
 		if(*i) {
 			(*i)->update();
 		}
@@ -133,19 +129,13 @@ float Sprite::getYPositionCenter() const {
 	return getYPosition() + getHeight() * 0.5f;
 }
 
-void Sprite::setXPosition(float x) {
-	GraphicBody::setXPosition(x);
-	vertices.setXPosition(x);
+void Sprite::setPosition(float newXPosition, float newYPosition) {
+	GraphicBody::setPosition(newXPosition, newYPosition);
+	vertices.setPosition(newXPosition, newYPosition);
 }
 
-void Sprite::setYPosition(float y) {
-	GraphicBody::setYPosition(y);
-	vertices.setYPosition(y);
-}
-
-void Sprite::setPosition(float x, float y) {
-	GraphicBody::setPosition(x, y);
-	vertices.setPosition(x, y);
+const Vec2 Sprite::getSize() const {
+	return vertices.getSize();
 }
 
 float Sprite::getWidth() const {
@@ -154,10 +144,6 @@ float Sprite::getWidth() const {
 
 float Sprite::getHeight() const {
 	return vertices.getHeight();
-}
-
-const Vec2 Sprite::getWidthHeight() const {
-	return vertices.getWidthHeight();
 }
 
 RenderStep* Sprite::addRenderStep(RenderStep* newRenderStep) {
@@ -227,6 +213,7 @@ std::list<RenderStep*>& Sprite::getRenderSteps() {
 
 void Sprite::setMainColor(const Color& color) {
 	RenderStep* mainRenderStep = getMainRenderStep();
+
 	if(mainRenderStep) {
 		mainRenderStep->addMode(RenderStepMode::COLOR);
 		mainRenderStep->setColor(color);
@@ -242,7 +229,7 @@ VerticesGroup& Sprite::getVertices() {
 void Sprite::construct(TextureInfo* texInfo,
                        unsigned int frameWidth,
                        unsigned int frameHeight,
-					   unsigned int nbFrames) {
+                       unsigned int nbFrames) {
 	if(texInfo) {
 		// Generates the square vertices from the frame width and height.
 		vertices.addVertices(4,
@@ -317,8 +304,8 @@ void Sprite::addAnimation(const std::string& name,
 
 			// We read the animation's frame indexes.
 			for(std::vector<unsigned int>::iterator i = framesVector.begin();
-					i != framesVector.end();
-					++i) {
+			    i != framesVector.end();
+			    ++i) {
 				*i = va_arg(frames, unsigned int);
 			}
 
@@ -370,8 +357,7 @@ void Sprite::copyFrom(const Sprite& src) {
 
 void Sprite::clearRenderSteps() {
 	for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-	        i != renderSteps.end();
-	        i++) {
+	    i != renderSteps.end(); ++i) {
 		if(*i) {
 			delete *i;
 		}
@@ -380,52 +366,41 @@ void Sprite::clearRenderSteps() {
 	renderSteps.clear();
 }
 
-Color Sprite::getMainColor(){
+Color Sprite::getMainColor() {
 	RenderStep* mainRenderStep = getMainRenderStep();
 	return mainRenderStep->getRenderInfo().getColor();
 }
 
-void Sprite::setMainAlpha(int alpha){
+void Sprite::setMainAlpha(int alpha) {
 	Color mainColor = getMainColor();
 	setMainColor(Color(mainColor.getRed(), mainColor.getGreen(), mainColor.getBlue(), alpha));
 }
 
 
-void Sprite::setMask(Sprite * aMask, bool inversed){
-    if(aMask != NULL){
-    for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-        i != renderSteps.end();
-        i++) {
-		if(*i) {
-			(*i)->setMask(aMask);
-            if (inversed) {
-                (*i)->addMode(RenderStepMode::INVERSE_MASKED);
+void Sprite::setMask(Sprite* aMask, bool inversed) {
+	if(aMask != NULL) {
+		for(std::list<RenderStep*>::iterator i = renderSteps.begin();
+		    i != renderSteps.end(); ++i) {
+			if(*i) {
+				(*i)->setMask(aMask);
 
-            }
-            else{
-                (*i)->addMode(RenderStepMode::MASKED);
+				if(inversed) {
+					(*i)->addMode(RenderStepMode::INVERSE_MASKED);
 
-            }
+				} else {
+					(*i)->addMode(RenderStepMode::MASKED);
 
+				}
+			}
 		}
 	}
-    }
-    else{
-        for(std::list<RenderStep*>::iterator i = renderSteps.begin();
-            i != renderSteps.end();
-            i++) {
-            if(*i) {
-                (*i)->removeMode(RenderStepMode::MASKED);
-            }
-        }
-    }
 }
 
 
 
-//void Sprite::setTexture(TextureInfo * aTextureInfo){
-//	getMainRenderInfo()->loadTexCoords(&vertices, aTextureInfo->imageWidth, aTextureInfo->imageHeight, 1, aTextureInfo);
-//}
-//void Sprite::setTexture(std::string key){
-//	setTexture(ResourceManager::getTexture(key));
-//}
+	//void Sprite::setTexture(TextureInfo * aTextureInfo){
+	//	getMainRenderInfo()->loadTexCoords(&vertices, aTextureInfo->imageWidth, aTextureInfo->imageHeight, 1, aTextureInfo);
+	//}
+	//void Sprite::setTexture(std::string key){
+	//	setTexture(ResourceManager::getTexture(key));
+	//}

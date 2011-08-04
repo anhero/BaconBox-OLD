@@ -20,6 +20,13 @@ namespace RedBox {
 		friend class AudioEngine;
 	public:
 		/**
+		 * Gets NullaudioEngine's instance.
+		 * @return Reference to the Null audio engine's instance or NULL if it
+		 * isn't constructed.
+		 */
+		static NullAudioEngine& getInstance();
+
+		/**
 		 * Constructs a sound effect. Gets the sound's data associated with the
 		 * key.
 		 * @param key Identifier for the sound data to use. The sound data needs
@@ -52,17 +59,7 @@ namespace RedBox {
 		 */
 		BackgroundMusic* getBackgroundMusic(const std::string& key,
 		                                    bool survive = true);
-		/**
-		 * Gets NullaudioEngine's instance. 
-		 * @return Pointer to the Null audio engine's instance or NULL if it
-		 * isn't constructed.
-		 */
-		static NullAudioEngine* getInstance();
-
 	private:
-		/// NullAudioEngine's main instance.
-		static NullAudioEngine* instance;
-
 		/// List of NullAudios managed by the NullAudioEngine.
 		std::list<NullAudio*> audios;
 
@@ -72,21 +69,14 @@ namespace RedBox {
 		NullAudioEngine();
 
 		/**
-		 * Initializes the audio engine. Called by the static functions that
-		 * load the audio engines.
+		 * Destructor.
 		 */
-		void init();
+		~NullAudioEngine();
 
 		/**
 		 * Updates the necessary informations for the audio engine.
 		 */
 		void update();
-
-		/**
-		 * Destructor. The audio engine can only be destroyed by the resource
-		 * manager.
-		 */
-		~NullAudioEngine();
 
 		/**
 		 * Loads sound data from a file.

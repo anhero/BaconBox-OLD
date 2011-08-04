@@ -1,11 +1,9 @@
-#include "PlatformFlagger.h"
-
-#ifdef RB_OPENAL
-
 #include "OpenALEngine.h"
 
-#include <fstream>
+#include "PlatformFlagger.h"
 
+#include <fstream>
+#include <algorithm>
 #include <cstring>
 #include <cassert>
 
@@ -24,7 +22,10 @@
 
 using namespace RedBox;
 
-OpenALEngine* OpenALEngine::instance = NULL;
+OpenALEngine& OpenALEngine::getInstance() {
+	static OpenALEngine instance;
+	return instance;
+}
 
 int OpenALEngine::openALToRedBoxVolume(float openALVolume) {
 	if(openALVolume < 0.0f) {
@@ -52,7 +53,7 @@ void OpenALEngine::setDefaultDevice(const std::string& newDevice) {
 
 const std::vector<std::string>& OpenALEngine::getDeviceList() {
 	// We only fill the list if it hasn't been filled yet.
-	if(deviceList.size() == 0) {
+	if(deviceList.empty()) {
 		// Gets the list of all devices.
 		const ALchar* devices = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
 		if(devices) {
@@ -63,10 +64,6 @@ const std::vector<std::string>& OpenALEngine::getDeviceList() {
 		}
 	}
 	return deviceList;
-}
-
-OpenALEngine* OpenALEngine::getInstance() {
-	return instance;
 }
 
 SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
@@ -85,45 +82,12 @@ SoundFX* OpenALEngine::getSoundFX(const std::string& key, bool survive) {
 	}
 }
 
+void OpenALEngine::setSoundVolume(int newSoundVolume) {
+	this->SoundEngine::setSoundVolume(newSoundVolume);
+	alListenerf(AL_GAIN, static_cast<float>(getSoundVolume()) / static_cast<float>(Sound::MAX_VOLUME));
+}
+
 OpenALEngine::OpenALEngine(): SoundEngine() {
-	assert(!OpenALEngine::instance);
-	OpenALEngine::instance = this;
-}
-
-OpenALEngine::~OpenALEngine() {
-	// We delete all the sources.
-	ALint bufferId;
-	ALuint tmp;
-	for(std::list<OpenALSoundFX*>::iterator i = sources.begin();
-		i != sources.end(); i++) {
-		// We make sure the source hasn't already been released.
-		if (alIsSource((*i)->sourceId)) {
-			// We make sure its buffer will be deleted.
-			alGetSourcei((*i)->sourceId, AL_BUFFER, &bufferId);
-			// We delete de source.
-			alDeleteSources(1, &((*i)->sourceId));
-			// We delete its buffer, if possible.
-			if(bufferId != AL_NONE) {
-				tmp = static_cast<ALuint>(bufferId);
-				alDeleteBuffers(1, &tmp);
-			}
-		}
-	}
-	sources.clear();
-	// We get the current context.
-	ALCcontext* context = alcGetCurrentContext();
-	// We check if it is valid.
-	if(context) {
-		ALCdevice* device = alcGetContextsDevice(context);
-		alcMakeContextCurrent(NULL);
-		alcDestroyContext(context);
-		if(device) {
-			alcCloseDevice(device);
-		}
-	}
-}
-
-void OpenALEngine::init() {
 	ALCdevice* device = NULL;
 	// We open the device.
 	if(defaultDevice.empty()) {
@@ -159,6 +123,39 @@ void OpenALEngine::init() {
 		}
 	} else {
 		Console::print("Failed to open the OpenAL audio device.");
+	}
+}
+
+OpenALEngine::~OpenALEngine() {
+	// We delete all the sources.
+	ALint bufferId;
+	ALuint tmp;
+	for(std::list<OpenALSoundFX*>::iterator i = sources.begin();
+		i != sources.end(); ++i) {
+		// We make sure the source hasn't already been released.
+		if (alIsSource((*i)->sourceId)) {
+			// We make sure its buffer will be deleted.
+			alGetSourcei((*i)->sourceId, AL_BUFFER, &bufferId);
+			// We delete de source.
+			alDeleteSources(1, &((*i)->sourceId));
+			// We delete its buffer, if possible.
+			if(bufferId != AL_NONE) {
+				tmp = static_cast<ALuint>(bufferId);
+				alDeleteBuffers(1, &tmp);
+			}
+		}
+	}
+	sources.clear();
+	// We get the current context.
+	ALCcontext* context = alcGetCurrentContext();
+	// We check if it is valid.
+	if(context) {
+		ALCdevice* device = alcGetContextsDevice(context);
+		alcMakeContextCurrent(NULL);
+		alcDestroyContext(context);
+		if(device) {
+			alcCloseDevice(device);
+		}
 	}
 }
 
@@ -239,16 +236,30 @@ bool OpenALEngine::unloadSound(SoundInfo* sound) {
 	return !alIsBuffer(sound->bufferId);
 }
 
+class PredBufferSource {
+public:
+	PredBufferSource(ALuint newBuffer) : buffer(newBuffer) {
+	}
+	bool operator () (OpenALSoundFX* sfx) const {
+		bool result = false;
+		if(sfx) {
+			ALint tmpBuffer;
+            alGetSourcei(sfx->getSourceId(), AL_BUFFER, &tmpBuffer);
+			if(static_cast<ALuint>(tmpBuffer) == buffer) {
+                alDeleteSources(1, &(sfx->getSourceId()));
+                result = true;
+			}
+		}
+		return result;
+	}
+private:
+	ALuint buffer;
+};
+
 void OpenALEngine::deleteBufferSources(ALuint buffer) {
 	ALint tmpBuffer;
-	for(std::list<OpenALSoundFX*>::iterator i = sources.begin();
-		i != sources.end(); i++) {
-		alGetSourcei((*i)->sourceId, AL_BUFFER, &tmpBuffer);
-		if (static_cast<ALuint>(tmpBuffer) == buffer) {
-			alDeleteSources(1, &((*i)->sourceId));
-			sources.erase(i);
-		}
-	}
+	std::list<OpenALSoundFX*>::iterator pos = std::remove_if(sources.begin(), sources.end(), PredBufferSource(buffer));
+	sources.erase(pos, sources.end());
 }
 
 void OpenALEngine::loadWav(const std::string& filePath,
@@ -325,5 +336,3 @@ void OpenALEngine::loadWav(const std::string& filePath,
 		Console::print("Failed to open the file: " + filePath);
 	}
 }
-
-#endif

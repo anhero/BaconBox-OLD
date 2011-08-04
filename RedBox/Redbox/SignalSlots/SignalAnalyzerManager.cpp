@@ -37,7 +37,7 @@ SignalAnalyzerManager::SignalAnalyzerManager() {
 SignalAnalyzerManager::~SignalAnalyzerManager() {
 	// We make sure to delete all the signal analyzers.
 	for(std::map<std::string, SignalAnalyzer*>::iterator i = analyzers.begin();
-	        i != analyzers.end(); i++) {
+	    i != analyzers.end(); ++i) {
 
 		if(i->second) {
 			delete i->second;

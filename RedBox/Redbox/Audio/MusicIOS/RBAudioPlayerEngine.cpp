@@ -1,7 +1,5 @@
 #include "PlatformFlagger.h"
 
-#ifdef RB_AV_AUDIO_PLAYER
-
 #include "RBAudioPlayerEngine.h"
 
 #include "RBAudioPlayerMusic.h"
@@ -13,6 +11,11 @@
 #include "Console.h"
 
 using namespace RedBox;
+
+RBAudioPlayerEngine& RBAudioPlayerEngine::getInstance() {
+	static RBAudioPlayerEngine instance;
+	return instance;
+}
 
 BackgroundMusic* RBAudioPlayerEngine::getBackgroundMusic(std::string const &key,
 														 bool survive) {
@@ -33,13 +36,14 @@ BackgroundMusic* RBAudioPlayerEngine::getBackgroundMusic(std::string const &key,
 	}
 }
 
+void RBAudioPlayerEngine::setMusicVolume(int newMusicVolume) {
+	this->MusicEngine::setMusicVolume(newMusicVolume);
+}
+
 RBAudioPlayerEngine::RBAudioPlayerEngine(): MusicEngine() {
 }
 
 RBAudioPlayerEngine::~RBAudioPlayerEngine() {
-}
-
-void RBAudioPlayerEngine::init() {
 }
 
 void RBAudioPlayerEngine::update() {
@@ -68,5 +72,3 @@ MusicInfo* RBAudioPlayerEngine::loadMusic(const MusicParameters& params) {
 bool RBAudioPlayerEngine::unloadMusic(MusicInfo* music) {
 	return true;
 }
-
-#endif

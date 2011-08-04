@@ -107,6 +107,16 @@ void Vec2::addToY(float yToAdd) {
 	}
 }
 
+void Vec2::addToXY(float xToAdd, float yToAdd) {
+	if(isPtr) {
+		*(coordsPtr.x) += xToAdd;
+		*(coordsPtr.y) += yToAdd;
+	} else {
+		coordsVal.x = xToAdd;
+		coordsVal.y = yToAdd;
+	}
+}
+
 bool Vec2::getIsPtr() const {
 	return isPtr;
 }

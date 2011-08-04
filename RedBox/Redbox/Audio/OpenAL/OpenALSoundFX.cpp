@@ -1,8 +1,6 @@
-#include "PlatformFlagger.h"
-
-#ifdef RB_OPENAL
-
 #include "OpenALSoundFX.h"
+
+#include "PlatformFlagger.h"
 
 #include <cassert>
 
@@ -91,6 +89,10 @@ OpenALSoundFX::~OpenALSoundFX() {
 	alDeleteSources(1, &sourceId);
 }
 
+ALuint& OpenALSoundFX::getSourceId() {
+    return sourceId;
+}
+
 OpenALSoundFX::OpenALSoundFX(): SoundFX(), sourceId(0), survives(false),
 	nbTimesLeft(0) {
 }
@@ -100,5 +102,3 @@ void OpenALSoundFX::load(ALuint bufferId) {
 	alSource3f(sourceId, AL_POSITION, 0.0f, 0.0f, 0.0f);
 	alSourcei(sourceId, AL_BUFFER, bufferId);
 }
-
-#endif

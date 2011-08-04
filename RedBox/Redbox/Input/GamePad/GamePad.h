@@ -77,7 +77,7 @@ namespace RedBox {
 		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
-		static void connectThumbStickMove(desttype* pclass, void (desttype::*pmemfun)(GamePadThumbstickSignalData)) {
+		static void connectThumbstickMove(desttype* pclass, void (desttype::*pmemfun)(GamePadThumbstickSignalData)) {
 			GamePad* gamePad = getDefault();
 			if(gamePad) {
 				gamePad->thumbstickMove.connect(pclass, pmemfun);

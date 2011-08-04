@@ -8,6 +8,7 @@
 #include "Body.h"
 #include "Color.h"
 #include "Vec2.h"
+#include "SafeEnum.h"
 
 namespace RedBox {
 	class GraphicBody;
@@ -20,15 +21,17 @@ namespace RedBox {
 	class Camera : public Body {
 		friend class State;
 	public:
+		struct ShakeAxesDef {
+			enum type {
+				BOTH_AXES,
+				HORIZONTAL_AXIS,
+				VERTICAL_AXIS
+			};
+		};
 		/**
 		 * The possible axes on which the camera can shake.
 		 */
-		enum ShakeAxes {
-			BOTH_AXES,
-			HORIZONTAL_AXIS,
-			VERTICAL_AXIS
-		};
-
+		typedef SafeEnum<ShakeAxesDef> ShakeAxes;
 		/**
 		 * Default constructor.
 		 */
@@ -229,7 +232,8 @@ namespace RedBox {
 		 * the camera shakes on both axes.
 		 */
 		void shake(float intensity = 0.05f, double duration = 0.5,
-				   bool forceReset = true, ShakeAxes axes = BOTH_AXES);
+				   bool forceReset = true,
+				   ShakeAxes axes = ShakeAxes::BOTH_AXES);
 
 		/**
 		 * Converts screen coordinates to world coordinates.

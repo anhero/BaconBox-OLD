@@ -1,13 +1,13 @@
-#include "PlatformFlagger.h"
-
-#ifdef RB_AV_AUDIO_PLAYER
-
 #include "RBAudioPlayerMusic.h"
+
+#include "PlatformFlagger.h"
 
 #include "Console.h"
 #include <cassert>
 
 using namespace RedBox;
+
+RBAudioPlayerMusic* currentMusic = NULL;
 
 void RBAudioPlayerMusic::play(int nbTimes) {
 	play(nbTimes, 0.0);
@@ -96,6 +96,11 @@ AudioState RBAudioPlayerMusic::getCurrentState() const {
 RBAudioPlayerMusic::~RBAudioPlayerMusic() {
 }
 
+void RBAudioPlayerMusic::refreshVolume() {
+	if(currentMusic) {
+	}
+}
+
 RBAudioPlayerMusic::RBAudioPlayerMusic(): BackgroundMusic(), bgm(NULL),
 playedOnce(false) {
 }
@@ -106,5 +111,3 @@ void RBAudioPlayerMusic::load(std::string const& filePath) {
 		bgm = [[RBAudioPlayerMusicDelegate alloc] initWithPath:[NSString stringWithCString:tmp]];
 	}
 }
-
-#endif

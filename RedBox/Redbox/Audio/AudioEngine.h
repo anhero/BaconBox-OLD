@@ -22,29 +22,15 @@ namespace RedBox {
 		friend class Engine;
 	public:
 		/**
-		 * Loads the sound and the music engine.
-		 */
-		static void loadAudioEngine();
-		/**
-		 * Loads the sound engine. Calls its init() method after being created.
-		 * Does nothing if the sound engine has already been loaded.
-		 */
-		static void loadSoundEngine();
-		/**
-		 * Loads the music engine. Calls its init() method after being created.
-		 * Does nothing if the music engine has already been loaded.
-		 */
-		static void loadMusicEngine();
-		/**
 		 * Gets the sound engine.
 		 * @return Pointer to the sound engine. Loads it if needed.
 		 */
-		static SoundEngine* getSoundEngine();
+		static SoundEngine& getSoundEngine();
 		/**
 		 * Gets the music engine.
 		 * @return Pointer to the music engine. Loads it if needed.
 		 */
-		static MusicEngine* getMusicEngine();
+		static MusicEngine& getMusicEngine();
 
 		/**
 		 * Plays a sound effect if a sound engine is available.
@@ -71,33 +57,15 @@ namespace RedBox {
 		AudioEngine();
 
 		/**
-		 * Initializes the audio engine. Called by the static functions that
-		 * load the audio engines.
+		 * Destructor. The audio engine can only be destroyed by the resource
+		 * manager.
 		 */
-		virtual void init() = 0;
+		virtual ~AudioEngine();
 
 		/**
 		 * Updates the necessary informations for the audio engine.
 		 */
 		virtual void update() = 0;
-
-		/**
-		 * Destructor. The audio engine can only be destroyed by the resource
-		 * manager.
-		 */
-		virtual ~AudioEngine();
-	private:
-		/// Pointer to the sound engine singleton.
-		static SoundEngine* soundEngine;
-
-		/// Pointer to the music engine singleton.
-		static MusicEngine* musicEngine;
-
-		/**
-		 * Unloads the audio engines. Must be called after the resource manager
-		 * has unloaded everything related to the audio engine.
-		 */
-		static void unloadAudioEngines();
 	};
 }
 

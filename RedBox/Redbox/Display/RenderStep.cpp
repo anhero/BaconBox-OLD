@@ -12,6 +12,7 @@
 #include "Vertex.h"
 #include "VerticesGroup.h"
 #include "Engine.h"
+#include "Sprite.h"
 
 using namespace RedBox;
 
@@ -74,20 +75,20 @@ RenderStep::~RenderStep() {
 	clean();
 }
 void RenderStep::mask(){
-    if(verticesData.size()) {
+	if(!verticesData.empty()) {
         GraphicDriver::drawMaskShapeWithTextureAndColor(verticesData,info, vertices->getVertices().size());
 	}			
 }
 
 void RenderStep::unmask(){
-    if(verticesData.size()) {
+	if(!verticesData.empty()) {
         GraphicDriver::unmask(verticesData,info, vertices->getVertices().size());
 	}
 }
 void RenderStep::render() {
 	updateVerticesData();
 
-	if(verticesData.size()) {
+	if(!verticesData.empty()) {
 		// We check which graphic driver method to use.
 		if(mode.isSet(RenderStepMode::SHAPE)) {
 			if(mode.isSet(RenderStepMode::TEXTURE)) {
@@ -231,7 +232,7 @@ void RenderStep::updateVerticesData() {
 		std::vector<float>::iterator data = verticesData.begin();
 
 		for(std::list<Vertex*>::iterator i = verticesPtr.begin();
-		        i != verticesPtr.end(); i++) {
+			i != verticesPtr.end(); ++i) {
 			*data = (*i)->getXPosition();
 			++data;
 			*data = (*i)->getYPosition();

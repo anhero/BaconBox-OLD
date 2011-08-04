@@ -1,4 +1,14 @@
-#include <string>
-typedef int RB_Char32;
+#ifndef RB_STRING_32_H
+#define RB_STRING_32_H
 
-typedef std::basic_string<RB_Char32> RB_String32;
+#include <stdint.h>
+
+#include <string>
+
+namespace RedBox {
+	typedef int32_t RB_Char32;
+
+	typedef std::basic_string<RB_Char32> RB_String32;
+}
+
+#endif
