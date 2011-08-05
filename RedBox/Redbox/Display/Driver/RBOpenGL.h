@@ -20,6 +20,7 @@
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #else
+#define GLEW_STATIC
 #include "glew.h"
 #define RB_GLEW
 #endif
