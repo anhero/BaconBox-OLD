@@ -137,7 +137,10 @@ endif(iphone)
 
 #we copy the header private and public header files
 file(MAKE_DIRECTORY ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include/RedBox)
-configure_file(${Public_RedBox_Headers} ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include COPYONLY)
+foreach(publicHeader ${Public_RedBox_Headers})
+	configure_file(${publicHeader} ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include COPYONLY)
+endforeach(publicHeader ${Public_RedBox_Headers})
+
 foreach(privateHeader ${Private_RedBox_Headers})
 	configure_file(${privateHeader} ${RedBox_BINARY_DIR}/${CMAKE_BUILD_TYPE}/include/RedBox COPYONLY)
 endforeach(privateHeader ${Private_RedBox_Headers})
