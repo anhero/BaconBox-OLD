@@ -53,7 +53,7 @@
 #include <RedBox/Engine.h>
 #include <RedBox/ResourceManager.h>
 #include <RedBox/ResourcePathHandler.h>
-#include <Redbox/SimpleButton.h>
+#include <RedBox/SimpleButton.h>
 #include <RedBox/Sprite.h>
 #include <RedBox/LineBody.h>
 #include <RedBox/Stopwatch.h>
