@@ -15,18 +15,18 @@ SDLMainWindow& SDLMainWindow::getInstance() {
 }
 
 void SDLMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
-	mainWindow = SDL_CreateWindow(MainWindow::DEFAULT_NAME.c_str(),
-								SDL_WINDOWPOS_CENTERED,
-								SDL_WINDOWPOS_CENTERED, width, height,
-								SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-	mainContext = SDL_GL_CreateContext(mainWindow);
-	SDL_GL_SetSwapInterval(1);
 	if(SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8) < 0) { printf("opengl error: %s\n", SDL_GetError()); }
 	if(SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8) < 0) { printf("opengl error: %s\n", SDL_GetError()); }
 	if(SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8) < 0) { printf("opengl error: %s\n", SDL_GetError()); }
 	if(SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8) < 0) { printf("opengl error: %s\n", SDL_GetError()); }
 	if(SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32) < 0) { printf("opengl error: %s\n", SDL_GetError()); }
 	if(SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1) < 0) { printf("Couldn't set double buffering: %s\n", SDL_GetError()); }
+	mainWindow = SDL_CreateWindow(MainWindow::DEFAULT_NAME.c_str(),
+								SDL_WINDOWPOS_CENTERED,
+								SDL_WINDOWPOS_CENTERED, width, height,
+								SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+	mainContext = SDL_GL_CreateContext(mainWindow);
+	SDL_GL_SetSwapInterval(1);
 	InputManager::getInstance().setNbKeyboards(1);
 	InputManager::getInstance().setNbPointers(1);
 }
