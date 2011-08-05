@@ -70,6 +70,12 @@ namespace RedBox {
 		 * @return Pointer to the emitter's default sprite.
 		 */
 		Sprite* getDefaultSprite();
+
+		/**
+		 * Creates a copy of the current sprite emitter.
+		 * @return Pointer to the new sprite emitter.
+		 */
+		GraphicBody* clone() const;
 	private:
 		/// Pointer to the default sprite to make a copy of for each particle.
 		Sprite* defaultSprite;

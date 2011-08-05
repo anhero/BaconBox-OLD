@@ -559,7 +559,7 @@ namespace RedBox {
 		 * structure containing information about the collision.
 		 * @see RedBox::CollisionData
 		 */
-		std::pair<bool, std::list<CollisionData> > collide(std::list<GraphicBody*> graphicBodies);
+		std::pair<bool, std::list<CollisionData> > collide(const std::list<GraphicBody*>& graphicBodies);
 
 		/**
 		 * Collide the current GraphicBody against the given horizontal line.
@@ -930,6 +930,12 @@ namespace RedBox {
 									float linePosition,
 									float lowerYBoundary = 1.0f,
 									float higherYBoundary = -1.0f);
+
+		/**
+		 * Creates a copy of the current graphic body.
+		 * @return Pointer to the new graphic body.
+		 */
+		virtual GraphicBody* clone() const = 0;
 
 	private:
 		static float computeVelocity(float velocity, float acceleration, float drag, float max);

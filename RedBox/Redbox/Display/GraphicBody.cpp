@@ -289,13 +289,15 @@ std::pair<bool, CollisionData> GraphicBody::collide(GraphicBody* other) {
 	return collide(this, other);
 }
 
-std::pair<bool, std::list<CollisionData> > GraphicBody::collide(std::list<GraphicBody*> GraphicBodys) {
+std::pair<bool, std::list<CollisionData> > GraphicBody::collide(const std::list<GraphicBody*>& graphicBodies) {
 	std::list<CollisionData> collisionInfo;
 	bool collide = false;
 
-	for(std::list<GraphicBody*>::iterator i = GraphicBodys.begin();
-		i != GraphicBodys.end(); ++i) {
-		std::pair<bool, CollisionData> collisionPair = this->collide(*i);
+	std::pair<bool, CollisionData> collisionPair;
+	for(std::list<GraphicBody*>::const_iterator i = graphicBodies.begin();
+		i != graphicBodies.end(); ++i) {
+
+		collisionPair = this->collide(*i);
 
 		if(collisionPair.first) {
 			collide = true;

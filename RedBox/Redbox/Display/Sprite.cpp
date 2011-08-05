@@ -396,6 +396,10 @@ void Sprite::setMask(Sprite* aMask, bool inversed) {
 	}
 }
 
+GraphicBody* Sprite::clone() const {
+	return new Sprite(*this);
+}
+
 
 
 	//void Sprite::setTexture(TextureInfo * aTextureInfo){

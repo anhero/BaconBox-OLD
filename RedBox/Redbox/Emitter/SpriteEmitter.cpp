@@ -52,6 +52,10 @@ Sprite* SpriteEmitter::getDefaultSprite() {
 	return defaultSprite;
 }
 
+GraphicBody* SpriteEmitter::clone() const {
+	return new SpriteEmitter(*this);
+}
+
 void SpriteEmitter::updateAlpha(int16_t deltaAlpha, Sprite* graphicBody) {
 	if(graphicBody && graphicBody->getMainRenderInfo()) {
 		int16_t tmpAlpha = static_cast<int16_t>(graphicBody->getMainRenderInfo()->getColor().getAlpha());

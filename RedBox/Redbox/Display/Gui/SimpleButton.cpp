@@ -65,6 +65,10 @@ void SimpleButton::setAngle(float newAngle) {
 								   buttonSprite.getYPosition());
 }
 
+GraphicBody* SimpleButton::clone() const {
+	return new SimpleButton(*this);
+}
+
 void SimpleButton::onPress() {
 	buttonSprite.playAnimation("p");
 }

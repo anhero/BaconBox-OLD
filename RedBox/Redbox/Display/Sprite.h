@@ -152,7 +152,7 @@ namespace RedBox {
 		 * @param y New vertical position (in pixels). Lower value means more at
 		 * the top.
 		 */
-		void setPosition(float x, float y);
+		virtual void setPosition(float x, float y);
 
 		/**
 		 * Gets the sprite's width.
@@ -327,6 +327,12 @@ namespace RedBox {
          * false by default.
          */
         void setMask(Sprite * aMask, bool inversed =false);
+
+		/**
+		 * Clones the sprite.
+		 * @return Pointer to the new Sprite.
+		 */
+		virtual GraphicBody* clone() const;
 		
 //		void setTexture(TextureInfo * aTextureInfo);
 //		void setTexture(std::string key);

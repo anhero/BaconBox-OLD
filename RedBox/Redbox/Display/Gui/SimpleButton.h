@@ -109,6 +109,12 @@ namespace RedBox {
 		 * Sets the button's angle.
 		 */
 		void setAngle(float newAngle);
+
+		/**
+		 * Creates a copy of the current simple button.
+		 * @return Pointer to the new simple button.
+		 */
+		GraphicBody* clone() const;
 	private:
 		/// Sprite representing the button's graphic.
 		Sprite buttonSprite;
