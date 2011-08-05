@@ -25,6 +25,122 @@ namespace RedBox {
 	class Emitter: public IEmitter {
 	public:
 		/**
+		 * Represents a particle the sprite emitter will shoot.
+		 */
+		struct Particle {
+			/**
+			 * Default constructor.
+			 */
+			Particle(): graphicBody(NULL), timeLeft(0.0),
+				state(ParticleState::DEAD), alphaCounter(0.0f),
+				alphaPerSecond(0.0f), scalingPerSecond(Vec2()),
+				anglePerSecond(0.0f) {
+			}
+			/**
+			 * Parameterized constructor.
+			 * @param newGraphicBody Pointer to the graphic used for the particle.
+			 * @param newTimeLeft Time remaining for the particle.
+			 * @param newState Particle's initial state.
+			 * @see RedBox::ParticleState::Enum
+			 */
+			Particle(T* newGraphicBody, double newTimeLeft,
+					 ParticleState newState) :
+				graphicBody(newGraphicBody), timeLeft(newTimeLeft),
+				state(newState), alphaCounter(0.0f), alphaPerSecond(0.0f),
+				scalingPerSecond(Vec2()), anglePerSecond(0.0f) {
+			}
+
+			/**
+			 * Copy constructor.
+			 * @param src Particle to make a copy of.
+			 */
+			Particle(const Particle& src) : graphicBody(NULL),
+				timeLeft(src.timeLeft), state(src.state), alphaCounter(0.0f),
+				alphaPerSecond(src.alphaPerSecond),
+				scalingPerSecond(src.scalingPerSecond),
+				anglePerSecond(src.anglePerSecond) {
+				if(src.graphicBody) {
+					graphicBody = new T(*src.graphicBody);
+				}
+			}
+
+			/**
+			 * Destructor. Frees up the memory used by the GraphicBody.
+			 */
+			~Particle() {
+				clearGraphicBody();
+			}
+
+			/**
+			 * Assignation operator overload.
+			 * @param src Particle to make a copy of.
+			 */
+			Particle& operator=(const Particle& src) {
+				if(this != &src) {
+					if(&src) {
+						clearGraphicBody();
+
+						if(src.graphicBody) {
+							graphicBody = new T(*src.graphicBody);
+						} else {
+							graphicBody = NULL;
+						}
+
+						timeLeft = src.timeLeft;
+						state = src.state;
+						alphaCounter = src.alphaCounter;
+						alphaPerSecond = src.alphaPerSecond;
+						scalingPerSecond = src.scalingPerSecond;
+						anglePerSecond = src.anglePerSecond;
+					} else {
+						clean();
+					}
+				}
+				return *this;
+			}
+
+			/// Pointer to the particle's GraphicBody object.
+			T* graphicBody;
+
+			/// Time left in the particle's current phase.
+			double timeLeft;
+
+			/// Flag used to know in which phase the particle is.
+			ParticleState state;
+
+			/// Counter used for the fading in and out.
+			float alphaCounter;
+
+			/// Alpha per second.
+			float alphaPerSecond;
+
+			/// Horizontal and vertical scaling per second.
+			Vec2 scalingPerSecond;
+
+			/// Rotation angle per second.
+			float anglePerSecond;
+		private:
+			/**
+			 * Frees up all the memory used by the GraphicBody.
+			 */
+			void clearGraphicBody() {
+				if(graphicBody) {
+					delete graphicBody;
+				}
+			}
+
+			/**
+			 * Resets the particle.
+			 */
+			void clean() {
+				clearGraphicBody();
+				graphicBody = NULL;
+				timeLeft = 0.0;
+				state = ParticleState::DEAD;
+			}
+		};
+
+		/**
 		 * Default constructor.
 		 */
 		Emitter(): IEmitter(), particles(std::vector<Particle>(10)) {
@@ -201,6 +317,14 @@ namespace RedBox {
 
 			particles.resize(newNbMaxParticles);
 		}
+
+		/**
+		 * Gets the emitter's particles.
+		 * @return Reference to the vector of particles.
+		 */
+		std::vector<Particle>& getParticles() {
+			return particles;
+		}
 	protected:
 		/**
 		 * Updates the GraphicBody's alpha using the given alpha to add to
@@ -255,123 +379,8 @@ namespace RedBox {
 		 * @param graphicBody Pointer to the GraphicBody to render.
 		 */
 		virtual void renderParticle(T* graphicBody) = 0;
+
 	private:
-		/**
-		 * Represents a particle the sprite emitter will shoot.
-		 */
-		struct Particle {
-			/**
-			 * Default constructor.
-			 */
-			Particle(): graphicBody(NULL), timeLeft(0.0),
-				state(ParticleState::DEAD), alphaCounter(0.0f),
-				alphaPerSecond(0.0f), scalingPerSecond(Vec2()),
-				anglePerSecond(0.0f) {
-			}
-			/**
-			 * Parameterized constructor.
-			 * @param newGraphicBody Pointer to the graphic used for the particle.
-			 * @param newTimeLeft Time remaining for the particle.
-			 * @param newState Particle's initial state.
-			 * @see RedBox::ParticleState::Enum
-			 */
-			Particle(T* newGraphicBody, double newTimeLeft,
-					 ParticleState newState) :
-				graphicBody(newGraphicBody), timeLeft(newTimeLeft),
-				state(newState), alphaCounter(0.0f), alphaPerSecond(0.0f),
-				scalingPerSecond(Vec2()), anglePerSecond(0.0f) {
-			}
-
-			/**
-			 * Copy constructor.
-			 * @param src Particle to make a copy of.
-			 */
-			Particle(const Particle& src) : graphicBody(NULL),
-				timeLeft(src.timeLeft), state(src.state), alphaCounter(0.0f),
-				alphaPerSecond(src.alphaPerSecond),
-				scalingPerSecond(src.scalingPerSecond),
-				anglePerSecond(src.anglePerSecond) {
-				if(src.graphicBody) {
-					graphicBody = new T(*src.graphicBody);
-				}
-			}
-
-			/**
-			 * Destructor. Frees up the memory used by the GraphicBody.
-			 */
-			~Particle() {
-				clearGraphicBody();
-			}
-
-			/**
-			 * Assignation operator overload.
-			 * @param src Particle to make a copy of.
-			 */
-			Particle& operator=(const Particle& src) {
-				if(this != &src) {
-					if(&src) {
-						clearGraphicBody();
-
-						if(src.graphicBody) {
-							graphicBody = new T(*src.graphicBody);
-						} else {
-							graphicBody = NULL;
-						}
-
-						timeLeft = src.timeLeft;
-						state = src.state;
-						alphaCounter = src.alphaCounter;
-						alphaPerSecond = src.alphaPerSecond;
-						scalingPerSecond = src.scalingPerSecond;
-						anglePerSecond = src.anglePerSecond;
-					} else {
-						clean();
-					}
-				}
-				return *this;
-			}
-
-			/// Pointer to the particle's GraphicBody object.
-			T* graphicBody;
-
-			/// Time left in the particle's current phase.
-			double timeLeft;
-
-			/// Flag used to know in which phase the particle is.
-			ParticleState state;
-
-			/// Counter used for the fading in and out.
-			float alphaCounter;
-
-			/// Alpha per second.
-			float alphaPerSecond;
-
-			/// Horizontal and vertical scaling per second.
-			Vec2 scalingPerSecond;
-
-			/// Rotation angle per second.
-			float anglePerSecond;
-		private:
-			/**
-			 * Frees up all the memory used by the GraphicBody.
-			 */
-			void clearGraphicBody() {
-				if(graphicBody) {
-					delete graphicBody;
-				}
-			}
-
-			/**
-			 * Resets the particle.
-			 */
-			void clean() {
-				clearGraphicBody();
-				graphicBody = NULL;
-				timeLeft = 0.0;
-				state = ParticleState::DEAD;
-			}
-		};
-
 		/// Vector containing the particles used to shoot.
 		std::vector<Particle> particles;
 
