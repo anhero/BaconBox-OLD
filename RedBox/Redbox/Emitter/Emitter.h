@@ -325,6 +325,18 @@ namespace RedBox {
 		std::vector<Particle>& getParticles() {
 			return particles;
 		}
+
+		/**
+		 * Kills a particle.
+		 * @param particle Iterator pointing to the particle to kill.
+		 */
+		void killParticle(typename std::vector<Particle>::iterator particle) {
+			if(particle != particles.end()) {
+				particle->state = ParticleState::DEAD;
+				particle->timeLeft = 0.0;
+				--nbParticles;
+			}
+		}
 	protected:
 		/**
 		 * Updates the GraphicBody's alpha using the given alpha to add to
