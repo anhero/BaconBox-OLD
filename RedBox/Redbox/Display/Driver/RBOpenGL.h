@@ -21,6 +21,7 @@
 #include <GLES/glext.h>
 #else
 #include "glew.h"
+#define RB_GLEW
 #endif
 
 #endif

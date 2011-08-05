@@ -42,6 +42,9 @@ void SDLMainWindow::setCaption(const std::string& caption) {
 }
 	
 void SDLMainWindow::show() {
+#ifdef RB_GLEW
+glewInit();
+#endif
 	while(SDLInputManager::getSDLInstance()->isRunning()) {
 		Engine::pulse();
 		if(!Engine::isBufferSwapped()) {
