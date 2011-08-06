@@ -40,7 +40,8 @@ namespace RedBox {
 					  float newAnglePerSecond = 0.0f,
 					  float newAlphaPerSecondVariance = 0.0f,
 					  const Vec2& newScalingPerSecondVariance = Vec2(),
-					  float newAnglePerSecondVariance = 0.0f);
+					  float newAnglePerSecondVariance = 0.0f,
+					  const std::string& newAnimationName = std::string());
 
 		/// Minimum duration the phase will last.
 		double phaseDuration;
@@ -74,6 +75,9 @@ namespace RedBox {
 		 * variance is added to the angle per second when a particle is shot.
 		 */
 		float anglePerSecondVariance;
+
+		/// Name of the animation to start when the phase begins.
+		std::string animationName;
 	};
 }
 #endif

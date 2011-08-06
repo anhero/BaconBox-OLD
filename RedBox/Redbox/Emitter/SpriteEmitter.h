@@ -106,6 +106,14 @@ namespace RedBox {
 		void updateRotation(float deltaAngle, Sprite* graphicBody);
 
 		/**
+		 * Makes the graphic body start an animation.
+		 * @param animationName Name of the animation to start.
+		 * @param graphicBody Graphic body to animate.
+		 */
+		void startAnimation(const std::string& animationName,
+							Sprite* graphicBody);
+
+		/**
 		 * Initializes a particle's sprite and returns a pointer to it.
 		 * @return Pointer to the created sprite.
 		 */

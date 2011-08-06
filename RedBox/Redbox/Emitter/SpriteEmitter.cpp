@@ -86,6 +86,13 @@ void SpriteEmitter::updateRotation(float deltaAngle, Sprite* graphicBody) {
 	}
 }
 
+void SpriteEmitter::startAnimation(const std::string& animationName,
+								   Sprite* graphicBody) {
+	if(graphicBody) {
+		graphicBody->playAnimation(animationName);
+	}
+}
+
 Sprite* SpriteEmitter::initParticle() {
 	if(defaultSprite) {
 		return new Sprite(*defaultSprite);

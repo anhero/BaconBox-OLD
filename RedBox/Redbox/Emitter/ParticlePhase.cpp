@@ -15,7 +15,8 @@ ParticlePhase::ParticlePhase(double newPhaseDuration,
 							 float newAnglePerSecond,
 							 float newAlphaPerSecondVariance,
 							 const Vec2& newScalingPerSecondVariance,
-							 float newAnglePerSecondVariance):
+							 float newAnglePerSecondVariance,
+							 const std::string& newAnimationName):
 phaseDuration(newPhaseDuration),
 phaseDurationVariance(newPhaseDurationVariance),
 alphaPerSecond(newAlphaPerSecond),
@@ -23,5 +24,6 @@ scalingPerSecond(newScalingPerSecond),
 anglePerSecond(newAnglePerSecond),
 alphaPerSecondVariance(newAlphaPerSecondVariance),
 scalingPerSecondVariance(newScalingPerSecondVariance),
-anglePerSecondVariance(newAnglePerSecondVariance) {
+anglePerSecondVariance(newAnglePerSecondVariance),
+animationName(newAnimationName) {
 }

@@ -228,6 +228,9 @@ namespace RedBox {
 
 						if(i->timeLeft <= 0.0) {
 							i->state = ParticleState::LIFE;
+							if(!lifePhase.animationName.empty()) {
+								startAnimation(lifePhase.animationName, i->graphicBody);
+							}
 							i->timeLeft = lifePhase.phaseDuration + Random::getRandomDouble(0.0, lifePhase.phaseDurationVariance);
 							i->alphaPerSecond = lifePhase.alphaPerSecond + Random::getRandomFloat(0.0f, lifePhase.alphaPerSecondVariance);
 							i->scalingPerSecond = lifePhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getY()));
@@ -244,6 +247,9 @@ namespace RedBox {
 
 						if(i->timeLeft <= 0.0) {
 							i->state = ParticleState::DYING;
+							if(!dyingPhase.animationName.empty()) {
+								startAnimation(dyingPhase.animationName, i->graphicBody);
+							}
 							i->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
 							i->alphaPerSecond = dyingPhase.alphaPerSecond + Random::getRandomFloat(0.0f, dyingPhase.alphaPerSecondVariance);
 							i->scalingPerSecond = dyingPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
@@ -331,11 +337,14 @@ namespace RedBox {
 		 * @param particle Iterator pointing to the particle to kill.
 		 */
 		void killParticle(typename std::vector<Particle>::iterator particle) {
-			if(particle != particles.end()) {
-				particle->state = ParticleState::DEAD;
-				particle->timeLeft = 0.0;
-				--nbParticles;
+			particle->state = ParticleState::DYING;
+			if(!dyingPhase.animationName.empty()) {
+				startAnimation(dyingPhase.animationName, particle->graphicBody);
 			}
+			particle->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
+			particle->alphaPerSecond = dyingPhase.alphaPerSecond + Random::getRandomFloat(0.0f, dyingPhase.alphaPerSecondVariance);
+			particle->scalingPerSecond = dyingPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
+			particle->anglePerSecond = dyingPhase.anglePerSecond + Random::getRandomFloat(0.0f, dyingPhase.anglePerSecondVariance);
 		}
 	protected:
 		/**
@@ -362,6 +371,14 @@ namespace RedBox {
 		 * @param graphicBody GraphicBody to have its rotation angle udpated.
 		 */
 		virtual void updateRotation(float deltaAngle, T* graphicBody) = 0;
+
+		/**
+		 * Makes the graphic body start an animation.
+		 * @param animationName Name of the animation to start.
+		 * @param graphicBody Graphic body to animate.
+		 */
+		virtual void startAnimation(const std::string& animationName,
+									T* graphicBody) = 0;
 
 		/**
 		 * Initializes a particle's renerable and returns a pointer to it.
@@ -434,6 +451,9 @@ namespace RedBox {
 				startParticle(deadParticle->graphicBody);
 				deadParticle->timeLeft = birthPhase.phaseDuration + Random::getRandomDouble(0.0, birthPhase.phaseDurationVariance);
 				deadParticle->state = ParticleState::BIRTH;
+				if(!birthPhase.animationName.empty()) {
+					startAnimation(birthPhase.animationName, deadParticle->graphicBody);
+				}
 				deadParticle->alphaPerSecond = birthPhase.alphaPerSecond + Random::getRandomFloat(0.0f, birthPhase.alphaPerSecondVariance);
 				deadParticle->scalingPerSecond = birthPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getY()));
 				deadParticle->anglePerSecond = birthPhase.anglePerSecond + Random::getRandomFloat(0.0f, birthPhase.anglePerSecondVariance);
