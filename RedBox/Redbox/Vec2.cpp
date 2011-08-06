@@ -212,7 +212,7 @@ void Vec2::normalize() {
 }
 
 float Vec2::getAngle() const {
-	return -MathHelper::radiansToDegrees(acosf((*this * UP) / (length() * UP.length())));
+	return MathHelper::radiansToDegrees(acosf((*this * UP) / (length() * UP.length()))) * ((getX() > 0) ? (-1.0f) : (1.0f));
 }
 
 void Vec2::rotate(float angle) {
