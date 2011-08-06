@@ -7,7 +7,7 @@
 
 using namespace RedBox;
 
-RBAudioPlayerMusic* currentMusic = NULL;
+RBAudioPlayerMusic* RBAudioPlayerMusic::currentMusic = NULL;
 
 void RBAudioPlayerMusic::play(int nbTimes) {
 	play(nbTimes, 0.0);
