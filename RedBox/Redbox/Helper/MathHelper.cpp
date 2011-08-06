@@ -6,7 +6,8 @@
 using namespace RedBox;
 
 const float MathHelper::PI = 3.141592f;
-const float MathHelper::DEGREE_TO_RADIAN = 0.017453f;
+const float MathHelper::DEGREE_TO_RADIAN = 0.0174532925f;
+const float MathHelper::RADIAN_TO_DEGREE = 57.2957795785523f;
 
 int MathHelper::nextPowerOf2(int number){
 	if(number == 0) {
@@ -25,7 +26,11 @@ float MathHelper::modFloat(float dividend, float divisor) {
 }
 
 float MathHelper::degreesToRadians(float degrees) {
-	return degrees * 0.0174532925f;
+	return degrees * DEGREE_TO_RADIAN;
+}
+
+float MathHelper::radiansToDegrees(float radians) {
+	return radians * RADIAN_TO_DEGREE;
 }
 
 unsigned int MathHelper::roundUpDivision(unsigned int dividend,

@@ -267,6 +267,12 @@ namespace RedBox {
 		void normalize();
 
 		/**
+		 * Gets the vector's angle.
+		 * @return Sprite's angle.
+		 */
+		float getAngle() const;
+
+		/**
 		 * Rotates the vector counter-clockwise by the given angle (in degrees).
 		 * @param angle Angle to rotate the vector by (in degrees).
 		 */
