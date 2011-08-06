@@ -188,13 +188,15 @@ void RenderStep::setVerticesGroup(VerticesGroup* newVertices) {
 void RenderStep::playAnimation(const std::string& name) {
 	// We check if the animation really exists.
 	if(info.animationExists(name)) {
-		// We set the new current animation and start the animation at the first
-		// frame.
-		info.setCurrentAnimation(name);
-		info.setCurrentFrame(0);
-		info.resetCurrentNbLoops();
-		animCounter = 0.0;
-		isPaused = false;
+		if(info.getCurrentAnimation() != name) {
+			// We set the new current animation and start the animation at the first
+			// frame.
+			info.setCurrentAnimation(name);
+			info.setCurrentFrame(0);
+			info.resetCurrentNbLoops();
+			animCounter = 0.0;
+			isPaused = false;
+		}
 	} else {
 		Console::print("Tried to play an animation which does not exist for the concerned RenderStep: " + name);
 		Console::printTrace();
