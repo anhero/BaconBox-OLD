@@ -25,6 +25,31 @@ void SDLMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
 	InputManager::getInstance().setNbPointers(1);
 }
 
+void SDLMainWindow::show() {
+#ifdef RB_GLEW
+glewInit();
+#endif
+	while(SDLInputManager::getSDLInstance()->isRunning()) {
+		Engine::pulse();
+		if(!Engine::isBufferSwapped()) {
+			SDL_GL_SwapWindow(mainWindow);
+			Engine::setBufferSwapped();
+		}
+	}
+}
+
+void SDLMainWindow::setCaption(const std::string& caption) {
+	SDL_SetWindowTitle(mainWindow, caption.c_str());
+}
+
+bool SDLMainWindow::isFullScreen() const {
+	return static_cast<bool>(SDL_GetWindowFlags(mainWindow) & SDL_WINDOW_FULLSCREEN);
+}
+
+void SDLMainWindow::setFullScreen(bool newFullScreen) {
+	SDL_SetWindowFullscreen(mainWindow, ((newFullScreen) ? (SDL_TRUE) : (SDL_FALSE)));
+}
+
 SDLMainWindow::SDLMainWindow() : MainWindow(), mainWindow(NULL),
 	mainContext(NULL) {
 
@@ -38,23 +63,6 @@ SDLMainWindow::SDLMainWindow() : MainWindow(), mainWindow(NULL),
 	if(SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,  1) < 0) { printf("Couldn't set double buffering: %s\n", SDL_GetError()); }
 
 	SDLMixerEngine::getInstance();
-}
-
-void SDLMainWindow::setCaption(const std::string& caption) {
-	SDL_SetWindowTitle(mainWindow, caption.c_str());
-}
-
-void SDLMainWindow::show() {
-#ifdef RB_GLEW
-glewInit();
-#endif
-	while(SDLInputManager::getSDLInstance()->isRunning()) {
-		Engine::pulse();
-		if(!Engine::isBufferSwapped()) {
-			SDL_GL_SwapWindow(mainWindow);
-			Engine::setBufferSwapped();
-		}
-	}
 }
 
 SDLMainWindow::~SDLMainWindow() {

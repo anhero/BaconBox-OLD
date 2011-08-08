@@ -19,6 +19,8 @@ namespace RedBox {
 		void onRedBoxInit(unsigned int width, unsigned int height);
 		void show();
 		void setCaption(const std::string& caption);
+		bool isFullScreen() const;
+		void setFullScreen(bool);
 	private:
 		/**
 		 * Initializes SDL.

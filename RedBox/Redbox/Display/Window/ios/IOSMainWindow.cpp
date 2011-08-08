@@ -37,6 +37,13 @@ IOSMainWindow::IOSMainWindow() : MainWindow() {
 void IOSMainWindow::setCaption(const std::string& caption) {
 	//SDL_WM_SetCaption(caption.c_str(), NULL);
 }
+
+bool IOSMainWindow::isFullScreen() const {
+	return true;
+}
+
+void IOSMainWindow::setFullScreen(bool) {
+}
 	
 void IOSMainWindow::show() {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];

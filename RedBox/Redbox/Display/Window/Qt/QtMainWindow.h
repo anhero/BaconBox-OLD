@@ -45,7 +45,7 @@ namespace RedBox {
 		public:
 			explicit MyMainWindow(QWidget *parent = 0);
 			~MyMainWindow();
-			void onRedBoxInit(int width, int height);
+			void onRedBoxInit(unsigned int width, unsigned int height);
 		private:
 			Ui::MainWindow *ui;
 			QtRedBoxWidget* engine;
@@ -62,6 +62,8 @@ namespace RedBox {
 		void onRedBoxInit(unsigned int width, unsigned int height);
 		void show();
 		void setCaption(const std::string& caption);
+		bool isFullScreen() const;
+		void setFullScreen(bool newFullScreen);
 	private:
 		/// Instance of the Qt Window.
 		MyMainWindow* window;
@@ -73,6 +75,7 @@ namespace RedBox {
 		 * Initializes.
 		 */
 		QtMainWindow();
+
 		/**
 		 * Properly quits.
 		 */

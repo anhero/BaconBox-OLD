@@ -1,5 +1,5 @@
-#include "PlatformFlagger.h"
 #include "MainWindow.h"
+#include "PlatformFlagger.h"
 #include "Engine.h"
 #include RB_MAINWINDOW_INCLUDE
 
