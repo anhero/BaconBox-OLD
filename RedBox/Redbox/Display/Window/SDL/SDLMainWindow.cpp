@@ -50,6 +50,14 @@ void SDLMainWindow::setFullScreen(bool newFullScreen) {
 	SDL_SetWindowFullscreen(mainWindow, ((newFullScreen) ? (SDL_TRUE) : (SDL_FALSE)));
 }
 
+bool SDLMainWindow::isInputGrabbed() const {
+	return static_cast<bool>(SDL_GetWindowFlags(mainWindow) & SDL_WINDOW_INPUT_GRABBED);
+}
+
+void SDLMainWindow::setInputGrabbed(bool newInputGrabbed) {
+	SDL_SetWindowGrab(mainWindow, ((newInputGrabbed) ? (SDL_TRUE) : (SDL_FALSE)));
+}
+
 SDLMainWindow::SDLMainWindow() : MainWindow(), mainWindow(NULL),
 	mainContext(NULL) {
 

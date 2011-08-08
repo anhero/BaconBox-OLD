@@ -44,7 +44,14 @@ bool IOSMainWindow::isFullScreen() const {
 
 void IOSMainWindow::setFullScreen(bool) {
 }
-	
+
+bool IOSMainWindow::isInputGrabbed() const {
+	return true;
+}
+
+void IOSMainWindow::setInputGrabbed(bool newInputGrabbed) {
+}
+
 void IOSMainWindow::show() {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     //Need the next to lines of code to prevent the dead code strip 

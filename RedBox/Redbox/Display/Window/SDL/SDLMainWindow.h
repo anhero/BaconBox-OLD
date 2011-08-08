@@ -54,6 +54,19 @@ namespace RedBox {
 		 * If false, makes sure it's not full screen.
 		 */
 		void setFullScreen(bool newFullScreen);
+
+		/**
+		 * Checks if the main window grabs the input. When the input is
+		 * grabbed, the cursor is invisible.
+		 * @return True if the main window grabbed the input, false if not.
+		 */
+		bool isInputGrabbed() const;
+
+		/**
+		 * Sets if the main window grabbed the input or not.
+		 * @param newInputGrabbed
+		 */
+		void setInputGrabbed(bool newInputGrabbed);
 	private:
 		/**
 		 * Initializes SDL.

@@ -58,12 +58,40 @@ namespace RedBox {
 		 * If false, makes sure it's not full screen.
 		 */
 		virtual void setFullScreen(bool newFullScreen) = 0;
+
+		/**
+		 * Checks if the main window grabs the input. When the input is
+		 * grabbed, the cursor is invisible.
+		 * @return True if the main window grabbed the input, false if not.
+		 */
+		virtual bool isInputGrabbed() const = 0;
+
+		/**
+		 * Sets if the main window grabbed the input or not.
+		 * @param newInputGrabbed
+		 */
+		virtual void setInputGrabbed(bool newInputGrabbed) = 0;
+
+		/**
+		 * Grabs the input.
+		 */
+		void grabInput();
+
+		/**
+		 * Releases the input grabbing.
+		 */
+		void releaseInput();
     protected:
 		/**
 		 * The constructor. When implementing a MainWindow, do any
 		 * initialization in here.
 		 */
 		MainWindow();
+
+		/**
+		 * Destructor.
+		 */
+		virtual ~MainWindow();
 	};
 }
 
