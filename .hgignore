@@ -29,7 +29,7 @@ RedBox-build*/*
 *.mpkg
 *.framework
 *.orig
-
+*.autosave
 
 #Windows file
 Thumbs.db
