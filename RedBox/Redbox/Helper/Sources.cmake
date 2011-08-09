@@ -18,6 +18,8 @@ if(iphone)
 	include(${Helper_dir}/ios/Sources.cmake)
 endif(iphone)
 
+include(${Helper_dir}/Tween/Sources.cmake)
+
 list(APPEND Private_RedBox_Headers ${RedBox_RedBox_Helper_Headers})
 
 list(APPEND RedBoxHeaders ${RedBox_RedBox_Helper_Headers})

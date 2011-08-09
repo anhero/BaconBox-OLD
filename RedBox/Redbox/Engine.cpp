@@ -17,6 +17,7 @@
 #include "MusicEngine.h"
 #include "InputManager.h"
 #include "TimerManager.h"
+#include "Tween.h"
 #include "Console.h"
 #include <libgen.h>
 
@@ -133,6 +134,8 @@ void Engine::pulse() {
 			InputManager::getInstance().update();
 			// We update the timers.
 			TimerManager::update();
+			// We update the tweens.
+			Tween::getInstance().update();
 			engine.nextUpdate += engine.updateDelay;
 			engine.lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
 			++engine.loops;

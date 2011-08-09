@@ -72,3 +72,4 @@
 #include <RedBox/SpriteFactory.h>
 #include <RedBox/InputManager.h>
 #include <RedBox/Console.h>
+#include <RedBox/Tween.h>
