@@ -96,6 +96,7 @@ namespace RedBox {
 	private:
 		/// List of active tweeners that need updating.
 		std::list<Tweener*> tweeners;
+
 		/// List of tweeners that are done and need to be removed.
 		std::list<Tweener*> tweenersToRemove;
 
