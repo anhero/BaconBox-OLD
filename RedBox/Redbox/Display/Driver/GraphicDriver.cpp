@@ -13,80 +13,80 @@
 using namespace RedBox;
 
 void GraphicDriver::drawShapeWithTextureAndColor(std::vector<float>& vertices,
-										  RenderInfo& renderingInfo,
-										  unsigned int nbVertices) {
+        RenderInfo& renderingInfo,
+        unsigned int nbVertices) {
 #ifdef RB_OPENGL
 	OpenGLDriver::drawShapeWithTextureAndColor(&(*(vertices.begin())),
-												   renderingInfo,
-												   nbVertices);
+	        renderingInfo,
+	        nbVertices);
 #endif
 }
 
 void GraphicDriver::drawShapeWithTexture(std::vector<float>& vertices,
-								  RenderInfo& renderingInfo,
-								  unsigned int nbVertices) {
+        RenderInfo& renderingInfo,
+        unsigned int nbVertices) {
 #ifdef RB_OPENGL
-		OpenGLDriver::drawShapeWithTexture(&(*(vertices.begin())),
-										   renderingInfo,
-										   nbVertices);
+	OpenGLDriver::drawShapeWithTexture(&(*(vertices.begin())),
+	                                   renderingInfo,
+	                                   nbVertices);
 #endif
 }
 
 void GraphicDriver::drawShapeWithColor(std::vector<float>& vertices,
-									   RedBox::RenderInfo &renderingInfo,
-									   unsigned int nbVertices) {
+                                       RedBox::RenderInfo& renderingInfo,
+                                       unsigned int nbVertices) {
 #ifdef RB_OPENGL
 	OpenGLDriver::drawShapeWithColor(&(*(vertices.begin())), renderingInfo,
-									 nbVertices);
+	                                 nbVertices);
 #endif
 }
 
 
 void GraphicDriver::drawMaskShapeWithTexture(std::vector<float>& vertices,
-									   RedBox::RenderInfo &renderingInfo,
-									   unsigned int nbVertices) {
+        RedBox::RenderInfo& renderingInfo,
+        unsigned int nbVertices) {
 #ifdef RB_OPENGL
 	OpenGLDriver::drawMaskShapeWithTexture(&(*(vertices.begin())), renderingInfo,
-									 nbVertices);
+	                                       nbVertices);
 #endif
 }
 
 void GraphicDriver::unmask(std::vector<float>& vertices,
-                                             RedBox::RenderInfo &renderingInfo,
-                                             unsigned int nbVertices) {
+                           RedBox::RenderInfo& renderingInfo,
+                           unsigned int nbVertices) {
 #ifdef RB_OPENGL
 	OpenGLDriver::unmask(&(*(vertices.begin())), renderingInfo,
-                                           nbVertices);
+	                     nbVertices);
 #endif
 }
 
 void GraphicDriver::drawMaskShapeWithTextureAndColor(std::vector<float>& vertices,
-                           RedBox::RenderInfo &renderingInfo,
-                           unsigned int nbVertices) {
+        RedBox::RenderInfo& renderingInfo,
+        unsigned int nbVertices) {
 #ifdef RB_OPENGL
 	OpenGLDriver::drawMaskShapeWithTextureAndColor(&(*(vertices.begin())), renderingInfo,
-                         nbVertices);
+	        nbVertices);
 #endif
 }
 
 
 void GraphicDriver::drawMaskedShapeWithTextureAndColor(std::vector<float>& vertices,
-                                                       RenderInfo& renderingInfo,
-                                                       unsigned int nbVertices, 
-                                                       bool inversedMask) {
+        RenderInfo& renderingInfo,
+        unsigned int nbVertices,
+        bool inversedMask) {
 #ifdef RB_OPENGL
 	OpenGLDriver::drawMaskedShapeWithTextureAndColor(&(*(vertices.begin())), renderingInfo,
-                                                   nbVertices, inversedMask);
+	        nbVertices, inversedMask);
 #endif
 }
 
 void GraphicDriver::prepareScene(const Vec2& position, float angle, float zoom,
-								 const Color& backgroundColor,
-								 const Vec2& rotationCenterOffset) {
+                                 const Color& backgroundColor,
+                                 const Vec2& rotationCenterOffset) {
 
 #ifdef RB_OPENGL
 	OpenGLDriver::prepareScene(position, angle, zoom, backgroundColor,
-							   rotationCenterOffset);
+	                           rotationCenterOffset);
 #endif
 
 }
@@ -97,7 +97,7 @@ void GraphicDriver::pushMatrix() {
 #endif
 }
 
-void GraphicDriver::translate(const Vec2 &translation) {
+void GraphicDriver::translate(const Vec2& translation) {
 #ifdef RB_OPENGL
 	OpenGLDriver::translate(translation);
 #endif
@@ -116,7 +116,7 @@ void GraphicDriver::initializeGraphicDriver(unsigned int screenWidth, unsigned i
 }
 
 
-TextureInfo * GraphicDriver::loadTexture(PixMap * pixMap){
+TextureInfo* GraphicDriver::loadTexture(PixMap* pixMap) {
 #ifdef RB_OPENGL
 	return OpenGLDriver::loadTexture(pixMap);
 #endif

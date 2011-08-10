@@ -198,6 +198,12 @@ namespace RedBox {
 		 * the setString() before rendering each time a change is made.
 		 */
 		void setString();
+
+		/**
+		 * Creates a copy of the current graphic string.
+		 * @return Pointer to the new graphic string.
+		 */
+		GraphicBody* clone() const;
 	private:
 		typedef std::list<std::pair<Glyph*, Sprite*> > GlyphList;
 

@@ -10,43 +10,49 @@
 
 using namespace RedBox;
 
-void NullGraphicsDriver::drawShapeWithTextureAndColor(float* vertices,
-												RenderInfo& renderingInfo,
-												unsigned int nbVertices){
+void NullGraphicsDriver::drawShapeWithTextureAndColor(float*, RenderInfo&,
+        unsigned int) {
 }
 
-void NullGraphicsDriver::drawShapeWithTexture(float* vertices,
-										RenderInfo& renderingInfo,
-										unsigned int nbVertices){
+void NullGraphicsDriver::drawShapeWithTexture(float*, RenderInfo&,
+        unsigned int) {
 }
 
-void NullGraphicsDriver::drawShapeWithColor(float* vertices,
-									  RenderInfo &renderingInfo,
-									  unsigned int nbVertices) {
+void NullGraphicsDriver::drawShapeWithColor(float*, RenderInfo&, unsigned int) {
 }
 
-void NullGraphicsDriver::prepareScene(int xTranslation, int yTranslation,
-									  int angle, float zoom,
-									  const Color& backgroundColor,
-									  const Vec2& rotationCenterOffset) {
+void NullGraphicsDriver::drawMaskShapeWithTexture(GLfloat*, RenderInfo&,
+        unsigned int) {
 }
 
-void NullGraphicsDriver::initializeGraphicDriver(int screenWidth, int screenHeight) {
+void NullGraphicsDriver::unmask(GLfloat*, RenderInfo&, unsigned int) {
+}
+
+void NullGraphicsDriver::drawMaskShapeWithTextureAndColor(GLfloat*, RenderInfo&,
+        unsigned int) {
+}
+
+void NullGraphicsDriver::drawMaskedShapeWithTextureAndColor(GLfloat*,
+        RenderInfo&,
+        unsigned int, bool) {
+}
+
+void NullGraphicsDriver::prepareScene(int, int, int, float, const Color&,
+                                      const Vec2&) {
+}
+
+void NullGraphicsDriver::initializeGraphicDriver(int, int) {
 }
 
 
-TextureInfo * NullGraphicsDriver::loadTexture(PixMap* pixMap){
+TextureInfo* NullGraphicsDriver::loadTexture(PixMap* pixMap) {
 	//@TODO: Check this...
-	
+
 	TextureInfo* textureInfo = new TextureInfo();
-	
+
 	textureInfo->imageWidth = pixMap->getWidth();
 	textureInfo->imageHeight = pixMap->getHeight();
-	
-	return textureInfo;
-}
 
-float NullGraphicsDriver::clampColorComponent(unsigned int component) {
-	return static_cast<float>(component) / static_cast<float>(Color::MAX_COMPONENT_VALUE);
+	return textureInfo;
 }
 

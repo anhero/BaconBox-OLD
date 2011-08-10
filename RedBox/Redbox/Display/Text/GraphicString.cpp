@@ -162,6 +162,10 @@ void GraphicString::setString() {
 	needReset = false;
 }
 
+GraphicBody* GraphicString::clone() const {
+	return new GraphicString(*this);
+}
+
 void GraphicString::setPosition() {
 	if(font) {
 		int lineHeight = font->getLineHeight();

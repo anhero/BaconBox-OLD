@@ -5,10 +5,10 @@ using namespace RedBox;
 Object::Object() {
 }
 
-Object::Object(const Object &src) {
+Object::Object(const Object&) {
 }
 
-Object& Object::operator=(const Object& src) {
+Object& Object::operator=(const Object&) {
 	return *this;
 }
 

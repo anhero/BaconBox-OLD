@@ -75,20 +75,20 @@ namespace RedBox{
 		 * RGBA components of the string effect. Range is from 0 to 255.
 		 * The order is Red Green Blue Alpha.
 		 */
-		int * getColor();
+		int* getColor();
 		
 		/**
 		 * Set the direction vector of the effect. 
 		 * Ex. A drop shadow with a direction vector of x:1 y:2 will
 		 * offset the shadow 1 pixel to the right and 2 pixels down.
 		 */
-		void setDirectionVector(Vec2 & directionVector);
+		void setDirectionVector(const Vec2& newDirectionVector);
 		/**
 		 * Get the direction vector of the effect
 		 * Ex. A drop shadow with a direction vector of x:1 y:2 will
 		 * offset the shadow 1 pixel to the right and 2 pixels down.
 		 */
-		Vec2 getDirectionVector();
+		const Vec2& getDirectionVector() const;
 	private:
 		///The string effect type. 
 		StringFXMode mode;
