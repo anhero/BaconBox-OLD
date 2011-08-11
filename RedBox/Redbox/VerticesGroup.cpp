@@ -336,14 +336,13 @@ void VerticesGroup::scale(const Vec2& factor) {
 	}
 }
 
-void VerticesGroup::rotate(float angle) {
-	Vec2 positionCenter = getPositionCenter(), tmp;
-
+void VerticesGroup::rotate(float angle, const Vec2& fromPoint) {
+	Vec2 tmp;
 	for(std::list<Vertex>::iterator i = vertices.begin();
 	        i != vertices.end(); ++i) {
-		tmp = i->getPosition() - positionCenter;
+		tmp = i->getPosition() - fromPoint;
 		tmp.rotate(angle);
-		i->getPosition() = positionCenter + tmp;
+		i->getPosition() = fromPoint + tmp;
 	}
 }
 

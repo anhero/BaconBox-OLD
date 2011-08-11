@@ -331,9 +331,13 @@ void Sprite::setScaling(float xScaling, float yScaling) {
 }
 
 void Sprite::setAngle(float newAngle) {
-	if(newAngle != getAngle()) {
-		vertices.rotate(newAngle - getAngle());
-		GraphicBody::setAngle(newAngle);
+	rotateFromPoint(newAngle - getAngle(), vertices.getPositionCenter());
+}
+
+void Sprite::rotateFromPoint(float angle, const Vec2& point) {
+	if(angle != 0.0f) {
+		vertices.rotate(angle, point);
+		this->GraphicBody::setAngle(getAngle() + angle);
 		Vec2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	}

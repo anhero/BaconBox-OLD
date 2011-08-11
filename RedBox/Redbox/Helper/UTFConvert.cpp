@@ -12,11 +12,11 @@
 using namespace RedBox;
 
 
-std::string UTFConvert::encodeToUTF8(RB_String32 UTF32String) {
+std::string UTFConvert::encodeToUTF8(String32 UTF32String) {
 
 	std::string UTF8String;
 
-	for(RB_String32::iterator i = UTF32String.begin() ; i < UTF32String.end();
+	for(String32::iterator i = UTF32String.begin() ; i < UTF32String.end();
 	    ++i) {
 		// 0xxxxxxx
 		if(*i < 0x80) {
@@ -63,13 +63,13 @@ std::string UTFConvert::encodeToUTF8(RB_String32 UTF32String) {
 }
 
 
-RB_String32 UTFConvert::decodeUTF8(std::string UTF8String) {
+String32 UTFConvert::decodeUTF8(std::string UTF8String) {
 
 
-	RB_String32 UTF32String;
+	String32 UTF32String;
 
 	for(std::string::iterator i = UTF8String.begin() ; i < UTF8String.end();) {
-		RB_Char32 a32Char;
+		Char32 a32Char;
 
 		// 1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
 		if((*i & MASK6BYTES) == MASK6BYTES) {

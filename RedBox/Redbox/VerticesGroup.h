@@ -220,7 +220,7 @@ namespace RedBox {
 		 * @param angle Angle used to rotate the vertices group. A positive
 		 * value rotates it counter-clockwise.
 		 */
-		void rotate(float angle);
+		void rotate(float angle, const Vec2& fromPoint);
 
 		/**
 		 * Updates the verticesData from the instance's vertices. Will not do

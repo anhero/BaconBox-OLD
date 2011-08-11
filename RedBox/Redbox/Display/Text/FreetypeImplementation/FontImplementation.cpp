@@ -18,16 +18,16 @@ void FontImplementation::initializeFontRenderer(){
 	}
 }
 
-std::string FontImplementation::getName(){
+const std::string& FontImplementation::getName() const {
 	return name;
 }
 
-
-FontImplementation::FontImplementation(const std::string& name, const std::string & path){
+FontImplementation::FontImplementation(const std::string& name,
+									   const std::string & path) {
 	
 	this->name = name;
 	
-	//We load the font face
+	// We load the font face
 	int error = FT_New_Face( fontRenderer, path.c_str(), 0, &font);
 	if ( error == FT_Err_Unknown_File_Format )
 	{
@@ -43,13 +43,13 @@ FontImplementation::FontImplementation(const std::string& name, const std::strin
 }
 
 
-Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
-	std::map<std::string, std::map< RB_Char32, Glyph*>* >::iterator i = glyphCache.find(size);
+Glyph * FontImplementation::getGlyph(Char32 unicodeValue){
+	std::map<std::string, std::map< Char32, Glyph*>* >::iterator i = glyphCache.find(size);
 	Glyph * aGlyph;
 	bool glyphCached = false;
 	//we check if the glyph is already loaded and cached.
 	if(i != glyphCache.end()){
-		std::map<RB_Char32, Glyph*>::iterator j = i->second->find(unicodeValue);
+		std::map<Char32, Glyph*>::iterator j = i->second->find(unicodeValue);
 		if (j != i->second->end()) {
 			aGlyph = j->second;
 			glyphCached = true;
@@ -102,9 +102,9 @@ Glyph * FontImplementation::getGlyph(RB_Char32 unicodeValue){
 										static_cast<float>(font->glyph->bitmap_top));
 
 		i = (glyphCache.insert(std::pair<std::string, 
-							   std::map<RB_Char32, Glyph*>* >(size, new std::map<RB_Char32, Glyph*>()) )).first;
+							   std::map<Char32, Glyph*>* >(size, new std::map<Char32, Glyph*>()) )).first;
 		
-			i->second->insert(std::pair<RB_Char32, Glyph*>(unicodeValue, aGlyph));
+			i->second->insert(std::pair<Char32, Glyph*>(unicodeValue, aGlyph));
 		
 	}
 	
@@ -120,7 +120,6 @@ void FontImplementation::setPixelSize(int pixelSize){
 		Console::print("Can't set pixel size");
 	}
 	size = Parser::intToString(pixelSize) + "px";
-	
 }
 
 
@@ -134,7 +133,7 @@ void FontImplementation::setManualLineHeight(int lineHeight){
 	this->lineHeight = lineHeight;
 	automaticLineHeight = false;
 }
-int FontImplementation::getLineHeight(){
+int FontImplementation::getLineHeight() const {
 	if (automaticLineHeight){
 		return  font->size->metrics.height >> 6;
 	}

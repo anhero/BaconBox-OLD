@@ -11,22 +11,10 @@
 
 using namespace RedBox;
 
-GraphicString::GraphicString(Font* newFont, const Vec2& newPosition,
-							 TextAlignment newAlignment,
-							 TextDirection newDirection) :
-	GraphicBody(newPosition), font(newFont), color(Color::BLACK),
-	 needReset(false), alignment(newAlignment), direction(newDirection),
-	widthCache(0.0f) {
-	setString();
-}
-
-GraphicString::GraphicString(Font* newFont, float newXPosition,
-							 float newYPosition, TextAlignment newAlignment,
-							 TextDirection newDirection) :
-	GraphicBody(Vec2(newXPosition, newYPosition)), font(newFont),
-	color(Color::BLACK), needReset(false), alignment(newAlignment),
-	direction(newDirection), widthCache(0.0f) {
-	setString();
+GraphicString::GraphicString(Font* newFont, TextAlignment newAlignment,
+                             TextDirection newDirection) :
+	GraphicBody(), font(newFont), color(Color::BLACK), alignment(newAlignment),
+	direction(newDirection) {
 }
 
 Font* GraphicString::getFont() {
@@ -35,7 +23,7 @@ Font* GraphicString::getFont() {
 
 void GraphicString::setFont(Font* newFont) {
 	font = newFont;
-	setText(internalString);
+	setText(text);
 }
 
 const Color& GraphicString::getColor() const {
@@ -44,7 +32,13 @@ const Color& GraphicString::getColor() const {
 
 void GraphicString::setColor(const Color& newColor) {
 	color = newColor;
-	setColor();
+
+	for(GlyphList::iterator i = characters.begin(); i != characters.end();
+	    ++i) {
+		if(i->second) {
+			i->second->setMainColor(newColor);
+		}
+	}
 }
 
 TextAlignment GraphicString::getAlignment() const {
@@ -53,7 +47,6 @@ TextAlignment GraphicString::getAlignment() const {
 
 void GraphicString::setAlignment(TextAlignment newAlignment) {
 	alignment = newAlignment;
-	setPosition();
 }
 
 TextDirection GraphicString::getDirection() const {
@@ -62,33 +55,121 @@ TextDirection GraphicString::getDirection() const {
 
 void GraphicString::setDirection(TextDirection newDirection) {
 	direction = newDirection;
-	setPosition();
 }
 
-void GraphicString::setText(const std::string& text) {
-	setText(UTFConvert::decodeUTF8(text));
+std::string GraphicString::getText() const {
+	return UTFConvert::encodeToUTF8(text);
 }
 
-void GraphicString::setText(const RB_String32& text) {
-	internalString = text;
+const String32& GraphicString::getTextUtf32() const {
+	return text;
+}
+
+void GraphicString::setText(const std::string& newText) {
+	setText(UTFConvert::decodeUTF8(newText));
+}
+
+void GraphicString::setText(const String32& newText) {
+	text = newText;
+
+	clearCharacters();
 
 	if(font) {
-		flushCharacters();
 
-		for(RB_String32::const_iterator i = text.begin(); i != text.end();
-			++i) {
-			Glyph* aGlyph = font->getGlyph(*i);
-			TextureInfo* glyphTextureInfo = aGlyph->textureInfo;
-			Sprite* aSprite = NULL;
+		float tmpAngle = getAngle(), tmpWidth = getWidth();
+		this->GraphicBody::setAngle(0.0f);
 
-			if(aGlyph->size.getX() != 0) {
-				aSprite = new Sprite(glyphTextureInfo, aGlyph->size.getX(), aGlyph->size.getY());
+		Glyph* tmpGlyph = NULL;
+		Sprite* tmpSprite = NULL;
+
+		for(String32::const_iterator i = text.begin(); i != text.end();
+		    ++i) {
+			tmpGlyph = font->getGlyph(*i);
+
+			if(tmpGlyph->size.getX() > 0.0f) {
+				tmpSprite = new Sprite(tmpGlyph->textureInfo, tmpGlyph->size.getX(), tmpGlyph->size.getY());
+				tmpSprite->setScaling(getScaling());
+				tmpSprite->setMainColor(color);
+			} else {
+				tmpSprite = NULL;
 			}
 
-			characters.push_back(std::pair<Glyph*, Sprite*>(aGlyph, aSprite));
+			characters.push_back(GlyphList::value_type(tmpGlyph, tmpSprite));
 		}
 
-		setString();
+		if(alignment == TextAlignment::LEFT ||
+		   alignment == TextAlignment::RIGHT ||
+		   alignment == TextAlignment::CENTER) {
+			float lineHeight = static_cast<float>(font->getLineHeight());
+
+			// We check if the direction is horizontal (alignment adjustements
+			// are different for vertical direction.
+			if(direction == TextDirection::LEFT_TO_RIGHT ||
+			   direction == TextDirection::RIGHT_TO_LEFT) {
+				float tmpX = 0.0f, minX, maxX, minY, maxY;
+				bool started = false;
+
+				for(GlyphList::iterator i = characters.begin();
+				    i != characters.end(); ++i) {
+					// We need to check for null pointers since spaces do not
+					// have sprites.
+					if(i->second) {
+						i->second->setPosition(tmpX + i->first->horizontalBearing.getX() * getXScaling(),
+						                       (lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY()) * getYScaling());
+
+						if(started) {
+							if(i->second->getXPosition() < minX) {
+								minX = i->second->getXPosition();
+							}
+
+							if(i->second->getXPosition() + i->second->getWidth() > maxX) {
+								maxX = i->second->getXPosition() + i->second->getWidth();
+							}
+
+							if(i->second->getYPosition() < minY) {
+								minY = i->second->getYPosition();
+							}
+
+							if(i->second->getYPosition() + i->second->getHeight() > maxY) {
+								maxY = i->second->getYPosition() + i->second->getHeight();
+							}
+						} else {
+							minX = i->second->getXPosition();
+							maxX = minX + i->second->getWidth();
+							minY = i->second->getYPosition();
+							maxY = minY + i->second->getHeight();
+							started = true;
+						}
+					}
+
+					tmpX += i->first->advance.getX() * getXScaling();
+				}
+
+				Vec2 newPosition = getPosition();
+
+				if(alignment == TextAlignment::RIGHT) {
+					newPosition += Vec2(tmpWidth, 0.0f) - Vec2(maxX - minX, 0.0f);
+				} else if(alignment == TextAlignment::CENTER) {
+					Console::print(newPosition);
+					newPosition += Vec2(tmpWidth, 0.0f) * 0.5f - Vec2(maxX - minX, 0.0f) * 0.5f;
+					Console::print(newPosition);
+				}
+
+				Vec2 delta = newPosition - Vec2(minX, minY);
+
+				for(GlyphList::iterator i = characters.begin();
+				    i != characters.end(); ++i) {
+					if(i->second) {
+						i->second->move(delta);
+					}
+				}
+
+				this->GraphicBody::setPosition(newPosition.getX(), newPosition.getY());
+			}
+		}
+
+		setAngle(tmpAngle);
+
 	} else {
 		Console::print("Trying to set text to a GraphicString without any font set.");
 		Console::printTrace();
@@ -96,148 +177,201 @@ void GraphicString::setText(const RB_String32& text) {
 }
 
 void GraphicString::setPosition(float newXPosition, float newYPosition) {
-	GraphicBody::setPosition(newXPosition, newYPosition);
-	needReset = true;
+	Vec2 delta = Vec2(newXPosition, newYPosition) - getPosition();
+	this->GraphicBody::setPosition(newXPosition, newYPosition);
+
+	for(GlyphList::iterator i = characters.begin();
+	    i != characters.end(); ++i) {
+		if(i->second) {
+			i->second->move(delta);
+		}
+	}
+}
+
+void GraphicString::setScaling(float newXScaling, float newYScaling) {
+	this->GraphicBody::setScaling(newXScaling, newYScaling);
+	Vec2 center = getPosition() + Vec2(getWidth(), getHeight()) * 0.5f;
+	setText(text);
+	setPosition(center - Vec2(getWidth(), getHeight()) * 0.5f);
+}
+
+void GraphicString::setAngle(float newAngle) {
+	float oldAngle = getAngle();
+	this->GraphicBody::setAngle(newAngle);
+	Vec2 center = Vec2(getXPosition() + getWidth() * 0.5f,
+	                   getYPosition() + getHeight() * 0.5f);
+
+	for(GlyphList::iterator i = characters.begin();
+	    i != characters.end(); ++i) {
+		if(i->second) {
+			i->second->rotateFromPoint(newAngle - oldAngle, center);
+		}
+	}
+
+	if(!characters.empty()) {
+		bool started = false;
+		float minX, minY;
+
+		for(GlyphList::iterator i = characters.begin();
+		    i != characters.end(); ++i) {
+			if(i->second) {
+				if(started) {
+					if(i->second->getXPosition() < minX) {
+						minX = i->second->getXPosition();
+					}
+
+					if(i->second->getYPosition() < minY) {
+						minY = i->second->getYPosition();
+					}
+				} else {
+					minX = i->second->getXPosition();
+					minY = i->second->getYPosition();
+					started = true;
+				}
+			}
+		}
+
+		if(started) {
+			this->GraphicBody::setPosition(minX, minY);
+		}
+	}
 }
 
 void GraphicString::setPixelSize(int pixelSize) {
-	font->setPixelSize(pixelSize);
-	setText(internalString);
+	if(font) {
+		font->setPixelSize(pixelSize);
+		setText(text);
+	}
 }
 
 void GraphicString::setPointSize(int pointSize, int dpi) {
-	font->setPointSize(pointSize, dpi);
-	setText(internalString);
+	if(font) {
+		font->setPointSize(pointSize, dpi);
+		setText(text);
+	}
 }
 
 void GraphicString::setAutomaticLineHeight() {
-	font->setAutomaticLineHeight();
-	setPosition();
+	if(font) {
+		font->setAutomaticLineHeight();
+	}
 }
 
 void GraphicString::setManualLineHeight(int lineHeight) {
-	font->setManualLineHeight(lineHeight);
-	setPosition();
+	if(font) {
+		font->setManualLineHeight(lineHeight);
+	}
 }
 
 void GraphicString::update() {
 	for(std::list<std::pair<Glyph*, Sprite*> >::iterator i = characters.begin();
-		i != characters.end(); ++i) {
+	    i != characters.end(); ++i) {
 		// We need to check for null pointer since space does not have sprite.
-		if(i->second != NULL) {
+		if(i->second) {
 			i->second->update();
 		}
 	}
 }
 
 void GraphicString::render() {
-	if(needReset) {
-		setString();
-	}
-
 	for(GlyphList::iterator i = characters.begin(); i != characters.end();
-		++i) {
+	    ++i) {
 		// We need to check for null pointer since space does not have sprite.
-		if(i->second != NULL) {
+		if(i->second) {
 			i->second->render();
 		}
 	}
 }
 
 float RedBox::GraphicString::getWidth() const {
-	return widthCache;
-}
-
-float RedBox::GraphicString::getHeight() const {
-	if(font) {
-		return font->getLineHeight();
-	} else {
+	if(characters.empty()) {
 		return 0.0f;
+	} else {
+		bool started = false;
+		float minX, maxX;
+
+		// We get the lowest and highest horizontal positions.
+		for(GlyphList::const_iterator i = characters.begin();
+		    i != characters.end(); ++i) {
+			if(i->second) {
+				if(started) {
+					if(i->second->getXPosition() < minX) {
+						minX = i->second->getXPosition();
+					}
+
+					if(i->second->getXPosition() + i->second->getWidth() > maxX) {
+						maxX = i->second->getXPosition() + i->second->getWidth();
+					}
+				} else {
+					minX = i->second->getXPosition();
+					maxX = minX + i->second->getWidth();
+					started = true;
+				}
+			}
+		}
+
+		// We make sure there was at least one glyph with a sprite.
+		if(started) {
+			return maxX - minX;
+		} else {
+			// If there were only glyphs without a sprite (for example: only
+			// spaces), we return a width of zero.
+			return 0.0f;
+		}
 	}
 }
 
-void GraphicString::setString() {
-	setColor();
-	setPosition();
-	needReset = false;
+float RedBox::GraphicString::getHeight() const {
+	if(characters.empty()) {
+		return 0.0f;
+	} else {
+		bool started = false;
+		float minY, maxY;
+
+		// We get the lowest and highest horizontal positions.
+		for(GlyphList::const_iterator i = characters.begin();
+		    i != characters.end(); ++i) {
+			if(i->second) {
+				if(started) {
+					if(i->second->getYPosition() < minY) {
+						minY = i->second->getYPosition();
+					}
+
+					if(i->second->getYPosition() + i->second->getHeight() > maxY) {
+						maxY = i->second->getYPosition() + i->second->getHeight();
+					}
+				} else {
+					minY = i->second->getYPosition();
+					maxY = minY + i->second->getHeight();
+					started = true;
+				}
+			}
+		}
+
+		// We make sure there was at least one glyph with a sprite.
+		if(started) {
+			return maxY - minY;
+		} else {
+			// If there were only glyphs without a sprite (for example: only
+			// spaces), we return a width of zero.
+			return 0.0f;
+		}
+	}
+}
+
+int GraphicString::getLineHeight() const {
+	if(font) {
+		return font->getLineHeight();
+	} else {
+		return 0;
+	}
 }
 
 GraphicBody* GraphicString::clone() const {
 	return new GraphicString(*this);
 }
 
-void GraphicString::setPosition() {
-	if(font) {
-		int lineHeight = font->getLineHeight();
-		float x = floorf(this->GraphicBody::getXPosition());
-		float y = floorf(this->GraphicBody::getYPosition());
-		//float x = this->GraphicBody::getXPosition();
-		//float y = this->GraphicBody::getYPosition();
-
-		//We check if the direction is horizontal (alignment adjustement are different for
-		//vertical direction.
-		if(direction == TextDirection::LEFT_TO_RIGHT || direction == TextDirection::RIGHT_TO_LEFT) {
-			//If the direction is left to right we iterate to set the position (we pretend it's left align first, since we need
-			// to get the ending position to calculate the adjustment factor.
-			if(direction == TextDirection::LEFT_TO_RIGHT) {
-				for(GlyphList::iterator i = characters.begin();
-					i != characters.end(); ++i) {
-					//We need to check for null pointer since space does not have sprite
-					if(i->second != NULL) {
-						i->second->setPosition(x + i->first->horizontalBearing.getX(), y + lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY());
-					}
-
-					x += i->first->advance.getX();
-				}
-			}
-			//If the direction is right to left we iterate to set the position (we pretend it's left align first, since we need
-			// to get the ending position to calculate the adjustment factor.
-			else if(direction == TextDirection::RIGHT_TO_LEFT) {
-				for(GlyphList::iterator i = characters.begin();
-					i != characters.end(); ++i) {
-					//We need to check for null pointer since space does not have sprite
-					if(i->second != NULL) {
-						i->second->setPosition(x + i->first->horizontalBearing.getX(), y + lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY());
-					}
-
-					x += i->first->advance.getX();
-				}
-			}
-
-			float xAdjustment = (alignment == TextAlignment::LEFT) ? (0.0f) : ((alignment == TextAlignment::RIGHT) ? (this->GraphicBody::getXPosition() - x) : ((this->GraphicBody::getXPosition() - x) * 0.5f));
-
-			for(GlyphList::iterator i = characters.begin();
-				i != characters.end(); ++i) {
-				//We need to check for null pointer since space does not have sprite
-				if(i->second != NULL) {
-					i->second->moveX(xAdjustment);
-				}
-			}
-
-			if(!characters.empty()) {
-				// We add the last glyph's width to the position...
-				x += (--characters.end())->first->advance.getX();
-			}
-		}
-
-		// To then put it in the cache.
-		widthCache = x;
-	}
-}
-
-void GraphicString::setColor() {
-	for(GlyphList::iterator i = characters.begin();
-		i != characters.end(); ++i) {
-		// We do not delete the glyph, it would break the glyph cache.
-		// Also we must check for null pointer, since space does not have sprite
-		if(i->second) {
-			i->second->setMainColor(color);
-		}
-	}
-
-}
-
-void GraphicString::flushCharacters() {
+void GraphicString::clearCharacters() {
 	std::for_each(characters.begin(), characters.end(), DeletePointerFromPair());
 	characters.clear();
 }

@@ -63,7 +63,9 @@ void GraphicBody::update() {
 	velocity.addToY(velocityDelta);
 	position.addToY(delta);
 
-	this->setPosition(position.getX(), position.getY());
+	if(oldPosition != position) {
+		this->setPosition(position.getX(), position.getY());
+	}
 }
 
 const Layer& GraphicBody::getLayer() const {
@@ -383,9 +385,8 @@ void GraphicBody::setScaling(const Vec2& newScaling) {
 	setScaling(newScaling.getX(), newScaling.getY());
 }
 
-void GraphicBody::setScaling(float xScaling, float yScaling) {
-	scaling.setX(xScaling);
-	scaling.setY(yScaling);
+void GraphicBody::setScaling(float newXScaling, float newYScaling) {
+	scaling.setXY(newXScaling, newYScaling);
 }
 
 void GraphicBody::addToScaling(const Vec2& scalingToAdd) {

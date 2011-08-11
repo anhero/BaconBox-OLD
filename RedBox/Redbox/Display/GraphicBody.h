@@ -677,7 +677,7 @@ namespace RedBox {
 		 * @param yScaling New vertical scaling to apply.
 		 * @see RedBox::GraphicBody::scaling
 		 */
-		virtual void setScaling(float xScaling, float yScaling);
+		virtual void setScaling(float newXScaling, float newYScaling);
 
 		/**
 		 * Adds some scaling to the current scaling applied.

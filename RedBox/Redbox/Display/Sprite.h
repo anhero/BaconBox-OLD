@@ -304,6 +304,8 @@ namespace RedBox {
 		 * it makes the sprite rotate counter-clockwise.
 		 */
 		void setAngle(float newAngle);
+
+		void rotateFromPoint(float angle, const Vec2& point);
         
         /** 
         * Similar to the render function except that it will only

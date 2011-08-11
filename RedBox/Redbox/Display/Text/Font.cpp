@@ -1,49 +1,40 @@
 #include "Font.h"
-#include "ResourceManager.h"
-#include "MathHelper.h"
-#include <sstream>
 #include "FontImplementation.h"
 
 using namespace RedBox;
 
-
-void Font::initializeFontRenderer(){
+void Font::initializeFontRenderer() {
 	FontImplementation::initializeFontRenderer();
 }
 
-std::string Font::getName(){
+const std::string& Font::getName() const {
 	return fontPimpl->getName();
 }
 
-
-Font::Font(const std::string& name, const std::string & path){
+Font::Font(const std::string& name, const std::string& path) : fontPimpl(NULL) {
 	fontPimpl = new FontImplementation(name, path);
 }
 
-
-Glyph * Font::getGlyph(RB_Char32 unicodeValue){
+Glyph* Font::getGlyph(Char32 unicodeValue) {
 	return fontPimpl->getGlyph(unicodeValue);
 }
 
-
-
-void Font::setPixelSize(int pixelSize){
+void Font::setPixelSize(int pixelSize) {
 	fontPimpl->setPixelSize(pixelSize);
 }
 
-
-void Font::setPointSize(int pointSize, int dpi){
+void Font::setPointSize(int pointSize, int dpi) {
 	fontPimpl->setPointSize(pointSize, dpi);
 }
-int Font::getLineHeight(){
+
+int Font::getLineHeight() const {
 	return fontPimpl->getLineHeight();
 }
 
-
-void Font::setManualLineHeight(int lineHeight){
+void Font::setManualLineHeight(int lineHeight) {
 	fontPimpl->setManualLineHeight(lineHeight);
 }
 
-void Font::setAutomaticLineHeight(){
+void Font::setAutomaticLineHeight() {
 	fontPimpl->setAutomaticLineHeight();
 }

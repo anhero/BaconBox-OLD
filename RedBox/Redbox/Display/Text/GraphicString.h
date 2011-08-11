@@ -19,7 +19,7 @@
 
 namespace RedBox {
 	class Font;
-	/** 
+	/**
 	 * A GraphicString is a GraphicBody object that print text
 	 * to the screen.
 	 * @ingroup Group
@@ -28,40 +28,16 @@ namespace RedBox {
 	public:
 		/**
 		 * Parameterized constructor.
-		 * @param font Pointer to the font to be used by the GraphicString.
-		 * @param newPosition Position, (0,0) by default. WARNING! The origin of
-		 * a string is not the top left corner, but the left tip, right tip or
-		 * middle of the baseline depending on the alignment.
-		 * @param alignment Alignment of the string (left, center or right),
+		 * @param newAlignment Alignment of the string (left, center or right),
 		 * left by default.
-		 * @param direction String direction, useful when you want to support
+		 * @param newDirection String direction, useful when you want to support
 		 * i18n, left to right by default.
-		 * @see RedBox::TextAlignment
-		 * @see RedBox::TextDirection
+		 * @see RedBox::GraphicString::alignment
+		 * @see RedBox::GraphicString::direction
 		 */
-		GraphicString(Font* newFont, const Vec2& newPosition = Vec2(),
-					  TextAlignment newAlignment = TextAlignment::LEFT,
-					  TextDirection newDirection = TextDirection::LEFT_TO_RIGHT);
-
-		/**
-		 * Parameterized constructor.
-		 * @param font Pointer to the font to be used by the GraphicString.
-		 * @param newXPosition Horizontal position, 0 by default. WARNING! The
-		 * origin of a string is not the top left corner, but the left tip,
-		 * right tip or middle of the baseline depending on the alignment.
-		 * @param newYPosition Vertical osition, (0,0) by default. WARNING! The
-		 * origin of a string is not the top left corner, but the left tip,
-		 * right tip or middle of the baseline depending on the alignment.
-		 * @param alignment Alignment of the string (left, center or right),
-		 * left by default.
-		 * @param direction String direction, useful when you want to support
-		 * i18n, left to right by default.
-		 * @see RedBox::TextAlignment
-		 * @see RedBox::TextDirection
-		 */
-		GraphicString(Font* newFont, float newXPosition, float newYPosition,
-					  TextAlignment newAlignment = TextAlignment::LEFT,
-					  TextDirection newDirection = TextDirection::LEFT_TO_RIGHT);
+		GraphicString(Font* newFont,
+		              TextAlignment newAlignment = TextAlignment::LEFT,
+		              TextDirection newDirection = TextDirection::LEFT_TO_RIGHT);
 
 		/**
 		 * Gets the rendering font for the string.
@@ -123,18 +99,32 @@ namespace RedBox {
 		void setDirection(TextDirection newDirection);
 
 		/**
+		 * Gets the graphic string's text in utf8.
+		 * @return Utf8 string containing the graphic string's text.
+		 */
+		std::string getText() const;
+
+		/**
+		 * Gets the graphic string's text in utf32.
+		 * @return Utf32 string containing the graphic string's text.
+		 */
+		const String32& getTextUtf32() const;
+
+		/**
 		 * Sets the graphic string's text from a UTF8 string.
 		 * @param text New text for the GraphicString.
 		 * @see RedBox::GraphicString::internalString
 		 */
-		void setText(const std::string& text);
+		void setText(const std::string& newText);
 
 		/**
 		 * Sets the graphic string's text from a UTF32 string.
 		 * @param text New text for the GraphicString.
 		 * @see RedBox::GraphicString::internalString
 		 */
-		void setText(const RB_String32& text);
+		void setText(const String32& newText);
+
+		using GraphicBody::setPosition;
 
 		/**
 		 * Sets the GraphicString's position. Depending on the alignment, the
@@ -148,6 +138,26 @@ namespace RedBox {
 		 * line "height" and a top-left, middle-left, bottom-left origin.
 		 */
 		void setPosition(float newXPosition, float newYPosition);
+
+		using GraphicBody::setScaling;
+
+		/**
+		 * Change the graphic string's scaling.
+		 * @param xScaling New horizontal scaling to apply.
+		 * @param yScaling New vertical scaling to apply.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void setScaling(float newXScaling, float newYScaling);
+
+		using GraphicBody::setAngle;
+
+		/**
+		 * Sets the graphic string's rotation angle.
+		 * @param newAngle Graphic string's new rotation angle. As the angle
+		 * increments, it makes the graphic body rotate counter-clockwise.
+		 * @see RedBox::GraphicBody::angle
+		 */
+		void setAngle(float newAngle);
 
 		/**
 		 * Set the string size in pixel.
@@ -180,24 +190,34 @@ namespace RedBox {
 		 */
 		void setManualLineHeight(int lineHeight);
 
-		/// Updates the graphic string.
+		/**
+		 * Updates the graphic string.
+		 */
 		void update();
 
-		/// Renders the graphic string.
+		/**
+		 * Renders the graphic string.
+		 */
 		void render();
 
-		/// Returns the width of the GraphicString
+		/**
+		 * Gets the graphic string's width.
+		 * @return Width in pixels (by default).
+		 */
 		float getWidth() const;
 
-		/// Returns the height of the GraphicString
+		/**
+		 * Gets the graphic string's height.
+		 * @return Height in pixels (by default).
+		 */
 		float getHeight() const;
 
 		/**
-		 * Most changes to the string will break it (Ex: if you call setText
-		 * after seting a color you will lose this color), so we need to call
-		 * the setString() before rendering each time a change is made.
+		 * Gets the font's line height.
+		 * @return Font's line height (in pixels). If no valid font is set,
+		 * returns 0.
 		 */
-		void setString();
+		int getLineHeight() const;
 
 		/**
 		 * Creates a copy of the current graphic string.
@@ -213,16 +233,6 @@ namespace RedBox {
 		/// RGBA color components of the string. The range is 0 to 255.
 		Color color;
 
-		/**
-		 * Most changes to the string will break it (Ex: if you call setText
-		 * after seting a color you will lose this color), so we need to call
-		 * the setString() method before rendering each time a change is made.
-		 * This boolean is set to true when the string is broken (set back to
-		 * false when the setString function is called). When set to true, the
-		 * setString will automatically get called before rendering.
-		 */
-		bool needReset;
-
 		/// Alignment of the string (Left, right, center)
 		TextAlignment alignment;
 
@@ -233,7 +243,7 @@ namespace RedBox {
 		TextDirection direction;
 
 		/// Unicode values of the GraphicString
-		RB_String32 internalString;
+		String32 text;
 
 		/// List of StringFX applied to the current string.
 		std::list<StringFX> renderEffects;
@@ -241,26 +251,11 @@ namespace RedBox {
 		/// List of sprite representing each glyph.
 		GlyphList characters;
 
-		/// Calculated width of the string
-		float widthCache;
-
-		/**
-		 * The setPosition part of the setString is complicated a bit, so we put
-		 * it in a separate function.
-		 * It's a bit more expensive in operation, but it's cleaner this way.
-		 */
-		void setPosition();
-
-		/**
-		 * Refreshes the main color for all glyphs.
-		 */
-		void setColor();
-
 		/**
 		 * Frees memory occupied by the sprites in the character list and
 		 * flushes it.
 		 */
-		void flushCharacters();
+		void clearCharacters();
 
 	};
 }
