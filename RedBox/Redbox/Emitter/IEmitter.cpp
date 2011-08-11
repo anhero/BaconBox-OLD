@@ -49,14 +49,6 @@ bool IEmitter::isStarted() const {
 	return started;
 }
 
-float IEmitter::getAngle() const {
-	return angle;
-}
-
-float IEmitter::getAngleVariance() const {
-	return angleVariance;
-}
-
 float IEmitter::getForce() const {
 	return force;
 }
@@ -98,11 +90,27 @@ void IEmitter::stop() {
 	started = false;
 }
 
-void IEmitter::setAngle(float newAngle) {
+void IEmitter::rotateFromPoint(float rotationAngle, const Vec2& rotationPoint) {
+	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
+	Vec2 tmp = getPosition() - rotationPoint;
+	tmp.rotate(rotationAngle);
+	tmp += rotationPoint;
+	this->GraphicBody::setPosition(tmp.getX(), tmp.getY());
+}
+
+float IEmitter::getShootingAngle() const {
+	return angle;
+}
+
+float IEmitter::getShootingAngleVariance() const {
+	return angleVariance;
+}
+
+void IEmitter::setShootingAngle(float newAngle) {
 	angle = newAngle;
 }
 
-void IEmitter::setAngleVariance(float newAngleVariance) {
+void IEmitter::setShootingAngleVariance(float newAngleVariance) {
 	angleVariance = newAngleVariance;
 }
 

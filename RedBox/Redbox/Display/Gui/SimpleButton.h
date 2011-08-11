@@ -29,7 +29,7 @@ namespace RedBox {
 		 * pixels).
 		 */
 		SimpleButton(const std::string& textureKey, unsigned int frameWidth,
-					 unsigned int frameHeight);
+		             unsigned int frameHeight);
 
 		/**
 		 * Parameterized constructor. Loads a button using a pointer to a
@@ -43,7 +43,7 @@ namespace RedBox {
 		 * pixels).
 		 */
 		SimpleButton(TextureInfo* textureInfo, unsigned int frameWidth,
-					 unsigned int frameHeight);
+		             unsigned int frameHeight);
 
 		/**
 		 * Copy constructor.
@@ -106,9 +106,12 @@ namespace RedBox {
 		void setScaling(float newXScaling, float newYScaling);
 
 		/**
-		 * Sets the button's angle.
+		 * Rotates the simple button from a point.
+		 * @param rotationAngle Angle to rotate the simple button.
+		 * @param rotationPoint Origin point on which to apply the rotation.
+		 * @see RedBox::GraphicBody::angle
 		 */
-		void setAngle(float newAngle);
+		void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
 
 		/**
 		 * Creates a copy of the current simple button.

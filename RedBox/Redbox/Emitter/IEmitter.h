@@ -124,33 +124,35 @@ namespace RedBox {
 		 */
 		void stop();
 
+		void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
+
 		/**
 		 * Gets the angle (in degrees) at which the particles will be shot.
 		 * @return Angle at which the particles will be shot.
 		 * @see RedBox::IEmitter::angle
 		 */
-		float getAngle() const;
+		float getShootingAngle() const;
 
 		/**
 		 * Sets the angle at which the emitter will emit its particles.
 		 * @param newAngle Angle (in degrees) at which to shoot the particles.
 		 * @see RedBox::IEmitter::angle
 		 */
-		void setAngle(float newAngle);
+		void setShootingAngle(float newAngle);
 
 		/**
 		 * Gets the value (in degrees) by which the angle will vary.
 		 * @return Angle variation that the particles will be shot at.
 		 * @see RedBox::IEmitter::angleVariance
 		 */
-		float getAngleVariance() const;
+		float getShootingAngleVariance() const;
 
 		/**
 		 * Sets the variance for the angle of the particles shot.
 		 * @param newAngleVariance Variance (in degrees) affected to the angle
 		 * at which the particles are shot.
 		 */
-		void setAngleVariance(float newAngleVariance);
+		void setShootingAngleVariance(float newAngleVariance);
 
 		/**
 		 * Gets the force at which the particles are shot.

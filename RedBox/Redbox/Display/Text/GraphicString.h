@@ -149,15 +149,13 @@ namespace RedBox {
 		 */
 		void setScaling(float newXScaling, float newYScaling);
 
-		using GraphicBody::setAngle;
-
 		/**
-		 * Sets the graphic string's rotation angle.
-		 * @param newAngle Graphic string's new rotation angle. As the angle
-		 * increments, it makes the graphic body rotate counter-clockwise.
+		 * Rotates the graphic string from a point.
+		 * @param rotationAngle Angle to rotate the graphic string.
+		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		void setAngle(float newAngle);
+		void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
 
 		/**
 		 * Set the string size in pixel.

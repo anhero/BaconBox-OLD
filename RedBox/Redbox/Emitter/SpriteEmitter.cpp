@@ -82,7 +82,7 @@ void SpriteEmitter::updateScaling(const Vec2& deltaScaling,
 
 void SpriteEmitter::updateRotation(float deltaAngle, Sprite* graphicBody) {
 	if(graphicBody) {
-		graphicBody->addToAngle(deltaAngle);
+		graphicBody->rotate(deltaAngle);
 	}
 }
 

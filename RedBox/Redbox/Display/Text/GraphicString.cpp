@@ -75,9 +75,8 @@ void GraphicString::setText(const String32& newText) {
 	clearCharacters();
 
 	if(font) {
-
 		float tmpAngle = getAngle(), tmpWidth = getWidth();
-		this->GraphicBody::setAngle(0.0f);
+		this->GraphicBody::rotateFromPoint(-tmpAngle, getPosition() - Vec2(tmpWidth * 0.5f, getHeight() * 0.5f));
 
 		Glyph* tmpGlyph = NULL;
 		Sprite* tmpSprite = NULL;
@@ -168,7 +167,7 @@ void GraphicString::setText(const String32& newText) {
 			}
 		}
 
-		setAngle(tmpAngle);
+		rotateFromPoint(tmpAngle, getPosition() + Vec2(getWidth(), getHeight()) * 0.5f);
 
 	} else {
 		Console::print("Trying to set text to a GraphicString without any font set.");
@@ -195,16 +194,16 @@ void GraphicString::setScaling(float newXScaling, float newYScaling) {
 	setPosition(center - Vec2(getWidth(), getHeight()) * 0.5f);
 }
 
-void GraphicString::setAngle(float newAngle) {
-	float oldAngle = getAngle();
-	this->GraphicBody::setAngle(newAngle);
+void GraphicString::rotateFromPoint(float rotationAngle,
+									const Vec2& rotationPoint) {
+	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
 	Vec2 center = Vec2(getXPosition() + getWidth() * 0.5f,
 	                   getYPosition() + getHeight() * 0.5f);
 
 	for(GlyphList::iterator i = characters.begin();
 	    i != characters.end(); ++i) {
 		if(i->second) {
-			i->second->rotateFromPoint(newAngle - oldAngle, center);
+			i->second->rotateFromPoint(rotationAngle, rotationPoint);
 		}
 	}
 

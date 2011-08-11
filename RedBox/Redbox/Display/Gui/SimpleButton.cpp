@@ -3,13 +3,13 @@
 using namespace RedBox;
 
 SimpleButton::SimpleButton(TextureInfo* textureInfo, unsigned int frameWidth,
-						   unsigned int frameHeight) : IButton(),
+                           unsigned int frameHeight) : IButton(),
 	buttonSprite(textureInfo, frameWidth, frameHeight, 3) {
 	initializeAnimations();
 }
 
 SimpleButton::SimpleButton(const std::string& textureKey,
-						   unsigned int frameWidth, unsigned int frameHeight) :
+                           unsigned int frameWidth, unsigned int frameHeight) :
 	IButton(), buttonSprite(textureKey, frameWidth, frameHeight, 3) {
 	initializeAnimations();
 }
@@ -23,9 +23,11 @@ SimpleButton::~SimpleButton() {
 
 SimpleButton& SimpleButton::operator=(const SimpleButton& src) {
 	this->IButton::operator=(src);
+
 	if(this != &src) {
 		buttonSprite = src.buttonSprite;
 	}
+
 	return *this;
 }
 
@@ -55,14 +57,15 @@ void SimpleButton::setScaling(float newXScaling, float newYScaling) {
 	this->GraphicBody::setScaling(newXScaling, newYScaling);
 	buttonSprite.setScaling(newXScaling, newYScaling);
 	this->GraphicBody::setPosition(buttonSprite.getXPosition(),
-								   buttonSprite.getYPosition());
+	                               buttonSprite.getYPosition());
 }
 
-void SimpleButton::setAngle(float newAngle) {
-	this->GraphicBody::setAngle(newAngle);
-	buttonSprite.setAngle(newAngle);
+void SimpleButton::rotateFromPoint(float rotationAngle,
+                                   const Vec2& rotationPoint) {
+	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
+	buttonSprite.rotateFromPoint(rotationAngle, rotationPoint);
 	this->GraphicBody::setPosition(buttonSprite.getXPosition(),
-								   buttonSprite.getYPosition());
+	                               buttonSprite.getYPosition());
 }
 
 GraphicBody* SimpleButton::clone() const {

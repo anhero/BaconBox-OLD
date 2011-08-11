@@ -330,14 +330,11 @@ void Sprite::setScaling(float xScaling, float yScaling) {
 	}
 }
 
-void Sprite::setAngle(float newAngle) {
-	rotateFromPoint(newAngle - getAngle(), vertices.getPositionCenter());
-}
+void Sprite::rotateFromPoint(float rotationAngle, const Vec2& rotationPoint) {
+	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
 
-void Sprite::rotateFromPoint(float angle, const Vec2& point) {
-	if(angle != 0.0f) {
-		vertices.rotate(angle, point);
-		this->GraphicBody::setAngle(getAngle() + angle);
+	if(rotationAngle != 0.0f) {
+		vertices.rotate(rotationAngle, rotationPoint);
 		Vec2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	}
@@ -406,9 +403,9 @@ GraphicBody* Sprite::clone() const {
 
 
 
-	//void Sprite::setTexture(TextureInfo * aTextureInfo){
-	//	getMainRenderInfo()->loadTexCoords(&vertices, aTextureInfo->imageWidth, aTextureInfo->imageHeight, 1, aTextureInfo);
-	//}
-	//void Sprite::setTexture(std::string key){
-	//	setTexture(ResourceManager::getTexture(key));
-	//}
+//void Sprite::setTexture(TextureInfo * aTextureInfo){
+//	getMainRenderInfo()->loadTexCoords(&vertices, aTextureInfo->imageWidth, aTextureInfo->imageHeight, 1, aTextureInfo);
+//}
+//void Sprite::setTexture(std::string key){
+//	setTexture(ResourceManager::getTexture(key));
+//}

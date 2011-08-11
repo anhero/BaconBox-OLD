@@ -436,11 +436,15 @@ float GraphicBody::getAngle() const {
 }
 
 void GraphicBody::setAngle(float newAngle) {
-	angle = fmodf(newAngle, 360.0f);
+	rotate(newAngle - angle);
 }
 
-void GraphicBody::addToAngle(float angleToAdd) {
-	setAngle(angle + angleToAdd);
+void GraphicBody::rotate(float angleToAdd) {
+	rotateFromPoint(angleToAdd, getPosition() + Vec2(getWidth(), getHeight()) * 0.5f);
+}
+
+void GraphicBody::rotateFromPoint(float rotationAngle, const Vec2&) {
+	angle = fmodf(angle += rotationAngle, 360.0f);
 }
 
 const Vec2& GraphicBody::getOffset() const {

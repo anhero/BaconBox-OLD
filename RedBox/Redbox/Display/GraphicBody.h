@@ -740,7 +740,7 @@ namespace RedBox {
 		 * increments, it makes the graphic body rotate counter-clockwise.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		virtual void setAngle(float newAngle);
+		void setAngle(float newAngle);
 
 		/**
 		 * Adds a value to the sprite's rotation angle.
@@ -749,7 +749,16 @@ namespace RedBox {
 		 * wrapped around.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		void addToAngle(float angleToAdd);
+		void rotate(float angleToAdd);
+
+		/**
+		 * Rotates the graphic body from a point.
+		 * @param rotationAngle Angle to rotate the graphic body.
+		 * @param rotationPoint Origin point on which to apply the rotation.
+		 * @see RedBox::GraphicBody::angle
+		 */
+		virtual void rotateFromPoint(float rotationAngle,
+		                             const Vec2& rotationPoint);
 
 		/**
 		 * Gets the body's colliding box's offset.
@@ -829,7 +838,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::collidingBoxRatio
 		 */
 		void setCollidingBoxRatio(float newXCollidingBoxRatio,
-								  float newYCollidingBoxRatio);
+		                          float newYCollidingBoxRatio);
 
 		/**
 		 * Gets the horizontal colliding box ratios.
@@ -871,7 +880,7 @@ namespace RedBox {
 		 * @see RedBox::CollisionData
 		 */
 		static std::pair<bool, CollisionData> collide(GraphicBody* body1,
-													  GraphicBody* body2);
+		        GraphicBody* body2);
 
 		/**
 		 * Use this function to collide a list of other GraphicBodys against
@@ -887,7 +896,7 @@ namespace RedBox {
 		 * @see RedBox::CollisionData
 		 */
 		static std::pair<bool, std::list<CollisionData> > collide(std::list<GraphicBody*> graphicBodies1,
-																  std::list<GraphicBody*> graphicBodies2);
+		        std::list<GraphicBody*> graphicBodies2);
 
 		/**
 		 * Collide the given GraphicBody against the given horizontal line. The
@@ -906,9 +915,9 @@ namespace RedBox {
 		 * @return True if the GraphicBody was colliding, false if not.
 		 */
 		static bool horizLineCollide(GraphicBody* aGraphicBody,
-									 float linePosition,
-									 float lowerXBoundary = 1.0f,
-									 float higherXBoundary = -1.0f);
+		                             float linePosition,
+		                             float lowerXBoundary = 1.0f,
+		                             float higherXBoundary = -1.0f);
 
 		/**
 		 * Collide the given GraphicBody against the given vertical line. The
@@ -927,9 +936,9 @@ namespace RedBox {
 		 * @return True if the GraphicBody was colliding, false if not.
 		 */
 		static bool vertLineCollide(GraphicBody* aGraphicBody,
-									float linePosition,
-									float lowerYBoundary = 1.0f,
-									float higherYBoundary = -1.0f);
+		                            float linePosition,
+		                            float lowerYBoundary = 1.0f,
+		                            float higherYBoundary = -1.0f);
 
 		/**
 		 * Creates a copy of the current graphic body.
