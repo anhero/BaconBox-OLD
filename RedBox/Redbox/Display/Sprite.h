@@ -147,12 +147,12 @@ namespace RedBox {
 
 		/**
 		 * Sets the sprite's horizontal and vertical position.
-		 * @param x New horizontal position (in pixels). Lower value means more
-		 * to the left.
-		 * @param y New vertical position (in pixels). Lower value means more at
-		 * the top.
+		 * @param newXPosition New horizontal position (in pixels). Lower value
+		 * means more to the left.
+		 * @param newYPosition New vertical position (in pixels). Lower value
+		 * means more at the top.
 		 */
-		virtual void setPosition(float x, float y);
+		virtual void setPosition(float newXPosition, float newYPosition);
 
 		/**
 		 * Gets the sprite's width.

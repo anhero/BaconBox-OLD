@@ -14,8 +14,8 @@ namespace RedBox {
 			SHAPE,
 			TEXTURE,
 			COLOR,
-            MASKED,
-            INVERSE_MASKED
+			MASKED,
+			INVERSE_MASKED
 		};
 	};
 	typedef SafeEnum<RenderStepModeDef> RenderStepMode;
