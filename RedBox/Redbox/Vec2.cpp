@@ -112,8 +112,8 @@ void Vec2::addToXY(float xToAdd, float yToAdd) {
 		*(coordsPtr.x) += xToAdd;
 		*(coordsPtr.y) += yToAdd;
 	} else {
-		coordsVal.x = xToAdd;
-		coordsVal.y = yToAdd;
+		coordsVal.x += xToAdd;
+		coordsVal.y += yToAdd;
 	}
 }
 
