@@ -199,6 +199,34 @@ namespace RedBox {
 		void render();
 
 		/**
+		 * Similar to the render function except that it will only
+		 * render to the alpha component of the color buffer. It is
+		 * used to mask the next rendered graphic body (if the next graphic
+		 * body is set as a masked sprite).
+		 */
+		void mask();
+
+		/**
+		 * Undo what the mask function did. This function
+		 * MUST be once after the masked graphic string has been rendered.
+		 */
+		void unmask();
+
+		/**
+		 * Gets the graphic body masking the current graphic string.
+		 * @return Pointer to the graphic string's mask.
+		 */
+		GraphicBody* getMask();
+
+		/**
+		 * Sets the graphic string used to mask the graphic string.
+		 * @param newMask A mask graphic string.
+		 * @param inversed Set this parameter to true if you want to inverse
+		 * the effect of the mask. False by default.
+		 */
+		void setMask(GraphicBody* newMask, bool inversed = false);
+
+		/**
 		 * Gets the graphic string's width.
 		 * @return Width in pixels (by default).
 		 */

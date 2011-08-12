@@ -50,7 +50,7 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 
 		// We make sure the width and the height of the texture are valid.
 		if(texInfo->imageWidth && texInfo->imageHeight && texInfo->poweredWidth
-		        && texInfo->poweredHeight && frameWidth && frameHeight) {
+		   && texInfo->poweredHeight && frameWidth && frameHeight) {
 			unsigned int framesPerLine = texInfo->imageWidth / frameWidth;
 
 			// We check if the image can fit enough frames.
@@ -69,14 +69,14 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 
 				// For each frame to load.
 				for(std::vector<std::vector<float> >::iterator i = texCoords.begin();
-					i != texCoords.end(); ++i) {
+				    i != texCoords.end(); ++i) {
 
 					// We set the number of coordinates.
 					i->resize(tmpSize * 2);
 					j = 0;
 
 					for(std::list<Vertex>::iterator j2 = tmpVertices.begin();
-						j2 != tmpVertices.end(); ++j2) {
+					    j2 != tmpVertices.end(); ++j2) {
 						(*i)[j] = offsetX + (j2->getXPosition() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth);
 						++j;
 						(*i)[j] = offsetY + (j2->getYPosition() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight);
@@ -118,13 +118,14 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 }
 
 void RenderInfo::addAnimation(const std::string& name,
-							  const std::vector<unsigned int>& frames,
+                              const std::vector<unsigned int>& frames,
                               double timePerFrame,
                               int nbLoops) {
 	// We check if the frames are within bounds, if not, we don't add the
 	// animation and we print an error message.
 	bool okay = true;
 	std::vector<unsigned int>::const_iterator i = frames.begin();
+
 	while(okay && i != frames.end()) {
 		if(*i >= texCoords.size()) {
 			okay = false;
@@ -132,6 +133,7 @@ void RenderInfo::addAnimation(const std::string& name,
 			++i;
 		}
 	}
+
 	if(okay) {
 		// We add the animation to the map and we check if it was successfully
 		// added.
@@ -155,15 +157,15 @@ void RenderInfo::addAnimation(const std::string& name,
 	// We also insert the new animation in the map if possible and continue
 	// only if it didn't already exist.
 	if(nbFrames >= 1 &&
-	        (insertionResult = animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(std::vector<unsigned int>(nbFrames), timePerFrame, nbLoops)))).second) {
+	   (insertionResult = animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(std::vector<unsigned int>(nbFrames), timePerFrame, nbLoops)))).second) {
 		// We set the frame numbers to the added animation using the variable
 		// parameters.
 		va_list frames;
 		va_start(frames, nbFrames);
 
 		for(std::vector<unsigned int>::iterator i = insertionResult.first->second.frames.begin();
-		        i != insertionResult.first->second.frames.end();
-		        ++i) {
+		    i != insertionResult.first->second.frames.end();
+		    ++i) {
 			*i = va_arg(frames, unsigned int);
 		}
 
@@ -182,12 +184,12 @@ void RenderInfo::addAnimation(const std::string& name,
 	}
 }
 
-void RenderInfo::setMask(Sprite* newMask){
-	mask = newMask;
+GraphicBody* RenderInfo::getMask() {
+	return mask;
 }
 
-Sprite* RenderInfo::getMask(){
-	return mask;
+void RenderInfo::setMask(GraphicBody* newMask) {
+	mask = newMask;
 }
 
 const Color& RenderInfo::getColor() const {
@@ -239,7 +241,7 @@ const AnimationParameters* RenderInfo::getAnimationParameters(const std::string&
 
 void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
 	if(animationExists(currentAnimation) &&
-	        newCurrentFrame <= getAnimationParameters(getCurrentAnimation())->frames.size()) {
+	   newCurrentFrame <= getAnimationParameters(getCurrentAnimation())->frames.size()) {
 		currentFrame = newCurrentFrame;
 	} else {
 		Console::print("Tried to set the current frame that is too high: " + newCurrentFrame);
@@ -312,7 +314,7 @@ namespace RedBox {
 		       ", texCoords: [";
 
 		for(std::vector< std::vector<float> >::const_iterator i = r.texCoords.begin();
-			i != r.texCoords.end(); ++i) {
+		    i != r.texCoords.end(); ++i) {
 			if(i != r.texCoords.begin()) {
 				output << ", ";
 			}
@@ -320,7 +322,7 @@ namespace RedBox {
 			output << "[";
 
 			for(std::vector<float>::const_iterator j = i->begin();
-				j != i->end(); ++j) {
+			    j != i->end(); ++j) {
 				if(j != i->begin()) {
 					output << ", ";
 				}
@@ -334,7 +336,7 @@ namespace RedBox {
 		output << "], currentFrame: " << r.currentFrame << ", animations: [";
 
 		for(std::map<std::string, AnimationParameters>::const_iterator i = r.animations.begin();
-			i != r.animations.end(); ++i) {
+		    i != r.animations.end(); ++i) {
 			if(i != r.animations.begin()) {
 				output << ", ";
 			}

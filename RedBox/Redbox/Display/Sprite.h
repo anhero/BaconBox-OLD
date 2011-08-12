@@ -158,13 +158,13 @@ namespace RedBox {
 		 * Gets the sprite's width.
 		 * @return Sprite's width.
 		 */
-		float getWidth() const;
+		virtual float getWidth() const;
 
 		/**
 		 * Gets the sprite's height.
 		 * @return Sprite's height.
 		 */
-		float getHeight() const;
+		virtual float getHeight() const;
 
 		/**
 		 * Gets the sprite's width and height.
@@ -296,7 +296,7 @@ namespace RedBox {
 		 * @param xScaling New horizontal scaling to apply.
 		 * @param yScaling New vertical scaling to apply.
 		 */
-		void setScaling(float xScaling, float yScaling);
+		virtual void setScaling(float xScaling, float yScaling);
 
 		/**
 		 * Rotates the sprite from a point.
@@ -304,7 +304,7 @@ namespace RedBox {
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
+		virtual void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
 
 		/**
 		 * Similar to the render function except that it will only
@@ -312,21 +312,27 @@ namespace RedBox {
 		 * used to mask the next rendered sprite (if the next sprite
 		 * is set as a masked sprite).
 		 */
-		void mask();
+		virtual void mask();
 
 		/**
 		 * Undo what the mask function did. This function
 		 * MUST be once after the masked sprite has been rendered.
 		 */
-		void unmask();
+		virtual void unmask();
+
+		/**
+		 * Gets the graphic body masking the current graphic body.
+		 * @return Pointer to the graphic body's mask.
+		 */
+		virtual GraphicBody* getMask();
 
 		/**
 		 * Set the sprite used to mask the parent renderstep.
-		 * @param aMask A mask sprite.
+		 * @param newMask A mask sprite.
 		 * @param inversed Set this parameter to true if you want to inverse
 		 * the effect of the mask. False by default.
 		 */
-		void setMask(Sprite* aMask, bool inversed = false);
+		virtual void setMask(GraphicBody* newMask, bool inversed = false);
 
 		/**
 		 * Clones the sprite.

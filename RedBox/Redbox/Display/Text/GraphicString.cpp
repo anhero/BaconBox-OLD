@@ -265,7 +265,7 @@ void GraphicString::setManualLineHeight(int lineHeight) {
 void GraphicString::update() {
 	for(std::list<std::pair<Glyph*, Sprite*> >::iterator i = characters.begin();
 	    i != characters.end(); ++i) {
-		// We need to check for null pointer since space does not have sprite.
+		// We need to check for null pointer since space does not have a sprite.
 		if(i->second) {
 			i->second->update();
 		}
@@ -275,9 +275,54 @@ void GraphicString::update() {
 void GraphicString::render() {
 	for(GlyphList::iterator i = characters.begin(); i != characters.end();
 	    ++i) {
-		// We need to check for null pointer since space does not have sprite.
+		// We need to check for null pointer since space does not have a sprite.
 		if(i->second) {
 			i->second->render();
+		}
+	}
+}
+
+void GraphicString::mask() {
+	for(GlyphList::iterator i = characters.begin(); i != characters.end();
+		++i) {
+		// We need to check for null pointer since space does not have a sprite.
+		if(i->second) {
+			i->second->mask();
+		}
+	}
+}
+
+void GraphicString::unmask() {
+	for(GlyphList::iterator i = characters.begin(); i != characters.end();
+		++i) {
+		// We need to check for null pointer since space does not have a sprite.
+		if(i->second) {
+			i->second->unmask();
+		}
+	}
+}
+
+GraphicBody* GraphicString::getMask() {
+	bool notFound = true;
+	GraphicBody* result = NULL;
+	GlyphList::iterator i = characters.begin();
+	while(notFound && i != characters.end()) {
+		if(i->second) {
+			notFound = false;
+			result = i->second->getMask();
+		} else {
+			++i;
+		}
+	}
+	return result;
+}
+
+void GraphicString::setMask(GraphicBody* newMask, bool inversed) {
+	for(GlyphList::iterator i = characters.begin(); i != characters.end();
+		++i) {
+		// We need to check for null pointer since space does not have a sprite.
+		if(i->second) {
+			i->second->setMask(newMask, inversed);
 		}
 	}
 }

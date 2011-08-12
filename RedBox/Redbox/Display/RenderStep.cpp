@@ -93,7 +93,7 @@ void RenderStep::render() {
 		if(mode.isSet(RenderStepMode::SHAPE)) {
 			if(mode.isSet(RenderStepMode::TEXTURE)) {
 				if (mode.isSet(RenderStepMode::MASKED) || mode.isSet(RenderStepMode::INVERSE_MASKED)) {
-                    Sprite* mask = getMask();
+					GraphicBody* mask = getMask();
                     mask->mask();
                     //MASKED+TEXTURE
                     bool inversed = mode.isSet(RenderStepMode::INVERSE_MASKED);
@@ -283,10 +283,11 @@ void RenderStep::copyFrom(const RenderStep& src) {
 	}
 }
 
-Sprite * RenderStep::getMask(){
+GraphicBody* RenderStep::getMask() {
     return info.getMask();
 }
-void RenderStep::setMask(Sprite * aMask){
+
+void RenderStep::setMask(GraphicBody* aMask) {
     info.setMask(aMask);
 }
 

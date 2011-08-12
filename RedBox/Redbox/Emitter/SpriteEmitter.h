@@ -15,7 +15,7 @@
 
 namespace RedBox {
 	/**
-	 * Used to generate a large number of objects and particles on screen and 
+	 * Used to generate a large number of objects and particles on screen and
 	 * control them in an organic way. Normally used to generate effects such as
 	 * fire, smoke, sparks etc.
 	 * @ingroup Display
@@ -111,7 +111,7 @@ namespace RedBox {
 		 * @param graphicBody Graphic body to animate.
 		 */
 		void startAnimation(const std::string& animationName,
-							Sprite* graphicBody);
+		                    Sprite* graphicBody);
 
 		/**
 		 * Initializes a particle's sprite and returns a pointer to it.
@@ -139,6 +139,29 @@ namespace RedBox {
 		 * @param graphicBody Pointer to the sprite to render.
 		 */
 		void renderParticle(Sprite* graphicBody);
+
+		/**
+		 * Masks a specific particle.
+		 * @param graphicBody Pointer to the particle to mask.
+		 * @see RedBox::GraphicBody::mask()
+		 */
+		void maskParticle(Sprite* graphicBody);
+
+		/**
+		 * Unmasks a specific particle.
+		 * @param graphicBody Pointer to the particle to mask.
+		 * @see RedBox::GraphicBody::unmask()
+		 */
+		void unmaskParticle(Sprite* graphicBody);
+
+		/**
+		 * Sets the mask to a particle.
+		 * @param newMask Pointer to the mask to use for the particle.
+		 * @param inversed Used to inverse the effect of the mask.
+		 * @see RedBox::GraphicBody::setMask(GraphicBody* newMask, bool inversed)
+		 */
+		void setMaskParticle(GraphicBody* newMask, bool inversed,
+		                     Sprite* graphicBody);
 
 		/**
 		 * Cleans and resets the SpriteEmitter.

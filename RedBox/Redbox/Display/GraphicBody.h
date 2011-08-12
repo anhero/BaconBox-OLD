@@ -69,6 +69,34 @@ namespace RedBox {
 		virtual void render() = 0;
 
 		/**
+		 * Similar to the render function except that it will only
+		 * render to the alpha component of the color buffer. It is
+		 * used to mask the next rendered graphic body (if the next graphic
+		 * body is set as a masked sprite).
+		 */
+		virtual void mask() = 0;
+
+		/**
+		 * Undo what the mask function did. This function
+		 * MUST be once after the masked graphic body has been rendered.
+		 */
+		virtual void unmask() = 0;
+
+		/**
+		 * Gets the graphic body masking the current graphic body.
+		 * @return Pointer to the graphic body's mask.
+		 */
+		virtual GraphicBody* getMask() = 0;
+
+		/**
+		 * Sets the graphic body used to mask the graphic body.
+		 * @param newMask A mask graphic body.
+		 * @param inversed Set this parameter to true if you want to inverse
+		 * the effect of the mask. False by default.
+		 */
+		virtual void setMask(GraphicBody* newMask, bool inversed = false) = 0;
+
+		/**
 		 * Gets the graphic body's current layer.
 		 * @return Current layer.
 		 * @see RedBox::GraphicBody::layer

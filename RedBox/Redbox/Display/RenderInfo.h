@@ -18,25 +18,25 @@
 namespace RedBox {
 	class VerticesGroup;
 	class TextureInfo;
-	class Sprite;
-    /**
-     * Struct contaning rendering information.
-     * @ingroup Display
-     */
+	class GraphicBody;
+	/**
+	 * Struct contaning rendering information.
+	 * @ingroup Display
+	 */
 	class RenderInfo : public Object {
-        /**
-         * Outputs the RenderInfo's content.
-         * @param output The ostream in which RenderInfo is output.
-         * @param r RenderInfo to output in the ostream.
-         * @return Resulting ostream.
-         */
+		/**
+		 * Outputs the RenderInfo's content.
+		 * @param output The ostream in which RenderInfo is output.
+		 * @param r RenderInfo to output in the ostream.
+		 * @return Resulting ostream.
+		 */
 		friend std::ostream& operator<<(std::ostream& output,
-										const RenderInfo& r);
+		                                const RenderInfo& r);
 	public:
-        /**
-         * Default constructor.
-         */
-        RenderInfo();
+		/**
+		 * Default constructor.
+		 */
+		RenderInfo();
 
 		/**
 		 * Copy constructor.
@@ -44,26 +44,26 @@ namespace RedBox {
 		 */
 		RenderInfo(const RenderInfo& src);
 
-        /**
-         * Parametrized constructor.
-         * @param newTexInfo Pointer to the information about the texture.
+		/**
+		 * Parametrized constructor.
+		 * @param newTexInfo Pointer to the information about the texture.
 		 * @param vertices Vertices to use to generate the texCoords.
-		 * @param frameWidth Width of the frames to read from the image (in 
+		 * @param frameWidth Width of the frames to read from the image (in
 		 * pixels).
 		 * @param frameHeight Height of the frames to read from the image (in
 		 * pixels).
 		 * @param nbFrames Number of frames of texture coordinates to generate.
 		 * will start loading.
-         * @param newColor Array to use to set the RenderInfo's color.
+		 * @param newColor Array to use to set the RenderInfo's color.
 		 * @see RedBox::RenderInfo::color
 		 * @see RedBox::RenderInfo::texInfo
-         */
-        RenderInfo(TextureInfo* newTexInfo,
-				   VerticesGroup* vertices,
-				   unsigned int frameWidth,
-				   unsigned int frameHeight,
-				   unsigned int nbFrames = 1,
-				   const Color& newColor = Color::WHITE);
+		 */
+		RenderInfo(TextureInfo* newTexInfo,
+		           VerticesGroup* vertices,
+		           unsigned int frameWidth,
+		           unsigned int frameHeight,
+		           unsigned int nbFrames = 1,
+		           const Color& newColor = Color::WHITE);
 
 		/**
 		 * Loads the texture coordinates. Used to determine what information
@@ -71,7 +71,7 @@ namespace RedBox {
 		 * corner of the image is at coordinates (0, 0), and the lower right
 		 * corner is at (1, 1).
 		 * @param vertices Vertices making up the shape to use for each frame.
-		 * @param frameWidth Width of the frames to read from the image (in 
+		 * @param frameWidth Width of the frames to read from the image (in
 		 * pixels).
 		 * @param frameHeight Height of the frames to read from the image (in
 		 * pixels).
@@ -80,24 +80,24 @@ namespace RedBox {
 		 * @see RedBox::RenderInfo::texInfo
 		 */
 		void loadTexCoords(VerticesGroup* vertices,
-						   unsigned int frameWidth,
-						   unsigned int frameHeight,
-						   unsigned int nbFrames = 1,
-						   TextureInfo* newTexInfo = NULL);
+		                   unsigned int frameWidth,
+		                   unsigned int frameHeight,
+		                   unsigned int nbFrames = 1,
+		                   TextureInfo* newTexInfo = NULL);
 		/**
 		 * Adds an animation.
 		 * @param name Animation's name used for identification when playing it.
 		 * @param frames Vector for the animation's series of frames to play.
 		 * @param timePerFrame Time in seconds that each frame lasts during the
 		 * animation.
-		 * @param nbLoops Number of times the animation will play before 
+		 * @param nbLoops Number of times the animation will play before
 		 * stopping. -1 means it will loop infinitely.
 		 * @see RedBox::RenderInfo::animations
 		 */
 		void addAnimation(const std::string& name,
-						  const std::vector<unsigned int>& frames,
-						  double timePerFrame,
-						  int nbLoops = -1);
+		                  const std::vector<unsigned int>& frames,
+		                  double timePerFrame,
+		                  int nbLoops = -1);
 
 		/**
 		 * Adds an animation. Accepts a variable number of parameters for each
@@ -113,9 +113,9 @@ namespace RedBox {
 		 * @see RedBox::RenderInfo::animations
 		 */
 		void addAnimation(const std::string& name,
-						  double timePerFrame,
-						  int nbLoops,
-						  unsigned int nbFrames, ... );
+		                  double timePerFrame,
+		                  int nbLoops,
+		                  unsigned int nbFrames, ...);
 		/**
 		 * Adds an animation. To be used for manual creation of animation
 		 * parameters.
@@ -124,22 +124,22 @@ namespace RedBox {
 		 * @see RedBox::RenderInfo::animations
 		 */
 		void addAnimation(const std::string& name,
-						  const AnimationParameters& newAnimation);
+		                  const AnimationParameters& newAnimation);
 
-        /**
+		/**
 		 * Sets the sprite used to mask the parent render step.
 		 * @param newMask Pointer to the new sprite to use as a mask.
 		 * @see RedBox::RenderInfo::mask
-         */
-		void setMask(Sprite* newMask);
-        
-        /**
+		 */
+		void setMask(GraphicBody* newMask);
+
+		/**
 		 * Gets the sprite used to mask the parent render step.
 		 * @return Pointer to the sprite that serves as a mask.
 		 * @see RedBox::RenderInfo::mask
-         */
-		Sprite* getMask();
-        
+		 */
+		GraphicBody* getMask();
+
 		/**
 		 * Gets the color.
 		 * @return RenderInfo's color.
@@ -247,20 +247,20 @@ namespace RedBox {
 		 */
 		void setDefaultFrame(unsigned int newDefaultFrame);
 	private:
-        /**
-         * Color, first int is red, second is green, third is blue and last one
-         * is alpha.
-         */
+		/**
+		 * Color, first int is red, second is green, third is blue and last one
+		 * is alpha.
+		 */
 		Color color;
-        
+
 		/**
 		 * Pointer to a mask sprite. Pointer is NULL if the parent render step
 		 * is not masked.
 		 */
-		Sprite* mask;
+		GraphicBody* mask;
 
-        /// Pointer to the texture information.
-        TextureInfo* texInfo;
+		/// Pointer to the texture information.
+		TextureInfo* texInfo;
 
 		/**
 		 * Vector containing the texture's coordinates for each animation frame.
@@ -281,14 +281,14 @@ namespace RedBox {
 		unsigned int defaultFrame;
 		/**
 		 * Map to associate names to each animations in texCoords. For example,
-		 * to get information about a specific animation, you'd do 
+		 * to get information about a specific animation, you'd do
 		 * animations["animationName"].
 		 */
 		std::map<std::string, AnimationParameters> animations;
 
 		/// Name of the animation currently playing.
 		std::string currentAnimation;
-    };
+	};
 }
 
 #endif

@@ -377,20 +377,26 @@ void Sprite::setMainAlpha(int alpha) {
 	setMainColor(Color(mainColor.getRed(), mainColor.getGreen(), mainColor.getBlue(), alpha));
 }
 
+GraphicBody* Sprite::getMask() {
+	if(getMainRenderStep()) {
+		return getMainRenderStep()->getMask();
+	} else {
+		return NULL;
+	}
+}
 
-void Sprite::setMask(Sprite* aMask, bool inversed) {
-	if(aMask != NULL) {
+void Sprite::setMask(GraphicBody* newMask, bool inversed) {
+	if(newMask) {
 		for(std::list<RenderStep*>::iterator i = renderSteps.begin();
 		    i != renderSteps.end(); ++i) {
 			if(*i) {
-				(*i)->setMask(aMask);
+				(*i)->setMask(newMask);
 
 				if(inversed) {
 					(*i)->addMode(RenderStepMode::INVERSE_MASKED);
 
 				} else {
 					(*i)->addMode(RenderStepMode::MASKED);
-
 				}
 			}
 		}

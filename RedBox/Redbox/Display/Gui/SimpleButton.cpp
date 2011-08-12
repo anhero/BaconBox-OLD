@@ -40,6 +40,22 @@ void SimpleButton::render() {
 	buttonSprite.render();
 }
 
+void SimpleButton::mask() {
+	buttonSprite.mask();
+}
+
+void SimpleButton::unmask() {
+	buttonSprite.unmask();
+}
+
+GraphicBody* SimpleButton::getMask() {
+	return buttonSprite.getMask();
+}
+
+void SimpleButton::setMask(GraphicBody* newMask, bool inversed) {
+	buttonSprite.setMask(newMask, inversed);
+}
+
 void SimpleButton::setPosition(float newXPosition, float newYPosition) {
 	this->GraphicBody::setPosition(newXPosition, newYPosition);
 	buttonSprite.setPosition(newXPosition, newYPosition);
