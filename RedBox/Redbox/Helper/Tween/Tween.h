@@ -131,7 +131,7 @@ namespace RedBox {
 
 	template <typename T>
 	TTweener<T>::TTweener(T& newValue, const T& newEnd, double newTime, Ease newEase) :
-		Tweener(newTime, newEase), value(newValue), start(*value), end(newEnd) {
+		Tweener(newTime, newEase), value(newValue), start(newValue), end(newEnd) {
 	}
 
 	template <typename T>
