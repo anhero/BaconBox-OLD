@@ -30,7 +30,7 @@ RenderStep::RenderStep(TextureInfo* newTexInfo,
 	info(RenderInfo(newTexInfo, newVertices, frameWidth, frameHeight, nbFrames,
 	                newColor)),
 	mode(FlagSet<RenderStepMode>(RenderStepMode::SHAPE) |
-		FlagSet<RenderStepMode>(RenderStepMode::TEXTURE)),
+	     FlagSet<RenderStepMode>(RenderStepMode::TEXTURE)),
 	vertices(newVertices),
 	deleteVerticesGroup(newDeleteVerticesGroup),
 	isPaused(false), animCounter(0.0) {
@@ -50,9 +50,9 @@ RenderStep::RenderStep(const std::string& key,
                        unsigned int nbFrames,
                        bool newDeleteVerticesGroup): Object(),
 	info(RenderInfo(ResourceManager::getTexture(key), newVertices, frameWidth,
-					frameHeight, nbFrames)),
+	                frameHeight, nbFrames)),
 	mode(FlagSet<RenderStepMode>(RenderStepMode::SHAPE) |
-		FlagSet<RenderStepMode>(RenderStepMode::TEXTURE)),
+	     FlagSet<RenderStepMode>(RenderStepMode::TEXTURE)),
 	vertices(newVertices), deleteVerticesGroup(newDeleteVerticesGroup),
 	isPaused(false), animCounter(0.0) {
 	if(vertices) {
@@ -74,15 +74,15 @@ RenderStep& RenderStep::operator=(const RenderStep& src) {
 RenderStep::~RenderStep() {
 	clean();
 }
-void RenderStep::mask(){
+void RenderStep::mask() {
 	if(!verticesData.empty()) {
-        GraphicDriver::drawMaskShapeWithTextureAndColor(verticesData,info, vertices->getVertices().size());
-	}			
+		GraphicDriver::drawMaskShapeWithTextureAndColor(verticesData, info, vertices->getVertices().size());
+	}
 }
 
-void RenderStep::unmask(){
+void RenderStep::unmask() {
 	if(!verticesData.empty()) {
-        GraphicDriver::unmask(verticesData,info, vertices->getVertices().size());
+		GraphicDriver::unmask(verticesData, info, vertices->getVertices().size());
 	}
 }
 void RenderStep::render() {
@@ -92,24 +92,23 @@ void RenderStep::render() {
 		// We check which graphic driver method to use.
 		if(mode.isSet(RenderStepMode::SHAPE)) {
 			if(mode.isSet(RenderStepMode::TEXTURE)) {
-				if (mode.isSet(RenderStepMode::MASKED) || mode.isSet(RenderStepMode::INVERSE_MASKED)) {
-                    Sprite* mask = getMask();
-                    mask->mask();
-                    //MASKED+TEXTURE
-                    bool inversed = mode.isSet(RenderStepMode::INVERSE_MASKED);
-                    GraphicDriver::drawMaskedShapeWithTextureAndColor(verticesData,
-																info,
-																vertices->getVertices().size(), inversed);
-                    mask->unmask();
-                }
-                else {
-                    //TEXTURE
+				if(mode.isSet(RenderStepMode::MASKED) || mode.isSet(RenderStepMode::INVERSE_MASKED)) {
+					GraphicBody* mask = getMask();
+					mask->mask();
+					//MASKED+TEXTURE
+					bool inversed = mode.isSet(RenderStepMode::INVERSE_MASKED);
+					GraphicDriver::drawMaskedShapeWithTextureAndColor(verticesData,
+					        info,
+					        vertices->getVertices().size(), inversed);
+					mask->unmask();
+				} else {
+					//TEXTURE
 					GraphicDriver::drawShapeWithTextureAndColor(verticesData,
-																info,
-																vertices->getVertices().size());
+					        info,
+					        vertices->getVertices().size());
 				}
 			} else if(mode.isSet(RenderStepMode::COLOR)) {
-                //COLOR ONLY
+				//COLOR ONLY
 				GraphicDriver::drawShapeWithColor(verticesData, info, vertices->getVertices().size());
 			}
 		}
@@ -234,7 +233,7 @@ void RenderStep::updateVerticesData() {
 		std::vector<float>::iterator data = verticesData.begin();
 
 		for(std::list<Vertex*>::iterator i = verticesPtr.begin();
-			i != verticesPtr.end(); ++i) {
+		    i != verticesPtr.end(); ++i) {
 			*data = (*i)->getXPosition();
 			++data;
 			*data = (*i)->getYPosition();
@@ -283,11 +282,12 @@ void RenderStep::copyFrom(const RenderStep& src) {
 	}
 }
 
-Sprite * RenderStep::getMask(){
-    return info.getMask();
+GraphicBody* RenderStep::getMask() {
+	return info.getMask();
 }
-void RenderStep::setMask(Sprite * aMask){
-    info.setMask(aMask);
+
+void RenderStep::setMask(GraphicBody* aMask) {
+	info.setMask(aMask);
 }
 
 void RenderStep::setColor(const Color& newColor) {

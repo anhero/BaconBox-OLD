@@ -29,7 +29,7 @@ namespace RedBox {
 		 * pixels).
 		 */
 		SimpleButton(const std::string& textureKey, unsigned int frameWidth,
-					 unsigned int frameHeight);
+		             unsigned int frameHeight);
 
 		/**
 		 * Parameterized constructor. Loads a button using a pointer to a
@@ -43,7 +43,7 @@ namespace RedBox {
 		 * pixels).
 		 */
 		SimpleButton(TextureInfo* textureInfo, unsigned int frameWidth,
-					 unsigned int frameHeight);
+		             unsigned int frameHeight);
 
 		/**
 		 * Copy constructor.
@@ -72,6 +72,34 @@ namespace RedBox {
 		 * Renders the button's sprite.
 		 */
 		void render();
+
+		/**
+		 * Similar to the render function except that it will only
+		 * render to the alpha component of the color buffer. It is
+		 * used to mask the next rendered graphic body (if the next graphic
+		 * body is set as a masked sprite).
+		 */
+		void mask();
+
+		/**
+		 * Undo what the mask function did. This function
+		 * MUST be once after the masked graphic body has been rendered.
+		 */
+		void unmask();
+
+		/**
+		 * Gets the graphic body masking the current button.
+		 * @return Pointer to the button's mask.
+		 */
+		GraphicBody* getMask();
+
+		/**
+		 * Sets the graphic body used to mask the button.
+		 * @param newMask A mask graphic body.
+		 * @param inversed Set this parameter to true if you want to inverse
+		 * the effect of the mask. False by default.
+		 */
+		void setMask(GraphicBody* newMask, bool inversed = false);
 
 		using GraphicBody::setPosition;
 
@@ -106,9 +134,12 @@ namespace RedBox {
 		void setScaling(float newXScaling, float newYScaling);
 
 		/**
-		 * Sets the button's angle.
+		 * Rotates the simple button from a point.
+		 * @param rotationAngle Angle to rotate the simple button.
+		 * @param rotationPoint Origin point on which to apply the rotation.
+		 * @see RedBox::GraphicBody::angle
 		 */
-		void setAngle(float newAngle);
+		void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
 
 		/**
 		 * Creates a copy of the current simple button.

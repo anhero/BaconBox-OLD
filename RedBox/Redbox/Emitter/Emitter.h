@@ -17,11 +17,10 @@
 namespace RedBox {
 	/**
 	 * Represents an emitter. Emitters for specific objects inherit from this
-	 * class. The object emitted has to have update() and render() functions
-	 * to work properly. This class is abstract.
+	 * class. This class is abstract.
 	 * @ingroup Display
 	 */
-	template <class T>
+	template <typename T>
 	class Emitter: public IEmitter {
 	public:
 		/**
@@ -44,7 +43,7 @@ namespace RedBox {
 			 * @see RedBox::ParticleState::Enum
 			 */
 			Particle(T* newGraphicBody, double newTimeLeft,
-					 ParticleState newState) :
+			         ParticleState newState) :
 				graphicBody(newGraphicBody), timeLeft(newTimeLeft),
 				state(newState), alphaCounter(0.0f), alphaPerSecond(0.0f),
 				scalingPerSecond(Vec2()), anglePerSecond(0.0f) {
@@ -96,6 +95,7 @@ namespace RedBox {
 						clean();
 					}
 				}
+
 				return *this;
 			}
 
@@ -143,14 +143,16 @@ namespace RedBox {
 		/**
 		 * Default constructor.
 		 */
-		Emitter(): IEmitter(), particles(std::vector<Particle>(10)) {
+		Emitter(): IEmitter(), particles(std::vector<Particle>(10)),
+			currentMask(NULL) {
 		}
 
 		/**
 		 * Copy constructor.
 		 * @param src SpriteEmitter to make a copy of.
 		 */
-		Emitter(const Emitter& src): IEmitter(src), particles(src.particles) {
+		Emitter(const Emitter& src): IEmitter(src), particles(src.particles),
+			currentMask(NULL) {
 		}
 
 		/**
@@ -176,13 +178,13 @@ namespace RedBox {
 		virtual void update() {
 			// We make sure that the sprite emitter is active and has a valid emitRate.
 			if(started && emitRate > 0.0 &&
-			        (nbParticlesToShoot == -1 || nbParticlesToShoot > 0)) {
+			   (nbParticlesToShoot == -1 || nbParticlesToShoot > 0)) {
 				float rate = 1.0 / emitRate;
 				emitCounter += Engine::getSinceLastUpdate();
 
 				// We try to shoot particles as long as the emission rate lets us.
 				while((nbParticlesToShoot == -1 || nbParticlesToShoot > 0) &&
-				        emitCounter > rate && shootParticle()) {
+				      emitCounter > rate && shootParticle()) {
 					if(nbParticlesToShoot > -1) {
 						--nbParticlesToShoot;
 					}
@@ -203,7 +205,7 @@ namespace RedBox {
 
 			// We update the particles that still have a lifespan remaining.
 			for(typename std::vector<Particle>::iterator i = particles.begin();
-				i != particles.end(); ++i) {
+			    i != particles.end(); ++i) {
 				// We check if it is still alive.
 				if(i->timeLeft > 0.0) {
 					// We update the sprite.
@@ -228,9 +230,11 @@ namespace RedBox {
 
 						if(i->timeLeft <= 0.0) {
 							i->state = ParticleState::LIFE;
+
 							if(!lifePhase.animationName.empty()) {
 								startAnimation(lifePhase.animationName, i->graphicBody);
 							}
+
 							i->timeLeft = lifePhase.phaseDuration + Random::getRandomDouble(0.0, lifePhase.phaseDurationVariance);
 							i->alphaPerSecond = lifePhase.alphaPerSecond + Random::getRandomFloat(0.0f, lifePhase.alphaPerSecondVariance);
 							i->scalingPerSecond = lifePhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getY()));
@@ -247,9 +251,11 @@ namespace RedBox {
 
 						if(i->timeLeft <= 0.0) {
 							i->state = ParticleState::DYING;
+
 							if(!dyingPhase.animationName.empty()) {
 								startAnimation(dyingPhase.animationName, i->graphicBody);
 							}
+
 							i->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
 							i->alphaPerSecond = dyingPhase.alphaPerSecond + Random::getRandomFloat(0.0f, dyingPhase.alphaPerSecondVariance);
 							i->scalingPerSecond = dyingPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
@@ -288,11 +294,68 @@ namespace RedBox {
 			// particles.
 			if(started) {
 				for(typename std::vector<Particle>::iterator i = particles.begin();
-					i != particles.end(); ++i) {
+				    i != particles.end(); ++i) {
 					if(i->timeLeft > 0.0) {
 						renderParticle(i->graphicBody);
 					}
 				}
+			}
+		}
+
+		/**
+		 * Similar to the render function except that it will only
+		 * render to the alpha component of the color buffer. It is
+		 * used to mask the next rendered graphic body (if the next graphic
+		 * body is set as a masked sprite).
+		 * @see RedBox::GraphicBody::mask()
+		 */
+		virtual void mask() {
+			if(started) {
+				for(typename std::vector<Particle>::iterator i = particles.begin();
+				    i != particles.end(); ++i) {
+					if(i->timeLeft > 0.0) {
+						maskParticle(i->graphicBody);
+					}
+				}
+			}
+		}
+
+		/**
+		 * Undo what the mask function did. This function
+		 * MUST be once after the masked graphic body has been rendered.
+		 * @see RedBox::GraphicBody::unmask()
+		 */
+		virtual void unmask() {
+			if(started) {
+				for(typename std::vector<Particle>::iterator i = particles.begin();
+				    i != particles.end(); ++i) {
+					if(i->timeLeft > 0.0) {
+						unmaskParticle(i->graphicBody);
+					}
+				}
+			}
+		}
+
+		/**
+		 * Gets the graphic body masking the current graphic body.
+		 * @return Pointer to the graphic body's mask.
+		 * @see RedBox::GraphicBody::getMask() const
+		 */
+		virtual GraphicBody* getMask() {
+			return currentMask;
+		}
+
+		/**
+		 * Sets the graphic body used to mask the graphic body.
+		 * @param newMask A mask graphic body.
+		 * @param inversed Set this parameter to true if you want to inverse
+		 * the effect of the mask. False by default.
+		 * @see RedBox::GraphicBody::setMask(GraphicBody* newMask, bool inversed)
+		 */
+		virtual void setMask(GraphicBody* newMask, bool inversed = false) {
+			for(typename std::vector<Particle>::iterator i = particles.begin();
+			    i != particles.end(); ++i) {
+				setMaskParticle(newMask, inversed, i->graphicBody);
 			}
 		}
 
@@ -338,9 +401,11 @@ namespace RedBox {
 		 */
 		void killParticle(typename std::vector<Particle>::iterator particle) {
 			particle->state = ParticleState::DYING;
+
 			if(!dyingPhase.animationName.empty()) {
 				startAnimation(dyingPhase.animationName, particle->graphicBody);
 			}
+
 			particle->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
 			particle->alphaPerSecond = dyingPhase.alphaPerSecond + Random::getRandomFloat(0.0f, dyingPhase.alphaPerSecondVariance);
 			particle->scalingPerSecond = dyingPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
@@ -378,7 +443,7 @@ namespace RedBox {
 		 * @param graphicBody Graphic body to animate.
 		 */
 		virtual void startAnimation(const std::string& animationName,
-									T* graphicBody) = 0;
+		                            T* graphicBody) = 0;
 
 		/**
 		 * Initializes a particle's renerable and returns a pointer to it.
@@ -409,9 +474,34 @@ namespace RedBox {
 		 */
 		virtual void renderParticle(T* graphicBody) = 0;
 
+		/**
+		 * Masks a specific particle.
+		 * @param graphicBody Pointer to the particle to mask.
+		 * @see RedBox::GraphicBody::mask()
+		 */
+		virtual void maskParticle(T* graphicBody) = 0;
+
+		/**
+		 * Unmasks a specific particle.
+		 * @param graphicBody Pointer to the particle to mask.
+		 * @see RedBox::GraphicBody::unmask()
+		 */
+		virtual void unmaskParticle(T* graphicBody) = 0;
+
+		/**
+		 * Sets the mask to a particle.
+		 * @param newMask Pointer to the mask to use for the particle.
+		 * @param inversed Used to inverse the effect of the mask.
+		 * @see RedBox::GraphicBody::setMask(GraphicBody* newMask, bool inversed)
+		 */
+		virtual void setMaskParticle(GraphicBody* newMask, bool inversed,
+		                             T* graphicBody) = 0;
 	private:
 		/// Vector containing the particles used to shoot.
 		std::vector<Particle> particles;
+
+		/// Pointer to the emitter's mask.
+		GraphicBody* currentMask;
 
 		/**
 		 * Finds the first dead particle in the vector of particles.
@@ -451,9 +541,11 @@ namespace RedBox {
 				startParticle(deadParticle->graphicBody);
 				deadParticle->timeLeft = birthPhase.phaseDuration + Random::getRandomDouble(0.0, birthPhase.phaseDurationVariance);
 				deadParticle->state = ParticleState::BIRTH;
+
 				if(!birthPhase.animationName.empty()) {
 					startAnimation(birthPhase.animationName, deadParticle->graphicBody);
 				}
+
 				deadParticle->alphaPerSecond = birthPhase.alphaPerSecond + Random::getRandomFloat(0.0f, birthPhase.alphaPerSecondVariance);
 				deadParticle->scalingPerSecond = birthPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getY()));
 				deadParticle->anglePerSecond = birthPhase.anglePerSecond + Random::getRandomFloat(0.0f, birthPhase.anglePerSecondVariance);
@@ -506,6 +598,7 @@ namespace RedBox {
 
 				if(&src) {
 					particles = src.particles;
+					currentMask = src.currentMask;
 				}
 			}
 		}

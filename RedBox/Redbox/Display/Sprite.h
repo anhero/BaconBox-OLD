@@ -20,7 +20,7 @@
 namespace RedBox {
 	class RenderStep;
 	class RenderInfo;
-    /** 
+	/**
 	 * Represents a sprite. A is used to display animated or non-animated
 	 * images or display colored shapes. To use a sprite, initialize it and
 	 * pass it to a State. A sprite can only be in one state at a time. Once
@@ -28,16 +28,16 @@ namespace RedBox {
 	 * deleting it, the state takes care of that for you. To remove a sprite
 	 * from a state, simply call setToBeDeleted(true), which is inherited from
 	 * GraphicBody.
-     * @ingroup Display
+	 * @ingroup Display
 	 * @see RedBox::GraphicBody
 	 * @see RedBox::State
-     */
+	 */
 	class Sprite : public GraphicBody {
-    public:
+	public:
 		/**
 		 * Default constructor.
 		 */
-        Sprite();
+		Sprite();
 
 		/**
 		 * Simple parameterized constructor.
@@ -60,7 +60,7 @@ namespace RedBox {
 		 * part of the texture with the given width and height.
 		 * @param textureKey Texture's key in the ResourceManager to use for the
 		 * constructed sprite.
-		 * @param frameWidth Width of the frames to read from the image (in 
+		 * @param frameWidth Width of the frames to read from the image (in
 		 * pixels).
 		 * @param frameHeight Height of the frames to read from the image (in
 		 * pixels).
@@ -68,9 +68,9 @@ namespace RedBox {
 		 * animations)
 		 */
 		Sprite(const std::string& textureKey,
-			   unsigned int frameWidth,
-			   unsigned int frameHeight,
-			   unsigned int nbFrames = 1);
+		       unsigned int frameWidth,
+		       unsigned int frameHeight,
+		       unsigned int nbFrames = 1);
 
 		/**
 		 * Parameterized constructor. Loads a sprite using a pointer to a
@@ -78,7 +78,7 @@ namespace RedBox {
 		 * width and height.
 		 * @param textureInfo Pointer to the texture information to load the
 		 * sprite from.
-		 * @param frameWidth Width of the frames to read from the image (in 
+		 * @param frameWidth Width of the frames to read from the image (in
 		 * pixels).
 		 * @param frameHeight Height of the frames to read from the image (in
 		 * pixels).
@@ -86,45 +86,45 @@ namespace RedBox {
 		 * animations).
 		 */
 		Sprite(TextureInfo* textureInfo,
-			   unsigned int frameWidth,
-			   unsigned int frameHeight,
-			   unsigned int nbFrames = 1);
+		       unsigned int frameWidth,
+		       unsigned int frameHeight,
+		       unsigned int nbFrames = 1);
 
-        /**
-         * Copy constructor.
-         * @param src Sprite to make a copy of.
-         */
-        Sprite(const Sprite& src);
+		/**
+		 * Copy constructor.
+		 * @param src Sprite to make a copy of.
+		 */
+		Sprite(const Sprite& src);
 
-        /**
-         * Assignation operator overload.
-         * @param src Sprite to make a copy of.
+		/**
+		 * Assignation operator overload.
+		 * @param src Sprite to make a copy of.
 		 * @return Reference to the modified sprite.
-         */
-        Sprite& operator=(const Sprite& src);
+		 */
+		Sprite& operator=(const Sprite& src);
 
-        /**
-         * Destructor. Frees up all allocated memory.
-         */
-        virtual ~Sprite();
+		/**
+		 * Destructor. Frees up all allocated memory.
+		 */
+		virtual ~Sprite();
 
-        /**
-         * Renders the sprite.
-         */
-        virtual void render();
+		/**
+		 * Renders the sprite.
+		 */
+		virtual void render();
 
 		/**
 		 * Updates the sprite.
 		 */
 		virtual void update();
 
-        /**
-         * Creates a vertex in the vertices group.
-         * @param x Horizontal position.
-         * @param y Vertical position.
-         */
-        void createVertex(float x, float y);
-		
+		/**
+		 * Creates a vertex in the vertices group.
+		 * @param x Horizontal position.
+		 * @param y Vertical position.
+		 */
+		void createVertex(float x, float y);
+
 		/**
 		 * Gets the sprite's center's position.
 		 * @return 2D vector containing the sprite's center's position.
@@ -147,24 +147,24 @@ namespace RedBox {
 
 		/**
 		 * Sets the sprite's horizontal and vertical position.
-		 * @param x New horizontal position (in pixels). Lower value means more
-		 * to the left.
-		 * @param y New vertical position (in pixels). Lower value means more at
-		 * the top.
+		 * @param newXPosition New horizontal position (in pixels). Lower value
+		 * means more to the left.
+		 * @param newYPosition New vertical position (in pixels). Lower value
+		 * means more at the top.
 		 */
-		virtual void setPosition(float x, float y);
+		virtual void setPosition(float newXPosition, float newYPosition);
 
 		/**
 		 * Gets the sprite's width.
 		 * @return Sprite's width.
 		 */
-		float getWidth() const;
+		virtual float getWidth() const;
 
 		/**
 		 * Gets the sprite's height.
 		 * @return Sprite's height.
 		 */
-		float getHeight() const;
+		virtual float getHeight() const;
 
 		/**
 		 * Gets the sprite's width and height.
@@ -172,7 +172,7 @@ namespace RedBox {
 		 * member is the width and the second is the height.
 		 */
 		const Vec2 getSize() const;
-		
+
 		/**
 		 * Adds a rendering step. Does nothing if the recieved pointer is NULL.
 		 * @param newRenderStep Pointer to the rendering step to add.
@@ -210,25 +210,25 @@ namespace RedBox {
 		 * @return Reference to the list of RenderSteps used by the sprite.
 		 */
 		std::list<RenderStep*>& getRenderSteps();
-		
+
 		/**
 		 * Set the color of the main renderStep with the
 		 * given color components Range are from 0 to 255.
 		 * Componentes are RGBA.
 		 */
 		void setMainColor(const Color& color);
-		
+
 		/**
 		 * Set the alpha component on the main renderstep.
-         * Range is from 0 to 255.
+		 * Range is from 0 to 255.
 		 */
 		void setMainAlpha(int alpha);
-		
+
 		/**
 		 * Return a Color object containing the color component of the main RenderStep.
 		 */
 		Color getMainColor();
-		
+
 		/**
 		 * Gets the vertices group.
 		 * @return Reference to the sprite's group of vertices.
@@ -265,13 +265,13 @@ namespace RedBox {
 		 * NULL if there aren't any RenderSteps for the sprite.
 		 */
 		RenderInfo* getMainRenderInfo();
-		
+
 		/**
 		 * Sets the current animation.
 		 * @param name Name of the animation to play.
 		 */
 		void playAnimation(const std::string& name);
-		
+
 		/**
 		 * Adds an animation. Accepts a variable number of parameters for each
 		 * animation frame. For example, an animation of 7 frames could be added
@@ -285,9 +285,9 @@ namespace RedBox {
 		 * @param nbFrames Number of frames the animation has.
 		 */
 		void addAnimation(const std::string& name,
-						  double timePerFrame,
-						  int nbLoops,
-						  unsigned int nbFrames, ... );
+		                  double timePerFrame,
+		                  int nbLoops,
+		                  unsigned int nbFrames, ...);
 
 		using GraphicBody::setScaling;
 
@@ -296,60 +296,66 @@ namespace RedBox {
 		 * @param xScaling New horizontal scaling to apply.
 		 * @param yScaling New vertical scaling to apply.
 		 */
-		void setScaling(float xScaling, float yScaling);
+		virtual void setScaling(float xScaling, float yScaling);
 
 		/**
-		 * Sets the sprite's rotation angle.
-		 * @param newAngle Sprite's new rotation angle. As the angle increments,
-		 * it makes the sprite rotate counter-clockwise.
+		 * Rotates the sprite from a point.
+		 * @param rotationAngle Angle to rotate the sprite.
+		 * @param rotationPoint Origin point on which to apply the rotation.
+		 * @see RedBox::GraphicBody::angle
 		 */
-		void setAngle(float newAngle);
-        
-        /** 
-        * Similar to the render function except that it will only
-        * render to the alpha component of the color buffer. It is
-        * used to mask the next rendered sprite (if the next sprite
-        * is set as a masked sprite).
-        */
-        void mask();
-        
-        /**
-         * Undo what the mask function did. This function
-         * MUST be once after the masked sprite has been rendered.
-         */
-        void unmask();
-        
-        
-        /**
-         * Set the sprite used to mask the parent renderstep.
-         * @param aMask A mask sprite.
-         * @param inversed Set this parameter to true if you want to inverse the effect of the mask.
-         * false by default.
-         */
-        void setMask(Sprite * aMask, bool inversed =false);
+		virtual void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
+
+		/**
+		 * Similar to the render function except that it will only
+		 * render to the alpha component of the color buffer. It is
+		 * used to mask the next rendered sprite (if the next sprite
+		 * is set as a masked sprite).
+		 */
+		virtual void mask();
+
+		/**
+		 * Undo what the mask function did. This function
+		 * MUST be once after the masked sprite has been rendered.
+		 */
+		virtual void unmask();
+
+		/**
+		 * Gets the graphic body masking the current graphic body.
+		 * @return Pointer to the graphic body's mask.
+		 */
+		virtual GraphicBody* getMask();
+
+		/**
+		 * Set the sprite used to mask the parent renderstep.
+		 * @param newMask A mask sprite.
+		 * @param inversed Set this parameter to true if you want to inverse
+		 * the effect of the mask. False by default.
+		 */
+		virtual void setMask(GraphicBody* newMask, bool inversed = false);
 
 		/**
 		 * Clones the sprite.
 		 * @return Pointer to the new Sprite.
 		 */
 		virtual GraphicBody* clone() const;
-		
-//		void setTexture(TextureInfo * aTextureInfo);
-//		void setTexture(std::string key);
+
+		//		void setTexture(TextureInfo * aTextureInfo);
+		//		void setTexture(std::string key);
 	private:
-        /**
+		/**
 		 * List containing the rendering steps. The first RenderStep in the list
 		 * is considered as the main one.
 		 */
-        std::list<RenderStep*> renderSteps;
+		std::list<RenderStep*> renderSteps;
 
-        /// Vertices making up the sprite.
-        VerticesGroup vertices;
-		
+		/// Vertices making up the sprite.
+		VerticesGroup vertices;
+
 		/**
 		 * Constructs the sprite using the given info.
 		 * @param texInfo Pointer to the texture's information.
-		 * @param frameWidth Width of the frames to read from the image (in 
+		 * @param frameWidth Width of the frames to read from the image (in
 		 * pixels).
 		 * @param frameHeight Height of the frames to read from the image (in
 		 * pixels).
@@ -357,25 +363,25 @@ namespace RedBox {
 		 * animations).
 		 */
 		void construct(TextureInfo* texInfo,
-					   unsigned int frameWidth,
-					   unsigned int frameHeight,
-					   unsigned int nbFrames = 1);
-        
-        
-        /**
-         * Resets the sprite. Also frees up all allocated memory.
-         */
-        void clean();
-        /**
-         * Makes the instance a copy of the recieved one.
-         * @param src Sprite to make a copy of.
-         */
-        void copyFrom(const Sprite& src);
+		               unsigned int frameWidth,
+		               unsigned int frameHeight,
+		               unsigned int nbFrames = 1);
+
+
+		/**
+		 * Resets the sprite. Also frees up all allocated memory.
+		 */
+		void clean();
+		/**
+		 * Makes the instance a copy of the recieved one.
+		 * @param src Sprite to make a copy of.
+		 */
+		void copyFrom(const Sprite& src);
 		/**
 		 * Frees up all memory used by the render steps.
 		 */
 		void clearRenderSteps();
-    };
+	};
 }
 
 #endif // RB_SPRITE_H

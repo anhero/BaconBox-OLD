@@ -37,7 +37,21 @@ IOSMainWindow::IOSMainWindow() : MainWindow() {
 void IOSMainWindow::setCaption(const std::string& caption) {
 	//SDL_WM_SetCaption(caption.c_str(), NULL);
 }
-	
+
+bool IOSMainWindow::isFullScreen() const {
+	return true;
+}
+
+void IOSMainWindow::setFullScreen(bool) {
+}
+
+bool IOSMainWindow::isInputGrabbed() const {
+	return true;
+}
+
+void IOSMainWindow::setInputGrabbed(bool newInputGrabbed) {
+}
+
 void IOSMainWindow::show() {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     //Need the next to lines of code to prevent the dead code strip 

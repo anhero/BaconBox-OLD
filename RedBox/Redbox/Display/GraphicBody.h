@@ -69,6 +69,34 @@ namespace RedBox {
 		virtual void render() = 0;
 
 		/**
+		 * Similar to the render function except that it will only
+		 * render to the alpha component of the color buffer. It is
+		 * used to mask the next rendered graphic body (if the next graphic
+		 * body is set as a masked sprite).
+		 */
+		virtual void mask() = 0;
+
+		/**
+		 * Undo what the mask function did. This function
+		 * MUST be once after the masked graphic body has been rendered.
+		 */
+		virtual void unmask() = 0;
+
+		/**
+		 * Gets the graphic body masking the current graphic body.
+		 * @return Pointer to the graphic body's mask.
+		 */
+		virtual GraphicBody* getMask() = 0;
+
+		/**
+		 * Sets the graphic body used to mask the graphic body.
+		 * @param newMask A mask graphic body.
+		 * @param inversed Set this parameter to true if you want to inverse
+		 * the effect of the mask. False by default.
+		 */
+		virtual void setMask(GraphicBody* newMask, bool inversed = false) = 0;
+
+		/**
 		 * Gets the graphic body's current layer.
 		 * @return Current layer.
 		 * @see RedBox::GraphicBody::layer
@@ -677,7 +705,7 @@ namespace RedBox {
 		 * @param yScaling New vertical scaling to apply.
 		 * @see RedBox::GraphicBody::scaling
 		 */
-		virtual void setScaling(float xScaling, float yScaling);
+		virtual void setScaling(float newXScaling, float newYScaling);
 
 		/**
 		 * Adds some scaling to the current scaling applied.
@@ -740,7 +768,7 @@ namespace RedBox {
 		 * increments, it makes the graphic body rotate counter-clockwise.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		virtual void setAngle(float newAngle);
+		void setAngle(float newAngle);
 
 		/**
 		 * Adds a value to the sprite's rotation angle.
@@ -749,7 +777,16 @@ namespace RedBox {
 		 * wrapped around.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		void addToAngle(float angleToAdd);
+		void rotate(float angleToAdd);
+
+		/**
+		 * Rotates the graphic body from a point.
+		 * @param rotationAngle Angle to rotate the graphic body.
+		 * @param rotationPoint Origin point on which to apply the rotation.
+		 * @see RedBox::GraphicBody::angle
+		 */
+		virtual void rotateFromPoint(float rotationAngle,
+		                             const Vec2& rotationPoint);
 
 		/**
 		 * Gets the body's colliding box's offset.
@@ -829,7 +866,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::collidingBoxRatio
 		 */
 		void setCollidingBoxRatio(float newXCollidingBoxRatio,
-								  float newYCollidingBoxRatio);
+		                          float newYCollidingBoxRatio);
 
 		/**
 		 * Gets the horizontal colliding box ratios.
@@ -871,7 +908,7 @@ namespace RedBox {
 		 * @see RedBox::CollisionData
 		 */
 		static std::pair<bool, CollisionData> collide(GraphicBody* body1,
-													  GraphicBody* body2);
+		        GraphicBody* body2);
 
 		/**
 		 * Use this function to collide a list of other GraphicBodys against
@@ -887,7 +924,7 @@ namespace RedBox {
 		 * @see RedBox::CollisionData
 		 */
 		static std::pair<bool, std::list<CollisionData> > collide(std::list<GraphicBody*> graphicBodies1,
-																  std::list<GraphicBody*> graphicBodies2);
+		        std::list<GraphicBody*> graphicBodies2);
 
 		/**
 		 * Collide the given GraphicBody against the given horizontal line. The
@@ -906,9 +943,9 @@ namespace RedBox {
 		 * @return True if the GraphicBody was colliding, false if not.
 		 */
 		static bool horizLineCollide(GraphicBody* aGraphicBody,
-									 float linePosition,
-									 float lowerXBoundary = 1.0f,
-									 float higherXBoundary = -1.0f);
+		                             float linePosition,
+		                             float lowerXBoundary = 1.0f,
+		                             float higherXBoundary = -1.0f);
 
 		/**
 		 * Collide the given GraphicBody against the given vertical line. The
@@ -927,9 +964,9 @@ namespace RedBox {
 		 * @return True if the GraphicBody was colliding, false if not.
 		 */
 		static bool vertLineCollide(GraphicBody* aGraphicBody,
-									float linePosition,
-									float lowerYBoundary = 1.0f,
-									float higherYBoundary = -1.0f);
+		                            float linePosition,
+		                            float lowerYBoundary = 1.0f,
+		                            float higherYBoundary = -1.0f);
 
 		/**
 		 * Creates a copy of the current graphic body.

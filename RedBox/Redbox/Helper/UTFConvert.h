@@ -21,11 +21,11 @@ namespace RedBox {
 		/**
 		 * Encode the given UTF32 string to a 8bit UTF8 one. 
 		 */
-		static std::string encodeToUTF8(RB_String32 UTF32String);
+		static std::string encodeToUTF8(String32 UTF32String);
 		/**
 		 * Decode the given 8bit UTF8 string to an UTF32 string.
 		 */
-		static RB_String32 decodeUTF8(std::string UTF8String);
+		static String32 decodeUTF8(std::string UTF8String);
 	};
 }
 

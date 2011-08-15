@@ -6,9 +6,9 @@
 #include <string>
 
 namespace RedBox {
-	typedef int32_t RB_Char32;
+	typedef int32_t Char32;
 
-	typedef std::basic_string<RB_Char32> RB_String32;
+	typedef std::basic_string<Char32> String32;
 }
 
 #endif

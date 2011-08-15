@@ -31,6 +31,27 @@ void QtMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
 	//Do nothing... It's all done in the MyMainWindow's function.
 }
 
+void QtMainWindow::show() {
+	window->show();
+	application->exec();
+}
+
+void QtMainWindow::setCaption(const std::string& caption) {
+	window->setWindowTitle(QString::fromStdString(caption));
+}
+
+bool QtMainWindow::isFullScreen() const {
+	return window->isFullScreen();
+}
+
+void QtMainWindow::setFullScreen(bool newFullScreen) {
+	if(newFullScreen) {
+		window->showFullScreen();
+	} else {
+		window->showNormal();
+	}
+}
+
 QtMainWindow::QtMainWindow() : MainWindow() {
 	//I build it with new to control its lifespan.
 	application = new QApplication(Engine::getApplicationArgc(), Engine::getApplicationArgv());
@@ -40,22 +61,10 @@ QtMainWindow::QtMainWindow() : MainWindow() {
 	QCoreApplication::setApplicationName("RedBoxApp");
 }
 
-void QtMainWindow::setCaption(const std::string& caption) {
-	window->setWindowTitle(QString::fromStdString(caption));
-}
-	
-void QtMainWindow::show() {
-	window->show();
-	application->exec();
-}
-
 QtMainWindow::~QtMainWindow() {
 	delete window;
 	delete application;
 }
-
-
-
 
 // ----------------------------- MyMainWindow ----------------------------------
 
@@ -82,7 +91,7 @@ MyMainWindow::~MyMainWindow() {
     delete ui;
 }
 
-void MyMainWindow::onRedBoxInit(int width, int height) {
+void MyMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
 	setMaximumSize(width, height);
 	QtRedBoxWidget::screenWidth = width;
 	QtRedBoxWidget::screenHeight = height;

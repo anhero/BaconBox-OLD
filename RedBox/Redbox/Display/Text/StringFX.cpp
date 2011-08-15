@@ -24,14 +24,14 @@ void StringFX::setColor(int red, int green, int blue, int alpha){
 	this->color[3] = alpha;
 }
 
-int * StringFX::getColor(){
+int* StringFX::getColor(){
 	return color;	
 }
 
-void StringFX::setDirectionVector(Vec2 & direction){
-	this->directionVector = directionVector;
+void StringFX::setDirectionVector(const Vec2& newDirectionVector){
+	this->directionVector = newDirectionVector;
 }
 
-Vec2 StringFX::getDirectionVector(){
+const Vec2& StringFX::getDirectionVector() const {
 	return directionVector;
 }

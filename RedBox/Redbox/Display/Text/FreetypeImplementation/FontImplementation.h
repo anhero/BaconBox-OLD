@@ -2,21 +2,25 @@
  * @file
  * @ingroup TextDisplay
  */
+#ifndef RB_FONT_IMPLEMENTATION_H
+#define RB_FONT_IMPLEMENTATION_H
+
 #include <ft2build.h>
 #include <freetype/freetype.h>
 #include <string>
-#include "Glyph.h"
-#include "RBString32.h"
 #include <vector>
 #include <map>
-#ifndef RB_FONTIMPLEMENTATION_H
-#define RB_FONTIMPLEMENTATION_H
+
+#include "Glyph.h"
+#include "RBString32.h"
 
 namespace RedBox{
 	/** 
-	 * Font implementation is used to hide the freetype private member in the font interface (pimpl idiom)
-	 * It should not be used directly when developing a game, you should use the Font class instead.
-	 * With the pimpl idiom, we don't have to specify where are the freetype's header in the redboxapp project.
+	 * Font implementation is used to hide the freetype private member in the
+	 * font interface (pimpl idiom) It should not be used directly when
+	 * developing a game, you should use the Font class instead. With the pimpl
+	 * idiom, we don't have to specify where are the freetype's header in the
+	 * redboxapp project.
      * @ingroup TextDisplay
      */
 	class FontImplementation{
@@ -24,10 +28,9 @@ namespace RedBox{
 	private:
 				
 		/**
-		 * Initialize the font renderer (freetype)
+		 * Initialize the font renderer (freetype).
 		 */
 		static void initializeFontRenderer();
-	
 		
 		/**
 		 * Constructor. Load the font in memory.
@@ -39,14 +42,14 @@ namespace RedBox{
 		/**
 		 * Return the name of the font.
 		 */
-		std::string getName();
+		const std::string& getName() const;
 		
 		/**
 		 * Return the glyph specified by the unicode value.
 		 * The size of the font should be set before calling 
 		 * this function.
 		 */
-		Glyph * getGlyph(RB_Char32 unicodeValue);
+		Glyph* getGlyph(Char32 unicodeValue);
 		
 		/**
 		 * Set the font size in pixel.
@@ -62,20 +65,26 @@ namespace RedBox{
 		 * @param dpi DPI of the screen (pixel per inch)
 		 */
 		void setPointSize(int pointSize, int dpi);
-		///Return the lineHeight (automatic or manual depending on the case, automatic by default)
-		int getLineHeight();
+
+		/**
+		 * Gets the line's height (automatic or manual depending on the case,
+		 * automatic by default).
+		 * @return Line's height in pixels.
+		 */
+		int getLineHeight() const;
 		/**
 		 * Tell the rendering font to use automatic line height (which is not always availlable,
 		 * but it's there most of the time.
 		 */
 		void setAutomaticLineHeight();
+
 		/**
 		 * Tell the rendering font to use the given line height and reset the string.
 		 * Call setAutomaticLineHeight() to return to the default automatic line height.
 		 */
 		void setManualLineHeight(int lineHeight);
 	
-		///Name of the font
+		/// Name of the font
 		std::string name;
 		
 		/**
@@ -95,6 +104,7 @@ namespace RedBox{
 		FT_Face font;
 		
 		bool automaticLineHeight;
+
 		int lineHeight;
 		
 		/**
@@ -112,9 +122,9 @@ namespace RedBox{
 		 * unicode value and value a pointer to the glyph.
 		 *(Size, (unicode value, glyph*))
 		 */
-		std::map<std::string, std::map< RB_Char32, Glyph*>* > glyphCache;
+		std::map<std::string, std::map< Char32, Glyph*>* > glyphCache;
 		
-		///Global font renderer (Freetype library).
+		/// Global font renderer (Freetype library).
 		static FT_Library fontRenderer;
 
 

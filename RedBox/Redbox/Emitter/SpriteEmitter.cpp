@@ -82,12 +82,12 @@ void SpriteEmitter::updateScaling(const Vec2& deltaScaling,
 
 void SpriteEmitter::updateRotation(float deltaAngle, Sprite* graphicBody) {
 	if(graphicBody) {
-		graphicBody->addToAngle(deltaAngle);
+		graphicBody->rotate(deltaAngle);
 	}
 }
 
 void SpriteEmitter::startAnimation(const std::string& animationName,
-								   Sprite* graphicBody) {
+                                   Sprite* graphicBody) {
 	if(graphicBody) {
 		graphicBody->playAnimation(animationName);
 	}
@@ -144,4 +144,20 @@ void SpriteEmitter::updateParticle(Sprite* graphicBody) {
 void SpriteEmitter::renderParticle(Sprite* graphicBody) {
 	assert(graphicBody);
 	graphicBody->render();
+}
+
+void SpriteEmitter::maskParticle(Sprite* graphicBody) {
+	assert(graphicBody);
+	graphicBody->mask();
+}
+
+void SpriteEmitter::unmaskParticle(Sprite* graphicBody) {
+	assert(graphicBody);
+	graphicBody->unmask();
+}
+
+void SpriteEmitter::setMaskParticle(GraphicBody* newMask, bool inversed,
+                                    Sprite* graphicBody) {
+	assert(graphicBody);
+	graphicBody->setMask(newMask, inversed);
 }

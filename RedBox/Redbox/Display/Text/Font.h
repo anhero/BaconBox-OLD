@@ -2,14 +2,14 @@
  * @file
  * @ingroup TextDisplay
  */
+#ifndef RB_FONT_H
+#define RB_FONT_H
+
 #include <string>
 #include "Glyph.h"
 #include "RBString32.h"
 
-#ifndef RB_FONT_H
-#define RB_FONT_H
-
-namespace RedBox{
+namespace RedBox {
 	
 	class FontImplementation;
 	
@@ -17,33 +17,32 @@ namespace RedBox{
 	 * Font use a font file (loaded by the resourceManager) to render glyphs.
      * @ingroup TextDisplay
      */
-	class Font{
+	class Font {
 	public:
 				
 		/**
 		 * Initialize the font renderer (freetype)
 		 */
 		static void initializeFontRenderer();
-	
 		
 		/**
 		 * Constructor. Load the font in memory.
 		 * @param name Name of the font.
 		 * @param path Path of the font.
 		 */
-		Font(const std::string& name, const std::string & path);
+		Font(const std::string& name, const std::string& path);
 		
 		/**
 		 * Return the name of the font.
 		 */
-		std::string getName();
+		const std::string& getName() const;
 		
 		/**
 		 * Return the glyph specified by the unicode value.
 		 * The size of the font should be set before calling 
 		 * this function.
 		 */
-		Glyph * getGlyph(RB_Char32 unicodeValue);
+		Glyph* getGlyph(Char32 unicodeValue);
 		
 		/**
 		 * Set the font size in pixel.
@@ -65,23 +64,29 @@ namespace RedBox{
 		 * but it's there most of the time.
 		 */
 		void setAutomaticLineHeight();
+
 		/**
 		 * Tell the rendering font to use the given line height and reset the string.
 		 * Call setAutomaticLineHeight() to return to the default automatic line height.
 		 */
 		void setManualLineHeight(int lineHeight);
-		///Return the lineHeight (automatic or manual depending on the case, automatic by default)
-		int getLineHeight();
+
+		/**
+		 * Gets the line's height (automatic or manual depending on the case,
+		 * automatic by default).
+		 * @return Line's height in pixels.
+		 */
+		int getLineHeight() const;
 		
 	private:
 		
 		/**
-		 * Private implementation of the font (pimpl idiom)
-		 * It is used to abstract/hide freetype from the engine user point of view.
-		 * If we don't do this, the user will need to specify where are the freetype's header in
-		 * is project.
+		 * Private implementation of the font (pimpl idiom) It is used to
+		 * abstract/hide freetype from the engine user point of view. If we
+		 * don't do this, the user will need to specify where are the
+		 * freetype's header in is project.
 		 */
-		FontImplementation * fontPimpl;
+		FontImplementation* fontPimpl;
 
 	};
 }

@@ -63,7 +63,9 @@ void GraphicBody::update() {
 	velocity.addToY(velocityDelta);
 	position.addToY(delta);
 
-	this->setPosition(position.getX(), position.getY());
+	if(oldPosition != position) {
+		this->setPosition(position.getX(), position.getY());
+	}
 }
 
 const Layer& GraphicBody::getLayer() const {
@@ -383,9 +385,8 @@ void GraphicBody::setScaling(const Vec2& newScaling) {
 	setScaling(newScaling.getX(), newScaling.getY());
 }
 
-void GraphicBody::setScaling(float xScaling, float yScaling) {
-	scaling.setX(xScaling);
-	scaling.setY(yScaling);
+void GraphicBody::setScaling(float newXScaling, float newYScaling) {
+	scaling.setXY(newXScaling, newYScaling);
 }
 
 void GraphicBody::addToScaling(const Vec2& scalingToAdd) {
@@ -435,11 +436,15 @@ float GraphicBody::getAngle() const {
 }
 
 void GraphicBody::setAngle(float newAngle) {
-	angle = fmodf(newAngle, 360.0f);
+	rotate(newAngle - angle);
 }
 
-void GraphicBody::addToAngle(float angleToAdd) {
-	setAngle(angle + angleToAdd);
+void GraphicBody::rotate(float angleToAdd) {
+	rotateFromPoint(angleToAdd, getPosition() + Vec2(getWidth(), getHeight()) * 0.5f);
+}
+
+void GraphicBody::rotateFromPoint(float rotationAngle, const Vec2&) {
+	angle = fmodf(angle += rotationAngle, 360.0f);
 }
 
 const Vec2& GraphicBody::getOffset() const {

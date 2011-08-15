@@ -330,10 +330,11 @@ void Sprite::setScaling(float xScaling, float yScaling) {
 	}
 }
 
-void Sprite::setAngle(float newAngle) {
-	if(newAngle != getAngle()) {
-		vertices.rotate(newAngle - getAngle());
-		GraphicBody::setAngle(newAngle);
+void Sprite::rotateFromPoint(float rotationAngle, const Vec2& rotationPoint) {
+	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
+
+	if(rotationAngle != 0.0f) {
+		vertices.rotate(rotationAngle, rotationPoint);
 		Vec2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	}
@@ -376,20 +377,26 @@ void Sprite::setMainAlpha(int alpha) {
 	setMainColor(Color(mainColor.getRed(), mainColor.getGreen(), mainColor.getBlue(), alpha));
 }
 
+GraphicBody* Sprite::getMask() {
+	if(getMainRenderStep()) {
+		return getMainRenderStep()->getMask();
+	} else {
+		return NULL;
+	}
+}
 
-void Sprite::setMask(Sprite* aMask, bool inversed) {
-	if(aMask != NULL) {
+void Sprite::setMask(GraphicBody* newMask, bool inversed) {
+	if(newMask) {
 		for(std::list<RenderStep*>::iterator i = renderSteps.begin();
 		    i != renderSteps.end(); ++i) {
 			if(*i) {
-				(*i)->setMask(aMask);
+				(*i)->setMask(newMask);
 
 				if(inversed) {
 					(*i)->addMode(RenderStepMode::INVERSE_MASKED);
 
 				} else {
 					(*i)->addMode(RenderStepMode::MASKED);
-
 				}
 			}
 		}
@@ -402,9 +409,9 @@ GraphicBody* Sprite::clone() const {
 
 
 
-	//void Sprite::setTexture(TextureInfo * aTextureInfo){
-	//	getMainRenderInfo()->loadTexCoords(&vertices, aTextureInfo->imageWidth, aTextureInfo->imageHeight, 1, aTextureInfo);
-	//}
-	//void Sprite::setTexture(std::string key){
-	//	setTexture(ResourceManager::getTexture(key));
-	//}
+//void Sprite::setTexture(TextureInfo * aTextureInfo){
+//	getMainRenderInfo()->loadTexCoords(&vertices, aTextureInfo->imageWidth, aTextureInfo->imageHeight, 1, aTextureInfo);
+//}
+//void Sprite::setTexture(std::string key){
+//	setTexture(ResourceManager::getTexture(key));
+//}
