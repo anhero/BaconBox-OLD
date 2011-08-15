@@ -124,9 +124,9 @@ void Engine::pulse() {
 				}
 
 				engine.currentState->internalOnGetFocus();
+				engine.lastState = engine.currentState;
 			}
 
-			engine.lastState = engine.currentState;
 			// We update the current state.
 			engine.currentState->internalUpdate();
 			engine.renderedSinceLastUpdate = false;

@@ -319,10 +319,10 @@ void Sprite::addAnimation(const std::string& name,
 	}
 }
 
-void Sprite::setScaling(float xScaling, float yScaling) {
-	if(xScaling && yScaling) {
-		vertices.scale(Vec2(xScaling / getXScaling(), yScaling / getYScaling()));
-		GraphicBody::setScaling(xScaling, yScaling);
+void Sprite::setScaling(float newXScaling, float newYScaling) {
+	if(newXScaling && newYScaling) {
+		vertices.scale(Vec2(newXScaling / getXScaling(), newYScaling / getYScaling()));
+		GraphicBody::setScaling(newXScaling, newYScaling);
 		Vec2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	} else {

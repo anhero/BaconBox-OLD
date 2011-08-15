@@ -296,7 +296,7 @@ namespace RedBox {
 		 * @param xScaling New horizontal scaling to apply.
 		 * @param yScaling New vertical scaling to apply.
 		 */
-		virtual void setScaling(float xScaling, float yScaling);
+		virtual void setScaling(float newXScaling, float newYScaling);
 
 		/**
 		 * Rotates the sprite from a point.
