@@ -55,6 +55,23 @@ namespace RedBox {
 		 */
 		static unsigned int roundUpDivision(unsigned int dividend,
 											unsigned int divisor);
+
+		/**
+		 * Clamps a number within a specific range.
+		 * @param x Value to clamp.
+		 * @param a Lower boundary of the range to clamp within.
+		 * @param b Higher boundary of the range to clamp within.
+		 * @return Clamped value, either x, a or b.
+		 */
+		template <typename T>
+		static T clamp(T x, T a, T b) {
+			return (x < a) ? (a) : ((x > b) ? (b) : (x));
+		}
+
+		template <typename T>
+		static bool sameSign(T x, T y) {
+			return ((x < T()) == (y < T()));
+		}
 	private:
 		/// Constant used for converting degrees to radians.
 		static const float DEGREE_TO_RADIAN;

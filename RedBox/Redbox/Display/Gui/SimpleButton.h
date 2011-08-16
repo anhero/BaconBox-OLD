@@ -128,8 +128,8 @@ namespace RedBox {
 
 		/**
 		 * Change the simple button's scaling.
-		 * @param xScaling New horizontal scaling to apply.
-		 * @param yScaling New vertical scaling to apply.
+		 * @param newXScaling New horizontal scaling to apply.
+		 * @param newYScaling New vertical scaling to apply.
 		 */
 		void setScaling(float newXScaling, float newYScaling);
 

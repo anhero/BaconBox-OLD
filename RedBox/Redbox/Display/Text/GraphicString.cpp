@@ -197,8 +197,6 @@ void GraphicString::setScaling(float newXScaling, float newYScaling) {
 void GraphicString::rotateFromPoint(float rotationAngle,
 									const Vec2& rotationPoint) {
 	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
-	Vec2 center = Vec2(getXPosition() + getWidth() * 0.5f,
-	                   getYPosition() + getHeight() * 0.5f);
 
 	for(GlyphList::iterator i = characters.begin();
 	    i != characters.end(); ++i) {
