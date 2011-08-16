@@ -68,8 +68,8 @@ while [ $# -gt 0 ];do
 			;;
 		# If all else fails.
 		*)
-			echo "Invalid argument: "$1
-			exit 1
+			version="$1"
+			print_version="$1"
 			;;
 	esac
 	shift;
