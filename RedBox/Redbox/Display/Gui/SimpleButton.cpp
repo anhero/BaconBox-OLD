@@ -77,7 +77,7 @@ void SimpleButton::setScaling(float newXScaling, float newYScaling) {
 }
 
 void SimpleButton::rotateFromPoint(float rotationAngle,
-                                   const Vec2& rotationPoint) {
+                                   const Vector2& rotationPoint) {
 	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
 	buttonSprite.rotateFromPoint(rotationAngle, rotationPoint);
 	this->GraphicBody::setPosition(buttonSprite.getXPosition(),

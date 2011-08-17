@@ -6,7 +6,7 @@
 #define RB_LAYER_H
 
 #include "Object.h"
-#include "Vec2.h"
+#include "Vector2.h"
 
 namespace RedBox {
 	/**
@@ -48,7 +48,7 @@ namespace RedBox {
 		 * @see RedBox::Layer::z
 		 * @see RedBox::Layer::scrollFactor
 		 */
-		Layer(int newZ, const Vec2& newScrollFactor);
+		Layer(int newZ, const Vector2& newScrollFactor);
 
 		/**
 		 * Copy constructor.
@@ -102,7 +102,7 @@ namespace RedBox {
 		 * means the layer will move faster as if it were closer to the camera,
 		 * between 1 and 0 means it will move as if it were far from the camera.
 		 */
-		const Vec2& getScrollFactor() const;
+		const Vector2& getScrollFactor() const;
 
 		/**
 		 * Sets the layer's scroll factor.
@@ -112,7 +112,7 @@ namespace RedBox {
 		 * if it were far from the camera.
 		 * @see RedBox::Layer::scrollFactor
 		 */
-		void setScrollFactor(const Vec2& newScrollFactor);
+		void setScrollFactor(const Vector2& newScrollFactor);
 
 		/**
 		 * Sets the layer's scroll factor.
@@ -180,7 +180,7 @@ namespace RedBox {
 		 * By default, all bodies have a scroll factor of 1 both horizontally
 		 * and vertically.
 		 */
-		Vec2 scrollFactor;
+		Vector2 scrollFactor;
 	};
 }
 

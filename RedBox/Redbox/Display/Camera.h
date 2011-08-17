@@ -7,7 +7,7 @@
 
 #include "Body.h"
 #include "Color.h"
-#include "Vec2.h"
+#include "Vector2.h"
 #include "SafeEnum.h"
 
 namespace RedBox {
@@ -62,7 +62,7 @@ namespace RedBox {
 		 * @return Vector containing the camera's position.
 		 * @see RedBox::Camera::position
 		 */
-		const Vec2& getPosition() const;
+		const Vector2& getPosition() const;
 
 		/**
 		 * Sets camera's position.
@@ -77,7 +77,7 @@ namespace RedBox {
 		 * @param newPosition Camera's new position.
 		 * @see RedBox::Camera::position
 		 */
-		void setPosition(const Vec2& newPosition);
+		void setPosition(const Vector2& newPosition);
 		
 		/**
 		 * Moves the camera.
@@ -93,7 +93,7 @@ namespace RedBox {
 		 * the camera.
 		 * @see RedBox::Camera::position
 		 */
-		void move(const Vec2& moveVector);
+		void move(const Vector2& moveVector);
 
 		/**
 		 * Gets the camera's horizontal position.
@@ -243,7 +243,7 @@ namespace RedBox {
 		 * given parameter.
 		 * @see RedBox::Camera::position
 		 */
-		Vec2 screenToWorld(const Vec2& positionOnScreen) const;
+		Vector2 screenToWorld(const Vector2& positionOnScreen) const;
 
 		/**
 		 * Converts screen coordinates to world coordinates.
@@ -255,7 +255,7 @@ namespace RedBox {
 		 * given parameters.
 		 * @see RedBox::Camera::position
 		 */
-		Vec2 screenToWorld(float x, float y) const;
+		Vector2 screenToWorld(float x, float y) const;
 
 		/**
 		 * Converts an horizontal screen coordinate to world coordinate.
@@ -284,7 +284,7 @@ namespace RedBox {
 		 * given parameter.
 		 * @see RedBox::Camera::position
 		 */
-		Vec2 worldToScreen(const Vec2& positionInWorld) const;
+		Vector2 worldToScreen(const Vector2& positionInWorld) const;
 
 		/**
 		 * Converts world coordinates to screen coordinates.
@@ -298,7 +298,7 @@ namespace RedBox {
 		 * given parameter.
 		 * @see RedBox::Camera::position
 		 */
-		Vec2 worldToScreen(float x, float y) const;
+		Vector2 worldToScreen(float x, float y) const;
 
 		/**
 		 * Converts an horizontal world coordinate to a screen coordinate.
@@ -343,7 +343,7 @@ namespace RedBox {
 
 	private:
 		/// Camera's position.
-		Vec2 position;
+		Vector2 position;
 
 		/// Angle of the camera.
 		float angle;
@@ -370,7 +370,7 @@ namespace RedBox {
 		ShakeAxes shakeAxes;
 
 		/// Offset used when the camera is shaking.
-		Vec2 offset;
+		Vector2 offset;
 
 		/**
 		 * Updates the camera's shaking.

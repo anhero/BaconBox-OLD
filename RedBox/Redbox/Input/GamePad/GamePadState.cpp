@@ -22,7 +22,7 @@ float GamePadState::getPreviousButton(unsigned int buttonIndex) const {
 	return previousButtons[buttonIndex];
 }
 
-const Vec2& GamePadState::getThumbstick(unsigned int thumbstickIndex) const {
+const Vector2& GamePadState::getThumbstick(unsigned int thumbstickIndex) const {
 	if(thumbstickIndex >= thumbsticks.size()) {
 		thumbstickIndex = thumbsticks.size() - 1;
 	}

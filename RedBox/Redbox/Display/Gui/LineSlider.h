@@ -85,20 +85,20 @@ namespace RedBox {
 						down = false;
 					} else {
 						// We get the upper left vertex's position.
-						std::list<Vertex>::iterator i = lineSprite.getVertices().getVertices().begin();
-						Vec2 tmpLine(i->getPosition());
+						std::vector<Vector2>::iterator i = lineSprite.getVertices().getVertices().begin();
+						Vector2 tmpLine(*i);
 
 						// We get the upper right vertex's position.
 						++i;
-						Vec2 line(i->getPosition());
+						Vector2 line(*i);
 
 						// We get the line's sprite's real center left position.
 						++i;
-						line += (i->getPosition() - line) * 0.5f;
+						line += (*i - line) * 0.5f;
 
 						// We get the line's sprite's real center right position.
 						++i;
-						tmpLine += (i->getPosition() - tmpLine) * 0.5f;
+						tmpLine += (*i - tmpLine) * 0.5f;
 
 						// We get the line that goes from the line's sprite's
 						// left center position to its right center position.
@@ -110,11 +110,11 @@ namespace RedBox {
 
 						// We project the cursor's relative position onto
 						// the line's sprite's horizontal center line.
-						tmpLine = line * (tmpLine * line) / (line * line);
+						tmpLine.project(line);
 
 						// We calculate the new current value from the
 						// projected cursor's position's length.
-						this->setCurrentValue(this->getMinimumValue() + static_cast<ValueType>(static_cast<float>(this->getMaximumValue() - this->getMinimumValue()) * ((MathHelper::sameSign(line.getX(), tmpLine.getX()) && MathHelper::sameSign(line.getY(), tmpLine.getY())) ? (tmpLine.length() / line.length()) : (-tmpLine.length() / line.length()))));
+						this->setCurrentValue(this->getMinimumValue() + static_cast<ValueType>(static_cast<float>(this->getMaximumValue() - this->getMinimumValue()) * ((MathHelper::sameSign(line.getX(), tmpLine.getX()) && MathHelper::sameSign(line.getY(), tmpLine.getY())) ? (tmpLine.getLength() / line.getLength()) : (-tmpLine.getLength() / line.getLength()))));
 					}
 				}
 			}
@@ -177,7 +177,7 @@ namespace RedBox {
 		 * means more at the top.
 		 */
 		void setPosition(float newXPosition, float newYPosition) {
-			Vec2 delta(newXPosition, newYPosition);
+			Vector2 delta(newXPosition, newYPosition);
 			delta -= this->getPosition();
 			this->Slider<T>::setPosition(newXPosition, newYPosition);
 			lineSprite.move(delta);
@@ -224,7 +224,7 @@ namespace RedBox {
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint) {
+		void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint) {
 			this->Slider<T>::rotateFromPoint(rotationAngle, rotationPoint);
 			lineSprite.rotateFromPoint(rotationAngle, rotationPoint);
 			buttonSprite.rotateFromPoint(rotationAngle, rotationPoint);
@@ -269,7 +269,7 @@ namespace RedBox {
 			}
 
 			if(this->getMaximumValue() == this->getMinimumValue()) {
-				buttonSprite.setPosition(lineSprite.getPositionCenter() - Vec2(buttonSprite.getWidth(), buttonSprite.getHeight()) * 0.5f);
+				buttonSprite.setPosition(lineSprite.getPositionCenter() - Vector2(buttonSprite.getWidth(), buttonSprite.getHeight()) * 0.5f);
 			} else {
 				float clampedValue = static_cast<float>(this->getCurrentValue() - this->getMinimumValue()) / static_cast<float>(this->getMaximumValue() - this->getMinimumValue());
 				buttonSprite.setPosition(lineSprite.getXPosition() + (lineSprite.getWidth() - buttonSprite.getWidth()) * clampedValue,

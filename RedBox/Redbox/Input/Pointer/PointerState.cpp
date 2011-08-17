@@ -24,11 +24,11 @@ const CursorState& PointerState::getCursorState(unsigned int index) const {
 	return cursors[index];
 }
 
-Vec2& PointerState::getCursorPosition(unsigned int index) {
+Vector2& PointerState::getCursorPosition(unsigned int index) {
 	return cursors[index].position;
 }
 
-Vec2& PointerState::getCursorPreviousPosition(unsigned int index) {
+Vector2& PointerState::getCursorPreviousPosition(unsigned int index) {
 	return cursors[index].previousPosition;
 }
 

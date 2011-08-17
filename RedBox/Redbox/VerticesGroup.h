@@ -6,7 +6,6 @@
 #ifndef RB_VERTICES_GROUP_H
 #define RB_VERTICES_GROUP_H
 
-#include <list>
 #include <vector>
 #include <iostream>
 #include <utility>
@@ -15,7 +14,7 @@
 #include "PlatformFlagger.h"
 
 #include "Object.h"
-#include "Vertex.h"
+#include "Vector2.h"
 
 namespace RedBox {
 	class Sprite;
@@ -44,11 +43,6 @@ namespace RedBox {
 		 * @param src Vertex group to make a copy of.
 		 */
 		VerticesGroup(const VerticesGroup& src);
-
-		/**
-		 * The destructor.
-		 */
-		~VerticesGroup();
 
 		/**
 		 * The assignment operator overload.
@@ -80,23 +74,16 @@ namespace RedBox {
 		 * point to the values in verticesData.
 		 * @return Dynamic array containing the vertices.
 		 */
-		std::list<Vertex>& getVertices();
-
-		/**
-		 * Checks if the vertices are from the instance.
-		 * @param firstVertex First vertex to check for.
-		 * @param secondVertex Second vertex to check for.
-		 */
-		bool containsVertices(Vertex* firstVertex, Vertex* secondVertex);
+		std::vector<Vector2>& getVertices();
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex and
 		 * the distance between the lowest and the highest vertex. Using this
 		 * function to get the width AND the height is faster than calling
 		 * getWidth() and getHeight() separately.
-		 * @return Vec2 containing the width and height.
+		 * @return Vector2 containing the width and height.
 		 */
-		Vec2 getSize() const;
+		Vector2 getSize() const;
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex.
@@ -116,7 +103,7 @@ namespace RedBox {
 		 * @return Pair containing the horizontal position and the vertical
 		 * position (in that order) of the left and top side.
 		 */
-		Vec2 getPosition() const;
+		Vector2 getPosition() const;
 
 		/**
 		 * Gets the vertices group's center's position. (0, 0) is at the upper
@@ -124,7 +111,7 @@ namespace RedBox {
 		 * @return 2D Vector containing the center's horizontal position and the
 		 * vertical position (in that order).
 		 */
-		Vec2 getPositionCenter() const;
+		Vector2 getPositionCenter() const;
 
 		/**
 		 * Sets the horizontal and vertical position.
@@ -137,10 +124,10 @@ namespace RedBox {
 
 		/**
 		 * Moves the vertices group horizontally and vertically.
-		 * @param delta Adds this Vec2's horizontal and vertical value to the
+		 * @param delta Adds this Vector2's horizontal and vertical value to the
 		 * vertices group's horizontal and vertical position.
 		 */
-		void move(const Vec2& delta);
+		void move(const Vector2& delta);
 
 		/**
 		 * Moves the vertices group horizontally and vertically.
@@ -213,42 +200,17 @@ namespace RedBox {
 		 * @param factor 2D vector containing the horizontal and vertical
 		 * scaling factor to apply.
 		 */
-		void scale(const Vec2& factor);
+		void scale(const Vector2& factor);
 
 		/**
 		 * Rotates the vertices group using the center as the anchor point.
 		 * @param angle Angle used to rotate the vertices group. A positive
 		 * value rotates it counter-clockwise.
 		 */
-		void rotate(float angle, const Vec2& fromPoint);
-
-		/**
-		 * Updates the verticesData from the instance's vertices. Will not do
-		 * anything if the list of vertices has the same number of vertices as
-		 * the vertices data contains.
-		 * @param verticesData Data about the vertices' coordinates to update.
-		 */
-		void updateDataFromVertices(std::vector<float>& verticesData);
+		void rotate(float angle, const Vector2& fromPoint);
 	private:
-		/// List containing the vertices pointing to the vertices' data.
-		std::list<Vertex> vertices;
-
-		/**
-		 * Goes through all the vertices and re-sets their pointers to floats
-		 * correctly.
-		 */
-		void resetPointers();
-
-		/**
-		 * Makes the instance a copy of the VertexGroup recieved.
-		 * @param src VerticesGroup to make a copy of.
-		 */
-		void copyFrom(const VerticesGroup& src);
-
-		/**
-		 * Frees all memory allocated by the vertices group.
-		 */
-		void clean();
+		/// Vector containing the vertices.
+		std::vector<Vector2> vertices;
 	};
 }
 

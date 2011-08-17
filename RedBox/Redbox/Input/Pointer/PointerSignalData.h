@@ -30,7 +30,7 @@ namespace RedBox {
 		 * Gets a vector of the pointer's position.
 		 * @return 2D vector of the pointer's position.
 		 */
-		const Vec2& getPosition() const;
+		const Vector2& getPosition() const;
 		
 		/**
 		 * Gets the pointer's horizontal position.

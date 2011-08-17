@@ -6,10 +6,10 @@ bool Layer::LessCompare::operator() (const Layer& l1, const Layer& l2) {
 	return (l1.getZ() < l2.getZ()) ? (true) : ((l1.getZ() > l2.getZ()) ? (false) : (l1.getScrollFactor().getX() >= l2.getScrollFactor().getX()));
 }
 
-Layer::Layer() : Object(), z(0), scrollFactor(Vec2(1.0f, 1.0f)) {
+Layer::Layer() : Object(), z(0), scrollFactor(Vector2(1.0f, 1.0f)) {
 }
 
-Layer::Layer(int newZ, const Vec2& newScrollFactor) : Object(), z(newZ),
+Layer::Layer(int newZ, const Vector2& newScrollFactor) : Object(), z(newZ),
 	scrollFactor(newScrollFactor) {
 }
 
@@ -42,11 +42,11 @@ void Layer::setZ(int newZ) {
 	z = newZ;
 }
 
-const Vec2& Layer::getScrollFactor() const {
+const Vector2& Layer::getScrollFactor() const {
 	return scrollFactor;
 }
 
-void Layer::setScrollFactor(const Vec2& newScrollFactor) {
+void Layer::setScrollFactor(const Vector2& newScrollFactor) {
 	scrollFactor = newScrollFactor;
 }
 

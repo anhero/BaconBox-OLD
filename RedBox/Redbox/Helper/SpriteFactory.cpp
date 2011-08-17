@@ -34,7 +34,7 @@ Sprite* SpriteFactory::makePolygon(unsigned int nbSides, float sideLength,
 					 FlagSet<RenderStepMode>(RenderStepMode::COLOR));
 		result->addRenderStep(ren);
 
-		Vec2 tmpVec(ren->getVerticesGroup()->getPosition());
+		Vector2 tmpVec(ren->getVerticesGroup()->getPosition());
 		result->GraphicBody::setPosition(tmpVec.getX(), tmpVec.getY());
 
 		result->setPosition(0.0f, 0.0f);

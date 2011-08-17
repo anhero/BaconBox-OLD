@@ -76,7 +76,7 @@ void GraphicString::setText(const String32& newText) {
 
 	if(font) {
 		float tmpAngle = getAngle(), tmpWidth = getWidth();
-		this->GraphicBody::rotateFromPoint(-tmpAngle, getPosition() - Vec2(tmpWidth * 0.5f, getHeight() * 0.5f));
+		this->GraphicBody::rotateFromPoint(-tmpAngle, getPosition() - Vector2(tmpWidth * 0.5f, getHeight() * 0.5f));
 
 		Glyph* tmpGlyph = NULL;
 		Sprite* tmpSprite = NULL;
@@ -144,17 +144,17 @@ void GraphicString::setText(const String32& newText) {
 					tmpX += i->first->advance.getX() * getXScaling();
 				}
 
-				Vec2 newPosition = getPosition();
+				Vector2 newPosition = getPosition();
 
 				if(alignment == TextAlignment::RIGHT) {
-					newPosition += Vec2(tmpWidth, 0.0f) - Vec2(maxX - minX, 0.0f);
+					newPosition += Vector2(tmpWidth, 0.0f) - Vector2(maxX - minX, 0.0f);
 				} else if(alignment == TextAlignment::CENTER) {
 					Console::print(newPosition);
-					newPosition += Vec2(tmpWidth, 0.0f) * 0.5f - Vec2(maxX - minX, 0.0f) * 0.5f;
+					newPosition += Vector2(tmpWidth, 0.0f) * 0.5f - Vector2(maxX - minX, 0.0f) * 0.5f;
 					Console::print(newPosition);
 				}
 
-				Vec2 delta = newPosition - Vec2(minX, minY);
+				Vector2 delta = newPosition - Vector2(minX, minY);
 
 				for(GlyphList::iterator i = characters.begin();
 				    i != characters.end(); ++i) {
@@ -167,7 +167,7 @@ void GraphicString::setText(const String32& newText) {
 			}
 		}
 
-		rotateFromPoint(tmpAngle, getPosition() + Vec2(getWidth(), getHeight()) * 0.5f);
+		rotateFromPoint(tmpAngle, getPosition() + Vector2(getWidth(), getHeight()) * 0.5f);
 
 	} else {
 		Console::print("Trying to set text to a GraphicString without any font set.");
@@ -176,7 +176,7 @@ void GraphicString::setText(const String32& newText) {
 }
 
 void GraphicString::setPosition(float newXPosition, float newYPosition) {
-	Vec2 delta = Vec2(newXPosition, newYPosition) - getPosition();
+	Vector2 delta = Vector2(newXPosition, newYPosition) - getPosition();
 	this->GraphicBody::setPosition(newXPosition, newYPosition);
 
 	for(GlyphList::iterator i = characters.begin();
@@ -189,13 +189,13 @@ void GraphicString::setPosition(float newXPosition, float newYPosition) {
 
 void GraphicString::setScaling(float newXScaling, float newYScaling) {
 	this->GraphicBody::setScaling(newXScaling, newYScaling);
-	Vec2 center = getPosition() + Vec2(getWidth(), getHeight()) * 0.5f;
+	Vector2 center = getPosition() + Vector2(getWidth(), getHeight()) * 0.5f;
 	setText(text);
-	setPosition(center - Vec2(getWidth(), getHeight()) * 0.5f);
+	setPosition(center - Vector2(getWidth(), getHeight()) * 0.5f);
 }
 
 void GraphicString::rotateFromPoint(float rotationAngle,
-									const Vec2& rotationPoint) {
+									const Vector2& rotationPoint) {
 	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
 
 	for(GlyphList::iterator i = characters.begin();

@@ -100,13 +100,13 @@ namespace RedBox {
 		 * @param cursorIndex Index of the cursor to check.
 		 * @return Cursor's position.
 		 */
-		const Vec2& getPosition(unsigned int cursorIndex = 0) const;
+		const Vector2& getPosition(unsigned int cursorIndex = 0) const;
 
 		/**
 		 * Gets the cursor's previous position.
 		 * @return Cursor's previous position.
 		 */
-		const Vec2& getPreviousPosition(unsigned int cursorIndex = 0) const;
+		const Vector2& getPreviousPosition(unsigned int cursorIndex = 0) const;
 
 		/**
 		 * Checks if the cursor has just moved.
@@ -178,14 +178,14 @@ namespace RedBox {
 		 * @param index Index of the cursor to get.
 		 * @return Reference to the cursor's position.
 		 */
-		Vec2& getCursorPosition(unsigned int index);
+		Vector2& getCursorPosition(unsigned int index);
 
 		/**
 		 * Gets a cursor's previous position.
 		 * @param index Index of the cursor to get.
 		 * @return Reference to the cursor's previous position.
 		 */
-		Vec2& getCursorPreviousPosition(unsigned int index);
+		Vector2& getCursorPreviousPosition(unsigned int index);
 
 		/**
 		 * Gets a cursor's buttons.

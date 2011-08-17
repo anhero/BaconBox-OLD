@@ -124,7 +124,7 @@ namespace RedBox {
 		 */
 		void stop();
 
-		void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
+		void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
 
 		/**
 		 * Gets the angle (in degrees) at which the particles will be shot.
