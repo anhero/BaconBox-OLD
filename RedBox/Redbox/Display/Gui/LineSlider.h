@@ -84,21 +84,32 @@ namespace RedBox {
 					   (!cur.isButtonPressed(CursorButton::LEFT) && !cur.isButtonHeld(CursorButton::LEFT))) {
 						down = false;
 					} else {
-						// We get the upper left vertex's position.
-						std::vector<Vector2>::iterator i = lineSprite.getVertices().getVertices().begin();
+						// We get the button's sprite's real width.
+						std::vector<Vector2>::iterator i = buttonSprite.getVertices().getVertices().begin();
 						Vector2 tmpLine(*i);
 
-						// We get the upper right vertex's position.
 						++i;
 						Vector2 line(*i);
 
-						// We get the line's sprite's real center left position.
+						Vector2 horizontalLine = line - tmpLine;
+
+						// We get the upper left vertex's position.
+						i = lineSprite.getVertices().getVertices().begin();
+						tmpLine = *i;
+
+						// We get the upper right vertex's position.
 						++i;
-						line += (*i - line) * 0.5f;
+						line = *i;
 
 						// We get the line's sprite's real center right position.
 						++i;
+						line += (*i - line) * 0.5f;
+						line -= horizontalLine * 0.5f;
+
+						// We get the line's sprite's real center left position.
+						++i;
 						tmpLine += (*i - tmpLine) * 0.5f;
+						tmpLine += horizontalLine * 0.5f;
 
 						// We get the line that goes from the line's sprite's
 						// left center position to its right center position.
@@ -114,7 +125,7 @@ namespace RedBox {
 
 						// We calculate the new current value from the
 						// projected cursor's position's length.
-						this->setCurrentValue(this->getMinimumValue() + static_cast<ValueType>(static_cast<float>(this->getMaximumValue() - this->getMinimumValue()) * ((MathHelper::sameSign(line.getX(), tmpLine.getX()) && MathHelper::sameSign(line.getY(), tmpLine.getY())) ? (tmpLine.getLength() / line.getLength()) : (-tmpLine.getLength() / line.getLength()))));
+						this->setCurrentValue(this->getMinimumValue() + static_cast<ValueType>((((MathHelper::sameSign(line.getX(), tmpLine.getX()) && MathHelper::sameSign(line.getY(), tmpLine.getY())) ? (tmpLine.getLength()) : (-tmpLine.getLength())) / line.getLength()) * static_cast<float>(this->getMaximumValue() - this->getMinimumValue())));
 					}
 				}
 			}
