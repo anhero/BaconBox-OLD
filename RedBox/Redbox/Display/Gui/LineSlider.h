@@ -27,8 +27,8 @@ namespace RedBox {
 		 * @see RedBox::Slider<T>
 		 */
 		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
-				   ValueType startingValue, const std::string& lineTextureKey,
-				   const std::string& buttonTextureKey) :
+		           ValueType startingValue, const std::string& lineTextureKey,
+		           const std::string& buttonTextureKey) :
 			Slider<T>(newMinimumValue, newMaximumValue, startingValue),
 			lineSprite(lineTextureKey), buttonSprite(buttonTextureKey),
 			down(false) {
@@ -83,46 +83,37 @@ namespace RedBox {
 					if(cur.isButtonReleased(CursorButton::LEFT) ||
 					   (!cur.isButtonPressed(CursorButton::LEFT) && !cur.isButtonHeld(CursorButton::LEFT))) {
 						down = false;
+
 					} else {
 						// We get the button's sprite's real width.
 						std::vector<Vector2>::iterator i = buttonSprite.getVertices().getVertices().begin();
 						Vector2 tmpLine(*i);
-
 						++i;
 						Vector2 line(*i);
-
 						Vector2 horizontalLine = line - tmpLine;
-
 						// We get the upper left vertex's position.
 						i = lineSprite.getVertices().getVertices().begin();
 						tmpLine = *i;
-
 						// We get the upper right vertex's position.
 						++i;
 						line = *i;
-
 						// We get the line's sprite's real center right position.
 						++i;
 						line += (*i - line) * 0.5f;
 						line -= horizontalLine * 0.5f;
-
 						// We get the line's sprite's real center left position.
 						++i;
 						tmpLine += (*i - tmpLine) * 0.5f;
 						tmpLine += horizontalLine * 0.5f;
-
 						// We get the line that goes from the line's sprite's
 						// left center position to its right center position.
 						line -= tmpLine;
-
 						// We get the cursor's position relative to the line's
 						// sprite's left center position.
 						tmpLine = cur.getPosition() - tmpLine;
-
 						// We project the cursor's relative position onto
 						// the line's sprite's horizontal center line.
 						tmpLine.project(line);
-
 						// We calculate the new current value from the
 						// projected cursor's position's length.
 						this->setCurrentValue(this->getMinimumValue() + static_cast<ValueType>((((MathHelper::sameSign(line.getX(), tmpLine.getX()) && MathHelper::sameSign(line.getY(), tmpLine.getY())) ? (tmpLine.getLength()) : (-tmpLine.getLength())) / line.getLength()) * static_cast<float>(this->getMaximumValue() - this->getMinimumValue())));
@@ -201,7 +192,7 @@ namespace RedBox {
 		 */
 		float getWidth() const {
 			return std::max(lineSprite.getXPosition() + lineSprite.getWidth(), buttonSprite.getXPosition() + buttonSprite.getWidth()) -
-				   std::min(lineSprite.getXPosition(), buttonSprite.getXPosition());
+			       std::min(lineSprite.getXPosition(), buttonSprite.getXPosition());
 		}
 
 		/**
@@ -210,7 +201,7 @@ namespace RedBox {
 		 */
 		float getHeight() const {
 			return std::max(lineSprite.getYPosition() + lineSprite.getHeight(), buttonSprite.getYPosition() + buttonSprite.getHeight()) -
-				   std::min(lineSprite.getYPosition(), buttonSprite.getYPosition());
+			       std::min(lineSprite.getYPosition(), buttonSprite.getYPosition());
 		}
 
 		using GraphicBody::setScaling;
@@ -281,10 +272,11 @@ namespace RedBox {
 
 			if(this->getMaximumValue() == this->getMinimumValue()) {
 				buttonSprite.setPosition(lineSprite.getPositionCenter() - Vector2(buttonSprite.getWidth(), buttonSprite.getHeight()) * 0.5f);
+
 			} else {
 				float clampedValue = static_cast<float>(this->getCurrentValue() - this->getMinimumValue()) / static_cast<float>(this->getMaximumValue() - this->getMinimumValue());
 				buttonSprite.setPosition(lineSprite.getXPosition() + (lineSprite.getWidth() - buttonSprite.getWidth()) * clampedValue,
-										 lineSprite.getYPositionCenter() - buttonSprite.getHeight() * 0.5f);
+				                         lineSprite.getYPositionCenter() - buttonSprite.getHeight() * 0.5f);
 			}
 
 			if(tmpAngle != 0.0f) {
@@ -299,7 +291,7 @@ namespace RedBox {
 		 */
 		void refreshPosition() {
 			this->Slider<T>::setPosition(std::min(lineSprite.getXPosition(), buttonSprite.getXPosition()),
-										 std::min(lineSprite.getYPosition(), buttonSprite.getYPosition()));
+			                             std::min(lineSprite.getYPosition(), buttonSprite.getYPosition()));
 		}
 	};
 }

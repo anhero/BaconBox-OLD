@@ -183,6 +183,7 @@ namespace RedBox {
 			ValueType oldValue = currentValue;
 			currentValue = MathHelper::clamp(newCurrentValue, minimumValue,
 			                                 maximumValue);
+
 			if(oldValue != currentValue) {
 				valueChange(currentValue);
 			}

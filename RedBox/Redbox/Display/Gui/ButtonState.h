@@ -6,9 +6,9 @@
 namespace RedBox {
 	struct ButtonStateDef {
 		enum type {
-			NORMAL,
-			HOVER,
-			PRESSED
+		    NORMAL,
+		    HOVER,
+		    PRESSED
 		};
 	};
 	typedef SafeEnum<ButtonStateDef> ButtonState;
