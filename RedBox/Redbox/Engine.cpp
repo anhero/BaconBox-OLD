@@ -17,6 +17,7 @@
 #include "MusicEngine.h"
 #include "InputManager.h"
 #include "TimerManager.h"
+#include "ResourceManager.h"
 #include "Tween.h"
 #include "Console.h"
 #include <libgen.h>
@@ -239,4 +240,7 @@ tmpExitCode(0), renderedSinceLastUpdate(false), screenWidth(0), screenHeight(0) 
 Engine::~Engine() {
 	// We delete the states.
 	std::for_each(states.begin(), states.end(), DeletePointerFromPair());
+
+	// We unload the resources.
+	ResourceManager::unloadAll();
 }
