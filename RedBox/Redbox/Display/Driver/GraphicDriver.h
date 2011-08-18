@@ -9,7 +9,7 @@
 #include "TextureInfo.h"
 #include "PixMap.h"
 #include "Color.h"
-#include "Vec2.h"
+#include "Vector2.h"
 
 namespace RedBox {
 	class RenderInfo;
@@ -30,9 +30,8 @@ namespace RedBox {
 		 * @param renderingInfo Object of type RenderInfo, containing colors array and textureID
 		 * @param nbVertices Number equal to the number of vertices to draw
 		 */
-		static void drawShapeWithTextureAndColor(std::vector<float>& vertices,
-		        RenderInfo& renderingInfo,
-		        unsigned int nbVertices);
+		static void drawShapeWithTextureAndColor(std::vector<Vector2>& vertices,
+		        RenderInfo& renderingInfo);
 		/**
 		 * Draw a textured shape with the given vertices, texture coordinate,
 		 * rendering informations (colors array and textureID) and number of
@@ -41,9 +40,8 @@ namespace RedBox {
 		 * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
 		 * @param nbVertices Number equal to the number of vertices to draw.
 		 */
-		static void drawShapeWithTexture(std::vector<float>& vertices,
-		                                 RenderInfo& renderingInfo,
-		                                 unsigned int nbVertices);
+		static void drawShapeWithTexture(std::vector<Vector2>& vertices,
+		                                 RenderInfo& renderingInfo);
 		/**
 		 * Draws a colored shape.
 		 * @param vertices Vertices' coordinates forming the shape to draw.
@@ -51,11 +49,8 @@ namespace RedBox {
 		 * information about how to render the shape.
 		 * @param nbVertices Number of vertices the shape has.
 		 */
-		static void drawShapeWithColor(std::vector<float>& vertices,
-		                               RenderInfo& renderingInfo,
-		                               unsigned int nbVertices);
-
-
+		static void drawShapeWithColor(std::vector<Vector2>& vertices,
+		                               RenderInfo& renderingInfo);
 
 		/**
 		 * Draw the alpha component of the given vertices and texture to the
@@ -67,9 +62,8 @@ namespace RedBox {
 		 * @param nbVertices Number equal to the number of vertices to draw.
 
 		 */
-		static void drawMaskShapeWithTexture(std::vector<float>& vertices,
-		                                     RenderInfo& renderingInfo,
-		                                     unsigned int nbVertices);
+		static void drawMaskShapeWithTexture(std::vector<Vector2>& vertices,
+		                                     RenderInfo& renderingInfo);
 
 		/**
 		 * Reset the alpha channel to it's original state after a call
@@ -79,9 +73,8 @@ namespace RedBox {
 		 * @param nbVertices Number equal to the number of vertices to draw.
 
 		 */
-		static void unmask(std::vector<float>& vertices,
-		                   RenderInfo& renderingInfo,
-		                   unsigned int nbVertices);
+		static void unmask(std::vector<Vector2>& vertices,
+		                   RenderInfo& renderingInfo);
 
 		/**
 		 * Draw the giver shape masked by using a blend between the alpha
@@ -97,9 +90,8 @@ namespace RedBox {
 		 * @param nbVertices Number of vertices the array contains.
 		 * @param inversedMask If true, the mask effect will be reversed.
 		 */
-		static void drawMaskedShapeWithTextureAndColor(std::vector<float>& vertices,
+		static void drawMaskedShapeWithTextureAndColor(std::vector<Vector2>& vertices,
 		        RenderInfo& renderingInfo,
-		        unsigned int nbVertices,
 		        bool inversedMask = false);
 
 		/**
@@ -113,15 +105,8 @@ namespace RedBox {
 		 * @param nbVertices Number equal to the number of vertices to draw.
 
 		 */
-		static void drawMaskShapeWithTextureAndColor(std::vector<float>& vertices,
-		        RenderInfo& renderingInfo,
-		        unsigned int nbVertices);
-
-
-
-
-
-
+		static void drawMaskShapeWithTextureAndColor(std::vector<Vector2>& vertices,
+		        RenderInfo& renderingInfo);
 
 		/**
 		 * Prepare the scene before rendering object.
@@ -133,9 +118,9 @@ namespace RedBox {
 		 * more than 1 zoom in.
 		 * @param backgroundColor The scene's background color.
 		 */
-		static void prepareScene(const Vec2& position, float angle, float zoom,
+		static void prepareScene(const Vector2& position, float angle, float zoom,
 		                         const Color& backgroundColor,
-		                         const Vec2& rotationCenterOffset);
+		                         const Vector2& rotationCenterOffset);
 
 		/**
 		 * Initialize the drawing backend an prepare the coordinate system with the given
@@ -157,7 +142,7 @@ namespace RedBox {
 		 * Applies a translation on the current matrix.
 		 * @param translation 2D translation to apply.
 		 */
-		static void translate(const Vec2& translation);
+		static void translate(const Vector2& translation);
 
 		/**
 		 * Pops the current matrix from the stack.

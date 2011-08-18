@@ -54,6 +54,8 @@
 #include <RedBox/ResourceManager.h>
 #include <RedBox/ResourcePathHandler.h>
 #include <RedBox/SimpleButton.h>
+#include <RedBox/Checkbox.h>
+#include <RedBox/LineSlider.h>
 #include <RedBox/Sprite.h>
 #include <RedBox/LineBody.h>
 #include <RedBox/Stopwatch.h>

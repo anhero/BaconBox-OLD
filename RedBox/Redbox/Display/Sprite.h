@@ -129,7 +129,7 @@ namespace RedBox {
 		 * Gets the sprite's center's position.
 		 * @return 2D vector containing the sprite's center's position.
 		 */
-		Vec2 getPositionCenter() const;
+		Vector2 getPositionCenter() const;
 
 		/**
 		 * Gets the sprite's center's horizontal position.
@@ -171,7 +171,7 @@ namespace RedBox {
 		 * @return Pair containing the sprite's width and height. The first
 		 * member is the width and the second is the height.
 		 */
-		const Vec2 getSize() const;
+		const Vector2 getSize() const;
 
 		/**
 		 * Adds a rendering step. Does nothing if the recieved pointer is NULL.
@@ -304,7 +304,7 @@ namespace RedBox {
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		virtual void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
+		virtual void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
 
 		/**
 		 * Similar to the render function except that it will only

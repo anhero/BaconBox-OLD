@@ -32,7 +32,7 @@ namespace RedBox {
 			 */
 			Particle(): graphicBody(NULL), timeLeft(0.0),
 				state(ParticleState::DEAD), alphaCounter(0.0f),
-				alphaPerSecond(0.0f), scalingPerSecond(Vec2()),
+				alphaPerSecond(0.0f), scalingPerSecond(Vector2()),
 				anglePerSecond(0.0f) {
 			}
 			/**
@@ -46,7 +46,7 @@ namespace RedBox {
 			         ParticleState newState) :
 				graphicBody(newGraphicBody), timeLeft(newTimeLeft),
 				state(newState), alphaCounter(0.0f), alphaPerSecond(0.0f),
-				scalingPerSecond(Vec2()), anglePerSecond(0.0f) {
+				scalingPerSecond(Vector2()), anglePerSecond(0.0f) {
 			}
 
 			/**
@@ -115,7 +115,7 @@ namespace RedBox {
 			float alphaPerSecond;
 
 			/// Horizontal and vertical scaling per second.
-			Vec2 scalingPerSecond;
+			Vector2 scalingPerSecond;
 
 			/// Rotation angle per second.
 			float anglePerSecond;
@@ -237,7 +237,7 @@ namespace RedBox {
 
 							i->timeLeft = lifePhase.phaseDuration + Random::getRandomDouble(0.0, lifePhase.phaseDurationVariance);
 							i->alphaPerSecond = lifePhase.alphaPerSecond + Random::getRandomFloat(0.0f, lifePhase.alphaPerSecondVariance);
-							i->scalingPerSecond = lifePhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getY()));
+							i->scalingPerSecond = lifePhase.scalingPerSecond + Vector2(Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getY()));
 							i->anglePerSecond = lifePhase.anglePerSecond + Random::getRandomFloat(0.0f, lifePhase.anglePerSecondVariance);
 						}
 
@@ -258,7 +258,7 @@ namespace RedBox {
 
 							i->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
 							i->alphaPerSecond = dyingPhase.alphaPerSecond + Random::getRandomFloat(0.0f, dyingPhase.alphaPerSecondVariance);
-							i->scalingPerSecond = dyingPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
+							i->scalingPerSecond = dyingPhase.scalingPerSecond + Vector2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
 							i->anglePerSecond = dyingPhase.anglePerSecond + Random::getRandomFloat(0.0f, dyingPhase.anglePerSecondVariance);
 						}
 
@@ -408,7 +408,7 @@ namespace RedBox {
 
 			particle->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
 			particle->alphaPerSecond = dyingPhase.alphaPerSecond + Random::getRandomFloat(0.0f, dyingPhase.alphaPerSecondVariance);
-			particle->scalingPerSecond = dyingPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
+			particle->scalingPerSecond = dyingPhase.scalingPerSecond + Vector2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
 			particle->anglePerSecond = dyingPhase.anglePerSecond + Random::getRandomFloat(0.0f, dyingPhase.anglePerSecondVariance);
 		}
 	protected:
@@ -426,7 +426,7 @@ namespace RedBox {
 		 * @param deltaScaling Scaling value to add to the GraphicBody's size.
 		 * @param graphicBody GraphicBody to have its size updated.
 		 */
-		virtual void updateScaling(const Vec2& deltaScaling, T* graphicBody) = 0;
+		virtual void updateScaling(const Vector2& deltaScaling, T* graphicBody) = 0;
 
 		/**
 		 * Updates the GraphicBody's rotation angle using the given angle to
@@ -547,7 +547,7 @@ namespace RedBox {
 				}
 
 				deadParticle->alphaPerSecond = birthPhase.alphaPerSecond + Random::getRandomFloat(0.0f, birthPhase.alphaPerSecondVariance);
-				deadParticle->scalingPerSecond = birthPhase.scalingPerSecond + Vec2(Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getY()));
+				deadParticle->scalingPerSecond = birthPhase.scalingPerSecond + Vector2(Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getY()));
 				deadParticle->anglePerSecond = birthPhase.anglePerSecond + Random::getRandomFloat(0.0f, birthPhase.anglePerSecondVariance);
 				++nbParticles;
 				return true;

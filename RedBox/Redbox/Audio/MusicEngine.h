@@ -53,6 +53,28 @@ namespace RedBox {
 		 * @see RedBox::AudioEngine::musicVolume
 		 */
 		virtual void setMusicVolume(int newMusicVolume);
+
+		/**
+		 * Checks if the music engine is muted.
+		 * @return True if the music engine is muted, false if not.
+		 */
+		bool isMuted() const;
+
+		/**
+		 * Mutes or unmutes the music engine.
+		 * @param newMuted True to mute, false to unmute.
+		 */
+		void setMuted(bool newMuted);
+
+		/**
+		 * Mutes the music engine.
+		 */
+		void mute();
+
+		/**
+		 * Unmutes the music engine.
+		 */
+		void unmute();
 	protected:
 		/**
 		 * Default constructor.
@@ -90,6 +112,13 @@ namespace RedBox {
 	private:
 		/// Value between 0 and 100 for the volume level. 100 is the maximum.
 		int musicVolume;
+
+		/**
+		 * Value used to determine if the music engine is muted or not. When it
+		 * is not muted, this attribute is set to -1. When it is muted, it
+		 * contains the volume.
+		 */
+		int muteValue;
 	};
 }
 

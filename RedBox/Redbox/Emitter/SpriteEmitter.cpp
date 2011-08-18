@@ -73,7 +73,7 @@ void SpriteEmitter::updateAlpha(int16_t deltaAlpha, Sprite* graphicBody) {
 	}
 }
 
-void SpriteEmitter::updateScaling(const Vec2& deltaScaling,
+void SpriteEmitter::updateScaling(const Vector2& deltaScaling,
                                   Sprite* graphicBody) {
 	if(graphicBody) {
 		graphicBody->addToScaling(deltaScaling);
@@ -109,7 +109,7 @@ void SpriteEmitter::startParticle(Sprite*& graphicBody) {
 
 	if(graphicBody) {
 		graphicBody->setPosition(getXPosition(), getYPosition());
-		Vec2 shootVec(Vec2::UP);
+		Vector2 shootVec(Vector2::UP);
 		shootVec.setLength(force + Random::getRandomFloat(0.0f, forceVariance));
 		shootVec.rotate(angle + Random::getRandomFloat(-angleVariance, angleVariance));
 		graphicBody->setVelocity(shootVec);

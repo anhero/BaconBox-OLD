@@ -2,34 +2,30 @@
 
 #include "Console.h"
 
-#include "PlatformFlagger.h"
-
 #include <cassert>
-
-#include <iostream>
 
 using namespace RedBox;
 
 VerticesGroup::VerticesGroup() : Object() {
 }
 
-VerticesGroup::VerticesGroup(const VerticesGroup& src) : Object(src) {
-	copyFrom(src);
-}
-
-VerticesGroup::~VerticesGroup() {
+VerticesGroup::VerticesGroup(const VerticesGroup& src) : Object(src),
+	vertices(src.vertices) {
 }
 
 VerticesGroup& VerticesGroup::operator=(const VerticesGroup& src) {
 	Object::operator=(src);
-	copyFrom(src);
+
+	if(this != &src) {
+		vertices = src.vertices;
+	}
+
 	return *this;
 }
 
-
 void VerticesGroup::addVertex(float x, float y) {
 	// We add the new vertex to the list.
-	vertices.push_back(Vertex(x, y));
+	vertices.push_back(Vector2(x, y));
 }
 
 void VerticesGroup::addVertices(unsigned int nbVertices, ...) {
@@ -42,67 +38,47 @@ void VerticesGroup::addVertices(unsigned int nbVertices, ...) {
 		for(unsigned int i = 0; i < nbVertices; ++i) {
 			x = static_cast<float>(va_arg(verticesCoords, double));
 			y = static_cast<float>(va_arg(verticesCoords, double));
-			vertices.push_back(Vertex(x, y));
+			vertices.push_back(Vector2(x, y));
 		}
 
 		va_end(verticesCoords);
 	}
 }
 
-std::list<Vertex>& VerticesGroup::getVertices() {
+std::vector<Vector2>& VerticesGroup::getVertices() {
 	return vertices;
 }
 
-bool VerticesGroup::containsVertices(Vertex* firstVertex, Vertex* secondVertex) {
-	std::list<Vertex>::iterator i = vertices.begin();
-	bool firstNotFound = true, secondNotFound = true;
-
-	while((firstNotFound || secondNotFound) && i != vertices.end()) {
-		if(&(*i) == firstVertex) {
-			firstNotFound = false;
-		}
-
-		if(&(*i) == secondVertex) {
-			secondNotFound = false;
-		}
-
-		++i;
-	}
-
-	return !(firstNotFound || secondNotFound);
-}
-
-
-
-Vec2 VerticesGroup::getSize() const {
+Vector2 VerticesGroup::getSize() const {
 	if(vertices.empty()) {
 		Console::print("Tried to get the width and the height of an empty VerticesGroup.");
-		return Vec2();
-	}
+		return Vector2();
+	} else {
 
-	float minX = vertices.front().getXPosition(),
-	      minY = vertices.front().getYPosition(),
-	      maxX = vertices.front().getXPosition(),
-	      maxY = vertices.front().getYPosition();
+		float minX = vertices.front().getX(),
+			  minY = vertices.front().getY(),
+			  maxX = vertices.front().getX(),
+			  maxY = vertices.front().getY();
 
-	// We find the minimum and the maximum coordinates.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
+		// We find the minimum and the maximum coordinates.
+		for(std::vector<Vector2>::const_iterator i = vertices.begin();
 			i != vertices.end(); ++i) {
-		if(i->getXPosition() < minX) {
-			minX = i->getXPosition();
-		} else if(i->getXPosition() > maxX) {
-			maxX = i->getXPosition();
+			if(i->getX() < minX) {
+				minX = i->getX();
+			} else if(i->getX() > maxX) {
+				maxX = i->getX();
+			}
+
+			if(i->getY() < minY) {
+				minY = i->getY();
+			} else if(i->getY() > maxY) {
+				maxY = i->getY();
+			}
 		}
 
-		if(i->getYPosition() < minY) {
-			minY = i->getYPosition();
-		} else if(i->getYPosition() > maxY) {
-			maxY = i->getYPosition();
-		}
+		// We return the width and the height.
+		return Vector2(maxX - minX, maxY - minY);
 	}
-
-	// We return the width and the height.
-	return Vec2(maxX - minX, maxY - minY);
 }
 
 float VerticesGroup::getWidth() const {
@@ -111,16 +87,16 @@ float VerticesGroup::getWidth() const {
 		return 0.0f;
 	}
 
-	float minX = vertices.front().getXPosition(),
-	      maxX = vertices.front().getXPosition();
+	float minX = vertices.front().getX(),
+	      maxX = vertices.front().getX();
 
 	// We find the smallest and the highest x position.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
-			i != vertices.end(); ++i) {
-		if(i->getXPosition() < minX) {
-			minX = i->getXPosition();
-		} else if(i->getXPosition() > maxX) {
-			maxX = i->getXPosition();
+	for(std::vector<Vector2>::const_iterator i = vertices.begin();
+	    i != vertices.end(); ++i) {
+		if(i->getX() < minX) {
+			minX = i->getX();
+		} else if(i->getX() > maxX) {
+			maxX = i->getX();
 		}
 	}
 
@@ -134,16 +110,16 @@ float VerticesGroup::getHeight() const {
 		return 0.0f;
 	}
 
-	float minY = vertices.front().getYPosition(),
-	      maxY = vertices.front().getYPosition();
+	float minY = vertices.front().getY(),
+	      maxY = vertices.front().getY();
 
 	// We find the smallest and the highest y position.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
-			i != vertices.end(); ++i) {
-		if(i->getYPosition() < minY) {
-			minY = i->getYPosition();
-		} else if(i->getYPosition() > maxY) {
-			maxY = i->getYPosition();
+	for(std::vector<Vector2>::const_iterator i = vertices.begin();
+	    i != vertices.end(); ++i) {
+		if(i->getY() < minY) {
+			minY = i->getY();
+		} else if(i->getY() > maxY) {
+			maxY = i->getY();
 		}
 	}
 
@@ -151,63 +127,63 @@ float VerticesGroup::getHeight() const {
 	return maxY - minY;
 }
 
-Vec2 VerticesGroup::getPosition() const {
+Vector2 VerticesGroup::getPosition() const {
 	if(vertices.empty()) {
 		Console::print("Tried to get the position of an empty VerticesGroup.");
-		return Vec2();
+		return Vector2();
 	}
 
-	Vec2 result(vertices.front().getXPosition(),
-				vertices.front().getYPosition());
+	Vector2 result(vertices.front().getX(),
+	               vertices.front().getY());
 
 	// We find the smallest vertical and horizontal position.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
-			i != vertices.end(); ++i) {
-		if(i->getXPosition() < result.getX()) {
-			result.setX(i->getXPosition());
+	for(std::vector<Vector2>::const_iterator i = vertices.begin();
+	    i != vertices.end(); ++i) {
+		if(i->getX() < result.getX()) {
+			result.setX(i->getX());
 		}
 
-		if(i->getYPosition() < result.getY()) {
-			result.setY(i->getYPosition());
+		if(i->getY() < result.getY()) {
+			result.setY(i->getY());
 		}
 	}
 
 	return result;
 }
 
-Vec2 VerticesGroup::getPositionCenter() const {
+Vector2 VerticesGroup::getPositionCenter() const {
 	if(vertices.size() == 0) {
 		Console::print("Tried to get the position of the center of an empty VerticesGroup.");
-		return Vec2();
+		return Vector2();
 	}
 
-	float minX = vertices.front().getXPosition(),
-		  minY = vertices.front().getYPosition(),
-		  maxX = vertices.front().getXPosition(),
-		  maxY = vertices.front().getYPosition();
+	float minX = vertices.front().getX(),
+	      minY = vertices.front().getY(),
+	      maxX = vertices.front().getX(),
+	      maxY = vertices.front().getY();
 
 	// We find the minimum and the maximum coordinates.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
-			i != vertices.end(); ++i) {
-		if(i->getXPosition() < minX) {
-			minX = i->getXPosition();
-		} else if(i->getXPosition() > maxX) {
-			maxX = i->getXPosition();
+	for(std::vector<Vector2>::const_iterator i = vertices.begin();
+	    i != vertices.end(); ++i) {
+		if(i->getX() < minX) {
+			minX = i->getX();
+		} else if(i->getX() > maxX) {
+			maxX = i->getX();
 		}
 
-		if(i->getYPosition() < minY) {
-			minY = i->getYPosition();
-		} else if(i->getYPosition() > maxY) {
-			maxY = i->getYPosition();
+		if(i->getY() < minY) {
+			minY = i->getY();
+		} else if(i->getY() > maxY) {
+			maxY = i->getY();
 		}
 	}
 
 	// We return the width and the height.
-	return Vec2(minX + (maxX - minX) * 0.5f, minY + (maxY - minY) * 0.5f);
+	return Vector2(minX + (maxX - minX) * 0.5f, minY + (maxY - minY) * 0.5f);
 }
 
 void VerticesGroup::setPosition(float newXPosition, float newYPosition) {
-	move(Vec2(newXPosition, newYPosition) - getPosition());
+	move(Vector2(newXPosition, newYPosition) - getPosition());
 }
 
 void VerticesGroup::move(float deltaX, float deltaY) {
@@ -215,13 +191,13 @@ void VerticesGroup::move(float deltaX, float deltaY) {
 		Console::print("Tried to move an empty vertices group.");
 	}
 
-	for(std::list<Vertex>::iterator i = vertices.begin();
-		i != vertices.end(); ++i) {
-		i->getPosition().addToXY(deltaX, deltaY);
+	for(std::vector<Vector2>::iterator i = vertices.begin();
+	    i != vertices.end(); ++i) {
+		i->addToXY(deltaX, deltaY);
 	}
 }
 
-void VerticesGroup::move(const Vec2& delta) {
+void VerticesGroup::move(const Vector2& delta) {
 	move(delta.getX(), delta.getY());
 }
 
@@ -229,19 +205,19 @@ float VerticesGroup::getXPosition() const {
 	if(vertices.empty()) {
 		Console::print("Tried to get the horizontal position of an empty VerticesGroup.");
 		return 0.0f;
-	}
+	} else {
+		float result = vertices.front().getX();
 
-	float result = vertices.front().getXPosition();
-
-	// We find the smallest horizontal position.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
+		// We find the smallest horizontal position.
+		for(std::vector<Vector2>::const_iterator i = vertices.begin();
 			i != vertices.end(); ++i) {
-		if(i->getXPosition() < result) {
-			result = i->getXPosition();
+			if(i->getX() < result) {
+				result = i->getX();
+			}
 		}
-	}
 
-	return result;
+		return result;
+	}
 }
 float VerticesGroup::getXPositionCenter() const {
 	if(vertices.empty()) {
@@ -249,16 +225,16 @@ float VerticesGroup::getXPositionCenter() const {
 		return 0.0f;
 	}
 
-	float minX = vertices.front().getXPosition(),
-	      maxX = vertices.front().getXPosition();
+	float minX = vertices.front().getX(),
+	      maxX = vertices.front().getX();
 
 	// We find the smallest and the highest x position.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
-			i != vertices.end(); ++i) {
-		if(i->getXPosition() < minX) {
-			minX = i->getXPosition();
-		} else if(i->getXPosition() > maxX) {
-			maxX = i->getXPosition();
+	for(std::vector<Vector2>::const_iterator i = vertices.begin();
+	    i != vertices.end(); ++i) {
+		if(i->getX() < minX) {
+			minX = i->getX();
+		} else if(i->getX() > maxX) {
+			maxX = i->getX();
 		}
 	}
 
@@ -280,13 +256,13 @@ float VerticesGroup::getYPosition() const {
 		return 0.0f;
 	}
 
-	float result = vertices.front().getYPosition();
+	float result = vertices.front().getY();
 
 	// We find the smallest vertical position.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
-			i != vertices.end(); ++i) {
-		if(i->getYPosition() < result) {
-			result = i->getYPosition();
+	for(std::vector<Vector2>::const_iterator i = vertices.begin();
+	    i != vertices.end(); ++i) {
+		if(i->getY() < result) {
+			result = i->getY();
 		}
 	}
 
@@ -299,16 +275,16 @@ float VerticesGroup::getYPositionCenter() const {
 		return 0.0f;
 	}
 
-	float minY = vertices.front().getYPosition(),
-	      maxY = vertices.front().getYPosition();
+	float minY = vertices.front().getY(),
+	      maxY = vertices.front().getY();
 
 	// We find the smallest and the highest y position.
-	for(std::list<Vertex>::const_iterator i = vertices.begin();
-			i != vertices.end(); ++i) {
-		if(i->getYPosition() < minY) {
-			minY = i->getYPosition();
-		} else if(i->getYPosition() > maxY) {
-			maxY = i->getYPosition();
+	for(std::vector<Vector2>::const_iterator i = vertices.begin();
+	    i != vertices.end(); ++i) {
+		if(i->getY() < minY) {
+			minY = i->getY();
+		} else if(i->getY() > maxY) {
+			maxY = i->getY();
 		}
 	}
 
@@ -324,98 +300,33 @@ void VerticesGroup::moveY(float deltaY) {
 	move(0.0f, deltaY);
 }
 
-void VerticesGroup::scale(const Vec2& factor) {
-	Vec2 position = getPositionCenter(), tmp;
+void VerticesGroup::scale(const Vector2& factor) {
+	Vector2 position = getPositionCenter();
 
-	for(std::list<Vertex>::iterator i = vertices.begin();
-	        i != vertices.end(); ++i) {
-		tmp = i->getPosition() - position;
-		tmp.setX(tmp.getX() * factor.getX());
-		tmp.setY(tmp.getY() * factor.getY());
-		i->getPosition() = position + tmp;
+	for(std::vector<Vector2>::iterator i = vertices.begin();
+	    i != vertices.end(); ++i) {
+		i->subtractFromXY(position);
+		i->scalarMultiplication(factor.getX(), factor.getY());
+		i->addToXY(position);
 	}
 }
 
-void VerticesGroup::rotate(float angle, const Vec2& fromPoint) {
-	Vec2 tmp;
-	for(std::list<Vertex>::iterator i = vertices.begin();
-	        i != vertices.end(); ++i) {
-		tmp = i->getPosition() - fromPoint;
-		tmp.rotate(angle);
-		i->getPosition() = fromPoint + tmp;
+void VerticesGroup::rotate(float angle, const Vector2& fromPoint) {
+	for(std::vector<Vector2>::iterator i = vertices.begin();
+	    i != vertices.end(); ++i) {
+		i->subtractFromXY(fromPoint);
+		i->rotate(angle);
+		i->addToXY(fromPoint);
 	}
-}
-
-void VerticesGroup::updateDataFromVertices(std::vector<float>& verticesData) {
-	assert(verticesData.size() % 2 == 0);
-
-	// We make sure the sizes are different.
-	if(vertices.size() * 2 != verticesData.size()) {
-		// First, we make a temporary copy of the vertices data.
-		std::vector<float> tmpData(vertices.size() * 2, 0.0f);
-		std::vector<float>& shortest = (verticesData.size() < tmpData.size()) ? (verticesData) : (tmpData);
-		std::vector<float>::iterator srcData = verticesData.begin();
-		std::vector<float>::iterator dstData = tmpData.begin();
-		std::list<Vertex>::iterator srcVertex = vertices.begin();
-
-		for(unsigned int i = 0; i < shortest.size(); ++i) {
-			*dstData = *srcData;
-			++srcData;
-			++dstData;
-
-			if(i % 2 == 1) {
-				++srcVertex;
-			}
-		}
-
-		// Next, if the vertices data became larger, we finish filling it up.
-		while(dstData != tmpData.end()) {
-			*dstData = srcVertex->getXPosition();
-			++dstData;
-			*dstData = srcVertex->getYPosition();
-			++dstData;
-			++srcVertex;
-		}
-
-		// We copy the temporary values in the real vertices data.
-		verticesData = tmpData;
-		// We synchronize the vertices with the data.
-		dstData = verticesData.begin();
-
-		for(srcVertex = vertices.begin(); srcVertex != vertices.end();
-		        srcVertex++) {
-			srcVertex->getPosition().setIsPtr(true);
-			srcVertex->getPosition().setXPtr(&(*dstData));
-			++dstData;
-			srcVertex->getPosition().setYPtr(&(*dstData));
-			++dstData;
-		}
-	}
-}
-
-void VerticesGroup::resetPointers() {
-	// We reset the vertices' pointers to the correct new floats.
-}
-
-void VerticesGroup::copyFrom(const VerticesGroup& src) {
-	// We make sure the recieved VertexGroup isn't the instance and isn't null.
-	if(this != &src && &src) {
-		vertices.clear();
-		vertices = src.vertices;
-	}
-}
-
-void VerticesGroup::clean() {
-	vertices.clear();
 }
 
 namespace RedBox {
 	std::ostream& operator<<(std::ostream& output, const VerticesGroup& v) {
 		output << "{vertices: [";
 
-		for(std::list<Vertex>::const_iterator i = v.vertices.begin();
-		        i != v.vertices.end();
-				++i) {
+		for(std::vector<Vector2>::const_iterator i = v.vertices.begin();
+		    i != v.vertices.end();
+		    ++i) {
 			if(i != v.vertices.begin()) {
 				output << ", ";
 			}

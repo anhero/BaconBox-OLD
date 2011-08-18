@@ -107,14 +107,18 @@ void SDLMixerEngine::askForDisconnect() {
 
 void SDLMixerEngine::setMusicVolume(int newMusicVolume) {
 	this->MusicEngine::setMusicVolume(newMusicVolume);
-	if(SDLMixerBackgroundMusic::currentMusic) {
-		Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(static_cast<int>(static_cast<float>(SDLMixerBackgroundMusic::currentMusic->getVolume()) * static_cast<float>(getMusicVolume()) / static_cast<float>(Sound::MAX_VOLUME))));
+	if(!this->MusicEngine::isMuted()) {
+		if(SDLMixerBackgroundMusic::currentMusic) {
+			Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(static_cast<int>(static_cast<float>(SDLMixerBackgroundMusic::currentMusic->getVolume()) * static_cast<float>(getMusicVolume()) / static_cast<float>(Sound::MAX_VOLUME))));
+		}
 	}
 }
 
 void SDLMixerEngine::setSoundVolume(int newSoundVolume) {
 	this->SoundEngine::setSoundVolume(newSoundVolume);
-	soundVolumeChange();
+	if(!this->SoundEngine::isMuted()) {
+		soundVolumeChange();
+	}
 }
 
 SDLMixerEngine::SDLMixerEngine() : SoundEngine(), MusicEngine(),

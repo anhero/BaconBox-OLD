@@ -6,7 +6,7 @@
 
 #include "Object.h"
 
-#include "Vec2.h"
+#include "Vector2.h"
 
 namespace RedBox {
 	/**
@@ -54,7 +54,7 @@ namespace RedBox {
 		 * @param point Point to check for if it overlaps with the AABB.
 		 * @return True if the point is inside the AABB, false if not.
 		 */
-		bool overlaps(const Vec2& point) const;
+		bool overlaps(const Vector2& point) const;
 
 		/**
 		 * Checks if a point is inside the AABB.
@@ -124,7 +124,7 @@ namespace RedBox {
 		 * @param rect AABB used to check for overlapping.
 		 * @return True if the point and the AABB overlap, false if not.
 		 */
-		static bool overlaps(const Vec2& point, const AABB& rect);
+		static bool overlaps(const Vector2& point, const AABB& rect);
 		
 		/**
 		 * Return true if the given AABB overlaps the given horizontal line. The

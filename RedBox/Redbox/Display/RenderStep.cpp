@@ -9,15 +9,14 @@
 #include "TimeHelper.h"
 #include "AnimationParameters.h"
 #include "Console.h"
-#include "Vertex.h"
 #include "VerticesGroup.h"
 #include "Engine.h"
 #include "Sprite.h"
 
 using namespace RedBox;
 
-RenderStep::RenderStep(): Object(), vertices(0), deleteVerticesGroup(false),
-	isPaused(false), animCounter(0.0) {
+RenderStep::RenderStep(): Object(), info(), mode(), vertices(NULL),
+	deleteVerticesGroup(false), isPaused(false), animCounter(0.0) {
 }
 
 RenderStep::RenderStep(TextureInfo* newTexInfo,
@@ -27,16 +26,11 @@ RenderStep::RenderStep(TextureInfo* newTexInfo,
                        unsigned int nbFrames,
                        const Color& newColor,
                        bool newDeleteVerticesGroup): Object(),
-	info(RenderInfo(newTexInfo, newVertices, frameWidth, frameHeight, nbFrames,
-	                newColor)),
+	info(newTexInfo, newVertices, frameWidth, frameHeight, nbFrames, newColor),
 	mode(FlagSet<RenderStepMode>(RenderStepMode::SHAPE) |
 	     FlagSet<RenderStepMode>(RenderStepMode::TEXTURE)),
-	vertices(newVertices),
-	deleteVerticesGroup(newDeleteVerticesGroup),
+	vertices(newVertices), deleteVerticesGroup(newDeleteVerticesGroup),
 	isPaused(false), animCounter(0.0) {
-	if(vertices) {
-		vertices->updateDataFromVertices(verticesData);
-	}
 
 	if(newColor != Color::WHITE) {
 		mode |= RenderStepMode::COLOR;
@@ -49,70 +43,37 @@ RenderStep::RenderStep(const std::string& key,
                        unsigned int frameHeight,
                        unsigned int nbFrames,
                        bool newDeleteVerticesGroup): Object(),
-	info(RenderInfo(ResourceManager::getTexture(key), newVertices, frameWidth,
-	                frameHeight, nbFrames)),
+	info(ResourceManager::getTexture(key), newVertices, frameWidth, frameHeight,
+	     nbFrames),
 	mode(FlagSet<RenderStepMode>(RenderStepMode::SHAPE) |
 	     FlagSet<RenderStepMode>(RenderStepMode::TEXTURE)),
 	vertices(newVertices), deleteVerticesGroup(newDeleteVerticesGroup),
 	isPaused(false), animCounter(0.0) {
-	if(vertices) {
-		vertices->updateDataFromVertices(verticesData);
-	}
 }
 
-RenderStep::RenderStep(const RenderStep& src): Object(src), vertices(0),
-	deleteVerticesGroup(false), isPaused(false), animCounter(0.0) {
-	copyFrom(src);
+RenderStep::RenderStep(const RenderStep& src): Object(src), info(src.info),
+	mode(src.mode), vertices(NULL), deleteVerticesGroup(false), isPaused(false),
+	animCounter(0.0) {
+}
+
+RenderStep::~RenderStep() {
+	clearVertices();
 }
 
 RenderStep& RenderStep::operator=(const RenderStep& src) {
 	Object::operator=(src);
-	copyFrom(src);
+
+	if(this != &src) {
+		info = src.info;
+		mode = src.mode;
+		clearVertices();
+		vertices = NULL;
+		deleteVerticesGroup = src.deleteVerticesGroup;
+		isPaused = false;
+		animCounter = 0.0;
+	}
+
 	return *this;
-}
-
-RenderStep::~RenderStep() {
-	clean();
-}
-void RenderStep::mask() {
-	if(!verticesData.empty()) {
-		GraphicDriver::drawMaskShapeWithTextureAndColor(verticesData, info, vertices->getVertices().size());
-	}
-}
-
-void RenderStep::unmask() {
-	if(!verticesData.empty()) {
-		GraphicDriver::unmask(verticesData, info, vertices->getVertices().size());
-	}
-}
-void RenderStep::render() {
-	updateVerticesData();
-
-	if(!verticesData.empty()) {
-		// We check which graphic driver method to use.
-		if(mode.isSet(RenderStepMode::SHAPE)) {
-			if(mode.isSet(RenderStepMode::TEXTURE)) {
-				if(mode.isSet(RenderStepMode::MASKED) || mode.isSet(RenderStepMode::INVERSE_MASKED)) {
-					GraphicBody* mask = getMask();
-					mask->mask();
-					//MASKED+TEXTURE
-					bool inversed = mode.isSet(RenderStepMode::INVERSE_MASKED);
-					GraphicDriver::drawMaskedShapeWithTextureAndColor(verticesData,
-					        info,
-					        vertices->getVertices().size(), inversed);
-					mask->unmask();
-				} else {
-					//TEXTURE
-					GraphicDriver::drawShapeWithTextureAndColor(verticesData,
-					        info,
-					        vertices->getVertices().size());
-				}
-			} else if(mode.isSet(RenderStepMode::COLOR)) {
-				//COLOR ONLY
-				GraphicDriver::drawShapeWithColor(verticesData, info, vertices->getVertices().size());
-			}
-		}
-	}
 }
 
 void RenderStep::update() {
@@ -132,6 +93,45 @@ void RenderStep::update() {
 	}
 }
 
+void RenderStep::render() {
+	if(vertices && !vertices->getVertices().empty()) {
+		// We check which graphic driver method to use.
+		if(mode.isSet(RenderStepMode::SHAPE)) {
+			if(mode.isSet(RenderStepMode::TEXTURE)) {
+				if(mode.isSet(RenderStepMode::MASKED) || mode.isSet(RenderStepMode::INVERSE_MASKED)) {
+					GraphicBody* mask = getMask();
+					mask->mask();
+					//MASKED+TEXTURE
+					bool inversed = mode.isSet(RenderStepMode::INVERSE_MASKED);
+					GraphicDriver::drawMaskedShapeWithTextureAndColor(vertices->getVertices(),
+					        info, inversed);
+					mask->unmask();
+				} else {
+					//TEXTURE
+					GraphicDriver::drawShapeWithTextureAndColor(vertices->getVertices(),
+					        info);
+				}
+			} else if(mode.isSet(RenderStepMode::COLOR)) {
+				//COLOR ONLY
+				GraphicDriver::drawShapeWithColor(vertices->getVertices(),
+				                                  info);
+			}
+		}
+	}
+}
+
+void RenderStep::mask() {
+	if(vertices && !vertices->getVertices().empty()) {
+		GraphicDriver::drawMaskShapeWithTextureAndColor(vertices->getVertices(),
+		        info);
+	}
+}
+
+void RenderStep::unmask() {
+	if(vertices && !vertices->getVertices().empty()) {
+		GraphicDriver::unmask(vertices->getVertices(), info);
+	}
+}
 RenderInfo& RenderStep::getRenderInfo() {
 	return info;
 }
@@ -214,74 +214,6 @@ const std::string& RenderStep::getCurrentAnimation() const {
 	return info.getCurrentAnimation();
 }
 
-void RenderStep::clean() {
-	if(deleteVerticesGroup && vertices) {
-		delete vertices;
-	}
-}
-
-void RenderStep::updateVerticesData() {
-	if(vertices) {
-		vertices->updateDataFromVertices(verticesData);
-	} else {
-		// We make sure that verticesData has the correct size.
-		if(verticesData.size() != verticesPtr.size() * 2) {
-			verticesData.resize(verticesPtr.size() * 2);
-		}
-
-		// We set all the verticesData's correct values.
-		std::vector<float>::iterator data = verticesData.begin();
-
-		for(std::list<Vertex*>::iterator i = verticesPtr.begin();
-		    i != verticesPtr.end(); ++i) {
-			*data = (*i)->getXPosition();
-			++data;
-			*data = (*i)->getYPosition();
-		}
-	}
-}
-
-
-void RenderStep::addVertexPtr(Vertex* vertexPtr) {
-	verticesPtr.push_back(vertexPtr);
-}
-
-void RenderStep::addVerticesPtr(std::list<Vertex*>::iterator first,
-                                std::list<Vertex*>::iterator last) {
-	verticesPtr.insert(verticesPtr.end(), first, last);
-}
-
-void RenderStep::addVerticesPtr(unsigned int nbVerticesPtr, ...) {
-	if(nbVerticesPtr) {
-		va_list lstPtr;
-		va_start(lstPtr, nbVerticesPtr);
-
-		for(unsigned int i = 0; i < nbVerticesPtr; i++) {
-			addVertexPtr(va_arg(lstPtr, Vertex*));
-		}
-
-		va_end(lstPtr);
-	}
-}
-
-void RenderStep::removeVertexPtr(Vertex* vertexPtr) {
-	verticesPtr.remove(vertexPtr);
-}
-
-void RenderStep::copyFrom(const RenderStep& src) {
-	if(this != &src && &src) {
-		clean();
-		info = src.info;
-		mode = src.mode;
-		vertices = 0;
-		verticesData.clear();
-		verticesPtr.clear();
-		deleteVerticesGroup = src.deleteVerticesGroup;
-		isPaused = false;
-		animCounter = 0.0;
-	}
-}
-
 GraphicBody* RenderStep::getMask() {
 	return info.getMask();
 }
@@ -294,38 +226,18 @@ void RenderStep::setColor(const Color& newColor) {
 	info.setColor(newColor);
 }
 
+void RenderStep::clearVertices() {
+	if(deleteVerticesGroup && vertices) {
+		delete vertices;
+	}
+}
+
 namespace RedBox {
 	std::ostream& operator<<(std::ostream& output, const RenderStep& r) {
-		output << "{info: " << r.info << ", mode: ";
-		bool needsPipe = false;
-
-		if(r.mode.isSet(RenderStepMode::SHAPE)) {
-			needsPipe = true;
-			output << "RenderStepMode::SHAPE";
-		}
-
-		if(r.mode.isSet(RenderStepMode::TEXTURE)) {
-			if(needsPipe) {
-				output << "|";
-			} else {
-				needsPipe = true;
-			}
-
-			output << "RenderStepMode::TEXTURE";
-		}
-
-		if(r.mode.isSet(RenderStepMode::COLOR)) {
-			if(needsPipe) {
-				output << "|";
-			}
-
-			output << "RenderStepMode::COLOR";
-		}
-
-		output << ", vertices: " << r.vertices << ", deleteVerticesGroup: " <<
-		       ((r.deleteVerticesGroup) ? ("true") : ("false")) << ", isPaused: " <<
-		       ((r.isPaused) ? ("true") : ("false")) << ", animCounter: " << r.animCounter
-		       << "}";
+		output << "{info: " << r.info << ", vertices: " << r.vertices <<
+				  ", deleteVerticesGroup: " << r.deleteVerticesGroup <<
+				  ", isPaused: " << r.isPaused << ", animCounter: " <<
+				  r.animCounter << "}";
 		return output;
 	}
 }

@@ -8,7 +8,7 @@
 #include <list>
 
 #include "Body.h"
-#include "Vec2.h"
+#include "Vector2.h"
 #include "Side.h"
 #include "FlagSet.h"
 #include "CollisionData.h"
@@ -38,7 +38,7 @@ namespace RedBox {
 		/**
 		 * The default constructor.
 		 */
-		GraphicBody(const Vec2& newPosition = Vec2());
+		GraphicBody(const Vector2& newPosition = Vector2());
 
 		/**
 		 * The copy constructor.
@@ -137,7 +137,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::layer
 		 * @see RedBox::Layer::scrollFactor
 		 */
-		const Vec2& getScrollFactor() const;
+		const Vector2& getScrollFactor() const;
 
 		/**
 		 * Sets the graphic body's scroll factor.
@@ -148,7 +148,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::layer
 		 * @see RedBox::Layer::scrollFactor
 		 */
-		void setScrollFactor(const Vec2& newScrollFactor);
+		void setScrollFactor(const Vector2& newScrollFactor);
 
 		/**
 		 * Sets the graphic body's scroll factor.
@@ -234,14 +234,14 @@ namespace RedBox {
 		 * vertical velocity.
 		 * @see RedBox::GraphicBody::velocity
 		 */
-		const Vec2& getVelocity() const;
+		const Vector2& getVelocity() const;
 
 		/**
 		 * Sets the graphic body's velocity.
 		 * @param newVelocity New horizontal and vertical velocity.
 		 * @see RedBox::GraphicBody::velocity
 		 */
-		void setVelocity(const Vec2& newVelocity);
+		void setVelocity(const Vector2& newVelocity);
 
 		/**
 		 * Sets the graphic body's horizontal and vertical velocity.
@@ -285,7 +285,7 @@ namespace RedBox {
 		 * vertical acceleration.
 		 * @see RedBox::GraphicBody::acceleration
 		 */
-		const Vec2& getAcceleration() const;
+		const Vector2& getAcceleration() const;
 
 		/**
 		 * Sets the graphic body's horizontal and vertical acceleration.
@@ -294,13 +294,13 @@ namespace RedBox {
 		 * float newYAcceleration)
 		 * @see RedBox::GraphicBody::acceleration
 		 */
-		void setAcceleration(const Vec2& newAcceleration);
+		void setAcceleration(const Vector2& newAcceleration);
 
 		/**
 		 * Sets the graphic body's horizontal and vertical acceleration.
 		 * @param newXAcceleration New horizontal acceleration.
 		 * @param newYAcceleration New vertical acceleration.
-		 * @see RedBox::GraphicBody::setAcceleration(const Vec2&
+		 * @see RedBox::GraphicBody::setAcceleration(const Vector2&
 		 * newAcceleration)
 		 * @see RedBox::GraphicBody::acceleration
 		 */
@@ -339,7 +339,7 @@ namespace RedBox {
 		 * @return 2D vector containing the horizontal and vertical position.
 		 * @see RedBox::GraphicBody::position
 		 */
-		const Vec2& getPosition() const;
+		const Vector2& getPosition() const;
 
 		/**
 		 * Sets the GraphicBody's horizontal and vertical position.
@@ -347,7 +347,7 @@ namespace RedBox {
 		 * @see GraphicBody::setPosition(float x, float y)
 		 * @see RedBox::GraphicBody::position
 		 */
-		void setPosition(const Vec2& newPosition);
+		void setPosition(const Vector2& newPosition);
 
 		/**
 		 * Sets the GraphicBody's horizontal and vertical position.
@@ -366,7 +366,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::move(float deltaX, float deltaY)
 		 * @see RedBox::GraphicBody::position
 		 */
-		void move(const Vec2& delta);
+		void move(const Vector2& delta);
 
 		/**
 		 * Moves the GraphicBody horizontally and vertically.
@@ -376,7 +376,7 @@ namespace RedBox {
 		 * @param deltaY Value to add to the GraphicBody's vertical position (in
 		 * pixels). Positive value moves the GraphicBody down and a negative
 		 * value moves the GraphicBody up.
-		 * @see RedBox::GraphicBody::move(const Vec2& delta);
+		 * @see RedBox::GraphicBody::move(const Vector2& delta);
 		 * @see RedBox::GraphicBody::position
 		 */
 		void move(float deltaX, float deltaY);
@@ -436,7 +436,7 @@ namespace RedBox {
 		 * @return 2D vector containing the last position calculated.
 		 * @see RedBox::GraphicBody::oldPosition
 		 */
-		const Vec2& getOldPosition() const;
+		const Vector2& getOldPosition() const;
 
 		/**
 		 * Gets the horizontal position before any movement was applied (at the
@@ -460,7 +460,7 @@ namespace RedBox {
 		 * velocity.
 		 * @see RedBox::GraphicBody::maxVelocity
 		 */
-		const Vec2& getMaxVelocity() const;
+		const Vector2& getMaxVelocity() const;
 
 		/**
 		 * Sets the graphic body's horizontal and vertical maximum velocity.
@@ -470,13 +470,13 @@ namespace RedBox {
 		 * would be -1.0f.
 		 * @see RedBox::GraphicBody::maxVelocity
 		 */
-		void setMaxVelocity(const Vec2& newMaxVelocity);
+		void setMaxVelocity(const Vector2& newMaxVelocity);
 
 		/**
 		 * Sets the graphic body's horizontal and vertical maximum velocity.
 		 * @param newMaxXVelocity New horizontal maximum velocity.
 		 * @param newMaxYVelocity New vertical maximum velocity.
-		 * @see RedBox::GraphicBody::setMaxVelocity(const Vec2& newMaxVelocity)
+		 * @see RedBox::GraphicBody::setMaxVelocity(const Vector2& newMaxVelocity)
 		 * @see RedBox::GraphicBody::maxVelocity
 		 */
 		void setMaxVelocity(float newMaxXVelocity, float newMaxYVelocity);
@@ -628,11 +628,11 @@ namespace RedBox {
 
 		/**
 		 * Gets the drag.
-		 * @return Vec2 containing the deceleration applied when there is no
+		 * @return Vector2 containing the deceleration applied when there is no
 		 * acceleration until velocity reaches 0.
 		 * @see RedBox::GraphicBody::drag
 		 */
-		const Vec2& getDrag() const;
+		const Vector2& getDrag() const;
 
 		/**
 		 * Sets the drag.
@@ -640,7 +640,7 @@ namespace RedBox {
 		 * acceleration until velocity reaches 0.
 		 * @see RedBox::GraphicBody::drag
 		 */
-		void setDrag(const Vec2& newDrag);
+		void setDrag(const Vector2& newDrag);
 
 		/**
 		 * Sets the drag.
@@ -690,14 +690,14 @@ namespace RedBox {
 		 * @return 2D vector containing the sprite's scaling currently applied.
 		 * @see RedBox::GraphicBody::scaling
 		 */
-		const Vec2& getScaling() const;
+		const Vector2& getScaling() const;
 
 		/**
 		 * Change the graphic body's scaling.
 		 * @param newScaling New scaling to apply.
 		 * @see RedBox::GraphicBody::scaling
 		 */
-		void setScaling(const Vec2& newScaling);
+		void setScaling(const Vector2& newScaling);
 
 		/**
 		 * Change the graphic body's scaling.
@@ -710,18 +710,18 @@ namespace RedBox {
 		/**
 		 * Adds some scaling to the current scaling applied.
 		 * @param scalingToAdd 2D vector containing the horizontal and vertical
-		 * scaling to add. For example, if you pass a Vec2(0.2f, 0.0f) to a
-		 * GraphicBody that already has a scaling of Vec2(1.3f, 1.0f), the
-		 * scaling will become Vec2(1.5f, 0.0f).
+		 * scaling to add. For example, if you pass a Vector2(0.2f, 0.0f) to a
+		 * GraphicBody that already has a scaling of Vector2(1.3f, 1.0f), the
+		 * scaling will become Vector2(1.5f, 0.0f).
 		 * @see RedBox::GraphicBody::scaling
 		 */
-		void addToScaling(const Vec2& scalingToAdd);
+		void addToScaling(const Vector2& scalingToAdd);
 
 		/**
 		 * Adds some scaling to the current scaling applied.
 		 * @param xScaling Horizontal scaling to add.
 		 * @param yScaling Vertical scaling to add.
-		 * @see RedBox::GraphicBody::addToScaling(const Vec2& scalingToAdd)
+		 * @see RedBox::GraphicBody::addToScaling(const Vector2& scalingToAdd)
 		 * @see RedBox::GraphicBody::scaling
 		 */
 		void addToScaling(float xScaling, float yScaling);
@@ -786,14 +786,14 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::angle
 		 */
 		virtual void rotateFromPoint(float rotationAngle,
-		                             const Vec2& rotationPoint);
+		                             const Vector2& rotationPoint);
 
 		/**
 		 * Gets the body's colliding box's offset.
 		 * @return 2D Vector containing the horizontal and vertical offset.
 		 * @see RedBox::GraphicBody::offset
 		 */
-		const Vec2& getOffset() const;
+		const Vector2& getOffset() const;
 
 		/**
 		 * Sets the body's colliding box's offset.
@@ -801,7 +801,7 @@ namespace RedBox {
 		 * collisions.
 		 * @see RedBox::GraphicBody::offset
 		 */
-		void setOffset(const Vec2& newOffset);
+		void setOffset(const Vector2& newOffset);
 
 		/**
 		 * Sets the body's colliding box's horizontal and vertical offset.
@@ -849,7 +849,7 @@ namespace RedBox {
 		 * box ratios.
 		 * @see RedBox::GraphicBody::collidingBoxRatio;
 		 */
-		const Vec2& getCollidingBoxRatio() const;
+		const Vector2& getCollidingBoxRatio() const;
 
 		/**
 		 * Sets the horizontal and vertical colliding box ratios.
@@ -857,7 +857,7 @@ namespace RedBox {
 		 * vertical colliding box ratios.
 		 * @see RedBox::GraphicBody::collidingBoxRatio
 		 */
-		void setCollidingBoxRatio(const Vec2& newCollidingBoxRatio);
+		void setCollidingBoxRatio(const Vector2& newCollidingBoxRatio);
 
 		/**
 		 * Sets the horizontal and vertical colliding box ratios.
@@ -1016,33 +1016,33 @@ namespace RedBox {
 		 * the body is. The higher the vertical value, the more to the bottom
 		 * the body is.
 		 */
-		Vec2 position;
+		Vector2 position;
 
 		/// Position at which the graphic body was at the last update.
-		Vec2 oldPosition;
+		Vector2 oldPosition;
 
 		/**
 		 * Velocity vector. Contains the graphic body's horizontal and vertical
 		 * speed.
 		 */
-		Vec2 velocity;
+		Vector2 velocity;
 
 		/**
 		 * Horizontal and vertical acceleration. Values are in pixels/sec^2.
 		 */
-		Vec2 acceleration;
+		Vector2 acceleration;
 
 		/**
 		 * Deceleration applied when there is no acceleration until velocity
 		 * reaches 0.
 		 */
-		Vec2 drag;
+		Vector2 drag;
 
 		/// Maximum horizontal and vertical velocity.
-		Vec2 maxVelocity;
+		Vector2 maxVelocity;
 
 		/// Sprite scaling currently applied on the X and Y axis.
-		Vec2 scaling;
+		Vector2 scaling;
 
 		/**
 		 * Rotation currently applied to the sprite (in degrees, between 0 and
@@ -1096,14 +1096,14 @@ namespace RedBox {
 		bool isInState;
 
 		/// 2D vector added to the position when detecting collisions.
-		Vec2 offset;
+		Vector2 offset;
 
 		/**
 		 * Size of the colliding box compared to the body's actual size. To make
 		 * the colliding box half the body's size, this vector would be set at
 		 * (0.5f, 0.5f).
 		 */
-		Vec2 collidingBoxRatio;
+		Vector2 collidingBoxRatio;
 
 		/**
 		 * Resets the layer changed status.

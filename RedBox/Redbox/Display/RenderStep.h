@@ -20,7 +20,6 @@
 
 namespace RedBox {
 	class VerticesGroup;
-	class Vertex;
 	/**
 	 * Definition of a specific render step.
 	 * @ingroup Display
@@ -94,12 +93,12 @@ namespace RedBox {
 		RenderStep(const RenderStep& src);
 
 		/**
-		 * Empty destructor.
+		 * Destructor.
 		 */
 		virtual ~RenderStep();
 
 		/**
-		 * Assignation operator overload. Makes the instance a copy of the
+		 * Assignment operator overload. Makes the instance a copy of the
 		 * recieved RenderStep.
 		 * @param src RenderStep to make a copy of.
 		 * @return Current instance for assignation chaining.
@@ -107,14 +106,14 @@ namespace RedBox {
 		RenderStep& operator=(const RenderStep& src);
 
 		/**
-		 * Renders the vertices using the info and the mode known.
-		 */
-		virtual void render();
-
-		/**
 		 * Updates the the RenderStep.
 		 */
 		virtual void update();
+
+		/**
+		 * Renders the vertices using the info and the mode known.
+		 */
+		virtual void render();
 
 		/**
 		 * Similar to the render function except that it will only
@@ -252,41 +251,6 @@ namespace RedBox {
 		const std::string& getCurrentAnimation() const;
 
 		/**
-		 * Synchronizes the vertices data with their respective vertices. To be
-		 * called at each sprite update or each time a sprite is moved.
-		 */
-		void updateVerticesData();
-
-		/**
-		 * Adds a vertex pointer to the render step. Only useful if the instance
-		 * is a secondary render step.
-		 * @param vertexPtr Pointer to add to the list.
-		 */
-		void addVertexPtr(Vertex* vertexPtr);
-
-		/**
-		 * Adds vertices to the list that the render step needs to keep
-		 * synchronized with.
-		 * @param first Iterator to the first vertex to add.
-		 * @param last Iterator to the last vertex to add.
-		 */
-		void addVerticesPtr(std::list<Vertex*>::iterator first,
-		                    std::list<Vertex*>::iterator last);
-
-		/**
-		 * Adds vertices to the list that the render step needs to keep
-		 * synchronized with. Takes a variable number of arguments.
-		 * @param nbVerticesPtr Number of vertices pointers to add.
-		 */
-		void addVerticesPtr(unsigned int nbVerticesPtr, ...);
-
-		/**
-		 * Removes a vertex pointer from the render step's list.
-		 * @param vertexPtr Pointer to remove from the list.
-		 */
-		void removeVertexPtr(Vertex* vertexPtr);
-
-		/**
 		 * Sets RenderInfo's color.
 		 * @param newColor RenderInfo's new color.
 		 * @see RedBox::RenderStep::info
@@ -313,17 +277,6 @@ namespace RedBox {
 		VerticesGroup* vertices;
 
 		/**
-		 * Data about the vertices' coordinates.
-		 */
-		std::vector<float> verticesData;
-
-		/**
-		 * Contains a list of pointers to the vertices this render step has to
-		 * keep its vertices data synchronized with.
-		 */
-		std::list<Vertex*> verticesPtr;
-
-		/**
 		 * Determines if the RenderStep needs to delete its vertices in its
 		 * destructor.
 		 */
@@ -337,16 +290,7 @@ namespace RedBox {
 		/// Internal counter used for animations.
 		double animCounter;
 
-		/**
-		 * Resets the RenderStep. Also frees up all allocated memory.
-		 */
-		void clean();
-
-		/**
-		 * Makes the instance a copy of the recieved RenderStep.
-		 * @param src RenderStep to make a copy of.
-		 */
-		void copyFrom(const RenderStep& src);
+		void clearVertices();
 	};
 }
 

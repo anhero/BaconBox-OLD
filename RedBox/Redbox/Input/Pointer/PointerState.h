@@ -47,14 +47,14 @@ namespace RedBox {
 		 * @param index Index of the cursor to get.
 		 * @return Reference to the cursor's position.
 		 */
-		Vec2& getCursorPosition(unsigned int index);
+		Vector2& getCursorPosition(unsigned int index);
 
 		/**
 		 * Gets a cursor's previous position.
 		 * @param index Index of the cursor to get.
 		 * @return Reference to the cursor's previous position.
 		 */
-		Vec2& getCursorPreviousPosition(unsigned int index);
+		Vector2& getCursorPreviousPosition(unsigned int index);
 
 		/**
 		 * Gets a cursor's buttons.

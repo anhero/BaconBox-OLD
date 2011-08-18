@@ -155,7 +155,7 @@ namespace RedBox {
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
+		void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
 
 		/**
 		 * Set the string size in pixel.

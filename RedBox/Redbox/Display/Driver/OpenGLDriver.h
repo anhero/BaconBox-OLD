@@ -16,7 +16,7 @@
 #include "RBOpenGL.h"
 
 #include "Color.h"
-#include "Vec2.h"
+#include "Vector2.h"
 
 namespace RedBox {
 	class RenderInfo;
@@ -142,9 +142,9 @@ namespace RedBox {
 		 * @param backgroundColor Color used for the glClearColor() function
 		 * (the scene's background color). The alpha component is ignored.
 		 */
-		static void prepareScene(const Vec2& position, float angle, float zoom,
+		static void prepareScene(const Vector2& position, float angle, float zoom,
 		                         const Color& backgroundColor,
-		                         const Vec2& rotationCenterOffset);
+		                         const Vector2& rotationCenterOffset);
 
 		/**
 		 * Pushes the current matrix on the stack.
@@ -155,7 +155,7 @@ namespace RedBox {
 		 * Applies a translation on the current matrix.
 		 * @param translation 2D translation to apply.
 		 */
-		static void translate(const Vec2& translation);
+		static void translate(const Vector2& translation);
 
 		/**
 		 * Pops the current matrix from the stack.

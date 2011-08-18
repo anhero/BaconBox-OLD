@@ -7,7 +7,7 @@
 
 #include "Object.h"
 
-#include "Vec2.h"
+#include "Vector2.h"
 
 namespace RedBox{
 	class TextureInfo;
@@ -23,7 +23,7 @@ namespace RedBox{
 		 * before rendering the next glyph when we are drawing in horizontal
 		 * layout.
 		 */
-		Vec2 advance;
+		Vector2 advance;
 
 		/**
 		 * Amount in pixels we must add to the current cursor position before
@@ -34,10 +34,10 @@ namespace RedBox{
 		 * (We need this value because character are not all drawn
 		 * at the the same height EX. 'y' go below the baseline)
 		 */
-		Vec2 horizontalBearing;
+		Vector2 horizontalBearing;
 
 		/// Glyph's size.
-		Vec2 size;
+		Vector2 size;
 
 		/// Pointer to the texture handle and texture size.
 		TextureInfo* textureInfo;

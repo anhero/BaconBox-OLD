@@ -57,7 +57,6 @@ Sprite::Sprite(TextureInfo* textureInfo,
 	          nbFrames);
 }
 
-
 Sprite::Sprite(const Sprite& src): GraphicBody(src) {
 	copyFrom(src);
 }
@@ -116,8 +115,8 @@ void Sprite::createVertex(float x, float y) {
 	vertices.addVertex(x, y);
 }
 
-Vec2 Sprite::getPositionCenter() const {
-	return Vec2(getXPosition() + getWidth() * 0.5f,
+Vector2 Sprite::getPositionCenter() const {
+	return Vector2(getXPosition() + getWidth() * 0.5f,
 	            getYPosition() + getHeight() * 0.5f);
 }
 
@@ -134,7 +133,7 @@ void Sprite::setPosition(float newXPosition, float newYPosition) {
 	vertices.setPosition(newXPosition, newYPosition);
 }
 
-const Vec2 Sprite::getSize() const {
+const Vector2 Sprite::getSize() const {
 	return vertices.getSize();
 }
 
@@ -321,21 +320,21 @@ void Sprite::addAnimation(const std::string& name,
 
 void Sprite::setScaling(float newXScaling, float newYScaling) {
 	if(newXScaling && newYScaling) {
-		vertices.scale(Vec2(newXScaling / getXScaling(), newYScaling / getYScaling()));
+		vertices.scale(Vector2(newXScaling / getXScaling(), newYScaling / getYScaling()));
 		GraphicBody::setScaling(newXScaling, newYScaling);
-		Vec2 tmp = vertices.getPosition();
+		Vector2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	} else {
 		Console::print("Tried to set a scaling of 0 to a sprite.");
 	}
 }
 
-void Sprite::rotateFromPoint(float rotationAngle, const Vec2& rotationPoint) {
+void Sprite::rotateFromPoint(float rotationAngle, const Vector2& rotationPoint) {
 	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
 
 	if(rotationAngle != 0.0f) {
 		vertices.rotate(rotationAngle, rotationPoint);
-		Vec2 tmp = vertices.getPosition();
+		Vector2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 	}
 }
@@ -350,7 +349,6 @@ void Sprite::copyFrom(const Sprite& src) {
 		vertices = src.vertices;
 		renderSteps.push_front(new RenderStep(*src.renderSteps.front()));
 		renderSteps.front()->setVerticesGroup(&vertices);
-		renderSteps.front()->updateVerticesData();
 	} else {
 		clean();
 	}

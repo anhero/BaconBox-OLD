@@ -10,10 +10,10 @@
 
 using namespace RedBox;
 
-Camera::Camera(): Body(), position(Vec2()), angle(0), zoomFactor(1.0f),
+Camera::Camera(): Body(), position(Vector2()), angle(0), zoomFactor(1.0f),
 	backgroundColor(Color::BLACK), shakeIntensity(0.0f),
 	shakeStart(0.0), shakeDuration(0.0), shakeAxes(ShakeAxes::BOTH_AXES),
-	offset(Vec2()) {
+	offset(Vector2()) {
 }
 
 Camera::Camera(const Camera& src) : Body(), position(src.position),
@@ -39,23 +39,23 @@ Camera& Camera::operator=(const Camera& src) {
 	return *this;
 }
 
-const Vec2& Camera::getPosition() const {
+const Vector2& Camera::getPosition() const {
 	return position;
 }
 
 void Camera::setPosition(float x, float y) {
-	position = Vec2(x, y);
+	position = Vector2(x, y);
 }
 
-void Camera::setPosition(const Vec2& newPosition) {
+void Camera::setPosition(const Vector2& newPosition) {
 	position = newPosition;
 }
 
 void Camera::move(float x, float y) {
-	position += Vec2(x, y);
+	position += Vector2(x, y);
 }
 
-void Camera::move(const Vec2& moveVector) {
+void Camera::move(const Vector2& moveVector) {
 	position += moveVector;
 }
 
@@ -115,7 +115,7 @@ float Camera::getZoomFactor() const {
 }
 
 void Camera::setZoomFactor(float newZoomFactor) {
-	Vec2 center(getXPosition() + static_cast<float>(getWidth()) * 0.5f, getYPosition() + static_cast<float>(getHeight()) * 0.5f);
+	Vector2 center(getXPosition() + static_cast<float>(getWidth()) * 0.5f, getYPosition() + static_cast<float>(getHeight()) * 0.5f);
 	zoomFactor = newZoomFactor;
 	setXPosition(center.getX() - static_cast<float>(getWidth()) * 0.5f);
 	setYPosition(center.getY() - static_cast<float>(getHeight()) * 0.5f);
@@ -139,12 +139,12 @@ void Camera::shake(float intensity, double duration, bool forceReset,
 	}
 }
 
-Vec2 Camera::screenToWorld(const Vec2& positionOnScreen) const {
+Vector2 Camera::screenToWorld(const Vector2& positionOnScreen) const {
 	return positionOnScreen * (1.0f / zoomFactor) + position;
 }
 
-Vec2 Camera::screenToWorld(float x, float y) const {
-	return Vec2(x, y) * (1.0f / zoomFactor) + position;
+Vector2 Camera::screenToWorld(float x, float y) const {
+	return Vector2(x, y) * (1.0f / zoomFactor) + position;
 }
 
 float Camera::screenToWorldX(float x) const {
@@ -155,12 +155,12 @@ float Camera::screenToWorldY(float y) const {
 	return y * (1.0f / zoomFactor) + position.getY();
 }
 
-Vec2 Camera::worldToScreen(const Vec2& positionInWorld) const {
+Vector2 Camera::worldToScreen(const Vector2& positionInWorld) const {
 	return (positionInWorld - position) * (1.0f / zoomFactor);
 }
 
-Vec2 Camera::worldToScreen(float x, float y) const {
-	return (Vec2(x, y) - position) * (1.0f / zoomFactor);
+Vector2 Camera::worldToScreen(float x, float y) const {
+	return (Vector2(x, y) - position) * (1.0f / zoomFactor);
 }
 
 float Camera::worldToScreenX(float x) const {
@@ -252,10 +252,10 @@ void Camera::update() {
 		}
 	} else {
 		// We reset the offsets.
-		offset = Vec2();
+		offset = Vector2();
 	}
 }
 
 void Camera::render() {
-	GraphicDriver::prepareScene(position + offset, angle, zoomFactor, backgroundColor, Vec2(static_cast<float>(getWidth()) * 0.5f, static_cast<float>(getHeight()) * 0.5f));
+	GraphicDriver::prepareScene(position + offset, angle, zoomFactor, backgroundColor, Vector2(static_cast<float>(getWidth()) * 0.5f, static_cast<float>(getHeight()) * 0.5f));
 }

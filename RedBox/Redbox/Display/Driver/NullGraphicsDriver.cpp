@@ -38,7 +38,7 @@ void NullGraphicsDriver::drawMaskedShapeWithTextureAndColor(GLfloat*,
 }
 
 void NullGraphicsDriver::prepareScene(int, int, int, float, const Color&,
-                                      const Vec2&) {
+                                      const Vector2&) {
 }
 
 void NullGraphicsDriver::initializeGraphicDriver(int, int) {
