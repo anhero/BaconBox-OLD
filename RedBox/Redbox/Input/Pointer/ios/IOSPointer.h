@@ -46,7 +46,7 @@ namespace RedBox {
 		void updateDevice();
 	private:
 		/// Temporary position for ios' event handling.
-		Vec2 iosPosition;
+		Vector2 iosPosition;
 		/// Temporary button state for ios' event handling.
 		bool isTouchDown;
 		/**
