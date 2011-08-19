@@ -304,7 +304,8 @@ namespace RedBox {
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		virtual void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
+		virtual void rotateFromPoint(float rotationAngle,
+									 const Vector2& rotationPoint);
 
 		/**
 		 * Similar to the render function except that it will only

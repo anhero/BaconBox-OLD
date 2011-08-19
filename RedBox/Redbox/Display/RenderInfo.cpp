@@ -194,7 +194,7 @@ const Color& RenderInfo::getColor() const {
 	return color;
 }
 
-const TextureInfo* RenderInfo::getTexInfo() const {
+TextureInfo* RenderInfo::getTexInfo() {
 	return texInfo;
 }
 

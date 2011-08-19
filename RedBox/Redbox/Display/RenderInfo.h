@@ -153,7 +153,7 @@ namespace RedBox {
 		 * the texInfo pointer.
 		 * @return Pointer to the RenderInfo's texture's information.
 		 */
-		const TextureInfo* getTexInfo() const;
+		TextureInfo* getTexInfo();
 
 		/**
 		 * Gets the vector of texture coordinates.
