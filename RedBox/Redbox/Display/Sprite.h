@@ -216,7 +216,7 @@ namespace RedBox {
 		 * given color components Range are from 0 to 255.
 		 * Componentes are RGBA.
 		 */
-		void setMainColor(const Color& color);
+		virtual void setMainColor(const Color& color);
 
 		/**
 		 * Set the alpha component on the main renderstep.
