@@ -53,22 +53,47 @@ namespace RedBox {
 		 * @see RedBox::SoundEngine::soundVolume;
 		 */
 		virtual void setSoundVolume(int newSoundVolume);
+
+		/**
+		 * Checks if the sound engine is muted.
+		 * @return True if the sound engine is muted, false if not.
+		 */
+		bool isMuted() const;
+
+		/**
+		 * Mutes or unmutes the sound engine.
+		 * @param newMuted True to mute, false to unmute.
+		 */
+		void setMuted(bool newMuted);
+
+		/**
+		 * Mutes the sound engine.
+		 */
+		void mute();
+
+		/**
+		 * Unmutes the sound engine.
+		 */
+		void unmute();
 	protected:
 		/**
 		 * Default constructor. Engine initialization is specifically done in
 		 * the init() method inherited from AudioEngine.
 		 */
 		SoundEngine();
+
 		/**
 		 * Destructor. Unloads the sound engine.
 		 */
 		virtual ~SoundEngine();
+
 		/**
 		 * Loads sound data from a file.
 		 * @param filePath Path to the sound file to load.
 		 * @return Pointer to the sound data loaded.
 		 */
 		virtual SoundInfo* loadSound(const std::string& filePath) = 0;
+
 		/**
 		 * Loads sound data from engine specific parameters.
 		 * @param params Parameters to use to load the sound data. Each engine
@@ -76,6 +101,7 @@ namespace RedBox {
 		 * @return Pointer to the sound data loaded.
 		 */
 		virtual SoundInfo* loadSound(const SoundParameters& params) = 0;
+
 		/**
 		 * Unloads sound data.
 		 * @param sound Sound data that needs to be unloaded. Delete must not be
@@ -85,7 +111,15 @@ namespace RedBox {
 		 */
 		virtual bool unloadSound(SoundInfo* sound) = 0;
 	private:
+		/// Value between 0 and 100 for the volume level. 100 is the maximum.
 		int soundVolume;
+
+		/**
+		 * Value used to determine if the music engine is muted or not. When it
+		 * is not muted, this attribute is set to -1. When it is muted, it
+		 * contains the volume.
+		 */
+		int muteValue;
 	};
 }
 

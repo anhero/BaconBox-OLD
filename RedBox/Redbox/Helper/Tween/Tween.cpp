@@ -98,13 +98,13 @@ float Tween::ease(float t, Ease easeType, float b, float c, float d) {
 		return c / 2.0f * (t * t * t * t * t + 2.0f) + b;
 		break;
 	case Ease::IN_SINE:
-		return -c * cosf(t / d * (MathHelper::PI / 2.0f)) + c + b;
+		return -c * cosf(t / d * (MathHelper::PI<float>() / 2.0f)) + c + b;
 		break;
 	case Ease::OUT_SINE:
-		return c * sinf(t / d * (MathHelper::PI / 2.0f)) + b;
+		return c * sinf(t / d * (MathHelper::PI<float>() / 2.0f)) + b;
 		break;
 	case Ease::IN_OUT_SINE:
-		return -c / 2.0f * (cosf(MathHelper::PI * t / d) - 1.0f) + b;
+		return -c / 2.0f * (cosf(MathHelper::PI<float>() * t / d) - 1.0f) + b;
 		break;
 	case Ease::IN_EXPO:
 		return c * powf(2.0f, 10.0f * (t / d - 1.0f)) + b;

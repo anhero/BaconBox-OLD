@@ -140,7 +140,7 @@ namespace RedBox {
 		static void prepareScene(int xTranslation, int yTranslation,
 		                         int angle, float zoom,
 		                         const Color& backgroundColor,
-		                         const Vec2& rotationCenterOffset);
+		                         const Vector2& rotationCenterOffset);
 
 		/**
 		 * Pushes the current matrix on the stack.
@@ -151,7 +151,7 @@ namespace RedBox {
 		 * Applies a translation on the current matrix.
 		 * @param translation 2D translation to apply.
 		 */
-		static void translate(const Vec2& translation);
+		static void translate(const Vector2& translation);
 
 		/**
 		 * Pops the current matrix from the stack.

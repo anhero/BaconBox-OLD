@@ -12,77 +12,69 @@
 
 using namespace RedBox;
 
-void GraphicDriver::drawShapeWithTextureAndColor(std::vector<float>& vertices,
-        RenderInfo& renderingInfo,
-        unsigned int nbVertices) {
+void GraphicDriver::drawShapeWithTextureAndColor(std::vector<Vector2>& vertices,
+        RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawShapeWithTextureAndColor(&(*(vertices.begin())),
-	        renderingInfo,
-	        nbVertices);
+	OpenGLDriver::drawShapeWithTextureAndColor(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
+	        renderingInfo, vertices.size());
 #endif
 }
 
-void GraphicDriver::drawShapeWithTexture(std::vector<float>& vertices,
-        RenderInfo& renderingInfo,
-        unsigned int nbVertices) {
+void GraphicDriver::drawShapeWithTexture(std::vector<Vector2>& vertices,
+        RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawShapeWithTexture(&(*(vertices.begin())),
+	OpenGLDriver::drawShapeWithTexture(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
 	                                   renderingInfo,
-	                                   nbVertices);
+	                                   vertices.size());
 #endif
 }
 
-void GraphicDriver::drawShapeWithColor(std::vector<float>& vertices,
-                                       RedBox::RenderInfo& renderingInfo,
-                                       unsigned int nbVertices) {
+void GraphicDriver::drawShapeWithColor(std::vector<Vector2>& vertices,
+                                       RedBox::RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawShapeWithColor(&(*(vertices.begin())), renderingInfo,
-	                                 nbVertices);
+	OpenGLDriver::drawShapeWithColor(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
+	                                 renderingInfo, vertices.size());
 #endif
 }
 
 
-void GraphicDriver::drawMaskShapeWithTexture(std::vector<float>& vertices,
-        RedBox::RenderInfo& renderingInfo,
-        unsigned int nbVertices) {
+void GraphicDriver::drawMaskShapeWithTexture(std::vector<Vector2>& vertices,
+        RedBox::RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawMaskShapeWithTexture(&(*(vertices.begin())), renderingInfo,
-	                                       nbVertices);
+	OpenGLDriver::drawMaskShapeWithTexture(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
+	                                       renderingInfo, vertices.size());
 #endif
 }
 
-void GraphicDriver::unmask(std::vector<float>& vertices,
-                           RedBox::RenderInfo& renderingInfo,
-                           unsigned int nbVertices) {
+void GraphicDriver::unmask(std::vector<Vector2>& vertices,
+                           RedBox::RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::unmask(&(*(vertices.begin())), renderingInfo,
-	                     nbVertices);
+	OpenGLDriver::unmask(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
+	                     renderingInfo, vertices.size());
 #endif
 }
 
-void GraphicDriver::drawMaskShapeWithTextureAndColor(std::vector<float>& vertices,
-        RedBox::RenderInfo& renderingInfo,
-        unsigned int nbVertices) {
+void GraphicDriver::drawMaskShapeWithTextureAndColor(std::vector<Vector2>& vertices,
+        RedBox::RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawMaskShapeWithTextureAndColor(&(*(vertices.begin())), renderingInfo,
-	        nbVertices);
+	OpenGLDriver::drawMaskShapeWithTextureAndColor(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
+	        renderingInfo, vertices.size());
 #endif
 }
 
 
-void GraphicDriver::drawMaskedShapeWithTextureAndColor(std::vector<float>& vertices,
+void GraphicDriver::drawMaskedShapeWithTextureAndColor(std::vector<Vector2>& vertices,
         RenderInfo& renderingInfo,
-        unsigned int nbVertices,
         bool inversedMask) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawMaskedShapeWithTextureAndColor(&(*(vertices.begin())), renderingInfo,
-	        nbVertices, inversedMask);
+	OpenGLDriver::drawMaskedShapeWithTextureAndColor(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
+	        renderingInfo, vertices.size(), inversedMask);
 #endif
 }
 
-void GraphicDriver::prepareScene(const Vec2& position, float angle, float zoom,
+void GraphicDriver::prepareScene(const Vector2& position, float angle, float zoom,
                                  const Color& backgroundColor,
-                                 const Vec2& rotationCenterOffset) {
+                                 const Vector2& rotationCenterOffset) {
 
 #ifdef RB_OPENGL
 	OpenGLDriver::prepareScene(position, angle, zoom, backgroundColor,
@@ -97,7 +89,7 @@ void GraphicDriver::pushMatrix() {
 #endif
 }
 
-void GraphicDriver::translate(const Vec2& translation) {
+void GraphicDriver::translate(const Vector2& translation) {
 #ifdef RB_OPENGL
 	OpenGLDriver::translate(translation);
 #endif

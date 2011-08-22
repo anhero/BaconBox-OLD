@@ -42,7 +42,7 @@ void SDLPointer::updateDevice() {
 
 	// We check the pointer's position.
 	getCursorPreviousPosition(0) = getCursorPosition(0);
-	getCursorPosition(0) = Vec2(static_cast<float>(x), static_cast<float>(y));
+	getCursorPosition(0) = Vector2(static_cast<float>(x), static_cast<float>(y));
 	if(hasMoved()) {
 		Pointer::move.shoot(PointerMoveSignalData(state, 0));
 	}

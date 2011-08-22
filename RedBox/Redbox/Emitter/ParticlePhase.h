@@ -5,7 +5,7 @@
 #ifndef RB_PARTICLE_PHASE_H
 #define RB_PARTICLE_PHASE_H
 
-#include "Vec2.h"
+#include "Vector2.h"
 
 namespace RedBox {
 	/**
@@ -36,10 +36,10 @@ namespace RedBox {
 		ParticlePhase(double newPhaseDuration,
 					  double newPhaseDurationVariance,
 					  float newAlphaPerSecond = 0.0f,
-					  const Vec2& newScalingPerSecond = Vec2(),
+					  const Vector2& newScalingPerSecond = Vector2(),
 					  float newAnglePerSecond = 0.0f,
 					  float newAlphaPerSecondVariance = 0.0f,
-					  const Vec2& newScalingPerSecondVariance = Vec2(),
+					  const Vector2& newScalingPerSecondVariance = Vector2(),
 					  float newAnglePerSecondVariance = 0.0f,
 					  const std::string& newAnimationName = std::string());
 
@@ -53,7 +53,7 @@ namespace RedBox {
 		float alphaPerSecond;
 
 		/// Scaling value being changed per second.
-		Vec2 scalingPerSecond;
+		Vector2 scalingPerSecond;
 
 		/// Rotation angle per second.
 		float anglePerSecond;
@@ -68,7 +68,7 @@ namespace RedBox {
 		 * Scaling per second variance. A value between 0 and the variance is
 		 * added to the scaling per second when a particle is shot.
 		 */
-		Vec2 scalingPerSecondVariance;
+		Vector2 scalingPerSecondVariance;
 
 		/**
 		 * Rotation angle per second variance. A value between 0 and the

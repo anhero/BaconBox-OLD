@@ -29,7 +29,7 @@ bool AABB::overlaps(const AABB& rect) const {
 	return overlaps(*this, rect);
 }
 
-bool AABB::overlaps(const Vec2& point) const {
+bool AABB::overlaps(const Vector2& point) const {
 	return overlaps(point.getX(), point.getY(), *this);
 }
 
@@ -51,7 +51,7 @@ bool AABB::overlaps(float x, float y, const AABB& rect) {
 	       y < rect.maxY;
 }
 
-bool AABB::overlaps(const Vec2& point, const AABB& rect) {
+bool AABB::overlaps(const Vector2& point, const AABB& rect) {
 	return overlaps(point.getX(), point.getY(), rect);
 }
 

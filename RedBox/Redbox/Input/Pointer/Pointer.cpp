@@ -8,11 +8,11 @@ Pointer* Pointer::getDefault() {
 	return InputManager::getDefaultPointer();
 }
 
-const Vec2& Pointer::getPosition(unsigned int cursorIndex) const {
+const Vector2& Pointer::getPosition(unsigned int cursorIndex) const {
 	return state.cursors[cursorIndex].getPosition();
 }
 
-const Vec2& Pointer::getPreviousPosition(unsigned int cursorIndex) const {
+const Vector2& Pointer::getPreviousPosition(unsigned int cursorIndex) const {
 	return state.cursors[cursorIndex].getPreviousPosition();
 }
 
@@ -50,11 +50,11 @@ std::vector<CursorState>& Pointer::getCursorStates() {
 	return state.cursors;
 }
 
-Vec2& Pointer::getCursorPosition(unsigned int index) {
+Vector2& Pointer::getCursorPosition(unsigned int index) {
 	return state.getCursorPosition(index);
 }
 
-Vec2& Pointer::getCursorPreviousPosition(unsigned int index) {
+Vector2& Pointer::getCursorPreviousPosition(unsigned int index) {
 	return state.getCursorPreviousPosition(index);
 }
 

@@ -2,17 +2,17 @@
 
 using namespace RedBox;
 
-CursorState::CursorState(float x, float y): position(Vec2(x, y)),
-previousPosition(Vec2(x, y)),
+CursorState::CursorState(float x, float y): position(Vector2(x, y)),
+previousPosition(Vector2(x, y)),
 buttons(std::vector<bool>(CursorButton::NB_BUTTONS, false)),
 previousButtons(std::vector<bool>(CursorButton::NB_BUTTONS, false)) {
 }
 
-const Vec2& CursorState::getPosition() const {
+const Vector2& CursorState::getPosition() const {
 	return position;
 }
 
-const Vec2& CursorState::getPreviousPosition() const {
+const Vector2& CursorState::getPreviousPosition() const {
 	return previousPosition;
 }
 

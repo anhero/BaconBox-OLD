@@ -12,7 +12,7 @@
 #include "SoundParameters.h"
 #include "MusicParameters.h"
 #ifndef RB_ANDROID
-	#include "Font.h"
+#include "Font.h"
 #endif
 #include "PixMap.h"
 
@@ -28,6 +28,7 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	class ResourceManager {
+		friend class Engine;
 	public:
 		/**
 		 * Add a texture already loaded as a pixmap into the graphic memory and
@@ -47,8 +48,8 @@ namespace RedBox {
 		 * Loads a texture from a file and assigns a representative key to it.
 		 * @param key Key used to identify this new texture.
 		 * @param filePath Path to the file containing the texture.
-         * @param colorFormat Used to select the internal colorFormat of the texture. If you choose ALPHA while loading
-         * an RGBA image, the engine will use the red channel and strip the 3 other channel.
+		 * @param colorFormat Used to select the internal colorFormat of the texture. If you choose ALPHA while loading
+		 * an RGBA image, the engine will use the red channel and strip the 3 other channel.
 		 * @param overwrite When set to true, it will delete any existing
 		 * texture at the specified key. (False (default) will print an error if
 		 * the key is occupied).
@@ -57,28 +58,30 @@ namespace RedBox {
 		 */
 		static TextureInfo* loadTexture(const std::string& key,
 		                                const std::string& filePath,
-                                        ColorFormat colorFormat = ColorFormat::RGBA,
+		                                ColorFormat colorFormat = ColorFormat::RGBA,
 		                                bool overwrite = false);
-        
-        /**
+
+		/**
 		 * Loads a texture from a file and assigns a representative key to it.
-         * This version of the loadTexture function need a relative path from the resource folder,
-         * you don't need to use an absolue path or to pass your filename through 
-         * ResourcePathHandler::getResourcePathFor.
+		 * This version of the loadTexture function needs a relative path from
+		 * the resource folder, you cannot use an absolute path or pass your
+		 * filename through ResourcePathHandler::getResourcePathFor.
 		 * @param key Key used to identify this new texture.
-		 * @param relativePath RelativePath (from the resource folder)to the file containing the texture.
-         * @param colorFormat Used to select the internal colorFormat of the texture. If you choose ALPHA while loading
-         * an RGBA image, the engine will use the red channel and strip the 3 other channel. 
+		 * @param relativePath Relative path (relative to the resources folder)
+		 * to the file containing the texture.
+		 * @param colorFormat Used to select the internal colorFormat of the
+		 * texture. If you choose ALPHA while loading an RGBA image, the engine
+		 * will use the red channel and strip the 3 other channel.
 		 * @param overwrite When set to true, it will delete any existing
 		 * texture at the specified key. (False (default) will print an error if
 		 * the key is occupied).
 		 * @return Pointer to the loaded texture, NULL if the texture failed to
 		 * load.
 		 */
-        static TextureInfo* loadTextureRelativePath(const std::string& key,
-                                                    const std::string& relativePath, 
-                                                    ColorFormat colorFormat = ColorFormat::RGBA,
-                                                    bool overwrite = false);
+		static TextureInfo* loadTextureRelativePath(const std::string& key,
+		                                            const std::string& relativePath,
+		                                            ColorFormat colorFormat = ColorFormat::RGBA,
+		                                            bool overwrite = false);
 
 		/**
 		 * Gets the information about the asked texture. Uses the texture's key
@@ -118,6 +121,23 @@ namespace RedBox {
 		                            bool overwrite = false);
 
 		/**
+		 * Loads a sound effect. This version of the loadSound function needs
+		 * a relative path from the resource folder, you cannot use an absolute
+		 * path or pass your filename through
+		 * ResourcePathHandler::getResourcePathFor.
+		 * @param key Name to give to the sound effect.
+		 * @param relativePath Relative path (relative to the resources folder)
+		 * to the sound file to load.
+		 * @param overwrite Flag checked to know if the loaded sound will
+		 * overwrite the existing sound if the key already exists.
+		 * @return Pointer to the loaded sound effect. Returns NULL if the
+		 * loading failed.
+		 */
+		static SoundInfo* loadSoundRelativePath(const std::string& key,
+		                                        const std::string& relativePath,
+		                                        bool overwrite = false);
+
+		/**
 		 * Loads a sound effect.
 		 * @param info Information in a struct about the sound effect to load.
 		 * Let's the developer specify more precise parameters for specific
@@ -141,6 +161,22 @@ namespace RedBox {
 		static MusicInfo* loadMusic(const std::string& key,
 		                            const std::string& filePath,
 		                            bool overwrite = false);
+
+		/**
+		 * Loads a background music. This version of the loadMusic function
+		 * needs a relative path from the resources folder, you cannot use an
+		 * absolute path or pass your filename through
+		 * ResourcePathHandler::getResourcePathFor.
+		 * @param key Name to give to the background music.
+		 * @param relativePath Relative path (relative to the resources folder)
+		 * to the music file to load.
+		 * @param overwrite Flag checked to know if the loaded music will
+		 * oerwrite the existing music if the key already exists.
+		 * @return Pointer to the loaded music, NULL if the loading failed.
+		 */
+		static MusicInfo* loadMusicRelativePath(const std::string& key,
+		                                        const std::string& relativePath,
+		                                        bool overwrite = false);
 
 		/**
 		 * Loads a background music.
@@ -170,7 +206,7 @@ namespace RedBox {
 
 #ifndef RB_ANDROID
 		/**
-		 * Load the font at the specified path and put it in the fonts' map.
+		 * Loads the font at the specified path and put it in the fonts' map.
 		 * @param key Name of the font, it will be the key of the fonts' map.
 		 * @param path Path of the font.
 		 * @param overwrite Flag checked to know if the loaded font will
@@ -179,6 +215,22 @@ namespace RedBox {
 		 */
 		static Font* loadFont(const std::string& key,
 		                      const std::string& path, bool overwrite = false);
+
+		/**
+		 * Loads the font at the specified path and put it in the fonts' map.
+		 * This version of the loadMusic function needs a relative path from the
+		 * resources folder, you cannot use an absolute path or pass your
+		 * filename through ResourcePathHandler::getResourcePathFor.
+		 * @param key Name of the font, it will be the key of the fonts' map.
+		 * @param relativePath Relative path (relative to the resources folder)
+		 * to the font file to load.
+		 * @param overwrite Flag checked to know if the loaded font will
+		 * overwrite the existing font if the key already exists.
+		 * @return Pointer to the loaded font, NULL if the font failed to load.
+		 */
+		static Font* loadFontRelativePath(const std::string& key,
+		                                  const std::string& relativePath,
+		                                  bool overwrite = false);
 
 		/**
 		 * Return a pointer to the font specified by the given name.
@@ -193,11 +245,12 @@ namespace RedBox {
 		 */
 		static void removeFont(const std::string& key);
 #endif
+	private:
 		/**
 		 * Unloads everything in the ResourceManager.
 		 */
 		static void unloadAll();
-	private:
+
 		///Create a PixMap from an image file at the given path.
 		static PixMap* loadPixMap(const std::string& filePath, ColorFormat colorFormat);
 

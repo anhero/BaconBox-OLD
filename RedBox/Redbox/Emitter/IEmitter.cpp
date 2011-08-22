@@ -90,9 +90,9 @@ void IEmitter::stop() {
 	started = false;
 }
 
-void IEmitter::rotateFromPoint(float rotationAngle, const Vec2& rotationPoint) {
+void IEmitter::rotateFromPoint(float rotationAngle, const Vector2& rotationPoint) {
 	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
-	Vec2 tmp = getPosition() - rotationPoint;
+	Vector2 tmp = getPosition() - rotationPoint;
 	tmp.rotate(rotationAngle);
 	tmp += rotationPoint;
 	this->GraphicBody::setPosition(tmp.getX(), tmp.getY());

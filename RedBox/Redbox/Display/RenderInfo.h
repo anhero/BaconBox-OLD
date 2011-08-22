@@ -14,6 +14,7 @@
 #include "Object.h"
 #include "AnimationParameters.h"
 #include "Color.h"
+#include "Vector2.h"
 
 namespace RedBox {
 	class VerticesGroup;
@@ -158,7 +159,7 @@ namespace RedBox {
 		 * Gets the vector of texture coordinates.
 		 * @return Vector of texture coordinates.
 		 */
-		std::vector<std::vector<float> >& getTexCoords();
+		std::vector<std::vector<Vector2> >& getTexCoords();
 		/**
 		 * Sets the color by specifying the red, green, blue and alpha values.
 		 * @param newColor The RenderInfo's new color.
@@ -267,7 +268,7 @@ namespace RedBox {
 		 * For example, to get a vector of texture coordinates for the 3rd
 		 * frame, you'd do texCoords[2].
 		 */
-		std::vector< std::vector<float> > texCoords;
+		std::vector<std::vector<Vector2> > texCoords;
 
 		/**
 		 * Current frame at which the animation is currently.

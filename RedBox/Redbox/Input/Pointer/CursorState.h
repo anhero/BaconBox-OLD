@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "Vec2.h"
+#include "Vector2.h"
 
 #include "CursorButton.h"
 
@@ -32,13 +32,13 @@ namespace RedBox {
 		 * Gets the cursor's position.
 		 * @return Cursor's position.
 		 */
-		const Vec2& getPosition() const;
+		const Vector2& getPosition() const;
 
 		/**
 		 * Gets the cursor's previous position.
 		 * @return Cursor's previous position.
 		 */
-		const Vec2& getPreviousPosition() const;
+		const Vector2& getPreviousPosition() const;
 
 		/**
 		 * Checks if the cursor has just moved.
@@ -68,10 +68,10 @@ namespace RedBox {
 		bool isButtonReleased(CursorButton::Enum button) const;
 	private:
 		/// Cursor's position.
-		Vec2 position;
+		Vector2 position;
 
 		/// Cursor's previous position.
-		Vec2 previousPosition;
+		Vector2 previousPosition;
 
 		/**
 		 * State of current buttons, values set to true mean the button is

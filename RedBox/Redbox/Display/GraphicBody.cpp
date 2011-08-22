@@ -25,9 +25,9 @@ FlagSet<Side> initAllSides() {
 	return result;
 }
 
-GraphicBody::GraphicBody(const Vec2& newPosition) : Body(),
-	position(newPosition), maxVelocity(Vec2(NO_MAX_VELOCITY, NO_MAX_VELOCITY)),
-	scaling(Vec2(1.0f, 1.0f)), angle(0.0f), collidableSides(ALL_SIDES),
+GraphicBody::GraphicBody(const Vector2& newPosition) : Body(),
+	position(newPosition), maxVelocity(Vector2(NO_MAX_VELOCITY, NO_MAX_VELOCITY)),
+	scaling(Vector2(1.0f, 1.0f)), angle(0.0f), collidableSides(ALL_SIDES),
 	elasticity(0.0f), staticBody(false), toBeDeleted(false),
 	layerChanged(false), isInState(false), collidingBoxRatio(1.0f, 1.0f) {
 }
@@ -85,11 +85,11 @@ void GraphicBody::setZ(int newZ) {
 	layer.setZ(newZ);
 }
 
-const Vec2& GraphicBody::getScrollFactor() const {
+const Vector2& GraphicBody::getScrollFactor() const {
 	return layer.getScrollFactor();
 }
 
-void GraphicBody::setScrollFactor(const Vec2& newScrollFactor) {
+void GraphicBody::setScrollFactor(const Vector2& newScrollFactor) {
 	layer.setScrollFactor(newScrollFactor);
 }
 
@@ -126,11 +126,11 @@ bool GraphicBody::isLayerChanged() const {
 	return layerChanged;
 }
 
-const Vec2& GraphicBody::getVelocity() const {
+const Vector2& GraphicBody::getVelocity() const {
 	return velocity;
 }
 
-void GraphicBody::setVelocity(const Vec2& newVelocity) {
+void GraphicBody::setVelocity(const Vector2& newVelocity) {
 	velocity = newVelocity;
 }
 
@@ -154,11 +154,11 @@ void GraphicBody::setYVelocity(float newYVelocity) {
 	velocity.setY(newYVelocity);
 }
 
-const Vec2& GraphicBody::getAcceleration() const {
+const Vector2& GraphicBody::getAcceleration() const {
 	return acceleration;
 }
 
-void GraphicBody::setAcceleration(const Vec2& newAcceleration) {
+void GraphicBody::setAcceleration(const Vector2& newAcceleration) {
 	acceleration = newAcceleration;
 }
 
@@ -183,11 +183,11 @@ void GraphicBody::setYAcceleration(float newYAccelaration) {
 	acceleration.setY(newYAccelaration);
 }
 
-const Vec2& GraphicBody::getPosition() const {
+const Vector2& GraphicBody::getPosition() const {
 	return position;
 }
 
-void GraphicBody::setPosition(const Vec2& newPosition) {
+void GraphicBody::setPosition(const Vector2& newPosition) {
 	setPosition(newPosition.getX(), newPosition.getY());
 }
 
@@ -195,12 +195,12 @@ void GraphicBody::setPosition(float newXPosition, float newYPosition) {
 	position.setXY(newXPosition, newYPosition);
 }
 
-void GraphicBody::move(const Vec2& delta) {
+void GraphicBody::move(const Vector2& delta) {
 	setPosition(position + delta);
 }
 
 void GraphicBody::move(float deltaX, float deltaY) {
-	setPosition(position + Vec2(deltaX, deltaY));
+	setPosition(position + Vector2(deltaX, deltaY));
 }
 
 float GraphicBody::getXPosition() const {
@@ -227,7 +227,7 @@ void GraphicBody::moveY(float deltaY) {
 	setYPosition(position.getY() + deltaY);
 }
 
-const Vec2& GraphicBody::getOldPosition() const {
+const Vector2& GraphicBody::getOldPosition() const {
 	return oldPosition;
 }
 
@@ -239,11 +239,11 @@ float GraphicBody::getOldYPosition() const {
 	return oldPosition.getY();
 }
 
-const Vec2& GraphicBody::getMaxVelocity() const {
+const Vector2& GraphicBody::getMaxVelocity() const {
 	return maxVelocity;
 }
 
-void GraphicBody::setMaxVelocity(const Vec2& newMaxVelocity) {
+void GraphicBody::setMaxVelocity(const Vector2& newMaxVelocity) {
 	maxVelocity = newMaxVelocity;
 }
 
@@ -349,11 +349,11 @@ AABB GraphicBody::getAABB() const {
 	return AABB(getXPosition() + getXOffset(), getXPosition() + getXOffset() + getWidth() * getXCollidingBoxRatio(), getYPosition() + getYOffset(), getYPosition() + getYOffset() + getHeight() * getYCollidingBoxRatio());
 }
 
-const Vec2& GraphicBody::getDrag() const {
+const Vector2& GraphicBody::getDrag() const {
 	return drag;
 }
 
-void GraphicBody::setDrag(const Vec2& newDrag) {
+void GraphicBody::setDrag(const Vector2& newDrag) {
 	drag = newDrag;
 }
 
@@ -377,11 +377,11 @@ void GraphicBody::setYDrag(float newYDrag) {
 	drag.setY(newYDrag);
 }
 
-const Vec2& GraphicBody::getScaling() const {
+const Vector2& GraphicBody::getScaling() const {
 	return scaling;
 }
 
-void GraphicBody::setScaling(const Vec2& newScaling) {
+void GraphicBody::setScaling(const Vector2& newScaling) {
 	setScaling(newScaling.getX(), newScaling.getY());
 }
 
@@ -389,7 +389,7 @@ void GraphicBody::setScaling(float newXScaling, float newYScaling) {
 	scaling.setXY(newXScaling, newYScaling);
 }
 
-void GraphicBody::addToScaling(const Vec2& scalingToAdd) {
+void GraphicBody::addToScaling(const Vector2& scalingToAdd) {
 	addToScaling(scalingToAdd.getX(), scalingToAdd.getY());
 }
 
@@ -440,18 +440,18 @@ void GraphicBody::setAngle(float newAngle) {
 }
 
 void GraphicBody::rotate(float angleToAdd) {
-	rotateFromPoint(angleToAdd, getPosition() + Vec2(getWidth(), getHeight()) * 0.5f);
+	rotateFromPoint(angleToAdd, getPosition() + Vector2(getWidth(), getHeight()) * 0.5f);
 }
 
-void GraphicBody::rotateFromPoint(float rotationAngle, const Vec2&) {
+void GraphicBody::rotateFromPoint(float rotationAngle, const Vector2&) {
 	angle = fmodf(angle += rotationAngle, 360.0f);
 }
 
-const Vec2& GraphicBody::getOffset() const {
+const Vector2& GraphicBody::getOffset() const {
 	return offset;
 }
 
-void GraphicBody::setOffset(const Vec2& newOffset) {
+void GraphicBody::setOffset(const Vector2& newOffset) {
 	offset = newOffset;
 }
 
@@ -475,11 +475,11 @@ void GraphicBody::setYOffset(float newYOffset) {
 	offset.setY(newYOffset);
 }
 
-const Vec2& GraphicBody::getCollidingBoxRatio() const {
+const Vector2& GraphicBody::getCollidingBoxRatio() const {
 	return collidingBoxRatio;
 }
 
-void GraphicBody::setCollidingBoxRatio(const Vec2& newCollidingBoxRatio) {
+void GraphicBody::setCollidingBoxRatio(const Vector2& newCollidingBoxRatio) {
 	collidingBoxRatio = newCollidingBoxRatio;
 }
 
@@ -824,7 +824,7 @@ void GraphicBody::copyFrom(const GraphicBody& src) {
 	if(this != &src && &src) {
 		position = src.position;
 		oldPosition = position;
-		velocity = Vec2();
+		velocity = Vector2();
 		acceleration = src.acceleration;
 		drag = src.drag;
 		maxVelocity = src.maxVelocity;

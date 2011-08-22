@@ -9,7 +9,7 @@
 #include <utility>
 
 #include "InputState.h"
-#include "Vec2.h"
+#include "Vector2.h"
 
 namespace RedBox {
 	/**
@@ -51,7 +51,7 @@ namespace RedBox {
 		 * @return 2-dimensional vector containing the horizontal and vertical
 		 * values of the thumbstick's position.
 		 */
-		const Vec2& getThumbstick(unsigned int thumbstickIndex) const;
+		const Vector2& getThumbstick(unsigned int thumbstickIndex) const;
 	private:
 		/**
 		 * Vector containing buttons' status. Values represent the pressure
@@ -67,7 +67,7 @@ namespace RedBox {
 		/**
 		 * Vector containing values for the thumbsticks' position.
 		 */
-		std::vector<Vec2> thumbsticks;
+		std::vector<Vector2> thumbsticks;
 	};
 }
 

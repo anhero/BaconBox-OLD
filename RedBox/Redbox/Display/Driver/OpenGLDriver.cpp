@@ -55,7 +55,7 @@ void OpenGLDriver::drawShapeWithTexture(GLfloat* vertices,
 
 
 
-		glTexCoordPointer(2, GL_FLOAT, 0, &(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0]));
+		glTexCoordPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>(&(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0])));
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 		glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
@@ -140,7 +140,7 @@ void OpenGLDriver::drawMaskShapeWithTexture(GLfloat* vertices,
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	glTexCoordPointer(2, GL_FLOAT, 0, &(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0]));
+	glTexCoordPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>(&(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0])));
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
@@ -235,7 +235,7 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	glTexCoordPointer(2, GL_FLOAT, 0, &(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0]));
+	glTexCoordPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>(&(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0])));
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
@@ -294,9 +294,9 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
 
 
 
-void OpenGLDriver::prepareScene(const Vec2& position, float angle, float zoom,
+void OpenGLDriver::prepareScene(const Vector2& position, float angle, float zoom,
                                 const Color& backgroundColor,
-                                const Vec2& rotationCenterOffset) {
+                                const Vector2& rotationCenterOffset) {
 	glClearColor(clampColorComponent(backgroundColor.getRed()),
 	             clampColorComponent(backgroundColor.getGreen()),
 	             clampColorComponent(backgroundColor.getBlue()),
@@ -319,7 +319,7 @@ void OpenGLDriver::pushMatrix() {
 	glPushMatrix();
 }
 
-void OpenGLDriver::translate(const Vec2& translation) {
+void OpenGLDriver::translate(const Vector2& translation) {
 	glTranslatef(-translation.getX(), -translation.getY(), 0.0f);
 }
 

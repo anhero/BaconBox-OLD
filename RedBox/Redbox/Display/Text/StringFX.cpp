@@ -28,10 +28,10 @@ int* StringFX::getColor(){
 	return color;	
 }
 
-void StringFX::setDirectionVector(const Vec2& newDirectionVector){
+void StringFX::setDirectionVector(const Vector2& newDirectionVector){
 	this->directionVector = newDirectionVector;
 }
 
-const Vec2& StringFX::getDirectionVector() const {
+const Vector2& StringFX::getDirectionVector() const {
 	return directionVector;
 }

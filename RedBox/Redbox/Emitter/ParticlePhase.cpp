@@ -3,18 +3,18 @@
 using namespace RedBox;
 
 ParticlePhase::ParticlePhase(): phaseDuration(0.0), phaseDurationVariance(0.0),
-alphaPerSecond(0.0f), scalingPerSecond(Vec2()), anglePerSecond(0.0f),
-alphaPerSecondVariance(0.0f), scalingPerSecondVariance(Vec2()),
+alphaPerSecond(0.0f), scalingPerSecond(Vector2()), anglePerSecond(0.0f),
+alphaPerSecondVariance(0.0f), scalingPerSecondVariance(Vector2()),
 anglePerSecondVariance(0.0f) {
 }
 
 ParticlePhase::ParticlePhase(double newPhaseDuration,
 							 double newPhaseDurationVariance,
 							 float newAlphaPerSecond,
-							 const Vec2& newScalingPerSecond,
+							 const Vector2& newScalingPerSecond,
 							 float newAnglePerSecond,
 							 float newAlphaPerSecondVariance,
-							 const Vec2& newScalingPerSecondVariance,
+							 const Vector2& newScalingPerSecondVariance,
 							 float newAnglePerSecondVariance,
 							 const std::string& newAnimationName):
 phaseDuration(newPhaseDuration),

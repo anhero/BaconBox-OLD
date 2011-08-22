@@ -10,7 +10,7 @@ PointerSignalData::~PointerSignalData() {
 }
 
 
-const Vec2& PointerSignalData::getPosition() const {
+const Vector2& PointerSignalData::getPosition() const {
 	return pointerState.getCursorState().getPosition();
 }
 

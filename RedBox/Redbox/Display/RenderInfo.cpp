@@ -29,7 +29,7 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
                        unsigned int nbFrames,
                        const Color& newColor) : Object(), color(newColor),
 	mask(NULL), texInfo(newTexInfo),
-	texCoords(std::vector< std::vector<float> >(nbFrames)), currentFrame(0),
+	texCoords(nbFrames), currentFrame(0),
 	currentNbLoops(0), defaultFrame(0) {
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
 }
@@ -61,26 +61,24 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 				float realWidth = static_cast<float>(texInfo->imageWidth) / static_cast<float>(texInfo->poweredWidth);
 				texCoords.resize(nbFrames);
 				float offsetX = 0.0f, offsetY = 0.0f;
-				Vec2 position = vertices->getPosition();
+				Vector2 position = vertices->getPosition();
 				// We get the width and the height of the of the vertices group.
-				Vec2 size = vertices->getSize();
-				unsigned int tmpSize = vertices->getVertices().size(), j = 0;
-				std::list<Vertex>& tmpVertices = vertices->getVertices();
+				Vector2 size = vertices->getSize();
+				size_t tmpSize = vertices->getVertices().size();
+				std::vector<Vector2>& tmpVertices = vertices->getVertices();
 
 				// For each frame to load.
-				for(std::vector<std::vector<float> >::iterator i = texCoords.begin();
+				for(std::vector<std::vector<Vector2> >::iterator i = texCoords.begin();
 				    i != texCoords.end(); ++i) {
 
 					// We set the number of coordinates.
-					i->resize(tmpSize * 2);
-					j = 0;
+					i->resize(tmpSize);
 
-					for(std::list<Vertex>::iterator j2 = tmpVertices.begin();
-					    j2 != tmpVertices.end(); ++j2) {
-						(*i)[j] = offsetX + (j2->getXPosition() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth);
-						++j;
-						(*i)[j] = offsetY + (j2->getYPosition() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight);
-						++j;
+					for(std::vector<Vector2>::iterator j1 = i->begin(), j2 = tmpVertices.begin();
+						j1 != i->end() && j2 != tmpVertices.end();
+						++j1, ++j2) {
+						j1->setXY(offsetX + (j2->getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
+								  offsetY + (j2->getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
 					}
 
 					offsetX += realFrameWidth;
@@ -200,7 +198,7 @@ const TextureInfo* RenderInfo::getTexInfo() const {
 	return texInfo;
 }
 
-std::vector<std::vector<float> >& RenderInfo::getTexCoords() {
+std::vector<std::vector<Vector2> >& RenderInfo::getTexCoords() {
 	return texCoords;
 }
 
@@ -313,7 +311,7 @@ namespace RedBox {
 		output << "{color: " << r.color << ", texInfo: " << r.texInfo <<
 		       ", texCoords: [";
 
-		for(std::vector< std::vector<float> >::const_iterator i = r.texCoords.begin();
+		for(std::vector<std::vector<Vector2> >::const_iterator i = r.texCoords.begin();
 		    i != r.texCoords.end(); ++i) {
 			if(i != r.texCoords.begin()) {
 				output << ", ";
@@ -321,7 +319,7 @@ namespace RedBox {
 
 			output << "[";
 
-			for(std::vector<float>::const_iterator j = i->begin();
+			for(std::vector<Vector2>::const_iterator j = i->begin();
 			    j != i->end(); ++j) {
 				if(j != i->begin()) {
 					output << ", ";

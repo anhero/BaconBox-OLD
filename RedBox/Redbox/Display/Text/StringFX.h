@@ -5,7 +5,7 @@
 
 #ifndef RB_STRINGFX_H
 #define RB_STRINGFX_H
-#include "Vec2.h"
+#include "Vector2.h"
 
 namespace RedBox{
 	/** 
@@ -82,13 +82,13 @@ namespace RedBox{
 		 * Ex. A drop shadow with a direction vector of x:1 y:2 will
 		 * offset the shadow 1 pixel to the right and 2 pixels down.
 		 */
-		void setDirectionVector(const Vec2& newDirectionVector);
+		void setDirectionVector(const Vector2& newDirectionVector);
 		/**
 		 * Get the direction vector of the effect
 		 * Ex. A drop shadow with a direction vector of x:1 y:2 will
 		 * offset the shadow 1 pixel to the right and 2 pixels down.
 		 */
-		const Vec2& getDirectionVector() const;
+		const Vector2& getDirectionVector() const;
 	private:
 		///The string effect type. 
 		StringFXMode mode;
@@ -105,7 +105,7 @@ namespace RedBox{
 		 * Ex. A drop shadow with a direction vector of x:1 y:2 will
 		 * offset the shadow 1 pixel to the right and 2 pixels down.
 		 */
-		Vec2 directionVector;
+		Vector2 directionVector;
 		
 	};
 }

@@ -94,7 +94,7 @@ namespace RedBox {
 		 * @param deltaScaling Scaling value to add to the GraphicBody's size.
 		 * @param graphicBody Pointer to the Sprite to have its size updated.
 		 */
-		void updateScaling(const Vec2& deltaScaling, Sprite* graphicBody);
+		void updateScaling(const Vector2& deltaScaling, Sprite* graphicBody);
 
 		/**
 		 * Updates the GraphicBody's rotation angle using the given angle to

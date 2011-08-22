@@ -28,7 +28,7 @@ std::map<std::string, MusicInfo*> ResourceManager::musics = std::map<std::string
 std::map<std::string, Font*> ResourceManager::fonts = std::map<std::string, Font*>();
 #endif
 TextureInfo* ResourceManager::addTexture(const std::string& key, PixMap* aPixmap,
-        bool overwrite) {
+                                         bool overwrite) {
 	TextureInfo* texInfo = NULL;
 
 	// We check if there is already a texture with this name.
@@ -45,11 +45,13 @@ TextureInfo* ResourceManager::addTexture(const std::string& key, PixMap* aPixmap
 			// We load the new texture.
 			texInfo = textures[key] = GraphicDriver::loadTexture(aPixmap);
 			Console::print("Overwrote the existing texture named " + key + ".");
+
 		} else {
 			Console::print("Can't load texture with key: " + key +
 			               " texture is already loaded");
 			texInfo = textures[key];
 		}
+
 	} else {
 		// We load the new texture and add it to the map.
 		texInfo = GraphicDriver::loadTexture(aPixmap);
@@ -61,25 +63,28 @@ TextureInfo* ResourceManager::addTexture(const std::string& key, PixMap* aPixmap
 
 
 TextureInfo* ResourceManager::loadTexture(const std::string& key,
-        const std::string& filePath, ColorFormat colorFormat,
-        bool overwrite) {
-
+                                          const std::string& filePath,
+                                          ColorFormat colorFormat,
+                                          bool overwrite) {
 	PixMap* aPixMap = loadPixMap(filePath, colorFormat);
 
 	if(aPixMap) {
 		TextureInfo* texInfo = addTexture(key, aPixMap, overwrite);
 		delete aPixMap;
 		return texInfo;
+
 	} else {
 		return NULL;
 	}
 }
 
 TextureInfo* ResourceManager::loadTextureRelativePath(const std::string& key,
-        const std::string& relativePath,
-        ColorFormat colorFormat,
-        bool overwrite) {
-	return loadTexture(key, ResourcePathHandler::getResourcePathFor(relativePath), colorFormat, overwrite);
+                                                      const std::string& relativePath,
+                                                      ColorFormat colorFormat,
+                                                      bool overwrite) {
+	return loadTexture(key,
+	                   ResourcePathHandler::getResourcePathFor(relativePath),
+	                   colorFormat, overwrite);
 }
 
 TextureInfo* ResourceManager::getTexture(const std::string& key) {
@@ -115,12 +120,14 @@ SoundInfo* ResourceManager::loadSound(const std::string& key,
 			newSnd = sounds[key] = AudioEngine::getSoundEngine().loadSound(filePath);
 			Console::print("Overwrote the existing sound effect named " + key +
 			               ".");
+
 		} else {
 			Console::print("Couldn't load the sound effect named " + key +
 			               " found at " + filePath +
 			               " because a sound with that name already exists.");
 			newSnd = sounds[key];
 		}
+
 	} else {
 		// We load the sound effect.
 		newSnd = AudioEngine::getSoundEngine().loadSound(filePath);
@@ -134,6 +141,13 @@ SoundInfo* ResourceManager::loadSound(const std::string& key,
 	}
 
 	return newSnd;
+}
+
+SoundInfo* ResourceManager::loadSoundRelativePath(const std::string& key,
+                                                  const std::string& relativePath,
+                                                  bool overwrite) {
+	return loadSound(key, ResourcePathHandler::getResourcePathFor(relativePath),
+	                 overwrite);
 }
 
 SoundInfo* ResourceManager::loadSound(const SoundParameters& params,
@@ -154,11 +168,13 @@ SoundInfo* ResourceManager::loadSound(const SoundParameters& params,
 			newSnd = sounds[params.name] = AudioEngine::getSoundEngine().loadSound(params);
 			Console::print("Overwrote the existing sound effect named " +
 			               params.name + ".");
+
 		} else {
 			Console::print("Couldn't load the sound effect named " + params.name +
 			               " because a sound with that name already exists.");
 			newSnd = sounds[params.name];
 		}
+
 	} else {
 		// We load the sound effect.
 		newSnd = AudioEngine::getSoundEngine().loadSound(params);
@@ -168,7 +184,7 @@ SoundInfo* ResourceManager::loadSound(const SoundParameters& params,
 			// We insert it into the map of sound effects with its
 			// corresponding key.
 			sounds.insert(std::pair<std::string, SoundInfo*>(params.name,
-			              newSnd));
+			                                                 newSnd));
 		}
 	}
 
@@ -193,12 +209,14 @@ MusicInfo* ResourceManager::loadMusic(const std::string& key,
 			newBgm = musics[key] = AudioEngine::getMusicEngine().loadMusic(filePath);
 			Console::print("Overwrote the existing music named " + key +
 			               ".");
+
 		} else {
 			Console::print("Couldn't load the music named " + key +
 			               " found at " + filePath +
 			               " because a music with that name already exists.");
 			newBgm = musics[key];
 		}
+
 	} else {
 		// We load the music.
 		newBgm = AudioEngine::getMusicEngine().loadMusic(filePath);
@@ -212,6 +230,13 @@ MusicInfo* ResourceManager::loadMusic(const std::string& key,
 	}
 
 	return newBgm;
+}
+
+MusicInfo* ResourceManager::loadMusicRelativePath(const std::string& key,
+                                                  const std::string& relativePath,
+                                                  bool overwrite) {
+	return loadMusic(key, ResourcePathHandler::getResourcePathFor(relativePath),
+	                 overwrite);
 }
 
 MusicInfo* ResourceManager::loadMusic(const MusicParameters& params,
@@ -230,11 +255,13 @@ MusicInfo* ResourceManager::loadMusic(const MusicParameters& params,
 			// We load the music and we overwrite the existing music.
 			newBgm = musics[params.name] = AudioEngine::getMusicEngine().loadMusic(params);
 			Console::print("Overwrote the existing music named " + params.name + ".");
+
 		} else {
 			Console::print("Couldn't load the music named " + params.name +
 			               " because a music with that name already exists.");
 			newBgm = musics[params.name];
 		}
+
 	} else {
 		// We load the music.
 		newBgm = AudioEngine::getMusicEngine().loadMusic(params);
@@ -262,9 +289,11 @@ void ResourceManager::removeSound(const std::string& key) {
 			delete(snd->second);
 			// We remove it from the map.
 			sounds.erase(snd);
+
 		} else {
 			Console::print("The sound effect named " + key + " could not be removed because the audio engine failed to unload it.");
 		}
+
 	} else {
 		Console::print("The sound effect named " + key + " could not be removed because it doesn't exist.");
 	}
@@ -282,9 +311,11 @@ void ResourceManager::removeMusic(const std::string& key) {
 			delete(music->second);
 			// We remove it from the map.
 			musics.erase(music);
+
 		} else {
 			Console::print("The music named " + key + " could not be removed because the audio engine failed to unload it.");
 		}
+
 	} else {
 		Console::print("The music named " + key + " could not be removed because it doesn't exist.");
 	}
@@ -307,11 +338,13 @@ Font* ResourceManager::loadFont(const std::string& key, const std::string& path,
 			// We load the new font.
 			aFont = fonts[key] = new Font(key, path);
 			Console::print("Overwrote the existing font named " + key + ".");
+
 		} else {
 			Console::print("Can't load font with key: " + key +
 			               " font is already loaded");
 			aFont = fonts[key];
 		}
+
 	} else {
 		// We load the new texture and add it to the map.
 		aFont = new Font(key, path);
@@ -321,11 +354,18 @@ Font* ResourceManager::loadFont(const std::string& key, const std::string& path,
 	return aFont;
 }
 
+Font* ResourceManager::loadFontRelativePath(const std::string& key,
+                                            const std::string& relativePath,
+                                            bool overwrite) {
+	return loadFont(key, ResourcePathHandler::getResourcePathFor(relativePath), overwrite);
+}
+
 Font* ResourceManager::getFont(const std::string& key) {
 	std::map<std::string, Font*>::iterator i = fonts.find(key);
 
 	if(i != fonts.end()) {
 		return (*i).second;
+
 	} else {
 		return NULL;
 	}
@@ -344,7 +384,7 @@ void ResourceManager::removeFont(const std::string& key) {
 void ResourceManager::unloadAll() {
 	// We unload the textures.
 	for(std::map<std::string, TextureInfo*>::iterator i = textures.begin();
-		i != textures.end(); ++i) {
+	    i != textures.end(); ++i) {
 		delete i->second;
 	}
 
@@ -352,7 +392,7 @@ void ResourceManager::unloadAll() {
 
 	// We unload the sound effects.
 	for(std::map<std::string, SoundInfo*>::iterator i = sounds.begin();
-		i != sounds.end(); ++i) {
+	    i != sounds.end(); ++i) {
 		AudioEngine::getSoundEngine().unloadSound(i->second);
 		delete i->second;
 	}
@@ -361,7 +401,7 @@ void ResourceManager::unloadAll() {
 
 	// We unload the musics.
 	for(std::map<std::string, MusicInfo*>::iterator i = musics.begin();
-		i != musics.end(); ++i) {
+	    i != musics.end(); ++i) {
 		AudioEngine::getMusicEngine().unloadMusic(i->second);
 		delete i->second;
 	}
@@ -371,7 +411,7 @@ void ResourceManager::unloadAll() {
 
 	// We unload the fonts.
 	for(std::map<std::string, Font*>::iterator i = fonts.begin();
-		i != fonts.end(); ++i) {
+	    i != fonts.end(); ++i) {
 		delete i->second;
 	}
 
@@ -390,8 +430,6 @@ PixMap* ResourceManager::loadPixMap(const std::string& filePath, ColorFormat col
 }
 
 PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath) {
-
-
 	FILE* PNG_file = fopen(filePath.c_str(), "rb");
 
 	if(PNG_file == NULL) {
@@ -400,7 +438,6 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath) {
 	}
 
 	uint8_t PNG_header[PNG_HEADER_SIZE];
-
 	fread(PNG_header, 1, PNG_HEADER_SIZE, PNG_file);
 
 	if(png_sig_cmp(PNG_header, 0, PNG_HEADER_SIZE) != 0) {
@@ -408,7 +445,7 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath) {
 	}
 
 	png_structp PNG_reader
-	= png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	    = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
 	if(PNG_reader == NULL) {
 		Console::print("Cannot read this png file " + filePath);
@@ -435,13 +472,10 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath) {
 
 	png_init_io(PNG_reader, PNG_file);
 	png_set_sig_bytes(PNG_reader, PNG_HEADER_SIZE);
-
 	png_read_info(PNG_reader, PNG_info);
-
 	png_uint_32 width, height;
 	width = png_get_image_width(PNG_reader, PNG_info);
 	height = png_get_image_height(PNG_reader, PNG_info);
-
 	png_uint_32 bit_depth, color_type;
 	bit_depth = png_get_bit_depth(PNG_reader, PNG_info);
 	color_type = png_get_color_type(PNG_reader, PNG_info);
@@ -461,6 +495,7 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath) {
 
 	if(png_get_valid(PNG_reader, PNG_info, PNG_INFO_tRNS)) {
 		png_set_tRNS_to_alpha(PNG_reader);
+
 	} else {
 		png_set_filler(PNG_reader, 0xff, PNG_FILLER_AFTER);
 	}
@@ -470,10 +505,8 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath) {
 	}
 
 	png_read_update_info(PNG_reader, PNG_info);
-
 	png_byte* PNG_image_buffer = (png_byte*)malloc(4 * width * height);
 	png_byte** PNG_rows = (png_byte**)malloc(height * sizeof(png_byte*));
-
 	unsigned int row;
 
 	for(row = 0; row < height; ++row) {
@@ -481,15 +514,10 @@ PixMap* ResourceManager::loadPixMapFromPNG(const std::string& filePath) {
 	}
 
 	png_read_image(PNG_reader, PNG_rows);
-
 	free(PNG_rows);
-
 	png_destroy_read_struct(&PNG_reader, &PNG_info, &PNG_end_info);
 	fclose(PNG_file);
-
 	PixMap* aPixMap = new PixMap(PNG_image_buffer, width, height);
-
-
 	return aPixMap;
 }
 

@@ -128,8 +128,8 @@ namespace RedBox {
 
 		/**
 		 * Change the simple button's scaling.
-		 * @param xScaling New horizontal scaling to apply.
-		 * @param yScaling New vertical scaling to apply.
+		 * @param newXScaling New horizontal scaling to apply.
+		 * @param newYScaling New vertical scaling to apply.
 		 */
 		void setScaling(float newXScaling, float newYScaling);
 
@@ -139,7 +139,7 @@ namespace RedBox {
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		void rotateFromPoint(float rotationAngle, const Vec2& rotationPoint);
+		void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
 
 		/**
 		 * Creates a copy of the current simple button.

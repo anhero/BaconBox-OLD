@@ -146,7 +146,7 @@ void State::internalRender() {
 	if(!graphicBodies.empty()) {
 		Layer lastLayer = graphicBodies.begin()->first;
 		GraphicDriver::pushMatrix();
-		GraphicDriver::translate(Vec2(-(1.0f - graphicBodies.begin()->second->getLayer().getScrollFactor().getX()) * camera.getXPosition(),
+		GraphicDriver::translate(Vector2(-(1.0f - graphicBodies.begin()->second->getLayer().getScrollFactor().getX()) * camera.getXPosition(),
 		                              -(1.0f - graphicBodies.begin()->second->getLayer().getScrollFactor().getY()) * camera.getYPosition()));
 
 		for(BodyMap::iterator i = graphicBodies.begin();
@@ -155,7 +155,7 @@ void State::internalRender() {
 				if(lastLayer != i->first) {
 					GraphicDriver::popMatrix();
 					GraphicDriver::pushMatrix();
-					GraphicDriver::translate(Vec2(-(1.0f - i->second->getLayer().getScrollFactor().getX()) * camera.getXPosition(),
+					GraphicDriver::translate(Vector2(-(1.0f - i->second->getLayer().getScrollFactor().getX()) * camera.getXPosition(),
 					                              -(1.0f - i->second->getLayer().getScrollFactor().getY()) * camera.getYPosition()));
 					lastLayer = i->first;
 				}
