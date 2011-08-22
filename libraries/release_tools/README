@@ -1,5 +1,0 @@
-This directory has scripts used to make release archives of projects which
-do not have releases.
-
-They may have some "platform-dependant" code... If they don't work, you can
-contact Samuel <samuel@dionne-riel.com> about that.
