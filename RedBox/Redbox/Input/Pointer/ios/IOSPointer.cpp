@@ -13,7 +13,7 @@ sigly::Signal2<NSSet*, UIEvent*> IOSPointer::touchEnd = sigly::Signal2<NSSet*, U
 sigly::Signal2<NSSet*, UIEvent*> IOSPointer::touchMove = sigly::Signal2<NSSet*, UIEvent*>();
 
 IOSPointer::IOSPointer(): Pointer(), sigly::HasSlots<>(),
-iosPosition(Vec2(0.0f, 0.0f)), isTouchDown(false) {
+iosPosition(Vector2(0.0f, 0.0f)), isTouchDown(false) {
 	touchBegin.connect(this, &IOSPointer::onTouchBegin);
 	touchEnd.connect(this, &IOSPointer::onTouchEnd);
 	touchMove.connect(this, &IOSPointer::onTouchMove);
