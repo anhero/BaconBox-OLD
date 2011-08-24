@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "Sprite.h"
-#include "RenderStep.h"
 #include "MathHelper.h"
 
 using namespace RedBox;
@@ -26,15 +25,11 @@ Sprite* SpriteFactory::makePolygon(unsigned int nbSides, float sideLength,
 			angle += 360.0f / nbSides;
 		}
 
-		RenderStep* ren = new RenderStep();
-		ren->setVerticesGroup(&result->getVertices());
-		ren->setDeleteVerticesGroup(false);
-		ren->setColor(color);
-		ren->setMode(FlagSet<RenderStepMode>(RenderStepMode::SHAPE) |
-					 FlagSet<RenderStepMode>(RenderStepMode::COLOR));
-		result->addRenderStep(ren);
+		result->setMainColor(color);
+		result->setRenderModes(FlagSet<RenderMode>(RenderMode::SHAPE) |
+		                       FlagSet<RenderMode>(RenderMode::COLOR));
 
-		Vector2 tmpVec(ren->getVerticesGroup()->getPosition());
+		Vector2 tmpVec(result->getVertices().getPosition());
 		result->GraphicBody::setPosition(tmpVec.getX(), tmpVec.getY());
 
 		result->setPosition(0.0f, 0.0f);

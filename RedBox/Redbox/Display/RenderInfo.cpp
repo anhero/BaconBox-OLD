@@ -23,7 +23,7 @@ RenderInfo::RenderInfo(const RenderInfo& src) : Object(), color(src.color),
 }
 
 RenderInfo::RenderInfo(TextureInfo* newTexInfo,
-                       VerticesGroup* vertices,
+                       const VerticesGroup& vertices,
                        unsigned int frameWidth,
                        unsigned int frameHeight,
                        unsigned int nbFrames,
@@ -34,7 +34,7 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
 }
 
-void RenderInfo::loadTexCoords(VerticesGroup* vertices,
+void RenderInfo::loadTexCoords(const VerticesGroup& vertices,
                                unsigned int frameWidth,
                                unsigned int frameHeight,
                                unsigned int nbFrames,
@@ -46,7 +46,7 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 	}
 
 	// We check if the texInfo, the vertices and the number of frames are valid.
-	if(texInfo && vertices && nbFrames > 0) {
+	if(texInfo && nbFrames > 0) {
 
 		// We make sure the width and the height of the texture are valid.
 		if(texInfo->imageWidth && texInfo->imageHeight && texInfo->poweredWidth
@@ -61,11 +61,11 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 				float realWidth = static_cast<float>(texInfo->imageWidth) / static_cast<float>(texInfo->poweredWidth);
 				texCoords.resize(nbFrames);
 				float offsetX = 0.0f, offsetY = 0.0f;
-				Vector2 position = vertices->getPosition();
+				Vector2 position = vertices.getPosition();
 				// We get the width and the height of the of the vertices group.
-				Vector2 size = vertices->getSize();
-				size_t tmpSize = vertices->getVertices().size();
-				std::vector<Vector2>& tmpVertices = vertices->getVertices();
+				Vector2 size = vertices.getSize();
+				size_t tmpSize = vertices.getVertices().size();
+				const std::vector<Vector2>& tmpVertices = vertices.getVertices();
 
 				// For each frame to load.
 				for(std::vector<std::vector<Vector2> >::iterator i = texCoords.begin();
@@ -74,11 +74,13 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 					// We set the number of coordinates.
 					i->resize(tmpSize);
 
-					for(std::vector<Vector2>::iterator j1 = i->begin(), j2 = tmpVertices.begin();
+					std::vector<Vector2>::const_iterator j2 = tmpVertices.begin();
+					for(std::vector<Vector2>::iterator j1 = i->begin();
 						j1 != i->end() && j2 != tmpVertices.end();
-						++j1, ++j2) {
+						++j1) {
 						j1->setXY(offsetX + (j2->getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
 								  offsetY + (j2->getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
+						++j2;
 					}
 
 					offsetX += realFrameWidth;
@@ -100,11 +102,6 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 
 		if(!newTexInfo) {
 			Console::print("    - Texture information pointer is invalid: " + Console::toString(texInfo));
-			Console::printTrace();
-		}
-
-		if(!vertices) {
-			Console::print("    - VerticesGroup pointer given is invalid : " + Console::toString(vertices));
 			Console::printTrace();
 		}
 

@@ -9,7 +9,7 @@
 
 namespace RedBox {
 
-	struct RenderStepModeDef {
+	struct RenderModeDef {
 		enum type {
 			SHAPE,
 			TEXTURE,
@@ -18,6 +18,6 @@ namespace RedBox {
 			INVERSE_MASKED
 		};
 	};
-	typedef SafeEnum<RenderStepModeDef> RenderStepMode;
+	typedef SafeEnum<RenderModeDef> RenderMode;
 }
 #endif

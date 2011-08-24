@@ -77,6 +77,13 @@ namespace RedBox {
 		std::vector<Vector2>& getVertices();
 
 		/**
+		 * Gets the vertices. The vertices' values are actually pointers that
+		 * point to the values in verticesData.
+		 * @return Dynamic array containing the vertices.
+		 */
+		const std::vector<Vector2>& getVertices() const;
+
+		/**
 		 * Gets the distance between the left-most and the right-most vertex and
 		 * the distance between the lowest and the highest vertex. Using this
 		 * function to get the width AND the height is faster than calling

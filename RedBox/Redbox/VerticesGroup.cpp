@@ -49,6 +49,10 @@ std::vector<Vector2>& VerticesGroup::getVertices() {
 	return vertices;
 }
 
+const std::vector<Vector2>& VerticesGroup::getVertices() const {
+	return vertices;
+}
+
 Vector2 VerticesGroup::getSize() const {
 	if(vertices.empty()) {
 		Console::print("Tried to get the width and the height of an empty VerticesGroup.");

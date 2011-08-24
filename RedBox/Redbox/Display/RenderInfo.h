@@ -60,7 +60,7 @@ namespace RedBox {
 		 * @see RedBox::RenderInfo::texInfo
 		 */
 		RenderInfo(TextureInfo* newTexInfo,
-		           VerticesGroup* vertices,
+		           const VerticesGroup& vertices,
 		           unsigned int frameWidth,
 		           unsigned int frameHeight,
 		           unsigned int nbFrames = 1,
@@ -80,7 +80,7 @@ namespace RedBox {
 		 * @param newTexInfo Pointer to the information about the texture.
 		 * @see RedBox::RenderInfo::texInfo
 		 */
-		void loadTexCoords(VerticesGroup* vertices,
+		void loadTexCoords(const VerticesGroup& vertices,
 		                   unsigned int frameWidth,
 		                   unsigned int frameHeight,
 		                   unsigned int nbFrames = 1,
