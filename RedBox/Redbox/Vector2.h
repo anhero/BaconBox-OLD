@@ -29,10 +29,13 @@ namespace RedBox {
 		/// Normalized vector that points up.
 		static const Vector2T<ValueType> UP;
 
+		/// Default value.
+		static const ValueType DEFAULT_VALUE;
+
 		/**
 		 * Default constructor.
 		 */
-		Vector2T() : x(), y() {
+		Vector2T() : x(DEFAULT_VALUE), y(DEFAULT_VALUE) {
 		}
 
 		/**
@@ -437,7 +440,7 @@ namespace RedBox {
 		 * clockwise.
 		 */
 		ValueType getAngle() const {
-			return (getX() < ValueType()) ? (-getAngleBetween(UP)) : (getAngleBetween(UP));
+			return (getX() < DEFAULT_VALUE) ? (-getAngleBetween(UP)) : (getAngleBetween(UP));
 		}
 
 		/**
@@ -490,7 +493,7 @@ namespace RedBox {
 
 	template <typename T>
 	std::ostream& operator<<(std::ostream& output, const Vector2T<T>& v) {
-		output << "{ x: " << v.x << ", y: " << v.y << "}";
+		output << "{x: " << v.x << ", y: " << v.y << "}";
 		return output;
 	}
 
