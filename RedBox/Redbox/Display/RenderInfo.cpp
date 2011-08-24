@@ -12,7 +12,7 @@
 using namespace RedBox;
 
 RenderInfo::RenderInfo(): Object(), color(Color::WHITE), mask(NULL),
-	texInfo(NULL), currentFrame(0), currentNbLoops(0), defaultFrame(0) {
+	texInfo(NULL), currentFrame(0), currentNbLoops(0), defaultFrame(0), inBatch(false){
 }
 
 RenderInfo::RenderInfo(const RenderInfo& src) : Object(), color(src.color),
@@ -59,13 +59,15 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 				float realFrameWidth = static_cast<float>(frameWidth) / static_cast<float>(texInfo->poweredWidth);
 				float realFrameHeight = static_cast<float>(frameHeight) / static_cast<float>(texInfo->poweredHeight);
 				float realWidth = static_cast<float>(texInfo->imageWidth) / static_cast<float>(texInfo->poweredWidth);
-				texCoords.resize(nbFrames);
+				internalTexCoords.resize(nbFrames);
 				float offsetX = 0.0f, offsetY = 0.0f;
 				Vector2 position = vertices->getPosition();
 				// We get the width and the height of the of the vertices group.
 				Vector2 size = vertices->getSize();
-				size_t tmpSize = vertices->getVertices().size();
-				std::vector<Vector2>& tmpVertices = vertices->getVertices();
+                int verticesCount;
+                Vector2 * verticesArray = vertices->getVertices(verticesCount);
+				size_t tmpSize = static_cast<size_t>(verticesCount);
+				//std::vector<Vector2>& tmpVertices = vertices->getVertices();
 
 				// For each frame to load.
 				for(std::vector<std::vector<Vector2> >::iterator i = texCoords.begin();

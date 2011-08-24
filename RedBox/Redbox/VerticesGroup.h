@@ -70,11 +70,12 @@ namespace RedBox {
 		void addVertices(unsigned int nbVertices, ...);
 
 		/**
-		 * Gets the vertices. The vertices' values are actually pointers that
-		 * point to the values in verticesData.
-		 * @return Dynamic array containing the vertices.
+		 * Return a pointer to the first vertex and set by reference 
+         * the given integer to the vertices count. This way you can use 
+         * the given pointer as a C array and edit directly the vertices
+         * wheter they are in a batch or not.
 		 */
-		std::vector<Vector2>& getVertices();
+		Vector2* getVertices(int & verticesCount);
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex and
@@ -84,6 +85,9 @@ namespace RedBox {
 		 * @return Vector2 containing the width and height.
 		 */
 		Vector2 getSize() const;
+        
+        ///Return the number of vertices in the VerticesGroup
+        int getVerticesCount() const;
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex.
@@ -209,8 +213,22 @@ namespace RedBox {
 		 */
 		void rotate(float angle, const Vector2& fromPoint);
 	private:
-		/// Vector containing the vertices.
-		std::vector<Vector2> vertices;
+		/// Vector containing the vertices when we are not in a batch.
+		std::vector<Vector2> internalVertices;
+        
+        /**
+         * C like array containing the vertices.
+         */
+        Vector2 * vertices;
+        
+        /**
+         * Number of vertices in the vertices group, we can't directly use
+         * the size of the vertices vector, since it won't be used when we use batch rendering.
+         */
+        int verticesCount;
+        
+        ///True if the vertices are outside of the verticesgroup (in a Batch)
+        bool inBatch;
 	};
 }
 
