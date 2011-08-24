@@ -9,6 +9,25 @@ using namespace RedBox;
 VerticesGroup::VerticesGroup() : Object() {
 }
 
+VerticesGroup::VerticesGroup(VerticesGroup::Vector2Array::size_type nbVertices, ...) :
+    Object(), vertices(nbVertices) {
+	if(nbVertices) {
+		va_list verticesCoords;
+		va_start(verticesCoords, nbVertices);
+
+		float x, y;
+
+		for(Vector2Array::iterator i = vertices.begin(); i != vertices.end();
+		    ++i) {
+			x = static_cast<float>(va_arg(verticesCoords, double));
+			y = static_cast<float>(va_arg(verticesCoords, double));
+			i->setXY(x, y);
+		}
+
+		va_end(verticesCoords);
+	}
+}
+
 VerticesGroup::VerticesGroup(const VerticesGroup& src) : Object(src),
 	vertices(src.vertices) {
 }

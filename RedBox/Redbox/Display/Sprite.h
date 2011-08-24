@@ -264,6 +264,12 @@ namespace RedBox {
 		RenderInfo& getRenderInfo();
 
 		/**
+		 * Gets the sprite's render info.
+		 * @return Reference to the sprite's render information.
+		 */
+		const RenderInfo& getRenderInfo() const;
+
+		/**
 		 * Checks if the sprite's animation is paused.
 		 * @return True if the animation is paused, false if not.
 		 * @see RedBox::Sprite::animationPaused
@@ -382,17 +388,21 @@ namespace RedBox {
 		/// Vertices making up the sprite.
 		VerticesGroup vertices;
 
+		/// Contains the render information.
 		RenderInfo renderInfo;
 
+		/// Flag set of render modes.
 		FlagSet<RenderMode> renderModes;
 
+		/// Set to true if the animation is paused (false by default).
 		bool animationPaused;
 
+		/// Internal time counter for animations.
 		double animationCounter;
 
 		/**
 		 * Constructs the sprite using the given info.
-		 * @param texInfo Pointer to the texture's information.
+		 * @param textureInfo Pointer to the texture's information.
 		 * @param frameWidth Width of the frames to read from the image (in
 		 * pixels).
 		 * @param frameHeight Height of the frames to read from the image (in
@@ -400,7 +410,7 @@ namespace RedBox {
 		 * @param nbFrames Number of frames the sprite will load (for
 		 * animations).
 		 */
-		void construct(TextureInfo* texInfo,
+		void construct(TextureInfo* textureInfo,
 		               unsigned int frameWidth,
 		               unsigned int frameHeight,
 		               unsigned int nbFrames = 1);

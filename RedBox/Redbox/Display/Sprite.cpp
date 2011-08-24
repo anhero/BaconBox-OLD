@@ -265,6 +265,10 @@ RenderInfo& Sprite::getRenderInfo() {
 	return renderInfo;
 }
 
+const RenderInfo& Sprite::getRenderInfo() const {
+	return renderInfo;
+}
+
 bool Sprite::isAnimationPaused() const {
 	return animationPaused;
 }

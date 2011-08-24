@@ -33,10 +33,24 @@ namespace RedBox {
 		friend std::ostream& operator<<(std::ostream& output,
 		                                const VerticesGroup& v);
 	public:
+		typedef std::vector<Vector2> Vector2Array;
+
 		/**
 		 * The default constructor.
 		 */
 		VerticesGroup();
+
+		/**
+		 * Parameterized constructor. Initializes the vertices group with
+		 * vertices.
+		 * @param nbVertices Number of vertices to add. Each of the following
+		 * parameters must be floats. The number of parameters must be equal to
+		 * twice the number of vertices to add. In the order, the floats are the
+		 * horizontal value then the vertical value of the vertex to add,
+		 * followed by the other vertices. For example, to add 4 vertices :
+		 * VerticesGroup(4, 1.3f, 3.4f, 1.0f, 0.05f, 4.33f, 2.66f, 19.0f, 84.1f)
+		 */
+		VerticesGroup(Vector2Array::size_type nbVertices, ...);
 
 		/**
 		 * The copy constructor.
@@ -61,7 +75,7 @@ namespace RedBox {
 		/**
 		 * Adds multiple vertices. Can recieve a variable number of parameters.
 		 * @param nbVertices Number of vertices to add. Each of the following
-		 * parameters must be floats. The number of parameters must equal to
+		 * parameters must be floats. The number of parameters must be equal to
 		 * twice the number of vertices to add. In the order, the floats are the
 		 * horizontal value then the vertical value of the vertex to add,
 		 * followed by the other vertices. For example, to add 4 vertices :
@@ -74,7 +88,7 @@ namespace RedBox {
 		 * point to the values in verticesData.
 		 * @return Dynamic array containing the vertices.
 		 */
-		std::vector<Vector2>& getVertices();
+		Vector2Array& getVertices();
 
 		/**
 		 * Gets the vertices. The vertices' values are actually pointers that
@@ -217,7 +231,7 @@ namespace RedBox {
 		void rotate(float angle, const Vector2& fromPoint);
 	private:
 		/// Vector containing the vertices.
-		std::vector<Vector2> vertices;
+		Vector2Array vertices;
 	};
 }
 
