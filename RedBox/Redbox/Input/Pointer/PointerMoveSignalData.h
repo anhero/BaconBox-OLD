@@ -23,11 +23,6 @@ namespace RedBox {
 		PointerMoveSignalData(const PointerState& newPointerState,
 							  unsigned int newCursorIndex);
 		
-		/**
-		 * Destructor.
-		 */
-		~PointerMoveSignalData();
-		
 		/// Index of the cursor concerned by the signal.
 		const unsigned int cursorIndex;
 	};

@@ -6,6 +6,3 @@ PointerMoveSignalData::PointerMoveSignalData(const PointerState& newPointerState
 											 unsigned int newCursorIndex) : 
 PointerSignalData(newPointerState), cursorIndex(newCursorIndex) {
 }
-
-PointerMoveSignalData::~PointerMoveSignalData() {
-}

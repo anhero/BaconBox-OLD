@@ -4,10 +4,7 @@ using namespace RedBox;
 
 PointerButtonSignalData::PointerButtonSignalData(const PointerState& newPointerState,
 												 unsigned int newCursorIndex,
-												 unsigned int newButtonIndex) :
+												 CursorButton::Enum newCursorButton) :
 PointerSignalData(newPointerState), cursorIndex(newCursorIndex),
-buttonIndex(newButtonIndex) {
-}
-
-PointerButtonSignalData::~PointerButtonSignalData() {
+cursorButton(newCursorButton) {
 }
