@@ -2,10 +2,10 @@
 
 _name="SDL"
 _license="zlib"
-_version="1.3-5573"
-_archive="${_name}-${_version}.tar.bz2"
+_version="1.3.0-50bf98210aae"
+_archive="${_name}-${_version}.tar.gz"
 _archive_url="http://anhero.net/stuff/${_archive}"
-_hash="18003e33e4e05663ce1219b639a5bba4"
+_hash="6f1d00a04a4443fa7e524e9d39c92748"
 
 load_base http.fetch
 load_base configuremakemake.build
@@ -28,6 +28,7 @@ function build() {
 	cd "${lib_workdir}/${_name}-${_version}/"
 
 	#Hack to remove Error: Couldn't open stream
+	echo Patching SDL_x11events.c to remove warnings...
 	patch -p1 <<'EOF'
 --- a/src/video/x11/SDL_x11events.c	2011-04-08 16:07:04.000000000 -0400
 +++ b/src/video/x11/SDL_x11events.c	2011-04-29 21:35:23.000000000 -0400
@@ -45,7 +46,8 @@ function build() {
 EOF
 
 	#Ugly hack to not use system iconv...
-	patch -p1 <<'EOF'
+	#echo Patching configure script to not use iconv...
+	echo DEPRECATED patch -p1 <<'EOF'
 --- a/configure	2011-03-26 22:52:31.000000000 -0400
 +++ b/configure	2011-04-19 12:45:53.000000000 -0400
 @@ -16085,7 +16085,7 @@
@@ -226,7 +228,8 @@ EOF
 EOF
 
 	#Patch to make this work with OS X Lion
-	patch -p1 <<'EOF'
+	#echo Patch for SDL_opengl.h under Mac OS X Lion
+	echo DEPRECATED patch -p1 <<'EOF'
 --- a/include/SDL_opengl.h	Mon Jul 18 14:55:24 2011 -0700
 +++ b/include/SDL_opengl.h	Wed Jul 20 14:50:14 2011 -0400
 @@ -46,6 +46,9 @@

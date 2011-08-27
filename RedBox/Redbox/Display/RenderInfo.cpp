@@ -8,7 +8,7 @@
 #include "Console.h"
 #include "MathHelper.h"
 #include "Sprite.h"
-
+#include "CArray.h"
 using namespace RedBox;
 
 RenderInfo::RenderInfo(): Object(), color(Color::WHITE), mask(NULL),
@@ -23,7 +23,7 @@ RenderInfo::RenderInfo(const RenderInfo& src) : Object(), color(src.color),
 }
 
 RenderInfo::RenderInfo(TextureInfo* newTexInfo,
-                       VerticesGroup* vertices,
+                       VerticesGroup& vertices,
                        unsigned int frameWidth,
                        unsigned int frameHeight,
                        unsigned int nbFrames,
@@ -34,7 +34,7 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
 }
 
-void RenderInfo::loadTexCoords(VerticesGroup* vertices,
+void RenderInfo::loadTexCoords(VerticesGroup& vertices,
                                unsigned int frameWidth,
                                unsigned int frameHeight,
                                unsigned int nbFrames,
@@ -46,7 +46,7 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 	}
 
 	// We check if the texInfo, the vertices and the number of frames are valid.
-	if(texInfo && vertices && nbFrames > 0) {
+	if(texInfo && nbFrames > 0) {
 
 		// We make sure the width and the height of the texture are valid.
 		if(texInfo->imageWidth && texInfo->imageHeight && texInfo->poweredWidth
@@ -59,15 +59,19 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 				float realFrameWidth = static_cast<float>(frameWidth) / static_cast<float>(texInfo->poweredWidth);
 				float realFrameHeight = static_cast<float>(frameHeight) / static_cast<float>(texInfo->poweredHeight);
 				float realWidth = static_cast<float>(texInfo->imageWidth) / static_cast<float>(texInfo->poweredWidth);
-				internalTexCoords.resize(nbFrames);
+				texCoords.resize(nbFrames);
 				float offsetX = 0.0f, offsetY = 0.0f;
-				Vector2 position = vertices->getPosition();
+				Vector2 position = vertices.getPosition();
 				// We get the width and the height of the of the vertices group.
-				Vector2 size = vertices->getSize();
-                int verticesCount;
-                Vector2 * verticesArray = vertices->getVertices(verticesCount);
-				size_t tmpSize = static_cast<size_t>(verticesCount);
+				Vector2 size = vertices.getSize();
+
+
+                               unsigned int verticesCount = vertices.getVertices().elementCount;
+                               Vector2 * verticesArray = vertices.getVertices().array;
+
+                               size_t tmpSize = static_cast<size_t>(verticesCount);
 				//std::vector<Vector2>& tmpVertices = vertices->getVertices();
+
 
 				// For each frame to load.
 				for(std::vector<std::vector<Vector2> >::iterator i = texCoords.begin();
@@ -76,11 +80,13 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 					// We set the number of coordinates.
 					i->resize(tmpSize);
 
-					for(std::vector<Vector2>::iterator j1 = i->begin(), j2 = tmpVertices.begin();
-						j1 != i->end() && j2 != tmpVertices.end();
-						++j1, ++j2) {
-						j1->setXY(offsetX + (j2->getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
-								  offsetY + (j2->getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
+					int j2 = 0;
+					for(std::vector<Vector2>::iterator j1 = i->begin();
+						j1 != i->end() && j2 < verticesCount;
+						++j1) {
+						j1->setXY(offsetX + (verticesArray[j2].getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
+								  offsetY + (verticesArray[j2].getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
+						j2++;
 					}
 
 					offsetX += realFrameWidth;
@@ -102,11 +108,6 @@ void RenderInfo::loadTexCoords(VerticesGroup* vertices,
 
 		if(!newTexInfo) {
 			Console::print("    - Texture information pointer is invalid: " + Console::toString(texInfo));
-			Console::printTrace();
-		}
-
-		if(!vertices) {
-			Console::print("    - VerticesGroup pointer given is invalid : " + Console::toString(vertices));
 			Console::printTrace();
 		}
 
@@ -196,7 +197,7 @@ const Color& RenderInfo::getColor() const {
 	return color;
 }
 
-const TextureInfo* RenderInfo::getTexInfo() const {
+TextureInfo* RenderInfo::getTexInfo() {
 	return texInfo;
 }
 

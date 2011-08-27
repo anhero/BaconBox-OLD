@@ -15,7 +15,7 @@
 
 #include "Object.h"
 #include "Vector2.h"
-
+#include "CArray.h"
 namespace RedBox {
 	class Sprite;
 	/**
@@ -69,13 +69,11 @@ namespace RedBox {
 		 */
 		void addVertices(unsigned int nbVertices, ...);
 
-		/**
-		 * Return a pointer to the first vertex and set by reference 
-         * the given integer to the vertices count. This way you can use 
-         * the given pointer as a C array and edit directly the vertices
-         * wheter they are in a batch or not.
-		 */
-		Vector2* getVertices(int & verticesCount);
+                /**
+                 * Return a struct containing a C array with the vertices and the 
+                 * number of element in this array
+                 */
+                CArray<Vector2> & getVertices() ;
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex and
@@ -87,7 +85,7 @@ namespace RedBox {
 		Vector2 getSize() const;
         
         ///Return the number of vertices in the VerticesGroup
-        int getVerticesCount() const;
+        int getVerticesCount();
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex.
@@ -219,13 +217,9 @@ namespace RedBox {
         /**
          * C like array containing the vertices.
          */
-        Vector2 * vertices;
+        CArray<Vector2> vertices;
         
-        /**
-         * Number of vertices in the vertices group, we can't directly use
-         * the size of the vertices vector, since it won't be used when we use batch rendering.
-         */
-        int verticesCount;
+       
         
         ///True if the vertices are outside of the verticesgroup (in a Batch)
         bool inBatch;

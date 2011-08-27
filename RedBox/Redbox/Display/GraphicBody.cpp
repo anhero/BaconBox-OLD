@@ -83,6 +83,7 @@ int GraphicBody::getZ() const {
 
 void GraphicBody::setZ(int newZ) {
 	layer.setZ(newZ);
+	layerChanged = true;
 }
 
 const Vector2& GraphicBody::getScrollFactor() const {
@@ -91,11 +92,13 @@ const Vector2& GraphicBody::getScrollFactor() const {
 
 void GraphicBody::setScrollFactor(const Vector2& newScrollFactor) {
 	layer.setScrollFactor(newScrollFactor);
+	layerChanged = true;
 }
 
 void GraphicBody::setScrollFactor(float newXScrollFactor,
                                   float newYScrollFactor) {
 	layer.setScrollFactor(newXScrollFactor, newYScrollFactor);
+	layerChanged = true;
 }
 
 float GraphicBody::getXScrollFactor() const {
@@ -104,6 +107,7 @@ float GraphicBody::getXScrollFactor() const {
 
 void GraphicBody::setXScrollFactor(float newXScrollFactor) {
 	layer.setXScrollFactor(newXScrollFactor);
+	layerChanged = true;
 }
 
 float GraphicBody::getYScrollFactor() const {
@@ -112,6 +116,7 @@ float GraphicBody::getYScrollFactor() const {
 
 void GraphicBody::setYScrollFactor(float newYScrollFactor) {
 	layer.setYScrollFactor(newYScrollFactor);
+	layerChanged = true;
 }
 
 bool GraphicBody::isToBeDeleted() const {

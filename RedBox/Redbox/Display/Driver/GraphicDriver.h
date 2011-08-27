@@ -10,6 +10,7 @@
 #include "PixMap.h"
 #include "Color.h"
 #include "Vector2.h"
+#include "CArray.h"
 
 namespace RedBox {
 	class RenderInfo;
@@ -30,7 +31,7 @@ namespace RedBox {
 		 * @param renderingInfo Object of type RenderInfo, containing colors array and textureID
 		 * @param nbVertices Number equal to the number of vertices to draw
 		 */
-		static void drawShapeWithTextureAndColor(std::vector<Vector2>& vertices,
+		static void drawShapeWithTextureAndColor(CArray<Vector2>& vertices,
 		        RenderInfo& renderingInfo);
 		/**
 		 * Draw a textured shape with the given vertices, texture coordinate,
@@ -40,7 +41,7 @@ namespace RedBox {
 		 * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
 		 * @param nbVertices Number equal to the number of vertices to draw.
 		 */
-		static void drawShapeWithTexture(std::vector<Vector2>& vertices,
+		static void drawShapeWithTexture(CArray<Vector2>& vertices,
 		                                 RenderInfo& renderingInfo);
 		/**
 		 * Draws a colored shape.
@@ -49,7 +50,7 @@ namespace RedBox {
 		 * information about how to render the shape.
 		 * @param nbVertices Number of vertices the shape has.
 		 */
-		static void drawShapeWithColor(std::vector<Vector2>& vertices,
+		static void drawShapeWithColor(CArray<Vector2>& vertices,
 		                               RenderInfo& renderingInfo);
 
 		/**
@@ -62,7 +63,7 @@ namespace RedBox {
 		 * @param nbVertices Number equal to the number of vertices to draw.
 
 		 */
-		static void drawMaskShapeWithTexture(std::vector<Vector2>& vertices,
+		static void drawMaskShapeWithTexture(CArray<Vector2>& vertices,
 		                                     RenderInfo& renderingInfo);
 
 		/**
@@ -73,7 +74,7 @@ namespace RedBox {
 		 * @param nbVertices Number equal to the number of vertices to draw.
 
 		 */
-		static void unmask(std::vector<Vector2>& vertices,
+		static void unmask(CArray<Vector2>& vertices,
 		                   RenderInfo& renderingInfo);
 
 		/**
@@ -90,7 +91,7 @@ namespace RedBox {
 		 * @param nbVertices Number of vertices the array contains.
 		 * @param inversedMask If true, the mask effect will be reversed.
 		 */
-		static void drawMaskedShapeWithTextureAndColor(std::vector<Vector2>& vertices,
+		static void drawMaskedShapeWithTextureAndColor(CArray<Vector2>& vertices,
 		        RenderInfo& renderingInfo,
 		        bool inversedMask = false);
 
@@ -105,7 +106,7 @@ namespace RedBox {
 		 * @param nbVertices Number equal to the number of vertices to draw.
 
 		 */
-		static void drawMaskShapeWithTextureAndColor(std::vector<Vector2>& vertices,
+		static void drawMaskShapeWithTextureAndColor(CArray<Vector2>& vertices,
 		        RenderInfo& renderingInfo);
 
 		/**

@@ -57,8 +57,8 @@ GraphicBody* SpriteEmitter::clone() const {
 }
 
 void SpriteEmitter::updateAlpha(int16_t deltaAlpha, Sprite* graphicBody) {
-	if(graphicBody && graphicBody->getMainRenderInfo()) {
-		int16_t tmpAlpha = static_cast<int16_t>(graphicBody->getMainRenderInfo()->getColor().getAlpha());
+	if(graphicBody) {
+		int16_t tmpAlpha = static_cast<int16_t>(graphicBody->getMainAlpha());
 		tmpAlpha += deltaAlpha;
 
 		if(tmpAlpha > static_cast<int16_t>(Color::MAX_COMPONENT_VALUE)) {
@@ -67,9 +67,7 @@ void SpriteEmitter::updateAlpha(int16_t deltaAlpha, Sprite* graphicBody) {
 			tmpAlpha = 0;
 		}
 
-		Color tmpColor = graphicBody->getMainRenderInfo()->getColor();
-		tmpColor.setAlpha(static_cast<uint8_t>(tmpAlpha));
-		graphicBody->setMainColor(tmpColor);
+		graphicBody->setMainAlpha(tmpAlpha);
 	}
 }
 

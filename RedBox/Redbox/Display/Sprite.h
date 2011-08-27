@@ -5,21 +5,17 @@
 #ifndef RB_SPRITE_H
 #define RB_SPRITE_H
 
-#include <list>
 #include <string>
-#include <utility>
 
-#include "PlatformFlagger.h"
-
-#include "TextureInfo.h"
 #include "GraphicBody.h"
 #include "VerticesGroup.h"
 #include "Color.h"
-
+#include "RenderInfo.h"
+#include "RenderMode.h"
+#include "FlagSet.h"
 
 namespace RedBox {
-	class RenderStep;
-	class RenderInfo;
+	struct TextureInfo;
 	/**
 	 * Represents a sprite. A is used to display animated or non-animated
 	 * images or display colored shapes. To use a sprite, initialize it and
@@ -109,14 +105,42 @@ namespace RedBox {
 		virtual ~Sprite();
 
 		/**
+		 * Updates the sprite.
+		 */
+		virtual void update();
+
+		/**
 		 * Renders the sprite.
 		 */
 		virtual void render();
 
 		/**
-		 * Updates the sprite.
+		 * Similar to the render function except that it will only
+		 * render to the alpha component of the color buffer. It is
+		 * used to mask the next rendered sprite (if the next sprite
+		 * is set as a masked sprite).
 		 */
-		virtual void update();
+		virtual void mask();
+
+		/**
+		 * Undo what the mask function did. This function
+		 * MUST be once after the masked sprite has been rendered.
+		 */
+		virtual void unmask();
+
+		/**
+		 * Gets the graphic body masking the current graphic body.
+		 * @return Pointer to the graphic body's mask.
+		 */
+		virtual GraphicBody* getMask();
+
+		/**
+		 * Set the sprite used to mask the parent renderstep.
+		 * @param newMask A mask sprite.
+		 * @param inversed Set this parameter to true if you want to inverse
+		 * the effect of the mask. False by default.
+		 */
+		virtual void setMask(GraphicBody* newMask, bool inversed = false);
 
 		/**
 		 * Creates a vertex in the vertices group.
@@ -155,6 +179,12 @@ namespace RedBox {
 		virtual void setPosition(float newXPosition, float newYPosition);
 
 		/**
+		 * Gets the sprite's width and height.
+		 * @return Vector2 containing the sprite's width and height.
+		 */
+		const Vector2 getSize() const;
+
+		/**
 		 * Gets the sprite's width.
 		 * @return Sprite's width.
 		 */
@@ -167,73 +197,41 @@ namespace RedBox {
 		virtual float getHeight() const;
 
 		/**
-		 * Gets the sprite's width and height.
-		 * @return Pair containing the sprite's width and height. The first
-		 * member is the width and the second is the height.
+		 * Gets the sprite's main color.
+		 * @return Color object containing the color component of the sprite.
 		 */
-		const Vector2 getSize() const;
-
-		/**
-		 * Adds a rendering step. Does nothing if the recieved pointer is NULL.
-		 * @param newRenderStep Pointer to the rendering step to add.
-		 * @return Pointer to the rendering step added. NULL if it failed.
-		 */
-		RenderStep* addRenderStep(RenderStep* newRenderStep);
-
-		/**
-		 * Removes a rendering step. Does nothing if the recieved is either NULL
-		 * or isn't in the list. Does not free up any memory used by the pointed
-		 * RenderStep.
-		 * @param renderStep Rendering step to remove from the set.
-		 */
-		void removeRenderStep(RenderStep* renderStep);
-
-		/**
-		 * Gets the main RenderStep. The main RenderStep is the one at the front
-		 * of the list.
-		 * @return Pointer to the RenderStep at the front of the list. Returns
-		 * NULL if the list is empty.
-		 */
-		RenderStep* getMainRenderStep();
-
-		/**
-		 * Gets a RenderStep. Has to loop through the list to get it, so it is
-		 * quite slower than a direct access.
-		 * @param position Position of the RenderStep to get from the list. 0 is
-		 * the first RenderStep (also known as the main RenderStep).
-		 * @return Pointer to the RenderStep at the position given.
-		 */
-		RenderStep* getRenderStep(unsigned int position);
-
-		/**
-		 * Gets the list of RenderStep's.
-		 * @return Reference to the list of RenderSteps used by the sprite.
-		 */
-		std::list<RenderStep*>& getRenderSteps();
+		const Color& getMainColor() const;
 
 		/**
 		 * Set the color of the main renderStep with the
 		 * given color components Range are from 0 to 255.
 		 * Componentes are RGBA.
 		 */
-		void setMainColor(const Color& color);
+		virtual void setMainColor(const Color& newColor);
 
 		/**
-		 * Set the alpha component on the main renderstep.
-		 * Range is from 0 to 255.
+		 * Gets the main color's alpha component.
+		 * @return Alpha component of the sprite's main color.
 		 */
-		void setMainAlpha(int alpha);
+		uint8_t getMainAlpha() const;
 
 		/**
-		 * Return a Color object containing the color component of the main RenderStep.
+		 * Sets the alpha component on the main renderstep.
+		 * @param alpha New alpha component. Range is from 0 to 255.
 		 */
-		Color getMainColor();
+		void setMainAlpha(int32_t newAlpha);
 
 		/**
 		 * Gets the vertices group.
 		 * @return Reference to the sprite's group of vertices.
 		 */
 		VerticesGroup& getVertices();
+
+		/**
+		 * Gets the vertices group.
+		 * @return Reference to the sprite's group of vertices.
+		 */
+		const VerticesGroup& getVertices() const;
 
 		/**
 		 * Gets the sprite's left side's position.
@@ -260,17 +258,48 @@ namespace RedBox {
 		float getMaxY() const;
 
 		/**
-		 * Gets a pointer to the main render step's render information.
-		 * @return Pointer to the main RenderStep's render information. Returns
-		 * NULL if there aren't any RenderSteps for the sprite.
+		 * Gets the sprite's render info.
+		 * @return Reference to the sprite's render information.
 		 */
-		RenderInfo* getMainRenderInfo();
+		RenderInfo& getRenderInfo();
+
+		/**
+		 * Gets the sprite's render info.
+		 * @return Reference to the sprite's render information.
+		 */
+		const RenderInfo& getRenderInfo() const;
+
+		/**
+		 * Checks if the sprite's animation is paused.
+		 * @return True if the animation is paused, false if not.
+		 * @see RedBox::Sprite::animationPaused
+		 */
+		bool isAnimationPaused() const;
 
 		/**
 		 * Sets the current animation.
 		 * @param name Name of the animation to play.
 		 */
 		void playAnimation(const std::string& name);
+
+		/**
+		 * Pauses the sprite's animation. Stays paused until resumeAnimation()
+		 * or playAnimation(...) is called.
+		 */
+		void pauseAnimation();
+
+		/**
+		 * Resumes the paused animation, does nothing if the animation wasn't
+		 * paused.
+		 */
+		void resumeAnimation();
+
+		/**
+		 * Gets the name of the current animation.
+		 * @return String containing the sprite's current animation. Empty
+		 * string if there is no current animation.
+		 */
+		const std::string& getCurrentAnimation() const;
 
 		/**
 		 * Adds an animation. Accepts a variable number of parameters for each
@@ -289,6 +318,48 @@ namespace RedBox {
 		                  int nbLoops,
 		                  unsigned int nbFrames, ...);
 
+		/**
+		 * Gets the rendering modes.
+		 * @return Current rendering modes.
+		 */
+		const FlagSet<RenderMode>& getRenderModes() const;
+
+		/**
+		 * Sets the rendering modes.
+		 * @param newMode New mode to be set.
+		 */
+		void setRenderModes(const FlagSet<RenderMode>& newRenderModes);
+
+		/**
+		 * Adds a mode with the bitwise inclusive OR. More than one mode can
+		 * be added at the same time using the same operator.
+		 * @param newMode New mode to add.
+		 */
+		void addRenderModes(const FlagSet<RenderMode>& newRenderModes);
+
+		/**
+		 * Adds a mode with the bitwise inclusive OR. More than one mode can
+		 * be added at the same time using the same operator.
+		 * @param newMode New mode to add.
+		 */
+		void addRenderMode(RenderMode newRenderMode);
+
+		/**
+		 * Flip off given mode flags.
+		 * @param mode Mode(s) to flip off. You can pass more than one flag like
+		 * this: (Flag1 | Flag2).
+		 * @see RedBox::RenderStep::mode
+		 */
+		void removeRenderModes(const FlagSet<RenderMode>& renderModesToRemove);
+
+		/**
+		 * Flip off given mode flag.
+		 * @param mode Mode(s) to flip off. You can pass more than one flag like
+		 * this: (Flag1 | Flag2).
+		 * @see RedBox::RenderStep::mode
+		 */
+		void removeRenderMode(RenderMode renderModeToRemove);
+
 		using GraphicBody::setScaling;
 
 		/**
@@ -304,35 +375,8 @@ namespace RedBox {
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		virtual void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
-
-		/**
-		 * Similar to the render function except that it will only
-		 * render to the alpha component of the color buffer. It is
-		 * used to mask the next rendered sprite (if the next sprite
-		 * is set as a masked sprite).
-		 */
-		virtual void mask();
-
-		/**
-		 * Undo what the mask function did. This function
-		 * MUST be once after the masked sprite has been rendered.
-		 */
-		virtual void unmask();
-
-		/**
-		 * Gets the graphic body masking the current graphic body.
-		 * @return Pointer to the graphic body's mask.
-		 */
-		virtual GraphicBody* getMask();
-
-		/**
-		 * Set the sprite used to mask the parent renderstep.
-		 * @param newMask A mask sprite.
-		 * @param inversed Set this parameter to true if you want to inverse
-		 * the effect of the mask. False by default.
-		 */
-		virtual void setMask(GraphicBody* newMask, bool inversed = false);
+		virtual void rotateFromPoint(float rotationAngle,
+		                             const Vector2& rotationPoint);
 
 		/**
 		 * Clones the sprite.
@@ -340,21 +384,25 @@ namespace RedBox {
 		 */
 		virtual GraphicBody* clone() const;
 
-		//		void setTexture(TextureInfo * aTextureInfo);
-		//		void setTexture(std::string key);
 	private:
-		/**
-		 * List containing the rendering steps. The first RenderStep in the list
-		 * is considered as the main one.
-		 */
-		std::list<RenderStep*> renderSteps;
-
 		/// Vertices making up the sprite.
 		VerticesGroup vertices;
 
+		/// Contains the render information.
+		RenderInfo renderInfo;
+
+		/// Flag set of render modes.
+		FlagSet<RenderMode> renderModes;
+
+		/// Set to true if the animation is paused (false by default).
+		bool animationPaused;
+
+		/// Internal time counter for animations.
+		double animationCounter;
+
 		/**
 		 * Constructs the sprite using the given info.
-		 * @param texInfo Pointer to the texture's information.
+		 * @param textureInfo Pointer to the texture's information.
 		 * @param frameWidth Width of the frames to read from the image (in
 		 * pixels).
 		 * @param frameHeight Height of the frames to read from the image (in
@@ -362,25 +410,10 @@ namespace RedBox {
 		 * @param nbFrames Number of frames the sprite will load (for
 		 * animations).
 		 */
-		void construct(TextureInfo* texInfo,
+		void construct(TextureInfo* textureInfo,
 		               unsigned int frameWidth,
 		               unsigned int frameHeight,
 		               unsigned int nbFrames = 1);
-
-
-		/**
-		 * Resets the sprite. Also frees up all allocated memory.
-		 */
-		void clean();
-		/**
-		 * Makes the instance a copy of the recieved one.
-		 * @param src Sprite to make a copy of.
-		 */
-		void copyFrom(const Sprite& src);
-		/**
-		 * Frees up all memory used by the render steps.
-		 */
-		void clearRenderSteps();
 	};
 }
 
