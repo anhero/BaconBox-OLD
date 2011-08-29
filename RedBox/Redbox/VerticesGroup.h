@@ -69,11 +69,19 @@ namespace RedBox {
 		 */
 		void addVertices(unsigned int nbVertices, ...);
 
-                /**
-                 * Return a struct containing a C array with the vertices and the 
-                 * number of element in this array
-                 */
-                CArray<Vector2> & getVertices() ;
+		/**
+		 * Gets the vertices group's vertices.
+		 * @return Reference to a struct containing a C array with the vertices
+		 * and the number of element in the array.
+		 */
+		CArray<Vector2>& getVertices();
+
+		/**
+		 * Gets the vertices group's vertices.
+		 * @return Reference to a struct containing a C array with the vertices
+		 * and the number of element in the array.
+		 */
+		const CArray<Vector2>& getVertices() const;
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex and
@@ -83,9 +91,12 @@ namespace RedBox {
 		 * @return Vector2 containing the width and height.
 		 */
 		Vector2 getSize() const;
-        
-        ///Return the number of vertices in the VerticesGroup
-        int getVerticesCount();
+
+		/**
+		 * Gets the number of vertices.
+		 * @return Number of vertices in the vertices group.
+		 */
+		unsigned int getVerticesCount() const;
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex.
@@ -213,16 +224,12 @@ namespace RedBox {
 	private:
 		/// Vector containing the vertices when we are not in a batch.
 		std::vector<Vector2> internalVertices;
-        
-        /**
-         * C like array containing the vertices.
-         */
-        CArray<Vector2> vertices;
-        
-       
-        
-        ///True if the vertices are outside of the verticesgroup (in a Batch)
-        bool inBatch;
+
+		/// C like array containing the vertices.
+		CArray<Vector2> vertices;
+
+		/// True if the vertices are outside of the verticesgroup (in a Batch).
+		bool inBatch;
 	};
 }
 

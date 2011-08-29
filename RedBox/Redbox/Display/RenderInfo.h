@@ -60,7 +60,7 @@ namespace RedBox {
 		 * @see RedBox::RenderInfo::texInfo
 		 */
 		RenderInfo(TextureInfo* newTexInfo,
-		            VerticesGroup& vertices,
+		           VerticesGroup& vertices,
 		           unsigned int frameWidth,
 		           unsigned int frameHeight,
 		           unsigned int nbFrames = 1,
@@ -80,7 +80,7 @@ namespace RedBox {
 		 * @param newTexInfo Pointer to the information about the texture.
 		 * @see RedBox::RenderInfo::texInfo
 		 */
-		void loadTexCoords( VerticesGroup& vertices,
+		void loadTexCoords(VerticesGroup& vertices,
 		                   unsigned int frameWidth,
 		                   unsigned int frameHeight,
 		                   unsigned int nbFrames = 1,
@@ -267,16 +267,16 @@ namespace RedBox {
 		 * Vector containing the texture's coordinates for each animation frame.
 		 */
 		std::vector<std::vector<Vector2> > texCoords;
-        
-        ///C array of the current frame texture coordinates
-        Vector2 * currentTexCoord;
-        
-        
-        ///Number of texture coordinates in the currentTexCoord array.
-        int currentTexCoordCount;
-        
-        ///true if the RenderStep is in a batch
-        bool inBatch;
+
+		/// C array of the current frame texture coordinates
+		Vector2* currentTexCoord;
+
+
+		/// Number of texture coordinates in the currentTexCoord array.
+		unsigned int currentTexCoordCount;
+
+		///true if the RenderStep is in a batch
+		bool inBatch;
 
 		/**
 		 * Current frame at which the animation is currently.
@@ -288,6 +288,7 @@ namespace RedBox {
 
 		/// Index of the frame to show when the RenderInfo isn't animated.
 		unsigned int defaultFrame;
+
 		/**
 		 * Map to associate names to each animations in texCoords. For example,
 		 * to get information about a specific animation, you'd do

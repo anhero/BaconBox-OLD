@@ -86,24 +86,27 @@ namespace RedBox {
 
 					} else {
 						// We get the button's sprite's real width.
-						std::vector<Vector2>::iterator i = buttonSprite.getVertices().getVertices().begin();
-						Vector2 tmpLine(*i);
+						unsigned int i = 0;
+						Vector2* tmpArray = buttonSprite.getVertices().getVertices().array;
+						//std::vector<Vector2>::iterator i = buttonSprite.getVertices().getVertices().begin();
+						Vector2 tmpLine(tmpArray[i]);
 						++i;
-						Vector2 line(*i);
+						Vector2 line(tmpArray[i]);
 						Vector2 horizontalLine = line - tmpLine;
 						// We get the upper left vertex's position.
-						i = lineSprite.getVertices().getVertices().begin();
-						tmpLine = *i;
+						i = 0;
+						tmpArray = lineSprite.getVertices().getVertices().array;
+						tmpLine = tmpArray[i];
 						// We get the upper right vertex's position.
 						++i;
-						line = *i;
+						line = tmpArray[i];
 						// We get the line's sprite's real center right position.
 						++i;
-						line += (*i - line) * 0.5f;
+						line += (tmpArray[i] - line) * 0.5f;
 						line -= horizontalLine * 0.5f;
 						// We get the line's sprite's real center left position.
 						++i;
-						tmpLine += (*i - tmpLine) * 0.5f;
+						tmpLine += (tmpArray[i] - tmpLine) * 0.5f;
 						tmpLine += horizontalLine * 0.5f;
 						// We get the line that goes from the line's sprite's
 						// left center position to its right center position.
