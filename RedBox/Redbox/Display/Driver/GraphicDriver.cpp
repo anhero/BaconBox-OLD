@@ -12,63 +12,63 @@
 
 using namespace RedBox;
 
-void GraphicDriver::drawShapeWithTextureAndColor(std::vector<Vector2>& vertices,
+void GraphicDriver::drawShapeWithTextureAndColor(CArray<Vector2>& vertices,
         RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawShapeWithTextureAndColor(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
-	        renderingInfo, vertices.size());
+	OpenGLDriver::drawShapeWithTextureAndColor(reinterpret_cast<GLfloat*>(vertices.array),
+	        renderingInfo, vertices.elementCount);
 #endif
 }
 
-void GraphicDriver::drawShapeWithTexture(std::vector<Vector2>& vertices,
+void GraphicDriver::drawShapeWithTexture(CArray<Vector2>& vertices,
         RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawShapeWithTexture(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
+	OpenGLDriver::drawShapeWithTexture(reinterpret_cast<GLfloat*>(vertices.array),
 	                                   renderingInfo,
-	                                   vertices.size());
+	                                   vertices.elementCount);
 #endif
 }
 
-void GraphicDriver::drawShapeWithColor(std::vector<Vector2>& vertices,
+void GraphicDriver::drawShapeWithColor(CArray<Vector2>& vertices,
                                        RedBox::RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawShapeWithColor(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
-	                                 renderingInfo, vertices.size());
+	OpenGLDriver::drawShapeWithColor(reinterpret_cast<GLfloat*>(vertices.array),
+	                                 renderingInfo, vertices.elementCount);
 #endif
 }
 
 
-void GraphicDriver::drawMaskShapeWithTexture(std::vector<Vector2>& vertices,
+void GraphicDriver::drawMaskShapeWithTexture(CArray<Vector2>& vertices,
         RedBox::RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawMaskShapeWithTexture(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
-	                                       renderingInfo, vertices.size());
+	OpenGLDriver::drawMaskShapeWithTexture(reinterpret_cast<GLfloat*>(vertices.array),
+	                                       renderingInfo, vertices.elementCount);
 #endif
 }
 
-void GraphicDriver::unmask(std::vector<Vector2>& vertices,
+void GraphicDriver::unmask(CArray<Vector2>& vertices,
                            RedBox::RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::unmask(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
-	                     renderingInfo, vertices.size());
+	OpenGLDriver::unmask(reinterpret_cast<GLfloat*>(vertices.array),
+	                     renderingInfo, vertices.elementCount);
 #endif
 }
 
-void GraphicDriver::drawMaskShapeWithTextureAndColor(std::vector<Vector2>& vertices,
+void GraphicDriver::drawMaskShapeWithTextureAndColor(CArray<Vector2>& vertices,
         RedBox::RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawMaskShapeWithTextureAndColor(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
-	        renderingInfo, vertices.size());
+	OpenGLDriver::drawMaskShapeWithTextureAndColor(reinterpret_cast<GLfloat*>(vertices.array),
+	        renderingInfo, vertices.elementCount);
 #endif
 }
 
 
-void GraphicDriver::drawMaskedShapeWithTextureAndColor(std::vector<Vector2>& vertices,
+void GraphicDriver::drawMaskedShapeWithTextureAndColor(CArray<Vector2>& vertices,
         RenderInfo& renderingInfo,
         bool inversedMask) {
 #ifdef RB_OPENGL
-	OpenGLDriver::drawMaskedShapeWithTextureAndColor(reinterpret_cast<GLfloat*>(&(*(vertices.begin()))),
-	        renderingInfo, vertices.size(), inversedMask);
+	OpenGLDriver::drawMaskedShapeWithTextureAndColor(reinterpret_cast<GLfloat*>(vertices.array),
+	        renderingInfo, vertices.elementCount, inversedMask);
 #endif
 }
 

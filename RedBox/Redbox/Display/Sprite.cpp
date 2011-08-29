@@ -121,7 +121,7 @@ void Sprite::update() {
 
 void Sprite::render() {
 	// We make sure there are vertices to render.
-	if(!vertices.getVertices().empty()) {
+	if(vertices.getVerticesCount() > 0) {
 		// We check which graphic driver method to use.
 		if(renderModes.isSet(RenderMode::SHAPE)) {
 			// We check if we have a texture to render.
@@ -132,7 +132,8 @@ void Sprite::render() {
 					assert(mask);
 					mask->mask();
 					// Masked with texture.
-					GraphicDriver::drawMaskedShapeWithTextureAndColor(vertices.getVertices(),
+                    CArray<Vector2> test = vertices.getVertices();
+					GraphicDriver::drawMaskedShapeWithTextureAndColor(test,
 					                                                  renderInfo,
 					                                                  renderModes.isSet(RenderMode::INVERSE_MASKED));
 					mask->unmask();
@@ -153,14 +154,14 @@ void Sprite::render() {
 }
 
 void Sprite::mask() {
-	if(!vertices.getVertices().empty()) {
+	if(vertices.getVerticesCount() > 0 ) {
 		GraphicDriver::drawMaskShapeWithTextureAndColor(vertices.getVertices(),
 		                                                renderInfo);
 	}
 }
 
 void Sprite::unmask() {
-	if(!vertices.getVertices().empty()) {
+	if(vertices.getVerticesCount() > 0) {
 		GraphicDriver::unmask(vertices.getVertices(), renderInfo);
 	}
 }

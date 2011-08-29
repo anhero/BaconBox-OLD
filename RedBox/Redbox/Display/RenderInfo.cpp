@@ -8,11 +8,11 @@
 #include "Console.h"
 #include "MathHelper.h"
 #include "Sprite.h"
-
+#include "CArray.h"
 using namespace RedBox;
 
 RenderInfo::RenderInfo(): Object(), color(Color::WHITE), mask(NULL),
-	texInfo(NULL), currentFrame(0), currentNbLoops(0), defaultFrame(0) {
+	texInfo(NULL), currentFrame(0), currentNbLoops(0), defaultFrame(0), inBatch(false){
 }
 
 RenderInfo::RenderInfo(const RenderInfo& src) : Object(), color(src.color),
@@ -23,7 +23,7 @@ RenderInfo::RenderInfo(const RenderInfo& src) : Object(), color(src.color),
 }
 
 RenderInfo::RenderInfo(TextureInfo* newTexInfo,
-                       const VerticesGroup& vertices,
+                       VerticesGroup& vertices,
                        unsigned int frameWidth,
                        unsigned int frameHeight,
                        unsigned int nbFrames,
@@ -34,7 +34,7 @@ RenderInfo::RenderInfo(TextureInfo* newTexInfo,
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
 }
 
-void RenderInfo::loadTexCoords(const VerticesGroup& vertices,
+void RenderInfo::loadTexCoords(VerticesGroup& vertices,
                                unsigned int frameWidth,
                                unsigned int frameHeight,
                                unsigned int nbFrames,
@@ -64,8 +64,14 @@ void RenderInfo::loadTexCoords(const VerticesGroup& vertices,
 				Vector2 position = vertices.getPosition();
 				// We get the width and the height of the of the vertices group.
 				Vector2 size = vertices.getSize();
-				size_t tmpSize = vertices.getVertices().size();
-				const std::vector<Vector2>& tmpVertices = vertices.getVertices();
+
+
+                               unsigned int verticesCount = vertices.getVertices().elementCount;
+                               Vector2 * verticesArray = vertices.getVertices().array;
+
+                               size_t tmpSize = static_cast<size_t>(verticesCount);
+				//std::vector<Vector2>& tmpVertices = vertices->getVertices();
+
 
 				// For each frame to load.
 				for(std::vector<std::vector<Vector2> >::iterator i = texCoords.begin();
@@ -74,13 +80,13 @@ void RenderInfo::loadTexCoords(const VerticesGroup& vertices,
 					// We set the number of coordinates.
 					i->resize(tmpSize);
 
-					std::vector<Vector2>::const_iterator j2 = tmpVertices.begin();
+					int j2 = 0;
 					for(std::vector<Vector2>::iterator j1 = i->begin();
-						j1 != i->end() && j2 != tmpVertices.end();
+						j1 != i->end() && j2 < verticesCount;
 						++j1) {
-						j1->setXY(offsetX + (j2->getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
-								  offsetY + (j2->getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
-						++j2;
+						j1->setXY(offsetX + (verticesArray[j2].getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
+								  offsetY + (verticesArray[j2].getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
+						j2++;
 					}
 
 					offsetX += realFrameWidth;

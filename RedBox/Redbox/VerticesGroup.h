@@ -15,7 +15,7 @@
 
 #include "Object.h"
 #include "Vector2.h"
-
+#include "CArray.h"
 namespace RedBox {
 	class Sprite;
 	/**
@@ -33,24 +33,10 @@ namespace RedBox {
 		friend std::ostream& operator<<(std::ostream& output,
 		                                const VerticesGroup& v);
 	public:
-		typedef std::vector<Vector2> Vector2Array;
-
 		/**
 		 * The default constructor.
 		 */
 		VerticesGroup();
-
-		/**
-		 * Parameterized constructor. Initializes the vertices group with
-		 * vertices.
-		 * @param nbVertices Number of vertices to add. Each of the following
-		 * parameters must be floats. The number of parameters must be equal to
-		 * twice the number of vertices to add. In the order, the floats are the
-		 * horizontal value then the vertical value of the vertex to add,
-		 * followed by the other vertices. For example, to add 4 vertices :
-		 * VerticesGroup(4, 1.3f, 3.4f, 1.0f, 0.05f, 4.33f, 2.66f, 19.0f, 84.1f)
-		 */
-		VerticesGroup(Vector2Array::size_type nbVertices, ...);
 
 		/**
 		 * The copy constructor.
@@ -75,7 +61,7 @@ namespace RedBox {
 		/**
 		 * Adds multiple vertices. Can recieve a variable number of parameters.
 		 * @param nbVertices Number of vertices to add. Each of the following
-		 * parameters must be floats. The number of parameters must be equal to
+		 * parameters must be floats. The number of parameters must equal to
 		 * twice the number of vertices to add. In the order, the floats are the
 		 * horizontal value then the vertical value of the vertex to add,
 		 * followed by the other vertices. For example, to add 4 vertices :
@@ -83,19 +69,11 @@ namespace RedBox {
 		 */
 		void addVertices(unsigned int nbVertices, ...);
 
-		/**
-		 * Gets the vertices. The vertices' values are actually pointers that
-		 * point to the values in verticesData.
-		 * @return Dynamic array containing the vertices.
-		 */
-		Vector2Array& getVertices();
-
-		/**
-		 * Gets the vertices. The vertices' values are actually pointers that
-		 * point to the values in verticesData.
-		 * @return Dynamic array containing the vertices.
-		 */
-		const std::vector<Vector2>& getVertices() const;
+                /**
+                 * Return a struct containing a C array with the vertices and the 
+                 * number of element in this array
+                 */
+                CArray<Vector2> & getVertices() ;
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex and
@@ -105,6 +83,9 @@ namespace RedBox {
 		 * @return Vector2 containing the width and height.
 		 */
 		Vector2 getSize() const;
+        
+        ///Return the number of vertices in the VerticesGroup
+        int getVerticesCount();
 
 		/**
 		 * Gets the distance between the left-most and the right-most vertex.
@@ -230,8 +211,18 @@ namespace RedBox {
 		 */
 		void rotate(float angle, const Vector2& fromPoint);
 	private:
-		/// Vector containing the vertices.
-		Vector2Array vertices;
+		/// Vector containing the vertices when we are not in a batch.
+		std::vector<Vector2> internalVertices;
+        
+        /**
+         * C like array containing the vertices.
+         */
+        CArray<Vector2> vertices;
+        
+       
+        
+        ///True if the vertices are outside of the verticesgroup (in a Batch)
+        bool inBatch;
 	};
 }
 
