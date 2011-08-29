@@ -247,6 +247,11 @@ namespace RedBox {
 		 * the RenderInfo isn't animated.
 		 */
 		void setDefaultFrame(unsigned int newDefaultFrame);
+        
+        /**
+         * Sets the C array containing the current texture coordinates.
+         */
+        void setBatchPointer(Vector2 * texCoord);
 	private:
 		/**
 		 * Color, first int is red, second is green, third is blue and last one

@@ -164,6 +164,10 @@ Vector2 VerticesGroup::getPosition() const {
 	return result;
 }
 
+void VerticesGroup::setBatchPointer(Vector2 * verticesPointer){
+    vertices.array = verticesPointer;
+}
+
 Vector2 VerticesGroup::getPositionCenter() const {
 	if(vertices.array == 0) {
 		Console::print("Tried to get the position of the center of an empty VerticesGroup.");

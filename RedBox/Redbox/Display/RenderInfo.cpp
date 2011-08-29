@@ -250,6 +250,10 @@ void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
 	}
 }
 
+void RenderInfo::setBatchPointer(Vector2 * texCoord){
+    currentTexCoord = texCoord;
+}
+
 unsigned int RenderInfo::getCurrentFrame() const {
 	if(isAnimated() && animationExists(currentAnimation)) {
 		return getAnimationParameters(getCurrentAnimation())->frames[currentFrame];

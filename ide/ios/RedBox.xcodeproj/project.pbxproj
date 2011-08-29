@@ -242,6 +242,8 @@
 		51927C1011D5EA5100C65B15 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		51D085B2140877F90004B1DB /* CArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D085B1140877F90004B1DB /* CArray.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51D085BE14087CA60004B1DB /* RenderMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D085BD14087CA60004B1DB /* RenderMode.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51EB297B140B2D9A00E7D000 /* RenderBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51EB2979140B2D9A00E7D000 /* RenderBatch.cpp */; };
+		51EB297C140B2D9A00E7D000 /* RenderBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 51EB297A140B2D9A00E7D000 /* RenderBatch.h */; };
 		7EF711F1132D35C100524FBB /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711ED132D35C100524FBB /* libfreetype.a */; };
 		7EF711F2132D35C100524FBB /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711EE132D35C100524FBB /* libpng.a */; };
 /* End PBXBuildFile section */
@@ -483,6 +485,8 @@
 		51A9351410E8934500D144F4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		51D085B1140877F90004B1DB /* CArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CArray.h; sourceTree = "<group>"; };
 		51D085BD14087CA60004B1DB /* RenderMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderMode.h; sourceTree = "<group>"; };
+		51EB2979140B2D9A00E7D000 /* RenderBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderBatch.cpp; sourceTree = "<group>"; };
+		51EB297A140B2D9A00E7D000 /* RenderBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderBatch.h; sourceTree = "<group>"; };
 		7EF711ED132D35C100524FBB /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../libraries/build/lib/libfreetype.a; sourceTree = "<group>"; };
 		7EF711EE132D35C100524FBB /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../libraries/build/lib/libpng.a; sourceTree = "<group>"; };
 		7EF711F0132D35C100524FBB /* libvorbisidec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisidec.a; path = ../../libraries/build/lib/libvorbisidec.a; sourceTree = "<group>"; };
@@ -672,8 +676,8 @@
 				515DA5F913FED375004228BE /* PixMap.cpp */,
 				515DA5FA13FED375004228BE /* PixMap.h */,
 				515DA5FB13FED375004228BE /* RBString32.h */,
-				515DA5FC13FED375004228BE /* RenderInfo.cpp */,
 				51D085BD14087CA60004B1DB /* RenderMode.h */,
+				515DA5FC13FED375004228BE /* RenderInfo.cpp */,
 				515DA5FD13FED375004228BE /* RenderInfo.h */,
 				515DA60213FED375004228BE /* Sprite.cpp */,
 				515DA60313FED375004228BE /* Sprite.h */,
@@ -681,6 +685,8 @@
 				515DA61413FED375004228BE /* TextureInfo.cpp */,
 				515DA61513FED375004228BE /* TextureInfo.h */,
 				515DA61613FED375004228BE /* Window */,
+				51EB2979140B2D9A00E7D000 /* RenderBatch.cpp */,
+				51EB297A140B2D9A00E7D000 /* RenderBatch.h */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -1099,6 +1105,7 @@
 				51D085B2140877F90004B1DB /* CArray.h in Headers */,
 				515DA7CC13FED376004228BE /* Vector2.h in Headers */,
 				515DA7CE13FED376004228BE /* VerticesGroup.h in Headers */,
+				51EB297C140B2D9A00E7D000 /* RenderBatch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1269,6 +1276,7 @@
 				515DA7C913FED376004228BE /* State.cpp in Sources */,
 				515DA7CB13FED376004228BE /* Vector2.cpp in Sources */,
 				515DA7CD13FED376004228BE /* VerticesGroup.cpp in Sources */,
+				51EB297B140B2D9A00E7D000 /* RenderBatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

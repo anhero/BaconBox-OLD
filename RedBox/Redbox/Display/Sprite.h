@@ -383,6 +383,11 @@ namespace RedBox {
 		 * @return Pointer to the new Sprite.
 		 */
 		virtual GraphicBody* clone() const;
+        
+        /**
+         * Sets the C arrays containing the vertices and texture coordinates.
+         */
+        void setBatchPointer(Vector2* verticesPointer, Vector2 * textureCoordPointer);
 
 	private:
 		/// Vertices making up the sprite.

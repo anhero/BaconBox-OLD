@@ -140,6 +140,11 @@ namespace RedBox {
 		 */
 		void move(float deltaX, float deltaY);
 
+        /**
+         * Sets the C array containing the vertices. It usually make it 
+         * point to the internal vector or a batch call's array of vertices .
+         */
+        void setBatchPointer(Vector2 * verticesPointer);
 		/**
 		 * Gets the horizontal position. Higher position value means it is more
 		 * to the right.
