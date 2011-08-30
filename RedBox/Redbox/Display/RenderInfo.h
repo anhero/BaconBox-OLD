@@ -247,6 +247,23 @@ namespace RedBox {
 		 * the RenderInfo isn't animated.
 		 */
 		void setDefaultFrame(unsigned int newDefaultFrame);
+        
+        /**
+         * Point the c array pointer (texture coordinates)
+         * to the batchcall's array.
+         * Set it to NULL if you don't want to sync a batchcall.
+         */
+        void setBatchPointer(Vector2 * texCoord);
+        
+        
+        /**
+         * Update batchcall array of texture coordinate with the internal 
+         * Vector of frame depending on the current frame. 
+         * (This function won't re-update the batchcall array 
+         * until the current frame change.)
+         */
+        void updateBatchPointer();
+        
 	private:
 		/**
 		 * Color, first int is red, second is green, third is blue and last one
@@ -268,15 +285,18 @@ namespace RedBox {
 		 */
 		std::vector<std::vector<Vector2> > texCoords;
 
-		/// C array of the current frame texture coordinates
-		Vector2* currentTexCoord;
+        /**
+         * Point to the texture coordinates of the current sprite in a renderbatch.
+         * Null if not in batch
+         */
+		Vector2* batchTexCoord;
+        
+        /**
+         * Contain the current frame of the last batchcall update.
+         * Used to prevent redundant updating on the same frame.
+         */
+        int lastBatchCallUpdateFrame;
 
-
-		/// Number of texture coordinates in the currentTexCoord array.
-		unsigned int currentTexCoordCount;
-
-		///true if the RenderStep is in a batch
-		bool inBatch;
 
 		/**
 		 * Current frame at which the animation is currently.

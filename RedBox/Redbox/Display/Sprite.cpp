@@ -119,6 +119,17 @@ void Sprite::update() {
 	}
 }
 
+void Sprite::setBatchPointer(Vector2* verticesPointer, Vector2 * textureCoordPointer){
+    vertices.setBatchPointer(verticesPointer);
+    renderInfo.setBatchPointer(textureCoordPointer);
+}
+
+void Sprite::setInternalBatchPointer(){
+    vertices.setInternalBatchPointer();
+    renderInfo.setBatchPointer(NULL);
+}
+
+
 void Sprite::render() {
 	// We make sure there are vertices to render.
 	if(vertices.getVerticesCount() > 0) {

@@ -169,6 +169,25 @@ Vector2 VerticesGroup::getPosition() const {
 	return result;
 }
 
+void VerticesGroup::setBatchPointer(Vector2 * verticesPointer){
+    vertices.array = verticesPointer;
+}
+
+
+void VerticesGroup::setInternalBatchPointer(){
+    std::vector<Vector2> tempVertices;
+    for (int i =0; i <vertices.elementCount; i++) {
+        tempVertices.push_back(vertices[i]);
+    }
+    
+    internalVertices = tempVertices;
+    vertices.array = &(internalVertices[0]);
+}
+Vector2 & VerticesGroup::operator[](unsigned int iterator){ 
+    return vertices[iterator];
+}
+
+
 Vector2 VerticesGroup::getPositionCenter() const {
 	if(vertices.elementCount == 0) {
 		Console::print("Tried to get the position of the center of an empty VerticesGroup.");

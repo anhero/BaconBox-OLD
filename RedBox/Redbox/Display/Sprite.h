@@ -383,6 +383,20 @@ namespace RedBox {
 		 * @return Pointer to the new Sprite.
 		 */
 		virtual GraphicBody* clone() const;
+        
+        /**
+         * Point the c array pointers (vertices and texture coordinates)
+         * to the batchcall's arrays.
+         */
+        void setBatchPointer(Vector2* verticesPointer, Vector2 * textureCoordPointer);
+        
+        
+        /**
+         * Set the verticesGroup and RenderInfo to use internal data instead of 
+         * the renderbatch data.
+         */
+        void setInternalBatchPointer();
+
 
 	private:
 		/// Vertices making up the sprite.

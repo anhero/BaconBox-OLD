@@ -151,6 +151,17 @@ namespace RedBox {
 		 */
 		void move(float deltaX, float deltaY);
 
+        /**
+         * Point the c array pointer (vertices)
+         * to the batchcall's array.
+         */
+        void setBatchPointer(Vector2 * verticesPointer);
+        
+        /**
+         * Point the c array pointer (vertices)
+         * to the internal vector.
+         */
+        void setInternalBatchPointer();
 		/**
 		 * Gets the horizontal position. Higher position value means it is more
 		 * to the right.
@@ -221,6 +232,10 @@ namespace RedBox {
 		 * value rotates it counter-clockwise.
 		 */
 		void rotate(float angle, const Vector2& fromPoint);
+        
+        ///You can iterate through the vertices with the [] operator.
+        Vector2 & operator[](unsigned int iterator);
+
 	private:
 		/// Vector containing the vertices when we are not in a batch.
 		std::vector<Vector2> internalVertices;

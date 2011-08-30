@@ -24,6 +24,8 @@ namespace RedBox{
 		CArray(const CArray<T>& src) : array(src.array),
 		    elementCount(src.elementCount) {
 		}
+        
+        T & operator[](unsigned int iterator){ return array[iterator];}
 
 		/// Pointer to the first element (C array)
         T* array;
