@@ -139,15 +139,19 @@ namespace RedBox {
 		 */
 		void setPosition(float newXPosition, float newYPosition);
 
-		using GraphicBody::setScaling;
+		using GraphicBody::scaleFromPoint;
 
 		/**
-		 * Change the graphic string's scaling.
-		 * @param xScaling New horizontal scaling to apply.
-		 * @param yScaling New vertical scaling to apply.
+		 * Scales the graphic strin from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, the graphic string will be twice as wide.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, the graphic string will be twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
 		 * @see RedBox::GraphicBody::scaling
 		 */
-		void setScaling(float newXScaling, float newYScaling);
+		virtual void scaleFromPoint(float xScaling, float yScaling,
+		                            const Vector2& fromPoint);
 
 		/**
 		 * Rotates the graphic string from a point.
@@ -283,6 +287,11 @@ namespace RedBox {
 		 */
 		void clearCharacters();
 
+		/**
+		 * Finds the real horizontal and vertical position and sets graphic
+		 * string's position to them.
+		 */
+		void refreshPosition();
 	};
 }
 

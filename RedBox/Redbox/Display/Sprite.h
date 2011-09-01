@@ -342,14 +342,19 @@ namespace RedBox {
 		 */
 		void removeRenderMode(RenderMode renderModeToRemove);
 
-		using GraphicBody::setScaling;
+		using GraphicBody::scaleFromPoint;
 
 		/**
-		 * Change the sprite's scaling.
-		 * @param xScaling New horizontal scaling to apply.
-		 * @param yScaling New vertical scaling to apply.
+		 * Scales the sprite from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, the sprite will be twice as wide.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, the sprite will be twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
 		 */
-		virtual void setScaling(float newXScaling, float newYScaling);
+		virtual void scaleFromPoint(float xScaling, float yScaling,
+		                            const Vector2& fromPoint);
 
 		/**
 		 * Rotates the sprite from a point.

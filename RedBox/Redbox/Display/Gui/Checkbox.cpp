@@ -68,9 +68,10 @@ float Checkbox::getHeight() const {
 	return buttonSprite.getHeight();
 }
 
-void Checkbox::setScaling(float newXScaling, float newYScaling) {
-	this->IButton::setScaling(newXScaling, newYScaling);
-	buttonSprite.setScaling(newXScaling, newYScaling);
+void Checkbox::scaleFromPoint(float xScaling, float yScaling,
+                              const Vector2& fromPoint) {
+	this->IButton::scaleFromPoint(xScaling, yScaling, fromPoint);
+	buttonSprite.scaleFromPoint(xScaling, yScaling, fromPoint);
 	this->IButton::setPosition(buttonSprite.getXPosition(), buttonSprite.getYPosition());
 }
 

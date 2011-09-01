@@ -729,7 +729,47 @@ namespace RedBox {
 		 * @param yScaling New vertical scaling to apply.
 		 * @see RedBox::GraphicBody::scaling
 		 */
-		virtual void setScaling(float newXScaling, float newYScaling);
+		void setScaling(float newXScaling, float newYScaling);
+
+		/**
+		 * Scales the graphic body from a specific point.
+		 * @param scalingToApply Horizontal and vertical scaling to apply.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
+		 * @see RedBox::GraphicBody::scaleFromPoint(float xScaling, float yScaling, const Vector2& fromPoint)
+		 */
+		void scaleFromPoint(const Vector2& scalingToApply,
+		                    const Vector2& fromPoint);
+
+		/**
+		 * Scales the graphic body from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, the graphic body will be twice as wide.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, the graphic body will be twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		virtual void scaleFromPoint(float xScaling, float yScaling,
+		                            const Vector2& fromPoint);
+
+		/**
+		 * Scales the graphic body horizontally from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, the graphic body will be twice as wide.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scaleXFromPoint(float xScaling, const Vector2& fromPoint);
+
+		/**
+		 * Scales the graphic body vertically from a specific point.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, the graphic body will be twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scaleYFromPoint(float yScaling, const Vector2& fromPoint);
 
 		/**
 		 * Adds some scaling to the current scaling applied.

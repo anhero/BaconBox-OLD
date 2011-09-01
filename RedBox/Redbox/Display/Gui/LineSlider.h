@@ -207,24 +207,27 @@ namespace RedBox {
 			       std::min(lineSprite.getYPosition(), buttonSprite.getYPosition());
 		}
 
-		using GraphicBody::setScaling;
+		using GraphicBody::scaleFromPoint;
 
 		/**
-		 * Change the line slider's scaling.
-		 * @param newXScaling New horizontal scaling to apply.
-		 * @param newYScaling New vertical scaling to apply.
+		 * Scales the line slider from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, the line slider will be twice as wide.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, the line slider will be twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
 		 */
-		void setScaling(float newXScaling, float newYScaling) {
-			if(newXScaling && newYScaling) {
-				this->Slider<T>::setScaling(newXScaling, newYScaling);
-				lineSprite.setScaling(newXScaling, newYScaling);
-				buttonSprite.setScaling(newXScaling, newYScaling);
-				placeButton();
-			}
+		virtual void scaleFromPoint(float xScaling, float yScaling,
+		                            const Vector2& fromPoint) {
+			this->Slider<T>::scaleFromPoint(xScaling, yScaling, fromPoint);
+			lineSprite.scaleFromPoint(xScaling, yScaling, fromPoint);
+			buttonSprite.scaleFromPoint(xScaling, yScaling, fromPoint);
+			refreshPosition();
 		}
 
 		/**
-		 * Rotates the simple button from a point.
+		 * Rotates the line slider from a point.
 		 * @param rotationAngle Angle to rotate the simple button.
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle

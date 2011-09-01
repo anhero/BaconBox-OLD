@@ -187,11 +187,18 @@ void GraphicString::setPosition(float newXPosition, float newYPosition) {
 	}
 }
 
-void GraphicString::setScaling(float newXScaling, float newYScaling) {
-	this->GraphicBody::setScaling(newXScaling, newYScaling);
-	Vector2 center = getPosition() + Vector2(getWidth(), getHeight()) * 0.5f;
-	setText(text);
-	setPosition(center - Vector2(getWidth(), getHeight()) * 0.5f);
+void GraphicString::scaleFromPoint(float xScaling, float yScaling,
+                                   const Vector2& fromPoint) {
+	this->GraphicBody::scaleFromPoint(xScaling, yScaling, fromPoint);
+
+	for(GlyphList::iterator i = characters.begin();
+	    i != characters.end(); ++i) {
+		if(i->second) {
+			i->second->scaleFromPoint(xScaling, yScaling, fromPoint);
+		}
+	}
+
+	refreshPosition();
 }
 
 void GraphicString::rotateFromPoint(float rotationAngle,
@@ -205,33 +212,7 @@ void GraphicString::rotateFromPoint(float rotationAngle,
 		}
 	}
 
-	if(!characters.empty()) {
-		bool started = false;
-		float minX, minY;
-
-		for(GlyphList::iterator i = characters.begin();
-		    i != characters.end(); ++i) {
-			if(i->second) {
-				if(started) {
-					if(i->second->getXPosition() < minX) {
-						minX = i->second->getXPosition();
-					}
-
-					if(i->second->getYPosition() < minY) {
-						minY = i->second->getYPosition();
-					}
-				} else {
-					minX = i->second->getXPosition();
-					minY = i->second->getYPosition();
-					started = true;
-				}
-			}
-		}
-
-		if(started) {
-			this->GraphicBody::setPosition(minX, minY);
-		}
-	}
+	refreshPosition();
 }
 
 void GraphicString::setPixelSize(int pixelSize) {
@@ -416,5 +397,35 @@ GraphicBody* GraphicString::clone() const {
 void GraphicString::clearCharacters() {
 	std::for_each(characters.begin(), characters.end(), DeletePointerFromPair());
 	characters.clear();
+}
+
+void GraphicString::refreshPosition() {
+	if(!characters.empty()) {
+		bool started = false;
+		float minX, minY;
+
+		for(GlyphList::iterator i = characters.begin();
+		    i != characters.end(); ++i) {
+			if(i->second) {
+				if(started) {
+					if(i->second->getXPosition() < minX) {
+						minX = i->second->getXPosition();
+					}
+
+					if(i->second->getYPosition() < minY) {
+						minY = i->second->getYPosition();
+					}
+				} else {
+					minX = i->second->getXPosition();
+					minY = i->second->getYPosition();
+					started = true;
+				}
+			}
+		}
+
+		if(started) {
+			this->GraphicBody::setPosition(minX, minY);
+		}
+	}
 }
 

@@ -342,16 +342,12 @@ void Sprite::removeRenderMode(RenderMode renderModeToRemove) {
 	renderModes.reset(renderModeToRemove);
 }
 
-void Sprite::setScaling(float newXScaling, float newYScaling) {
-	if(newXScaling && newYScaling) {
-		vertices.scale(Vector2(newXScaling / getXScaling(), newYScaling / getYScaling()), getPositionCenter());
-		GraphicBody::setScaling(newXScaling, newYScaling);
-		Vector2 tmp = vertices.getPosition();
-		GraphicBody::setPosition(tmp.getX(), tmp.getY());
-
-	} else {
-		Console::println("Tried to set a scaling of 0 to a sprite.");
-	}
+void Sprite::scaleFromPoint(float xScaling, float yScaling,
+                            const Vector2& fromPoint) {
+	this->GraphicBody::scaleFromPoint(xScaling, yScaling, fromPoint);
+	vertices.scale(Vector2(xScaling, yScaling), fromPoint);
+	Vector2 tmp = vertices.getPosition();
+	this->GraphicBody::setPosition(tmp.getX(), tmp.getY());
 }
 
 void Sprite::rotateFromPoint(float rotationAngle, const Vector2& rotationPoint) {

@@ -407,7 +407,25 @@ void GraphicBody::setScaling(const Vector2& newScaling) {
 }
 
 void GraphicBody::setScaling(float newXScaling, float newYScaling) {
-	scaling.setXY(newXScaling, newYScaling);
+	scaleFromPoint(newXScaling / scaling.getX(), newYScaling / scaling.getY(), getPositionCenter());
+}
+
+void GraphicBody::scaleFromPoint(const Vector2& scalingToApply,
+                                 const Vector2& fromPoint) {
+	scaleFromPoint(scalingToApply.getX(), scalingToApply.getY(), fromPoint);
+}
+
+void GraphicBody::scaleFromPoint(float xScaling, float yScaling,
+                                 const Vector2&) {
+	scaling.scalarMultiplication(xScaling, yScaling);
+}
+
+void GraphicBody::scaleXFromPoint(float xScaling, const Vector2& fromPoint) {
+	scaleFromPoint(xScaling, 1.0f, fromPoint);
+}
+
+void GraphicBody::scaleYFromPoint(float yScaling, const Vector2& fromPoint) {
+	scaleFromPoint(1.0f, yScaling, fromPoint);
 }
 
 void GraphicBody::addToScaling(const Vector2& scalingToAdd) {

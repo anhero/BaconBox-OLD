@@ -69,9 +69,10 @@ float SimpleButton::getHeight() const {
 	return buttonSprite.getHeight();
 }
 
-void SimpleButton::setScaling(float newXScaling, float newYScaling) {
-	this->GraphicBody::setScaling(newXScaling, newYScaling);
-	buttonSprite.setScaling(newXScaling, newYScaling);
+void SimpleButton::scaleFromPoint(float xScaling, float yScaling,
+                                  const Vector2& fromPoint) {
+	this->GraphicBody::scaleFromPoint(xScaling, yScaling, fromPoint);
+	buttonSprite.scaleFromPoint(xScaling, yScaling, fromPoint);
 	this->GraphicBody::setPosition(buttonSprite.getXPosition(),
 	                               buttonSprite.getYPosition());
 }

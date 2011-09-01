@@ -124,14 +124,19 @@ namespace RedBox {
 		 */
 		float getHeight() const;
 
-		using GraphicBody::setScaling;
+		using GraphicBody::scaleFromPoint;
 
 		/**
-		 * Change the simple button's scaling.
-		 * @param newXScaling New horizontal scaling to apply.
-		 * @param newYScaling New vertical scaling to apply.
+		 * Scales the simple button from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, the simple button will be twice as wide.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, the simple button will be twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
 		 */
-		void setScaling(float newXScaling, float newYScaling);
+		virtual void scaleFromPoint(float xScaling, float yScaling,
+		                            const Vector2& fromPoint);
 
 		/**
 		 * Rotates the simple button from a point.
