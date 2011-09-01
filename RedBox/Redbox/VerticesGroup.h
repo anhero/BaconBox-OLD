@@ -212,8 +212,9 @@ namespace RedBox {
 		 * as the anchor point.
 		 * @param factor 2D vector containing the horizontal and vertical
 		 * scaling factor to apply.
+		 * @param fromPoint Point from which to scale.
 		 */
-		void scale(const Vector2& factor);
+		void scale(const Vector2& factor, const Vector2& fromPoint);
 
 		/**
 		 * Rotates the vertices group using the center as the anchor point.

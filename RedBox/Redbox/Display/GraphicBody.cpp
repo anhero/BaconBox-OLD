@@ -244,6 +244,18 @@ float GraphicBody::getOldYPosition() const {
 	return oldPosition.getY();
 }
 
+const Vector2 GraphicBody::getPositionCenter() const {
+	return Vector2(getXPositionCenter(), getYPositionCenter());
+}
+
+float GraphicBody::getXPositionCenter() const {
+	return getXPosition() + getWidth() * 0.5f;
+}
+
+float GraphicBody::getYPositionCenter() const {
+	return getYPosition() + getHeight() * 0.5f;
+}
+
 const Vector2& GraphicBody::getMaxVelocity() const {
 	return maxVelocity;
 }
@@ -270,6 +282,10 @@ float GraphicBody::getMaxYVelocity() const {
 
 void GraphicBody::setMaxYVelocity(float newMaxYVelocity) {
 	maxVelocity.setY(newMaxYVelocity);
+}
+
+const Vector2 GraphicBody::getSize() const {
+	return Vector2(getWidth(), getHeight());
 }
 
 FlagSet<Side>& GraphicBody::getCollidableSides() {

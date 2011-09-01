@@ -149,24 +149,6 @@ namespace RedBox {
 		 */
 		void createVertex(float x, float y);
 
-		/**
-		 * Gets the sprite's center's position.
-		 * @return 2D vector containing the sprite's center's position.
-		 */
-		Vector2 getPositionCenter() const;
-
-		/**
-		 * Gets the sprite's center's horizontal position.
-		 * @return Sprite's center's horizontal position.
-		 */
-		float getXPositionCenter() const;
-
-		/**
-		 * Gets the sprite's center's vertical position.
-		 * @return Sprite's center vertical position.
-		 */
-		float getYPositionCenter() const;
-
 		using GraphicBody::setPosition;
 
 		/**

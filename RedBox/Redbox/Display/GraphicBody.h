@@ -455,6 +455,24 @@ namespace RedBox {
 		float getOldYPosition() const;
 
 		/**
+		 * Gets the graphic body's center's position.
+		 * @return 2D vector containing the graphic body's center's position.
+		 */
+		const Vector2 getPositionCenter() const;
+
+		/**
+		 * Gets the graphic body's center's horizontal position.
+		 * @return Graphic body's center's horizontal position.
+		 */
+		float getXPositionCenter() const;
+
+		/**
+		 * Gets the graphic body's center's vertical position.
+		 * @return Graphic body's center vertical position.
+		 */
+		float getYPositionCenter() const;
+
+		/**
 		 * Gets the graphic body's horizontal and vertical maximum velocity.
 		 * @return 2D vector containing the horizontal and vertical maximum
 		 * velocity.
@@ -510,6 +528,12 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::maxVelocity
 		 */
 		void setMaxYVelocity(float newMaxYVelocity);
+
+		/**
+		 * Gets the graphic body's size. Can be overloaded for performance.
+		 * @return Vector2 containing the width and height of the graphic body.
+		 */
+		virtual const Vector2 getSize() const;
 
 		/**
 		 * Gets the graphic body's width.

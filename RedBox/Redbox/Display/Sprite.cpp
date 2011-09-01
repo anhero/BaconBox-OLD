@@ -189,19 +189,6 @@ void Sprite::createVertex(float x, float y) {
 	vertices.addVertex(x, y);
 }
 
-Vector2 Sprite::getPositionCenter() const {
-	return Vector2(getXPosition() + getWidth() * 0.5f,
-	               getYPosition() + getHeight() * 0.5f);
-}
-
-float Sprite::getXPositionCenter() const {
-	return getXPosition() + getWidth() * 0.5f;
-}
-
-float Sprite::getYPositionCenter() const {
-	return getYPosition() + getHeight() * 0.5f;
-}
-
 void Sprite::setPosition(float newXPosition, float newYPosition) {
 	GraphicBody::setPosition(newXPosition, newYPosition);
 	vertices.setPosition(newXPosition, newYPosition);
@@ -357,7 +344,7 @@ void Sprite::removeRenderMode(RenderMode renderModeToRemove) {
 
 void Sprite::setScaling(float newXScaling, float newYScaling) {
 	if(newXScaling && newYScaling) {
-		vertices.scale(Vector2(newXScaling / getXScaling(), newYScaling / getYScaling()));
+		vertices.scale(Vector2(newXScaling / getXScaling(), newYScaling / getYScaling()), getPositionCenter());
 		GraphicBody::setScaling(newXScaling, newYScaling);
 		Vector2 tmp = vertices.getPosition();
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
