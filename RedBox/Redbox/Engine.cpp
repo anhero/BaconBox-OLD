@@ -65,7 +65,7 @@ State* Engine::playState(const std::string& name) {
 	if(it != engine.states.end()) {
 		engine.currentState = it->second;
 	} else {
-		Console::print("State \"" + name +
+		Console::println("State \"" + name +
 		        "\" doesn't exist so it cannot be played.");
 	}
 

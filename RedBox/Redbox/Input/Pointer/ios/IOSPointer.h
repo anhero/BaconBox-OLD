@@ -5,10 +5,6 @@
 #ifndef RB_IOS_POINTER_H
 #define RB_IOS_POINTER_H
 
-#include "PlatformFlagger.h"
-
-#ifdef RB_IPHONE_PLATFORM
-
 #include <Foundation/Foundation.h>
 #include <UIKit/UITouch.h>
 #include <UIKit/UIEvent.h>

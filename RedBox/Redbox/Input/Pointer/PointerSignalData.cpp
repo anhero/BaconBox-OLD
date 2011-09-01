@@ -2,8 +2,9 @@
 
 using namespace RedBox;
 
-PointerSignalData::PointerSignalData(const PointerState& newPointerState) : 
-InputSignalData(), pointerState(newPointerState) {
+PointerSignalData::PointerSignalData(const PointerState& newPointerState,
+                                     unsigned int newCursorIndex) :
+	InputSignalData(), pointerState(newPointerState), cursorIndex(newCursorIndex) {
 }
 
 PointerSignalData::~PointerSignalData() {
@@ -21,4 +22,17 @@ float PointerSignalData::getXPosition() const {
 
 float PointerSignalData::getYPosition() const {
 	return getPosition().getY();
+}
+
+const Vector2& PointerSignalData::getPreviousPosition() const {
+	return pointerState.getCursorState().getPreviousPosition();
+}
+
+
+float PointerSignalData::getPreviousXPosition() const {
+	return getPreviousPosition().getX();
+}
+
+float PointerSignalData::getPreviousYPosition() const {
+	return getPreviousPosition().getY();
 }

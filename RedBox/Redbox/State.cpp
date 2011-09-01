@@ -3,6 +3,7 @@
 #include <cassert>
 #include <algorithm>
 
+#include "GraphicBody.h"
 #include "Console.h"
 #include "GraphicDriver.h"
 #include "DeleteHelper.h"
@@ -33,10 +34,10 @@ void State::addGraphicBody(GraphicBody* aGraphicBody) {
 		if(!aGraphicBody->isInState) {
 			toAdd.push_front(aGraphicBody);
 		} else {
-			Console::print("Tried to add a GraphicBody that is already in a state.");
+			Console::println("Tried to add a GraphicBody that is already in a state.");
 		}
 	} else {
-		Console::print("Tried to add an invalid GraphicBody (" + Console::toString(aGraphicBody) + ") to the state.");
+		Console::println("Tried to add an invalid GraphicBody (" + Console::toString(aGraphicBody) + ") to the state.");
 	}
 }
 
@@ -78,7 +79,7 @@ void State::addGraphicBodyDirect(GraphicBody* aGraphicBody) {
 		                     aGraphicBody));
 		aGraphicBody->isInState = true;
 	} else {
-		Console::print("Tried to add a GraphicBody that is already in a state.");
+		Console::println("Tried to add a GraphicBody that is already in a state.");
 	}
 }
 

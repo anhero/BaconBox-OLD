@@ -18,7 +18,7 @@ const CursorState& PointerState::getCursorState(unsigned int index) const {
 	// cursor state.
 	if(index >= cursors.size()) {
 		index = cursors.size() - 1;
-		Console::print("Tried to get a cursor's state that does not exist, returning instead the cursor state with the highest index.");
+		Console::println("Tried to get a cursor's state that does not exist, returning instead the cursor state with the highest index.");
 	}
 
 	return cursors[index];

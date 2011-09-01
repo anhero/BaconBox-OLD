@@ -91,23 +91,23 @@ void RenderInfo::loadTexCoords(VerticesGroup& vertices,
 				}
 
 			} else {
-				Console::print("Attempted to construct a RenderInfo with a number of frames too high: " + nbFrames);
+				Console::println("Attempted to construct a RenderInfo with a number of frames too high: " + nbFrames);
 				Console::printTrace();
 			}
 		}
 
 	} else {
 		// We print the errors.
-		Console::print("Attempted to load texture coordinates with incorrect parameters: ");
+		Console::println("Attempted to load texture coordinates with incorrect parameters: ");
 		Console::printTrace();
 
 		if(!newTexInfo) {
-			Console::print("    - Texture information pointer is invalid: " + Console::toString(texInfo));
+			Console::println("    - Texture information pointer is invalid: " + Console::toString(texInfo));
 			Console::printTrace();
 		}
 
 		if(nbFrames == 0) {
-			Console::print("    - Number of frames must be of at least 1.");
+			Console::println("    - Number of frames must be of at least 1.");
 			Console::printTrace();
 		}
 	}
@@ -135,12 +135,12 @@ void RenderInfo::addAnimation(const std::string& name,
 		// We add the animation to the map and we check if it was successfully
 		// added.
 		if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(frames, timePerFrame, nbLoops))).second)) {
-			Console::print("Failed to add the animation named : " + name);
+			Console::println("Failed to add the animation named : " + name);
 			Console::printTrace();
 		}
 
 	} else {
-		Console::print("Failed to add the animation named \"" + name + "\" because it contains at least one frame index that is too high.");
+		Console::println("Failed to add the animation named \"" + name + "\" because it contains at least one frame index that is too high.");
 		Console::printTrace();
 	}
 }
@@ -170,7 +170,7 @@ void RenderInfo::addAnimation(const std::string& name,
 		va_end(frames);
 
 	} else {
-		Console::print("Failed to add the animation named : " + name);
+		Console::println("Failed to add the animation named : " + name);
 		Console::printTrace();
 	}
 }
@@ -178,7 +178,7 @@ void RenderInfo::addAnimation(const std::string& name,
 void RenderInfo::addAnimation(const std::string& name,
                               const AnimationParameters& newAnimation) {
 	if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, newAnimation)).second)) {
-		Console::print("Failed to add the animation named : " + name);
+		Console::println("Failed to add the animation named : " + name);
 		Console::printTrace();
 	}
 }
@@ -223,7 +223,7 @@ AnimationParameters* RenderInfo::getAnimationParameters(const std::string& name)
 		return &(animations[name]);
 
 	} else {
-		Console::print("Tried to get a non-existing animation: " + name);
+		Console::println("Tried to get a non-existing animation: " + name);
 		Console::printTrace();
 		return NULL;
 	}
@@ -234,7 +234,7 @@ const AnimationParameters* RenderInfo::getAnimationParameters(const std::string&
 		return &(animations.find(name)->second);
 
 	} else {
-		Console::print("Tried to get a non-existing animation: " + name);
+		Console::println("Tried to get a non-existing animation: " + name);
 		Console::printTrace();
 		return NULL;
 	}
@@ -246,7 +246,7 @@ void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
 		currentFrame = newCurrentFrame;
 
 	} else {
-		Console::print("Tried to set the current frame that is too high: " + newCurrentFrame);
+		Console::println("Tried to set the current frame that is too high: " + newCurrentFrame);
 		Console::printTrace();
 	}
 }
@@ -308,7 +308,7 @@ void RenderInfo::setDefaultFrame(unsigned int newDefaultFrame) {
 		defaultFrame = newDefaultFrame;
 
 	} else {
-		Console::print("Tried to set the default frame to a value too high: " + newDefaultFrame);
+		Console::println("Tried to set the default frame to a value too high: " + newDefaultFrame);
 		Console::printTrace();
 		defaultFrame = (texCoords.size()) ? (texCoords.size() - 1) : (0);
 	}

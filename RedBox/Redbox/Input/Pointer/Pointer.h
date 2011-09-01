@@ -9,7 +9,6 @@
 
 #include "InputDevice.h"
 #include "PointerButtonSignalData.h"
-#include "PointerMoveSignalData.h"
 #include "PointerState.h"
 
 namespace RedBox {
@@ -26,7 +25,7 @@ namespace RedBox {
 	public:
 		/// Signal sent when a cursor button is pressed down.
 		sigly::Signal1<PointerButtonSignalData> buttonPress;
-		
+
 		/// Signal sent when a cursor button is held.
 		sigly::Signal1<PointerButtonSignalData> buttonHold;
 
@@ -34,8 +33,8 @@ namespace RedBox {
 		sigly::Signal1<PointerButtonSignalData> buttonRelease;
 
 		/// Signal sent when a cursor has moved.
-		sigly::Signal1<PointerMoveSignalData> move;
-		
+		sigly::Signal1<PointerSignalData> move;
+
 		/**
 		 * Gets a pointer to the default pointer device.
 		 * @return Pointer to the default pointer device. Null if none are
@@ -51,6 +50,7 @@ namespace RedBox {
 		template <class desttype>
 		static void connectButtonPress(desttype* pclass, void (desttype::*pmemfun)(PointerButtonSignalData)) {
 			Pointer* pointer = getDefault();
+
 			if(pointer) {
 				pointer->buttonPress.connect(pclass, pmemfun);
 			}
@@ -64,6 +64,7 @@ namespace RedBox {
 		template <class desttype>
 		static void connectButtonHold(desttype* pclass, void (desttype::*pmemfun)(PointerButtonSignalData)) {
 			Pointer* pointer = getDefault();
+
 			if(pointer) {
 				pointer->buttonHold.connect(pclass, pmemfun);
 			}
@@ -77,6 +78,7 @@ namespace RedBox {
 		template <class desttype>
 		static void connectButtonRelease(desttype* pclass, void (desttype::*pmemfun)(PointerButtonSignalData)) {
 			Pointer* pointer = getDefault();
+
 			if(pointer) {
 				pointer->buttonRelease.connect(pclass, pmemfun);
 			}
@@ -88,8 +90,9 @@ namespace RedBox {
 		 * @param pmemfun Pointer to the function to call.
 		 */
 		template <class desttype>
-		static void connectMove(desttype* pclass, void (desttype::*pmemfun)(PointerMoveSignalData)) {
+		static void connectMove(desttype* pclass, void (desttype::*pmemfun)(PointerSignalData)) {
 			Pointer* pointer = getDefault();
+
 			if(pointer) {
 				pointer->move.connect(pclass, pmemfun);
 			}
@@ -121,7 +124,7 @@ namespace RedBox {
 		 * @return True if the button was just pressed, false if not.
 		 */
 		bool isButtonPressed(CursorButton::Enum button,
-							 unsigned int cursorIndex = 0) const;
+		                     unsigned int cursorIndex = 0) const;
 
 		/**
 		 * Checks if the specified button is being held down.
@@ -147,14 +150,14 @@ namespace RedBox {
 	protected:
 		/// State of the pointing device's cursors.
 		PointerState state;
-		
+
 		/**
 		 * Parameterized constructor.
 		 * @param nbCursors Number of cursors the pointing device(s) can
 		 * support.
 		 */
 		Pointer(unsigned int nbCursors = PointerState::DEFAULT_NB_CURSORS);
-		
+
 		/**
 		 * Destructor
 		 */

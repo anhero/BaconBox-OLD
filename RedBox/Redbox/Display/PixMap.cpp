@@ -122,7 +122,7 @@ void PixMap::insertSubPixMap(PixMap* subPixMap, unsigned int xOffset,
 	if(subPixMap->getColorFormat() == colorFormat) {
 		insertSubPixMap(subPixMap->getBuffer(), subPixMap->getWidth(), subPixMap->getHeight(), xOffset, yOffset);
 	} else {
-		Console::print("Can't insert sub pixmap into current pixmap, because the color format isn't compatible.");
+		Console::println("Can't insert sub pixmap into current pixmap, because the color format isn't compatible.");
 	}
 }
 

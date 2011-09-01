@@ -106,7 +106,7 @@ namespace RedBox {
 		void setMinimumValue(ValueType newMinimumValue) {
 			if(newMinimumValue > maximumValue) {
 				newMinimumValue = maximumValue;
-				Console::print("Tried to set a slider's minimum value higher than its maximum value.");
+				Console::println("Tried to set a slider's minimum value higher than its maximum value.");
 				Console::printTrace();
 			}
 
@@ -134,7 +134,7 @@ namespace RedBox {
 		void setMaximumValue(ValueType newMaximumValue) {
 			if(newMaximumValue < minimumValue) {
 				newMaximumValue = minimumValue;
-				Console::print("Tried to set a slider's maximum value lower than its minimum value.");
+				Console::println("Tried to set a slider's maximum value lower than its minimum value.");
 				Console::printTrace();
 			}
 

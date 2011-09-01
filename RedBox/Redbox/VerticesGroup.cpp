@@ -73,7 +73,7 @@ const CArray<Vector2>& VerticesGroup::getVertices() const {
 
 Vector2 VerticesGroup::getSize() const {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to get the width and the height of an empty VerticesGroup.");
+		Console::println("Tried to get the width and the height of an empty VerticesGroup.");
 		return Vector2();
 	} else {
 
@@ -104,7 +104,7 @@ Vector2 VerticesGroup::getSize() const {
 
 float VerticesGroup::getWidth() const {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to get the width of an empty VerticesGroup.");
+		Console::println("Tried to get the width of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -126,7 +126,7 @@ float VerticesGroup::getWidth() const {
 
 float VerticesGroup::getHeight() const {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to get the height of an empty VerticesGroup.");
+		Console::println("Tried to get the height of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -148,7 +148,7 @@ float VerticesGroup::getHeight() const {
 
 Vector2 VerticesGroup::getPosition() const {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to get the position of an empty VerticesGroup.");
+		Console::println("Tried to get the position of an empty VerticesGroup.");
 		return Vector2();
 	}
 
@@ -171,7 +171,7 @@ Vector2 VerticesGroup::getPosition() const {
 
 Vector2 VerticesGroup::getPositionCenter() const {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to get the position of the center of an empty VerticesGroup.");
+		Console::println("Tried to get the position of the center of an empty VerticesGroup.");
 		return Vector2();
 	}
 
@@ -205,7 +205,7 @@ void VerticesGroup::setPosition(float newXPosition, float newYPosition) {
 
 void VerticesGroup::move(float deltaX, float deltaY) {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to move an empty vertices group.");
+		Console::println("Tried to move an empty vertices group.");
 	}
 
     for(unsigned int i = 0; i < vertices.elementCount; ++i) {
@@ -219,7 +219,7 @@ void VerticesGroup::move(const Vector2& delta) {
 
 float VerticesGroup::getXPosition() const {
 	if(vertices.array == 0) {
-		Console::print("Tried to get the horizontal position of an empty VerticesGroup.");
+		Console::println("Tried to get the horizontal position of an empty VerticesGroup.");
 		return 0.0f;
 	} else {
 		float result = vertices.array[0].getX();
@@ -236,7 +236,7 @@ float VerticesGroup::getXPosition() const {
 }
 float VerticesGroup::getXPositionCenter() const {
 	if(vertices.array == 0) {
-		Console::print("Tried to get the horizontal position of an empty VerticesGroup.");
+		Console::println("Tried to get the horizontal position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -266,7 +266,7 @@ void VerticesGroup::moveX(float deltaX) {
 
 float VerticesGroup::getYPosition() const {
 	if(vertices.array == 0) {
-		Console::print("Tried to get the vertical position of an empty VerticesGroup.");
+		Console::println("Tried to get the vertical position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -284,7 +284,7 @@ float VerticesGroup::getYPosition() const {
 
 float VerticesGroup::getYPositionCenter() const {
 	if(vertices.array == 0) {
-		Console::print("Tried to get the height of an empty VerticesGroup.");
+		Console::println("Tried to get the height of an empty VerticesGroup.");
 		return 0.0f;
 	}
 

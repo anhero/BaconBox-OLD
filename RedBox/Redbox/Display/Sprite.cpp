@@ -27,7 +27,7 @@ Sprite::Sprite(const std::string& textureKey) : GraphicBody(), vertices(),
 		          1u);
 
 	} else {
-		Console::print("Tried to construct a sprite from an invalid image key: " + textureKey);
+		Console::println("Tried to construct a sprite from an invalid image key: " + textureKey);
 	}
 }
 
@@ -40,7 +40,7 @@ Sprite::Sprite(TextureInfo* textureInfo): GraphicBody(), vertices(),
 		          1u);
 
 	} else {
-		Console::print("Tried to construct a sprite from an invalid texture information: " + Console::toString(textureInfo));
+		Console::println("Tried to construct a sprite from an invalid texture information: " + Console::toString(textureInfo));
 	}
 }
 
@@ -326,7 +326,7 @@ void Sprite::addAnimation(const std::string& name,
 		renderInfo.addAnimation(name, framesVector, timePerFrame, nbLoops);
 
 	} else {
-		Console::print("Failed to add the animation named \"" + name + "\" because it specified that it had 0 frames.");
+		Console::println("Failed to add the animation named \"" + name + "\" because it specified that it had 0 frames.");
 		Console::printTrace();
 	}
 }
@@ -363,7 +363,7 @@ void Sprite::setScaling(float newXScaling, float newYScaling) {
 		GraphicBody::setPosition(tmp.getX(), tmp.getY());
 
 	} else {
-		Console::print("Tried to set a scaling of 0 to a sprite.");
+		Console::println("Tried to set a scaling of 0 to a sprite.");
 	}
 }
 
@@ -400,7 +400,7 @@ void Sprite::construct(TextureInfo* textureInfo,
 		renderModes.set(RenderMode::COLOR);
 
 	} else {
-		Console::print("Failed to load a sprite with the following texture information: " + Console::toString(textureInfo));
+		Console::println("Failed to load a sprite with the following texture information: " + Console::toString(textureInfo));
 	}
 }
 

@@ -149,9 +149,9 @@ void GraphicString::setText(const String32& newText) {
 				if(alignment == TextAlignment::RIGHT) {
 					newPosition += Vector2(tmpWidth, 0.0f) - Vector2(maxX - minX, 0.0f);
 				} else if(alignment == TextAlignment::CENTER) {
-					Console::print(newPosition);
+					Console::println(newPosition);
 					newPosition += Vector2(tmpWidth, 0.0f) * 0.5f - Vector2(maxX - minX, 0.0f) * 0.5f;
-					Console::print(newPosition);
+					Console::println(newPosition);
 				}
 
 				Vector2 delta = newPosition - Vector2(minX, minY);
@@ -170,7 +170,7 @@ void GraphicString::setText(const String32& newText) {
 		rotateFromPoint(tmpAngle, getPosition() + Vector2(getWidth(), getHeight()) * 0.5f);
 
 	} else {
-		Console::print("Trying to set text to a GraphicString without any font set.");
+		Console::println("Trying to set text to a GraphicString without any font set.");
 		Console::printTrace();
 	}
 }

@@ -5,10 +5,6 @@
 #ifndef RB_SDL_POINTER_H
 #define RB_SDL_POINTER_H
 
-#include "PlatformFlagger.h"
-
-#ifdef RB_SDL
-
 #include "Pointer.h"
 
 namespace RedBox {
@@ -36,5 +32,4 @@ namespace RedBox {
 	};
 }
 
-#endif
 #endif

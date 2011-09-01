@@ -1,6 +1,3 @@
-#include "PlatformFlagger.h"
-
-#ifdef RB_QT
 #include "QtPointer.h"
 
 #include "InputManager.h"
@@ -60,8 +57,6 @@ void QtPointer::updateDevice() {
 	getCursorPreviousPosition(0) = getCursorPosition(0);
 	getCursorPosition(0) = Vec2(cursorPosition.x(), cursorPosition.y());
 	if(hasMoved()) {
-		Pointer::move.shoot(PointerMoveSignalData(state, 0));
+		Pointer::move.shoot(PointerSignalData(state, 0));
 	}
 }
-
-#endif // RB_QT
