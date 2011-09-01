@@ -52,7 +52,7 @@ namespace RedBox {
 		 * @param newActive New value for the active flag.
 		 * @see RedBox::Body::active
 		 */
-		void setActive(bool newActive);
+		virtual void setActive(bool newActive);
 
 		/**
 		 * Checks if the body is visible. An invisible body is simply not

@@ -147,6 +147,14 @@ namespace RedBox {
 		void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
 
 		/**
+		 * Sets if the button is active or not. An inactive button will not be
+		 * updated.
+		 * @param newActive New value for the active flag.
+		 * @see RedBox::Body::active
+		 */
+		void setActive(bool newActive);
+
+		/**
 		 * Creates a copy of the current simple button.
 		 * @return Pointer to the new simple button.
 		 */

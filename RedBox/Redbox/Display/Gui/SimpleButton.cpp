@@ -4,13 +4,13 @@ using namespace RedBox;
 
 SimpleButton::SimpleButton(TextureInfo* textureInfo, unsigned int frameWidth,
                            unsigned int frameHeight) : IButton(),
-	buttonSprite(textureInfo, frameWidth, frameHeight, 3) {
+	buttonSprite(textureInfo, frameWidth, frameHeight, 4) {
 	initializeAnimations();
 }
 
 SimpleButton::SimpleButton(const std::string& textureKey,
                            unsigned int frameWidth, unsigned int frameHeight) :
-	IButton(), buttonSprite(textureKey, frameWidth, frameHeight, 3) {
+	IButton(), buttonSprite(textureKey, frameWidth, frameHeight, 4) {
 	initializeAnimations();
 }
 
@@ -85,6 +85,15 @@ void SimpleButton::rotateFromPoint(float rotationAngle,
 	                               buttonSprite.getYPosition());
 }
 
+void SimpleButton::setActive(bool newActive) {
+	this->IButton::setActive(newActive);
+	if(newActive) {
+		onLeave();
+	} else {
+		buttonSprite.playAnimation("i");
+	}
+}
+
 GraphicBody* SimpleButton::clone() const {
 	return new SimpleButton(*this);
 }
@@ -114,5 +123,6 @@ void SimpleButton::initializeAnimations() {
 	buttonSprite.addAnimation("n", 0.0, 1, 1, 0);
 	buttonSprite.addAnimation("h", 0.0, 1, 1, 1);
 	buttonSprite.addAnimation("p", 0.0, 1, 1, 2);
+	buttonSprite.addAnimation("i", 0.0, 1, 1, 3);
 }
 
