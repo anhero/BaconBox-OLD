@@ -732,6 +732,52 @@ namespace RedBox {
 		void setScaling(float newXScaling, float newYScaling);
 
 		/**
+		 * Scales the graphic body horizontally and vertically.
+		 * @param scalingToApply Horizontal and vertical scaling to apply.
+		 * Simply does a scalar multiplication to the scaling with the recieved
+		 * scaling to apply. So if a graphic body has a scaling of (2.0, 1.5)
+		 * and this method recieves (2.0, 2.0), the graphic body's scaling will
+		 * become (4.0, 3.0).
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scale(const Vector2& scalingToApply);
+
+		/**
+		 * Scales the graphic body horizontally and vertically.
+		 * @param xScaling Horizontal scaling to apply. Simply does a scalar
+		 * multiplication to the horizontal scaling with the recieved scaling
+		 * to apply. So if a graphic body has a horizontal scaling of 2.0 and
+		 * this method recieves 1.5, the graphic body's new horizontal scaling
+		 * will become 3.0.
+		 * @param yScaling Vertical scaling to apply. Same thing as the
+		 * xScaling parameter, but for the graphic body's height.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scale(float xScaling, float yScaling);
+
+		/**
+		 * Scales the graphic body horizontally.
+		 * @param xScaling Horizontal scaling to apply. Simply does a scalar
+		 * multiplication to the horizontal scaling with the recieved scaling
+		 * to apply. So if a graphic body has a horizontal scaling of 2.0 and
+		 * this method recieves 1.5, the graphic body's new horizontal scaling
+		 * will become 3.0.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scaleX(float xScaling);
+
+		/**
+		 * Scales the graphic body vertically.
+		 * @param xScaling Vertical scaling to apply. Simply does a scalar
+		 * multiplication to the horizontal scaling with the recieved scaling
+		 * to apply. So if a graphic body has a vertical scaling of 2.0 and
+		 * this method recieves 1.5, the graphic body's new vertical scaling
+		 * will become 3.0.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scaleY(float yScaling);
+
+		/**
 		 * Scales the graphic body from a specific point.
 		 * @param scalingToApply Horizontal and vertical scaling to apply.
 		 * @param fromPoint Anchor point from which to apply the scaling.
