@@ -249,11 +249,11 @@ namespace RedBox {
 		void setDefaultFrame(unsigned int newDefaultFrame);
         
         /**
-         * Point the c array pointer (texture coordinates)
-         * to the batchcall's array.
-         * Set it to NULL if you don't want to sync a batchcall.
+         * Point the c arrays pointers (texture coordinates and colors)
+         * to the batchcall's arrays.
+         * Set them to NULL if you don't want to sync a batchcall.
          */
-        void setBatchPointer(Vector2 * texCoord);
+        void setBatchPointer(Vector2 * texCoord, unsigned char * colors);
         
         
         /**
@@ -291,6 +291,8 @@ namespace RedBox {
          */
 		Vector2* batchTexCoord;
         
+        
+        unsigned char * batchColors;
         /**
          * Contain the current frame of the last batchcall update.
          * Used to prevent redundant updating on the same frame.
@@ -308,6 +310,9 @@ namespace RedBox {
 
 		/// Index of the frame to show when the RenderInfo isn't animated.
 		unsigned int defaultFrame;
+        
+        ///Used to prevent redundant updating on the color (when in batchcall)
+        bool colorNeedUpdate;
 
 		/**
 		 * Map to associate names to each animations in texCoords. For example,

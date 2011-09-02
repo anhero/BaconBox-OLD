@@ -67,6 +67,13 @@ namespace RedBox {
 		static void drawShapeWithColor(GLfloat* vertices,
 		                               RenderInfo& renderingInfo,
 		                               unsigned int nbVertices);
+        
+        
+        static void drawBatchWithTexture(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
+                                         const CArray<unsigned short>& indices, const TextureInfo & textureInfo);
+        
+        static void drawBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
+                                         const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char> & colors);
 
 		/**
 		 * Draw the alpha component of the given vertices and texture to the

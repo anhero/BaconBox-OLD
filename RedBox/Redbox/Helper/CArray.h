@@ -12,7 +12,11 @@ namespace RedBox{
      * @ingroup Helper
      */
 	template <typename T>
-    struct CArray{
+    class CArray{
+        
+        template <typename U>  friend std::ostream& operator<<(std::ostream& output,
+		                                const CArray<U>& aCArray);
+        public:
 
 		CArray() : array(NULL), elementCount(0) {
 		}
@@ -25,7 +29,7 @@ namespace RedBox{
 		    elementCount(src.elementCount) {
 		}
         
-        T & operator[](unsigned int iterator){ return array[iterator];}
+        T & operator[](unsigned int iterator) const{ return array[iterator];}
 
 		/// Pointer to the first element (C array)
         T* array;
@@ -33,6 +37,23 @@ namespace RedBox{
         /// Number of element in the C array
         unsigned int elementCount;
 	};
+    
+
+    template <typename U>
+    std::ostream& operator<<(std::ostream& output, const CArray<U>& aCArray) {
+		output << "{CArray: [";
+        
+        for(unsigned int i = 0; i < aCArray.elementCount; i++) {
+			if(i != 0) {
+				output << ", ";
+			}
+            
+			output << aCArray[i];
+		}
+        
+		output << "]}";
+		return output;
+	}
 }
 
 #endif

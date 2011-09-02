@@ -119,14 +119,14 @@ void Sprite::update() {
 	}
 }
 
-void Sprite::setBatchPointer(Vector2* verticesPointer, Vector2 * textureCoordPointer){
+void Sprite::setBatchPointer(Vector2* verticesPointer, Vector2 * textureCoordPointer, unsigned char * colors){
     vertices.setBatchPointer(verticesPointer);
-    renderInfo.setBatchPointer(textureCoordPointer);
+    renderInfo.setBatchPointer(textureCoordPointer, colors);
 }
 
 void Sprite::setInternalBatchPointer(){
     vertices.setInternalBatchPointer();
-    renderInfo.setBatchPointer(NULL);
+    renderInfo.setBatchPointer(NULL, NULL);
 }
 
 

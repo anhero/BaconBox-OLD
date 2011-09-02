@@ -12,7 +12,7 @@
 using namespace RedBox;
 
 RenderInfo::RenderInfo(): Object(), color(Color::WHITE), mask(NULL),
-texInfo(NULL), texCoords(), batchTexCoord(NULL), 
+texInfo(NULL), texCoords(), batchTexCoord(NULL), batchColors(NULL), colorNeedUpdate(true), 
 currentFrame(0), currentNbLoops(0), defaultFrame(0), lastBatchCallUpdateFrame(-1) {
 }
 
@@ -37,10 +37,26 @@ currentFrame(0), currentNbLoops(0), defaultFrame(0) {
 
 
 void RenderInfo::updateBatchPointer(){
-    if (batchTexCoord != NULL) {
+    if (batchTexCoord != NULL && batchColors != NULL) {
         if(static_cast<int>(currentFrame) == lastBatchCallUpdateFrame){
             for (unsigned int i = 0; i < texCoords[currentFrame].size(); i++) {
                 batchTexCoord[i] = texCoords[currentFrame][i];
+                
+                if (colorNeedUpdate) {
+                    colorNeedUpdate = false;
+
+                for (unsigned int j =0; j< 4; j++) {
+                    batchColors[j+(i*4)] = color.getComponents()[j];
+                }
+                }
+            }
+        }
+        else if(colorNeedUpdate){
+            colorNeedUpdate = false;
+            for (unsigned int i =0; i < texCoords[currentFrame].size()*4; i+=4) {
+            for (unsigned int j =0; j< 4; j++) {
+                batchColors[j+i] = color.getComponents()[j];
+            }
             }
         }
     }
@@ -214,6 +230,7 @@ std::vector<std::vector<Vector2> >& RenderInfo::getTexCoords() {
 
 void RenderInfo::setColor(const Color& newColor) {
 	color = newColor;
+    colorNeedUpdate = true;
 }
 
 void RenderInfo::setTexInfo(TextureInfo* newTexInfo) {
@@ -260,11 +277,19 @@ void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
 	}
 }
 
-void RenderInfo::setBatchPointer(Vector2 * texCoord){
-    batchTexCoord = texCoord;
-    if (texCoord == NULL) {
+void RenderInfo::setBatchPointer(Vector2 * texCoord, unsigned char * colors){
+    
+    if (texCoord == NULL || colors == NULL) {
+        batchTexCoord = NULL;
+        batchColors = NULL;
         lastBatchCallUpdateFrame = -1;
     }
+    else{
+        batchTexCoord = texCoord;
+        batchColors = colors;
+    }
+    
+    
 }
 
 unsigned int RenderInfo::getCurrentFrame() const {

@@ -388,7 +388,7 @@ namespace RedBox {
          * Point the c array pointers (vertices and texture coordinates)
          * to the batchcall's arrays.
          */
-        void setBatchPointer(Vector2* verticesPointer, Vector2 * textureCoordPointer);
+        void setBatchPointer(Vector2* verticesPointer, Vector2 * textureCoordPointer, unsigned char * colors);
         
         
         /**

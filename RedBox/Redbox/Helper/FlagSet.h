@@ -170,6 +170,7 @@ namespace RedBox {
 			typename std::set<T>::const_iterator i = bitsToCheck.bits.begin();
 			while(result && i != bitsToCheck.bits.end()) {
 				result = result && (bits.find(*i) != bits.end());
+                ++i;
 			}
 			return result;
 		}

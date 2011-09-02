@@ -65,6 +65,14 @@ namespace RedBox {
 		 */
 		static void drawMaskShapeWithTexture(CArray<Vector2>& vertices,
 		                                     RenderInfo& renderingInfo);
+        
+        
+        static void drawBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
+                                                 const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char> & colors);
+        
+        
+        static void drawBatchWithTexture(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
+                                         const CArray<unsigned short>& indices, const TextureInfo & textureInfo);
 
 		/**
 		 * Reset the alpha channel to it's original state after a call

@@ -243,7 +243,7 @@
 		51D085B2140877F90004B1DB /* CArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D085B1140877F90004B1DB /* CArray.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51D085BE14087CA60004B1DB /* RenderMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D085BD14087CA60004B1DB /* RenderMode.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51EB297B140B2D9A00E7D000 /* RenderBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51EB2979140B2D9A00E7D000 /* RenderBatch.cpp */; };
-		51EB297C140B2D9A00E7D000 /* RenderBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 51EB297A140B2D9A00E7D000 /* RenderBatch.h */; };
+		51EB297C140B2D9A00E7D000 /* RenderBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 51EB297A140B2D9A00E7D000 /* RenderBatch.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7EF711F1132D35C100524FBB /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711ED132D35C100524FBB /* libfreetype.a */; };
 		7EF711F2132D35C100524FBB /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711EE132D35C100524FBB /* libpng.a */; };
 /* End PBXBuildFile section */
@@ -1102,10 +1102,10 @@
 				515DA7C813FED376004228BE /* SignalData.h in Headers */,
 				51D085BE14087CA60004B1DB /* RenderMode.h in Headers */,
 				515DA7CA13FED376004228BE /* State.h in Headers */,
+				51EB297C140B2D9A00E7D000 /* RenderBatch.h in Headers */,
 				51D085B2140877F90004B1DB /* CArray.h in Headers */,
 				515DA7CC13FED376004228BE /* Vector2.h in Headers */,
 				515DA7CE13FED376004228BE /* VerticesGroup.h in Headers */,
-				51EB297C140B2D9A00E7D000 /* RenderBatch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
