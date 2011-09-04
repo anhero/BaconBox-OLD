@@ -70,6 +70,15 @@ void GraphicDriver::drawBatchWithTextureAndColor(const CArray<Vector2>& vertices
     
 }
 
+void GraphicDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
+                                               const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char>& colors, bool inversedMask){
+    
+#ifdef RB_OPENGL
+	OpenGLDriver::drawMaskedBatchWithTextureAndColor(vertices, textureCoord, 
+                                                     indices, textureInfo, colors, inversedMask);
+#endif
+}
+
 void GraphicDriver::drawMaskShapeWithTextureAndColor(CArray<Vector2>& vertices,
         RedBox::RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL

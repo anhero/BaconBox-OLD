@@ -74,6 +74,10 @@ namespace RedBox {
         
         static void drawBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
                                          const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char> & colors);
+        
+        
+        static void drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
+                                                       const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char>& colors, bool inversedMask);
 
 		/**
 		 * Draw the alpha component of the given vertices and texture to the

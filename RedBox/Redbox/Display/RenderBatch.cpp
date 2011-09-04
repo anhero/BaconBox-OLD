@@ -119,9 +119,22 @@ void RenderBatch::render(){
         (*i)->getRenderInfo().updateBatchPointer();
     }
 
+    if (renderModes.isSet(RenderMode::INVERSE_MASKED)&& renderModes.isSet(RenderMode::TEXTURE)) {
+        //maskBody->mask();
+
+        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), colors.size()), true);
+        //maskBody->unmask();
+
+    }
+    else if(renderModes.isSet(RenderMode::MASKED) && renderModes.isSet(RenderMode::TEXTURE)){
+       // maskBody->mask();
+        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), colors.size()), false);
+        //maskBody->unmask();
+    }
+    else if (renderModes.isSet(RenderMode::TEXTURE)){
     GraphicDriver::drawBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), colors.size()));
+    }
     
-    //GraphicDriver::drawBatchWithTexture(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo);
 }
 
 void RenderBatch::mask(){
