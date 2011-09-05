@@ -191,6 +191,10 @@ namespace RedBox {
 		static TextureInfo* loadTexture(PixMap* pixMap);
 	private:
 		static float clampColorComponent(unsigned int component);
+        
+        static GLuint maskedFramebuffer;
+        static GLuint maskedTexture;
+
 	};
 }
 
