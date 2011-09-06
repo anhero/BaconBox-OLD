@@ -92,7 +92,7 @@ namespace RedBox{
         Vector2 * vertices;
         
         ///Batch array of colors
-        std::vector<unsigned char> colors;
+        unsigned char * colors;
         
         std::vector<unsigned short> indices;
 

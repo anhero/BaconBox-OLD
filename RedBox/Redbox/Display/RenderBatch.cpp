@@ -21,23 +21,27 @@ RenderBatch::~RenderBatch(){
         delete [] vertices;
     }
     
+    if (colors != NULL) {
+        delete [] colors;
+    }
     
-
+    
+    
 }
 
 void RenderBatch::reconstruct(){
     if (verticesCount > 0) {
         
-            
+        
         unsigned int indicesIterator = 0;
         unsigned int verticesIterator = 0;
-    
+        
         Vector2 * tempTextureCoord = new Vector2[verticesCount];
         Vector2 * tempVertices = new Vector2[verticesCount];
+        unsigned char * tempColors = new unsigned char[verticesCount*4];
         spritesCount = sprites.size();
         indices.clear();
-        colors.clear();
-
+        
         for (std::set<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); ++i) {
             
             
@@ -50,42 +54,44 @@ void RenderBatch::reconstruct(){
                 indices.push_back(indicesIterator + triangleIterator +2);
             }
             indicesIterator += (*i)->getVertices().getVerticesCount();
-
+            
             
             
             CArray<Vector2> currentVertices = (*i)->getVertices().getVertices();
-
+            
             //Colors array construction
             for (unsigned int j = 0 ; j < currentVertices.elementCount; j++ ) {
                 for (unsigned int k = 0; k < 4; k++) {
-                    colors.push_back((*i)->getMainColor().getComponents()[k]);
+                    tempColors[(verticesIterator+j)*4 +k] = (*i)->getMainColor().getComponents()[k];
                 }
             }
             
             
-           
+            
+            
+            
             
             
             
             //Vertices and texture coord array construction
             
-
+            
             std::vector<std::vector<Vector2> > currentTexCoord = (*i)->getRenderInfo().getTexCoords();
             
-
+            
             unsigned int currentFrame =  (*i)->getRenderInfo().getCurrentFrame();
             
             
             
-            (*i)->setBatchPointer((&tempVertices[verticesIterator]), (&tempTextureCoord[verticesIterator]), &(colors[colors.size()- currentVertices.elementCount*4]));
-
+            (*i)->setBatchPointer((&tempVertices[verticesIterator]), (&tempTextureCoord[verticesIterator]), &(tempColors[verticesIterator*4]));
+            
             for (unsigned int j = 0; j < currentVertices.elementCount;) {
                 tempVertices[verticesIterator] = currentVertices[j];
                 tempTextureCoord[verticesIterator] = (*i)->getRenderInfo().getTexCoords()[currentFrame][j];
                 j++;
                 verticesIterator++;
             }
-
+            
         }
         
         if (textureCoord != NULL) {
@@ -97,7 +103,12 @@ void RenderBatch::reconstruct(){
             delete [] vertices;
         }
         vertices = tempVertices;
-                
+        
+        if (colors != NULL) {
+            delete [] colors;
+        }
+        colors = tempColors;
+        
     }
     
 }
@@ -118,21 +129,21 @@ void RenderBatch::render(){
     for (std::set<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); ++i) {
         (*i)->getRenderInfo().updateBatchPointer();
     }
-
+    
     if (renderModes.isSet(RenderMode::INVERSE_MASKED)&& renderModes.isSet(RenderMode::TEXTURE)) {
         //maskBody->mask();
-
-        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), colors.size()), true);
+        
+        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*4), true);
         //maskBody->unmask();
-
+        
     }
     else if(renderModes.isSet(RenderMode::MASKED) && renderModes.isSet(RenderMode::TEXTURE)){
-       // maskBody->mask();
-        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), colors.size()), false);
+        // maskBody->mask();
+        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*4), false);
         //maskBody->unmask();
     }
     else if (renderModes.isSet(RenderMode::TEXTURE)){
-    GraphicDriver::drawBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), colors.size()));
+        GraphicDriver::drawBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*4));
     }
     
 }
@@ -195,7 +206,7 @@ void RenderBatch::addSprite(Sprite * aSprite){
         textureInfo.textureId = aSprite->getRenderInfo().getTexInfo()->textureId;
         renderModes = aSprite->getRenderModes();
         if (verticesCount+ aSprite->getVertices().getVerticesCount() < std::numeric_limits<unsigned short>::max()) {
-        verticesCount += aSprite->getVertices().getVerticesCount();
+            verticesCount += aSprite->getVertices().getVerticesCount();
             sprites.insert(aSprite);
         }
         else{

@@ -191,11 +191,16 @@ namespace RedBox {
 		/// Path to the current application binary.
 		std::string applicationPath;
 
-		/// Screen's width.
-		unsigned int screenWidth;
+		/// Screen's width resolution (or width of the window in window mode).
+		unsigned int resolutionWidth;
 
-		/// Screen's height.
-		unsigned int screenHeight;
+		/// Screen's height resolution (or height of the window in window mode).
+		unsigned int resolutionHeight;
+        
+        ///Render context width (if you want to work with pixel set it to the same value as resolutionWidth.
+        unsigned int contextWidth;
+        ///Render context width (if you want to work with pixel set it to the same value as resolutionHeight.
+        unsigned int contextHeight;
 
 		/// A copy of argc
 		static int argc;
