@@ -11,6 +11,7 @@
 
 #include "StaticAssert.h"
 #include "IsNumber.h"
+#include "Ease.h"
 
 namespace RedBox {
 	/**
@@ -104,6 +105,18 @@ namespace RedBox {
 		static bool sameSign(T x, T y) {
 			return ((x < T()) == (y < T()));
 		}
+
+		/**
+         * Eases a value using a specific type of easing.
+         * @param t Value to ease.
+         * @param easeType Type of easing to apply.
+         * @param b Value to add to the easing.
+         * @param c Force to apply on the easing.
+         * @param d Force to apply on the easing.
+         */
+        static float ease(float t, Ease easeType, float b = 0.0f,
+                          float c = 1.0f, float d = 1.0f);
+
 	private:
 		template <typename T>
 		struct RadiansToDegrees {

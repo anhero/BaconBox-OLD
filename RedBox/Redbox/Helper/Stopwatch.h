@@ -18,6 +18,20 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		Stopwatch();
+
+		/**
+		 * Copy constructor.
+		 * @param src Stopwatch to copy.
+		 */
+		Stopwatch(const Stopwatch& src);
+
+		/**
+		 * Assignment operator overload.
+		 * @param src Stopwatch to copy.
+		 * @return Reference to the modified Stopwatch.
+		 */
+		Stopwatch& operator=(const Stopwatch& src);
+
 		/**
 		 * Starts the stopwatch, resets from whatever state the stopwatch was
 		 * in and is restarted.
@@ -44,7 +58,7 @@ namespace RedBox {
 		 * @return If it isn't started, it returns 0. If the timer is paused,
 		 * it returns the time when it was paused.
 		 */
-		double getTime();
+		double getTime() const;
 		/**
 		 * Gets whether the stopwatch is started or not.
 		 * @return True if the stopwatch is started, even if it's paused.

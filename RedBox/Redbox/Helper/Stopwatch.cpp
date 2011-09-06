@@ -6,6 +6,22 @@ Stopwatch::Stopwatch(): startTime(0.0), pausedTime(0.0), paused(false),
 	started(false), timeType(TimeHelper::SCALABLE_PAUSABLE) {
 }
 
+Stopwatch::Stopwatch(const Stopwatch& src) : startTime(src.startTime),
+	pausedTime(src.pausedTime), paused(src.paused), started(src.started),
+	timeType(src.timeType) {
+}
+
+Stopwatch& Stopwatch::operator=(const Stopwatch& src) {
+	if(this != &src) {
+		startTime = src.startTime;
+		pausedTime = src.pausedTime;
+		paused = src.paused;
+		started = src.started;
+		timeType = src.timeType;
+	}
+	return *this;
+}
+
 void Stopwatch::start() {
 	// We start the stopwatch.
 	started = true;
@@ -47,7 +63,7 @@ void Stopwatch::unpause() {
 	}
 }
 
-double Stopwatch::getTime() {
+double Stopwatch::getTime() const {
 	// If the stopwatch is running.
 	if(started) {
 		// If the stopwatch is paused.
