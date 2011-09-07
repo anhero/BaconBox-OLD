@@ -15,6 +15,7 @@ namespace RedBox {
 	 * vectors, floats, etc.). Can be used as a stopwatch to start it, pause it,
 	 * stop it, etc.
 	 * @ingroup Helper
+	 * @tparam T Type of the value to be tweened.
 	 */
 	template <typename T>
 	class Tween : public Stopwatch {
@@ -133,7 +134,7 @@ namespace RedBox {
 
 		/**
 		 * Sets the tween's type of easing.
-		 * @param New type of easing to use.
+		 * @param newEase New type of easing to use.
 		 * @see RedBox::Tween<T>::ease
 		 */
 		void setEase(Ease newEase) {

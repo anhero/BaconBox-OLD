@@ -158,6 +158,7 @@ namespace RedBox {
 		 * Sets the mask to a particle.
 		 * @param newMask Pointer to the mask to use for the particle.
 		 * @param inversed Used to inverse the effect of the mask.
+		 * @param graphicBody Pointer to the sprite to set its mask.
 		 * @see RedBox::GraphicBody::setMask(GraphicBody* newMask, bool inversed)
 		 */
 		void setMaskParticle(GraphicBody* newMask, bool inversed,

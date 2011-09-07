@@ -18,6 +18,7 @@ namespace RedBox {
 	 * Represents a 2D euclidean vector. Templated so it can only be a vector of
 	 * floats, doubles or long doubles.
 	 * @ingroup Math
+	 * @tparam T Type of data to use as the Vector2T's coordinates.
 	 */
 	template <typename T>
 	class Vector2T {

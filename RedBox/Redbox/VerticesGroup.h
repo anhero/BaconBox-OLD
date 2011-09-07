@@ -220,6 +220,7 @@ namespace RedBox {
 		 * Rotates the vertices group using the center as the anchor point.
 		 * @param angle Angle used to rotate the vertices group. A positive
 		 * value rotates it counter-clockwise.
+		 * @param fromPoint Point to use as the center of rotation.
 		 */
 		void rotate(float angle, const Vector2& fromPoint);
 	private:
