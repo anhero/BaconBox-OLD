@@ -129,14 +129,16 @@ void Engine::pulse() {
 
 			// We update the current state.
 			engine.currentState->internalUpdate();
-			engine.renderedSinceLastUpdate = false;
-			// We update the input manager.
-			InputManager::getInstance().update();
-			// We update the timers.
-			TimerManager::update();
-			engine.nextUpdate += engine.updateDelay;
-			engine.lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
-			++engine.loops;
+			if(engine.currentState == engine.lastState) {
+				engine.renderedSinceLastUpdate = false;
+				// We update the input manager.
+				InputManager::getInstance().update();
+				// We update the timers.
+				TimerManager::update();
+				engine.nextUpdate += engine.updateDelay;
+				engine.lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
+				++engine.loops;
+			}
 		}
 
 		if(!engine.renderedSinceLastUpdate) {
