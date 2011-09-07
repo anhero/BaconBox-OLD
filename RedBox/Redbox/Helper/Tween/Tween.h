@@ -142,6 +142,8 @@ namespace RedBox {
 
 		/**
 		 * Gets the current eased value.
+		 * @return Value eased using the tween's type of easing. If the tween
+		 * is done, it always returns the end value.
 		 */
 		T getValue() const {
 			double currentTime = this->getTime();
