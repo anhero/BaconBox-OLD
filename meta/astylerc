@@ -30,7 +30,7 @@
 --indent-col1-comments
 
 # Add this much indents to multi-line conditions.
---min-contitional-indent=0
+--min-conditional-indent=0
 
 # The furthest a continuation line should be on the right.
 --max-instatement-indent=80
