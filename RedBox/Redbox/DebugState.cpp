@@ -26,17 +26,21 @@ void DebugState::onPointerButtonPress(PointerButtonSignalData data) {
 		AABB boundingBox;
 		selectedBody = NULL;
 		while(i != graphicBodies.rend() && selectedBody == NULL) {
-			boundingBox = AABB(i->second->getXPosition(),
-							   i->second->getXPosition() + i->second->getWidth(),
-							   i->second->getYPosition(),
-							   i->second->getYPosition() + i->second->getHeight());
-			if(boundingBox.overlaps(data.getPosition())) {
-				cursorOffset = data.getPosition() - i->second->getPosition();
-				Console::print("Cursor position: ");
-				Console::println(camera.screenToWorld(data.getPosition()));
-				Console::print("GraphicBody position: ");
-				Console::println(i->second->getPosition());
-				selectedBody = i->second;
+			if(i->second->isVisible()) {
+				boundingBox = AABB(i->second->getXPosition(),
+								   i->second->getXPosition() + i->second->getWidth(),
+								   i->second->getYPosition(),
+								   i->second->getYPosition() + i->second->getHeight());
+				if(boundingBox.overlaps(data.getPosition())) {
+					cursorOffset = data.getPosition() - i->second->getPosition();
+					Console::print("Cursor position: ");
+					Console::println(camera.screenToWorld(data.getPosition()));
+					Console::print("GraphicBody position: ");
+					Console::println(i->second->getPosition());
+					selectedBody = i->second;
+				} else {
+					++i;
+				}
 			} else {
 				++i;
 			}
