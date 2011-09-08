@@ -5,6 +5,7 @@
 #ifndef RB_STOPWATCH_H
 #define RB_STOPWATCH_H
 
+#include "Object.h"
 #include "TimeHelper.h"
 
 namespace RedBox {
@@ -12,7 +13,7 @@ namespace RedBox {
 	 * Class that can be used like a simple stopwatch.
 	 * @ingroup Helper
 	 */
-	class Stopwatch {
+	class Stopwatch : public Object {
 	public:
 		/**
 		 * Default constructor.
@@ -23,14 +24,14 @@ namespace RedBox {
 		 * Copy constructor.
 		 * @param src Stopwatch to copy.
 		 */
-		Stopwatch(const Stopwatch& src);
+		Stopwatch(const Stopwatch &src);
 
 		/**
 		 * Assignment operator overload.
 		 * @param src Stopwatch to copy.
 		 * @return Reference to the modified Stopwatch.
 		 */
-		Stopwatch& operator=(const Stopwatch& src);
+		Stopwatch &operator=(const Stopwatch &src);
 
 		/**
 		 * Starts the stopwatch, resets from whatever state the stopwatch was
@@ -102,7 +103,7 @@ namespace RedBox {
 		 * Adds time to the stopwatch.
 		 * @param time Time in seconds to add to the stopwatch.
 		 */
-		void addToTime(double time);
+		void addToTime(double timeToAdd);
 	private:
 		/// Time at which the stopwatch was started.
 		double startTime;

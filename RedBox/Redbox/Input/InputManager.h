@@ -207,10 +207,13 @@ namespace RedBox {
 		 * accelerometers.
 		 */
 		bool deleteAccelerometers;
+
 		/// Flag set to know if the input manager has to delete the game pads.
 		bool deleteGamePads;
+
 		/// Flag set to know if the input manager has to delete the keyboards.
 		bool deleteKeyboards;
+
 		/// Flag set to know if the input manager has to delete the pointers.
 		bool deletePointers;
 	};
