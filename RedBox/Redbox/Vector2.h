@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cmath>
 
+#include "Object.h"
 #include "StaticAssert.h"
 #include "IsNumber.h"
 #include "MathHelper.h"
@@ -21,7 +22,7 @@ namespace RedBox {
 	 * @tparam T Type of data to use as the Vector2T's coordinates.
 	 */
 	template <typename T>
-	class Vector2T {
+	class Vector2T : public Object {
 		template <typename U> friend std::ostream& operator<<(std::ostream& output, const Vector2T<U>& v);
 	public:
 		/// Fundamental floating point number type the vector contains.
@@ -36,7 +37,7 @@ namespace RedBox {
 		/**
 		 * Default constructor.
 		 */
-		Vector2T() : x(DEFAULT_VALUE), y(DEFAULT_VALUE) {
+		Vector2T() : Object(), x(DEFAULT_VALUE), y(DEFAULT_VALUE) {
 		}
 
 		/**
@@ -44,14 +45,14 @@ namespace RedBox {
 		 * @param newX Starting x value.
 		 * @param newY Starting y value.
 		 */
-		Vector2T(ValueType newX, ValueType newY) : x(newX), y(newY) {
+		Vector2T(ValueType newX, ValueType newY) : Object(), x(newX), y(newY) {
 		}
 
 		/**
 		 * Copy constructor.
 		 * @param src Vector2 to make a copy of.
 		 */
-		Vector2T(const Vector2T<ValueType>& src) : x(src.x), y(src.y) {
+		Vector2T(const Vector2T<ValueType>& src) : Object(src), x(src.x), y(src.y) {
 		}
 
 		/**
@@ -60,6 +61,7 @@ namespace RedBox {
 		 * @return Reference to the modified instance.
 		 */
 		Vector2T<ValueType>& operator=(const Vector2T<ValueType>& src) {
+			this->Object::operator=(src);
 			if(this != &src) {
 				setX(src.getX());
 				setY(src.getY());
