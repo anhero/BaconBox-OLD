@@ -10,11 +10,14 @@
 #include "RenderInfo.h"
 #include "TextureInfo.h"
 #include "MathHelper.h"
-
+#include "MainWindow.h"
 using namespace RedBox;
 
 GLuint OpenGLDriver::maskedFramebuffer = 0;
 GLuint OpenGLDriver::maskedTexture = 0;
+Sprite * OpenGLDriver::maskedSprite = NULL;
+TextureInfo * OpenGLDriver::maskedTextureInfo = NULL;
+
 
 void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat* vertices,
                                                 RenderInfo& renderingInfo,
@@ -46,7 +49,6 @@ void OpenGLDriver::drawShapeWithTexture(GLfloat* vertices,
         
 		glVertexPointer(2, GL_FLOAT, 0, vertices);
 		glEnableClientState(GL_VERTEX_ARRAY);
-        
         
         
 		glTexCoordPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>(&(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0])));
@@ -109,28 +111,40 @@ void OpenGLDriver::drawMaskShapeWithTextureAndColor(GLfloat* vertices,
 }
 
 void OpenGLDriver::drawBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
-                                                const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char>& colors){
+                                                const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char>& colors, bool printAlpha){
     glEnableClientState(GL_COLOR_ARRAY);
     glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors.array);
     
-    drawBatchWithTexture(vertices, textureCoord,indices, textureInfo);
+    drawBatchWithTexture(vertices, textureCoord,indices, textureInfo, printAlpha);
     glDisableClientState(GL_COLOR_ARRAY);
     
 }
 
 void OpenGLDriver::drawBatchWithTexture(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
-                                        const CArray<unsigned short> & indices, const TextureInfo & textureInfo){
+                                        const CArray<unsigned short> & indices, const TextureInfo & textureInfo, bool printAlpha){
     
     glBindTexture(GL_TEXTURE_2D, textureInfo.textureId);
     
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
-    
+    if (printAlpha) {
+        
 #ifdef RB_OPENGLES
-    glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
+        glBlendEquationSeparateOES(GL_FUNC_ADD_OES, GL_MAX_EXT);
+        glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 #else
-    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
+        glBlendEquationSeparate(GL_FUNC_ADD, GL_MAX);
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 #endif
+    }
+    else{
+#ifdef RB_OPENGLES
+        glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
+#else
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
+#endif
+    }
+    
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -138,9 +152,15 @@ void OpenGLDriver::drawBatchWithTexture(const CArray<Vector2>& vertices, const C
     
     glVertexPointer(2, GL_FLOAT, 0, reinterpret_cast<float*>(vertices.array));
     glTexCoordPointer(2, GL_FLOAT, 0, reinterpret_cast<float*>(textureCoord.array));
-
-    glDrawElements(GL_TRIANGLE_STRIP, indices.elementCount ,GL_UNSIGNED_SHORT, indices.array);
     
+    glDrawElements(GL_TRIANGLE_STRIP, indices.elementCount ,GL_UNSIGNED_SHORT, indices.array);
+    if (printAlpha) {
+#ifdef RB_OPENGLES
+        glBlendEquationOES(GL_FUNC_ADD_OES);
+#else
+        glBlendEquation(GL_FUNC_ADD);
+#endif
+    }
     glDisable(GL_BLEND);
     glDisable(GL_TEXTURE_2D);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -163,15 +183,22 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
     glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT,
                               GL_TEXTURE_2D, maskedTexture, 0);
 #endif
-        
-    glClearColor(0.0f,0.0f,0.0f,0.0f);
-    drawBatchWithTextureAndColor(vertices, textureCoord, indices, textureInfo, colors);
+    
+    //We can't call glclearcolor on a texture binded framebuffer, so we draw quad to clear the texture
+    glColor4ub(0, 0, 0, 255);
+    glVertexPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>( &(maskedSprite->getVertices()[0])));
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+    drawBatchWithTextureAndColor(vertices, textureCoord, indices, textureInfo, colors, true);
+    
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, 1);
     
-    drawBatchWithTextureAndColor(vertices, textureCoord, indices, textureInfo, colors);
+    
 
-
+    maskedSprite->maskedRender(inversedMask);
+    
+        
         
     }
     
@@ -233,54 +260,54 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
                                                           RenderInfo& renderingInfo,
                                                           unsigned int nbVertices, bool inversedMask) {
         if(renderingInfo.getColor().getAlpha() > 0) {
-
-        glEnable(GL_BLEND);
-        
-        if(inversedMask) {
-            //First render, if are drawing an invered mask, we must prepare the alpha buffer.
-            glDisable(GL_TEXTURE_2D);
+            
+            glEnable(GL_BLEND);
+            
+            if(inversedMask) {
+                //First render, if are drawing an invered mask, we must prepare the alpha buffer.
+                glDisable(GL_TEXTURE_2D);
 #ifdef RB_OPENGLES
-            glBlendEquationSeparateOES(GL_FUNC_ADD_OES, GL_FUNC_ADD_OES);
+                glBlendEquationSeparateOES(GL_FUNC_ADD_OES, GL_FUNC_ADD_OES);
 #else
-            glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+                glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
 #endif
-            
-            
+                
+                
 #ifdef RB_OPENGLES
-            glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE_MINUS_DST_ALPHA, GL_ZERO);
+                glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE_MINUS_DST_ALPHA, GL_ZERO);
 #else
-            glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE_MINUS_DST_ALPHA, GL_ZERO);
+                glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE_MINUS_DST_ALPHA, GL_ZERO);
 #endif
-            glColor4ub(255, 255, 255, 255);
+                glColor4ub(255, 255, 255, 255);
+                
+                
+                glVertexPointer(2, GL_FLOAT, 0, vertices);
+                glEnableClientState(GL_VERTEX_ARRAY);
+                
+                glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
+                
+            }
             
+            glBindTexture(GL_TEXTURE_2D, renderingInfo.getTexInfo()->textureId);
+            
+            glEnable(GL_TEXTURE_2D);
+            //Second render (we must use the minimum alpha between the source and destination and let the RGB component unchanged).
+#ifdef RB_OPENGLES
+            glBlendEquationSeparateOES(GL_FUNC_ADD_OES, GL_MIN_EXT);
+#else
+            glBlendEquationSeparate(GL_FUNC_ADD, GL_MIN);
+#endif
+            glBlendFunc(GL_ZERO, GL_ONE);
             
             glVertexPointer(2, GL_FLOAT, 0, vertices);
             glEnableClientState(GL_VERTEX_ARRAY);
             
+            glTexCoordPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>(&(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0])));
+            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+            
             glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
             
-        }
-        
-        glBindTexture(GL_TEXTURE_2D, renderingInfo.getTexInfo()->textureId);
-        
-        glEnable(GL_TEXTURE_2D);
-        //Second render (we must use the minimum alpha between the source and destination and let the RGB component unchanged).
-#ifdef RB_OPENGLES
-        glBlendEquationSeparateOES(GL_FUNC_ADD_OES, GL_MIN_EXT);
-#else
-        glBlendEquationSeparate(GL_FUNC_ADD, GL_MIN);
-#endif
-        glBlendFunc(GL_ZERO, GL_ONE);
-        
-        glVertexPointer(2, GL_FLOAT, 0, vertices);
-        glEnableClientState(GL_VERTEX_ARRAY);
-        
-        glTexCoordPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>(&(renderingInfo.getTexCoords()[renderingInfo.getCurrentFrame()][0])));
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        
-        glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-        
-        //Third render, we must render the color according to the buffer alpha channel,
+            //Third render, we must render the color according to the buffer alpha channel,
             const uint8_t* color = renderingInfo.getColor().getComponents();
             glColor4ub(color[0], color[1], color[2], color[3]);
             
@@ -295,25 +322,25 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
             
             glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
             
-        
-        
-        //Fourth render, we must reset the alpha channel and leave the RGB channels unchanged.
-        glDisable(GL_TEXTURE_2D);
+            
+            
+            //Fourth render, we must reset the alpha channel and leave the RGB channels unchanged.
+            glDisable(GL_TEXTURE_2D);
 #ifdef RB_OPENGLES
-        glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO);
+            glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO);
 #else
-        glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO);
+            glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE, GL_ZERO);
 #endif
-        glColor4ub(255, 255, 255, 255);
-        
-        glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
-        
-        
-        glDisableClientState(GL_VERTEX_ARRAY);
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-        glDisable(GL_BLEND);
-        
-    }
+            glColor4ub(255, 255, 255, 255);
+            
+            glDrawArrays(GL_TRIANGLE_FAN, 0, nbVertices);
+            
+            
+            glDisableClientState(GL_VERTEX_ARRAY);
+            glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+            glDisable(GL_BLEND);
+            
+        }
         
     }
     
@@ -380,18 +407,27 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
         glGenFramebuffersEXT(1, &maskedFramebuffer);
         glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, maskedFramebuffer);
 #endif
+        
         glGenTextures(1, &maskedTexture);
         glBindTexture(GL_TEXTURE_2D, maskedTexture);
         
+        maskedTextureInfo = new TextureInfo();
+        maskedTextureInfo->textureId = maskedTexture;
+        maskedTextureInfo->imageWidth = MainWindow::getInstance().getResolutionWidth();
+        maskedTextureInfo->imageHeight = MainWindow::getInstance().getResolutionHeight();
+        maskedTextureInfo->poweredWidth = MathHelper::nextPowerOf2(maskedTextureInfo->imageWidth);
+        maskedTextureInfo->poweredHeight = MathHelper::nextPowerOf2(maskedTextureInfo->imageHeight);
         
-        
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0,
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, maskedTextureInfo->poweredWidth, maskedTextureInfo->poweredHeight, 0,
                      GL_RGBA, GL_UNSIGNED_BYTE, NULL);
         
         
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
+        
+        maskedSprite = new Sprite(maskedTextureInfo);
+        
+        
     }
     
     

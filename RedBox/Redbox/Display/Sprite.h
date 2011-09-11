@@ -399,6 +399,13 @@ namespace RedBox {
 
 
 	private:
+        /**
+         * The GraphicDriver call for masked sprite is called in this function.
+         * This way it's possible to call the masked version without calling 
+         * mask() and unmask() on the mask.
+         */
+        void maskedRender(bool inversedMask);
+        
 		/// Vertices making up the sprite.
 		VerticesGroup vertices;
 
@@ -428,6 +435,10 @@ namespace RedBox {
 		               unsigned int frameWidth,
 		               unsigned int frameHeight,
 		               unsigned int nbFrames = 1);
+        
+#ifdef RB_OPENGL
+        friend class OpenGLDriver;
+#endif
 	};
 }
 

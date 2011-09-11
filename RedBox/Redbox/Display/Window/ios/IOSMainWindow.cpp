@@ -22,8 +22,8 @@ void IOSMainWindow::onRedBoxInit(unsigned int resolutionWidth, unsigned int reso
 	InputManager::getInstance().setNbPointers(1);
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    resolutionWidth = screenBounds.size.width;
-    resolutionHeight = screenBounds.size.height;
+    this->resolutionWidth = screenBounds.size.width;
+    this->resolutionHeight = screenBounds.size.height;
     setContextSize(contextWidth, contextHeight);
 
 

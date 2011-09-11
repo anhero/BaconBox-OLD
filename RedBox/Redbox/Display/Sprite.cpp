@@ -129,6 +129,13 @@ void Sprite::setInternalBatchPointer(){
     renderInfo.setBatchPointer(NULL, NULL);
 }
 
+void Sprite::maskedRender(bool inversedMask){
+    GraphicDriver::drawMaskedShapeWithTextureAndColor(vertices.getVertices(),
+                                                      renderInfo,
+                                                      inversedMask);
+}
+
+
 
 void Sprite::render() {
 	// We make sure there are vertices to render.
@@ -143,22 +150,20 @@ void Sprite::render() {
 					assert(mask);
 					mask->mask();
 					// Masked with texture.
-                    CArray<Vector2> test = vertices.getVertices();
-					GraphicDriver::drawMaskedShapeWithTextureAndColor(test,
-					                                                  renderInfo,
-					                                                  renderModes.isSet(RenderMode::INVERSE_MASKED));
+                    maskedRender(renderModes.isSet(RenderMode::INVERSE_MASKED));
 					mask->unmask();
 
 				} else {
 					// We render with the texture.
-					GraphicDriver::drawShapeWithTextureAndColor(vertices.getVertices(),
-					                                            renderInfo);
+                    GraphicDriver::drawShapeWithTextureAndColor(vertices.getVertices(),
+                                                                renderInfo);
 				}
 
 			} else if(renderModes.isSet(RenderMode::COLOR)) {
 				// We render with the color only.
-				GraphicDriver::drawShapeWithColor(vertices.getVertices(),
-				                                  renderInfo);
+                GraphicDriver::drawShapeWithColor(vertices.getVertices(),
+                                                  renderInfo);
+				
 			}
 		}
 	}

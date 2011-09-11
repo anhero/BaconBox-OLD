@@ -17,7 +17,7 @@
 
 #include "Color.h"
 #include "Vector2.h"
-
+#include "Sprite.h"
 namespace RedBox {
 	class RenderInfo;
 	/**
@@ -70,10 +70,10 @@ namespace RedBox {
         
         
         static void drawBatchWithTexture(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
-                                         const CArray<unsigned short>& indices, const TextureInfo & textureInfo);
+                                         const CArray<unsigned short>& indices, const TextureInfo & textureInfo, bool printAlpha = false);
         
         static void drawBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
-                                         const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char> & colors);
+                                         const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char> & colors, bool printAlpha = false);
         
         
         static void drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
@@ -192,9 +192,10 @@ namespace RedBox {
 	private:
 		static float clampColorComponent(unsigned int component);
         
-        static GLuint maskedFramebuffer;
         static GLuint maskedTexture;
-
+        static GLuint maskedFramebuffer;
+        static Sprite * maskedSprite;
+        static TextureInfo * maskedTextureInfo;
 	};
 }
 
