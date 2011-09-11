@@ -16,14 +16,17 @@ IOSMainWindow& IOSMainWindow::getInstance() {
 	return instance;
 }
 
-void IOSMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
+void IOSMainWindow::onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, unsigned int contextWidth, unsigned int contextHeight) {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-	//SDL_SetVideoMode(width, height, 32, SDL_OPENGL);
-	//InputManager::getInstance().setNbKeyboards(1);
 	InputManager::getInstance().setNbPointers(1);
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    resolutionWidth = screenBounds.size.width;
+    resolutionHeight = screenBounds.size.height;
+    setContextSize(contextWidth, contextHeight);
+
+
     RedBoxAppViewController* viewController = [[RedBoxAppViewController alloc] initWithFrame:screenBounds];
     [RedBoxAppAppDelegate setViewController:viewController];
     [pool release];
@@ -31,11 +34,10 @@ void IOSMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
 }
 
 IOSMainWindow::IOSMainWindow() : MainWindow() {
-	//SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	fullscreen = true;
 }
 
 void IOSMainWindow::setCaption(const std::string& caption) {
-	//SDL_WM_SetCaption(caption.c_str(), NULL);
 }
 
 bool IOSMainWindow::isFullScreen() const {
@@ -65,6 +67,26 @@ void IOSMainWindow::show() {
 
 IOSMainWindow::~IOSMainWindow() {
 	//SDL_Quit();
+}
+
+void IOSMainWindow::setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight){
+
+}
+
+void IOSMainWindow::setContextSize(unsigned int contextWidth, unsigned int contextHeight){
+    if (this->contextWidth == 0) {
+        this->contextWidth =resolutionWidth;
+    }
+    else{
+        this->contextWidth = contextWidth;
+    }
+    
+    if (this->contextHeight == 0) {
+        this->contextHeight = resolutionHeight;
+    }
+    else{
+        this->contextHeight = contextHeight;
+    }
 }
 
 

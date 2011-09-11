@@ -25,3 +25,16 @@ MainWindow::MainWindow() : sigly::HasSlots<>() {
 
 MainWindow::~MainWindow() {
 }
+
+unsigned int MainWindow::getResolutionWidth(){
+    return resolutionWidth;
+}
+unsigned int MainWindow::getResolutionHeight(){
+    return resolutionHeight;
+}
+unsigned int MainWindow::getContextWidth(){
+    return contextWidth;
+}
+unsigned int MainWindow::getContextHeight(){
+    return contextHeight;
+}

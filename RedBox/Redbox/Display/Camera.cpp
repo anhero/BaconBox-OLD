@@ -7,7 +7,7 @@
 #include "Random.h"
 #include "Engine.h"
 #include "GraphicBody.h"
-
+#include "MainWindow.h"
 using namespace RedBox;
 
 Camera::Camera(): Body(), position(Vector2()), angle(0), zoomFactor(1.0f),
@@ -173,7 +173,7 @@ float Camera::worldToScreenY(float y) const {
 
 unsigned int Camera::getWidth() const {
 	if(zoomFactor != 0.0f) {
-		return static_cast<unsigned int>(static_cast<float>(Engine::getScreenWidth()) / fabsf(zoomFactor));
+		return static_cast<unsigned int>(static_cast<float>(MainWindow::getInstance().getContextWidth()) / fabsf(zoomFactor));
 	} else {
 		return 0;
 	}
@@ -181,7 +181,7 @@ unsigned int Camera::getWidth() const {
 
 unsigned int Camera::getHeight() const {
 	if(zoomFactor != 0.0f) {
-		return static_cast<unsigned int>(static_cast<float>(Engine::getScreenHeight()) / fabsf(zoomFactor));
+		return static_cast<unsigned int>(static_cast<float>(MainWindow::getInstance().getContextHeight()) / fabsf(zoomFactor));
 	} else {
 		return 0;
 	}
@@ -240,13 +240,13 @@ void Camera::update() {
 		float tmpIntensity = (timeSinceStarted == 0.0) ? (shakeIntensity) : ((1.0f - ((TimeHelper::getInstance().getSinceStart() - shakeStart) / shakeDuration)) * shakeIntensity);
 
 		if(shakeAxes == ShakeAxes::BOTH_AXES || shakeAxes == ShakeAxes::HORIZONTAL_AXIS) {
-			offset.setX(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(Engine::getScreenWidth()));
+			offset.setX(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(MainWindow::getInstance().getContextWidth()));
 		} else {
 			offset.setX(0.0f);
 		}
 
 		if(shakeAxes == ShakeAxes::BOTH_AXES || shakeAxes == ShakeAxes::VERTICAL_AXIS) {
-			offset.setY(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(Engine::getScreenHeight()));
+			offset.setY(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(MainWindow::getInstance().getContextHeight()));
 		} else {
 			offset.setY(0.0f);
 		}

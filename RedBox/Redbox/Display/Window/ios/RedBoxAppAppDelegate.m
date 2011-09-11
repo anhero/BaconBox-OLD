@@ -5,7 +5,7 @@
 #import "RedBoxAppViewController.h"
 #include <RedBox.h>
 #include <RedBox/GraphicDriver.h>
-
+#include "MainWindow.h"
 static RedBoxAppViewController *redBoxViewController = nil;
 
 @implementation RedBoxAppAppDelegate
@@ -32,7 +32,7 @@ static RedBoxAppViewController *redBoxViewController = nil;
     self.window.rootViewController = self.viewController;
     [window addSubview:viewController.view];
     [window makeKeyAndVisible];
-    RedBox::GraphicDriver::initializeGraphicDriver(RedBox::Engine::getScreenWidth(), RedBox::Engine::getScreenHeight());
+    RedBox::GraphicDriver::initializeGraphicDriver(RedBox::MainWindow::getInstance().getResolutionWidth(), RedBox::MainWindow::getInstance().getResolutionHeight());
     return YES;
 }
 

@@ -27,7 +27,7 @@
 using namespace RedBox;
 
 const double Engine::DEFAULT_UPDATES_PER_SECOND = 60.0;
-sigly::Signal2<unsigned int, unsigned int> Engine::onInitialize = sigly::Signal2<unsigned int, unsigned int>();
+sigly::Signal4<unsigned int, unsigned int, unsigned int, unsigned int> Engine::onInitialize = sigly::Signal4<unsigned int, unsigned int,unsigned int,unsigned int>();
 
 State* Engine::addState(State* newState) {
 	Engine& engine = getInstance();
@@ -158,15 +158,18 @@ void Engine::pulse() {
 	}
 }
 
-void Engine::initializeEngine(unsigned int newScreenWidth,
-							  unsigned int newScreenHeight) {
+void Engine::initializeEngine(unsigned int resolutionWidth,
+                              unsigned int resolutionHeight, 
+                              unsigned int contextWidth,
+                              unsigned int contextHeight) {
 	Engine& engine = getInstance();
-	engine.screenWidth = newScreenWidth;
-	engine.screenHeight = newScreenHeight;
+	
+    
 	TimeHelper::getInstance();
 	InputManager::getInstance();
-	onInitialize.shoot(engine.screenWidth, engine.screenHeight);
-	GraphicDriver::initializeGraphicDriver(engine.screenWidth, engine.screenHeight);
+	onInitialize.shoot(resolutionWidth, resolutionHeight, contextWidth, contextHeight);
+
+	GraphicDriver::initializeGraphicDriver(MainWindow::getInstance().getResolutionWidth(), MainWindow::getInstance().getResolutionHeight());
 #ifndef RB_ANDROID
 	Font::initializeFontRenderer();
 #endif
@@ -177,13 +180,7 @@ double Engine::getSinceLastUpdate() {
 	return (engine.lastUpdate) ? (TimeHelper::getInstance().getSinceStartComplete() - engine.lastUpdate) : (engine.lastUpdate);
 }
 
-unsigned int Engine::getScreenWidth() {
-	return getInstance().screenWidth;
-}
 
-unsigned int Engine::getScreenHeight() {
-	return getInstance().screenHeight;
-}
 
 bool Engine::isBufferSwapped() {
 	return getInstance().bufferSwapped;
@@ -233,7 +230,7 @@ Engine& Engine::getInstance() {
 Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0),
 loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
 minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false), needsExit(false),
-tmpExitCode(0), renderedSinceLastUpdate(false), screenWidth(0), screenHeight(0) {
+tmpExitCode(0), renderedSinceLastUpdate(false) {
 	MainWindow::getInstance().setCaption(MainWindow::DEFAULT_NAME);
 }
 
