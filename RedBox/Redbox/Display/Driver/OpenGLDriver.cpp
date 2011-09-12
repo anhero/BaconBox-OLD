@@ -194,10 +194,12 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
     
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, 1);
     
-    
-
+    glPushMatrix();
+    glLoadIdentity();
+    glScalef(1.0f, -1.0f, 1.0f);
+    glTranslatef(0.0f, -480.0f, 0.0f);
     maskedSprite->maskedRender(inversedMask);
-    
+    glPopMatrix();
         
         
     }
@@ -216,7 +218,7 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
         glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
 #else
         glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
-#endif
+#endif-
         glVertexPointer(2, GL_FLOAT, 0, vertices);
         glEnableClientState(GL_VERTEX_ARRAY);
         
@@ -426,7 +428,6 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         
         maskedSprite = new Sprite(maskedTextureInfo);
-        
         
     }
     
