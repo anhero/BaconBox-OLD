@@ -13,6 +13,8 @@ namespace RedBox {
 	public:
 		typedef typename Slider<T>::ValueType ValueType;
 
+		sigly::Signal0<> release;
+
 		/**
 		 * Parameterized constructor. Creates the line and the slider's
 		 * button from texture keys.
@@ -27,8 +29,8 @@ namespace RedBox {
 		 * @see RedBox::Slider<T>
 		 */
 		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
-		           ValueType startingValue, const std::string& lineTextureKey,
-		           const std::string& buttonTextureKey) :
+		           ValueType startingValue, const std::string &lineTextureKey,
+		           const std::string &buttonTextureKey) :
 			Slider<T>(newMinimumValue, newMaximumValue, startingValue),
 			lineSprite(lineTextureKey), buttonSprite(buttonTextureKey),
 			down(false) {
@@ -52,7 +54,7 @@ namespace RedBox {
 		LineSlider<ValueType>& operator=(const LineSlider<ValueType>& src) {
 			this->Slider<T>::operator=(src);
 
-			if(this != &src) {
+			if (this != &src) {
 				lineSprite = src.lineSprite;
 				buttonSprite = src.buttonSprite;
 				down = false;
@@ -68,26 +70,29 @@ namespace RedBox {
 			this->Slider<T>::update();
 			lineSprite.update();
 			buttonSprite.update();
-			Pointer* ptr = Pointer::getDefault();
+			Pointer *ptr = Pointer::getDefault();
 
-			if(ptr) {
-				const CursorState& cur = ptr->getState().getCursorState();
+			if (ptr) {
+				const CursorState &cur = ptr->getState().getCursorState();
 
-				if(!down) {
-					if(cur.isButtonPressed(CursorButton::LEFT) && AABB::overlaps(cur.getPosition(), lineSprite.getAABB())) {
+				if (!down) {
+					if (cur.isButtonPressed(CursorButton::LEFT) && AABB::overlaps(cur.getPosition(), lineSprite.getAABB())) {
 						down = true;
 					}
 				}
 
-				if(down) {
-					if(cur.isButtonReleased(CursorButton::LEFT) ||
-					   (!cur.isButtonPressed(CursorButton::LEFT) && !cur.isButtonHeld(CursorButton::LEFT))) {
+				if (down) {
+					if (cur.isButtonReleased(CursorButton::LEFT)) {
+						down = false;
+						release.shoot();
+
+					} else if ((!cur.isButtonPressed(CursorButton::LEFT) && !cur.isButtonHeld(CursorButton::LEFT))) {
 						down = false;
 
 					} else {
 						// We get the button's sprite's real width.
 						unsigned int i = 0;
-						Vector2* tmpArray = buttonSprite.getVertices().getVertices().array;
+						Vector2 *tmpArray = buttonSprite.getVertices().getVertices().array;
 						//std::vector<Vector2>::iterator i = buttonSprite.getVertices().getVertices().begin();
 						Vector2 tmpLine(tmpArray[i]);
 						++i;
@@ -157,7 +162,7 @@ namespace RedBox {
 		 * Gets the graphic body masking the current button.
 		 * @return Pointer to the slider's mask.
 		 */
-		GraphicBody* getMask() {
+		GraphicBody *getMask() {
 			return lineSprite.getMask();
 		}
 
@@ -167,7 +172,7 @@ namespace RedBox {
 		 * @param inversed Set this parameter to true if you want to inverse
 		 * the effect of the mask. False by default.
 		 */
-		void setMask(GraphicBody* newMask, bool inversed = false) {
+		void setMask(GraphicBody *newMask, bool inversed = false) {
 			lineSprite.setMask(newMask, inversed);
 			buttonSprite.setMask(newMask, inversed);
 		}
@@ -219,7 +224,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::scaling
 		 */
 		virtual void scaleFromPoint(float xScaling, float yScaling,
-		                            const Vector2& fromPoint) {
+		                            const Vector2 &fromPoint) {
 			this->Slider<T>::scaleFromPoint(xScaling, yScaling, fromPoint);
 			lineSprite.scaleFromPoint(xScaling, yScaling, fromPoint);
 			buttonSprite.scaleFromPoint(xScaling, yScaling, fromPoint);
@@ -232,7 +237,7 @@ namespace RedBox {
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint) {
+		void rotateFromPoint(float rotationAngle, const Vector2 &rotationPoint) {
 			this->Slider<T>::rotateFromPoint(rotationAngle, rotationPoint);
 			lineSprite.rotateFromPoint(rotationAngle, rotationPoint);
 			buttonSprite.rotateFromPoint(rotationAngle, rotationPoint);
@@ -243,7 +248,7 @@ namespace RedBox {
 		 * Creates a copy of the current simple button.
 		 * @return Pointer to the new simple button.
 		 */
-		GraphicBody* clone() const {
+		GraphicBody *clone() const {
 			return new LineSlider<ValueType>(*this);
 		}
 
@@ -272,11 +277,11 @@ namespace RedBox {
 		void placeButton() {
 			float tmpAngle = this->getAngle();
 
-			if(tmpAngle != 0.0f) {
+			if (tmpAngle != 0.0f) {
 				this->setAngle(0.0f);
 			}
 
-			if(this->getMaximumValue() == this->getMinimumValue()) {
+			if (this->getMaximumValue() == this->getMinimumValue()) {
 				buttonSprite.setPosition(lineSprite.getPositionCenter() - Vector2(buttonSprite.getWidth(), buttonSprite.getHeight()) * 0.5f);
 
 			} else {
@@ -285,7 +290,7 @@ namespace RedBox {
 				                         lineSprite.getYPositionCenter() - buttonSprite.getHeight() * 0.5f);
 			}
 
-			if(tmpAngle != 0.0f) {
+			if (tmpAngle != 0.0f) {
 				this->setAngle(tmpAngle);
 			}
 
