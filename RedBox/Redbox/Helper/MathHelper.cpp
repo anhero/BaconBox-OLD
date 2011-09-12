@@ -4,7 +4,7 @@
 
 namespace RedBox {
 	template <> MathHelper::PI<float>::operator float() { return 3.14159265f; }
-	template <> MathHelper::PI<double>::operator double() { return 3.14159265f; }
+	template <> MathHelper::PI<double>::operator double() { return 3.14159265; }
 	template <> MathHelper::PI<long double>::operator long double() { return 3.14159265l; }
 
 	template <> const float MathHelper::RadiansToDegrees<float>::RADIAN_TO_DEGREE = 57.2957795785523f;
