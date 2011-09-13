@@ -5,7 +5,7 @@
 #include "GraphicDriver.h"
 using namespace RedBox;
 
-RenderBatch::RenderBatch(): textureCoord(NULL), vertices(NULL), verticesCount(0), spritesCount(0){
+RenderBatch::RenderBatch(): textureCoord(NULL), vertices(NULL),colors(NULL), verticesCount(0), spritesCount(0){
     
 }
 
@@ -31,6 +31,13 @@ RenderBatch::~RenderBatch(){
 
 void RenderBatch::reconstruct(){
     if (verticesCount > 0) {
+        colorChannelCount = 0;
+        if (textureInfo.colorFormat == ColorFormat::RGBA) {
+            colorChannelCount = 4;
+        }
+        else if(textureInfo.colorFormat == ColorFormat::ALPHA) {
+            colorChannelCount = 1;
+        }
         
         
         unsigned int indicesIterator = 0;
@@ -38,7 +45,7 @@ void RenderBatch::reconstruct(){
         
         Vector2 * tempTextureCoord = new Vector2[verticesCount];
         Vector2 * tempVertices = new Vector2[verticesCount];
-        unsigned char * tempColors = new unsigned char[verticesCount*4];
+        unsigned char * tempColors = new unsigned char[verticesCount * colorChannelCount];
         spritesCount = sprites.size();
         indices.clear();
         
@@ -61,8 +68,8 @@ void RenderBatch::reconstruct(){
             
             //Colors array construction
             for (unsigned int j = 0 ; j < currentVertices.elementCount; j++ ) {
-                for (unsigned int k = 0; k < 4; k++) {
-                    tempColors[(verticesIterator+j)*4 +k] = (*i)->getMainColor().getComponents()[k];
+                for (unsigned int k = 0; k < colorChannelCount; k++) {
+                    tempColors[(verticesIterator+j)*colorChannelCount +k] = (*i)->getMainColor().getComponents()[k];
                 }
             }
             
@@ -83,7 +90,7 @@ void RenderBatch::reconstruct(){
             
             
             
-            (*i)->setBatchPointer((&tempVertices[verticesIterator]), (&tempTextureCoord[verticesIterator]), &(tempColors[verticesIterator*4]));
+            (*i)->setBatchPointer((&tempVertices[verticesIterator]), (&tempTextureCoord[verticesIterator]), &(tempColors[verticesIterator*colorChannelCount]));
             
             for (unsigned int j = 0; j < currentVertices.elementCount;) {
                 tempVertices[verticesIterator] = currentVertices[j];
@@ -115,7 +122,7 @@ void RenderBatch::reconstruct(){
 
 void RenderBatch::update(){
     
-    
+
     for (std::set<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); ++i) {
         (*i)->update();
     }
@@ -133,35 +140,34 @@ void RenderBatch::render(){
     if (renderModes.isSet(RenderMode::INVERSE_MASKED)&& renderModes.isSet(RenderMode::TEXTURE)) {
         maskBody->mask();
         
-        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*4), true);
+        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*colorChannelCount), true);
         maskBody->unmask();
         
     }
     else if(renderModes.isSet(RenderMode::MASKED) && renderModes.isSet(RenderMode::TEXTURE)){
         maskBody->mask();
-        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*4), false);
+        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*colorChannelCount), false);
         maskBody->unmask();
     }
     else if (renderModes.isSet(RenderMode::TEXTURE)){
-        GraphicDriver::drawBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*4));
+        GraphicDriver::drawBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*colorChannelCount));
     }
     
 }
 
 void RenderBatch::mask(){
     //If the user add/remove some sprites to the batch, we need to reconstruct it.
-    if (verticesCount != sprites.size()) {
-        verticesCount = sprites.size();
+    if (spritesCount != sprites.size()) {        
         reconstruct();
     }
     for (std::set<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); ++i) {
         (*i)->getRenderInfo().updateBatchPointer();
     }
-    //TODO:Call drawer here
+    GraphicDriver::drawMaskBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*colorChannelCount));
 }
 
 void RenderBatch::unmask(){
-    //TODO: Call drawer here
+    GraphicDriver::unmaskBatch(CArray<Vector2>(vertices, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()));
 }
 
 void RenderBatch::removeSprite(Sprite * aSprite){

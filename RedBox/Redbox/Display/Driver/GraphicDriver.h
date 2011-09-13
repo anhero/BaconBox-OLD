@@ -66,6 +66,10 @@ namespace RedBox {
 		static void drawMaskShapeWithTexture(CArray<Vector2>& vertices,
 		                                     RenderInfo& renderingInfo);
         
+        static void drawMaskBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
+                                                     const CArray<unsigned short>& indices, const TextureInfo & textureInfo, 
+                                                     const CArray<unsigned char> & colors);
+        
         
         static void drawBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
                                                  const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char> & colors);
@@ -86,9 +90,10 @@ namespace RedBox {
 		 * @param nbVertices Number equal to the number of vertices to draw.
 
 		 */
-		static void unmask(CArray<Vector2>& vertices,
+		static void unmaskShape(CArray<Vector2>& vertices,
 		                   RenderInfo& renderingInfo);
 
+        static void unmaskBatch(const CArray<Vector2>& vertices, const CArray<unsigned short>& indices);
 		/**
 		 * Draw the giver shape masked by using a blend between the alpha
 		 * component of the shape and the inversed alpha component

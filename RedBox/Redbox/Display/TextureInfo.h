@@ -10,6 +10,7 @@
 #include "PlatformFlagger.h"
 
 #include "RBOpenGL.h"
+#include "ColorFormat.h"
 
 namespace RedBox {
 	/**
@@ -48,6 +49,8 @@ namespace RedBox {
 					unsigned int newImageHeight);
 #endif
 		
+        ///Color format of the texture
+        ColorFormat colorFormat;
 		/// Texture width powered to 2
 		unsigned int poweredWidth;
 		

@@ -42,6 +42,10 @@ namespace RedBox {
 		static void drawShapeWithTextureAndColor(GLfloat* vertices,
 		        RenderInfo& renderingInfo,
 		        unsigned int nbVertices);
+        
+        
+        static void unmaskBatch(const CArray<Vector2>& vertices, const CArray<unsigned short>& indices);
+
 
 		/**
 		 * Draw a textured shape with the given vertices, texture coordinate,
@@ -67,6 +71,10 @@ namespace RedBox {
 		static void drawShapeWithColor(GLfloat* vertices,
 		                               RenderInfo& renderingInfo,
 		                               unsigned int nbVertices);
+        
+        static void drawMaskBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
+                                                     const CArray<unsigned short>& indices, const TextureInfo & textureInfo, 
+                                                     const CArray<unsigned char> & colors);
         
         
         static void drawBatchWithTexture(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
@@ -103,7 +111,7 @@ namespace RedBox {
 		 * array, texture coordinates and textureID.
 		 * @param nbVertices Number of vertices to draw.
 		 */
-		static void unmask(GLfloat* vertices,
+		static void unmaskShape(GLfloat* vertices,
 		                   RenderInfo& renderingInfo,
 		                   unsigned int nbVertices);
 		/**

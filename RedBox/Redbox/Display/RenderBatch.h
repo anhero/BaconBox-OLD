@@ -110,6 +110,8 @@ namespace RedBox{
 		 */
 		GraphicBody* maskBody;
         
+        ///Number of color channel in the texture
+        unsigned int colorChannelCount;
         
         TextureInfo textureInfo;
 	};

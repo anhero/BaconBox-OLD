@@ -178,7 +178,7 @@ void Sprite::mask() {
 
 void Sprite::unmask() {
 	if(vertices.getVerticesCount() > 0) {
-		GraphicDriver::unmask(vertices.getVertices(), renderInfo);
+		GraphicDriver::unmaskShape(vertices.getVertices(), renderInfo);
 	}
 }
 

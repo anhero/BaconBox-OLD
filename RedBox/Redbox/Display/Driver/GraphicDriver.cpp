@@ -37,6 +37,14 @@ void GraphicDriver::drawShapeWithColor(CArray<Vector2>& vertices,
 #endif
 }
 
+void GraphicDriver::drawMaskBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
+                                      const CArray<unsigned short>& indices, const TextureInfo & textureInfo, 
+                                      const CArray<unsigned char> & colors){
+#ifdef RB_OPENGL
+	OpenGLDriver::drawMaskBatchWithTextureAndColor(vertices,textureCoord, indices, textureInfo, colors);
+#endif
+    
+}
 
 void GraphicDriver::drawMaskShapeWithTexture(CArray<Vector2>& vertices,
         RedBox::RenderInfo& renderingInfo) {
@@ -45,11 +53,15 @@ void GraphicDriver::drawMaskShapeWithTexture(CArray<Vector2>& vertices,
 	                                       renderingInfo, vertices.elementCount);
 #endif
 }
-
-void GraphicDriver::unmask(CArray<Vector2>& vertices,
+void GraphicDriver::unmaskBatch(const CArray<Vector2>& vertices, const CArray<unsigned short>& indices){
+#ifdef RB_OPENGL
+	OpenGLDriver::unmaskBatch(vertices, indices);
+#endif
+}
+void GraphicDriver::unmaskShape(CArray<Vector2>& vertices,
                            RedBox::RenderInfo& renderingInfo) {
 #ifdef RB_OPENGL
-	OpenGLDriver::unmask(reinterpret_cast<GLfloat*>(vertices.array),
+	OpenGLDriver::unmaskShape(reinterpret_cast<GLfloat*>(vertices.array),
 	                     renderingInfo, vertices.elementCount);
 #endif
 }

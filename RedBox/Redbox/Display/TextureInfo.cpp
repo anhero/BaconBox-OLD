@@ -5,12 +5,12 @@
 using namespace RedBox;
 
 #ifdef RB_OPENGL
-TextureInfo::TextureInfo(): textureId(0), poweredWidth(0), poweredHeight(0) {
+TextureInfo::TextureInfo(): textureId(0), poweredWidth(0), poweredHeight(0), colorFormat(ColorFormat::RGBA){
 }
 TextureInfo::TextureInfo(unsigned int newTextureId,
 						 unsigned int newImageWidth,
 						 unsigned int newImageHeight): textureId(newTextureId),
-poweredWidth(newImageWidth), poweredHeight(newImageHeight) {
+poweredWidth(newImageWidth), poweredHeight(newImageHeight), colorFormat(ColorFormat::RGBA) {
 }
 #else
 TextureInfo::TextureInfo():poweredWidth(0), poweredHeight(0) {

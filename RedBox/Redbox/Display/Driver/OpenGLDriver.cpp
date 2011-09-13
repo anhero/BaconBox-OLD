@@ -203,6 +203,38 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
         
         
     }
+
+void OpenGLDriver::drawMaskBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
+                                                     const CArray<unsigned short>& indices, const TextureInfo & textureInfo, 
+                                                     const CArray<unsigned char> & colors){
+    
+    
+    glBindTexture(GL_TEXTURE_2D, textureInfo.textureId);
+    
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_BLEND);
+    
+#ifdef RB_OPENGLES
+    glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
+#else
+    glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
+#endif
+    glVertexPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>(vertices.array));
+    glEnableClientState(GL_VERTEX_ARRAY);
+    
+    glTexCoordPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>(textureCoord.array));
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    
+    glDrawElements(GL_TRIANGLE_STRIP, indices.elementCount ,GL_UNSIGNED_SHORT, indices.array);
+    
+    
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    
+    glDisable(GL_BLEND);
+    glDisable(GL_TEXTURE_2D);
+
+}
     
     
     
@@ -218,7 +250,7 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
         glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
 #else
         glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
-#endif-
+#endif
         glVertexPointer(2, GL_FLOAT, 0, vertices);
         glEnableClientState(GL_VERTEX_ARRAY);
         
@@ -234,8 +266,27 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
         glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
     }
+void OpenGLDriver::unmaskBatch(const CArray<Vector2>& vertices, const CArray<unsigned short>& indices){
+    glEnable(GL_BLEND);
+    glVertexPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>(vertices.array));
+    glEnableClientState(GL_VERTEX_ARRAY);
     
-    void OpenGLDriver::unmask(GLfloat* vertices,
+#ifdef RB_OPENGLES
+    glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE, GL_ONE);
+#else
+    glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE, GL_ONE);
+#endif
+    glColor4ub(255, 255, 255, 255);
+    
+    
+    
+    glDrawElements(GL_TRIANGLE_STRIP, indices.elementCount ,GL_UNSIGNED_SHORT, indices.array);
+    
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisable(GL_BLEND);
+}
+    
+    void OpenGLDriver::unmaskShape(GLfloat* vertices,
                               RenderInfo&,
                               unsigned int nbVertices) {
         glEnable(GL_BLEND);
@@ -456,7 +507,7 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
         texInfo->poweredHeight = heightPoweredToTwo;
         
         GLint format;
-        
+        texInfo->colorFormat = pixMap->getColorFormat();
         if(pixMap->getColorFormat() == ColorFormat::RGBA) {
             format = GL_RGBA;
         } else if(pixMap->getColorFormat() == ColorFormat::ALPHA) {
