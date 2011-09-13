@@ -181,16 +181,9 @@ namespace RedBox {
 		 */
 		static void popMatrix();
 
-		/**
-		 * Initialize the drawing backend an prepare the coordinate system with the given
-		 * screen size.
-		 * @param screenWidth Width of the screen. A camera with a zoom factor of 1, will
-		 * show "screenWidth" pixels in width
-		 * @param screenHeight Height of the screen. A camera with a zoom factor of 1, will
-		 * show "screenHeight" pixels in height
-		 */
-		static void initializeGraphicDriver(unsigned int screenWidth,
-		                                    unsigned int screenHeight);
+		
+		static void initializeGraphicDriver(float contextWidth,
+		                                    float contextHeight);
 
 		/**
 		 * Load a texture into graphic memory.
@@ -202,6 +195,7 @@ namespace RedBox {
         
         static GLuint maskedTexture;
         static GLuint maskedFramebuffer;
+        static GLuint originalFramebuffer;
         static Sprite * maskedSprite;
         static TextureInfo * maskedTextureInfo;
 	};

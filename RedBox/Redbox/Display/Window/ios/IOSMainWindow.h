@@ -16,7 +16,7 @@ namespace RedBox {
 	public:
 		/// Gets the singleton instance of IOSMainWindow.
 		static IOSMainWindow& getInstance();
-		void onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, unsigned int contextWidth, unsigned int contextHeight);
+		void onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight);
 		void show();
 		void setCaption(const std::string& caption);
 		bool isFullScreen() const;
@@ -37,11 +37,7 @@ namespace RedBox {
          * Set the resolution of the window.
          */
         void setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight);
-        /**
-         * Set the size. If you want to work in pixels, set them to 0 and they 
-         * will automagically match the current resolution width and height
-         */
-        void setContextSize(unsigned int contextWidth, unsigned int contextHeight);
+        
 	private:
 		IOSMainWindow();
 		~IOSMainWindow();

@@ -27,7 +27,7 @@
 using namespace RedBox;
 
 const double Engine::DEFAULT_UPDATES_PER_SECOND = 60.0;
-sigly::Signal4<unsigned int, unsigned int, unsigned int, unsigned int> Engine::onInitialize = sigly::Signal4<unsigned int, unsigned int,unsigned int,unsigned int>();
+sigly::Signal4<unsigned int, unsigned int, float, float> Engine::onInitialize = sigly::Signal4<unsigned int, unsigned int,float,float>();
 
 State* Engine::addState(State* newState) {
 	Engine& engine = getInstance();
@@ -159,10 +159,9 @@ void Engine::pulse() {
 }
 
 void Engine::initializeEngine(unsigned int resolutionWidth,
-                              unsigned int resolutionHeight, 
-                              unsigned int contextWidth,
-                              unsigned int contextHeight) {
-	Engine& engine = getInstance();
+                              unsigned int resolutionHeight,
+                              float contextWidth,
+                              float contextHeight) {
 	
     
 	TimeHelper::getInstance();

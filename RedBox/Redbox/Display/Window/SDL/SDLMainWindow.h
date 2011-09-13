@@ -28,7 +28,7 @@ namespace RedBox {
 		 * @param width The width of the window.
 		 * @param height The height of the window
 		 */
-		void onRedBoxInit(unsigned int width, unsigned int height);
+		void onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight);
 
 		/**
 		 * Activates and opens the window.
@@ -67,6 +67,12 @@ namespace RedBox {
 		 * @param newInputGrabbed
 		 */
 		void setInputGrabbed(bool newInputGrabbed);
+        
+        /** 
+         * Set the resolution of the window.
+         */
+        void setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight);
+      
 	private:
 		/**
 		 * Initializes SDL.

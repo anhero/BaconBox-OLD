@@ -140,16 +140,9 @@ namespace RedBox {
 		                         const Color& backgroundColor,
 		                         const Vector2& rotationCenterOffset);
 
-		/**
-		 * Initialize the drawing backend an prepare the coordinate system with the given
-		 * screen size.
-		 * @param screenWidth Width of the screen. A camera with a zoom factor of 1, will
-		 * show "screenWidth" pixels in width
-		 * @param screenHeight Height of the screen. A camera with a zoom factor of 1, will
-		 * show "screenHeight" pixels in height
-		 */
-		static void initializeGraphicDriver(unsigned int screenWidth,
-		                                    unsigned int screenHeight);
+	
+		static void initializeGraphicDriver(float contextWidth,
+		                                    float contextHeight);
 
 		/**
 		 * Pushes the current matrix on the stack.

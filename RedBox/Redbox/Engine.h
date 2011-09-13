@@ -25,7 +25,7 @@ namespace RedBox {
 		static void application(int argc, char* argv[]);
 
 		/// Signal sent when the RedBox engine is initialized.
-		static sigly::Signal4<unsigned int, unsigned int, unsigned int, unsigned int> onInitialize;
+		static sigly::Signal4<unsigned int, unsigned int, float, float> onInitialize;
 		/**
 		 * Adds a state to the engine's list.
 		 * @param newState Pointer to the state to add to the engine.
@@ -100,9 +100,9 @@ namespace RedBox {
          * the top of the window to the bottom (set it to 0 if you wan't to work in pixel).
 		 */
 		static void initializeEngine(unsigned int resolutionWidth,
-									 unsigned int resolutionHeight, 
-                                     unsigned int contextWidth = 0,
-                                     unsigned int contextHeight = 0);
+									 unsigned int resolutionHeight,
+                                     float contextWidth = 0.0f,
+                                     float contextHeight = 0.0f);
 
 		/**
 		 * Gets the time elapsed since the last update called on a state.

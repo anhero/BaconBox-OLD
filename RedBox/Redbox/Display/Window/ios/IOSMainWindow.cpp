@@ -16,7 +16,7 @@ IOSMainWindow& IOSMainWindow::getInstance() {
 	return instance;
 }
 
-void IOSMainWindow::onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, unsigned int contextWidth, unsigned int contextHeight) {
+void IOSMainWindow::onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight) {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
 	InputManager::getInstance().setNbPointers(1);
@@ -73,20 +73,5 @@ void IOSMainWindow::setResolution(unsigned int resolutionWidth, unsigned int res
 
 }
 
-void IOSMainWindow::setContextSize(unsigned int contextWidth, unsigned int contextHeight){
-    if (this->contextWidth == 0) {
-        this->contextWidth =resolutionWidth;
-    }
-    else{
-        this->contextWidth = contextWidth;
-    }
-    
-    if (this->contextHeight == 0) {
-        this->contextHeight = resolutionHeight;
-    }
-    else{
-        this->contextHeight = contextHeight;
-    }
-}
 
 

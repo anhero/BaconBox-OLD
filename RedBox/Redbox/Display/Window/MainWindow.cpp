@@ -32,9 +32,25 @@ unsigned int MainWindow::getResolutionWidth(){
 unsigned int MainWindow::getResolutionHeight(){
     return resolutionHeight;
 }
-unsigned int MainWindow::getContextWidth(){
+float MainWindow::getContextWidth(){
     return contextWidth;
 }
-unsigned int MainWindow::getContextHeight(){
+float MainWindow::getContextHeight(){
     return contextHeight;
+}
+
+void MainWindow::setContextSize(float contextWidth, float contextHeight){
+    if (this->contextWidth == 0) {
+        this->contextWidth =resolutionWidth;
+    }
+    else{
+        this->contextWidth = contextWidth;
+    }
+    
+    if (this->contextHeight == 0) {
+        this->contextHeight = resolutionHeight;
+    }
+    else{
+        this->contextHeight = contextHeight;
+    }
 }

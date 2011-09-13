@@ -13,6 +13,7 @@
 #include "MainWindow.h"
 using namespace RedBox;
 
+GLuint OpenGLDriver::originalFramebuffer = 0;
 GLuint OpenGLDriver::maskedFramebuffer = 0;
 GLuint OpenGLDriver::maskedTexture = 0;
 Sprite * OpenGLDriver::maskedSprite = NULL;
@@ -183,21 +184,28 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
     glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT,
                               GL_TEXTURE_2D, maskedTexture, 0);
 #endif
-    
+    glPushMatrix();
+    glLoadIdentity();
+    //glScalef(3.0f, -3.0f, 1.0f);
+
     //We can't call glclearcolor on a texture binded framebuffer, so we draw quad to clear the texture
     glColor4ub(0, 0, 0, 255);
     glVertexPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat*>( &(maskedSprite->getVertices()[0])));
     glEnableClientState(GL_VERTEX_ARRAY);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
+    glPopMatrix();
     drawBatchWithTextureAndColor(vertices, textureCoord, indices, textureInfo, colors, true);
-    
-    glBindFramebufferOES(GL_FRAMEBUFFER_OES, 1);
+#ifdef RB_OPENGLES
+    glBindFramebufferOES(GL_FRAMEBUFFER_OES, originalFramebuffer);
+#else
+    glBindFramebuffer(GL_FRAMEBUFFER, originalFramebuffer);
+#endif
     
     glPushMatrix();
     glLoadIdentity();
     glScalef(1.0f, -1.0f, 1.0f);
-    glTranslatef(0.0f, -480.0f, 0.0f);
+    glTranslatef(0.0f, -(MainWindow::getInstance().getContextHeight()), 0.0f);
+
     maskedSprite->maskedRender(inversedMask);
     glPopMatrix();
         
@@ -433,19 +441,19 @@ void OpenGLDriver::unmaskBatch(const CArray<Vector2>& vertices, const CArray<uns
         glPopMatrix();
     }
     
-    void OpenGLDriver::initializeGraphicDriver(unsigned int screenWidth,
-                                               unsigned int screenHeight) {
+    void OpenGLDriver::initializeGraphicDriver(float contextWidth,
+                                               float contextHeight) {
         glShadeModel(GL_FLAT);
         
-        glViewport(0, 0, static_cast<int>(screenWidth),
-                   static_cast<int>(screenHeight));
+        glViewport(0, 0, static_cast<int>(contextWidth),
+                   static_cast<int>(contextHeight));
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
 #ifdef RB_OPENGLES
-        glOrthof(0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
+        glOrthof(0.0f, static_cast<float>(contextWidth), static_cast<float>(contextHeight), 0.0f, -1.0f, 1.0f);
 #else
-        glOrtho(0.0, static_cast<double>(screenWidth), static_cast<double>(screenHeight), 0.0, -1.0, 1.0);
+        glOrtho(0.0, static_cast<double>(contextWidth), static_cast<double>(contextHeight), 0.0, -1.0, 1.0);
 #endif
 #if defined(RB_MAC_PLATFORM) && defined(RB_SDL)
         int swapInterval = 1;
@@ -453,6 +461,13 @@ void OpenGLDriver::unmaskBatch(const CArray<Vector2>& vertices, const CArray<uns
 #endif
         
         //FBO and mask texture initialization
+        GLint tempBuffer;
+#ifdef RB_OPENGLES
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES,&tempBuffer);
+#else
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING_EXT,&tempBuffer);
+#endif
+                 originalFramebuffer = static_cast<GLuint>(tempBuffer);
 #ifdef RB_OPENGLES
         glGenFramebuffersOES(1, &maskedFramebuffer);
         glBindFramebufferOES(GL_FRAMEBUFFER_OES, maskedFramebuffer);
@@ -479,7 +494,12 @@ void OpenGLDriver::unmaskBatch(const CArray<Vector2>& vertices, const CArray<uns
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         
         maskedSprite = new Sprite(maskedTextureInfo);
-        
+#ifdef RB_OPENGLES
+        glBindFramebufferOES(GL_FRAMEBUFFER_OES, originalFramebuffer);
+#else
+        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, originalFramebuffer);
+#endif
+
     }
     
     

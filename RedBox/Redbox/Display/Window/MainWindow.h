@@ -36,7 +36,7 @@ namespace RedBox {
          * @param contextHeight The height of the context (set it to 0 if you want to work 
          * with pixels, it will match the resolution height).
 		 */
-		virtual void onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, unsigned int contextWidth, unsigned int contextHeight) = 0;
+		virtual void onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight) = 0;
         
 		/**
 		 * Activates and opens the window.
@@ -94,16 +94,16 @@ namespace RedBox {
          * Set the size. If you want to work in pixels, set them to 0 and they 
          * will automagically match the current resolution width and height
          */
-        virtual void setContextSize(unsigned int contextWidth, unsigned int contextHeight) = 0;
+        virtual void setContextSize(float contextWidth, float contextHeight);
 
         ///Return the current window resolution width
         unsigned int getResolutionWidth();
         ///Return the current window resolution height
         unsigned int getResolutionHeight();
         ///Return the current context width
-        unsigned int getContextWidth();
+        float getContextWidth();
         ///Return the current context height
-        unsigned int getContextHeight();
+        float getContextHeight();
 
     protected:
         ///True if the current window is fullscreen.

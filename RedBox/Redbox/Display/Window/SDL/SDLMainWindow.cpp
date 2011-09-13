@@ -14,10 +14,15 @@ SDLMainWindow& SDLMainWindow::getInstance() {
 	return instance;
 }
 
-void SDLMainWindow::onRedBoxInit(unsigned int width, unsigned int height) {
+void SDLMainWindow::onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight) {
+    
+    this->resolutionWidth = resolutionWidth;
+    this->resolutionHeight = resolutionHeight;
+    setContextSize(contextWidth, contextHeight);
+    
 	mainWindow = SDL_CreateWindow(MainWindow::DEFAULT_NAME.c_str(),
 								SDL_WINDOWPOS_CENTERED,
-								SDL_WINDOWPOS_CENTERED, width, height,
+								SDL_WINDOWPOS_CENTERED, this->resolutionWidth, this->resolutionHeight,
 								SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	mainContext = SDL_GL_CreateContext(mainWindow);
 	if(SDL_GL_SetSwapInterval(1) < 0) { printf("opengl error [SetSwapInterval]: %s\n", SDL_GetError()); }
@@ -37,6 +42,11 @@ glewInit();
 		}
 	}
 }
+void SDLMainWindow::setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight){
+    //TODO!!!!
+}
+
+
 
 void SDLMainWindow::setCaption(const std::string& caption) {
 	SDL_SetWindowTitle(mainWindow, caption.c_str());
