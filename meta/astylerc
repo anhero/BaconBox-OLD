@@ -49,9 +49,6 @@
 # Remove all padding inside the pearls in the header of blocks.
 --unpad-paren
 
-# Within a block, extra lines will be removed.
---delete-empty-lines
-
 # Add brackets to single-line conditional statements.
 --add-brackets
 
