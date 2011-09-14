@@ -12,75 +12,76 @@
 using namespace RedBox;
 
 RenderInfo::RenderInfo(): Object(), color(Color::WHITE), mask(NULL),
-texInfo(NULL), texCoords(), batchTexCoord(NULL), batchColors(NULL), colorNeedUpdate(true), 
-currentFrame(0), currentNbLoops(0), defaultFrame(0), lastBatchCallUpdateFrame(-1) {
+	texInfo(NULL), texCoords(), batchTexCoord(NULL), batchColors(NULL), colorNeedUpdate(true),
+	currentFrame(0), currentNbLoops(0), defaultFrame(0), lastBatchCallUpdateFrame(-1) {
 }
 
-RenderInfo::RenderInfo(const RenderInfo& src) : Object(), color(src.color),
-mask(src.mask),	texInfo(src.texInfo), texCoords(src.texCoords),
-batchTexCoord(src.batchTexCoord),
-currentFrame(src.currentFrame),	currentNbLoops(src.currentNbLoops),
-defaultFrame(src.defaultFrame),	animations(src.animations),
-currentAnimation(src.currentAnimation),lastBatchCallUpdateFrame(-1) {
+RenderInfo::RenderInfo(const RenderInfo &src) : Object(), color(src.color),
+	mask(src.mask),	texInfo(src.texInfo), texCoords(src.texCoords),
+	batchTexCoord(src.batchTexCoord),
+	currentFrame(src.currentFrame),	currentNbLoops(src.currentNbLoops),
+	defaultFrame(src.defaultFrame),	animations(src.animations),
+	currentAnimation(src.currentAnimation), lastBatchCallUpdateFrame(-1) {
 }
 
-RenderInfo::RenderInfo(TextureInfo* newTexInfo,
-                       VerticesGroup& vertices,
+RenderInfo::RenderInfo(TextureInfo *newTexInfo,
+                       VerticesGroup &vertices,
                        unsigned int frameWidth,
                        unsigned int frameHeight,
                        unsigned int nbFrames,
-                       const Color& newColor) : Object(), color(newColor),
-mask(NULL), texInfo(newTexInfo), texCoords(nbFrames), batchTexCoord(NULL),
-currentFrame(0), currentNbLoops(0), defaultFrame(0) {
+                       const Color &newColor) : Object(), color(newColor),
+	mask(NULL), texInfo(newTexInfo), texCoords(nbFrames), batchTexCoord(NULL),
+	currentFrame(0), currentNbLoops(0), defaultFrame(0) {
 	loadTexCoords(vertices, frameWidth, frameHeight, nbFrames);
 }
 
 
-void RenderInfo::updateBatchPointer(){
-    if (batchTexCoord != NULL && batchColors != NULL) {
-        if(static_cast<int>(currentFrame) == lastBatchCallUpdateFrame){
-            for (unsigned int i = 0; i < texCoords[currentFrame].size(); i++) {
-                batchTexCoord[i] = texCoords[currentFrame][i];
-                
-                if (colorNeedUpdate) {
-                    colorNeedUpdate = false;
+void RenderInfo::updateBatchPointer() {
+	if (batchTexCoord != NULL && batchColors != NULL) {
+		if (static_cast<int>(currentFrame) == lastBatchCallUpdateFrame) {
+			for (unsigned int i = 0; i < texCoords[currentFrame].size(); i++) {
+				batchTexCoord[i] = texCoords[currentFrame][i];
 
-                for (unsigned int j =0; j< 4; j++) {
-                    batchColors[j+(i*4)] = color.getComponents()[j];
-                }
-                }
-            }
-        }
-        else if(colorNeedUpdate){
-            colorNeedUpdate = false;
-            for (unsigned int i =0; i < texCoords[currentFrame].size()*4; i+=4) {
-            for (unsigned int j =0; j< 4; j++) {
-                batchColors[j+i] = color.getComponents()[j];
-            }
-            }
-        }
-    }
+				if (colorNeedUpdate) {
+					colorNeedUpdate = false;
+
+					for (unsigned int j = 0; j < 4; j++) {
+						batchColors[j + (i * 4)] = color.getComponents()[j];
+					}
+				}
+			}
+
+		} else if (colorNeedUpdate) {
+			colorNeedUpdate = false;
+
+			for (unsigned int i = 0; i < texCoords[currentFrame].size() * 4; i += 4) {
+				for (unsigned int j = 0; j < 4; j++) {
+					batchColors[j + i] = color.getComponents()[j];
+				}
+			}
+		}
+	}
 }
 
-void RenderInfo::loadTexCoords(VerticesGroup& vertices,
+void RenderInfo::loadTexCoords(VerticesGroup &vertices,
                                unsigned int frameWidth,
                                unsigned int frameHeight,
                                unsigned int nbFrames,
-                               TextureInfo* newTexInfo) {
+                               TextureInfo *newTexInfo) {
 	// We check if we also reassign the texInfo.
-	if(newTexInfo) {
+	if (newTexInfo) {
 		texInfo = newTexInfo;
 	}
-    
+
 	// We check if the texInfo, the vertices and the number of frames are valid.
-	if(texInfo && nbFrames > 0) {
+	if (texInfo && nbFrames > 0) {
 		// We make sure the width and the height of the texture are valid.
-		if(texInfo->imageWidth && texInfo->imageHeight && texInfo->poweredWidth
-		   && texInfo->poweredHeight && frameWidth && frameHeight) {
+		if (texInfo->imageWidth && texInfo->imageHeight && texInfo->poweredWidth
+		    && texInfo->poweredHeight && frameWidth && frameHeight) {
 			unsigned int framesPerLine = texInfo->imageWidth / frameWidth;
-            
+
 			// We check if the image can fit enough frames.
-			if(framesPerLine * (texInfo->imageHeight / frameHeight)) {
+			if (framesPerLine * (texInfo->imageHeight / frameHeight)) {
 				float realFrameWidth = static_cast<float>(frameWidth) / static_cast<float>(texInfo->poweredWidth);
 				float realFrameHeight = static_cast<float>(frameHeight) / static_cast<float>(texInfo->poweredHeight);
 				float realWidth = static_cast<float>(texInfo->imageWidth) / static_cast<float>(texInfo->poweredWidth);
@@ -90,55 +91,55 @@ void RenderInfo::loadTexCoords(VerticesGroup& vertices,
 				// We get the width and the height of the of the vertices group.
 				Vector2 size = vertices.getSize();
 				unsigned int verticesCount = vertices.getVertices().elementCount;
-				Vector2* verticesArray = vertices.getVertices().array;
+				Vector2 *verticesArray = vertices.getVertices().array;
 				size_t tmpSize = static_cast<size_t>(verticesCount);
-                
+
 				// For each frame to load.
-				for(std::vector<std::vector<Vector2> >::iterator i = texCoords.begin();
-				    i != texCoords.end(); ++i) {
+				for (std::vector<std::vector<Vector2> >::iterator i = texCoords.begin();
+				     i != texCoords.end(); ++i) {
 					// We set the number of coordinates.
 					i->resize(tmpSize);
 					unsigned int j2 = 0;
-                    
-					for(std::vector<Vector2>::iterator j1 = i->begin();
-					    j1 != i->end() && j2 < verticesCount; ++j1) {
+
+					for (std::vector<Vector2>::iterator j1 = i->begin();
+					     j1 != i->end() && j2 < verticesCount; ++j1) {
 						j1->setXY(offsetX + (verticesArray[j2].getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
 						          offsetY + (verticesArray[j2].getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
 						++j2;
 					}
-                    
+
 					offsetX += realFrameWidth;
-                    
-					if(offsetX >= realWidth) {
+
+					if (offsetX >= realWidth) {
 						offsetX = 0.0f;
 						offsetY += realFrameHeight;
 					}
 				}
-                
+
 			} else {
 				Console::print("Attempted to construct a RenderInfo with a number of frames too high: " + nbFrames);
 				Console::printTrace();
 			}
 		}
-        
+
 	} else {
 		// We print the errors.
 		Console::print("Attempted to load texture coordinates with incorrect parameters: ");
 		Console::printTrace();
-        
-		if(!newTexInfo) {
+
+		if (!newTexInfo) {
 			Console::print("    - Texture information pointer is invalid: " + Console::toString(texInfo));
 			Console::printTrace();
 		}
-        
-		if(nbFrames == 0) {
+
+		if (nbFrames == 0) {
 			Console::print("    - Number of frames must be of at least 1.");
 			Console::printTrace();
 		}
 	}
 }
 
-void RenderInfo::addAnimation(const std::string& name,
+void RenderInfo::addAnimation(const std::string &name,
                               const std::vector<unsigned int>& frames,
                               double timePerFrame,
                               int nbLoops) {
@@ -146,81 +147,81 @@ void RenderInfo::addAnimation(const std::string& name,
 	// animation and we print an error message.
 	bool okay = true;
 	std::vector<unsigned int>::const_iterator i = frames.begin();
-    
-	while(okay && i != frames.end()) {
-		if(*i >= texCoords.size()) {
+
+	while (okay && i != frames.end()) {
+		if (*i >= texCoords.size()) {
 			okay = false;
-            
+
 		} else {
 			++i;
 		}
 	}
-    
-	if(okay) {
+
+	if (okay) {
 		// We add the animation to the map and we check if it was successfully
 		// added.
-		if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(frames, timePerFrame, nbLoops))).second)) {
+		if (!(animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(frames, timePerFrame, nbLoops))).second)) {
 			Console::print("Failed to add the animation named : " + name);
 			Console::printTrace();
 		}
-        
+
 	} else {
 		Console::print("Failed to add the animation named \"" + name + "\" because it contains at least one frame index that is too high.");
 		Console::printTrace();
 	}
 }
 
-void RenderInfo::addAnimation(const std::string& name,
+void RenderInfo::addAnimation(const std::string &name,
                               double timePerFrame,
                               int nbLoops,
                               unsigned int nbFrames, ...) {
 	std::pair<std::map<std::string, AnimationParameters>::iterator, bool> insertionResult;
-    
+
 	// We make sure it is trying to add an animation with at least one frame.
 	// We also insert the new animation in the map if possible and continue
 	// only if it didn't already exist.
-	if(nbFrames >= 1 &&
-	   (insertionResult = animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(std::vector<unsigned int>(nbFrames), timePerFrame, nbLoops)))).second) {
+	if (nbFrames >= 1 &&
+	    (insertionResult = animations.insert(std::pair<std::string, AnimationParameters>(name, AnimationParameters(std::vector<unsigned int>(nbFrames), timePerFrame, nbLoops)))).second) {
 		// We set the frame numbers to the added animation using the variable
 		// parameters.
 		va_list frames;
 		va_start(frames, nbFrames);
-        
-		for(std::vector<unsigned int>::iterator i = insertionResult.first->second.frames.begin();
-		    i != insertionResult.first->second.frames.end();
-		    ++i) {
+
+		for (std::vector<unsigned int>::iterator i = insertionResult.first->second.frames.begin();
+		     i != insertionResult.first->second.frames.end();
+		     ++i) {
 			*i = va_arg(frames, unsigned int);
 		}
-        
+
 		va_end(frames);
-        
+
 	} else {
 		Console::print("Failed to add the animation named : " + name);
 		Console::printTrace();
 	}
 }
 
-void RenderInfo::addAnimation(const std::string& name,
-                              const AnimationParameters& newAnimation) {
-	if(!(animations.insert(std::pair<std::string, AnimationParameters>(name, newAnimation)).second)) {
+void RenderInfo::addAnimation(const std::string &name,
+                              const AnimationParameters &newAnimation) {
+	if (!(animations.insert(std::pair<std::string, AnimationParameters>(name, newAnimation)).second)) {
 		Console::print("Failed to add the animation named : " + name);
 		Console::printTrace();
 	}
 }
 
-GraphicBody* RenderInfo::getMask() {
+GraphicBody *RenderInfo::getMask() {
 	return mask;
 }
 
-void RenderInfo::setMask(GraphicBody* newMask) {
+void RenderInfo::setMask(GraphicBody *newMask) {
 	mask = newMask;
 }
 
-const Color& RenderInfo::getColor() const {
+const Color &RenderInfo::getColor() const {
 	return color;
 }
 
-TextureInfo* RenderInfo::getTexInfo() {
+TextureInfo *RenderInfo::getTexInfo() {
 	return texInfo;
 }
 
@@ -228,26 +229,26 @@ std::vector<std::vector<Vector2> >& RenderInfo::getTexCoords() {
 	return texCoords;
 }
 
-void RenderInfo::setColor(const Color& newColor) {
+void RenderInfo::setColor(const Color &newColor) {
 	color = newColor;
-    colorNeedUpdate = true;
+	colorNeedUpdate = true;
 }
 
-void RenderInfo::setTexInfo(TextureInfo* newTexInfo) {
+void RenderInfo::setTexInfo(TextureInfo *newTexInfo) {
 	texInfo = newTexInfo;
 }
-bool RenderInfo::animationExists(const std::string& name) const {
-	if(animations.find(name) == animations.end()) {
+bool RenderInfo::animationExists(const std::string &name) const {
+	if (animations.find(name) == animations.end()) {
 		return false;
-        
+
 	} else {
 		return true;
 	}
 }
-AnimationParameters* RenderInfo::getAnimationParameters(const std::string& name) {
-	if(animationExists(name)) {
+AnimationParameters *RenderInfo::getAnimationParameters(const std::string &name) {
+	if (animationExists(name)) {
 		return &(animations[name]);
-        
+
 	} else {
 		Console::print("Tried to get a non-existing animation: " + name);
 		Console::printTrace();
@@ -255,10 +256,10 @@ AnimationParameters* RenderInfo::getAnimationParameters(const std::string& name)
 	}
 }
 
-const AnimationParameters* RenderInfo::getAnimationParameters(const std::string& name) const {
-	if(animationExists(name)) {
+const AnimationParameters *RenderInfo::getAnimationParameters(const std::string &name) const {
+	if (animationExists(name)) {
 		return &(animations.find(name)->second);
-        
+
 	} else {
 		Console::print("Tried to get a non-existing animation: " + name);
 		Console::printTrace();
@@ -267,35 +268,35 @@ const AnimationParameters* RenderInfo::getAnimationParameters(const std::string&
 }
 
 void RenderInfo::setCurrentFrame(unsigned int newCurrentFrame) {
-	if(animationExists(currentAnimation) &&
-	   newCurrentFrame <= getAnimationParameters(getCurrentAnimation())->frames.size()) {
+	if (animationExists(currentAnimation) &&
+	    newCurrentFrame <= getAnimationParameters(getCurrentAnimation())->frames.size()) {
 		currentFrame = newCurrentFrame;
-        
+
 	} else {
 		Console::print("Tried to set the current frame that is too high: " + newCurrentFrame);
 		Console::printTrace();
 	}
 }
 
-void RenderInfo::setBatchPointer(Vector2 * texCoord, unsigned char * colors){
-    
-    if (texCoord == NULL || colors == NULL) {
-        batchTexCoord = NULL;
-        batchColors = NULL;
-        lastBatchCallUpdateFrame = -1;
-    }
-    else{
-        batchTexCoord = texCoord;
-        batchColors = colors;
-    }
-    
-    
+void RenderInfo::setBatchPointer(Vector2 *texCoord, unsigned char *colors) {
+
+	if (texCoord == NULL || colors == NULL) {
+		batchTexCoord = NULL;
+		batchColors = NULL;
+		lastBatchCallUpdateFrame = -1;
+
+	} else {
+		batchTexCoord = texCoord;
+		batchColors = colors;
+	}
+
+
 }
 
 unsigned int RenderInfo::getCurrentFrame() const {
-	if(isAnimated() && animationExists(currentAnimation)) {
+	if (isAnimated() && animationExists(currentAnimation)) {
 		return getAnimationParameters(getCurrentAnimation())->frames[currentFrame];
-        
+
 	} else {
 		return defaultFrame;
 	}
@@ -306,22 +307,22 @@ bool RenderInfo::isAnimated() const {
 }
 
 void RenderInfo::incrementFrame() {
-	AnimationParameters* anim = getAnimationParameters(getCurrentAnimation());
-    
-	if(anim) {
+	AnimationParameters *anim = getAnimationParameters(getCurrentAnimation());
+
+	if (anim) {
 		++currentFrame;
-        
-		if(currentFrame >= anim->frames.size()) {
-			if(anim->nbLoops == -1) {
+
+		if (currentFrame >= anim->frames.size()) {
+			if (anim->nbLoops == -1) {
 				currentFrame = 0;
-                
-			} else if(anim->nbLoops > -1) {
+
+			} else if (anim->nbLoops > -1) {
 				++currentNbLoops;
-                
-				if(currentNbLoops > anim->nbLoops) {
+
+				if (currentNbLoops > anim->nbLoops) {
 					currentNbLoops = anim->nbLoops;
 					--currentFrame;
-                    
+
 				} else {
 					currentFrame = 0;
 				}
@@ -330,10 +331,10 @@ void RenderInfo::incrementFrame() {
 	}
 }
 
-const std::string& RenderInfo::getCurrentAnimation() const {
+const std::string &RenderInfo::getCurrentAnimation() const {
 	return currentAnimation;
 }
-void RenderInfo::setCurrentAnimation(const std::string& name) {
+void RenderInfo::setCurrentAnimation(const std::string &name) {
 	currentAnimation = name;
 }
 void RenderInfo::resetCurrentNbLoops() {
@@ -345,9 +346,9 @@ unsigned int RenderInfo::getDefaultFrame() const {
 }
 
 void RenderInfo::setDefaultFrame(unsigned int newDefaultFrame) {
-	if(newDefaultFrame < texCoords.size()) {
+	if (newDefaultFrame < texCoords.size()) {
 		defaultFrame = newDefaultFrame;
-        
+
 	} else {
 		Console::print("Tried to set the default frame to a value too high: " + newDefaultFrame);
 		Console::printTrace();
@@ -356,41 +357,41 @@ void RenderInfo::setDefaultFrame(unsigned int newDefaultFrame) {
 }
 
 namespace RedBox {
-	std::ostream& operator<<(std::ostream& output, const RenderInfo& r) {
+	std::ostream &operator<<(std::ostream &output, const RenderInfo &r) {
 		output << "{color: " << r.color << ", texInfo: " << r.texInfo <<
-        ", texCoords: [";
-        
-		for(std::vector<std::vector<Vector2> >::const_iterator i = r.texCoords.begin();
-		    i != r.texCoords.end(); ++i) {
-			if(i != r.texCoords.begin()) {
+		       ", texCoords: [";
+
+		for (std::vector<std::vector<Vector2> >::const_iterator i = r.texCoords.begin();
+		     i != r.texCoords.end(); ++i) {
+			if (i != r.texCoords.begin()) {
 				output << ", ";
 			}
-            
+
 			output << "[";
-            
-			for(std::vector<Vector2>::const_iterator j = i->begin();
-			    j != i->end(); ++j) {
-				if(j != i->begin()) {
+
+			for (std::vector<Vector2>::const_iterator j = i->begin();
+			     j != i->end(); ++j) {
+				if (j != i->begin()) {
 					output << ", ";
 				}
-                
+
 				output << *j;
 			}
-            
+
 			output << "]";
 		}
-        
+
 		output << "], currentFrame: " << r.currentFrame << ", animations: [";
-        
-		for(std::map<std::string, AnimationParameters>::const_iterator i = r.animations.begin();
-		    i != r.animations.end(); ++i) {
-			if(i != r.animations.begin()) {
+
+		for (std::map<std::string, AnimationParameters>::const_iterator i = r.animations.begin();
+		     i != r.animations.end(); ++i) {
+			if (i != r.animations.begin()) {
 				output << ", ";
 			}
-            
+
 			output << "{first: " << i->first << ", second: " << i->second << "}";
 		}
-        
+
 		output << "]}";
 		return output;
 	}

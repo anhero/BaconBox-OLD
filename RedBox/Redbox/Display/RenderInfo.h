@@ -31,8 +31,8 @@ namespace RedBox {
 		 * @param r RenderInfo to output in the ostream.
 		 * @return Resulting ostream.
 		 */
-		friend std::ostream& operator<<(std::ostream& output,
-		                                const RenderInfo& r);
+		friend std::ostream &operator<<(std::ostream &output,
+		                                const RenderInfo &r);
 	public:
 		/**
 		 * Default constructor.
@@ -43,7 +43,7 @@ namespace RedBox {
 		 * Copy constructor.
 		 * @param src RenderInfo to make a copy of.
 		 */
-		RenderInfo(const RenderInfo& src);
+		RenderInfo(const RenderInfo &src);
 
 		/**
 		 * Parametrized constructor.
@@ -59,12 +59,12 @@ namespace RedBox {
 		 * @see RedBox::RenderInfo::color
 		 * @see RedBox::RenderInfo::texInfo
 		 */
-		RenderInfo(TextureInfo* newTexInfo,
-		           VerticesGroup& vertices,
+		RenderInfo(TextureInfo *newTexInfo,
+		           VerticesGroup &vertices,
 		           unsigned int frameWidth,
 		           unsigned int frameHeight,
 		           unsigned int nbFrames = 1,
-		           const Color& newColor = Color::WHITE);
+		           const Color &newColor = Color::WHITE);
 
 		/**
 		 * Loads the texture coordinates. Used to determine what information
@@ -80,11 +80,11 @@ namespace RedBox {
 		 * @param newTexInfo Pointer to the information about the texture.
 		 * @see RedBox::RenderInfo::texInfo
 		 */
-		void loadTexCoords(VerticesGroup& vertices,
+		void loadTexCoords(VerticesGroup &vertices,
 		                   unsigned int frameWidth,
 		                   unsigned int frameHeight,
 		                   unsigned int nbFrames = 1,
-		                   TextureInfo* newTexInfo = NULL);
+		                   TextureInfo *newTexInfo = NULL);
 		/**
 		 * Adds an animation.
 		 * @param name Animation's name used for identification when playing it.
@@ -95,7 +95,7 @@ namespace RedBox {
 		 * stopping. -1 means it will loop infinitely.
 		 * @see RedBox::RenderInfo::animations
 		 */
-		void addAnimation(const std::string& name,
+		void addAnimation(const std::string &name,
 		                  const std::vector<unsigned int>& frames,
 		                  double timePerFrame,
 		                  int nbLoops = -1);
@@ -113,7 +113,7 @@ namespace RedBox {
 		 * @param nbFrames Number of frames the animation has.
 		 * @see RedBox::RenderInfo::animations
 		 */
-		void addAnimation(const std::string& name,
+		void addAnimation(const std::string &name,
 		                  double timePerFrame,
 		                  int nbLoops,
 		                  unsigned int nbFrames, ...);
@@ -124,36 +124,36 @@ namespace RedBox {
 		 * @param newAnimation Animation parameters for the new animation.
 		 * @see RedBox::RenderInfo::animations
 		 */
-		void addAnimation(const std::string& name,
-		                  const AnimationParameters& newAnimation);
+		void addAnimation(const std::string &name,
+		                  const AnimationParameters &newAnimation);
 
 		/**
 		 * Sets the sprite used to mask the parent render step.
 		 * @param newMask Pointer to the new sprite to use as a mask.
 		 * @see RedBox::RenderInfo::mask
 		 */
-		void setMask(GraphicBody* newMask);
+		void setMask(GraphicBody *newMask);
 
 		/**
 		 * Gets the sprite used to mask the parent render step.
 		 * @return Pointer to the sprite that serves as a mask.
 		 * @see RedBox::RenderInfo::mask
 		 */
-		GraphicBody* getMask();
+		GraphicBody *getMask();
 
 		/**
 		 * Gets the color.
 		 * @return RenderInfo's color.
 		 * @see RedBox::RenderInfo::color
 		 */
-		const Color& getColor() const;
+		const Color &getColor() const;
 
 		/**
 		 * Gets the texture info. Returns the texture information pointed by
 		 * the texInfo pointer.
 		 * @return Pointer to the RenderInfo's texture's information.
 		 */
-		TextureInfo* getTexInfo();
+		TextureInfo *getTexInfo();
 
 		/**
 		 * Gets the vector of texture coordinates.
@@ -164,34 +164,34 @@ namespace RedBox {
 		 * Sets the color by specifying the red, green, blue and alpha values.
 		 * @param newColor The RenderInfo's new color.
 		 */
-		void setColor(const Color& newColor);
+		void setColor(const Color &newColor);
 
 		/**
 		 * Sets the texture information.
 		 * @param newTexInfo Pointer to the new texture information.
 		 */
-		void setTexInfo(TextureInfo* newTexInfo);
+		void setTexInfo(TextureInfo *newTexInfo);
 
 		/**
 		 * Checks wether an animation exists or not.
 		 * @param name Name of the animation to check.
 		 * @return True if the animation exists, false if not.
 		 */
-		bool animationExists(const std::string& name) const;
+		bool animationExists(const std::string &name) const;
 
 		/**
 		 * Gets the animation parameters of a specific animation.
 		 * @param name Name of the animation to get.
 		 * @return Animation parameters asked for.
 		 */
-		AnimationParameters* getAnimationParameters(const std::string& name);
+		AnimationParameters *getAnimationParameters(const std::string &name);
 
 		/**
 		 * Gets the animation parameters of a specific animation.
 		 * @param name Name of the animation to get.
 		 * @return Animation parameters asked for.
 		 */
-		const AnimationParameters* getAnimationParameters(const std::string& name) const;
+		const AnimationParameters *getAnimationParameters(const std::string &name) const;
 
 		/**
 		 * Changes the frame to be shown.
@@ -221,13 +221,13 @@ namespace RedBox {
 		 * Gets the name of the RenderInfo's current animation.
 		 * @return Current animation's name.
 		 */
-		const std::string& getCurrentAnimation() const;
+		const std::string &getCurrentAnimation() const;
 
 		/**
 		 * Sets the current animation.
 		 * @param name current animation's name.
 		 */
-		void setCurrentAnimation(const std::string& name);
+		void setCurrentAnimation(const std::string &name);
 
 		/**
 		 * Resets the counter of number of loops done for the animation.
@@ -247,23 +247,23 @@ namespace RedBox {
 		 * the RenderInfo isn't animated.
 		 */
 		void setDefaultFrame(unsigned int newDefaultFrame);
-        
-        /**
-         * Point the c arrays pointers (texture coordinates and colors)
-         * to the batchcall's arrays.
-         * Set them to NULL if you don't want to sync a batchcall.
-         */
-        void setBatchPointer(Vector2 * texCoord, unsigned char * colors);
-        
-        
-        /**
-         * Update batchcall array of texture coordinate with the internal 
-         * Vector of frame depending on the current frame. 
-         * (This function won't re-update the batchcall array 
-         * until the current frame change.)
-         */
-        void updateBatchPointer();
-        
+
+		/**
+		 * Point the c arrays pointers (texture coordinates and colors)
+		 * to the batchcall's arrays.
+		 * Set them to NULL if you don't want to sync a batchcall.
+		 */
+		void setBatchPointer(Vector2 *texCoord, unsigned char *colors);
+
+
+		/**
+		 * Update batchcall array of texture coordinate with the internal
+		 * Vector of frame depending on the current frame.
+		 * (This function won't re-update the batchcall array
+		 * until the current frame change.)
+		 */
+		void updateBatchPointer();
+
 	private:
 		/**
 		 * Color, first int is red, second is green, third is blue and last one
@@ -275,30 +275,29 @@ namespace RedBox {
 		 * Pointer to a mask sprite. Pointer is NULL if the parent render step
 		 * is not masked.
 		 */
-		GraphicBody* mask;
+		GraphicBody *mask;
 
 		/// Pointer to the texture information.
-		TextureInfo* texInfo;
+		TextureInfo *texInfo;
 
 		/**
 		 * Vector containing the texture's coordinates for each animation frame.
 		 */
 		std::vector<std::vector<Vector2> > texCoords;
 
-        /**
-         * Point to the texture coordinates of the current sprite in a renderbatch.
-         * Null if not in batch
-         */
-		Vector2* batchTexCoord;
-        
-        
-        unsigned char * batchColors;
-        /**
-         * Contain the current frame of the last batchcall update.
-         * Used to prevent redundant updating on the same frame.
-         */
-        int lastBatchCallUpdateFrame;
+		/**
+		 * Point to the texture coordinates of the current sprite in a renderbatch.
+		 * Null if not in batch
+		 */
+		Vector2 *batchTexCoord;
 
+		unsigned char *batchColors;
+
+		/**
+		 * Contain the current frame of the last batchcall update.
+		 * Used to prevent redundant updating on the same frame.
+		 */
+		int lastBatchCallUpdateFrame;
 
 		/**
 		 * Current frame at which the animation is currently.
@@ -310,9 +309,9 @@ namespace RedBox {
 
 		/// Index of the frame to show when the RenderInfo isn't animated.
 		unsigned int defaultFrame;
-        
-        ///Used to prevent redundant updating on the color (when in batchcall)
-        bool colorNeedUpdate;
+
+		///Used to prevent redundant updating on the color (when in batchcall)
+		bool colorNeedUpdate;
 
 		/**
 		 * Map to associate names to each animations in texCoords. For example,
