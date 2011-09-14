@@ -81,8 +81,6 @@
 		515DA72013FED376004228BE /* Slider.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA5F313FED375004228BE /* Slider.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		515DA72113FED376004228BE /* Layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA5F513FED375004228BE /* Layer.cpp */; };
 		515DA72213FED376004228BE /* Layer.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA5F613FED375004228BE /* Layer.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		515DA72313FED376004228BE /* LineBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA5F713FED375004228BE /* LineBody.cpp */; };
-		515DA72413FED376004228BE /* LineBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA5F813FED375004228BE /* LineBody.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		515DA72513FED376004228BE /* PixMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA5F913FED375004228BE /* PixMap.cpp */; };
 		515DA72613FED376004228BE /* PixMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA5FA13FED375004228BE /* PixMap.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		515DA72713FED376004228BE /* RBString32.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA5FB13FED375004228BE /* RBString32.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -155,11 +153,6 @@
 		515DA77413FED376004228BE /* Timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA65D13FED375004228BE /* Timer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		515DA77513FED376004228BE /* TimerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA65E13FED375004228BE /* TimerManager.cpp */; };
 		515DA77613FED376004228BE /* TimerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA65F13FED375004228BE /* TimerManager.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		515DA77713FED376004228BE /* Ease.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA66113FED375004228BE /* Ease.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		515DA77813FED376004228BE /* Tween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA66313FED375004228BE /* Tween.cpp */; };
-		515DA77913FED376004228BE /* Tween.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA66413FED375004228BE /* Tween.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		515DA77A13FED376004228BE /* Tweener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA66513FED375004228BE /* Tweener.cpp */; };
-		515DA77B13FED376004228BE /* Tweener.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA66613FED375004228BE /* Tweener.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		515DA77C13FED376004228BE /* UTFConvert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA66713FED375004228BE /* UTFConvert.cpp */; };
 		515DA77D13FED376004228BE /* UTFConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA66813FED375004228BE /* UTFConvert.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		515DA78013FED376004228BE /* Accelerometer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA66F13FED375004228BE /* Accelerometer.cpp */; };
@@ -207,8 +200,6 @@
 		515DA7AE13FED376004228BE /* Pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA6A913FED375004228BE /* Pointer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		515DA7AF13FED376004228BE /* PointerButtonSignalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA6AA13FED375004228BE /* PointerButtonSignalData.cpp */; };
 		515DA7B013FED376004228BE /* PointerButtonSignalData.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA6AB13FED375004228BE /* PointerButtonSignalData.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		515DA7B113FED376004228BE /* PointerMoveSignalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA6AC13FED375004228BE /* PointerMoveSignalData.cpp */; };
-		515DA7B213FED376004228BE /* PointerMoveSignalData.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA6AD13FED375004228BE /* PointerMoveSignalData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		515DA7B313FED376004228BE /* PointerSignalData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA6AE13FED375004228BE /* PointerSignalData.cpp */; };
 		515DA7B413FED376004228BE /* PointerSignalData.h in Headers */ = {isa = PBXBuildFile; fileRef = 515DA6AF13FED375004228BE /* PointerSignalData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		515DA7B513FED376004228BE /* PointerState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 515DA6B013FED375004228BE /* PointerState.cpp */; };
@@ -240,6 +231,11 @@
 		51927C0E11D5EA5000C65B15 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		51927C0F11D5EA5000C65B15 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		51927C1011D5EA5100C65B15 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		51B750A61420F32B00EEA32A /* Ease.h in Headers */ = {isa = PBXBuildFile; fileRef = 51B750A51420F32B00EEA32A /* Ease.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51B750AB1420F33700EEA32A /* Tween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51B750A91420F33700EEA32A /* Tween.cpp */; };
+		51B750AC1420F33700EEA32A /* Tween.h in Headers */ = {isa = PBXBuildFile; fileRef = 51B750AA1420F33700EEA32A /* Tween.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51B750AF1420F3B900EEA32A /* DebugState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51B750AD1420F3B900EEA32A /* DebugState.cpp */; };
+		51B750B01420F3B900EEA32A /* DebugState.h in Headers */ = {isa = PBXBuildFile; fileRef = 51B750AE1420F3B900EEA32A /* DebugState.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51D085B2140877F90004B1DB /* CArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D085B1140877F90004B1DB /* CArray.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51D085BE14087CA60004B1DB /* RenderMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D085BD14087CA60004B1DB /* RenderMode.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51EB297B140B2D9A00E7D000 /* RenderBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51EB2979140B2D9A00E7D000 /* RenderBatch.cpp */; };
@@ -329,8 +325,6 @@
 		515DA5F313FED375004228BE /* Slider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slider.h; sourceTree = "<group>"; };
 		515DA5F513FED375004228BE /* Layer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Layer.cpp; sourceTree = "<group>"; };
 		515DA5F613FED375004228BE /* Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layer.h; sourceTree = "<group>"; };
-		515DA5F713FED375004228BE /* LineBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LineBody.cpp; sourceTree = "<group>"; };
-		515DA5F813FED375004228BE /* LineBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineBody.h; sourceTree = "<group>"; };
 		515DA5F913FED375004228BE /* PixMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixMap.cpp; sourceTree = "<group>"; };
 		515DA5FA13FED375004228BE /* PixMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixMap.h; sourceTree = "<group>"; };
 		515DA5FB13FED375004228BE /* RBString32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBString32.h; sourceTree = "<group>"; };
@@ -403,11 +397,6 @@
 		515DA65D13FED375004228BE /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
 		515DA65E13FED375004228BE /* TimerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimerManager.cpp; sourceTree = "<group>"; };
 		515DA65F13FED375004228BE /* TimerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerManager.h; sourceTree = "<group>"; };
-		515DA66113FED375004228BE /* Ease.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ease.h; sourceTree = "<group>"; };
-		515DA66313FED375004228BE /* Tween.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tween.cpp; sourceTree = "<group>"; };
-		515DA66413FED375004228BE /* Tween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tween.h; sourceTree = "<group>"; };
-		515DA66513FED375004228BE /* Tweener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tweener.cpp; sourceTree = "<group>"; };
-		515DA66613FED375004228BE /* Tweener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweener.h; sourceTree = "<group>"; };
 		515DA66713FED375004228BE /* UTFConvert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UTFConvert.cpp; sourceTree = "<group>"; };
 		515DA66813FED375004228BE /* UTFConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UTFConvert.h; sourceTree = "<group>"; };
 		515DA66F13FED375004228BE /* Accelerometer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Accelerometer.cpp; sourceTree = "<group>"; };
@@ -455,8 +444,6 @@
 		515DA6A913FED375004228BE /* Pointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pointer.h; sourceTree = "<group>"; };
 		515DA6AA13FED375004228BE /* PointerButtonSignalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointerButtonSignalData.cpp; sourceTree = "<group>"; };
 		515DA6AB13FED375004228BE /* PointerButtonSignalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointerButtonSignalData.h; sourceTree = "<group>"; };
-		515DA6AC13FED375004228BE /* PointerMoveSignalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointerMoveSignalData.cpp; sourceTree = "<group>"; };
-		515DA6AD13FED375004228BE /* PointerMoveSignalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointerMoveSignalData.h; sourceTree = "<group>"; };
 		515DA6AE13FED375004228BE /* PointerSignalData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointerSignalData.cpp; sourceTree = "<group>"; };
 		515DA6AF13FED375004228BE /* PointerSignalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointerSignalData.h; sourceTree = "<group>"; };
 		515DA6B013FED375004228BE /* PointerState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointerState.cpp; sourceTree = "<group>"; };
@@ -483,6 +470,12 @@
 		517BDCDD11B04CA80095F001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		517D7C3210F87AB10022BBF2 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		51A9351410E8934500D144F4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		51B750A51420F32B00EEA32A /* Ease.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ease.h; sourceTree = "<group>"; };
+		51B750A81420F33700EEA32A /* Sources.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sources.cmake; sourceTree = "<group>"; };
+		51B750A91420F33700EEA32A /* Tween.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tween.cpp; sourceTree = "<group>"; };
+		51B750AA1420F33700EEA32A /* Tween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tween.h; sourceTree = "<group>"; };
+		51B750AD1420F3B900EEA32A /* DebugState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugState.cpp; sourceTree = "<group>"; };
+		51B750AE1420F3B900EEA32A /* DebugState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugState.h; sourceTree = "<group>"; };
 		51D085B1140877F90004B1DB /* CArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CArray.h; sourceTree = "<group>"; };
 		51D085BD14087CA60004B1DB /* RenderMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderMode.h; sourceTree = "<group>"; };
 		51EB2979140B2D9A00E7D000 /* RenderBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderBatch.cpp; sourceTree = "<group>"; };
@@ -562,6 +555,8 @@
 		515DA59B13FED375004228BE /* RedBox */ = {
 			isa = PBXGroup;
 			children = (
+				51B750AD1420F3B900EEA32A /* DebugState.cpp */,
+				51B750AE1420F3B900EEA32A /* DebugState.h */,
 				515DA59C13FED375004228BE /* AABB.cpp */,
 				515DA59D13FED375004228BE /* AABB.h */,
 				515DA59E13FED375004228BE /* Audio */,
@@ -671,8 +666,6 @@
 				515DA5EA13FED375004228BE /* Gui */,
 				515DA5F513FED375004228BE /* Layer.cpp */,
 				515DA5F613FED375004228BE /* Layer.h */,
-				515DA5F713FED375004228BE /* LineBody.cpp */,
-				515DA5F813FED375004228BE /* LineBody.h */,
 				515DA5F913FED375004228BE /* PixMap.cpp */,
 				515DA5FA13FED375004228BE /* PixMap.h */,
 				515DA5FB13FED375004228BE /* RBString32.h */,
@@ -792,6 +785,8 @@
 		515DA63B13FED375004228BE /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				51B750A71420F33700EEA32A /* Tween */,
+				51B750A51420F32B00EEA32A /* Ease.h */,
 				51D085B1140877F90004B1DB /* CArray.h */,
 				515DA63C13FED375004228BE /* BitHelper.cpp */,
 				515DA63D13FED375004228BE /* BitHelper.h */,
@@ -821,7 +816,6 @@
 				515DA65D13FED375004228BE /* Timer.h */,
 				515DA65E13FED375004228BE /* TimerManager.cpp */,
 				515DA65F13FED375004228BE /* TimerManager.h */,
-				515DA66013FED375004228BE /* Tween */,
 				515DA66713FED375004228BE /* UTFConvert.cpp */,
 				515DA66813FED375004228BE /* UTFConvert.h */,
 			);
@@ -835,18 +829,6 @@
 				515DA64213FED375004228BE /* IOSTimeHelper.h */,
 			);
 			path = ios;
-			sourceTree = "<group>";
-		};
-		515DA66013FED375004228BE /* Tween */ = {
-			isa = PBXGroup;
-			children = (
-				515DA66113FED375004228BE /* Ease.h */,
-				515DA66313FED375004228BE /* Tween.cpp */,
-				515DA66413FED375004228BE /* Tween.h */,
-				515DA66513FED375004228BE /* Tweener.cpp */,
-				515DA66613FED375004228BE /* Tweener.h */,
-			);
-			path = Tween;
 			sourceTree = "<group>";
 		};
 		515DA66D13FED375004228BE /* Input */ = {
@@ -928,8 +910,6 @@
 				515DA6A913FED375004228BE /* Pointer.h */,
 				515DA6AA13FED375004228BE /* PointerButtonSignalData.cpp */,
 				515DA6AB13FED375004228BE /* PointerButtonSignalData.h */,
-				515DA6AC13FED375004228BE /* PointerMoveSignalData.cpp */,
-				515DA6AD13FED375004228BE /* PointerMoveSignalData.h */,
 				515DA6AE13FED375004228BE /* PointerSignalData.cpp */,
 				515DA6AF13FED375004228BE /* PointerSignalData.h */,
 				515DA6B013FED375004228BE /* PointerState.cpp */,
@@ -958,6 +938,16 @@
 				515DA6CC13FED375004228BE /* SignalData.h */,
 			);
 			path = SignalSlots;
+			sourceTree = "<group>";
+		};
+		51B750A71420F33700EEA32A /* Tween */ = {
+			isa = PBXGroup;
+			children = (
+				51B750A81420F33700EEA32A /* Sources.cmake */,
+				51B750A91420F33700EEA32A /* Tween.cpp */,
+				51B750AA1420F33700EEA32A /* Tween.h */,
+			);
+			path = Tween;
 			sourceTree = "<group>";
 		};
 		7EF711F5132D35E900524FBB /* libraries */ = {
@@ -1021,7 +1011,6 @@
 				515DA71F13FED376004228BE /* SimpleButton.h in Headers */,
 				515DA72013FED376004228BE /* Slider.h in Headers */,
 				515DA72213FED376004228BE /* Layer.h in Headers */,
-				515DA72413FED376004228BE /* LineBody.h in Headers */,
 				515DA72613FED376004228BE /* PixMap.h in Headers */,
 				515DA72713FED376004228BE /* RBString32.h in Headers */,
 				515DA72913FED376004228BE /* RenderInfo.h in Headers */,
@@ -1063,9 +1052,6 @@
 				515DA77213FED376004228BE /* TimeHelper.h in Headers */,
 				515DA77413FED376004228BE /* Timer.h in Headers */,
 				515DA77613FED376004228BE /* TimerManager.h in Headers */,
-				515DA77713FED376004228BE /* Ease.h in Headers */,
-				515DA77913FED376004228BE /* Tween.h in Headers */,
-				515DA77B13FED376004228BE /* Tweener.h in Headers */,
 				515DA77D13FED376004228BE /* UTFConvert.h in Headers */,
 				515DA78113FED376004228BE /* Accelerometer.h in Headers */,
 				515DA78313FED376004228BE /* AccelerometerSignalData.h in Headers */,
@@ -1090,7 +1076,6 @@
 				515DA7AC13FED376004228BE /* IOSPointer.h in Headers */,
 				515DA7AE13FED376004228BE /* Pointer.h in Headers */,
 				515DA7B013FED376004228BE /* PointerButtonSignalData.h in Headers */,
-				515DA7B213FED376004228BE /* PointerMoveSignalData.h in Headers */,
 				515DA7B413FED376004228BE /* PointerSignalData.h in Headers */,
 				515DA7B613FED376004228BE /* PointerState.h in Headers */,
 				515DA7BE13FED376004228BE /* Object.h in Headers */,
@@ -1101,6 +1086,9 @@
 				515DA7C613FED376004228BE /* SignalAnalyzerManager.h in Headers */,
 				515DA7C813FED376004228BE /* SignalData.h in Headers */,
 				51D085BE14087CA60004B1DB /* RenderMode.h in Headers */,
+				51B750A61420F32B00EEA32A /* Ease.h in Headers */,
+				51B750B01420F3B900EEA32A /* DebugState.h in Headers */,
+				51B750AC1420F33700EEA32A /* Tween.h in Headers */,
 				515DA7CA13FED376004228BE /* State.h in Headers */,
 				51EB297C140B2D9A00E7D000 /* RenderBatch.h in Headers */,
 				51D085B2140877F90004B1DB /* CArray.h in Headers */,
@@ -1208,7 +1196,6 @@
 				515DA71B13FED376004228BE /* IButton.cpp in Sources */,
 				515DA71E13FED376004228BE /* SimpleButton.cpp in Sources */,
 				515DA72113FED376004228BE /* Layer.cpp in Sources */,
-				515DA72313FED376004228BE /* LineBody.cpp in Sources */,
 				515DA72513FED376004228BE /* PixMap.cpp in Sources */,
 				515DA72813FED376004228BE /* RenderInfo.cpp in Sources */,
 				515DA72D13FED376004228BE /* Sprite.cpp in Sources */,
@@ -1240,8 +1227,6 @@
 				515DA77113FED376004228BE /* TimeHelper.cpp in Sources */,
 				515DA77313FED376004228BE /* Timer.cpp in Sources */,
 				515DA77513FED376004228BE /* TimerManager.cpp in Sources */,
-				515DA77813FED376004228BE /* Tween.cpp in Sources */,
-				515DA77A13FED376004228BE /* Tweener.cpp in Sources */,
 				515DA77C13FED376004228BE /* UTFConvert.cpp in Sources */,
 				515DA78013FED376004228BE /* Accelerometer.cpp in Sources */,
 				515DA78213FED376004228BE /* AccelerometerSignalData.cpp in Sources */,
@@ -1265,7 +1250,6 @@
 				515DA7AB13FED376004228BE /* IOSPointer.cpp in Sources */,
 				515DA7AD13FED376004228BE /* Pointer.cpp in Sources */,
 				515DA7AF13FED376004228BE /* PointerButtonSignalData.cpp in Sources */,
-				515DA7B113FED376004228BE /* PointerMoveSignalData.cpp in Sources */,
 				515DA7B313FED376004228BE /* PointerSignalData.cpp in Sources */,
 				515DA7B513FED376004228BE /* PointerState.cpp in Sources */,
 				515DA7BD13FED376004228BE /* Object.cpp in Sources */,
@@ -1277,6 +1261,8 @@
 				515DA7CB13FED376004228BE /* Vector2.cpp in Sources */,
 				515DA7CD13FED376004228BE /* VerticesGroup.cpp in Sources */,
 				51EB297B140B2D9A00E7D000 /* RenderBatch.cpp in Sources */,
+				51B750AB1420F33700EEA32A /* Tween.cpp in Sources */,
+				51B750AF1420F3B900EEA32A /* DebugState.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

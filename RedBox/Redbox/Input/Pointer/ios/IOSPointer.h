@@ -62,4 +62,3 @@ namespace RedBox {
 
 #endif
 
-#endif

@@ -61,4 +61,3 @@ void IOSPointer::onTouchMove(NSSet* touches, UIEvent* event) {
 	iosPosition.setY(static_cast<float>(location.y));
 }
 
-#endif
