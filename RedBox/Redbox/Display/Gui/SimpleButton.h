@@ -124,14 +124,19 @@ namespace RedBox {
 		 */
 		float getHeight() const;
 
-		using GraphicBody::setScaling;
+		using GraphicBody::scaleFromPoint;
 
 		/**
-		 * Change the simple button's scaling.
-		 * @param newXScaling New horizontal scaling to apply.
-		 * @param newYScaling New vertical scaling to apply.
+		 * Scales the simple button from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, the simple button will be twice as wide.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, the simple button will be twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
 		 */
-		void setScaling(float newXScaling, float newYScaling);
+		virtual void scaleFromPoint(float xScaling, float yScaling,
+		                            const Vector2& fromPoint);
 
 		/**
 		 * Rotates the simple button from a point.
@@ -140,6 +145,14 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::angle
 		 */
 		void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
+
+		/**
+		 * Sets if the button is active or not. An inactive button will not be
+		 * updated.
+		 * @param newActive New value for the active flag.
+		 * @see RedBox::Body::active
+		 */
+		void setActive(bool newActive);
 
 		/**
 		 * Creates a copy of the current simple button.

@@ -2,17 +2,34 @@
 
 using namespace RedBox;
 
-Stopwatch::Stopwatch(): startTime(0.0), pausedTime(0.0), paused(false),
-	started(false), timeType(TimeHelper::SCALABLE_PAUSABLE) {
+Stopwatch::Stopwatch(): Object(), startTime(0.0), pausedTime(0.0),
+	paused(false), started(false), timeType(TimeHelper::SCALABLE_PAUSABLE) {
+}
+
+Stopwatch::Stopwatch(const Stopwatch &src) : Object(src),
+	startTime(src.startTime), pausedTime(src.pausedTime), paused(src.paused),
+	started(src.started), timeType(src.timeType) {
+}
+
+Stopwatch &Stopwatch::operator=(const Stopwatch &src) {
+	this->Object::operator=(src);
+
+	if (this != &src) {
+		startTime = src.startTime;
+		pausedTime = src.pausedTime;
+		paused = src.paused;
+		started = src.started;
+		timeType = src.timeType;
+	}
+
+	return *this;
 }
 
 void Stopwatch::start() {
 	// We start the stopwatch.
 	started = true;
-
 	// We unpause the stopwatch.
 	paused = false;
-
 	// We get the current time.
 	startTime = TimeHelper::getInstance().getSinceStart(timeType);
 }
@@ -20,14 +37,13 @@ void Stopwatch::start() {
 void Stopwatch::stop() {
 	// We stop the stopwatch.
 	started = false;
-
 	// We unpause the timer.
 	paused = false;
 }
 
 void Stopwatch::pause() {
 	// If the stopwatch is running and isn't already paused.
-	if(started && !paused) {
+	if (started && !paused) {
 		// We pause the stopwatch.
 		paused = true;
 		// We calculate the time when the stopwatch was paused.
@@ -37,7 +53,7 @@ void Stopwatch::pause() {
 
 void Stopwatch::unpause() {
 	// If the stopwatch is paused.
-	if(paused) {
+	if (paused) {
 		// We unpause the stopwatch.
 		paused = false;
 		// We recalculate the start time.
@@ -47,18 +63,20 @@ void Stopwatch::unpause() {
 	}
 }
 
-double Stopwatch::getTime() {
+double Stopwatch::getTime() const {
 	// If the stopwatch is running.
-	if(started) {
+	if (started) {
 		// If the stopwatch is paused.
-		if(paused) {
+		if (paused) {
 			// We return the time at which the stopwatch was paused.
 			return pausedTime;
+
 		} else {
 			// We return the time since the stopwatch was started.
 			return TimeHelper::getInstance().getSinceStart(timeType) - startTime;
 		}
 	}
+
 	// If the timer isn't running.
 	return 0.0;
 }
@@ -72,25 +90,25 @@ bool Stopwatch::isPaused() const {
 }
 
 void Stopwatch::useScalablePausableTime() {
-	if(!started) {
+	if (!started) {
 		timeType = TimeHelper::SCALABLE_PAUSABLE;
 	}
 }
 
 void Stopwatch::usePausableTime() {
-	if(!started) {
+	if (!started) {
 		timeType = TimeHelper::PAUSABLE;
 	}
 }
 
 void Stopwatch::useCompleteTime() {
-	if(!started) {
+	if (!started) {
 		timeType = TimeHelper::COMPLETE;
 	}
 }
 
 void Stopwatch::setTimeType(TimeHelper::TimeType newTimeType) {
-	if(!started) {
+	if (!started) {
 		timeType = newTimeType;
 	}
 }
@@ -99,12 +117,13 @@ TimeHelper::TimeType Stopwatch::getTimeType() const {
 	return timeType;
 }
 
-void Stopwatch::addToTime(double time) {
-	if(started) {
-		if(paused) {
-			pausedTime += time;
+void Stopwatch::addToTime(double timeToAdd) {
+	if (started) {
+		if (paused) {
+			pausedTime += timeToAdd;
+
 		} else {
-			startTime -= time;
+			startTime -= timeToAdd;
 		}
 	}
 }

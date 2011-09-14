@@ -1,12 +1,6 @@
-#include "PlatformFlagger.h"
-
-#ifdef RB_SDL
-
 #include "SDLPointer.h"
 
 #include <stdint.h>
-
-#include <iostream>
 
 #include <SDL/SDL.h>
 
@@ -44,8 +38,6 @@ void SDLPointer::updateDevice() {
 	getCursorPreviousPosition(0) = getCursorPosition(0);
 	getCursorPosition(0) = Vector2(static_cast<float>(x), static_cast<float>(y));
 	if(hasMoved()) {
-		Pointer::move.shoot(PointerMoveSignalData(state, 0));
+		Pointer::move.shoot(PointerSignalData(state, 0));
 	}
 }
-
-#endif

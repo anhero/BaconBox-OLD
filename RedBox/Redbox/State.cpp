@@ -3,6 +3,7 @@
 #include <cassert>
 #include <algorithm>
 
+#include "GraphicBody.h"
 #include "Console.h"
 #include "GraphicDriver.h"
 #include "DeleteHelper.h"
@@ -33,10 +34,10 @@ void State::addGraphicBody(GraphicBody* aGraphicBody) {
 		if(!aGraphicBody->isInState) {
 			toAdd.push_front(aGraphicBody);
 		} else {
-			Console::print("Tried to add a GraphicBody that is already in a state.");
+			Console::println("Tried to add a GraphicBody that is already in a state.");
 		}
 	} else {
-		Console::print("Tried to add an invalid GraphicBody (" + Console::toString(aGraphicBody) + ") to the state.");
+		Console::println("Tried to add an invalid GraphicBody (" + Console::toString(aGraphicBody) + ") to the state.");
 	}
 }
 
@@ -78,7 +79,7 @@ void State::addGraphicBodyDirect(GraphicBody* aGraphicBody) {
 		                     aGraphicBody));
 		aGraphicBody->isInState = true;
 	} else {
-		Console::print("Tried to add a GraphicBody that is already in a state.");
+		Console::println("Tried to add a GraphicBody that is already in a state.");
 	}
 }
 
@@ -89,14 +90,14 @@ void State::internalUpdate() {
 	toAdd.clear();
 
 	// We update the graphic bodies.
-	for(BodyMap::iterator i = graphicBodies.begin(); i != graphicBodies.end();
-		++i) {
+	BodyMap::iterator i = graphicBodies.begin();
+	while(i != graphicBodies.end()) {
 		// We check if the delete flag is on.
 		if(i->second->isToBeDeleted()) {
 			// We put the GraphicBody in the list of GraphicBodys to delete.
 			toDelete.push_back(i->second);
 			// We remove the GraphicBody from the multimap.
-			graphicBodies.erase(i);
+			graphicBodies.erase(i++);
 		} else {
 			if(i->second->isEnabled() && i->second->isActive()) {
 				// We update the GraphicBody.
@@ -109,8 +110,12 @@ void State::internalUpdate() {
 					// have had their z changed.
 					layerChange.push_back(i->second);
 					// We remove it from the multimap.
-					graphicBodies.erase(i);
+					graphicBodies.erase(i++);
+				} else {
+					++i;
 				}
+			} else {
+				++i;
 			}
 		}
 	}

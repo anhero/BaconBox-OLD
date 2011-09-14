@@ -5,10 +5,6 @@
 #ifndef RB_QT_POINTER_H
 #define RB_QT_POINTER_H
 
-#include "PlatformFlagger.h"
-
-#ifdef RB_QT
-
 #include <QWidget>
 #include <Qt>
 
@@ -59,5 +55,4 @@ namespace RedBox {
 	};
 }
 
-#endif // RB_QT
 #endif

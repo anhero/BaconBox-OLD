@@ -5,139 +5,184 @@
 #ifndef RB_TWEEN_H
 #define RB_TWEEN_H
 
-#include <cassert>
-
-#include <list>
-
-#include "Tweener.h"
+#include "Stopwatch.h"
+#include "Ease.h"
+#include "MathHelper.h"
 
 namespace RedBox {
 	/**
-	 * Templated tweener for any tweenable types (like integers, 2d vectors,
-	 * floats, etc.)
+	 * Templated motion tween for any tweenable types (like integers, 2d
+	 * vectors, floats, etc.). Can be used as a stopwatch to start it, pause it,
+	 * stop it, etc.
 	 * @ingroup Helper
+	 * @tparam T Type of the value to be tweened.
 	 */
 	template <typename T>
-	class TTweener : public Tweener {
-		friend class Tween;
-	private:
-		/// Reference to the tweened value.
-		T& value;
-
-		/// Starting value.
-		T start;
-
-		/// Ending value.
-		T end;
+	class Tween : public Stopwatch {
+	public:
+		/**
+		 * Default constructor. Initializes a tween that will always return the
+		 * type's default constructor's value as its tweened value.
+		 */
+		Tween() : Stopwatch(), startValue(), endValue(), duration(0.0),
+			ease(Ease::LINEAR) {
+		}
 
 		/**
 		 * Parameterized constructor.
-		 * @param newValue Reference to the value to be tweened.
-		 * @param newEnd Ending value to use.
-		 * @param newTime Time the tweening needs to take.
-		 * @param newEase Ease to apply to the tweening.
+		 * @param newStartValue Starting value for the tween.
+		 * @param newEndValue Ending value for the tween.
+		 * @param newDuration Duration in seconds the tween will last.
+		 * @param newEase Type of easing to apply to the tweening.
+		 * @see RedBox::Tween<T>::startValue
+		 * @see RedBox::Tween<T>::endValue
+		 * @see RedBox::Tween<T>::duration
+		 * @see RedBox::Tween<T>::ease
 		 */
-		TTweener(T& newValue, const T& newEnd, double newTime, Ease newEase);
-
-		/**
-		 * Sets the value using the given floating point number.
-		 * @param p Value from 0.0f to 1.0f that is used to indicate at which
-		 * point between the start and the end the value is.
-		 */
-		void setValue(float p);
-	};
-
-	/**
-	 * Used to tween values.
-	 * @ingroup Helper
-	 */
-	class Tween {
-		friend class Tweener;
-		friend class Engine;
-	public:
-		/**
-		 * Eases a value using a specific type of easing.
-		 * @param t Value to ease.
-		 * @param easeType Type of easing to apply.
-		 * @param b Value to add to the easing.
-		 * @param c Force to apply on the easing.
-		 * @param d Force to apply on the easing.
-		 */
-		static float ease(float t, Ease easeType, float b = 0.0f,
-		                  float c = 1.0f, float d = 1.0f);
-
-		/**
-		 * Tweens a value to a specific end value.
-		 * @param value Reference to the value to tween.
-		 * @param end Value to tween to.
-		 * @param time Time the tweening must take to get to the ending value.
-		 * @param ease Type of easing to apply on the tweening.
-		 */
-		template <typename T>
-		static void to(T& value, const T& end, double time, Ease ease) {
-			getInstance().tweeners.push_back(new TTweener<T>(value, end, time,
-			                                 ease));
+		Tween(const T& newStartValue, const T& newEndValue, double newDuration, Ease newEase) : Stopwatch(),
+			startValue(newStartValue), endValue(newEndValue), duration(newDuration), ease(newEase) {
 		}
 
 		/**
-		 * Tweens a value from a starting value to an ending value.
-		 * @param value Reference to the value to tween.
-		 * @param start Value at which to tween from.
-		 * @param end Value to tween to.
-		 * @param time Time the tweening must take to tget to the ending value.
-		 * @param ease Type of easing to apply on the tweening.
+		 * Copy constructor.
+		 * @param src Tween to copy.
 		 */
-		template <typename T>
-		static void fromTo(T& value, const T& start, const T& end, double time, Ease ease) {
-			value = start;
-			getInstance().tweeners.push_back(new TTweener<T>(value, end, time,
-			                                 ease));
+		Tween(const Tween<T>& src) : Stopwatch(src), startValue(src.startValue),
+			endValue(src.endValue), duration(src.duration), ease(src.ease) {
+		}
+
+		/**
+		 * Assignment operator overload.
+		 * @param src Tween to copy.
+		 * @return Reference to the modified tween.
+		 */
+		Tween<T>& operator=(const Tween<T>& src) {
+			this->Stopwatch::operator=(src);
+
+			if(this != &src) {
+				startValue = src.startValue;
+				endValue = src.endValue;
+				duration = src.duration;
+				ease = src.ease;
+			}
+
+			return *this;
+		}
+
+		/**
+		 * Gets the tween's starting value.
+		 * @return Starting value.
+		 * @see RedBox::Tween<T>::startValue
+		 */
+		const T& getStartValue() const {
+			return startValue;
+		}
+
+		/**
+		 * Sets the starting value.
+		 * @param newStartValue New starting value.
+		 * @see RedBox::Tween<T>::startValue
+		 */
+		void setStartValue(const T& newStartValue) {
+			startValue = newStartValue;
+		}
+
+		/**
+		 * Gets the ending value.
+		 * @return Ending value.
+		 * @see RedBox::Tween<T>::endValue
+		 */
+		const T& getEndValue() const {
+			return endValue;
+		}
+
+		/**
+		 * Sets the ending value.
+		 * @param newEndValue New ending value.
+		 * @see RedBox::Tween<T>::endValue
+		 */
+		void setEndValue(const T& newEndValue) {
+			endValue = newEndValue;
+		}
+
+		/**
+		 * Gets the tween's duration.
+		 * @return Gets the tween's duration.
+		 * @see RedBox::Tween<T>::duration
+		 */
+		double getDuration() const {
+			return duration;
+		}
+
+		/**
+		 * Sets the tween's duration.
+		 * @param newDuration New duration (in seconds).
+		 * @see RedBox::Tween<T>::duration
+		 */
+		void setDuration(double newDuration) {
+			duration = newDuration;
+		}
+
+		/**
+		 * Gets the tween's type of easing.
+		 * @return Type of easing applied on the value.
+		 * @see RedBox::Tween<T>::ease
+		 */
+		Ease getEase() const {
+			return ease;
+		}
+
+		/**
+		 * Sets the tween's type of easing.
+		 * @param newEase New type of easing to use.
+		 * @see RedBox::Tween<T>::ease
+		 */
+		void setEase(Ease newEase) {
+			ease = newEase;
+		}
+
+		/**
+		 * Gets the current eased value.
+		 * @return Value eased using the tween's type of easing. If the tween
+		 * is done, it always returns the end value.
+		 */
+		T getValue() const {
+			double currentTime = this->getTime();
+
+			if(duration == 0.0 || currentTime >= duration) {
+				return endValue;
+
+			} else {
+				return (endValue - startValue) * MathHelper::ease(currentTime / duration, ease) + startValue;
+			}
+		}
+
+		/**
+		 * Checks if the tween is done.
+		 * @return True if the tweening is equal to or past the end value,
+		 * false if not.
+		 */
+		bool isDone() const {
+			return getTime() >= duration;
 		}
 	private:
-		/// List of active tweeners that need updating.
-		std::list<Tweener*> tweeners;
+		/// Value at the start of the tweening.
+		T startValue;
 
-		/// List of tweeners that are done and need to be removed.
-		std::list<Tweener*> tweenersToRemove;
-
-		/**
-		 * Gets the singleton instance.
-		 * @return Reference to the singleton.
-		 */
-		static Tween& getInstance();
+		/// Value to reach at the end of the tweening's duration.
+		T endValue;
 
 		/**
-		 * Default constructor.
+		 * Time the value takes to reach the end value. The value between the
+		 * start value and the end value is eased using the tween's easing type.
 		 */
-		Tween();
+		double duration;
 
 		/**
-		 * Destructor. Deletes all the tweeners.
+		 * Type of ease to apply to the value.
 		 */
-		~Tween();
-
-		/**
-		 * Updates all the tweeners and removes the tweeners that are done.
-		 */
-		void update();
-
-		/**
-		 * Removes a tweeners from the list of tweeners that need updating.
-		 * This method is called by the tweeners when they are done.
-		 * @see RedBox::Tweener::update()
-		 */
-		void remove(Tweener* tweener);
+		Ease ease;
 	};
-
-	template <typename T>
-	TTweener<T>::TTweener(T& newValue, const T& newEnd, double newTime, Ease newEase) :
-		Tweener(newTime, newEase), value(newValue), start(newValue), end(newEnd) {
-	}
-
-	template <typename T>
-	void TTweener<T>::setValue(float p) {
-		value = (end - start) * p + start;
-	}
 }
 
 #endif

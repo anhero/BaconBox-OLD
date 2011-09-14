@@ -27,7 +27,7 @@ Sprite::Sprite(const std::string& textureKey) : GraphicBody(), vertices(),
 		          1u);
 
 	} else {
-		Console::print("Tried to construct a sprite from an invalid image key: " + textureKey);
+		Console::println("Tried to construct a sprite from an invalid image key: " + textureKey);
 	}
 }
 
@@ -40,7 +40,7 @@ Sprite::Sprite(TextureInfo* textureInfo): GraphicBody(), vertices(),
 		          1u);
 
 	} else {
-		Console::print("Tried to construct a sprite from an invalid texture information: " + Console::toString(textureInfo));
+		Console::println("Tried to construct a sprite from an invalid texture information: " + Console::toString(textureInfo));
 	}
 }
 
@@ -205,19 +205,6 @@ void Sprite::createVertex(float x, float y) {
 	vertices.addVertex(x, y);
 }
 
-Vector2 Sprite::getPositionCenter() const {
-	return Vector2(getXPosition() + getWidth() * 0.5f,
-	               getYPosition() + getHeight() * 0.5f);
-}
-
-float Sprite::getXPositionCenter() const {
-	return getXPosition() + getWidth() * 0.5f;
-}
-
-float Sprite::getYPositionCenter() const {
-	return getYPosition() + getHeight() * 0.5f;
-}
-
 void Sprite::setPosition(float newXPosition, float newYPosition) {
 	GraphicBody::setPosition(newXPosition, newYPosition);
 	vertices.setPosition(newXPosition, newYPosition);
@@ -342,7 +329,7 @@ void Sprite::addAnimation(const std::string& name,
 		renderInfo.addAnimation(name, framesVector, timePerFrame, nbLoops);
 
 	} else {
-		Console::print("Failed to add the animation named \"" + name + "\" because it specified that it had 0 frames.");
+		Console::println("Failed to add the animation named \"" + name + "\" because it specified that it had 0 frames.");
 		Console::printTrace();
 	}
 }
@@ -371,16 +358,12 @@ void Sprite::removeRenderMode(RenderMode renderModeToRemove) {
 	renderModes.reset(renderModeToRemove);
 }
 
-void Sprite::setScaling(float newXScaling, float newYScaling) {
-	if(newXScaling && newYScaling) {
-		vertices.scale(Vector2(newXScaling / getXScaling(), newYScaling / getYScaling()));
-		GraphicBody::setScaling(newXScaling, newYScaling);
-		Vector2 tmp = vertices.getPosition();
-		GraphicBody::setPosition(tmp.getX(), tmp.getY());
-
-	} else {
-		Console::print("Tried to set a scaling of 0 to a sprite.");
-	}
+void Sprite::scaleFromPoint(float xScaling, float yScaling,
+                            const Vector2& fromPoint) {
+	this->GraphicBody::scaleFromPoint(xScaling, yScaling, fromPoint);
+	vertices.scale(Vector2(xScaling, yScaling), fromPoint);
+	Vector2 tmp = vertices.getPosition();
+	this->GraphicBody::setPosition(tmp.getX(), tmp.getY());
 }
 
 void Sprite::rotateFromPoint(float rotationAngle, const Vector2& rotationPoint) {
@@ -416,7 +399,7 @@ void Sprite::construct(TextureInfo* textureInfo,
 		renderModes.set(RenderMode::COLOR);
 
 	} else {
-		Console::print("Failed to load a sprite with the following texture information: " + Console::toString(textureInfo));
+		Console::println("Failed to load a sprite with the following texture information: " + Console::toString(textureInfo));
 	}
 }
 

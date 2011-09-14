@@ -18,10 +18,11 @@ namespace RedBox {
 	 * Represents a 2D euclidean vector. Templated so it can only be a vector of
 	 * floats, doubles or long doubles.
 	 * @ingroup Math
+	 * @tparam T Type of data to use as the Vector2T's coordinates.
 	 */
 	template <typename T>
 	class Vector2T {
-		template <typename U> friend std::ostream& operator<<(std::ostream& output, const Vector2T<U>& v);
+		template <typename U> friend std::ostream &operator<<(std::ostream &output, const Vector2T<U>& v);
 	public:
 		/// Fundamental floating point number type the vector contains.
 		typedef T ValueType;
@@ -59,7 +60,7 @@ namespace RedBox {
 		 * @return Reference to the modified instance.
 		 */
 		Vector2T<ValueType>& operator=(const Vector2T<ValueType>& src) {
-			if(this != &src) {
+			if (this != &src) {
 				setX(src.getX());
 				setY(src.getY());
 			}
@@ -492,7 +493,7 @@ namespace RedBox {
 #pragma pack()
 
 	template <typename T>
-	std::ostream& operator<<(std::ostream& output, const Vector2T<T>& v) {
+	std::ostream &operator<<(std::ostream &output, const Vector2T<T>& v) {
 		output << "{x: " << v.x << ", y: " << v.y << "}";
 		return output;
 	}

@@ -50,14 +50,20 @@
  * @brief Classes related to player input.
  */
 
+/**
+ * @defgroup Debug Debug
+ * @brief Classes used to help debugging.
+ */
+
 #include <RedBox/Engine.h>
+#include <RedBox/State.h>
+#include <RedBox/DebugState.h>
 #include <RedBox/ResourceManager.h>
 #include <RedBox/ResourcePathHandler.h>
 #include <RedBox/SimpleButton.h>
 #include <RedBox/Checkbox.h>
 #include <RedBox/LineSlider.h>
 #include <RedBox/Sprite.h>
-#include <RedBox/LineBody.h>
 #include <RedBox/Stopwatch.h>
 #include <RedBox/Font.h>
 #include <RedBox/GraphicString.h>

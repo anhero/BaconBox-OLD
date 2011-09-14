@@ -455,6 +455,24 @@ namespace RedBox {
 		float getOldYPosition() const;
 
 		/**
+		 * Gets the graphic body's center's position.
+		 * @return 2D vector containing the graphic body's center's position.
+		 */
+		const Vector2 getPositionCenter() const;
+
+		/**
+		 * Gets the graphic body's center's horizontal position.
+		 * @return Graphic body's center's horizontal position.
+		 */
+		float getXPositionCenter() const;
+
+		/**
+		 * Gets the graphic body's center's vertical position.
+		 * @return Graphic body's center vertical position.
+		 */
+		float getYPositionCenter() const;
+
+		/**
 		 * Gets the graphic body's horizontal and vertical maximum velocity.
 		 * @return 2D vector containing the horizontal and vertical maximum
 		 * velocity.
@@ -510,6 +528,12 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::maxVelocity
 		 */
 		void setMaxYVelocity(float newMaxYVelocity);
+
+		/**
+		 * Gets the graphic body's size. Can be overloaded for performance.
+		 * @return Vector2 containing the width and height of the graphic body.
+		 */
+		virtual const Vector2 getSize() const;
 
 		/**
 		 * Gets the graphic body's width.
@@ -705,7 +729,93 @@ namespace RedBox {
 		 * @param yScaling New vertical scaling to apply.
 		 * @see RedBox::GraphicBody::scaling
 		 */
-		virtual void setScaling(float newXScaling, float newYScaling);
+		void setScaling(float newXScaling, float newYScaling);
+
+		/**
+		 * Scales the graphic body horizontally and vertically.
+		 * @param scalingToApply Horizontal and vertical scaling to apply.
+		 * Simply does a scalar multiplication to the scaling with the recieved
+		 * scaling to apply. So if a graphic body has a scaling of (2.0, 1.5)
+		 * and this method recieves (2.0, 2.0), the graphic body's scaling will
+		 * become (4.0, 3.0).
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scale(const Vector2& scalingToApply);
+
+		/**
+		 * Scales the graphic body horizontally and vertically.
+		 * @param xScaling Horizontal scaling to apply. Simply does a scalar
+		 * multiplication to the horizontal scaling with the recieved scaling
+		 * to apply. So if a graphic body has a horizontal scaling of 2.0 and
+		 * this method recieves 1.5, the graphic body's new horizontal scaling
+		 * will become 3.0.
+		 * @param yScaling Vertical scaling to apply. Same thing as the
+		 * xScaling parameter, but for the graphic body's height.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scale(float xScaling, float yScaling);
+
+		/**
+		 * Scales the graphic body horizontally.
+		 * @param xScaling Horizontal scaling to apply. Simply does a scalar
+		 * multiplication to the horizontal scaling with the recieved scaling
+		 * to apply. So if a graphic body has a horizontal scaling of 2.0 and
+		 * this method recieves 1.5, the graphic body's new horizontal scaling
+		 * will become 3.0.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scaleX(float xScaling);
+
+		/**
+		 * Scales the graphic body vertically.
+		 * @param xScaling Vertical scaling to apply. Simply does a scalar
+		 * multiplication to the horizontal scaling with the recieved scaling
+		 * to apply. So if a graphic body has a vertical scaling of 2.0 and
+		 * this method recieves 1.5, the graphic body's new vertical scaling
+		 * will become 3.0.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scaleY(float yScaling);
+
+		/**
+		 * Scales the graphic body from a specific point.
+		 * @param scalingToApply Horizontal and vertical scaling to apply.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
+		 * @see RedBox::GraphicBody::scaleFromPoint(float xScaling, float yScaling, const Vector2& fromPoint)
+		 */
+		void scaleFromPoint(const Vector2& scalingToApply,
+		                    const Vector2& fromPoint);
+
+		/**
+		 * Scales the graphic body from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, the graphic body will be twice as wide.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, the graphic body will be twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		virtual void scaleFromPoint(float xScaling, float yScaling,
+		                            const Vector2& fromPoint);
+
+		/**
+		 * Scales the graphic body horizontally from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, the graphic body will be twice as wide.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scaleXFromPoint(float xScaling, const Vector2& fromPoint);
+
+		/**
+		 * Scales the graphic body vertically from a specific point.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, the graphic body will be twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::GraphicBody::scaling
+		 */
+		void scaleYFromPoint(float yScaling, const Vector2& fromPoint);
 
 		/**
 		 * Adds some scaling to the current scaling applied.

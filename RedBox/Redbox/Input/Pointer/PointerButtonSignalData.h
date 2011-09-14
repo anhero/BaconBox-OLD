@@ -24,12 +24,9 @@ namespace RedBox {
 		 * signal.
 		 */
 		PointerButtonSignalData(const PointerState& newPointerState,
-								unsigned int newCursorIndex,
-								CursorButton::Enum newCursorButton);
-		
-		/// Index of the cursor concerned by the signal.
-		const unsigned int cursorIndex;
-		
+		                        unsigned int newCursorIndex,
+		                        CursorButton::Enum newCursorButton);
+
 		/// Index of the button concerned by the button.
 		const CursorButton::Enum cursorButton;
 	};

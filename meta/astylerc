@@ -1,0 +1,59 @@
+# This astylerc file can be used to reformat a file according to our 
+# style guide.
+#
+# You can copy it in your home (on *nix and OSX) with
+#     cp astylerc $HOME/.astylerc
+#
+# Under windows, you can copy it to your user folder
+#     COPY astylerc %USERPROFILE%\astylerc
+#
+# If you already have an astylerc file and do not want to replace it, you can
+# define the ARTISTIC_STYLE_OPTIONS environment variable to the path to this 
+# file.
+
+# Bracket style.
+--style=attach
+
+# Indentation as tabs. Treat them as 4 columns wide.
+--indent=tab=4
+
+# Indent the namespaces.
+--indent-namespaces
+
+# Indent labels in goto.
+--indent-labels
+
+# Multi-line preprocessor definitions should be indented.
+--indent-preprocessor
+
+# We want every comments to be indented with the code.
+--indent-col1-comments
+
+# Add this much indents to multi-line conditions.
+--min-conditional-indent=0
+
+# The furthest a continuation line should be on the right.
+--max-instatement-indent=80
+
+# Newlines are added before and after if, for and while blocks.
+--break-blocks
+
+# Closing blocks also have added lines before and after.
+--break-blocks=all
+
+# Operators have one space padding before and after.
+--pad-oper
+
+# Allow one space between the if, for or while statement and the parenthesis.
+--pad-header
+# Remove all padding inside the pearls in the header of blocks.
+--unpad-paren
+
+# Add brackets to single-line conditional statements.
+--add-brackets
+
+# Align the pointer or reference operator (* or &) with the name.
+--align-pointer=name
+
+# Do not keep a backup copy of the unaltered file.
+--suffix=none

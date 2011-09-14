@@ -5,55 +5,55 @@
 using namespace RedBox;
 
 void NullAudio::play(int nbTimes) {
-	Console::print("Playing a NullAudio object " + Console::toString(nbTimes) + " times.");
+	Console::println("Playing a NullAudio object " + Console::toString(nbTimes) + " times.");
 }
 
 void NullAudio::stop() {
-	Console::print("Stopping a NullAudio object.");
+	Console::println("Stopping a NullAudio object.");
 }
 
 void NullAudio::pause() {
-	Console::print("Pausing a NullAudio object.");
+	Console::println("Pausing a NullAudio object.");
 }
 
 void NullAudio::resume() {
-	Console::print("Resuming a NullAudio object.");
+	Console::println("Resuming a NullAudio object.");
 }
 
 bool NullAudio::isLooping() {
-	Console::print("Checking if a NullAudio object is looping, returning false.");
+	Console::println("Checking if a NullAudio object is looping, returning false.");
 	return false;
 }
 
 AudioState NullAudio::getCurrentState() const {
-	Console::print("Getting a NullAudio object's audio state, returning STOPPED");
+	Console::println("Getting a NullAudio object's audio state, returning STOPPED");
 	return AudioState::STOPPED;
 }
 
 void NullAudio::play(int nbTimes, double fadeIn) {
-	Console::print("Playing a NullAudio object " + Console::toString(nbTimes) + " times with a " +
+	Console::println("Playing a NullAudio object " + Console::toString(nbTimes) + " times with a " +
 			Console::toString(fadeIn) + " second(s) fade in.");
 }
 
 void NullAudio::stop(double fadeOut) {
-	Console::print("Stopping a NullAudio object with a " + Console::toString(fadeOut) +
+	Console::println("Stopping a NullAudio object with a " + Console::toString(fadeOut) +
 			" second(s) fade out.");
 }
 
 void NullAudio::pause(double fadeOut) {
-	Console::print("Pausing a NullAudio object with a " + Console::toString(fadeOut) +
+	Console::println("Pausing a NullAudio object with a " + Console::toString(fadeOut) +
 			" second(s) fade out.");
 }
 
 void NullAudio::resume(double fadeIn) {
-	Console::print("Resuming a NullAudio object with a " + Console::toString(fadeIn) +
+	Console::println("Resuming a NullAudio object with a " + Console::toString(fadeIn) +
 			" second(s) fade in.");
 }
 
 NullAudio::~NullAudio() {
-	Console::print("Destroying a NullAudio object.");
+	Console::println("Destroying a NullAudio object.");
 }
 
 NullAudio::NullAudio() : BackgroundMusic(), SoundFX() {
-	Console::print("Constructing a NullAudio object.");
+	Console::println("Constructing a NullAudio object.");
 }

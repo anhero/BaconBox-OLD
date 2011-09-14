@@ -1,10 +1,5 @@
-#include "PlatformFlagger.h"
-
-#ifdef RB_IPHONE_PLATFORM
-
 #include "IOSPointer.h"
 #include "CursorButton.h"
-#include <iostream>
 
 using namespace RedBox;
 
@@ -39,7 +34,7 @@ void IOSPointer::updateDevice() {
 	getCursorPreviousPosition(0) = getCursorPosition(0);
 	getCursorPosition(0) = iosPosition;
 	if(hasMoved()) {
-		Pointer::move.shoot(PointerMoveSignalData(state, 0));
+		Pointer::move.shoot(PointerSignalData(state, 0));
 	}
 }
 

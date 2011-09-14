@@ -101,6 +101,26 @@ namespace RedBox {
 		}
 
 		/**
+		 * Checks if two flag sets have the same flags raised.
+		 * @param other Flag set to check equality with.
+		 * @return True if the flag sets have the same flags raised, false if
+		 * not.
+		 */
+		bool operator==(const FlagSet<T>& other) const {
+			return bits == other.bits;
+		}
+
+		/**
+		 * Checks if two flag sets have different flags raised.
+		 * @param other Flag set to check inequality with.
+		 * @return True if the flag sets have different flags raised, false if
+		 * not.
+		 */
+		bool operator!=(const FlagSet<T>& other) const {
+			return !(this->operator==(other));
+		}
+
+		/**
 		 * Raises or lowers a flag.
 		 * @param newBit Bit to be raised or lowered.
 		 * @param value If set to true, it will raise the flag. If set to false,

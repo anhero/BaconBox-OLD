@@ -6,16 +6,15 @@
 
 using namespace RedBox;
 
-VerticesGroup::VerticesGroup() : Object(), vertices(NULL,0), inBatch(false) {
+VerticesGroup::VerticesGroup() : Object(), vertices(NULL, 0), inBatch(false) {
 }
 
 VerticesGroup::VerticesGroup(const VerticesGroup& src) : Object(src),
 	internalVertices(src.internalVertices), inBatch(src.inBatch) {
-        if(!inBatch){
-            vertices.array = &(internalVertices[0]);
-            vertices.elementCount = internalVertices.size();
-        }
-        
+	if(!inBatch) {
+		vertices.array = &(internalVertices[0]);
+		vertices.elementCount = internalVertices.size();
+	}
 }
 
 VerticesGroup& VerticesGroup::operator=(const VerticesGroup& src) {
@@ -24,30 +23,30 @@ VerticesGroup& VerticesGroup::operator=(const VerticesGroup& src) {
 	if(this != &src) {
 		internalVertices = src.internalVertices;
 		inBatch = src.inBatch;
-        if(!inBatch){
-            vertices.array = &(internalVertices[0]);
-            vertices.elementCount = internalVertices.size();
-        }
+
+		if(!inBatch) {
+			vertices.array = &(internalVertices[0]);
+			vertices.elementCount = internalVertices.size();
+		}
 	}
 
 	return *this;
 }
 
 unsigned int VerticesGroup::getVerticesCount() const {
-    return vertices.elementCount;
+	return vertices.elementCount;
 }
 void VerticesGroup::addVertex(float x, float y) {
-        // We add the new vertex to the list.
-        internalVertices.push_back(Vector2(x, y));
-        vertices.elementCount = internalVertices.size();
-        vertices.array = &(internalVertices[0]);
+	// We add the new vertex to the list.
+	internalVertices.push_back(Vector2(x, y));
+	vertices.elementCount = internalVertices.size();
+	vertices.array = &(internalVertices[0]);
 }
 
 void VerticesGroup::addVertices(unsigned int nbVertices, ...) {
 	if(nbVertices) {
 		va_list verticesCoords;
 		va_start(verticesCoords, nbVertices);
-
 		float x, y;
 
 		for(unsigned int i = 0; i < nbVertices; ++i) {
@@ -57,41 +56,42 @@ void VerticesGroup::addVertices(unsigned int nbVertices, ...) {
 		}
 
 		va_end(verticesCoords);
-        
-        vertices.elementCount = internalVertices.size();
-        vertices.array = &(internalVertices[0]);
+		vertices.elementCount = internalVertices.size();
+		vertices.array = &(internalVertices[0]);
 	}
 }
 
 CArray<Vector2>& VerticesGroup::getVertices() {
-    return vertices;
+	return vertices;
 }
 
 const CArray<Vector2>& VerticesGroup::getVertices() const {
-    return vertices;
+	return vertices;
 }
 
 Vector2 VerticesGroup::getSize() const {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to get the width and the height of an empty VerticesGroup.");
+		Console::println("Tried to get the width and the height of an empty VerticesGroup.");
 		return Vector2();
-	} else {
 
+	} else {
 		float minX = vertices.array[0].getX(),
-			  minY = vertices.array[0].getY(),
-			  maxX = vertices.array[0].getX(),
-			  maxY = vertices.array[0].getY();
+		      minY = vertices.array[0].getY(),
+		      maxX = vertices.array[0].getX(),
+		      maxY = vertices.array[0].getY();
 
 		// We find the minimum and the maximum coordinates.
 		for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 			if(vertices.array[i].getX() < minX) {
 				minX = vertices.array[i].getX();
+
 			} else if(vertices.array[i].getX() > maxX) {
 				maxX = vertices.array[i].getX();
 			}
 
 			if(vertices.array[i].getY() < minY) {
 				minY = vertices.array[i].getY();
+
 			} else if(vertices.array[i].getY() > maxY) {
 				maxY = vertices.array[i].getY();
 			}
@@ -104,7 +104,7 @@ Vector2 VerticesGroup::getSize() const {
 
 float VerticesGroup::getWidth() const {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to get the width of an empty VerticesGroup.");
+		Console::println("Tried to get the width of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -115,6 +115,7 @@ float VerticesGroup::getWidth() const {
 	for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 		if(vertices.array[i].getX() < minX) {
 			minX = vertices.array[i].getX();
+
 		} else if(vertices.array[i].getX() > maxX) {
 			maxX = vertices.array[i].getX();
 		}
@@ -126,7 +127,7 @@ float VerticesGroup::getWidth() const {
 
 float VerticesGroup::getHeight() const {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to get the height of an empty VerticesGroup.");
+		Console::println("Tried to get the height of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -134,9 +135,10 @@ float VerticesGroup::getHeight() const {
 	      maxY = vertices.array[0].getY();
 
 	// We find the smallest and the highest y position.
-    for(unsigned int i = 0; i < vertices.elementCount; ++i) {
+	for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 		if(vertices.array[i].getY() < minY) {
 			minY = vertices.array[i].getY();
+
 		} else if(vertices.array[i].getY() > maxY) {
 			maxY = vertices.array[i].getY();
 		}
@@ -148,7 +150,7 @@ float VerticesGroup::getHeight() const {
 
 Vector2 VerticesGroup::getPosition() const {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to get the position of an empty VerticesGroup.");
+		Console::println("Tried to get the position of an empty VerticesGroup.");
 		return Vector2();
 	}
 
@@ -156,7 +158,7 @@ Vector2 VerticesGroup::getPosition() const {
 	               vertices.array[0].getY());
 
 	// We find the smallest vertical and horizontal position.
-    for(unsigned int i = 0; i < vertices.elementCount; ++i) {
+	for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 		if(vertices.array[i].getX() < result.getX()) {
 			result.setX(vertices.array[i].getX());
 		}
@@ -176,7 +178,7 @@ void VerticesGroup::setBatchPointer(Vector2 * verticesPointer){
 
 void VerticesGroup::setInternalBatchPointer(){
     std::vector<Vector2> tempVertices;
-    for (int i =0; i <vertices.elementCount; i++) {
+    for (unsigned int i = 0; i < vertices.elementCount; ++i) {
         tempVertices.push_back(vertices[i]);
     }
     
@@ -190,7 +192,7 @@ Vector2 & VerticesGroup::operator[](unsigned int iterator){
 
 Vector2 VerticesGroup::getPositionCenter() const {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to get the position of the center of an empty VerticesGroup.");
+		Console::println("Tried to get the position of the center of an empty VerticesGroup.");
 		return Vector2();
 	}
 
@@ -200,15 +202,17 @@ Vector2 VerticesGroup::getPositionCenter() const {
 	      maxY = vertices.array[0].getY();
 
 	// We find the minimum and the maximum coordinates.
-    for(unsigned int i = 0; i < vertices.elementCount; ++i) {
+	for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 		if(vertices.array[i].getX() < minX) {
 			minX = vertices.array[i].getX();
+
 		} else if(vertices.array[i].getX() > maxX) {
 			maxX = vertices.array[i].getX();
 		}
 
 		if(vertices.array[i].getY() < minY) {
 			minY = vertices.array[i].getY();
+
 		} else if(vertices.array[i].getY() > maxY) {
 			maxY = vertices.array[i].getY();
 		}
@@ -224,10 +228,10 @@ void VerticesGroup::setPosition(float newXPosition, float newYPosition) {
 
 void VerticesGroup::move(float deltaX, float deltaY) {
 	if(vertices.elementCount == 0) {
-		Console::print("Tried to move an empty vertices group.");
+		Console::println("Tried to move an empty vertices group.");
 	}
 
-    for(unsigned int i = 0; i < vertices.elementCount; ++i) {
+	for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 		vertices.array[i].addToXY(deltaX, deltaY);
 	}
 }
@@ -238,13 +242,14 @@ void VerticesGroup::move(const Vector2& delta) {
 
 float VerticesGroup::getXPosition() const {
 	if(vertices.array == 0) {
-		Console::print("Tried to get the horizontal position of an empty VerticesGroup.");
+		Console::println("Tried to get the horizontal position of an empty VerticesGroup.");
 		return 0.0f;
+
 	} else {
 		float result = vertices.array[0].getX();
 
 		// We find the smallest horizontal position.
-        for(unsigned int i = 0; i < vertices.elementCount; ++i) {
+		for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 			if(vertices.array[i].getX() < result) {
 				result = vertices.array[i].getX();
 			}
@@ -255,7 +260,7 @@ float VerticesGroup::getXPosition() const {
 }
 float VerticesGroup::getXPositionCenter() const {
 	if(vertices.array == 0) {
-		Console::print("Tried to get the horizontal position of an empty VerticesGroup.");
+		Console::println("Tried to get the horizontal position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -263,9 +268,10 @@ float VerticesGroup::getXPositionCenter() const {
 	      maxX = vertices.array[0].getX();
 
 	// We find the smallest and the highest x position.
-    for(unsigned int i = 0; i < vertices.elementCount; ++i) {
+	for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 		if(vertices.array[i].getX() < minX) {
 			minX = vertices.array[i].getX();
+
 		} else if(vertices.array[i].getX() > maxX) {
 			maxX = vertices.array[i].getX();
 		}
@@ -285,14 +291,14 @@ void VerticesGroup::moveX(float deltaX) {
 
 float VerticesGroup::getYPosition() const {
 	if(vertices.array == 0) {
-		Console::print("Tried to get the vertical position of an empty VerticesGroup.");
+		Console::println("Tried to get the vertical position of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
 	float result = vertices.array[0].getY();
 
 	// We find the smallest vertical position.
-    for(unsigned int i = 0; i < vertices.elementCount; ++i) {
+	for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 		if(vertices.array[i].getY() < result) {
 			result = vertices.array[i].getY();
 		}
@@ -303,7 +309,7 @@ float VerticesGroup::getYPosition() const {
 
 float VerticesGroup::getYPositionCenter() const {
 	if(vertices.array == 0) {
-		Console::print("Tried to get the height of an empty VerticesGroup.");
+		Console::println("Tried to get the height of an empty VerticesGroup.");
 		return 0.0f;
 	}
 
@@ -311,9 +317,10 @@ float VerticesGroup::getYPositionCenter() const {
 	      maxY = vertices.array[0].getY();
 
 	// We find the smallest and the highest y position.
-    for(unsigned int i = 0; i < vertices.elementCount; ++i) {
+	for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 		if(vertices.array[i].getY() < minY) {
 			minY = vertices.array[i].getY();
+
 		} else if(vertices.array[i].getY() > maxY) {
 			maxY = vertices.array[i].getY();
 		}
@@ -331,18 +338,16 @@ void VerticesGroup::moveY(float deltaY) {
 	move(0.0f, deltaY);
 }
 
-void VerticesGroup::scale(const Vector2& factor) {
-	Vector2 position = getPositionCenter();
-
-    for(unsigned int i = 0; i < vertices.elementCount; ++i) {
-		vertices.array[i].subtractFromXY(position);
-		vertices.array[i].scalarMultiplication(factor.getX(), factor.getY());
-		vertices.array[i].addToXY(position);
+void VerticesGroup::scale(const Vector2& factor, const Vector2& fromPoint) {
+	for(unsigned int i = 0; i < vertices.elementCount; ++i) {
+		vertices.array[i].subtractFromXY(fromPoint);
+		vertices.array[i].scalarMultiplication(factor);
+		vertices.array[i].addToXY(fromPoint);
 	}
 }
 
 void VerticesGroup::rotate(float angle, const Vector2& fromPoint) {
-    for(unsigned int i = 0; i < vertices.elementCount; ++i) {
+	for(unsigned int i = 0; i < vertices.elementCount; ++i) {
 		vertices.array[i].subtractFromXY(fromPoint);
 		vertices.array[i].rotate(angle);
 		vertices.array[i].addToXY(fromPoint);
@@ -353,7 +358,7 @@ namespace RedBox {
 	std::ostream& operator<<(std::ostream& output, const VerticesGroup& v) {
 		output << "{vertices: [";
 
-        for(unsigned int i = 0; i < v.vertices.elementCount; i++) {
+		for(unsigned int i = 0; i < v.vertices.elementCount; i++) {
 			if(i != 0) {
 				output << ", ";
 			}

@@ -32,6 +32,8 @@ namespace RedBox {
 		 * @param newAlphaPerSecondVariance Alpha per second variance.
 		 * @param newScalingPerSecondVariance Scaling per second variance.
 		 * @param newAnglePerSecondVariance Rotation angle per second variance.
+		 * @param newAnimationName Name of the animation to play during that
+		 * particle phase.
 		 */
 		ParticlePhase(double newPhaseDuration,
 					  double newPhaseDurationVariance,

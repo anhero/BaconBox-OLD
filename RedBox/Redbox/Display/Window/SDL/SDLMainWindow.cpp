@@ -42,7 +42,8 @@ glewInit();
 		}
 	}
 }
-void SDLMainWindow::setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight){
+
+void SDLMainWindow::setResolution(unsigned int /*resolutionWidth*/, unsigned int /*resolutionHeight*/) {
     //TODO!!!!
 }
 

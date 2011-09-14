@@ -244,6 +244,18 @@ float GraphicBody::getOldYPosition() const {
 	return oldPosition.getY();
 }
 
+const Vector2 GraphicBody::getPositionCenter() const {
+	return Vector2(getXPositionCenter(), getYPositionCenter());
+}
+
+float GraphicBody::getXPositionCenter() const {
+	return getXPosition() + getWidth() * 0.5f;
+}
+
+float GraphicBody::getYPositionCenter() const {
+	return getYPosition() + getHeight() * 0.5f;
+}
+
 const Vector2& GraphicBody::getMaxVelocity() const {
 	return maxVelocity;
 }
@@ -270,6 +282,10 @@ float GraphicBody::getMaxYVelocity() const {
 
 void GraphicBody::setMaxYVelocity(float newMaxYVelocity) {
 	maxVelocity.setY(newMaxYVelocity);
+}
+
+const Vector2 GraphicBody::getSize() const {
+	return Vector2(getWidth(), getHeight());
 }
 
 FlagSet<Side>& GraphicBody::getCollidableSides() {
@@ -391,7 +407,41 @@ void GraphicBody::setScaling(const Vector2& newScaling) {
 }
 
 void GraphicBody::setScaling(float newXScaling, float newYScaling) {
-	scaling.setXY(newXScaling, newYScaling);
+	scaleFromPoint(newXScaling / scaling.getX(), newYScaling / scaling.getY(), getPositionCenter());
+}
+
+void GraphicBody::scale(const Vector2 &scalingToApply) {
+	scaleFromPoint(scalingToApply, getPositionCenter());
+}
+
+void GraphicBody::scale(float xScaling, float yScaling) {
+	scaleFromPoint(xScaling, yScaling, getPositionCenter());
+}
+
+void GraphicBody::scaleX(float xScaling) {
+	scaleFromPoint(xScaling, 1.0f, getPositionCenter());
+}
+
+void GraphicBody::scaleY(float yScaling) {
+	scaleFromPoint(1.0f, yScaling, getPositionCenter());
+}
+
+void GraphicBody::scaleFromPoint(const Vector2& scalingToApply,
+                                 const Vector2& fromPoint) {
+	scaleFromPoint(scalingToApply.getX(), scalingToApply.getY(), fromPoint);
+}
+
+void GraphicBody::scaleFromPoint(float xScaling, float yScaling,
+                                 const Vector2&) {
+	scaling.scalarMultiplication(xScaling, yScaling);
+}
+
+void GraphicBody::scaleXFromPoint(float xScaling, const Vector2& fromPoint) {
+	scaleFromPoint(xScaling, 1.0f, fromPoint);
+}
+
+void GraphicBody::scaleYFromPoint(float yScaling, const Vector2& fromPoint) {
+	scaleFromPoint(1.0f, yScaling, fromPoint);
 }
 
 void GraphicBody::addToScaling(const Vector2& scalingToAdd) {

@@ -13,16 +13,17 @@
 #include "Object.h"
 #include "Layer.h"
 #include "Camera.h"
-#include "GraphicBody.h"
 #include "Color.h"
 
 namespace RedBox {
+	class GraphicBody;
 	/**
 	 * A state represents the the game's different states, it contains and
 	 * manages the GraphicBody objects. Ex: the playState, the MenuState.
      */
 	class State : public Object, public sigly::HasSlots<> {
 		friend class Engine;
+		friend class DebugState;
 	public:
 		/**
 		 * Default name given to states initialized with the default
