@@ -91,9 +91,8 @@ void RenderInfo::loadTexCoords(VerticesGroup &vertices,
 				Vector2 position = vertices.getPosition();
 				// We get the width and the height of the of the vertices group.
 				Vector2 size = vertices.getSize();
-				unsigned int verticesCount = vertices.getVertices().elementCount;
-				Vector2 *verticesArray = vertices.getVertices().array;
-				size_t tmpSize = static_cast<size_t>(verticesCount);
+                std::vector<Vector2*> tempVertices = vertices.getVertices();
+				size_t tmpSize = static_cast<size_t>(vertices.getVerticesCount());
 
 				// For each frame to load.
 				for (std::vector<std::vector<Vector2> >::iterator i = texCoords.begin();
@@ -103,9 +102,9 @@ void RenderInfo::loadTexCoords(VerticesGroup &vertices,
 					unsigned int j2 = 0;
 
 					for (std::vector<Vector2>::iterator j1 = i->begin();
-					     j1 != i->end() && j2 < verticesCount; ++j1) {
-						j1->setXY(offsetX + (verticesArray[j2].getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
-						          offsetY + (verticesArray[j2].getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
+					     j1 != i->end() && j2 < vertices.getVerticesCount(); ++j1) {
+						j1->setXY(offsetX + (tempVertices[j2]->getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
+						          offsetY + (tempVertices[j2]->getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
 						++j2;
 					}
 

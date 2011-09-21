@@ -130,7 +130,8 @@ void Sprite::setInternalBatchPointer(){
 }
 
 void Sprite::maskedRender(bool inversedMask){
-    GraphicDriver::drawMaskedShapeWithTextureAndColor(vertices.getVertices(),
+    CArray<Vector2> vertices = CArray<Vector2>(this->vertices.getVertices()[0], this->vertices.getVerticesCount());
+    GraphicDriver::drawMaskedShapeWithTextureAndColor(vertices,
                                                       renderInfo,
                                                       inversedMask);
 }
@@ -140,6 +141,7 @@ void Sprite::maskedRender(bool inversedMask){
 void Sprite::render() {
 	// We make sure there are vertices to render.
 	if(vertices.getVerticesCount() > 0) {
+        CArray<Vector2> vertices = CArray<Vector2>(this->vertices.getVertices()[0], this->vertices.getVerticesCount());
 		// We check which graphic driver method to use.
 		if(renderModes.isSet(RenderMode::SHAPE)) {
 			// We check if we have a texture to render.
@@ -155,13 +157,13 @@ void Sprite::render() {
 
 				} else {
 					// We render with the texture.
-                    GraphicDriver::drawShapeWithTextureAndColor(vertices.getVertices(),
+                    GraphicDriver::drawShapeWithTextureAndColor(vertices,
                                                                 renderInfo);
 				}
 
 			} else if(renderModes.isSet(RenderMode::COLOR)) {
 				// We render with the color only.
-                GraphicDriver::drawShapeWithColor(vertices.getVertices(),
+                GraphicDriver::drawShapeWithColor(vertices,
                                                   renderInfo);
 				
 			}
@@ -171,14 +173,16 @@ void Sprite::render() {
 
 void Sprite::mask() {
 	if(vertices.getVerticesCount() > 0 ) {
-		GraphicDriver::drawMaskShapeWithTextureAndColor(vertices.getVertices(),
+        CArray<Vector2> vertices = CArray<Vector2>(this->vertices.getVertices()[0], this->vertices.getVerticesCount());
+		GraphicDriver::drawMaskShapeWithTextureAndColor(vertices,
 		                                                renderInfo);
 	}
 }
 
 void Sprite::unmask() {
 	if(vertices.getVerticesCount() > 0) {
-		GraphicDriver::unmaskShape(vertices.getVertices(), renderInfo);
+        CArray<Vector2> vertices = CArray<Vector2>(this->vertices.getVertices()[0], this->vertices.getVerticesCount());
+		GraphicDriver::unmaskShape(vertices, renderInfo);
 	}
 }
 

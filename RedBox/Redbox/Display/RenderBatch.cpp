@@ -51,9 +51,10 @@ void RenderBatch::reconstruct(){
         
         for (std::set<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); ++i) {
             
+            unsigned int verticesCount = (*i)->getVertices().getVerticesCount();
             
             //Indices array construction
-            for (unsigned int triangleIterator = 0; triangleIterator < ((*i)->getVertices().getVerticesCount() -2); triangleIterator++) {
+            for (unsigned int triangleIterator = 0; triangleIterator < (verticesCount -2); triangleIterator++) {
                 indices.push_back(indicesIterator);
                 indices.push_back(indicesIterator);
                 indices.push_back(indicesIterator + triangleIterator +1);
@@ -64,10 +65,10 @@ void RenderBatch::reconstruct(){
             
             
             
-            CArray<Vector2> currentVertices = (*i)->getVertices().getVertices();
+            std::vector<Vector2*> currentVertices = (*i)->getVertices().getVertices();
             
             //Colors array construction
-            for (unsigned int j = 0 ; j < currentVertices.elementCount; j++ ) {
+            for (unsigned int j = 0 ; j < verticesCount; j++ ) {
                 for (unsigned int k = 0; k < colorChannelCount; k++) {
                     tempColors[(verticesIterator+j)*colorChannelCount +k] = (*i)->getMainColor().getComponents()[k];
                 }
@@ -90,14 +91,16 @@ void RenderBatch::reconstruct(){
             
             
             
-            (*i)->setBatchPointer((&tempVertices[verticesIterator]), (&tempTextureCoord[verticesIterator]), &(tempColors[verticesIterator*colorChannelCount]));
             
-            for (unsigned int j = 0; j < currentVertices.elementCount;) {
-                tempVertices[verticesIterator] = currentVertices[j];
+            unsigned int tempVerticesIterator = verticesIterator;
+            for (unsigned int j = 0; j < verticesCount;) {
+                tempVertices[verticesIterator] = *(currentVertices[j]);
                 tempTextureCoord[verticesIterator] = (*i)->getRenderInfo().getTexCoords()[currentFrame][j];
                 j++;
                 verticesIterator++;
             }
+            
+            (*i)->setBatchPointer((&tempVertices[tempVerticesIterator]), (&tempTextureCoord[tempVerticesIterator]), &(tempColors[tempVerticesIterator*colorChannelCount]));
             
         }
         
