@@ -196,9 +196,12 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
 	glColor4ub(0, 0, 0, 255);
 	glVertexPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat *>(&(maskedSprite->getVertices()[0])));
 	glEnableClientState(GL_VERTEX_ARRAY);
+    glEnable(GL_BLEND);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	glPopMatrix();
+    
 	drawBatchWithTextureAndColor(vertices, textureCoord, indices, textureInfo, colors, true);
+    glDisable(GL_BLEND);
 #ifdef RB_OPENGLES
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, originalFramebuffer);
 #else
