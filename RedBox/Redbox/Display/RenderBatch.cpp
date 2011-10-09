@@ -129,6 +129,7 @@ void RenderBatch::update(){
     for (std::set<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); ++i) {
         (*i)->update();
     }
+    
 }
 
 void RenderBatch::render(){
@@ -139,7 +140,6 @@ void RenderBatch::render(){
     for (std::set<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); ++i) {
         (*i)->getRenderInfo().updateBatchPointer();
     }
-    
     if (renderModes.isSet(RenderMode::INVERSE_MASKED)&& renderModes.isSet(RenderMode::TEXTURE)) {
         maskBody->mask();
         

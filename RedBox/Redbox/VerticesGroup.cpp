@@ -196,9 +196,9 @@ Vector2 VerticesGroup::getPosition() const {
 }
 
 void VerticesGroup::setBatchPointer(Vector2 * verticesPointer){
-    
+    vertices.clear();
     for (unsigned int i =0; i < verticesCount; i++) {
-        vertices.push_back(verticesPointer+i);
+        vertices.push_back(&(verticesPointer[i]));
     }
 }
 

@@ -190,18 +190,21 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
 #endif
 	glPushMatrix();
 	glLoadIdentity();
-	//glScalef(3.0f, -3.0f, 1.0f);
+	
 
 	//We can't call glclearcolor on a texture binded framebuffer, so we draw quad to clear the texture
-	glColor4ub(0, 0, 0, 255);
+	glColor4ub(0, 0, 0, 0);
 	glVertexPointer(2, GL_FLOAT, 0, reinterpret_cast<GLfloat *>(&(maskedSprite->getVertices()[0])));
 	glEnableClientState(GL_VERTEX_ARRAY);
     glEnable(GL_BLEND);
+    glBlendFunc(GL_ONE, GL_ZERO);
+    
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	glPopMatrix();
-    
+    glColor4ub(255, 255, 255, 255);
 	drawBatchWithTextureAndColor(vertices, textureCoord, indices, textureInfo, colors, true);
     glDisable(GL_BLEND);
+    
 #ifdef RB_OPENGLES
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, originalFramebuffer);
 #else
@@ -336,16 +339,12 @@ void OpenGLDriver::drawMaskedShapeWithTextureAndColor(GLfloat *vertices,
 			glDisable(GL_TEXTURE_2D);
 #ifdef RB_OPENGLES
 			glBlendEquationSeparateOES(GL_FUNC_ADD_OES, GL_FUNC_ADD_OES);
+            glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE_MINUS_DST_ALPHA, GL_ZERO);
 #else
 			glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+            glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE_MINUS_DST_ALPHA, GL_ZERO);
 #endif
 
-
-#ifdef RB_OPENGLES
-			glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE_MINUS_DST_ALPHA, GL_ZERO);
-#else
-			glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE_MINUS_DST_ALPHA, GL_ZERO);
-#endif
 			glColor4ub(255, 255, 255, 255);
 
 
