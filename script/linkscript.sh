@@ -30,10 +30,7 @@ function vecho() {
 outfile=$1
 shift
 
-echo "-----------------------"
-echo "Building static big lib"
-echo "-----------------------"
-echo "--> $(basename ${outfile})"
+echo "--> Building static big lib: $(basename ${outfile})"
 
 outdir=$(dirname "${outfile}")
 
@@ -52,6 +49,8 @@ mkdir -p "${tempdir}"
 
 function staticWithAr() {
 	#Magic with ar! YARR!
+
+	shopt -s nullglob
 
 	vecho Looping on libraries
 	for lib in "${@}"; do
