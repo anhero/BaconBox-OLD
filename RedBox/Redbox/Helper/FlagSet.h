@@ -27,7 +27,7 @@ namespace RedBox {
 		 * raised.
 		 * @param bit First flag to put up when the flag set is initialized.
 		 */
-		FlagSet(const T& bit) {
+		explicit FlagSet(const T &bit) {
 			set(bit);
 		}
 
@@ -35,7 +35,7 @@ namespace RedBox {
 		 * Copy constructor.
 		 * @param src Flag set to make a copy of.
 		 */
-		FlagSet(const FlagSet<T>& src) : bits(src.bits) {
+		FlagSet(const FlagSet<T> &src) : bits(src.bits) {
 		}
 
 		/**
@@ -43,8 +43,8 @@ namespace RedBox {
 		 * @param src Flag set to make a copy of.
 		 * @return Reference to the modified flag set.
 		 */
-		FlagSet<T>& operator=(const FlagSet<T>& src) {
-			if(this != &src) {
+		FlagSet<T>& operator=(const FlagSet<T> &src) {
+			if (this != &src) {
 				bits = src.bits;
 			}
 
@@ -56,10 +56,10 @@ namespace RedBox {
 		 * @param other Flag set to combine with the instance.
 		 * @return Flag set representing the two flag sets merged.
 		 */
-		FlagSet<T> operator|(const FlagSet<T>& other) const {
+		FlagSet<T> operator|(const FlagSet<T> &other) const {
 			FlagSet<T> result(*this);
 
-			for(typename std::set<T>::const_iterator i = other.bits.begin(); i != other.bits.end(); ++i) {
+			for (typename std::set<T>::const_iterator i = other.bits.begin(); i != other.bits.end(); ++i) {
 				result.bits.insert(*i);
 			}
 
@@ -71,7 +71,7 @@ namespace RedBox {
 		 * @param bit Flag to raise on the resulting flag set.
 		 * @return A copy of the instance with the given flag raised.
 		 */
-		FlagSet<T> operator|(const T& bit) const {
+		FlagSet<T> operator|(const T &bit) const {
 			FlagSet<T> result(*this);
 			result.set(bit);
 			return result;
@@ -82,8 +82,8 @@ namespace RedBox {
 		 * @param src Flag set to merge with the instance.
 		 * @return Reference to the modified flag set (the instance).
 		 */
-		FlagSet<T>& operator|=(const FlagSet<T>& src) {
-			if(this != &src) {
+		FlagSet<T>& operator|=(const FlagSet<T> &src) {
+			if (this != &src) {
 				*this = *this | src;
 			}
 
@@ -95,7 +95,7 @@ namespace RedBox {
 		 * @param bit Flag to raise on the current instance.
 		 * @return Reference to the modified flag set (the instance).
 		 */
-		FlagSet<T>& operator|=(const T& bit) {
+		FlagSet<T>& operator|=(const T &bit) {
 			set(bit);
 			return *this;
 		}
@@ -106,7 +106,7 @@ namespace RedBox {
 		 * @return True if the flag sets have the same flags raised, false if
 		 * not.
 		 */
-		bool operator==(const FlagSet<T>& other) const {
+		bool operator==(const FlagSet<T> &other) const {
 			return bits == other.bits;
 		}
 
@@ -116,7 +116,7 @@ namespace RedBox {
 		 * @return True if the flag sets have different flags raised, false if
 		 * not.
 		 */
-		bool operator!=(const FlagSet<T>& other) const {
+		bool operator!=(const FlagSet<T> &other) const {
 			return !(this->operator==(other));
 		}
 
@@ -126,9 +126,10 @@ namespace RedBox {
 		 * @param value If set to true, it will raise the flag. If set to false,
 		 * it will lower the flag.
 		 */
-		void set(const T& newBit, bool value = true) {
-			if(value) {
+		void set(const T &newBit, bool value = true) {
+			if (value) {
 				bits.insert(newBit);
+
 			} else {
 				bits.erase(newBit);
 			}
@@ -140,15 +141,16 @@ namespace RedBox {
 		 * @param value If set to true, it will raise the flags. If set to
 		 * false, it will lower the flags.
 		 */
-		void set(const FlagSet<T>& newBits, bool value = true) {
-			if(value) {
-				for(typename std::set<T>::const_iterator i = newBits.bits.begin();
-					i != newBits.bits.end(); ++i) {
+		void set(const FlagSet<T> &newBits, bool value = true) {
+			if (value) {
+				for (typename std::set<T>::const_iterator i = newBits.bits.begin();
+				     i != newBits.bits.end(); ++i) {
 					bits.insert(*i);
 				}
+
 			} else {
-				for(typename std::set<T>::const_iterator i = newBits.bits.begin();
-					i != newBits.bits.end(); ++i) {
+				for (typename std::set<T>::const_iterator i = newBits.bits.begin();
+				     i != newBits.bits.end(); ++i) {
 					bits.erase(*i);
 				}
 			}
@@ -166,8 +168,16 @@ namespace RedBox {
 		 * @param bitsToRemove Flag set containing the flags to lower on the
 		 * current instance.
 		 */
-		void reset(const FlagSet<T>& bitsToRemove) {
+		void reset(const FlagSet<T> &bitsToRemove) {
 			set(bitsToRemove, false);
+		}
+
+		/**
+		 * Lowers a flag.
+		 * @param bitToRemove Flag to lower.
+		 */
+		void reset(const T &bitToRemove) {
+			set(bitToRemove, false);
 		}
 
 		/**
@@ -175,7 +185,7 @@ namespace RedBox {
 		 * @param bitToCheck Flag to check.
 		 * @return True if the given flag is raised, false if not.
 		 */
-		bool isSet(const T& bitToCheck) const {
+		bool isSet(const T &bitToCheck) const {
 			return bits.find(bitToCheck) != bits.end();
 		}
 
@@ -185,13 +195,15 @@ namespace RedBox {
 		 * @return True if all the flags from the flag set are raised in the
 		 * current instance, false if not.
 		 */
-		bool areSet(const FlagSet<T>& bitsToCheck) const {
+		bool areSet(const FlagSet<T> &bitsToCheck) const {
 			bool result = true;
 			typename std::set<T>::const_iterator i = bitsToCheck.bits.begin();
-			while(result && i != bitsToCheck.bits.end()) {
+
+			while (result && i != bitsToCheck.bits.end()) {
 				result = result && (bits.find(*i) != bits.end());
-                ++i;
+				++i;
 			}
+
 			return result;
 		}
 
