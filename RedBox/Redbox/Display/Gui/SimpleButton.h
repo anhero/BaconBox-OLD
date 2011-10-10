@@ -1,4 +1,3 @@
-#if 0
 /**
  * @file
  * @ingroup GUI
@@ -6,164 +5,76 @@
 #ifndef RB_SIMPLE_BUTTON_H
 #define RB_SIMPLE_BUTTON_H
 
-#include <string>
-
-#include "IButton.h"
-#include "Sprite.h"
+#include "Button.h"
 
 namespace RedBox {
 	/**
-	 * Represents a simple buttons that has graphics for 3 states.
+	 * Represents a simple buttons that has graphics for 4 states.
 	 * @ingroup GUI
 	 */
-	class SimpleButton : public IButton {
+	class SimpleButton : public Button {
 	public:
 		/**
-		 * Parameterized constructor. Loads a button using the texture in the
-		 * resource manager with the corresponding key. Only takes the asked
-		 * part of the texture with the given width and height.
-		 * @param textureKey Texture's key in the ResourceManager to use for the
-		 * constructed sprite.
-		 * @param frameWidth Width of the frames to read from the image (in
-		 * pixels).
-		 * @param frameHeight Height of the frames to read from the image (in
-		 * pixels).
+		 * Parameterized constructor. Loads the vertices and the texture
+		 * coordinates. If the specified size has a coordinate equal to 0 or
+		 * lower, each button frame will be equal to the texture's width
+		 * divided by 4.
+		 * @param newTextureKey Key to the texture to create the button from.
+		 * @param startingPosition Starting position at which to place the
+		 * button.
+		 * @param newSize Size of the button.
+		 * @param newTextureOffset Texture coordinates' offset if needed.
+		 * @see RedBox::Texturable::textureInformation
 		 */
-		SimpleButton(const std::string &textureKey, unsigned int frameWidth,
-		             unsigned int frameHeight);
+		explicit SimpleButton(const std::string &newTextureKey,
+		                      const Vector2 &startingPosition = Vector2(),
+		                      const Vector2 &newSize = Vector2(),
+		                      const Vector2 &newTextureOffset = Vector2());
 
 		/**
-		 * Parameterized constructor. Loads a button using a pointer to a
-		 * TextureInfo. Only takes the asked part of the texture with the given
-		 * width and height.
-		 * @param textureInfo Pointer to the texture information to load the
-		 * button from.
-		 * @param frameWidth Width of the frames to read from the image (in
-		 * pixels).
-		 * @param frameHeight Height of the frames to read from the image (in
-		 * pixels).
+		 * Parameterized constructor. Loads the vertices and the texture
+		 * coordinates. If the specified size has a coordinate equal to 0 or
+		 * lower, each button frame will be equal to the texture's width
+		 * divided by 4.
+		 * @param newTextureInformation Pointer to the texture information to
+		 * load the button with.
+		 * @param startingPosition Starting position at which to place the
+		 * button.
+		 * @param newSize Size of the button.
+		 * @param newTextureOffset Texture coordinates' offset if needed.
+		 * @see RedBox::Texturable::textureInformation
 		 */
-		SimpleButton(TextureInformation *textureInfo, unsigned int frameWidth,
-		             unsigned int frameHeight);
+		explicit SimpleButton(const TextureInformation *newTextureInformation,
+		                      const Vector2 &startingPosition = Vector2(),
+		                      const Vector2 &newSize = Vector2(),
+		                      const Vector2 &newTextureOffset = Vector2());
 
 		/**
 		 * Copy constructor.
-		 * @param src Simple button to make a copy of.
+		 * @param src SimpleButton to make a copy of.
 		 */
 		SimpleButton(const SimpleButton &src);
 
 		/**
 		 * Destructor.
 		 */
-		~SimpleButton();
+		virtual ~SimpleButton();
 
 		/**
-		 * Assignment operator overload.
-		 * @param src Simple button to make a copy of.
-		 * @return Reference to the modified simple button.
+		 * Assignment operator.
+		 * @param src SimpleButton to make a copy of.
+		 * @return Reference to the modified SimpleButton.
 		 */
 		SimpleButton &operator=(const SimpleButton &src);
 
 		/**
-		 * Updates the button and its sprite.
+		 * Gets the texture coordinates for the body.
+		 * @return Texture coordinates used to map the texture on the body's
+		 * polygon.
+		 * @see RedBox::Animatable::frames
 		 */
-		void update();
-
-		/**
-		 * Renders the button's sprite.
-		 */
-		void render();
-
-		/**
-		 * Similar to the render function except that it will only
-		 * render to the alpha component of the color buffer. It is
-		 * used to mask the next rendered graphic body (if the next graphic
-		 * body is set as a masked sprite).
-		 */
-		void mask();
-
-		/**
-		 * Undo what the mask function did. This function
-		 * MUST be once after the masked graphic body has been rendered.
-		 */
-		void unmask();
-
-		/**
-		 * Gets the graphic body masking the current button.
-		 * @return Pointer to the button's mask.
-		 */
-		GraphicBody *getMask();
-
-		/**
-		 * Sets the graphic body used to mask the button.
-		 * @param newMask A mask graphic body.
-		 * @param inversed Set this parameter to true if you want to inverse
-		 * the effect of the mask. False by default.
-		 */
-		void setMask(GraphicBody *newMask, bool inversed = false);
-
-		using GraphicBody::setPosition;
-
-		/**
-		 * Sets the simple button's horizontal and vertical position.
-		 * @param newXPosition New horizontal position (in pixels). Lower value
-		 * means more to the left.
-		 * @param newYPosition New vertical position (in pixels). Lower value
-		 * means more at the top.
-		 */
-		void setPosition(float newXPosition, float newYPosition);
-
-		/**
-		 * Gets the simple button's width.
-		 * @return Width in pixels (by default).
-		 */
-		float getWidth() const;
-
-		/**
-		 * Gets the simple button's height.
-		 * @return Height in pixels (by default).
-		 */
-		float getHeight() const;
-
-		using GraphicBody::scaleFromPoint;
-
-		/**
-		 * Scales the simple button from a specific point.
-		 * @param xScaling Horizontal scaling to apply. For example, if
-		 * 2.0f is passed, the simple button will be twice as wide.
-		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
-		 * passed, the simple button will be twice as high.
-		 * @param fromPoint Anchor point from which to apply the scaling.
-		 * @see RedBox::GraphicBody::scaling
-		 */
-		virtual void scaleFromPoint(float xScaling, float yScaling,
-		                            const Vector2 &fromPoint);
-
-		/**
-		 * Rotates the simple button from a point.
-		 * @param rotationAngle Angle to rotate the simple button.
-		 * @param rotationPoint Origin point on which to apply the rotation.
-		 * @see RedBox::GraphicBody::angle
-		 */
-		void rotateFromPoint(float rotationAngle, const Vector2 &rotationPoint);
-
-		/**
-		 * Sets if the button is active or not. An inactive button will not be
-		 * updated.
-		 * @param newActive New value for the active flag.
-		 * @see RedBox::Body::active
-		 */
-		void setActive(bool newActive);
-
-		/**
-		 * Creates a copy of the current simple button.
-		 * @return Pointer to the new simple button.
-		 */
-		GraphicBody *clone() const;
+		const TextureCoordinates &getCurrentTextureCoordinates() const;
 	private:
-		/// Sprite representing the button's graphic.
-		Sprite buttonSprite;
-
 		/**
 		 * Called when a pointer button press is detected while the cursor is
 		 * over the button.
@@ -194,11 +105,11 @@ namespace RedBox {
 		void onLeave();
 
 		/**
-		 * Initializes the 3 animations for the sprite.
+		 * Initializes the 4 animations for the sprite.
 		 */
 		void initializeAnimations();
 	};
+
 }
 
-#endif
 #endif
