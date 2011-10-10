@@ -1,6 +1,5 @@
 /**
  * @file
- * @ingroup Display
  */
 #ifndef RB_PARTICLE_PHASE_H
 #define RB_PARTICLE_PHASE_H
@@ -10,7 +9,6 @@
 namespace RedBox {
 	/**
 	 * Represents a phase in a particle's "life".
-	 * @ingroup Display
 	 */
 	struct ParticlePhase {
 		/**
@@ -36,15 +34,27 @@ namespace RedBox {
 		 * particle phase.
 		 */
 		ParticlePhase(double newPhaseDuration,
-					  double newPhaseDurationVariance,
-					  float newAlphaPerSecond = 0.0f,
-					  const Vector2& newScalingPerSecond = Vector2(),
-					  float newAnglePerSecond = 0.0f,
-					  float newAlphaPerSecondVariance = 0.0f,
-					  const Vector2& newScalingPerSecondVariance = Vector2(),
-					  float newAnglePerSecondVariance = 0.0f,
-					  const std::string& newAnimationName = std::string());
+		              double newPhaseDurationVariance,
+		              float newAlphaPerSecond = 0.0f,
+		              const Vector2 &newScalingPerSecond = Vector2(),
+		              float newAnglePerSecond = 0.0f,
+		              float newAlphaPerSecondVariance = 0.0f,
+		              const Vector2 &newScalingPerSecondVariance = Vector2(),
+		              float newAnglePerSecondVariance = 0.0f,
+		              const std::string &newAnimationName = std::string());
 
+		/**
+		 * Copy constructor.
+		 * @param src ParticlePhase to make a copy of.
+		 */
+		ParticlePhase(const ParticlePhase &src);
+
+		/**
+		 * Assignment operator.
+		 * @param src ParticlePhase to make a copy of.
+		 * @return Reference to the modified ParticlePhase.
+		 */
+		ParticlePhase &operator=(const ParticlePhase &src);
 		/// Minimum duration the phase will last.
 		double phaseDuration;
 
@@ -82,4 +92,4 @@ namespace RedBox {
 		std::string animationName;
 	};
 }
-#endif
+#endif // RB_PARTICLE_PHASE_H
