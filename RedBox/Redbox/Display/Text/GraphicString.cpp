@@ -1,3 +1,4 @@
+#if 0
 #include "GraphicString.h"
 
 #include <cmath>
@@ -428,4 +429,4 @@ void GraphicString::refreshPosition() {
 		}
 	}
 }
-
+#endif

@@ -1,3 +1,5 @@
+#if 0
+
 #include "IButton.h"
 
 #include "Pointer.h"
@@ -126,3 +128,5 @@ void IButton::update() {
 ButtonState IButton::getState() const {
 	return state;
 }
+
+#endif

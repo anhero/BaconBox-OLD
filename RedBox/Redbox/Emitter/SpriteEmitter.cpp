@@ -1,3 +1,4 @@
+#if 0
 #include "SpriteEmitter.h"
 
 #include <cassert>
@@ -159,3 +160,5 @@ void SpriteEmitter::setMaskParticle(GraphicBody* newMask, bool inversed,
 	assert(graphicBody);
 	graphicBody->setMask(newMask, inversed);
 }
+
+#endif

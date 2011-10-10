@@ -1,8 +1,8 @@
+#if 0
 /**
  * @file
  * @ingroup TextDisplay
  */
-
 #ifndef RB_GRAPHICSTRING_H
 #define RB_GRAPHICSTRING_H
 
@@ -295,4 +295,5 @@ namespace RedBox {
 	};
 }
 
+#endif
 #endif

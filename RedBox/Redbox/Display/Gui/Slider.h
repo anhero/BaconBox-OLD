@@ -1,3 +1,4 @@
+#if 0
 #ifndef RB_SLIDER_H
 #define RB_SLIDER_H
 
@@ -209,4 +210,5 @@ namespace RedBox {
 	};
 }
 
+#endif
 #endif

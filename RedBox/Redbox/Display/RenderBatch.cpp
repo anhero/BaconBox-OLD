@@ -1,3 +1,4 @@
+#if 0
 #include "RenderBatch.h"
 #include <limits>
 
@@ -256,3 +257,5 @@ namespace RedBox {
 
 	}
 }
+
+#endif

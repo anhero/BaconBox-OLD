@@ -1,3 +1,4 @@
+#if 0
 /**
  * @file
  * @ingroup GUI
@@ -199,4 +200,5 @@ namespace RedBox {
 	};
 }
 
+#endif
 #endif

@@ -1,3 +1,4 @@
+#if 0
 #ifndef RB_CHECK_BOX_H
 #define RB_CHECK_BOX_H
 
@@ -153,4 +154,5 @@ namespace RedBox {
 	};
 }
 
+#endif
 #endif

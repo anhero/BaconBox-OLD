@@ -1,3 +1,4 @@
+#if 0
 #include "Checkbox.h"
 
 namespace RedBox {
@@ -180,3 +181,5 @@ namespace RedBox {
 
 	}
 }
+
+#endif

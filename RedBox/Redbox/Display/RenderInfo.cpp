@@ -1,3 +1,4 @@
+#if 0
 #include "RenderInfo.h"
 
 #include <cmath>
@@ -396,3 +397,5 @@ namespace RedBox {
 		return output;
 	}
 }
+
+#endif

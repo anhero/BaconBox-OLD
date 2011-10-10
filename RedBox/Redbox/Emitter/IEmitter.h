@@ -1,3 +1,4 @@
+#if 0
 /**
  * @file
  * @ingroup Display
@@ -338,3 +339,5 @@ namespace RedBox {
 	};
 }
 #endif
+#endif
+

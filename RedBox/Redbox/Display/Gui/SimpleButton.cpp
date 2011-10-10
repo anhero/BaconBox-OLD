@@ -1,3 +1,4 @@
+#if 0
 #include "SimpleButton.h"
 
 namespace RedBox {
@@ -128,3 +129,5 @@ namespace RedBox {
 		buttonSprite.addAnimation("i", 0.0, 1, 1, 3);
 	}
 }
+
+#endif

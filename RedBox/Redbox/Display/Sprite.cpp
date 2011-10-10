@@ -1,3 +1,5 @@
+#if 0
+
 #include "Sprite.h"
 
 #include <cassert>
@@ -407,3 +409,5 @@ namespace RedBox {
 		}
 	}
 }
+
+#endif

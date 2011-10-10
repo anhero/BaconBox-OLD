@@ -1,3 +1,4 @@
+#if 0
 #include "DebugState.h"
 
 #include "GraphicBody.h"
@@ -68,3 +69,5 @@ void DebugState::onKeyRelease(KeySignalData data) {
 		Console::println(camera.screenToWorld(Pointer::getDefault()->getState().getCursorState().getPosition()));
 	}
 }
+
+#endif

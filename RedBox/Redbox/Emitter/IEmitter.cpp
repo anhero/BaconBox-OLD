@@ -1,3 +1,4 @@
+#if 0
 #include "IEmitter.h"
 
 using namespace RedBox;
@@ -191,3 +192,4 @@ float IEmitter::getWidth() const {
 float IEmitter::getHeight() const{
 	return 1.0f;
 }
+#endif

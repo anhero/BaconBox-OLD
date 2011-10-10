@@ -1,3 +1,4 @@
+#if 0
 /**
  * @file
  * @ingroup Display
@@ -430,3 +431,4 @@ namespace RedBox {
 }
 
 #endif // RB_SPRITE_H
+#endif

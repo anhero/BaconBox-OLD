@@ -1,3 +1,4 @@
+#if 0
 /**
  * @file
  * @ingroup Helper
@@ -49,4 +50,5 @@ namespace RedBox {
 	};
 }
 
+#endif
 #endif
