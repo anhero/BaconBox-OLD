@@ -1,6 +1,6 @@
 @echo off
 echo =================================
-echo = Building RedBoxApp on Windows =
+echo = Building RedBox on Windows    =
 echo =================================
 
 set OPENALDIR=C:\Program  Files\OpenAL 1.1 SDK\

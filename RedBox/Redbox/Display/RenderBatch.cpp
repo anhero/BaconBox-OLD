@@ -18,13 +18,49 @@ namespace RedBox {
 			removeSprite(*i);
 		}
 
+<<<<<<< local
 		if (textureCoord != NULL) {
 			delete [] textureCoord;
 		}
+=======
+    for (std::set<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); ++i) {
+        (*i)->update();
+    }
+    
+}
+>>>>>>> other
 
+<<<<<<< local
 		if (vertices != NULL) {
 			delete [] vertices;
 		}
+=======
+void RenderBatch::render(){
+    //If the user add/remove some sprites to the batch, we need to reconstruct it.
+    if (spritesCount != sprites.size()) {        
+        reconstruct();
+    }
+    for (std::set<Sprite*>::iterator i = sprites.begin(); i != sprites.end(); ++i) {
+        (*i)->getRenderInfo().updateBatchPointer();
+    }
+    if (renderModes.isSet(RenderMode::INVERSE_MASKED)&& renderModes.isSet(RenderMode::TEXTURE)) {
+        maskBody->mask();
+        
+        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*colorChannelCount), true);
+        maskBody->unmask();
+        
+    }
+    else if(renderModes.isSet(RenderMode::MASKED) && renderModes.isSet(RenderMode::TEXTURE)){
+        maskBody->mask();
+        GraphicDriver::drawMaskedBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*colorChannelCount), false);
+        maskBody->unmask();
+    }
+    else if (renderModes.isSet(RenderMode::TEXTURE)){
+        GraphicDriver::drawBatchWithTextureAndColor(CArray<Vector2>(vertices, verticesCount), CArray<Vector2>(textureCoord, verticesCount), CArray<unsigned short>(&(indices[0]), indices.size()), textureInfo, CArray<unsigned char>(&(colors[0]), verticesCount*colorChannelCount));
+    }
+    
+}
+>>>>>>> other
 
 		if (colors != NULL) {
 			delete [] colors;

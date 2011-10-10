@@ -28,12 +28,13 @@ void SDLMainWindow::onRedBoxInit(unsigned int resolutionWidth, unsigned int reso
 	if(SDL_GL_SetSwapInterval(1) < 0) { printf("opengl error [SetSwapInterval]: %s\n", SDL_GetError()); }
 	InputManager::getInstance().setNbKeyboards(1);
 	InputManager::getInstance().setNbPointers(1);
+
+	#ifdef RB_GLEW
+	glewInit();
+	#endif
 }
 
 void SDLMainWindow::show() {
-#ifdef RB_GLEW
-glewInit();
-#endif
 	while(SDLInputManager::getSDLInstance()->isRunning()) {
 		Engine::pulse();
 		if(!Engine::isBufferSwapped()) {
