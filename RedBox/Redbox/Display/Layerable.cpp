@@ -1,0 +1,42 @@
+#include "Layerable.h"
+
+namespace RedBox {
+	bool Layerable::LessCompare::operator()(const Layerable *l1,
+	                                          const Layerable *l2) {
+		return (l1 && l2) && (l1->getZ() < l2->getZ() ||
+		                      (l1->getZ() == l2->getZ() &&
+		                       (l1->getXScrollFactor() < l2->getXScrollFactor() ||
+		                        (l1->getXScrollFactor() == l2->getXScrollFactor() &&
+		                         l1->getYScrollFactor() < l2->getYScrollFactor()))));
+	}
+
+	Layerable::Layerable() : Disableable(), Manageable(), Orderable(),
+		Scrollable() {
+	}
+
+	Layerable::Layerable(const Layerable &src) : Disableable(src),
+		Manageable(src), Orderable(src), Scrollable(src) {
+	}
+
+	Layerable::~Layerable() {
+	}
+
+	Layerable &Layerable::operator=(const Layerable &src) {
+		this->Disableable::operator=(src);
+		this->Manageable::operator=(src);
+		this->Orderable::operator=(src);
+		this->Scrollable::operator=(src);
+		return *this;
+	}
+
+	void Layerable::setZ(int newZ) {
+		this->Orderable::setZ(newZ);
+		this->keyChange();
+	}
+
+	void Layerable::setScrollFactor(float newXScrollFactor,
+	                                  float newYScrollFactor) {
+		this->Scrollable::setScrollFactor(newXScrollFactor, newYScrollFactor);
+		this->keyChange();
+	}
+}
