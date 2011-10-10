@@ -1,94 +1,66 @@
-#if 0
 #include "Checkbox.h"
 
+#include "TextureInformation.h"
+
 namespace RedBox {
+	Checkbox::Checkbox(const std::string &newTextureKey,
+	                   const Vector2 &startingPosition,
+	                   const Vector2 &newSize,
+	                   const Vector2 &newTextureOffset) : Button() {
+		this->setTextureInformation(newTextureKey);
 
-	Checkbox::Checkbox(const std::string &textureKey, unsigned int frameWidth,
-	                   unsigned int frameHeight) : IButton(),
-		buttonSprite(textureKey, frameWidth, frameHeight, 6), checked(false) {
-		initializeAnimations();
+		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
+			construct(newSize, startingPosition, newTextureOffset, 8);
+			this->initializeAnimations();
+
+		} else if (this->getTextureInformation()) {
+			construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth / 8),
+			                  static_cast<float>(this->getTextureInformation()->imageHeight)),
+			          startingPosition, newTextureOffset, 8);
+			this->initializeAnimations();
+		}
 	}
 
-	Checkbox::Checkbox(TextureInformation *textureInfo, unsigned int frameWidth,
-	                   unsigned int frameHeight) : IButton(),
-		buttonSprite(textureInfo, frameWidth, frameHeight, 6), checked(false) {
-		initializeAnimations();
+	Checkbox::Checkbox(const TextureInformation *newTextureInformation,
+	                   const Vector2 &startingPosition,
+	                   const Vector2 &newSize,
+	                   const Vector2 &newTextureOffset) : Button() {
+		this->setTextureInformation(newTextureInformation);
+
+		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
+			construct(newSize, startingPosition, newTextureOffset, 8);
+			this->initializeAnimations();
+
+		} else if (this->getTextureInformation()) {
+			construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth / 8),
+			                  static_cast<float>(this->getTextureInformation()->imageHeight)),
+			          startingPosition, newTextureOffset, 8);
+			this->initializeAnimations();
+		}
 	}
 
-	Checkbox::Checkbox(const Checkbox &src) : IButton(src),
-		buttonSprite(src.buttonSprite), checked(false) {
+	Checkbox::Checkbox(const Checkbox &src) : Button(src) {
 	}
 
 	Checkbox::~Checkbox() {
 	}
 
 	Checkbox &Checkbox::operator=(const Checkbox &src) {
-		this->IButton::operator=(src);
-
-		if (this != &src) {
-			buttonSprite = src.buttonSprite;
-			checked = src.checked;
-		}
-
+		this->Button::operator=(src);
 		return *this;
 	}
 
-	void Checkbox::update() {
-		this->IButton::update();
-		buttonSprite.update();
-	}
+	const TextureCoordinates &Checkbox::getCurrentTextureCoordinates() const {
+		if (this->isActive()) {
+			return this->Button::getCurrentTextureCoordinates();
 
-	void Checkbox::render() {
-		buttonSprite.render();
-	}
+		} else if (isChecked()) {
+			return this->getFrames()[7];
 
-	void Checkbox::mask() {
-		buttonSprite.mask();
+		} else {
+			return this->getFrames()[6];
+		}
 	}
-
-	void Checkbox::unmask() {
-		buttonSprite.unmask();
-	}
-
-	GraphicBody *Checkbox::getMask() {
-		return buttonSprite.getMask();
-	}
-
-	void Checkbox::setMask(GraphicBody *newMask, bool inverted) {
-		buttonSprite.setMask(newMask, inverted);
-	}
-
-	void Checkbox::setPosition(float newXPosition, float newYPosition) {
-		this->IButton::setPosition(newXPosition, newYPosition);
-		buttonSprite.setPosition(newXPosition, newYPosition);
-	}
-
-	float Checkbox::getWidth() const {
-		return buttonSprite.getWidth();
-	}
-
-	float Checkbox::getHeight() const {
-		return buttonSprite.getHeight();
-	}
-
-	void Checkbox::scaleFromPoint(float xScaling, float yScaling,
-	                              const Vector2 &fromPoint) {
-		this->IButton::scaleFromPoint(xScaling, yScaling, fromPoint);
-		buttonSprite.scaleFromPoint(xScaling, yScaling, fromPoint);
-		this->IButton::setPosition(buttonSprite.getXPosition(), buttonSprite.getYPosition());
-	}
-
-	void Checkbox::rotateFromPoint(float rotationAngle,
-	                               const Vector2 &rotationPoint) {
-		this->IButton::rotateFromPoint(rotationAngle, rotationPoint);
-		buttonSprite.rotateFromPoint(rotationAngle, rotationPoint);
-		this->IButton::setPosition(buttonSprite.getXPosition(), buttonSprite.getYPosition());
-	}
-
-	GraphicBody *Checkbox::clone() const {
-		return new Checkbox(*this);
-	}
-
 	bool Checkbox::isChecked() const {
 		return checked;
 	}
@@ -96,42 +68,60 @@ namespace RedBox {
 	void Checkbox::setChecked(bool newChecked) {
 		checked = newChecked;
 
-		if (this->getState() == ButtonState::NORMAL) {
-			if (isChecked()) {
-				buttonSprite.playAnimation("cn");
+		if (this->isActive()) {
+			if (this->getButtonState() == ButtonState::NORMAL) {
+				if (isChecked()) {
+					this->startAnimation("cn");
 
-			} else {
-				buttonSprite.playAnimation("n");
+				} else {
+					this->startAnimation("n");
+				}
+
+			} else if (this->getButtonState() == ButtonState::HOVER) {
+				if (isChecked()) {
+					this->startAnimation("ch");
+
+				} else {
+					this->startAnimation("h");
+				}
+
+			} else if (this->getButtonState() == ButtonState::PRESSED) {
+				if (isChecked()) {
+					this->startAnimation("cp");
+
+				} else {
+					this->startAnimation("p");
+				}
 			}
 
-		} else if (this->getState() == ButtonState::HOVER) {
+		} else {
 			if (isChecked()) {
-				buttonSprite.playAnimation("ch");
+				this->startAnimation("cd");
 
 			} else {
-				buttonSprite.playAnimation("h");
-			}
-
-		} else if (this->getState() == ButtonState::PRESSED) {
-			if (isChecked()) {
-				buttonSprite.playAnimation("cp");
-
-			} else {
-				buttonSprite.playAnimation("p");
+				this->startAnimation("d");
 			}
 		}
 	}
 
+	void Checkbox::check() {
+		setChecked(true);
+	}
+
+	void Checkbox::uncheck() {
+		setChecked(false);
+	}
+
 	void Checkbox::toggleChecked() {
-		setChecked(!checked);
+		setChecked(!isChecked());
 	}
 
 	void Checkbox::onPress() {
 		if (isChecked()) {
-			buttonSprite.playAnimation("cp");
+			this->startAnimation("cp");
 
 		} else {
-			buttonSprite.playAnimation("p");
+			this->startAnimation("p");
 		}
 	}
 
@@ -142,10 +132,10 @@ namespace RedBox {
 		toggleChecked();
 
 		if (isChecked()) {
-			buttonSprite.playAnimation("ch");
+			this->startAnimation("ch");
 
 		} else {
-			buttonSprite.playAnimation("h");
+			this->startAnimation("h");
 		}
 
 		click();
@@ -153,10 +143,10 @@ namespace RedBox {
 
 	void Checkbox::onEnter() {
 		if (isChecked()) {
-			buttonSprite.playAnimation("ch");
+			this->startAnimation("ch");
 
 		} else {
-			buttonSprite.playAnimation("h");
+			this->startAnimation("h");
 		}
 
 		hover();
@@ -164,22 +154,21 @@ namespace RedBox {
 
 	void Checkbox::onLeave() {
 		if (isChecked()) {
-			buttonSprite.playAnimation("cn");
+			this->startAnimation("cn");
 
 		} else {
-			buttonSprite.playAnimation("n");
+			this->startAnimation("n");
 		}
 	}
 
 	void Checkbox::initializeAnimations() {
-		buttonSprite.addAnimation("n", 0.0, 1, 1, 0);
-		buttonSprite.addAnimation("h", 0.0, 1, 1, 1);
-		buttonSprite.addAnimation("p", 0.0, 1, 1, 2);
-		buttonSprite.addAnimation("cn", 0.0, 1, 1, 3);
-		buttonSprite.addAnimation("ch", 0.0, 1, 1, 4);
-		buttonSprite.addAnimation("cp", 0.0, 1, 1, 5);
-
+		this->addAnimation("n", 0.0, 0, 1, 0);
+		this->addAnimation("h", 0.0, 0, 1, 1);
+		this->addAnimation("p", 0.0, 0, 1, 2);
+		this->addAnimation("cn", 0.0, 0, 1, 3);
+		this->addAnimation("ch", 0.0, 0, 1, 4);
+		this->addAnimation("cp", 0.0, 0, 1, 5);
+		this->addAnimation("d", 0.0, 0, 1, 6);
+		this->addAnimation("cd", 0.0, 0, 1, 7);
 	}
 }
-
-#endif
