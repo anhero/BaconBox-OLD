@@ -14,16 +14,23 @@
 	#define RB_SDL
 #endif
 
+#ifdef OPENGL
+	#define RB_OPENGL
+	#ifdef OPENGLES
+		#define RB_OPENGLES
+	#endif
+#endif // OPENGL
+
 
 /* ****************************************************************************
  * System-specific defines
  */
 //Android platform
 #ifdef __ANDROID__
-#define RB_ANDROID
-#define RB_OPENGL
-#define RB_OPENGLES
-#endif
+	#define RB_ANDROID
+	#define RB_OPENGL
+	#define RB_OPENGLES
+#endif // __ANDROID__
 
 //Linux systems
 #ifdef linux
@@ -31,9 +38,10 @@
 
 	#define RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
 	#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
-#ifndef RB_ANDROID
-	#define RB_HAS_GCC_STACKTRACE
-#endif
+
+	#ifndef RB_ANDROID
+		#define RB_HAS_GCC_STACKTRACE
+	#endif
 #endif // linux
 
 //Windows systems
@@ -54,26 +62,24 @@
 	#include "TargetConditionals.h"
 
 	#define RB_APPLE_PLATFORM
-    #define RB_OPENGL
+
 	//More detailed platforms
 	#if TARGET_IPHONE_SIMULATOR
 		#define RB_IPHONE_PLATFORM
 		#define RB_IPHONE_SIMULATOR_PLATFORM
-		#define RB_OPENGLES
 	#endif // TARGET_IPHONE_SIMULATOR
 
 	#if TARGET_OS_IPHONE
 		#define RB_IPHONE_PLATFORM
 		#define RB_IPHONE_DEVICE_PLATFORM
-		#define RB_OPENGLES
 	#endif // TARGET_OS_IPHONE
 
 	#if TARGET_OS_MAC
 		#define RB_MAC_PLATFORM
 	#endif
 
-	//Time on iOS
 	#ifdef RB_IPHONE_PLATFORM
+		//Time on iOS
 		#define RB_TIME_HELPER_IMPL RedBox::IOSTimeHelper
 		#define RB_TIME_HELPER_INCLUDE "IOSTimeHelper.h"
 	#elif defined(RB_MAC_PLATFORM)
@@ -90,7 +96,7 @@
  */
 
 //SDL platform
-#if defined(RB_SDL)
+#ifdef RB_SDL
 	//Graphics engine for SDL
 	#define RB_OPENGL
 
@@ -110,10 +116,10 @@
 
 	#define RB_MAINWINDOW_IMPL SDLMainWindow::getInstance()
 	#define RB_MAINWINDOW_INCLUDE "SDLMainWindow.h"
-#endif
+#endif // RB_SDL
 
 //Qt platform
-#if defined(RB_QT)
+#ifdef RB_QT
 	//Graphics engine for Qt
 	#define RB_OPENGL
 
@@ -130,11 +136,10 @@
 
 	#define RB_MAINWINDOW_IMPL QtMainWindow::getInstance()
 	#define RB_MAINWINDOW_INCLUDE "QtMainWindow.h"
-#endif
+#endif // RB_QT
 
 //iOS platform
-#if defined(RB_IPHONE_PLATFORM)
-	
+#ifdef RB_IPHONE_PLATFORM
 	//Sound engine for iOS
 	#define RB_OPENAL
 	#define RB_SOUND_ENGINE OpenALEngine::getInstance()
@@ -144,18 +149,20 @@
 	#define RB_AV_AUDIO_PLAYER
 	#define RB_MUSIC_ENGINE RBAudioPlayerEngine::getInstance()
 	#define RB_MUSIC_ENGINE_INCLUDE "RBAudioPlayerEngine.h"
-	
+
 
 	//Input engine for iOS
-	#define RB_POINTER_IMPL new IOSPointer()
 	#define RB_POINTER_INCLUDE "IOSPointer.h"
-    
-    #define RB_MAINWINDOW_INCLUDE "IOSMainWindow.h"
-    #define RB_MAINWINDOW_IMPL IOSMainWindow::getInstance()
+	#define RB_POINTER_IMPL new IOSPointer()
+
+	#define RB_MAINWINDOW_INCLUDE "IOSMainWindow.h"
+	#define RB_MAINWINDOW_IMPL IOSMainWindow::getInstance()
+#endif // RB_IPHONE_PLATFORM
+
+#ifdef RB_OPENGL
+	#define RB_GRAPHIC_DRIVER OpenGLDriver::getInstance()
+	#define RB_GRAPHIC_DRIVER_INCLUDE "OpenGLDriver.h"
 #endif
-
-
-
 
 /*
 //Mac platform (without SDL or Qt) (currently unsupported)
@@ -175,7 +182,7 @@
  * Defaulting implementations if not defined
  */
 
-//For NULL inputs
+// For NULL inputs
 #ifndef RB_POINTER_IMPL
 	#define RB_POINTER_IMPL NULL
 #endif
@@ -189,20 +196,27 @@
 	#define RB_GAME_PAD_IMPL NULL
 #endif
 
-//For NULL sound engine
+// For NULL sound engine
 #ifndef RB_SOUND_ENGINE
 	#define RB_SOUND_ENGINE NullAudioEngine::getInstance()
 	#define RB_SOUND_ENGINE_INCLUDE "NullAudioEngine.h"
-#endif
+#endif // RB_SOUND_ENGINE
+
+// For NULL music engine
 #ifndef RB_MUSIC_ENGINE
 	#define RB_MUSIC_ENGINE NullAudioEngine::getInstance()
 	#define RB_MUSIC_ENGINE_INCLUDE "NullAudioEngine.h"
+#endif // RB_MUSIC_ENGINE
+
+// For NULL graphic driver.
+#ifndef RB_GRAPHIC_DRIVER
+	#define RB_GRAPHIC_DRIVER NullGraphicDriver::getInstance()
+	#define RB_GRAPHIC_DRIVER_INCLUDE "NullGraphicDriver.h"
 #endif
 
-//Default input manager
+// Default input manager
 #ifndef RB_INPUT_MANAGER_IMPL
 	#define RB_INPUT_MANAGER_IMPL RedBox::InputManager
 #endif
-
 
 #endif // RB_PLATFORM_FLAGGER_H

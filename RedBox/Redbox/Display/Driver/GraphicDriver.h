@@ -2,98 +2,102 @@
  * @file
  * @ingroup GraphicDrivers
  */
-#ifndef RB_GRAPHICDRIVER_H
-#define RB_GRAPHICDRIVER_H
+#ifndef RB_GRAPHIC_DRIVER_H
+#define RB_GRAPHIC_DRIVER_H
 
 #include <vector>
-#include "PixMap.h"
-#include "Color.h"
-#include "Vector2.h"
-#include "CArray.h"
+
+#include "TextureCoordinates.h"
 
 namespace RedBox {
-	class RenderInfo;
+	class VerticesArray;
 	struct TextureInformation;
+	class Color;
+	class PixMap;
 	/**
 	 * Graphic abstraction layer.
-	 * A driver must handle rendering and loading (into graphic memory) of bitmap data.
+	 * A driver must handle rendering and loading (into graphic memory) of
+	 * bitmap data.
 	 * @class GraphicDriver
 	 * @ingroup Driver
 	 */
 	class GraphicDriver {
 	public:
 		/**
+		 * Gets the graphic driver instance.
+		 * @return Reference to the graphic driver singleton.
+		 */
+		static GraphicDriver &getInstance();
+
+		/**
 		 * Draw a colored and textured shape with the given vertices, texture
-		 * coordinate, rendering informations (colors array and textureID) and
+		 * coordinate, rendering informations (colors array and texture) and
 		 * number of vertices. Color information will blend with the texture
 		 * (and background if alpha is not at max value of 255).
 		 * @param vertices Vertices to draw.
-		 * @param renderingInfo Object of type RenderInfo, containing colors array and textureID
-		 * @param nbVertices Number equal to the number of vertices to draw
+		 * @param textureInformation Pointer to the texture information.
+		 * @param textureCoordinates Texture coordinates in the texture to
+		 * draw.
+		 * @param color Color to render.
 		 */
-		static void drawShapeWithTextureAndColor(CArray<Vector2>& vertices,
-		                                         RenderInfo &renderingInfo);
+		virtual void drawShapeWithTextureAndColor(const VerticesArray &vertices,
+		                                          const TextureInformation *textureInformation,
+		                                          const TextureCoordinates &textureCoordinates,
+		                                          const Color &color) = 0;
+
 		/**
 		 * Draw a textured shape with the given vertices, texture coordinate,
 		 * rendering informations (colors array and textureID) and number of
 		 * vertices.
 		 * @param vertices Vertices to draw.
-		 * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
-		 * @param nbVertices Number equal to the number of vertices to draw.
+		 * @param textureInformation Pointer to the texture information.
+		 * @param textureCoordinates Texture coordinates in the texture to
+		 * draw.
 		 */
-		static void drawShapeWithTexture(CArray<Vector2>& vertices,
-		                                 RenderInfo &renderingInfo);
+		virtual void drawShapeWithTexture(const VerticesArray &vertices,
+		                                  const TextureInformation *textureInformation,
+		                                  const TextureCoordinates &textureCoordinates) = 0;
+
 		/**
 		 * Draws a colored shape.
-		 * @param vertices Vertices' coordinates forming the shape to draw.
-		 * @param renderingInfo Contains general and platform-specific
-		 * information about how to render the shape.
-		 * @param nbVertices Number of vertices the shape has.
+		 * @param vertices Vertices to draw.
+		 * @param color Color to render.
 		 */
-		static void drawShapeWithColor(CArray<Vector2>& vertices,
-		                               RenderInfo &renderingInfo);
+		virtual void drawShapeWithColor(const VerticesArray &vertices,
+		                                const Color &color) = 0;
+
+		/**
+		 * Draws the alpha component of the given vertices and texture to the
+		 * alpha component of the frame buffer, so the next call to any
+		 * "drawMaskedShape..." functions can use the given mask as its inverted
+		 * alpha value. This version of the function will also use the alpha
+		 * component of the shape's color (in addition to the texture alpha
+		 * component).
+		 * @param vertices Vertices to draw.
+		 * @param textureInformation Pointer to the texture information.
+		 * @param textureCoordinates Texture coordinates in the texture to
+		 * draw.
+		 * @param color Color to render.
+		 */
+		virtual void drawMaskShapeWithTextureAndColor(const VerticesArray &vertices,
+		                                              const TextureInformation *textureInformation,
+		                                              const TextureCoordinates &textureCoordinates,
+		                                              const Color &color) = 0;
 
 		/**
 		 * Draw the alpha component of the given vertices and texture to the
 		 * alpha component of the frame buffer, so the next call to any
-		 * "drawMaskedShape..." functions can use the given mask as it's inversed
-		 * alpha value.
+		 * "drawMaskedShape..." functions can use the given mask as its
+		 * inverted alpha value.
 		 * @param vertices Vertices to draw.
-		 * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
-		 * @param nbVertices Number equal to the number of vertices to draw.
-
+		 * @param textureInformation Pointer to the texture information.
+		 * @param textureCoordinates Texture coordinates in the texture to
+		 * draw.
 		 */
-		static void drawMaskShapeWithTexture(CArray<Vector2>& vertices,
-		                                     RenderInfo &renderingInfo);
+		virtual void drawMaskShapeWithTexture(const VerticesArray &vertices,
+		                                      const TextureInformation *textureInformation,
+		                                      const TextureCoordinates &textureCoordinates) = 0;
 
-		static void drawMaskBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord,
-		                                             const CArray<unsigned short>& indices, const TextureInformation &textureInfo,
-		                                             const CArray<unsigned char> & colors);
-
-
-		static void drawBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord,
-		                                         const CArray<unsigned short>& indices, const TextureInformation &textureInfo, const CArray<unsigned char> & colors);
-
-
-		static void drawBatchWithTexture(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord,
-		                                 const CArray<unsigned short>& indices, const TextureInformation &textureInfo);
-
-
-		static void drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord,
-		                                               const CArray<unsigned short>& indices, const TextureInformation &textureInfo, const CArray<unsigned char>& colors, bool inversedMask);
-
-		/**
-		 * Reset the alpha channel to it's original state after a call
-		 * to any "drawMask..." function.
-		 * @param vertices Vertices to draw.
-		 * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
-		 * @param nbVertices Number equal to the number of vertices to draw.
-
-		 */
-		static void unmaskShape(CArray<Vector2>& vertices,
-		                        RenderInfo &renderingInfo);
-
-		static void unmaskBatch(const CArray<Vector2>& vertices, const CArray<unsigned short>& indices);
 		/**
 		 * Draw the giver shape masked by using a blend between the alpha
 		 * component of the shape and the inversed alpha component
@@ -103,28 +107,51 @@ namespace RedBox {
 		 * This version of the function render with a texture and a color.
 		 * @param vertices Array of vertices to draw. They have to be like this:
 		 * [x1, y1, x2, y2, x3, y3, ...]. The order must be clockwise.
-		 * @param renderingInfo Contains the information about the shape's
-		 * color.
-		 * @param nbVertices Number of vertices the array contains.
-		 * @param inversedMask If true, the mask effect will be reversed.
+		 * @param textureInformation Pointer to the texture information.
+		 * @param textureCoordinates Texture coordinates in the texture to
+		 * draw.
+		 * @param color Color to render.
+		 * @param invertedMask If true, the mask effect will be inverted.
 		 */
-		static void drawMaskedShapeWithTextureAndColor(CArray<Vector2>& vertices,
-		                                               RenderInfo &renderingInfo,
-		                                               bool inversedMask = false);
+		virtual void drawMaskedShapeWithTextureAndColor(const VerticesArray &vertices,
+		                                                const TextureInformation *textureInformation,
+		                                                const TextureCoordinates &textureCoordinates,
+		                                                const Color &color,
+		                                                bool invertedMask = false) = 0;
 
 		/**
-		 * Draw the alpha component of the given vertices and texture to the
-		 * alpha component of the frame buffer, so the next call to any
-		 * "drawMaskedShape..." functions can use the given mask as it's inversed
-		 * alpha value.This version of the function will also use the alpha component of
-		 * the shape's color (in addition to the texture alpha component).
+		 * Reset the alpha channel to it's original state after a call
+		 * to any "drawMask..." function.
 		 * @param vertices Vertices to draw.
-		 * @param renderingInfo Object of type RenderInfo, containing colors array and textureID.
-		 * @param nbVertices Number equal to the number of vertices to draw.
-
 		 */
-		static void drawMaskShapeWithTextureAndColor(CArray<Vector2>& vertices,
-		                                             RenderInfo &renderingInfo);
+		virtual void unmaskShape(const VerticesArray &vertices) = 0;
+
+		virtual void drawBatchWithTextureAndColor(const VerticesArray &vertices,
+		                                          const TextureInformation *textureInformation,
+		                                          const TextureCoordinates &textureCoordinates,
+		                                          const std::vector<unsigned short> &indices,
+		                                          const std::vector<unsigned char> &colors) = 0;
+
+		virtual void drawBatchWithTexture(const VerticesArray &vertices,
+		                                  const TextureInformation *textureInformation,
+		                                  const TextureCoordinates &textureCoordinates,
+		                                  const std::vector<unsigned short> &indices) = 0;
+
+		virtual void drawMaskBatchWithTextureAndColor(const VerticesArray &vertices,
+		                                              const TextureInformation *textureInformation,
+		                                              const TextureCoordinates &textureCoordinates,
+		                                              const std::vector<unsigned short> &indices,
+		                                              const std::vector<unsigned char> &colors) = 0;
+
+		virtual void drawMaskedBatchWithTextureAndColor(const VerticesArray &vertices,
+		                                                const TextureInformation *textureInformation,
+		                                                const TextureCoordinates &textureCoordinates,
+		                                                const std::vector<unsigned short> &indices,
+		                                                const std::vector<unsigned char> &colors,
+		                                                bool invertedMask) = 0;
+
+		virtual void unmaskBatch(const VerticesArray &vertices,
+		                         const std::vector<unsigned short> &indices) = 0;
 
 		/**
 		 * Prepare the scene before rendering object.
@@ -136,35 +163,45 @@ namespace RedBox {
 		 * more than 1 zoom in.
 		 * @param backgroundColor The scene's background color.
 		 */
-		static void prepareScene(const Vector2 &position, float angle, float zoom,
-		                         const Color &backgroundColor,
-		                         const Vector2 &rotationCenterOffset);
+		virtual void prepareScene(const Vector2 &position, float angle,
+		                          const Vector2 &zoom,
+		                          const Color &backgroundColor) = 0;
 
 
-		static void initializeGraphicDriver(float contextWidth,
-		                                    float contextHeight);
+		virtual void initializeGraphicDriver(float contextWidth,
+		                                     float contextHeight) = 0;
 
 		/**
 		 * Pushes the current matrix on the stack.
 		 */
-		static void pushMatrix();
+		virtual void pushMatrix() = 0;
 
 		/**
 		 * Applies a translation on the current matrix.
 		 * @param translation 2D translation to apply.
 		 */
-		static void translate(const Vector2 &translation);
+		virtual void translate(const Vector2 &translation) = 0;
 
 		/**
 		 * Pops the current matrix from the stack.
 		 */
-		static void popMatrix();
+		virtual void popMatrix() = 0;
 
 		/**
 		 * Load a texture into graphic memory.
 		 * @param pixMap A pixmap object containing the buffer the driver must load.
 		 */
-		static TextureInformation *loadTexture(PixMap *pixMap);
+		virtual TextureInformation *loadTexture(PixMap *pixMap) = 0;
+	protected:
+		/**
+		 * Default constructor.
+		 */
+		GraphicDriver();
+
+		/**
+		 * Destructor.
+		 */
+		virtual ~GraphicDriver();
 	};
 
 }

@@ -42,7 +42,7 @@ namespace RedBox {
 				}
 
 				// We load the new texture.
-				texInfo = textures[key] = GraphicDriver::loadTexture(aPixmap);
+				texInfo = textures[key] = GraphicDriver::getInstance().loadTexture(aPixmap);
 				Console::println("Overwrote the existing texture named " + key + ".");
 
 			} else {
@@ -53,7 +53,7 @@ namespace RedBox {
 
 		} else {
 			// We load the new texture and add it to the map.
-			texInfo = GraphicDriver::loadTexture(aPixmap);
+			texInfo = GraphicDriver::getInstance().loadTexture(aPixmap);
 			textures.insert(std::pair<std::string, TextureInformation *>(key, texInfo));
 		}
 
