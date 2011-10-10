@@ -133,6 +133,18 @@ namespace RedBox {
 		}
 
 		/**
+		 * Does a scalar division to the instance's coordinates by using the
+		 * right-hand side's coordinates as the divisiors.
+		 * @param rhs Vector containing the coordinates to be used as the
+		 * divisors.
+		 * @return Reference to the modified insance.
+		 */
+		Vector2T<ValueType>& operator/=(const Vector2T<ValueType> &rhs) {
+			scalarDivision(rhs);
+			return *this;
+		}
+
+		/**
 		 * Adds to vectors's coordinates together.
 		 * @param other Vector to add to the instance's copy.
 		 * @return Sum of the instance's copy and the recieved vector.
@@ -198,6 +210,17 @@ namespace RedBox {
 		 * scalar value.
 		 */
 		const Vector2T<ValueType> operator/(ValueType other) const {
+			return Vector2T<ValueType>(*this) /= other;
+		}
+
+		/**
+		 * Divides a vector's coordinates by another vector's coordinates.
+		 * @param other Vector containing the coordinates to use as the
+		 * divisors.
+		 * @return Quotient of the copy of the instance and the recieved
+		 * vector.
+		 */
+		const Vector2T<ValueType> operator/(const Vector2T<ValueType> &other) const {
 			return Vector2T<ValueType>(*this) /= other;
 		}
 
@@ -384,11 +407,29 @@ namespace RedBox {
 		}
 
 		/**
+		 * Divides the instance's coordinates by given divisors.
+		 * @param xDivisor X divisor to divide the instance's x coordinate by.
+		 * @param yDivisor Y divisor to divide the instance's x coordinate by.
+		 */
+		void scalarDivision(ValueType xDivisor, ValueType yDivisor) {
+			setXY(getX() / xDivisor, getY() / yDivisor);
+		}
+
+		/**
+		 * Divides the instance's coordinates by another vector's coordinates.
+		 * @param divisor Vector containing the coordinates to use as the
+		 * divisors.
+		 */
+		void scalarDivision(const Vector2T<ValueType> &divisor) {
+			scalarDivision(divisor.getX(), divisor.getY());
+		}
+
+		/**
 		 * Divides the instance's coordinates by a given divisor.
 		 * @param divisor Divisor to divide the instance's coordinates by.
 		 */
 		void scalarDivision(ValueType divisor) {
-			setXY(getX() / divisor, getY() / divisor);
+			scalarDivision(divisor, divisor);
 		}
 
 		/**
