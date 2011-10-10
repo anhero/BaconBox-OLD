@@ -6,256 +6,244 @@
 #include "TimeHelper.h"
 #include "Random.h"
 #include "Engine.h"
-#include "GraphicBody.h"
 #include "MainWindow.h"
-using namespace RedBox;
 
-Camera::Camera(): Body(), position(Vector2()), angle(0), zoomFactor(1.0f),
-	backgroundColor(Color::BLACK), shakeIntensity(0.0f),
-	shakeStart(0.0), shakeDuration(0.0), shakeAxes(ShakeAxes::BOTH_AXES),
-	offset(Vector2()) {
-}
-
-Camera::Camera(const Camera& src) : Body(), position(src.position),
-	angle(src.angle), zoomFactor(src.zoomFactor),
-	backgroundColor(src.backgroundColor), shakeIntensity(src.shakeIntensity),
-	shakeStart(src.shakeStart), shakeAxes(src.shakeAxes), offset(src.offset) {
-}
-
-Camera& Camera::operator=(const Camera& src) {
-	Body::operator=(src);
-
-	if(this != &src) {
-		position = src.position;
-		angle = src.angle;
-		zoomFactor = src.zoomFactor;
-		backgroundColor = src.backgroundColor;
-		shakeIntensity = src.shakeIntensity;
-		shakeStart = src.shakeStart;
-		shakeAxes = src.shakeAxes;
-		offset = src.offset;
+namespace RedBox {
+	Camera::Camera() : Collidable(), Disableable(),
+		Shapable<StandardVerticesArray>(), backgroundColor(Color::BLACK),
+		shakeIntensity(0.0f), shakeStart(0.0), shakeDuration(0.0), shakeAxes(ShakeAxes::BOTH_AXES), offset() {
+		this->getVertices().resize(4);
+		StandardVerticesArray::Iterator i = this->getVertices().getBegin();
+		++i;
+		i->setXY(MainWindow::getInstance().getContextWidth(), 0.0f);
+		++i;
+		i->setXY(MainWindow::getInstance().getContextWidth(),
+		         MainWindow::getInstance().getContextHeight());
+		++i;
+		i->setXY(0.0f, MainWindow::getInstance().getContextHeight());
 	}
 
-	return *this;
-}
-
-const Vector2& Camera::getPosition() const {
-	return position;
-}
-
-void Camera::setPosition(float x, float y) {
-	position = Vector2(x, y);
-}
-
-void Camera::setPosition(const Vector2& newPosition) {
-	position = newPosition;
-}
-
-void Camera::move(float x, float y) {
-	position += Vector2(x, y);
-}
-
-void Camera::move(const Vector2& moveVector) {
-	position += moveVector;
-}
-
-float Camera::getXPosition() const {
-	return position.getX();
-}
-
-void Camera::setXPosition(float newXPosition) {
-	position.setX(newXPosition);
-}
-
-void Camera::moveX(float x) {
-	position.addToX(x);
-}
-
-float Camera::getYPosition() const {
-	return position.getY();
-}
-
-void Camera::setYPosition(float newYPosition) {
-	position.setY(newYPosition);
-}
-
-void Camera::moveY(float y) {
-	position.addToY(y);
-}
-
-float Camera::getAngle() const {
-	return angle;
-}
-
-void Camera::setAngle(float newAngle) {
-	angle = newAngle;
-}
-
-void Camera::rotateLeft(float rotationAngle) {
-	angle -= rotationAngle;
-}
-void Camera::rotateRight(float rotationAngle) {
-	angle += rotationAngle;
-}
-
-void Camera::resetAngle() {
-	angle = 0.0f;
-}
-
-void Camera::setBackgroundColor(const Color& newBackgroundColor) {
-	backgroundColor = newBackgroundColor;
-}
-
-const Color& Camera::getBackgroundColor() const {
-	return backgroundColor;
-}
-
-float Camera::getZoomFactor() const {
-	return zoomFactor;
-}
-
-void Camera::setZoomFactor(float newZoomFactor) {
-	Vector2 center(getXPosition() + static_cast<float>(getWidth()) * 0.5f, getYPosition() + static_cast<float>(getHeight()) * 0.5f);
-	zoomFactor = newZoomFactor;
-	setXPosition(center.getX() - static_cast<float>(getWidth()) * 0.5f);
-	setYPosition(center.getY() - static_cast<float>(getHeight()) * 0.5f);
-}
-
-void Camera::zoom(float factor) {
-	setZoomFactor(zoomFactor * factor);
-}
-
-void Camera::resetZoom() {
-	setZoomFactor(1.0f);
-}
-
-void Camera::shake(float intensity, double duration, bool forceReset,
-                   ShakeAxes axes) {
-	if(forceReset || intensity > shakeIntensity) {
-		shakeIntensity = fabs(intensity);
-		shakeStart = TimeHelper::getInstance().getSinceStart();
-		shakeDuration = ((duration > 0.0) ? (duration) : (0.0));
-		shakeAxes = axes;
+	Camera::Camera(const Camera &src) : Collidable(src), Disableable(src),
+		Shapable<StandardVerticesArray>(src),
+		backgroundColor(src.backgroundColor),
+		shakeIntensity(src.shakeIntensity), shakeStart(src.shakeStart),
+		shakeDuration(src.shakeDuration), shakeAxes(src.shakeAxes),
+		offset(src.offset) {
 	}
-}
 
-Vector2 Camera::screenToWorld(const Vector2& positionOnScreen) const {
-	return positionOnScreen * (1.0f / zoomFactor) + position;
-}
+	Camera &Camera::operator=(const Camera &src) {
+		this->Collidable::operator=(src);
+		this->Disableable::operator=(src);
+		this->Shapable<StandardVerticesArray>::operator=(src);
 
-Vector2 Camera::screenToWorld(float x, float y) const {
-	return Vector2(x, y) * (1.0f / zoomFactor) + position;
-}
-
-float Camera::screenToWorldX(float x) const {
-	return x * (1.0f / zoomFactor) + position.getX();
-}
-
-float Camera::screenToWorldY(float y) const {
-	return y * (1.0f / zoomFactor) + position.getY();
-}
-
-Vector2 Camera::worldToScreen(const Vector2& positionInWorld) const {
-	return (positionInWorld - position) * (1.0f / zoomFactor);
-}
-
-Vector2 Camera::worldToScreen(float x, float y) const {
-	return (Vector2(x, y) - position) * (1.0f / zoomFactor);
-}
-
-float Camera::worldToScreenX(float x) const {
-	return (x - position.getX()) * (1.0f / zoomFactor);
-}
-
-float Camera::worldToScreenY(float y) const {
-	return (y - position.getY()) * (1.0f / zoomFactor);
-}
-
-unsigned int Camera::getWidth() const {
-	if(zoomFactor != 0.0f) {
-		return static_cast<unsigned int>(static_cast<float>(MainWindow::getInstance().getContextWidth()) / fabsf(zoomFactor));
-	} else {
-		return 0;
-	}
-}
-
-unsigned int Camera::getHeight() const {
-	if(zoomFactor != 0.0f) {
-		return static_cast<unsigned int>(static_cast<float>(MainWindow::getInstance().getContextHeight()) / fabsf(zoomFactor));
-	} else {
-		return 0;
-	}
-}
-
-bool Camera::collideInside(GraphicBody* body) {
-	bool result = false;
-	if(body->getXPosition() <= getXPosition()) {
-		// Body is too much to the left.
-		if(body->getXVelocity() < 0.0f) {
-			body->setXVelocity(-body->getXVelocity() * body->getElasticity());
+		if (this != &src) {
+			backgroundColor = src.backgroundColor;
+			shakeIntensity = src.shakeIntensity;
+			shakeStart = src.shakeStart;
+			shakeDuration = src.shakeDuration;
+			shakeAxes = src.shakeAxes;
+			offset = src.offset;
 		}
 
-		body->setXPosition(getXPosition());
-
-		result = true;
-	} else if(body->getXPosition() + body->getWidth() >= getXPosition() + static_cast<float>(getWidth())) {
-		// Body is too much to the right.
-		if(body->getXVelocity() > 0.0f) {
-			body->setXVelocity(-body->getXVelocity() * body->getElasticity());
-		}
-
-		body->setXPosition(getXPosition() + static_cast<float>(getWidth()) - body->getWidth());
-
-		result = true;
+		return *this;
 	}
 
-	if(body->getYPosition() <= getYPosition()) {
-		// Body is too much to the top.
-		if(body->getYVelocity() < 0.0f) {
-			body->setYVelocity(-body->getYVelocity() * body->getElasticity());
-		}
-
-		body->setYPosition(getYPosition());
-
-		result = true;
-	} else if(body->getYPosition() + body->getHeight() >= getYPosition() + static_cast<float>(getHeight())) {
-		// Body is too much to the bottom.
-		if(body->getYVelocity() > 0.0f) {
-			body->setYVelocity(-body->getYVelocity() * body->getElasticity());
-		}
-
-		body->setYPosition(getYPosition() + static_cast<float>(getHeight()) - body->getHeight());
-
-		result = true;
+	const Vector2 Camera::getSize() const {
+		return getVertices().getSize();
 	}
 
-	return result;
-}
+	float Camera::getWidth() const {
+		return this->getVertices().getWidth();
+	}
 
-void Camera::update() {
-	double timeSinceStarted = TimeHelper::getInstance().getSinceStart() - shakeStart;
+	float Camera::getHeight() const {
+		return this->getVertices().getHeight();
+	}
 
-	if(timeSinceStarted < shakeDuration) {
-		// We set random offsets to the camera.
-		float tmpIntensity = (timeSinceStarted == 0.0) ? (shakeIntensity) : ((1.0f - ((TimeHelper::getInstance().getSinceStart() - shakeStart) / shakeDuration)) * shakeIntensity);
+	void Camera::move(float xDelta, float yDelta) {
+		this->Collidable::move(xDelta, yDelta);
+		this->getVertices().move(xDelta, yDelta);
+	}
 
-		if(shakeAxes == ShakeAxes::BOTH_AXES || shakeAxes == ShakeAxes::HORIZONTAL_AXIS) {
-			offset.setX(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(MainWindow::getInstance().getContextWidth()));
+	void Camera::scaleFromPoint(float xScaling, float yScaling,
+	                            const Vector2 &fromPoint) {
+		this->Collidable::scaleFromPoint(xScaling, yScaling, fromPoint);
+		this->getVertices().scaleFromPoint(1.0f / xScaling, 1.0f / yScaling, fromPoint);
+		Vector2 tmpPosition = this->getVertices().getMinimumXY();
+		this->Collidable::move(tmpPosition.getX() - getXPosition(),
+		                       tmpPosition.getY() - getYPosition());
+	}
+
+	void Camera::rotateFromPoint(float rotationAngle,
+	                             const Vector2 &rotationPoint) {
+		this->Collidable::rotateFromPoint(rotationAngle, rotationPoint);
+		getVertices().rotateFromPoint(rotationAngle, rotationPoint);
+		Vector2 tmpPosition = this->getVertices().getMinimumXY();
+		this->Collidable::move(tmpPosition.getX() - getXPosition(),
+		                       tmpPosition.getY() - getYPosition());
+	}
+
+	const Color &Camera::getBackgroundColor() const {
+		return backgroundColor;
+	}
+
+	void Camera::setBackgroundColor(const Color &newBackgroundColor) {
+		backgroundColor = newBackgroundColor;
+	}
+
+	void Camera::shake(float intensity, double duration, bool forceReset,
+	                   ShakeAxes axes) {
+		if (forceReset || intensity > shakeIntensity) {
+			shakeIntensity = fabsf(intensity);
+			shakeStart = TimeHelper::getInstance().getSinceStart();
+			shakeDuration = ((duration > 0.0) ? (duration) : (0.0));
+			shakeAxes = axes;
+		}
+	}
+
+	const Vector2 Camera::screenToWorld(const Vector2 &positionOnScreen) const {
+		// We apply the camera's scaling and rotation to the position on screen.
+		Vector2 result(positionOnScreen);
+		result.scalarDivision(this->getScaling());
+		result.rotate(this->getAngle());
+		// We add this new vector to the camera's first vertices, which
+		// corresponds to the screen's upper left corner.
+		return *this->getVertices().getBegin() + result;
+	}
+
+	const Vector2 Camera::screenToWorld(float x, float y) const {
+		return screenToWorld(Vector2(x, y));
+	}
+
+	float Camera::screenToWorldX(float x) const {
+		return screenToWorld(x, 0.0f).getX();
+	}
+
+	float Camera::screenToWorldY(float y) const {
+		return screenToWorld(0.0f, y).getY();
+	}
+
+	const Vector2 Camera::worldToScreen(const Vector2 &positionInWorld) const {
+		// We subtract the screen's upper left corner's world position from
+		// the position in world received.
+		Vector2 result(positionInWorld);
+		result.subtractFromXY(*this->getVertices().getBegin());
+		// We then unapply the rotation and the scaling.
+		result.rotate(-this->getAngle());
+		result.scalarMultiplication(this->getScaling());
+		return result;
+	}
+
+	const Vector2 Camera::worldToScreen(float x, float y) const {
+		return worldToScreen(Vector2(x, y));
+	}
+
+	float Camera::worldToScreenX(float x) const {
+		return worldToScreen(x, 0.0f).getX();
+	}
+
+	float Camera::worldToScreenY(float y) const {
+		return worldToScreen(0.0f, y).getY();
+	}
+
+	bool Camera::collideInside(Collidable *collidable) {
+		bool result = false;
+
+		if (collidable) {
+			AxisAlignedBoundingBox bodyAabb = collidable->getAxisAlignedBoundingBox();
+			AxisAlignedBoundingBox cameraAabb = this->getAxisAlignedBoundingBox();
+
+			if (bodyAabb.getLeft() <= cameraAabb.getLeft()) {
+				// The collidable is too much to the left.
+				if (collidable->getXVelocity() < 0.0f) {
+					collidable->setXVelocity(-collidable->getXVelocity() * collidable->getElasticity());
+				}
+
+				// We correct the position.
+				collidable->moveX(cameraAabb.getLeft() - bodyAabb.getLeft());
+
+				result = true;
+
+			} else if (bodyAabb.getRight() >= cameraAabb.getRight()) {
+				// The collidable is too much to the right.
+				if (collidable->getXVelocity() > 0.0f) {
+					collidable->setXVelocity(-collidable->getXVelocity() * collidable->getElasticity());
+				}
+
+				// We correct the position.
+				collidable->moveX(cameraAabb.getLeft() - bodyAabb.getLeft());
+
+				result = true;
+			}
+
+			if (bodyAabb.getTop() <= cameraAabb.getTop()) {
+				// The collidable is too much to the top.
+				if (collidable->getYVelocity() < 0.0f) {
+					collidable->setYVelocity(-collidable->getYVelocity() * collidable->getElasticity());
+				}
+
+				// We correct the position.
+				collidable->moveY(cameraAabb.getTop() - bodyAabb.getTop());
+
+				result = true;
+
+			} else if (bodyAabb.getBottom() >= cameraAabb.getBottom()) {
+				// The collidable is too much to the right.
+				if (collidable->getYVelocity() > 0.0f) {
+					collidable->setYVelocity(-collidable->getYVelocity() * collidable->getElasticity());
+				}
+
+				// We correct the position.
+				collidable->moveY(cameraAabb.getBottom() - bodyAabb.getBottom());
+
+				result = true;
+			}
+		}
+
+		return result;
+	}
+
+	void Camera::update() {
+		double timeSinceStarted = TimeHelper::getInstance().getSinceStart() - shakeStart;
+
+		if (timeSinceStarted < shakeDuration) {
+			// We set random offsets to the camera.
+			float tmpIntensity = (timeSinceStarted == 0.0) ? (shakeIntensity) : ((1.0f - ((TimeHelper::getInstance().getSinceStart() - shakeStart) / shakeDuration)) * shakeIntensity);
+
+			if (shakeAxes == ShakeAxes::BOTH_AXES || shakeAxes == ShakeAxes::HORIZONTAL_AXIS) {
+				offset.setX(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(MainWindow::getInstance().getContextWidth()));
+
+			} else {
+				offset.setX(0.0f);
+			}
+
+			if (shakeAxes == ShakeAxes::BOTH_AXES || shakeAxes == ShakeAxes::VERTICAL_AXIS) {
+				offset.setY(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(MainWindow::getInstance().getContextHeight()));
+
+			} else {
+				offset.setY(0.0f);
+			}
+
 		} else {
-			offset.setX(0.0f);
+			// We reset the offsets.
+			offset = Vector2();
 		}
-
-		if(shakeAxes == ShakeAxes::BOTH_AXES || shakeAxes == ShakeAxes::VERTICAL_AXIS) {
-			offset.setY(Random::getRandomFloat(tmpIntensity * -1.0f, tmpIntensity) * static_cast<float>(MainWindow::getInstance().getContextHeight()));
-		} else {
-			offset.setY(0.0f);
-		}
-	} else {
-		// We reset the offsets.
-		offset = Vector2();
 	}
-}
 
-void Camera::render() {
-	GraphicDriver::prepareScene(position + offset, angle, zoomFactor, backgroundColor, Vector2(static_cast<float>(getWidth()) * 0.5f, static_cast<float>(getHeight()) * 0.5f));
+	void Camera::render() {
+		GraphicDriver::getInstance().prepareScene(*this->getVertices().getBegin() + offset, getAngle(), getScaling(), backgroundColor);
+	}
+
+	void Camera::mask() {
+	}
+
+	void Camera::unmask() {
+	}
+
+	Maskable *Camera::getMask() const {
+		return NULL;
+	}
+
+	void Camera::setMask(Maskable *, bool) {
+	}
 }
