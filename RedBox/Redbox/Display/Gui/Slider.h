@@ -1,8 +1,9 @@
-#if 0
+/**
+ * @file
+ */
 #ifndef RB_SLIDER_H
 #define RB_SLIDER_H
 
-#include "GraphicBody.h"
 #include "MathHelper.h"
 #include "Console.h"
 
@@ -10,7 +11,7 @@
 
 namespace RedBox {
 	template <typename T>
-	class Slider : public GraphicBody {
+	class Slider {
 	public:
 		typedef T ValueType;
 
@@ -20,7 +21,7 @@ namespace RedBox {
 		/**
 		 * Default constructor.
 		 */
-		Slider() : GraphicBody(), minimumValue(), maximumValue(),
+		Slider() : valueChange(), minimumValue(), maximumValue(),
 			currentValue() {
 		}
 
@@ -34,7 +35,7 @@ namespace RedBox {
 		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
 		 */
 		Slider(ValueType newMinimumValue, ValueType newMaximumValue) :
-			GraphicBody(), minimumValue(), maximumValue(), currentValue() {
+			valueChange(), minimumValue(), maximumValue(), currentValue() {
 			setMinimumMaximumValue(newMinimumValue, newMaximumValue);
 		}
 
@@ -49,9 +50,8 @@ namespace RedBox {
 		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
 		 */
 		Slider(ValueType newMinimumValue, ValueType newMaximumValue,
-		       ValueType startingValue) : GraphicBody(),
-			minimumValue(), maximumValue(),
-			currentValue(startingValue) {
+		       ValueType startingValue) : valueChange(), minimumValue(),
+			maximumValue(), currentValue(startingValue) {
 			setMinimumMaximumValue(newMinimumValue, newMaximumValue);
 		}
 
@@ -59,7 +59,7 @@ namespace RedBox {
 		 * Copy constructor.
 		 * @param src Slider to make a copy of.
 		 */
-		Slider(const Slider<ValueType>& src) : GraphicBody(src),
+		Slider(const Slider<ValueType> &src) : valueChange(src.valueChange),
 			minimumValue(src.minimumValue), maximumValue(src.maximumValue),
 			currentValue(src.currentValue) {
 		}
@@ -71,14 +71,12 @@ namespace RedBox {
 		}
 
 		/**
-		 * Assignment operator overload.
+		 * Assignment operator.
 		 * @param src Slider to make a copy of.
-		 * @return Reference to the modified slider.
+		 * @return Reference to the modified Slider.
 		 */
-		Slider<ValueType>& operator=(const Slider<ValueType>& src) {
-			this->GraphicBody::operator=(src);
-
-			if(this != &src) {
+		Slider<ValueType> &operator=(const Slider<ValueType> &src) {
+			if (this != &src) {
 				minimumValue = src.minimumValue;
 				maximumValue = src.maximumValue;
 				currentValue = src.currentValue;
@@ -105,7 +103,7 @@ namespace RedBox {
 		 * @see RedBox::Slider<T>::minimumValue
 		 */
 		void setMinimumValue(ValueType newMinimumValue) {
-			if(newMinimumValue > maximumValue) {
+			if (newMinimumValue > maximumValue) {
 				newMinimumValue = maximumValue;
 				Console::println("Tried to set a slider's minimum value higher than its maximum value.");
 				Console::printTrace();
@@ -133,7 +131,7 @@ namespace RedBox {
 		 * see RedBox::Slider<T>::maximumValue
 		 */
 		void setMaximumValue(ValueType newMaximumValue) {
-			if(newMaximumValue < minimumValue) {
+			if (newMaximumValue < minimumValue) {
 				newMaximumValue = minimumValue;
 				Console::println("Tried to set a slider's maximum value lower than its minimum value.");
 				Console::printTrace();
@@ -155,7 +153,7 @@ namespace RedBox {
 		 */
 		void setMinimumMaximumValue(ValueType newMinimumValue,
 		                            ValueType newMaximumValue) {
-			if(newMinimumValue > newMaximumValue) {
+			if (newMinimumValue > newMaximumValue) {
 				newMaximumValue = newMinimumValue;
 			}
 
@@ -185,7 +183,7 @@ namespace RedBox {
 			currentValue = MathHelper::clamp(newCurrentValue, minimumValue,
 			                                 maximumValue);
 
-			if(oldValue != currentValue) {
+			if (oldValue != currentValue) {
 				valueChange(currentValue);
 			}
 		}
@@ -208,7 +206,7 @@ namespace RedBox {
 		 */
 		ValueType currentValue;
 	};
+
 }
 
-#endif
-#endif
+#endif // RB_SLIDER_H
