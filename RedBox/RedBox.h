@@ -77,7 +77,7 @@
 #include <RedBox/BackgroundMusic.h>
 #include <RedBox/SoundFX.h>
 #include <RedBox/Timer.h>
-#include <RedBox/ParticleEmitter.h>
+#include <RedBox/SpriteEmitter.h>
 #include <RedBox/RenderInfo.h>
 #include <RedBox/SpriteFactory.h>
 #include <RedBox/InputManager.h>
