@@ -63,6 +63,8 @@
 #include <RedBox/SimpleButton.h>
 #include <RedBox/Checkbox.h>
 #include <RedBox/LineSlider.h>
+#include <RedBox/InanimateGraphicElement.h>
+#include <RedBox/GraphicElement.h>
 #include <RedBox/InanimateSprite.h>
 #include <RedBox/Sprite.h>
 #include <RedBox/Stopwatch.h>
@@ -75,7 +77,7 @@
 #include <RedBox/BackgroundMusic.h>
 #include <RedBox/SoundFX.h>
 #include <RedBox/Timer.h>
-#include <RedBox/SpriteEmitter.h>
+#include <RedBox/ParticleEmitter.h>
 #include <RedBox/RenderInfo.h>
 #include <RedBox/SpriteFactory.h>
 #include <RedBox/InputManager.h>
