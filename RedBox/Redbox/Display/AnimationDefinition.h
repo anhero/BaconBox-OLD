@@ -2,8 +2,8 @@
  * @file
  * @ingroup Display
  */
-#ifndef RB_ANIMATION_PARAMETERS_H
-#define RB_ANIMATION_PARAMETERS_H
+#ifndef RB_ANIMATION_DEFINITION_H
+#define RB_ANIMATION_DEFINITION_H
 
 #include <vector>
 #include <string>
@@ -12,14 +12,13 @@
 namespace RedBox {
 	/**
 	 * Represents the details of an animation in a RenderStep.
-	 * @see RedBox::RenderStep
 	 * @ingroup Display
 	 */
-	struct AnimationParameters {
+	struct AnimationDefinition {
 		/**
 		 * Default constructor. By default, an animation will loop indefinetely.
 		 */
-		AnimationParameters();
+		AnimationDefinition();
 
 		/**
 		 * Parametrized constroctor. By default, an animation will loop
@@ -29,22 +28,22 @@ namespace RedBox {
 		 * @param newNbLoops Number of loops before the animation finishes to
 		 * use.
 		 */
-		AnimationParameters(const std::vector<unsigned int>& newFrames,
+		AnimationDefinition(const std::vector<unsigned int>& newFrames,
 		                    double newTimePerFrame,
 		                    int newNbLoops = -1);
 
 		/**
 		 * Copy constructor.
-		 * @param src Animation parameters to make a copy of.
+		 * @param src Animation definition to make a copy of.
 		 */
-		AnimationParameters(const AnimationParameters &src);
+		AnimationDefinition(const AnimationDefinition &src);
 
 		/**
 		 * Assignment operator overload.
-		 * @param src Animation parameters to make a copy of.
-		 * @return Reference to the modified animation parameters.
+		 * @param src Animation definition to make a copy of.
+		 * @return Reference to the modified animation definition.
 		 */
-		AnimationParameters &operator=(const AnimationParameters &src);
+		AnimationDefinition &operator=(const AnimationDefinition &src);
 
 		/// The suit of frames composing the animation
 		std::vector<unsigned int> frames;
@@ -59,11 +58,11 @@ namespace RedBox {
 		int nbLoops;
 	};
 	/**
-	 * Outputs the AnimationParameters' content.
-	 * @param output The ostream in which AnimationParameters is output.
-	 * @param a AnimationParameters to output in the ostream.
+	 * Outputs the AnimationDefinition' content.
+	 * @param output The ostream in which AnimationDefinition is output.
+	 * @param a AnimationDefinition to output in the ostream.
 	 * @return Resulting ostream.
 	 */
-	std::ostream &operator<<(std::ostream &output, const AnimationParameters &a);
+	std::ostream &operator<<(std::ostream &output, const AnimationDefinition &a);
 }
 #endif

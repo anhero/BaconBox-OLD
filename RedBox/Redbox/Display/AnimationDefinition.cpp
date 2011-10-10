@@ -1,21 +1,21 @@
-#include "AnimationParameters.h"
+#include "AnimationDefinition.h"
 
 namespace RedBox {
-	AnimationParameters::AnimationParameters(): frames(), timePerFrame(0.0),
+	AnimationDefinition::AnimationDefinition(): frames(), timePerFrame(0.0),
 		nbLoops(-1) {
 	}
 
-	AnimationParameters::AnimationParameters(const std::vector<unsigned int>& newFrames,
+	AnimationDefinition::AnimationDefinition(const std::vector<unsigned int>& newFrames,
 	                                         double newTimePerFrame,
 	                                         int newNbLoops): frames(newFrames),
 		timePerFrame(newTimePerFrame), nbLoops(newNbLoops) {
 	}
 
-	AnimationParameters::AnimationParameters(const AnimationParameters &src) :
+	AnimationDefinition::AnimationDefinition(const AnimationDefinition &src) :
 		frames(src.frames), timePerFrame(src.timePerFrame), nbLoops(src.nbLoops) {
 	}
 
-	AnimationParameters &AnimationParameters::operator=(const AnimationParameters &src) {
+	AnimationDefinition &AnimationDefinition::operator=(const AnimationDefinition &src) {
 		if (this != &src) {
 			frames = src.frames;
 			timePerFrame = src.timePerFrame;
@@ -26,7 +26,7 @@ namespace RedBox {
 	}
 
 	std::ostream &operator<<(std::ostream &output,
-	                         const AnimationParameters &a) {
+	                         const AnimationDefinition &a) {
 		output << "{timePerFrame: ";
 		output << a.timePerFrame << ", nbLoops: " << a.nbLoops << ", frames: [";
 
