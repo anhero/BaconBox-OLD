@@ -2,8 +2,8 @@
  * @file
  * @ingroup Display
  */
-#ifndef RB_TEXTURE_INFO_H
-#define RB_TEXTURE_INFO_H
+#ifndef RB_TEXTURE_INFORMATION_H
+#define RB_TEXTURE_INFORMATION_H
 
 #include <iostream>
 
@@ -18,37 +18,37 @@ namespace RedBox {
 	 * informations depending on the platform.
 	 * @ingroup Display
 	 */
-	struct TextureInfo {
+	struct TextureInformation {
 		/**
-		 * Outputs the TextureInfo's content.
-		 * @param output The ostream in which TextureInfo is output.
-		 * @param t TextureInfo to output in the ostream.
+		 * Outputs the Texture's content.
+		 * @param output The ostream in which Texture is output.
+		 * @param t Texture to output in the ostream.
 		 * @return Resulting ostream.
 		 */
 		friend std::ostream &operator<<(std::ostream &output,
-		                                const TextureInfo &t);
+		                                const TextureInformation &t);
 
 		/**
 		 * Default constructor.
 		 */
-		TextureInfo();
+		TextureInformation();
 #ifdef RB_OPENGL
 		/**
 		 * Parametrized constructor for the OpenGL implementation of
-		 * TextureInfo.
+		 * Texture.
 		 * @param newTextureId Texture ID to be used.
 		 * @param newImageWidth Image width in pixels to be used.
 		 * @param newImageHeight Image height in pixels to be used.
 		 */
-		TextureInfo(unsigned int newTextureId,
-		            unsigned int newImageWidth,
-		            unsigned int newImageHeight);
+		TextureInformation(unsigned int newTextureId,
+		                   unsigned int newImageWidth,
+		                   unsigned int newImageHeight);
 
 		/// OpenGL's texture's ID.
 		unsigned int textureId;
 #else
-		TextureInfo(unsigned int newImageWidth,
-		            unsigned int newImageHeight);
+		TextureInformation(unsigned int newImageWidth,
+		                   unsigned int newImageHeight);
 #endif
 
 		/// Color format of the texture

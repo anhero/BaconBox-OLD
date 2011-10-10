@@ -2,28 +2,22 @@
  * @file
  * @ingroup GraphicDrivers
  */
-
-
-#include "PlatformFlagger.h"
-#ifdef RB_OPENGL
 #ifndef RB_OPENGLDRIVER
 #define RB_OPENGLDRIVER
 
 #include "PlatformFlagger.h"
 
 #include "GraphicDriver.h"
-
 #include "RBOpenGL.h"
-
 #include "Color.h"
 #include "Vector2.h"
 #include "Sprite.h"
+
 namespace RedBox {
 	class RenderInfo;
 	/**
-	 * @class OpenGLDriver
+	 * OpenGl graphic driver.
 	 * @ingroup Driver
-	 *  OpenGl graphic driver.
 	 */
 	class OpenGLDriver {
 		friend class GraphicDriver;
@@ -39,12 +33,12 @@ namespace RedBox {
 		 * array, texture coordinates and textureID.
 		 * @param nbVertices Number of vertices to draw.
 		 */
-		static void drawShapeWithTextureAndColor(GLfloat* vertices,
-		        RenderInfo& renderingInfo,
-		        unsigned int nbVertices);
-        
-        
-        static void unmaskBatch(const CArray<Vector2>& vertices, const CArray<unsigned short>& indices);
+		static void drawShapeWithTextureAndColor(GLfloat *vertices,
+		                                         RenderInfo &renderingInfo,
+		                                         unsigned int nbVertices);
+
+
+		static void unmaskBatch(const CArray<Vector2>& vertices, const CArray<unsigned short>& indices);
 
 
 		/**
@@ -56,8 +50,8 @@ namespace RedBox {
 		 * array, texture coordinates and textureID.
 		 * @param nbVertices Number of vertices to draw.
 		 */
-		static void drawShapeWithTexture(GLfloat* vertices,
-		                                 RenderInfo& renderingInfo,
+		static void drawShapeWithTexture(GLfloat *vertices,
+		                                 RenderInfo &renderingInfo,
 		                                 unsigned int nbVertices);
 		/**
 		 * Draw a colored shape with the given vertices and rendering
@@ -68,24 +62,37 @@ namespace RedBox {
 		 * color.
 		 * @param nbVertices Number of vertices the array contains.
 		 */
-		static void drawShapeWithColor(GLfloat* vertices,
-		                               RenderInfo& renderingInfo,
+		static void drawShapeWithColor(GLfloat *vertices,
+		                               RenderInfo &renderingInfo,
 		                               unsigned int nbVertices);
-        
-        static void drawMaskBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
-                                                     const CArray<unsigned short>& indices, const TextureInfo & textureInfo, 
-                                                     const CArray<unsigned char> & colors);
-        
-        
-        static void drawBatchWithTexture(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
-                                         const CArray<unsigned short>& indices, const TextureInfo & textureInfo, bool printAlpha = false);
-        
-        static void drawBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
-                                         const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char> & colors, bool printAlpha = false);
-        
-        
-        static void drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord, 
-                                                       const CArray<unsigned short>& indices, const TextureInfo & textureInfo, const CArray<unsigned char>& colors, bool inversedMask);
+
+		static void drawMaskBatchWithTextureAndColor(const CArray<Vector2>& vertices,
+		                                             const CArray<Vector2>& textureCoord,
+		                                             const CArray<unsigned short>& indices,
+		                                             const TextureInformation &textureInfo,
+		                                             const CArray<unsigned char> &colors);
+
+
+		static void drawBatchWithTexture(const CArray<Vector2>& vertices,
+		                                 const CArray<Vector2>& textureCoord,
+		                                 const CArray<unsigned short>& indices,
+		                                 const TextureInformation &textureInfo,
+		                                 bool printAlpha = false);
+
+		static void drawBatchWithTextureAndColor(const CArray<Vector2>& vertices,
+		                                         const CArray<Vector2>& textureCoord,
+		                                         const CArray<unsigned short>& indices,
+		                                         const TextureInformation &textureInfo,
+		                                         const CArray<unsigned char> &colors,
+		                                         bool printAlpha = false);
+
+
+		static void drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& vertices,
+		                                               const CArray<Vector2>& textureCoord,
+		                                               const CArray<unsigned short>& indices,
+		                                               const TextureInformation &textureInfo,
+		                                               const CArray<unsigned char>& colors,
+		                                               bool inversedMask);
 
 		/**
 		 * Draw the alpha component of the given vertices and texture to the
@@ -98,8 +105,8 @@ namespace RedBox {
 		 * array, texture coordinates and textureID.
 		 * @param nbVertices Number of vertices to draw.
 		 */
-		static void drawMaskShapeWithTexture(GLfloat* vertices,
-		                                     RenderInfo& renderingInfo,
+		static void drawMaskShapeWithTexture(GLfloat *vertices,
+		                                     RenderInfo &renderingInfo,
 		                                     unsigned int nbVertices);
 
 		/**
@@ -111,9 +118,9 @@ namespace RedBox {
 		 * array, texture coordinates and textureID.
 		 * @param nbVertices Number of vertices to draw.
 		 */
-		static void unmaskShape(GLfloat* vertices,
-		                   RenderInfo& renderingInfo,
-		                   unsigned int nbVertices);
+		static void unmaskShape(GLfloat *vertices,
+		                        RenderInfo &renderingInfo,
+		                        unsigned int nbVertices);
 		/**
 		 * Draw the alpha component of the given vertices and texture to the
 		 * alpha component of the frame buffer, so the next call to any
@@ -126,9 +133,9 @@ namespace RedBox {
 		 * color.
 		 * @param nbVertices Number of vertices the array contains.
 		 */
-		static void drawMaskShapeWithTextureAndColor(GLfloat* vertices,
-		        RenderInfo& renderingInfo,
-		        unsigned int nbVertices);
+		static void drawMaskShapeWithTextureAndColor(GLfloat *vertices,
+		                                             RenderInfo &renderingInfo,
+		                                             unsigned int nbVertices);
 
 		/**
 		 * Draw the giver shape masked by using a blend between the alpha
@@ -144,9 +151,9 @@ namespace RedBox {
 		 * @param nbVertices Number of vertices the array contains.
 		 * @param inversedMask If true, the mask effect will be reversed.
 		 */
-		static void drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
-		        RenderInfo& renderingInfo,
-		        unsigned int nbVertices, bool inversedMask = false);
+		static void drawMaskedShapeWithTextureAndColor(GLfloat *vertices,
+		                                               RenderInfo &renderingInfo,
+		                                               unsigned int nbVertices, bool inversedMask = false);
 
 
 		/**
@@ -161,9 +168,9 @@ namespace RedBox {
 		 * @param backgroundColor Color used for the glClearColor() function
 		 * (the scene's background color). The alpha component is ignored.
 		 */
-		static void prepareScene(const Vector2& position, float angle, float zoom,
-		                         const Color& backgroundColor,
-		                         const Vector2& rotationCenterOffset);
+		static void prepareScene(const Vector2 &position, float angle, float zoom,
+		                         const Color &backgroundColor,
+		                         const Vector2 &rotationCenterOffset);
 
 		/**
 		 * Pushes the current matrix on the stack.
@@ -174,14 +181,14 @@ namespace RedBox {
 		 * Applies a translation on the current matrix.
 		 * @param translation 2D translation to apply.
 		 */
-		static void translate(const Vector2& translation);
+		static void translate(const Vector2 &translation);
 
 		/**
 		 * Pops the current matrix from the stack.
 		 */
 		static void popMatrix();
 
-		
+
 		static void initializeGraphicDriver(float contextWidth,
 		                                    float contextHeight);
 
@@ -189,17 +196,16 @@ namespace RedBox {
 		 * Load a texture into graphic memory.
 		 * @param pixMap A pixmap object containing the buffer the driver must load.
 		 */
-		static TextureInfo* loadTexture(PixMap* pixMap);
+		static TextureInformation *loadTexture(PixMap *pixMap);
 	private:
 		static float clampColorComponent(unsigned int component);
-        
-        static GLuint maskedTexture;
-        static GLuint maskedFramebuffer;
-        static GLuint originalFramebuffer;
-        static Sprite * maskedSprite;
-        static TextureInfo * maskedTextureInfo;
+
+		static GLuint maskedTexture;
+		static GLuint maskedFramebuffer;
+		static GLuint originalFramebuffer;
+		static Sprite *maskedSprite;
+		static TextureInformation *maskedTextureInfo;
 	};
 }
 
 #endif
-#endif //RB_OPENGL

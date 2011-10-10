@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 
-#include "TextureInfo.h"
+#include "TextureInformation.h"
 #include "VerticesGroup.h"
 #include "Console.h"
 #include "MathHelper.h"
@@ -26,7 +26,7 @@ RenderInfo::RenderInfo(const RenderInfo &src) : Object(), color(src.color),
     currentAnimation(src.currentAnimation) {
 }
 
-RenderInfo::RenderInfo(TextureInfo *newTexInfo,
+RenderInfo::RenderInfo(TextureInformation *newTexInfo,
                        VerticesGroup &vertices,
                        unsigned int frameWidth,
                        unsigned int frameHeight,
@@ -68,7 +68,7 @@ void RenderInfo::loadTexCoords(VerticesGroup &vertices,
                                unsigned int frameWidth,
                                unsigned int frameHeight,
                                unsigned int nbFrames,
-                               TextureInfo *newTexInfo) {
+                               TextureInformation *newTexInfo) {
 	// We check if we also reassign the texInfo.
 	if (newTexInfo) {
 		texInfo = newTexInfo;
@@ -221,7 +221,7 @@ const Color &RenderInfo::getColor() const {
 	return color;
 }
 
-TextureInfo *RenderInfo::getTexInfo() {
+TextureInformation *RenderInfo::getTexInfo() {
 	return texInfo;
 }
 
@@ -234,7 +234,7 @@ void RenderInfo::setColor(const Color &newColor) {
 	colorNeedUpdate = true;
 }
 
-void RenderInfo::setTexInfo(TextureInfo *newTexInfo) {
+void RenderInfo::setTexInfo(TextureInformation *newTexInfo) {
 	texInfo = newTexInfo;
 }
 bool RenderInfo::animationExists(const std::string &name) const {

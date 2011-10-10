@@ -8,7 +8,7 @@
 #include <iostream>
 
 #include "RenderInfo.h"
-#include "TextureInfo.h"
+#include "TextureInformation.h"
 #include "MathHelper.h"
 #include "MainWindow.h"
 using namespace RedBox;
@@ -17,7 +17,7 @@ GLuint OpenGLDriver::originalFramebuffer = 0;
 GLuint OpenGLDriver::maskedFramebuffer = 0;
 GLuint OpenGLDriver::maskedTexture = 0;
 Sprite *OpenGLDriver::maskedSprite = NULL;
-TextureInfo *OpenGLDriver::maskedTextureInfo = NULL;
+TextureInformation *OpenGLDriver::maskedTextureInfo = NULL;
 
 
 void OpenGLDriver::drawShapeWithTextureAndColor(GLfloat *vertices,
@@ -113,7 +113,7 @@ void OpenGLDriver::drawMaskShapeWithTextureAndColor(GLfloat *vertices,
 }
 
 void OpenGLDriver::drawBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord,
-                                                const CArray<unsigned short>& indices, const TextureInfo &textureInfo, const CArray<unsigned char>& colors, bool printAlpha) {
+                                                const CArray<unsigned short>& indices, const TextureInformation &textureInfo, const CArray<unsigned char>& colors, bool printAlpha) {
 	glEnableClientState(GL_COLOR_ARRAY);
 	glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors.array);
 
@@ -123,7 +123,7 @@ void OpenGLDriver::drawBatchWithTextureAndColor(const CArray<Vector2>& vertices,
 }
 
 void OpenGLDriver::drawBatchWithTexture(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord,
-                                        const CArray<unsigned short> & indices, const TextureInfo &textureInfo, bool printAlpha) {
+                                        const CArray<unsigned short> & indices, const TextureInformation &textureInfo, bool printAlpha) {
 
 	glBindTexture(GL_TEXTURE_2D, textureInfo.textureId);
 
@@ -174,7 +174,7 @@ void OpenGLDriver::drawBatchWithTexture(const CArray<Vector2>& vertices, const C
 }
 
 void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord,
-                                                      const CArray<unsigned short>& indices, const TextureInfo &textureInfo, const CArray<unsigned char>& colors, bool inversedMask) {
+                                                      const CArray<unsigned short>& indices, const TextureInformation &textureInfo, const CArray<unsigned char>& colors, bool inversedMask) {
 
 #ifdef RB_OPENGLES
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, maskedFramebuffer);
@@ -217,7 +217,7 @@ void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const CArray<Vector2>& ver
 }
 
 void OpenGLDriver::drawMaskBatchWithTextureAndColor(const CArray<Vector2>& vertices, const CArray<Vector2>& textureCoord,
-                                                    const CArray<unsigned short>& indices, const TextureInfo &textureInfo,
+                                                    const CArray<unsigned short>& indices, const TextureInformation &textureInfo,
                                                     const CArray<unsigned char> &/*colors*/) {
 
 
@@ -483,7 +483,7 @@ void OpenGLDriver::initializeGraphicDriver(float contextWidth,
 	glGenTextures(1, &maskedTexture);
 	glBindTexture(GL_TEXTURE_2D, maskedTexture);
 
-	maskedTextureInfo = new TextureInfo();
+	maskedTextureInfo = new TextureInformation();
 	maskedTextureInfo->textureId = maskedTexture;
 	maskedTextureInfo->imageWidth = MainWindow::getInstance().getResolutionWidth();
 	maskedTextureInfo->imageHeight = MainWindow::getInstance().getResolutionHeight();
@@ -507,10 +507,10 @@ void OpenGLDriver::initializeGraphicDriver(float contextWidth,
 }
 
 
-TextureInfo *OpenGLDriver::loadTexture(PixMap *pixMap) {
+TextureInformation *OpenGLDriver::loadTexture(PixMap *pixMap) {
 
 
-	TextureInfo *texInfo = new TextureInfo();
+	TextureInformation *texInfo = new TextureInformation();
 	glGenTextures(1, &(texInfo->textureId));
 	glBindTexture(GL_TEXTURE_2D, texInfo->textureId);
 

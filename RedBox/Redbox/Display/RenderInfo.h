@@ -18,7 +18,7 @@
 
 namespace RedBox {
 	class VerticesGroup;
-	class TextureInfo;
+	class TextureInformation;
 	class GraphicBody;
 	/**
 	 * Struct contaning rendering information.
@@ -59,7 +59,7 @@ namespace RedBox {
 		 * @see RedBox::RenderInfo::color
 		 * @see RedBox::RenderInfo::texInfo
 		 */
-		RenderInfo(TextureInfo *newTexInfo,
+		RenderInfo(TextureInformation *newTexInfo,
 		           VerticesGroup &vertices,
 		           unsigned int frameWidth,
 		           unsigned int frameHeight,
@@ -84,7 +84,7 @@ namespace RedBox {
 		                   unsigned int frameWidth,
 		                   unsigned int frameHeight,
 		                   unsigned int nbFrames = 1,
-		                   TextureInfo *newTexInfo = NULL);
+		                   TextureInformation *newTexInfo = NULL);
 		/**
 		 * Adds an animation.
 		 * @param name Animation's name used for identification when playing it.
@@ -153,7 +153,7 @@ namespace RedBox {
 		 * the texInfo pointer.
 		 * @return Pointer to the RenderInfo's texture's information.
 		 */
-		TextureInfo *getTexInfo();
+		TextureInformation *getTexInfo();
 
 		/**
 		 * Gets the vector of texture coordinates.
@@ -170,7 +170,7 @@ namespace RedBox {
 		 * Sets the texture information.
 		 * @param newTexInfo Pointer to the new texture information.
 		 */
-		void setTexInfo(TextureInfo *newTexInfo);
+		void setTexInfo(TextureInformation *newTexInfo);
 
 		/**
 		 * Checks wether an animation exists or not.
@@ -278,7 +278,7 @@ namespace RedBox {
 		GraphicBody *mask;
 
 		/// Pointer to the texture information.
-		TextureInfo *texInfo;
+		TextureInformation *texInfo;
 
 		/**
 		 * Vector containing the texture's coordinates for each animation frame.

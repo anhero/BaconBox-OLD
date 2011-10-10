@@ -28,7 +28,7 @@ namespace RedBox {
 		 * @param frameHeight Height of the frames to read from the image (in
 		 * pixels).
 		 */
-		SimpleButton(const std::string& textureKey, unsigned int frameWidth,
+		SimpleButton(const std::string &textureKey, unsigned int frameWidth,
 		             unsigned int frameHeight);
 
 		/**
@@ -42,14 +42,14 @@ namespace RedBox {
 		 * @param frameHeight Height of the frames to read from the image (in
 		 * pixels).
 		 */
-		SimpleButton(TextureInfo* textureInfo, unsigned int frameWidth,
+		SimpleButton(TextureInformation *textureInfo, unsigned int frameWidth,
 		             unsigned int frameHeight);
 
 		/**
 		 * Copy constructor.
 		 * @param src Simple button to make a copy of.
 		 */
-		SimpleButton(const SimpleButton& src);
+		SimpleButton(const SimpleButton &src);
 
 		/**
 		 * Destructor.
@@ -61,7 +61,7 @@ namespace RedBox {
 		 * @param src Simple button to make a copy of.
 		 * @return Reference to the modified simple button.
 		 */
-		SimpleButton& operator=(const SimpleButton& src);
+		SimpleButton &operator=(const SimpleButton &src);
 
 		/**
 		 * Updates the button and its sprite.
@@ -91,7 +91,7 @@ namespace RedBox {
 		 * Gets the graphic body masking the current button.
 		 * @return Pointer to the button's mask.
 		 */
-		GraphicBody* getMask();
+		GraphicBody *getMask();
 
 		/**
 		 * Sets the graphic body used to mask the button.
@@ -99,7 +99,7 @@ namespace RedBox {
 		 * @param inversed Set this parameter to true if you want to inverse
 		 * the effect of the mask. False by default.
 		 */
-		void setMask(GraphicBody* newMask, bool inversed = false);
+		void setMask(GraphicBody *newMask, bool inversed = false);
 
 		using GraphicBody::setPosition;
 
@@ -136,7 +136,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::scaling
 		 */
 		virtual void scaleFromPoint(float xScaling, float yScaling,
-		                            const Vector2& fromPoint);
+		                            const Vector2 &fromPoint);
 
 		/**
 		 * Rotates the simple button from a point.
@@ -144,7 +144,7 @@ namespace RedBox {
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::GraphicBody::angle
 		 */
-		void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
+		void rotateFromPoint(float rotationAngle, const Vector2 &rotationPoint);
 
 		/**
 		 * Sets if the button is active or not. An inactive button will not be
@@ -158,7 +158,7 @@ namespace RedBox {
 		 * Creates a copy of the current simple button.
 		 * @return Pointer to the new simple button.
 		 */
-		GraphicBody* clone() const;
+		GraphicBody *clone() const;
 	private:
 		/// Sprite representing the button's graphic.
 		Sprite buttonSprite;

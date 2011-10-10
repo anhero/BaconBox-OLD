@@ -34,9 +34,9 @@ namespace RedBox {
 		 * array, texture coordinates and textureID.
 		 * @param nbVertices Number of vertices to draw.
 		 */
-		static void drawShapeWithTextureAndColor(float* vertices,
-		        RenderInfo& renderingInfo,
-		        unsigned int nbVertices);
+		static void drawShapeWithTextureAndColor(float *vertices,
+		                                         RenderInfo &renderingInfo,
+		                                         unsigned int nbVertices);
 
 		/**
 		 * Draw a textured shape with the given vertices, texture coordinate,
@@ -47,8 +47,8 @@ namespace RedBox {
 		 * array, texture coordinates and textureID.
 		 * @param nbVertices Number of vertices to draw.
 		 */
-		static void drawShapeWithTexture(float* vertices,
-		                                 RenderInfo& renderingInfo,
+		static void drawShapeWithTexture(float *vertices,
+		                                 RenderInfo &renderingInfo,
 		                                 unsigned int nbVertices);
 		/**
 		 * Draw a colored shape with the given vertices and rendering
@@ -59,8 +59,8 @@ namespace RedBox {
 		 * color.
 		 * @param nbVertices Number of vertices the array contains.
 		 */
-		static void drawShapeWithColor(float* vertices,
-		                               RenderInfo& renderingInfo,
+		static void drawShapeWithColor(float *vertices,
+		                               RenderInfo &renderingInfo,
 		                               unsigned int nbVertices);
 
 		/**
@@ -74,8 +74,8 @@ namespace RedBox {
 		 * array, texture coordinates and textureID.
 		 * @param nbVertices Number of vertices to draw.
 		 */
-		static void drawMaskShapeWithTexture(GLfloat* vertices,
-		                                     RenderInfo& renderingInfo,
+		static void drawMaskShapeWithTexture(GLfloat *vertices,
+		                                     RenderInfo &renderingInfo,
 		                                     unsigned int nbVertices);
 
 		/**
@@ -87,8 +87,8 @@ namespace RedBox {
 		 * array, texture coordinates and textureID.
 		 * @param nbVertices Number of vertices to draw.
 		 */
-		static void unmask(GLfloat* vertices,
-		                   RenderInfo& renderingInfo,
+		static void unmask(GLfloat *vertices,
+		                   RenderInfo &renderingInfo,
 		                   unsigned int nbVertices);
 
 		/**
@@ -103,9 +103,9 @@ namespace RedBox {
 		 * color.
 		 * @param nbVertices Number of vertices the array contains.
 		 */
-		static void drawMaskShapeWithTextureAndColor(GLfloat* vertices,
-		        RenderInfo& renderingInfo,
-		        unsigned int nbVertices);
+		static void drawMaskShapeWithTextureAndColor(GLfloat *vertices,
+		                                             RenderInfo &renderingInfo,
+		                                             unsigned int nbVertices);
 
 		/**
 		 * Draw the giver shape masked by using a blend between the alpha
@@ -121,10 +121,10 @@ namespace RedBox {
 		 * @param nbVertices Number of vertices the array contains.
 		 * @param inversedMask If true, the mask effect will be reversed.
 		 */
-		static void drawMaskedShapeWithTextureAndColor(GLfloat* vertices,
-		        RenderInfo& renderingInfo,
-		        unsigned int nbVertices,
-		        bool inversedMask = false);
+		static void drawMaskedShapeWithTextureAndColor(GLfloat *vertices,
+		                                               RenderInfo &renderingInfo,
+		                                               unsigned int nbVertices,
+		                                               bool inversedMask = false);
 		/**
 		 * Prepare the scene before rendering object.
 		 * It clear the draw buffer and reset the transformation matrix with the given
@@ -139,8 +139,8 @@ namespace RedBox {
 		 */
 		static void prepareScene(int xTranslation, int yTranslation,
 		                         int angle, float zoom,
-		                         const Color& backgroundColor,
-		                         const Vector2& rotationCenterOffset);
+		                         const Color &backgroundColor,
+		                         const Vector2 &rotationCenterOffset);
 
 		/**
 		 * Pushes the current matrix on the stack.
@@ -151,7 +151,7 @@ namespace RedBox {
 		 * Applies a translation on the current matrix.
 		 * @param translation 2D translation to apply.
 		 */
-		static void translate(const Vector2& translation);
+		static void translate(const Vector2 &translation);
 
 		/**
 		 * Pops the current matrix from the stack.
@@ -172,7 +172,7 @@ namespace RedBox {
 		 * Load a texture into graphic memory.
 		 * @param pixMap A pixmap object containing the buffer the driver must load.
 		 */
-		static TextureInfo* loadTexture(PixMap* pixMap);
+		static TextureInformation *loadTexture(PixMap *pixMap);
 	};
 }
 

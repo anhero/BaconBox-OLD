@@ -1,11 +1,12 @@
 #include "FontImplementation.h"
+#include <sstream>
+#include <freetype/ftglyph.h>
+#include <algorithm>
+
 #include "Console.h"
 #include "ResourceManager.h"
 #include "MathHelper.h"
 #include "Parser.h"
-#include <sstream>
-#include <freetype/ftglyph.h>
-#include <algorithm>
 
 using namespace RedBox;
 

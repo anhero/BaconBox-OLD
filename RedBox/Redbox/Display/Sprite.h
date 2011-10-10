@@ -15,7 +15,7 @@
 #include "FlagSet.h"
 
 namespace RedBox {
-	struct TextureInfo;
+	struct TextureInformation;
 	/**
 	 * Represents a sprite. A is used to display animated or non-animated
 	 * images or display colored shapes. To use a sprite, initialize it and
@@ -39,7 +39,7 @@ namespace RedBox {
 		 * Simple parameterized constructor.
 		 * @param textureKey Key to the texture to create a sprite from.
 		 */
-		Sprite(const std::string& textureKey);
+		Sprite(const std::string &textureKey);
 
 		/**
 		 * Simple parameterized constructor. Does the same thing as the
@@ -48,7 +48,7 @@ namespace RedBox {
 		 * with.
 		 * @see RedBox::RenderInfo::texInfo
 		 */
-		Sprite(TextureInfo* textureInfo);
+		Sprite(TextureInformation *textureInfo);
 
 		/**
 		 * Parameterized constructor. Loads a sprite using the texture in the
@@ -63,7 +63,7 @@ namespace RedBox {
 		 * @param nbFrames Number of frames the sprite will load (for
 		 * animations)
 		 */
-		Sprite(const std::string& textureKey,
+		Sprite(const std::string &textureKey,
 		       unsigned int frameWidth,
 		       unsigned int frameHeight,
 		       unsigned int nbFrames = 1);
@@ -81,7 +81,7 @@ namespace RedBox {
 		 * @param nbFrames Number of frames the sprite will load (for
 		 * animations).
 		 */
-		Sprite(TextureInfo* textureInfo,
+		Sprite(TextureInformation *textureInfo,
 		       unsigned int frameWidth,
 		       unsigned int frameHeight,
 		       unsigned int nbFrames = 1);
@@ -90,14 +90,14 @@ namespace RedBox {
 		 * Copy constructor.
 		 * @param src Sprite to make a copy of.
 		 */
-		Sprite(const Sprite& src);
+		Sprite(const Sprite &src);
 
 		/**
 		 * Assignation operator overload.
 		 * @param src Sprite to make a copy of.
 		 * @return Reference to the modified sprite.
 		 */
-		Sprite& operator=(const Sprite& src);
+		Sprite &operator=(const Sprite &src);
 
 		/**
 		 * Destructor. Frees up all allocated memory.
@@ -132,7 +132,7 @@ namespace RedBox {
 		 * Gets the graphic body masking the current graphic body.
 		 * @return Pointer to the graphic body's mask.
 		 */
-		virtual GraphicBody* getMask();
+		virtual GraphicBody *getMask();
 
 		/**
 		 * Set the sprite used to mask the parent renderstep.
@@ -140,7 +140,7 @@ namespace RedBox {
 		 * @param inversed Set this parameter to true if you want to inverse
 		 * the effect of the mask. False by default.
 		 */
-		virtual void setMask(GraphicBody* newMask, bool inversed = false);
+		virtual void setMask(GraphicBody *newMask, bool inversed = false);
 
 		/**
 		 * Creates a vertex in the vertices group.
@@ -182,14 +182,14 @@ namespace RedBox {
 		 * Gets the sprite's main color.
 		 * @return Color object containing the color component of the sprite.
 		 */
-		const Color& getMainColor() const;
+		const Color &getMainColor() const;
 
 		/**
 		 * Set the color of the main renderStep with the
 		 * given color components Range are from 0 to 255.
 		 * Componentes are RGBA.
 		 */
-		virtual void setMainColor(const Color& newColor);
+		virtual void setMainColor(const Color &newColor);
 
 		/**
 		 * Gets the main color's alpha component.
@@ -207,13 +207,13 @@ namespace RedBox {
 		 * Gets the vertices group.
 		 * @return Reference to the sprite's group of vertices.
 		 */
-		VerticesGroup& getVertices();
+		VerticesGroup &getVertices();
 
 		/**
 		 * Gets the vertices group.
 		 * @return Reference to the sprite's group of vertices.
 		 */
-		const VerticesGroup& getVertices() const;
+		const VerticesGroup &getVertices() const;
 
 		/**
 		 * Gets the sprite's left side's position.
@@ -243,13 +243,13 @@ namespace RedBox {
 		 * Gets the sprite's render info.
 		 * @return Reference to the sprite's render information.
 		 */
-		RenderInfo& getRenderInfo();
+		RenderInfo &getRenderInfo();
 
 		/**
 		 * Gets the sprite's render info.
 		 * @return Reference to the sprite's render information.
 		 */
-		const RenderInfo& getRenderInfo() const;
+		const RenderInfo &getRenderInfo() const;
 
 		/**
 		 * Checks if the sprite's animation is paused.
@@ -262,7 +262,7 @@ namespace RedBox {
 		 * Sets the current animation.
 		 * @param name Name of the animation to play.
 		 */
-		void playAnimation(const std::string& name);
+		void playAnimation(const std::string &name);
 
 		/**
 		 * Pauses the sprite's animation. Stays paused until resumeAnimation()
@@ -281,7 +281,7 @@ namespace RedBox {
 		 * @return String containing the sprite's current animation. Empty
 		 * string if there is no current animation.
 		 */
-		const std::string& getCurrentAnimation() const;
+		const std::string &getCurrentAnimation() const;
 
 		/**
 		 * Adds an animation. Accepts a variable number of parameters for each
@@ -295,7 +295,7 @@ namespace RedBox {
 		 * stopping. -1 means it will loop infinitely.
 		 * @param nbFrames Number of frames the animation has.
 		 */
-		void addAnimation(const std::string& name,
+		void addAnimation(const std::string &name,
 		                  double timePerFrame,
 		                  int nbLoops,
 		                  unsigned int nbFrames, ...);
@@ -354,7 +354,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::scaling
 		 */
 		virtual void scaleFromPoint(float xScaling, float yScaling,
-		                            const Vector2& fromPoint);
+		                            const Vector2 &fromPoint);
 
 		/**
 		 * Rotates the sprite from a point.
@@ -363,36 +363,36 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::angle
 		 */
 		virtual void rotateFromPoint(float rotationAngle,
-		                             const Vector2& rotationPoint);
+		                             const Vector2 &rotationPoint);
 
 		/**
 		 * Clones the sprite.
 		 * @return Pointer to the new Sprite.
 		 */
-		virtual GraphicBody* clone() const;
-        
-        /**
-         * Point the c array pointers (vertices and texture coordinates)
-         * to the batchcall's arrays.
-         */
-        void setBatchPointer(Vector2* verticesPointer, Vector2 * textureCoordPointer, unsigned char * colors);
-        
-        
-        /**
-         * Set the verticesGroup and RenderInfo to use internal data instead of 
-         * the renderbatch data.
-         */
-        void setInternalBatchPointer();
+		virtual GraphicBody *clone() const;
+
+		/**
+		 * Point the c array pointers (vertices and texture coordinates)
+		 * to the batchcall's arrays.
+		 */
+		void setBatchPointer(Vector2 *verticesPointer, Vector2 *textureCoordPointer, unsigned char *colors);
+
+
+		/**
+		 * Set the verticesGroup and RenderInfo to use internal data instead of
+		 * the renderbatch data.
+		 */
+		void setInternalBatchPointer();
 
 
 	private:
-        /**
-         * The GraphicDriver call for masked sprite is called in this function.
-         * This way it's possible to call the masked version without calling 
-         * mask() and unmask() on the mask.
-         */
-        void maskedRender(bool inversedMask);
-        
+		/**
+		 * The GraphicDriver call for masked sprite is called in this function.
+		 * This way it's possible to call the masked version without calling
+		 * mask() and unmask() on the mask.
+		 */
+		void maskedRender(bool inversedMask);
+
 		/// Vertices making up the sprite.
 		VerticesGroup vertices;
 
@@ -418,13 +418,13 @@ namespace RedBox {
 		 * @param nbFrames Number of frames the sprite will load (for
 		 * animations).
 		 */
-		void construct(TextureInfo* textureInfo,
+		void construct(TextureInformation *textureInfo,
 		               unsigned int frameWidth,
 		               unsigned int frameHeight,
 		               unsigned int nbFrames = 1);
-        
+
 #ifdef RB_OPENGL
-        friend class OpenGLDriver;
+		friend class OpenGLDriver;
 #endif
 	};
 }

@@ -3,7 +3,7 @@
 #include <cmath>
 #include <algorithm>
 
-#include "TextureInfo.h"
+#include "TextureInformation.h"
 #include "Console.h"
 #include "UTFConvert.h"
 #include "Font.h"

@@ -10,12 +10,12 @@
 #include "Vector2.h"
 
 namespace RedBox{
-	class TextureInfo;
+	class TextureInformation;
 	/** 
 	 * This class contain the needed informations to render a glyph. 
      * @ingroup TextDisplay
      */
-	struct Glyph : public Object {
+	struct Glyph {
 		/**
 		 * Amount of pixels we need to add to the current horizontal and
 		 * vertical position before rendering the next character. The horizontal
@@ -40,7 +40,7 @@ namespace RedBox{
 		Vector2 size;
 
 		/// Pointer to the texture handle and texture size.
-		TextureInfo* textureInfo;
+		TextureInformation* textureInfo;
 
 		/**
 		 * Default constructor.
