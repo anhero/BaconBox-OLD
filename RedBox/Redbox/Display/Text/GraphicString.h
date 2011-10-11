@@ -346,10 +346,10 @@ namespace RedBox {
 		 * NULL.
 		 * @param newFont Pointer to the new font to use.
 		 */
-		void setFont(Font *newFont) {
+		void setFont(FontPointer newFont) {
 			// We make sure the new font is valid.
-			if (newFont) {
-				font = newFont;
+			if (newFont.pointer) {
+				font = newFont.pointer;
 			}
 		}
 
