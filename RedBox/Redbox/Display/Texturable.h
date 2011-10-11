@@ -7,6 +7,8 @@
 
 #include <string>
 
+#include "TexturePointer.h"
+
 namespace RedBox {
 	struct TextureInformation;
 	/**
@@ -16,25 +18,11 @@ namespace RedBox {
 	class Texturable {
 	public:
 		/**
-		 * Default constructor.
-		 */
-		Texturable();
-
-		/**
 		 * Simple parameterized constructor.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		explicit Texturable(const std::string &newTextureKey);
-
-		/**
-		 * Simple parameterized constructor. Does the same thing as the
-		 * constructor that recieves an key.
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the body with.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		explicit Texturable(const TextureInformation *newTextureInformation);
+		explicit Texturable(TexturePointer newTexture = TexturePointer());
 
 		/**
 		 * Copy constructor.
@@ -59,26 +47,18 @@ namespace RedBox {
 		 * @return Pointer to the body's texture.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		const TextureInformation *getTextureInformation() const;
+		TextureInformation *getTextureInformation() const;
 
 		/**
 		 * Sets the texturable body's texture.
-		 * @param newTextureKey Key of the new texture information.
+		 * @param newTexture Texture pointer to use as the new texture.
 		 * @see RedBox::Texturable::textureInformation
 		 * @see RedBox::ResourceManager::getTexture(const std::string &key)
 		 */
-		void setTextureInformation(const std::string &newTextureKey);
-
-		/**
-		 * Sets the texturable body's texture.
-		 * @param newTextureInformation Pointer to the body's new texture
-		 * information.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		void setTextureInformation(const TextureInformation *newTextureInformation);
+		void setTextureInformation(TexturePointer newTexture);
 	private:
 		/// Pointer to the texture information.
-		const TextureInformation *textureInformation;
+		TextureInformation *textureInformation;
 	};
 
 }

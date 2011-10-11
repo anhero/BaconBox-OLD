@@ -19,32 +19,14 @@ namespace RedBox {
 		 * coordinates. If the specified size has a coordinate equal to 0 or
 		 * lower, each button frame will be equal to the texture's width
 		 * divided by 4.
-		 * @param newTextureKey Key to the texture to create the button from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @param startingPosition Starting position at which to place the
 		 * button.
 		 * @param newSize Size of the button.
 		 * @param newTextureOffset Texture coordinates' offset if needed.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		explicit SimpleButton(const std::string &newTextureKey,
-		                      const Vector2 &startingPosition = Vector2(),
-		                      const Vector2 &newSize = Vector2(),
-		                      const Vector2 &newTextureOffset = Vector2());
-
-		/**
-		 * Parameterized constructor. Loads the vertices and the texture
-		 * coordinates. If the specified size has a coordinate equal to 0 or
-		 * lower, each button frame will be equal to the texture's width
-		 * divided by 4.
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the button with.
-		 * @param startingPosition Starting position at which to place the
-		 * button.
-		 * @param newSize Size of the button.
-		 * @param newTextureOffset Texture coordinates' offset if needed.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		explicit SimpleButton(const TextureInformation *newTextureInformation,
+		explicit SimpleButton(TexturePointer newTexture,
 		                      const Vector2 &startingPosition = Vector2(),
 		                      const Vector2 &newSize = Vector2(),
 		                      const Vector2 &newTextureOffset = Vector2());

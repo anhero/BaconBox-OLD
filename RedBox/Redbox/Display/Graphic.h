@@ -15,6 +15,7 @@
 #include "GraphicDriver.h"
 #include "FlagSet.h"
 #include "RenderMode.h"
+#include "TexturePointer.h"
 
 namespace RedBox {
 	/**
@@ -32,30 +33,18 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		Graphic() : Maskable(), Colorable(), Shapable<StandardVerticesArray>(),
-			T(), currentMask(NULL), renderModes() {
+			T(), renderModes(), currentMask(NULL) {
 		}
 
 		/**
 		 * Simple parameterized constructor. Only sets the texture information.
 		 * Does not load any texture coordinates.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		explicit Graphic(const std::string &newTextureKey) : Maskable(),
-			Colorable(), Shapable<StandardVerticesArray>(), T(newTextureKey),
-			currentMask(NULL), renderModes() {
-		}
-
-		/**
-		 * Simple parameterized constructor. Does the same thing as the
-		 * constructor that recieves an key.
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the sprite with.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		explicit Graphic(const TextureInformation *newTextureInformation) :
-			Maskable(), Colorable(), Shapable<StandardVerticesArray>(),
-			T(newTextureInformation), currentMask(NULL), renderModes() {
+		explicit Graphic(TexturePointer newTexture) : Maskable(),
+			Colorable(), Shapable<StandardVerticesArray>(), T(newTexture),
+			renderModes(), currentMask(NULL) {
 		}
 
 		/**
@@ -63,8 +52,8 @@ namespace RedBox {
 		 * @param src Graphic to make a copy of.
 		 */
 		Graphic(const Graphic<T> &src) : Maskable(src), Colorable(src),
-			Shapable<StandardVerticesArray>(src), T(src), currentMask(src.currentMask),
-			renderModes(src.renderModes) {
+		    Shapable<StandardVerticesArray>(src), T(src),
+		    renderModes(src.renderModes), currentMask(src.currentMask) {
 		}
 
 		/**

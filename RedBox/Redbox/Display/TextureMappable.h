@@ -7,6 +7,7 @@
 
 #include "Texturable.h"
 #include "TextureCoordinates.h"
+#include "TexturePointer.h"
 
 namespace RedBox {
 	class VerticesArray;
@@ -18,8 +19,7 @@ namespace RedBox {
 	public:
 		/**
 		 * Loads texture coordinates.
-		 * @param textureInformation Pointer to the new texture information
-		 * to use.
+		 * @param texture Texture pointer to use as the texture.
 		 * @param vertices Vertices to use to load the texture coordinates.
 		 * @param offset Offset from the upper left corner of the texture (in
 		 * pixels).
@@ -27,7 +27,7 @@ namespace RedBox {
 		 * texture coordinates. Loads as many texture coordinates as there are
 		 * vertices.
 		 */
-		static void loadTextureCoordinates(const TextureInformation *textureInformation,
+		static void loadTextureCoordinates(TexturePointer texture,
 		                                   const VerticesArray &vertices,
 		                                   const Vector2 &offset,
 		                                   TextureCoordinates *textureCoordinates);
@@ -39,19 +39,10 @@ namespace RedBox {
 
 		/**
 		 * Simple parameterized constructor.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		explicit TextureMappable(const std::string &newTextureKey);
-
-		/**
-		 * Simple parameterized constructor. Does the same thing as the
-		 * constructor that recieves an key.
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the sprite with.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		explicit TextureMappable(const TextureInformation *newTextureInformation);
+		explicit TextureMappable(TexturePointer newTexture);
 
 		/**
 		 * Copy constructor.

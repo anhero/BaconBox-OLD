@@ -1,15 +1,7 @@
 #include "Text.h"
 
 namespace RedBox {
-	Text::Text(const std::string &fontKey,
-	           TextAlignment newAlignment,
-	           TextDirection newDirection,
-	           const Vector2 &startingPosition) :
-		GraphicString<Collidable>(fontKey, newAlignment, newDirection,
-		                          startingPosition), Layerable() {
-	}
-
-	Text::Text(Font *newFont,
+	Text::Text(FontPointer newFont,
 	           TextAlignment newAlignment,
 	           TextDirection newDirection,
 	           const Vector2 &startingPosition) :
@@ -17,16 +9,7 @@ namespace RedBox {
 		                          startingPosition), Layerable() {
 	}
 
-	Text::Text(const std::string &fontKey,
-	           const std::string &newText,
-	           TextAlignment newAlignment,
-	           TextDirection newDirection,
-	           const Vector2 &startingPosition) :
-		GraphicString<Collidable>(fontKey, newText, newAlignment, newDirection,
-		                          startingPosition), Layerable() {
-	}
-
-	Text::Text(Font *newFont,
+	Text::Text(FontPointer newFont,
 	           const std::string &newText,
 	           TextAlignment newAlignment,
 	           TextDirection newDirection,
@@ -35,16 +18,7 @@ namespace RedBox {
 		                          startingPosition), Layerable() {
 	}
 
-	Text::Text(const std::string &fontKey,
-	           const String32 &newText,
-	           TextAlignment newAlignment,
-	           TextDirection newDirection,
-	           const Vector2 &startingPosition) :
-		GraphicString<Collidable>(fontKey, newText, newAlignment, newDirection,
-		                          startingPosition), Layerable() {
-	}
-
-	Text::Text(Font *newFont,
+	Text::Text(FontPointer newFont,
 	           const String32 &newText,
 	           TextAlignment newAlignment,
 	           TextDirection newDirection,

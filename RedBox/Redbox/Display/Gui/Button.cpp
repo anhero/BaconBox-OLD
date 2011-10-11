@@ -8,14 +8,14 @@ namespace RedBox {
 		buttonState(ButtonState::NORMAL), tmpHold(false) {
 	}
 
-	Button::Button(const std::string &newTextureKey,
+	Button::Button(TexturePointer newTexture,
 	               const Vector2 &startingPosition,
 	               const Vector2 &newSize,
 	               const Vector2 &newTextureOffset,
 	               unsigned int nbFrames) :
-	    Sprite(newTextureKey, startingPosition, newSize, newTextureOffset,
-	           nbFrames), click(), hover(), buttonState(ButtonState::NORMAL),
-	    tmpHold(false) {
+		Sprite(newTexture, startingPosition, newSize, newTextureOffset,
+		       nbFrames), click(), hover(), buttonState(ButtonState::NORMAL),
+		tmpHold(false) {
 	}
 
 	Button::Button(const Button &src) : Sprite(src), click(src.click),

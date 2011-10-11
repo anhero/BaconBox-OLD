@@ -3,29 +3,11 @@
 #include "TextureInformation.h"
 
 namespace RedBox {
-	Checkbox::Checkbox(const std::string &newTextureKey,
+	Checkbox::Checkbox(TexturePointer newTexture,
 	                   const Vector2 &startingPosition,
 	                   const Vector2 &newSize,
 	                   const Vector2 &newTextureOffset) : Button() {
-		this->setTextureInformation(newTextureKey);
-
-		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
-			construct(newSize, startingPosition, newTextureOffset, 8);
-			this->initializeAnimations();
-
-		} else if (this->getTextureInformation()) {
-			construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth / 8),
-			                  static_cast<float>(this->getTextureInformation()->imageHeight)),
-			          startingPosition, newTextureOffset, 8);
-			this->initializeAnimations();
-		}
-	}
-
-	Checkbox::Checkbox(const TextureInformation *newTextureInformation,
-	                   const Vector2 &startingPosition,
-	                   const Vector2 &newSize,
-	                   const Vector2 &newTextureOffset) : Button() {
-		this->setTextureInformation(newTextureInformation);
+		this->setTextureInformation(newTexture);
 
 		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
 			construct(newSize, startingPosition, newTextureOffset, 8);
