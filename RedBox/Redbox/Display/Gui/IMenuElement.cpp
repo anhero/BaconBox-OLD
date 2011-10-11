@@ -4,7 +4,7 @@ using namespace RedBox;
 /**
  * Default constructor.
  */
-IMenuElement::IMenuElement(std::string key): isSelected(false), key(key){
+IMenuElement::IMenuElement(const std::string& newKey): isSelected(false), key(newKey){
 	
 }
 

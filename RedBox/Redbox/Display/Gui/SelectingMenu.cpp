@@ -149,7 +149,7 @@ void SelectingMenu::scaleMaskToMenu(float x, float y){
 	internalMask->setScaling((width*x/internalMask->getWidth()), (height*y/internalMask->getHeight()));
 	internalMask->setPosition(this->getCenterPosition()-Vector2(internalMask->getWidth()/2,internalMask->getHeight()/2));
 }
-std::string SelectingMenu::getMiddleKey() const{
+std::string SelectingMenu::getSelectedKey() const{
 	if (!elements.empty()) {
 		return (*middle)->getKey();
 	}else{

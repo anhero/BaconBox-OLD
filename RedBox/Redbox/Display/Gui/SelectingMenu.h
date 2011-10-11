@@ -121,7 +121,7 @@ namespace RedBox {
 		 * @param y the ratio in Y between the internalMask and the menu.
 		 */
 		virtual void scaleMaskToMenu(float x, float y);
-		std::string getMiddleKey() const;
+		std::string getSelectedKey() const;
 		/**
 		 * Is called when a menu's element is triggered.
 		 */

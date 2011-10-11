@@ -1,10 +1,12 @@
 #include "SpriteMenuElement.h"
 using namespace RedBox;
 
-SpriteMenuElement::SpriteMenuElement(std::string imageKey):IMenuElement(imageKey){
+SpriteMenuElement::SpriteMenuElement(const std::string& imageKey):IMenuElement(imageKey){
 	image = new Sprite(imageKey);
 }
-
+SpriteMenuElement::SpriteMenuElement(const std::string& imageKey,const std::string& idKey):IMenuElement(idKey){
+	image = new Sprite(imageKey);
+}
 SpriteMenuElement::SpriteMenuElement(const SpriteMenuElement &src):IMenuElement(src.key){
 	image = new Sprite(src.key);
 }

@@ -19,7 +19,7 @@ namespace RedBox{
 		/**
 		 * Default constructor.
 		 */
-		IMenuElement(std::string key);	
+		IMenuElement(const std::string& key);	
 		
 		/**
 		 * Copy constructor.

@@ -19,7 +19,13 @@ namespace RedBox {
 		 * Parametrized constructor.
 		 * @param imageKey the textureId to create the SpriteMenuElement
 		 */
-		SpriteMenuElement(std::string imageKey);
+		SpriteMenuElement(const std::string& imageKey);
+		/**
+		 * Parametrized constructor.
+		 * @param imageKey the textureId to create the SpriteMenuElement.
+		 * @param idKey the key to be returned to the menu.
+		 */
+		SpriteMenuElement(const std::string& imageKey, const std::string& idKey);
 		/**
 		 * Copy constructor.
 		 * @param imageKey the textureId to create the SpriteMenuElement
