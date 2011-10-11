@@ -9,6 +9,7 @@
 #include <UIKit/UITouch.h>
 #include <UIKit/UIEvent.h>
 
+#include <vector>
 #include "Pointer.h"
 #include "sigly.h"
 
@@ -27,6 +28,8 @@ namespace RedBox {
 		static sigly::Signal2<NSSet*, UIEvent*> touchEnd;
 		/// Signal sent by EAGLView when a touch moves.
 		static sigly::Signal2<NSSet*, UIEvent*> touchMove;
+        /// Signal sent by EAGLView when a touch is cancelled.
+		static sigly::Signal2<NSSet*, UIEvent*> touchCancelled;
 	protected:
 		/**
 		 * Default constructor.
@@ -41,10 +44,7 @@ namespace RedBox {
 		 */
 		void updateDevice();
 	private:
-		/// Temporary position for ios' event handling.
-		Vector2 iosPosition;
-		/// Temporary button state for ios' event handling.
-		bool isTouchDown;
+        
 		/**
 		 * Called when EAGLView gets a touchesBegan event.
 		 */
@@ -57,6 +57,41 @@ namespace RedBox {
 		 * Called when EAGLView gets a touchesMoved event.
 		 */
 		void onTouchMove(NSSet* touches, UIEvent* event);
+        /**
+		 * Called when EAGLView gets a touchesCancelled event.
+		 */
+        void onTouchCancelled(NSSet* touches, UIEvent* event);
+        
+        
+        struct IOSTouch {
+            IOSTouch():touch(NULL), inContact(false), position(0.0f,0.0f){}
+            ///Pointer to the IOS touch object
+            UITouch * touch;
+            
+            ///Last known position for this touch event.
+            Vector2 position;
+            ///True if the touch is currently happening, false if the touch is ended.
+            bool inContact;
+        };
+        
+        /**
+         * Used for multi touch tracking; it matches the touch object with their cursor ID. 
+         * (The key of each object in the vector is the matching cursor ID.)
+         */
+        std::vector<IOSTouch> touches;
+
+        
+        /**
+         * Add the given touch object and match it to a cursor.
+         * @return Return the matching cursor ID and -1 if it can't add the given touch object.
+         */
+        int AddNewTouch(UITouch* touch);
+        
+        /**
+         * Return the matching cursor ID for the given touch object.
+         * @return The matching cursor ID or -1 if there is no matching cursor.
+         */
+        int getTouchID(UITouch* touch);
 	};
 }
 
