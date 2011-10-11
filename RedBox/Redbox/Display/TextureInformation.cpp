@@ -5,7 +5,7 @@
 
 namespace RedBox {
 
-#ifdef RB_OPENGL
+#if defined (RB_OPENGL) || defined (RB_OPENGLES)
 	TextureInformation::TextureInformation(): textureId(0), colorFormat(ColorFormat::RGBA),
 		poweredWidth(0), poweredHeight(0), imageWidth(0), imageHeight(0) {
 	}
@@ -31,7 +31,7 @@ namespace RedBox {
 
 	std::ostream &operator<<(std::ostream &output, const TextureInformation &t) {
 		output << "{";
-#ifdef RB_OPENGL
+#if defined (RB_OPENGL) || defined (RB_OPENGLES)
 		output << "textureId: " << t.textureId << ", ";
 #endif
 		output << "poweredWidth: " << t.poweredWidth << ", poweredHeight: " <<

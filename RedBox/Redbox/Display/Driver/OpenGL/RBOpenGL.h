@@ -3,7 +3,7 @@
 
 #include "PlatformFlagger.h"
 
-#ifdef RB_OPENGL
+#if defined (RB_OPENGL) || defined (RB_OPENGLES)
 
 #if defined(RB_MAC_PLATFORM) && defined(RB_SDL)
 #include <OpenGl/OpenGL.h>

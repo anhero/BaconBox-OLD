@@ -14,21 +14,12 @@
 	#define RB_SDL
 #endif
 
-#ifdef OPENGL
-	#define RB_OPENGL
-	#ifdef OPENGLES
-		#define RB_OPENGLES
-	#endif
-#endif // OPENGL
-
-
 /* ****************************************************************************
  * System-specific defines
  */
 //Android platform
 #ifdef __ANDROID__
 	#define RB_ANDROID
-	#define RB_OPENGL
 	#define RB_OPENGLES
 #endif // __ANDROID__
 
@@ -62,6 +53,7 @@
 	#include "TargetConditionals.h"
 
 	#define RB_APPLE_PLATFORM
+    
 
 	//More detailed platforms
 	#if TARGET_IPHONE_SIMULATOR
@@ -79,10 +71,12 @@
 	#endif
 
 	#ifdef RB_IPHONE_PLATFORM
+        #define RB_OPENGLES
 		//Time on iOS
 		#define RB_TIME_HELPER_IMPL RedBox::IOSTimeHelper
 		#define RB_TIME_HELPER_INCLUDE "IOSTimeHelper.h"
 	#elif defined(RB_MAC_PLATFORM)
+        #define RB_OPENGL
 		// Time on Mac OS X
 		#define RB_TIME_HELPER_IMPL RedBox::LibcTimeHelper
 		#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
@@ -159,7 +153,7 @@
 	#define RB_MAINWINDOW_IMPL IOSMainWindow::getInstance()
 #endif // RB_IPHONE_PLATFORM
 
-#ifdef RB_OPENGL
+#if defined (RB_OPENGL) || defined (RB_OPENGLES)
 	#define RB_GRAPHIC_DRIVER OpenGLDriver::getInstance()
 	#define RB_GRAPHIC_DRIVER_INCLUDE "OpenGLDriver.h"
 #endif

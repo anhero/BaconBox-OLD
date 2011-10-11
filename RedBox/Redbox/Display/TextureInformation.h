@@ -32,7 +32,7 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		TextureInformation();
-#ifdef RB_OPENGL
+#if defined (RB_OPENGL) || defined (RB_OPENGLES)
 		/**
 		 * Parametrized constructor for the OpenGL implementation of
 		 * Texture.
