@@ -1,5 +1,6 @@
 /**
  * @file
+ * @ingroup Display
  */
 #ifndef RB_GRAPHIC_ELEMENT_H
 #define RB_GRAPHIC_ELEMENT_H
@@ -16,6 +17,13 @@
 #include "TexturePointer.h"
 
 namespace RedBox {
+	/**
+	 * Graphic element that can be animated, just like the sprite, but not
+	 * layerable and can be collidable or only transformable (collidable means
+	 * it is also transformable).
+	 * @tparam Parent Collidable or Transformable.
+	 * @ingroup Display
+	 */
 	template <typename Parent>
 	class GraphicElement : public Graphic<Animatable>, public Parent {
 	public:

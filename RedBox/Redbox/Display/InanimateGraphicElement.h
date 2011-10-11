@@ -15,6 +15,13 @@
 #include "TexturePointer.h"
 
 namespace RedBox {
+	/**
+	 * Graphic element that cannot be animated, just like the inanimate sprite,
+	 * but not layerable and can be collidable or only transformable (collidable means
+	 * it is also transformable).
+	 * @tparam Parent Collidable or Transformable.
+	 * @ingroup Display
+	 */
 	template <typename Parent>
 	class InanimateGraphicElement : public Graphic<Inanimate>,
 		public Parent {
