@@ -5,217 +5,125 @@
 #ifndef RB_CAMERA_H
 #define RB_CAMERA_H
 
-#include "Body.h"
 #include "Color.h"
 #include "Vector2.h"
 #include "SafeEnum.h"
+#include "Renderable.h"
+#include "Collidable.h"
+#include "Disableable.h"
+#include "StandardVerticesArray.h"
+#include "Shapable.h"
 
 namespace RedBox {
-	class GraphicBody;
-	/** 
-	 * Represent the camera. This class prepare the scene to mimic a the effect of a camera. 
+	/**
+	 * Represent the camera. This class prepare the scene to mimic a the effect of a camera.
 	 * If we "move" this object to the right, every object will shift
 	 * to the left before rendering.
-     * @ingroup Display
-     */
-	class Camera : public Body {
+	 * @ingroup Display
+	 */
+	class Camera : public Collidable, public Disableable,
+		public Shapable<StandardVerticesArray> {
 		friend class State;
 	public:
 		struct ShakeAxesDef {
 			enum type {
-				BOTH_AXES,
-				HORIZONTAL_AXIS,
-				VERTICAL_AXIS
+			    BOTH_AXES,
+			    HORIZONTAL_AXIS,
+			    VERTICAL_AXIS
 			};
 		};
+
 		/**
 		 * The possible axes on which the camera can shake.
 		 */
 		typedef SafeEnum<ShakeAxesDef> ShakeAxes;
+
 		/**
 		 * Default constructor.
 		 */
 		Camera();
 
 		/**
-		 * Parameterized constructor specifying its width and height.
-		 * @param newWidth Camera's initial width.
-		 * @param newHeight Camera's initial height.
-		 */
-		Camera(unsigned int newWidth, unsigned int newHeight);
-
-		/**
 		 * Copy constructor.
-		 * @param Camera to make a copy of.
+		 * @param src Camera to make a copy of.
 		 */
-		Camera(const Camera& src);
+		Camera(const Camera &src);
 
 		/**
 		 * Assignation operator overload.
 		 * @param src Camera to make a copy of.
 		 * @return Camera resulting of the copy.
 		 */
-		Camera& operator=(const Camera& src);
-		
-		/**
-		 * Gets the camera's position.
-		 * @return Vector containing the camera's position.
-		 * @see RedBox::Camera::position
-		 */
-		const Vector2& getPosition() const;
+		Camera &operator=(const Camera &src);
 
 		/**
-		 * Sets camera's position.
-		 * @param x Set the horizontal position of the camera.
-		 * @param y Set the vertical position of the camera.
-		 * @see RedBox::Camera::position
+		 * Gets the camera's size.
+		 * @return Vector2 containing the width and height of the camera.
 		 */
-		void setPosition(float x, float y);
+		const Vector2 getSize() const;
 
 		/**
-		 * Sets the camera's position.
-		 * @param newPosition Camera's new position.
-		 * @see RedBox::Camera::position
+		 * Gets the camera's width.
+		 * @return Width in pixels (by default).
 		 */
-		void setPosition(const Vector2& newPosition);
-		
-		/**
-		 * Moves the camera.
-		 * @param x Value to move the camera on the x axis.
-		 * @param y Value to move the camera on the y axis.
-		 * @see RedBox::Camera::position
-		 */
-		void move(float x, float y);
+		float getWidth() const;
 
 		/**
-		 * Move the camera.
-		 * @param moveVector 2D vector containing the number of pixels to move
-		 * the camera.
-		 * @see RedBox::Camera::position
+		 * Gets the camera's height.
+		 * @return Height in pixels (by default).
 		 */
-		void move(const Vector2& moveVector);
+		float getHeight() const;
 
 		/**
-		 * Gets the camera's horizontal position.
-		 * @return Camera's horizontal position.
-		 * @see RedBox::Camera::position
+		 * Moves the camera horizontally and vertically.
+		 * @param xDelta Value to add to the camera's horizontal position
+		 * (in pixels). Positive value moves the Positionable to the right and a
+		 * negative value moves the camera to the left.
+		 * @param yDelta Value to add to the camera's vertical position (in
+		 * pixels). Positive value moves the camera down and a negative
+		 * value moves the camera up.
+		 * @see RedBox::Positionable::move(const Vector2& delta);
+		 * @see RedBox::Positionable::position
 		 */
-		float getXPosition() const;
+		virtual void move(float xDelta, float yDelta);
+
+		using Collidable::scaleFromPoint;
 
 		/**
-		 * Sets the camera's horizontal position.
-		 * @param newXPosition New horizontal position.
-		 * @see RedBox::Camera::position
+		 * Scales the camera from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, everything will look twice as wide.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, everything will look twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::Transformable::scaling
 		 */
-		void setXPosition(float newXPosition);
+		void scaleFromPoint(float xScaling, float yScaling,
+		                    const Vector2 &fromPoint);
 
 		/**
-		 * Move the camera horizontally.
-		 * @param x Number of pixels to move the camera horizontally.
-		 * @see RedBox::Camera::position
+		 * Rotates the camera from a point.
+		 * @param rotationAngle Angle to rotate the camera.
+		 * @param rotationPoint Origin point on which to apply the rotation.
+		 * @see RedBox::Transformable::angle
 		 */
-		void moveX(float x);
-
-		/**
-		 * Gets the camera's vertical position.
-		 * @return Camera's vertical position.
-		 * @see RedBox::Camera::position
-		 */
-		float getYPosition() const;
-
-		/**
-		 * Sets the camera's vertical position.
-		 * @param newYPosition New vertical position.
-		 * @see RedBox::Camera::position
-		 */
-		void setYPosition(float newYPosition);
-
-		/**
-		 * Move the camera vertically.
-		 * @param y Number of pixels to move the camera vertically.
-		 * @see RedBox::Camera::position
-		 */
-		void moveY(float y);
-
-		/**
-		 * Gets the camera's current rotation angle.
-		 * @return Camera's angle.
-		 * @see RedBox::Camera::angle
-		 */
-		float getAngle() const;
-
-		/**
-		 * Sets the camera's angle.
-		 * @param newAngle Camera's new angle.
-		 * @see RedBox::Camera::angle
-		 */
-		void setAngle(float newAngle);
-
-		/**
-		 * Rotate the camera counter-clockwise with the given degree value.
-		 * @param rotationAngle Angle to have to camera rotate
-		 * counter-clockwise.
-		 * @see RedBox::Camera::angle
-		 */
-		void rotateLeft(float rotationAngle);
-		
-		/**
-		 * Rotate the camera clockwise with the given degree value.
-		 * @param rotationAngle Angle to have to camera rotate clockwise.
-		 * @see RedBox::Camera::angle
-		 */
-		void rotateRight(float rotationAngle);
-
-		/**
-		 * Resets the camera's angle to the default value (0 degrees).
-		 * @see RedBox::Camera::angle
-		 */
-		void resetAngle();
+		void rotateFromPoint(float rotationAngle,
+		                     const Vector2 &rotationPoint);
 
 		/**
 		 * Gets the camera's background color.
 		 * @return Camera's background color.
 		 * @see RedBox::Camera::backgroundColor
 		 */
-		const Color& getBackgroundColor() const;
+		const Color &getBackgroundColor() const;
 
 		/**
 		 * Sets the camera's background color.
 		 * @param newBackgroundColor Camera's new background color.
 		 * @see RedBox::Camera::backgroundColor
 		 */
-		void setBackgroundColor(const Color& newBackgroundColor);
-		
-		/**
-		 * Gets the zoom factor.
-		 * @return Camera's zoom factor. less than 1 is zoomed out, more than
-		 * 1 is zoomed in.
-		 * @see RedBox::Camera::zoomFactor
-		 */
-		float getZoomFactor() const;
+		void setBackgroundColor(const Color &newBackgroundColor);
 
-		/**
-		 * Sets the zoom factor with the given value.
-		 * @param newZoomFactor 1.0 is the default, less than 1 zooms out, more
-		 * than 1 zooms in.
-		 * @see RedBox::Camera::zoomFactor
-		 */
-		void setZoomFactor(float newZoomFactor);
-
-		/**
-		 * Multiply the zoom factor by the given value.
-		 * @param factor 1 does nothing, less than 1 zooms out, more than 1
-		 * zooms in.
-		 * @see RedBox::Camera::zoomFactor
-		 */
-		void zoom(float factor);
-		
-		/**
-		 * Resets the zoom factor to the default value (1.0).
-		 * @see RedBox::Camera::zoomFactor
-		 */
-		void resetZoom();
-		
 		/**
 		 * Makes the camera shake like an earthquake.
 		 * @param intensity Intensity of the camera shaking. This is not in
@@ -232,8 +140,8 @@ namespace RedBox {
 		 * the camera shakes on both axes.
 		 */
 		void shake(float intensity = 0.05f, double duration = 0.5,
-				   bool forceReset = true,
-				   ShakeAxes axes = ShakeAxes::BOTH_AXES);
+		           bool forceReset = true,
+		           ShakeAxes axes = ShakeAxes::BOTH_AXES);
 
 		/**
 		 * Converts screen coordinates to world coordinates.
@@ -243,7 +151,7 @@ namespace RedBox {
 		 * given parameter.
 		 * @see RedBox::Camera::position
 		 */
-		Vector2 screenToWorld(const Vector2& positionOnScreen) const;
+		const Vector2 screenToWorld(const Vector2 &positionOnScreen) const;
 
 		/**
 		 * Converts screen coordinates to world coordinates.
@@ -255,7 +163,7 @@ namespace RedBox {
 		 * given parameters.
 		 * @see RedBox::Camera::position
 		 */
-		Vector2 screenToWorld(float x, float y) const;
+		const Vector2 screenToWorld(float x, float y) const;
 
 		/**
 		 * Converts an horizontal screen coordinate to world coordinate.
@@ -284,7 +192,7 @@ namespace RedBox {
 		 * given parameter.
 		 * @see RedBox::Camera::position
 		 */
-		Vector2 worldToScreen(const Vector2& positionInWorld) const;
+		const Vector2 worldToScreen(const Vector2 &positionInWorld) const;
 
 		/**
 		 * Converts world coordinates to screen coordinates.
@@ -298,7 +206,7 @@ namespace RedBox {
 		 * given parameter.
 		 * @see RedBox::Camera::position
 		 */
-		Vector2 worldToScreen(float x, float y) const;
+		const Vector2 worldToScreen(float x, float y) const;
 
 		/**
 		 * Converts an horizontal world coordinate to a screen coordinate.
@@ -323,34 +231,13 @@ namespace RedBox {
 		float worldToScreenY(float y) const;
 
 		/**
-		 * Gets the camera's width (not considering the zoom factor).
-		 * @return Camera's width.
-		 */
-		unsigned int getWidth() const;
-
-		/**
-		 * Gets the camera's height (not considering the zoom factor).
-		 * @return Camera's height.
-		 */
-		unsigned int getHeight() const;
-
-		/**
 		 * Makes the given body collide within the camera.
-		 * @param body Pointer to the graphic body that needs to stay within the
-		 * camera.
+		 * @param collidable Pointer to the collidable body that needs to stay
+		 * within the camera.
 		 */
-		bool collideInside(GraphicBody* body);
+		bool collideInside(Collidable *collidable);
 
 	private:
-		/// Camera's position.
-		Vector2 position;
-
-		/// Angle of the camera.
-		float angle;
-		
-		/// Zoom factor (1 does nothing, less than 1 zoom out, more than 1 zoom in)
-		float zoomFactor;
-
 		/// Background color for the camera.
 		Color backgroundColor;
 
@@ -382,6 +269,29 @@ namespace RedBox {
 		 * factor
 		 */
 		void render();
+
+		/**
+		 * Does nothing.
+		 */
+		void mask();
+
+		/**
+		 * Does nothing
+		 */
+		void unmask();
+
+		/**
+		 * Does nothing
+		 * @return NULL.
+		 */
+		Maskable *getMask() const;
+
+		/**
+		 * Does nothing.
+		 * @param newMask Useless.
+		 * @param inverted Useless.
+		 */
+		void setMask(Maskable *newMask, bool inverted = false);
 	};
 }
 

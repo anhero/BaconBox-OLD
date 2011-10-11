@@ -1,607 +1,296 @@
 /**
  * @file
- * @ingroup Display
  */
 #ifndef RB_EMITTER_H
 #define RB_EMITTER_H
 
-#include <stdint.h>
+#include <list>
 
-#include <vector>
-
-#include "IEmitter.h"
-#include "ParticleState.h"
-#include "Engine.h"
-#include "Random.h"
+#include "ParticlePhase.h"
 
 namespace RedBox {
 	/**
-	 * Represents an emitter. Emitters for specific objects inherit from this
-	 * class. This class is abstract.
-	 * @ingroup Display
-	 */
-	template <typename T>
-	class Emitter: public IEmitter {
+     * Represents an emitter. Emitters for specific objects inherit from this
+     * class. This class is abstract.
+     * @ingroup Display
+     */
+	class Emitter {
 	public:
-		/**
-		 * Represents a particle the sprite emitter will shoot.
-		 */
-		struct Particle {
-			/**
-			 * Default constructor.
-			 */
-			Particle(): graphicBody(NULL), timeLeft(0.0),
-				state(ParticleState::DEAD), alphaCounter(0.0f),
-				alphaPerSecond(0.0f), scalingPerSecond(Vector2()),
-				anglePerSecond(0.0f) {
-			}
-			/**
-			 * Parameterized constructor.
-			 * @param newGraphicBody Pointer to the graphic used for the particle.
-			 * @param newTimeLeft Time remaining for the particle.
-			 * @param newState Particle's initial state.
-			 * @see RedBox::ParticleState::Enum
-			 */
-			Particle(T* newGraphicBody, double newTimeLeft,
-			         ParticleState newState) :
-				graphicBody(newGraphicBody), timeLeft(newTimeLeft),
-				state(newState), alphaCounter(0.0f), alphaPerSecond(0.0f),
-				scalingPerSecond(Vector2()), anglePerSecond(0.0f) {
-			}
-
-			/**
-			 * Copy constructor.
-			 * @param src Particle to make a copy of.
-			 */
-			Particle(const Particle& src) : graphicBody(NULL),
-				timeLeft(src.timeLeft), state(src.state), alphaCounter(0.0f),
-				alphaPerSecond(src.alphaPerSecond),
-				scalingPerSecond(src.scalingPerSecond),
-				anglePerSecond(src.anglePerSecond) {
-				if(src.graphicBody) {
-					graphicBody = new T(*src.graphicBody);
-				}
-			}
-
-			/**
-			 * Destructor. Frees up the memory used by the GraphicBody.
-			 */
-			~Particle() {
-				clearGraphicBody();
-			}
-
-			/**
-			 * Assignation operator overload.
-			 * @param src Particle to make a copy of.
-			 */
-			Particle& operator=(const Particle& src) {
-				if(this != &src) {
-					if(&src) {
-						clearGraphicBody();
-
-						if(src.graphicBody) {
-							graphicBody = new T(*src.graphicBody);
-						} else {
-							graphicBody = NULL;
-						}
-
-						timeLeft = src.timeLeft;
-						state = src.state;
-						alphaCounter = src.alphaCounter;
-						alphaPerSecond = src.alphaPerSecond;
-						scalingPerSecond = src.scalingPerSecond;
-						anglePerSecond = src.anglePerSecond;
-					} else {
-						clean();
-					}
-				}
-
-				return *this;
-			}
-
-			/// Pointer to the particle's GraphicBody object.
-			T* graphicBody;
-
-			/// Time left in the particle's current phase.
-			double timeLeft;
-
-			/// Flag used to know in which phase the particle is.
-			ParticleState state;
-
-			/// Counter used for the fading in and out.
-			float alphaCounter;
-
-			/// Alpha per second.
-			float alphaPerSecond;
-
-			/// Horizontal and vertical scaling per second.
-			Vector2 scalingPerSecond;
-
-			/// Rotation angle per second.
-			float anglePerSecond;
-		private:
-			/**
-			 * Frees up all the memory used by the GraphicBody.
-			 */
-			void clearGraphicBody() {
-				if(graphicBody) {
-					delete graphicBody;
-				}
-			}
-
-			/**
-			 * Resets the particle.
-			 */
-			void clean() {
-				clearGraphicBody();
-				graphicBody = NULL;
-				timeLeft = 0.0;
-				state = ParticleState::DEAD;
-			}
-		};
+		/// Represents the type that contains the phases.
+		typedef std::list<ParticlePhase> PhaseList;
 
 		/**
 		 * Default constructor.
 		 */
-		Emitter(): IEmitter(), particles(std::vector<Particle>(10)),
-			currentMask(NULL) {
-		}
+		Emitter();
 
 		/**
 		 * Copy constructor.
-		 * @param src SpriteEmitter to make a copy of.
+		 * @param src Emitter to make a copy of.
 		 */
-		Emitter(const Emitter& src): IEmitter(src), particles(src.particles),
-			currentMask(NULL) {
-		}
+		Emitter(const Emitter &src);
 
 		/**
 		 * Destructor.
 		 */
-		virtual ~Emitter() {
-		}
+		virtual ~Emitter();
 
 		/**
-		 * Assignation operator overloading.
+		 * Assignment operator.
 		 * @param src Emitter to make a copy of.
-		 * @return Instance of this Emitter.
+		 * @return Reference to the modified Emitter.
 		 */
-		Emitter& operator=(const Emitter& src) {
-			IEmitter::operator=(src);
-			copyFrom(src);
-			return *this;
-		}
+		Emitter &operator=(const Emitter &src);
 
 		/**
-		 * Updates the emitter and its particles.
+		 * Gets the current number of particles.
+		 * @return Number of particles currently not dead.
+		 * @see RedBox::Emitter::nbParticles
 		 */
-		virtual void update() {
-			// We make sure that the sprite emitter is active and has a valid emitRate.
-			if(started && emitRate > 0.0 &&
-			   (nbParticlesToShoot == -1 || nbParticlesToShoot > 0)) {
-				float rate = 1.0 / emitRate;
-				emitCounter += Engine::getSinceLastUpdate();
-
-				// We try to shoot particles as long as the emission rate lets us.
-				while((nbParticlesToShoot == -1 || nbParticlesToShoot > 0) &&
-				      emitCounter > rate && shootParticle()) {
-					if(nbParticlesToShoot > -1) {
-						--nbParticlesToShoot;
-					}
-
-					emitCounter -= rate;
-				}
-
-				// We check if we have to count the emitter's life span.
-				if(lifeSpan != -1.0) {
-					// We update the emitter's elapsed time.
-					elapsedTime += Engine::getSinceLastUpdate();
-
-					if(lifeSpan < elapsedTime) {
-						stop();
-					}
-				}
-			}
-
-			// We update the particles that still have a lifespan remaining.
-			for(typename std::vector<Particle>::iterator i = particles.begin();
-			    i != particles.end(); ++i) {
-				// We check if it is still alive.
-				if(i->timeLeft > 0.0) {
-					// We update the sprite.
-					updateParticle(i->graphicBody);
-					// We update the lifespan.
-					i->timeLeft -= Engine::getSinceLastUpdate();
-				}
-
-				// We update the particles depending on their phase.
-				ParticleState tmpState = ParticleState::DEAD;
-
-				do {
-					tmpState = i->state;
-
-					switch(i->state.underlying()) {
-					case ParticleState::BIRTH:
-						i->alphaCounter += Engine::getSinceLastUpdate() * i->alphaPerSecond;
-						updateAlpha(static_cast<int16_t>(floorf(i->alphaCounter)), i->graphicBody);
-						i->alphaCounter = fmodf(i->alphaCounter, 1.0f);
-						updateScaling(i->scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
-						updateRotation(i->anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
-
-						if(i->timeLeft <= 0.0) {
-							i->state = ParticleState::LIFE;
-
-							if(!lifePhase.animationName.empty()) {
-								startAnimation(lifePhase.animationName, i->graphicBody);
-							}
-
-							i->timeLeft = lifePhase.phaseDuration + Random::getRandomDouble(0.0, lifePhase.phaseDurationVariance);
-							i->alphaPerSecond = lifePhase.alphaPerSecond + Random::getRandomFloat(0.0f, lifePhase.alphaPerSecondVariance);
-							i->scalingPerSecond = lifePhase.scalingPerSecond + Vector2(Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, lifePhase.scalingPerSecondVariance.getY()));
-							i->anglePerSecond = lifePhase.anglePerSecond + Random::getRandomFloat(0.0f, lifePhase.anglePerSecondVariance);
-						}
-
-						break;
-					case ParticleState::LIFE:
-						i->alphaCounter += Engine::getSinceLastUpdate() * i->alphaPerSecond;
-						updateAlpha(static_cast<int16_t>(floorf(i->alphaCounter)), i->graphicBody);
-						i->alphaCounter = fmodf(i->alphaCounter, 1.0f);
-						updateScaling(i->scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
-						updateRotation(i->anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
-
-						if(i->timeLeft <= 0.0) {
-							i->state = ParticleState::DYING;
-
-							if(!dyingPhase.animationName.empty()) {
-								startAnimation(dyingPhase.animationName, i->graphicBody);
-							}
-
-							i->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
-							i->alphaPerSecond = dyingPhase.alphaPerSecond + Random::getRandomFloat(0.0f, dyingPhase.alphaPerSecondVariance);
-							i->scalingPerSecond = dyingPhase.scalingPerSecond + Vector2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
-							i->anglePerSecond = dyingPhase.anglePerSecond + Random::getRandomFloat(0.0f, dyingPhase.anglePerSecondVariance);
-						}
-
-						break;
-					case ParticleState::DYING:
-						i->alphaCounter += Engine::getSinceLastUpdate() * i->alphaPerSecond;
-						updateAlpha(static_cast<int16_t>(floorf(i->alphaCounter)), i->graphicBody);
-						i->alphaCounter = fmodf(i->alphaCounter, 1.0f);
-						updateScaling(i->scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
-						updateRotation(i->anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()), i->graphicBody);
-
-						if(i->timeLeft <= 0.0) {
-							i->state = ParticleState::DEAD;
-							i->timeLeft = 0.0;
-							// We reduce the number of active particles.
-							--nbParticles;
-						}
-
-						break;
-					default:
-						break;
-					}
-				} while(tmpState != i->state);
-			}
-
-			deleteIfPossible();
-		}
-		/**
-		 * Renders the emitter and its particles.
-		 */
-		virtual void render() {
-			// We check that the emitter is started before rendering the
-			// particles.
-			if(started) {
-				for(typename std::vector<Particle>::iterator i = particles.begin();
-				    i != particles.end(); ++i) {
-					if(i->timeLeft > 0.0) {
-						renderParticle(i->graphicBody);
-					}
-				}
-			}
-		}
-
-		/**
-		 * Similar to the render function except that it will only
-		 * render to the alpha component of the color buffer. It is
-		 * used to mask the next rendered graphic body (if the next graphic
-		 * body is set as a masked sprite).
-		 * @see RedBox::GraphicBody::mask()
-		 */
-		virtual void mask() {
-			if(started) {
-				for(typename std::vector<Particle>::iterator i = particles.begin();
-				    i != particles.end(); ++i) {
-					if(i->timeLeft > 0.0) {
-						maskParticle(i->graphicBody);
-					}
-				}
-			}
-		}
-
-		/**
-		 * Undo what the mask function did. This function
-		 * MUST be once after the masked graphic body has been rendered.
-		 * @see RedBox::GraphicBody::unmask()
-		 */
-		virtual void unmask() {
-			if(started) {
-				for(typename std::vector<Particle>::iterator i = particles.begin();
-				    i != particles.end(); ++i) {
-					if(i->timeLeft > 0.0) {
-						unmaskParticle(i->graphicBody);
-					}
-				}
-			}
-		}
-
-		/**
-		 * Gets the graphic body masking the current graphic body.
-		 * @return Pointer to the graphic body's mask.
-		 * @see RedBox::GraphicBody::getMask() const
-		 */
-		virtual GraphicBody* getMask() {
-			return currentMask;
-		}
-
-		/**
-		 * Sets the graphic body used to mask the graphic body.
-		 * @param newMask A mask graphic body.
-		 * @param inversed Set this parameter to true if you want to inverse
-		 * the effect of the mask. False by default.
-		 * @see RedBox::GraphicBody::setMask(GraphicBody* newMask, bool inversed)
-		 */
-		virtual void setMask(GraphicBody* newMask, bool inversed = false) {
-			for(typename std::vector<Particle>::iterator i = particles.begin();
-			    i != particles.end(); ++i) {
-				setMaskParticle(newMask, inversed, i->graphicBody);
-			}
-		}
+		unsigned int getNbParticles() const;
 
 		/**
 		 * Gets the maximum number of particles.
 		 * @return Maximum number of particles an emitter can have at the
 		 * same time.
 		 */
-		unsigned int getNbMaxParticles() const {
-			return particles.size();
-		}
+		virtual unsigned int getMaximumNbParticles() const = 0;
 
 		/**
 		 * Sets the maximum number of particles.
-		 * @param newNbMaxParticles Maximum number of particles the sprite
-		 * emitter can have shown at the same time.
+		 * @param newMaximumNbParticles Maximum number of particles the emitter
+		 * can have shown at the same time on the screen.
 		 */
-		void setNbMaxParticles(unsigned int newNbMaxParticles) {
-			// We make sure to free the memory if we reduce the number of
-			// maximum particles.
-			if(!particles.empty()) {
-				for(unsigned int i = particles.size() - 1; i >= newNbMaxParticles; i--) {
-					if(particles[i].graphicBody) {
-						delete particles[i].graphicBody;
-					}
-				}
-			}
-
-			particles.resize(newNbMaxParticles);
-		}
+		virtual void setMaximumNbParticles(unsigned int newMaximumNbParticles) = 0;
 
 		/**
-		 * Gets the emitter's particles.
-		 * @return Reference to the vector of particles.
+		 * Gets the number of particles to shoot before stopping.
+		 * @return Number of particles left to shoot (-1 for infinite).
+		 * @see RedBox::Emitter::nbParticlesToShoot
 		 */
-		std::vector<Particle>& getParticles() {
-			return particles;
-		}
+		int getNbParticlesToShoot() const;
 
 		/**
-		 * Kills a particle.
-		 * @param particle Iterator pointing to the particle to kill.
+		 * Sets the number of particles left to shoot.
+		 * @param newNbParticlesToShoot New number of particles left to shoot.
+		 * Any negative number will set it to infinit shooting.
+		 * @see RedBox::Emitter::nbParticlesToShoot
 		 */
-		void killParticle(typename std::vector<Particle>::iterator particle) {
-			particle->state = ParticleState::DYING;
+		void setNbParticlesToShoot(int newNbParticlesToShoot);
 
-			if(!dyingPhase.animationName.empty()) {
-				startAnimation(dyingPhase.animationName, particle->graphicBody);
-			}
+		/**
+		 * Gets the particle emitter's lifespan.
+		 * @return Lifespan (not the time remaining, -1 for infinite).
+		 * @see RedBox::Emitter::lifeSpan
+		 */
+		double getLifeSpan() const;
 
-			particle->timeLeft = dyingPhase.phaseDuration + Random::getRandomDouble(0.0, dyingPhase.phaseDurationVariance);
-			particle->alphaPerSecond = dyingPhase.alphaPerSecond + Random::getRandomFloat(0.0f, dyingPhase.alphaPerSecondVariance);
-			particle->scalingPerSecond = dyingPhase.scalingPerSecond + Vector2(Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, dyingPhase.scalingPerSecondVariance.getY()));
-			particle->anglePerSecond = dyingPhase.anglePerSecond + Random::getRandomFloat(0.0f, dyingPhase.anglePerSecondVariance);
-		}
+		/**
+		 * Sets the particle emitter's life span.
+		 * @param newLifeSpan New life span (any negative number for infinite).
+		 * @see RedBox::Emitter::lifeSpan
+		 */
+		void setLifeSpan(double newLifeSpan);
+
+		/**
+		 * Gets the time (in seconds) elapsed since the emitter was started.
+		 * @return Time elapsed since the emitter was started or 0 if the
+		 * emitter isn't started or has an infinite life span.
+		 * @see RedBox::Emitter::elapsedTime
+		 */
+		double getElapsedTime() const;
+
+		/**
+		 * Checks whether the particle emitter is started or not.
+		 * @return True if the emitter is started, false if not.
+		 * @see RedBox::Emitter::started
+		 */
+		bool isStarted() const;
+
+		/**
+		 * Starts the particle emitter.
+		 * @see RedBox::Emitter::started
+		 */
+		void start();
+
+		/**
+		 * Stops the particle emitter.
+		 * @see RedBox::Emitter::started
+		 */
+		void stop();
+
+		/**
+		 * Gets the particle emitter's shooting angle.
+		 * @return Particle emitter's shooting angle (value from -180.0f to
+		 * 180.0f).
+		 * @see RedBox::Emitter::shootingAngle
+		 */
+		float getShootingAngle() const;
+
+		/**
+		 * Sets the shooting angle.
+		 * @param newShootingAngle New shooting angle, wraps it arout to be
+		 * within range of -180.0f to 180.0f
+		 * @see RedBox::Emitter::shootingAngle
+		 */
+		void setShootingAngle(float newShootingAngle);
+
+		/**
+		 * Gets the particle emitter's shooting angle variance.
+		 * @return Particle emitter's shooting angle (value from 0 to 180).
+		 * @see RedBox::Emitter::shootingAngleVariance
+		 */
+		float getShootingAngleVariance() const;
+
+		/**
+		 * Sets the particle emitter's shooting angle variance.
+		 * @param newShootingAngleVariance New shooting angle, clamps it from
+		 * 0 to 180.
+		 * @see RedBox::Emitter::shootingAngleVariance
+		 */
+		void setShootingAngleVariance(float newShootingAngleVariance);
+
+		/**
+		 * Gets the particle emitter's shooting force (in velocity, pixels per
+		 * second).
+		 * @return Shooting force (in pixels per second).
+		 * @see RedBox::Emitter::shootingForce
+		 */
+		float getShootingForce() const;
+
+		/**
+		 * Sets the particle emitter's shooting force.
+		 * @param newShootingForce New shooting force (in pixels per second).
+		 * @see RedBox::Emitter::shootingForce
+		 */
+		void setShootingForce(float newShootingForce);
+
+		/**
+		 * Gets the particle emitter's shooting force variance (in velocity,
+		 * pixels per second).
+		 * @return Shooting force (in pixels per second).
+		 * @see RedBox::Emitter::shootingForceVariance
+		 */
+		float getShootingForceVariance() const;
+
+		/**
+		 * Sets the particle emitter's shooting force variance.
+		 * @param newShootingForceVariance New shooting force variance (in
+		 * pixels per second).
+		 * @see RedBox::Emitter::shootingForceVariance
+		 */
+		void setShootingForceVariance(float newShootingForceVariance);
+
+		/**
+		 * Gets the time between each spawn.
+		 * @return Time between each particle spawning (in seconds). -1 for
+		 * a null spawning rate.
+		 * @see RedBox::Emitter::timePerSpawn
+		 */
+		double getTimeBetweenSpawns() const;
+
+		/**
+		 * Gets the number of particles spawned per second.
+		 * @return Number of particles spawned per second.
+		 * @see RedBox::Emitter::timePerSpawn
+		 */
+		double getSpawningRate() const;
+
+		/**
+		 * Sets te time between each spawn.
+		 * @param newTimePerSpawn New time between each spawning particles
+		 * (in seconds). Does nothing if 0 or any negative number except -1 is
+		 * received. -1 for a null spawning rate.
+		 * @see RedBox::Emitter::timePerSpawn
+		 */
+		void setTimeBetweenSpawns(double newTimePerSpawn);
+
+		/**
+		 * Sets the number of particles to spawn per second.
+		 * @param newSpawningRate Number of particles to spawn per second.
+		 * @see RedBox::Emitter::timePerSpawn
+		 */
+		void setSpawningRate(double newSpawningRate);
+
+		/**
+		 * Gets the list of phases to use for the particles' lives.
+		 * @return List of phases.
+		 * @see RedBox::Emitter::phases
+		 */
+		PhaseList &getPhases();
+
+		/**
+		 * Gets the list of phases to use for the particles' lives.
+		 * @return List of phases.
+		 * @see RedBox::Emitter::phases
+		 */
+		const PhaseList &getPhases() const;
+
+		/**
+		 * Checks if the particle emitter is to die when done.
+		 * @return True if the particle emitter needs to be deleted when done,
+		 * false if not.
+		 */
+		bool isToDeleteWhenDone() const;
+
+		/**
+		 * Sets whether the particle emitter needs to die when its lifespan is
+		 * done or when it has shot all its particles to shoot.
+		 * @param newToDeleteWhenDone If the particle emitter needs to die or
+		 * not when done.
+		 */
+		void setToDeleteWhenDone(bool newToDeleteWhenDone);
 	protected:
-		/**
-		 * Updates the GraphicBody's alpha using the given alpha to add to
-		 * the GraphicBody's current alpha value.
-		 * @param deltaAlpha Alpha value to add to the GraphicBody's alpha.
-		 * @param graphicBody GraphicBody to have its alpha updated.
-		 */
-		virtual void updateAlpha(int16_t deltaAlpha, T* graphicBody) = 0;
+		/// Elapsed time the emitter was active for.
+		double elapsedTime;
 
-		/**
-		 * Updates the GraphicBody's size using the given scaling value to add
-		 * to the GraphicBody's size scaling.
-		 * @param deltaScaling Scaling value to add to the GraphicBody's size.
-		 * @param graphicBody GraphicBody to have its size updated.
-		 */
-		virtual void updateScaling(const Vector2& deltaScaling, T* graphicBody) = 0;
+		/// Number of particles currently active and being shown on the screen.
+		unsigned int nbParticles;
 
-		/**
-		 * Updates the GraphicBody's rotation angle using the given angle to
-		 * add to the GraphicBody's rotation angle.
-		 * @param deltaAngle Angle value to add to the GraphicBody's rotation
-		 * angle.
-		 * @param graphicBody GraphicBody to have its rotation angle udpated.
-		 */
-		virtual void updateRotation(float deltaAngle, T* graphicBody) = 0;
-
-		/**
-		 * Makes the graphic body start an animation.
-		 * @param animationName Name of the animation to start.
-		 * @param graphicBody Graphic body to animate.
-		 */
-		virtual void startAnimation(const std::string& animationName,
-		                            T* graphicBody) = 0;
-
-		/**
-		 * Initializes a particle's renerable and returns a pointer to it.
-		 * @return Pointer to the created GraphicBody.
-		 */
-		virtual T* initParticle() = 0;
-
-		/**
-		 * Starts a particle with the information about its generated angle and
-		 * shooting force. If the given pointer to the GraphicBody isn't
-		 * initialized, it will initialize it.
-		 * @param graphicBody GraphicBody to have its values initialized to go in
-		 * the right direction with the right force.
-		 */
-		virtual void startParticle(T*& graphicBody) = 0;
-
-		/**
-		 * Updates the particle. If the pointer recieved is null, the method
-		 * will not do anything.
-		 * @param graphicBody Pointer to the GraphicBody to update.
-		 */
-		virtual void updateParticle(T* graphicBody) = 0;
-
-		/**
-		 * Renders the particle. If the pointer recieved is null, the method
-		 * will not do anything.
-		 * @param graphicBody Pointer to the GraphicBody to render.
-		 */
-		virtual void renderParticle(T* graphicBody) = 0;
-
-		/**
-		 * Masks a specific particle.
-		 * @param graphicBody Pointer to the particle to mask.
-		 * @see RedBox::GraphicBody::mask()
-		 */
-		virtual void maskParticle(T* graphicBody) = 0;
-
-		/**
-		 * Unmasks a specific particle.
-		 * @param graphicBody Pointer to the particle to mask.
-		 * @see RedBox::GraphicBody::unmask()
-		 */
-		virtual void unmaskParticle(T* graphicBody) = 0;
-
-		/**
-		 * Sets the mask to a particle.
-		 * @param newMask Pointer to the mask to use for the particle.
-		 * @param inversed Used to inverse the effect of the mask.
-		 * @see RedBox::GraphicBody::setMask(GraphicBody* newMask, bool inversed)
-		 */
-		virtual void setMaskParticle(GraphicBody* newMask, bool inversed,
-		                             T* graphicBody) = 0;
+		/// Number of particles left to shoot. -1 for infinite.
+		int nbParticlesToShoot;
 	private:
-		/// Vector containing the particles used to shoot.
-		std::vector<Particle> particles;
+		/// Time in seconds the emitter stays active. -1 for infinite.
+		double lifeSpan;
 
-		/// Pointer to the emitter's mask.
-		GraphicBody* currentMask;
+		/// Flag at true if the emitter is active, false if it is not.
+		bool started;
 
-		/**
-		 * Finds the first dead particle in the vector of particles.
-		 * @return Iterator to the first dead particle found.
-		 */
-		typename std::vector<Particle>::iterator findFirstDeadParticle() {
-			if(nbParticles >= particles.size()) {
-				return particles.end();
-			} else {
-				bool notFound = true;
-				typename std::vector<Particle>::iterator i = particles.begin();
-
-				// We look for the first particle that is dead.
-				while(notFound && i != particles.end()) {
-					if(i->state == ParticleState::DEAD) {
-						notFound = false;
-					} else {
-						++i;
-					}
-				}
-
-				return i;
-			}
-		}
+		/// Angle (in degrees) at which the emitter emits particles.
+		float shootingAngle;
 
 		/**
-		 * Finds an available particle and shoots it.
-		 * @return True if there was a particle available to shoot and it was
-		 * successfully shot, false if not.
+		 * Angle variance (in degrees) in a cone at which the particles are
+		 * emit.
 		 */
-		bool shootParticle() {
-			// We try to get a dead particle.
-			typename std::vector<Particle>::iterator deadParticle = findFirstDeadParticle();
+		float shootingAngleVariance;
 
-			// If it's dead, we start it.
-			if(deadParticle != particles.end()) {
-				startParticle(deadParticle->graphicBody);
-				deadParticle->timeLeft = birthPhase.phaseDuration + Random::getRandomDouble(0.0, birthPhase.phaseDurationVariance);
-				deadParticle->state = ParticleState::BIRTH;
+		/// Force at which the particles are shot (in pixels per second).
+		float shootingForce;
 
-				if(!birthPhase.animationName.empty()) {
-					startAnimation(birthPhase.animationName, deadParticle->graphicBody);
-				}
-
-				deadParticle->alphaPerSecond = birthPhase.alphaPerSecond + Random::getRandomFloat(0.0f, birthPhase.alphaPerSecondVariance);
-				deadParticle->scalingPerSecond = birthPhase.scalingPerSecond + Vector2(Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, birthPhase.scalingPerSecondVariance.getY()));
-				deadParticle->anglePerSecond = birthPhase.anglePerSecond + Random::getRandomFloat(0.0f, birthPhase.anglePerSecondVariance);
-				++nbParticles;
-				return true;
-			} else {
-				return false;
-			}
-		}
+		/// Variance added to the force when the particles are shot.
+		float shootingForceVariance;
 
 		/**
-		 * Deletes the emitter if it is done shooting the particles.
+		 * Time (in seconds) between each particle spawning. -1 for a null
+		 * spawning rate.
 		 */
-		void deleteIfPossible() {
-			if(nbParticlesToShoot == 0) {
-				bool notFound = true;
-				typename std::vector<Particle>::iterator i = particles.begin();
-
-				while(notFound && i != particles.end()) {
-					if(i->state != ParticleState::DEAD) {
-						notFound = false;
-					} else {
-						++i;
-					}
-				}
-
-				if(notFound) {
-					stop();
-
-					if(dieOnDeactivate) {
-						this->setToBeDeleted(true);
-					}
-				}
-			}
-		}
+		double timePerSpawn;
 
 		/**
-		 * Resets the emitter.
+		 * List of particle phases each particle go through before dying.
 		 */
-		void clean() {
-			particles.clear();
-		}
+		PhaseList phases;
 
 		/**
-		 * Makes a copy of the recieved emitter.
+		 * Set to true if the particle emitter is to try to die when done. False
+		 * by default. Does not work if the particle emitter is not managed by
+		 * a BodyManager.
+		 * @see RedBox::BodyManager
 		 */
-		void copyFrom(const Emitter& src) {
-			if(this != &src) {
-				clean();
-
-				if(&src) {
-					particles = src.particles;
-					currentMask = src.currentMask;
-				}
-			}
-		}
+		bool toDeleteWhenDone;
 	};
+
 }
-#endif
+
+#endif // RB_EMITTER_H

@@ -1,4 +1,9 @@
 get_filename_component(DisplayDriver_dir ${CMAKE_CURRENT_LIST_FILE} PATH)
+
+if(${OpenGL})
+	include(${DisplayDriver_dir}/OpenGL/Sources.cmake)
+endif(${OpenGL})
+
 file(GLOB RedBox_RedBox_Display_Driver_Headers ${DisplayDriver_dir}/*.h)
 file(GLOB RedBox_RedBox_Display_Driver_Sources ${DisplayDriver_dir}/*.cpp)
 

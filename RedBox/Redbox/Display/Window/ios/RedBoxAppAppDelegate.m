@@ -32,7 +32,7 @@ static RedBoxAppViewController *redBoxViewController = nil;
     self.window.rootViewController = self.viewController;
     [window addSubview:viewController.view];
     [window makeKeyAndVisible];
-    RedBox::GraphicDriver::initializeGraphicDriver(RedBox::MainWindow::getInstance().getResolutionWidth(), RedBox::MainWindow::getInstance().getResolutionHeight());
+    RedBox::GraphicDriver::getInstance().initializeGraphicDriver(RedBox::MainWindow::getInstance().getResolutionWidth(), RedBox::MainWindow::getInstance().getResolutionHeight());
     return YES;
 }
 

@@ -21,7 +21,7 @@ namespace RedBox {
 	class BackgroundMusic;
 	class SoundInfo;
 	class MusicInfo;
-	class TextureInfo;
+	class TextureInformation;
 	/**
 	 * Class that manages resources like textures and audio.
 	 * @ingroup Display
@@ -41,8 +41,8 @@ namespace RedBox {
 		 * @return Pointer to the added texture information. Returns NULL if the
 		 * texture failed to be added.
 		 */
-		static TextureInfo* addTexture(const std::string& key, PixMap* aPixmap,
-		                               bool overwrite = false);
+		static TextureInformation *addTexture(const std::string &key, PixMap *aPixmap,
+		                                      bool overwrite = false);
 
 		/**
 		 * Loads a texture from a file and assigns a representative key to it.
@@ -56,10 +56,10 @@ namespace RedBox {
 		 * @return Pointer to the loaded texture, NULL if the texture failed to
 		 * load.
 		 */
-		static TextureInfo* loadTexture(const std::string& key,
-		                                const std::string& filePath,
-		                                ColorFormat colorFormat = ColorFormat::RGBA,
-		                                bool overwrite = false);
+		static TextureInformation *loadTexture(const std::string &key,
+		                                       const std::string &filePath,
+		                                       ColorFormat colorFormat = ColorFormat::RGBA,
+		                                       bool overwrite = false);
 
 		/**
 		 * Loads a texture from a file and assigns a representative key to it.
@@ -78,10 +78,10 @@ namespace RedBox {
 		 * @return Pointer to the loaded texture, NULL if the texture failed to
 		 * load.
 		 */
-		static TextureInfo* loadTextureRelativePath(const std::string& key,
-		                                            const std::string& relativePath,
-		                                            ColorFormat colorFormat = ColorFormat::RGBA,
-		                                            bool overwrite = false);
+		static TextureInformation *loadTextureRelativePath(const std::string &key,
+		                                                   const std::string &relativePath,
+		                                                   ColorFormat colorFormat = ColorFormat::RGBA,
+		                                                   bool overwrite = false);
 
 		/**
 		 * Gets the information about the asked texture. Uses the texture's key
@@ -90,14 +90,14 @@ namespace RedBox {
 		 * @return Pointer to the texture requested, NULL if no texture is
 		 * associated with the given key.
 		 */
-		static TextureInfo* getTexture(const std::string& key);
+		static TextureInformation *getTexture(const std::string &key);
 
 		/**
 		 * Gets a pointer to the asked sound effect.
 		 * @param key Name of the sound effect to get a pointer of.
 		 * @return Pointer to the asked sound effect, NULL if it doesn't exist.
 		 */
-		static SoundInfo* getSound(const std::string& key);
+		static SoundInfo *getSound(const std::string &key);
 
 		/**
 		 * Gets a pointer to the asked background music.
@@ -105,7 +105,7 @@ namespace RedBox {
 		 * @return Pointer to the asked background music, NULL if it doesn't
 		 * exist.
 		 */
-		static MusicInfo* getMusic(const std::string& key);
+		static MusicInfo *getMusic(const std::string &key);
 
 		/**
 		 * Loads a sound effect.
@@ -116,8 +116,8 @@ namespace RedBox {
 		 * @return Pointer to the loaded sound effect. Returns NULL if the
 		 * loading failed.
 		 */
-		static SoundInfo* loadSound(const std::string& key,
-		                            const std::string& filePath,
+		static SoundInfo *loadSound(const std::string &key,
+		                            const std::string &filePath,
 		                            bool overwrite = false);
 
 		/**
@@ -133,8 +133,8 @@ namespace RedBox {
 		 * @return Pointer to the loaded sound effect. Returns NULL if the
 		 * loading failed.
 		 */
-		static SoundInfo* loadSoundRelativePath(const std::string& key,
-		                                        const std::string& relativePath,
+		static SoundInfo *loadSoundRelativePath(const std::string &key,
+		                                        const std::string &relativePath,
 		                                        bool overwrite = false);
 
 		/**
@@ -147,7 +147,7 @@ namespace RedBox {
 		 * @return Pointer to the loaded sound effect, NULL if the loading
 		 * failed.
 		 */
-		static SoundInfo* loadSound(const SoundParameters& info,
+		static SoundInfo *loadSound(const SoundParameters &info,
 		                            bool overwrite = false);
 
 		/**
@@ -158,8 +158,8 @@ namespace RedBox {
 		 * oerwrite the existing music if the key already exists.
 		 * @return Pointer to the loaded music, NULL if the loading failed.
 		 */
-		static MusicInfo* loadMusic(const std::string& key,
-		                            const std::string& filePath,
+		static MusicInfo *loadMusic(const std::string &key,
+		                            const std::string &filePath,
 		                            bool overwrite = false);
 
 		/**
@@ -174,8 +174,8 @@ namespace RedBox {
 		 * oerwrite the existing music if the key already exists.
 		 * @return Pointer to the loaded music, NULL if the loading failed.
 		 */
-		static MusicInfo* loadMusicRelativePath(const std::string& key,
-		                                        const std::string& relativePath,
+		static MusicInfo *loadMusicRelativePath(const std::string &key,
+		                                        const std::string &relativePath,
 		                                        bool overwrite = false);
 
 		/**
@@ -187,7 +187,7 @@ namespace RedBox {
 		 * overwrite the existing sound if the key already exists.
 		 * @return Pointer to the loaded music, NULL if the loading failed.
 		 */
-		static MusicInfo* loadMusic(const MusicParameters& info,
+		static MusicInfo *loadMusic(const MusicParameters &info,
 		                            bool overwrite = true);
 
 		/**
@@ -195,14 +195,14 @@ namespace RedBox {
 		 * is associated with the given key.
 		 * @param key Name of the sound effect to unload.
 		 */
-		static void removeSound(const std::string& key);
+		static void removeSound(const std::string &key);
 
 		/**
 		 * Removes and unloads a background music. Does nothing if no background
 		 * music is associated with the given key.
 		 * @param key Name of the background music to unload.
 		 */
-		static void removeMusic(const std::string& key);
+		static void removeMusic(const std::string &key);
 
 #ifndef RB_ANDROID
 		/**
@@ -213,8 +213,8 @@ namespace RedBox {
 		 * overwrite the existing font if the key already exists.
 		 * @return Pointer to the loaded font, NULL if the font failed to load.
 		 */
-		static Font* loadFont(const std::string& key,
-		                      const std::string& path, bool overwrite = false);
+		static Font *loadFont(const std::string &key,
+		                      const std::string &path, bool overwrite = false);
 
 		/**
 		 * Loads the font at the specified path and put it in the fonts' map.
@@ -228,8 +228,8 @@ namespace RedBox {
 		 * overwrite the existing font if the key already exists.
 		 * @return Pointer to the loaded font, NULL if the font failed to load.
 		 */
-		static Font* loadFontRelativePath(const std::string& key,
-		                                  const std::string& relativePath,
+		static Font *loadFontRelativePath(const std::string &key,
+		                                  const std::string &relativePath,
 		                                  bool overwrite = false);
 
 		/**
@@ -237,13 +237,13 @@ namespace RedBox {
 		 * @param key Key of the font to get.
 		 * @return Pointer to the specified font, NULL if no font is found.
 		 */
-		static Font* getFont(const std::string& key);
+		static Font *getFont(const std::string &key);
 
 		/**
 		 * Remove the specified font from the fonts' map.
 		 * @param key Key of the font to remove.
 		 */
-		static void removeFont(const std::string& key);
+		static void removeFont(const std::string &key);
 #endif
 	private:
 		/**
@@ -252,22 +252,22 @@ namespace RedBox {
 		static void unloadAll();
 
 		///Create a PixMap from an image file at the given path.
-		static PixMap* loadPixMap(const std::string& filePath, ColorFormat colorFormat);
+		static PixMap *loadPixMap(const std::string &filePath, ColorFormat colorFormat);
 
 		///Create a PixMap from a PNG file at the given path.
-		static PixMap* loadPixMapFromPNG(const std::string& filePath);
+		static PixMap *loadPixMapFromPNG(const std::string &filePath);
 
 		/// Map associating the textures' keys and their information.
-		static std::map<std::string, TextureInfo*> textures;
+		static std::map<std::string, TextureInformation *> textures;
 
 		/// Map associating the sound effects' names and their information.
-		static std::map<std::string, SoundInfo*> sounds;
+		static std::map<std::string, SoundInfo *> sounds;
 
 		/// Map associating the musics' names and their information.
-		static std::map<std::string, MusicInfo*> musics;
+		static std::map<std::string, MusicInfo *> musics;
 #ifndef RB_ANDROID
 		/// Map  associating the fonts' names and their information.
-		static std::map<std::string, Font*> fonts;
+		static std::map<std::string, Font *> fonts;
 #endif
 	};
 }

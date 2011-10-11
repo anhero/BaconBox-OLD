@@ -8,7 +8,7 @@ ScrollingMenu::ScrollingMenu(float width, float height, float spacing):Selecting
 	this->spacing = spacing;
 	tweenValue = Vector2(spacing,0.0);
 }
-ScrollingMenu* ScrollingMenu::clone() const{
+SelectingMenu* ScrollingMenu::clone() const{
 	return new ScrollingMenu (*this);
 }
 void ScrollingMenu::scrollTo(std::list<IMenuElement *>::iterator dest, bool force){

@@ -1,3 +1,4 @@
+#if 0
 #include "SpriteFactory.h"
 
 #include <cmath>
@@ -39,3 +40,4 @@ Sprite* SpriteFactory::makePolygon(unsigned int nbSides, float sideLength,
 		return NULL;
 	}
 }
+#endif

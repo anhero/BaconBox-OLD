@@ -1,9 +1,10 @@
+#if 0
 #include "RenderInfo.h"
 
 #include <cmath>
 #include <iostream>
 
-#include "TextureInfo.h"
+#include "TextureInformation.h"
 #include "VerticesGroup.h"
 #include "Console.h"
 #include "MathHelper.h"
@@ -26,7 +27,7 @@ RenderInfo::RenderInfo(const RenderInfo &src) : Object(), color(src.color),
     currentAnimation(src.currentAnimation) {
 }
 
-RenderInfo::RenderInfo(TextureInfo *newTexInfo,
+RenderInfo::RenderInfo(TextureInformation *newTexInfo,
                        VerticesGroup &vertices,
                        unsigned int frameWidth,
                        unsigned int frameHeight,
@@ -68,7 +69,7 @@ void RenderInfo::loadTexCoords(VerticesGroup &vertices,
                                unsigned int frameWidth,
                                unsigned int frameHeight,
                                unsigned int nbFrames,
-                               TextureInfo *newTexInfo) {
+                               TextureInformation *newTexInfo) {
 	// We check if we also reassign the texInfo.
 	if (newTexInfo) {
 		texInfo = newTexInfo;
@@ -91,9 +92,8 @@ void RenderInfo::loadTexCoords(VerticesGroup &vertices,
 				Vector2 position = vertices.getPosition();
 				// We get the width and the height of the of the vertices group.
 				Vector2 size = vertices.getSize();
-				unsigned int verticesCount = vertices.getVertices().elementCount;
-				Vector2 *verticesArray = vertices.getVertices().array;
-				size_t tmpSize = static_cast<size_t>(verticesCount);
+                std::vector<Vector2*> tempVertices = vertices.getVertices();
+				size_t tmpSize = static_cast<size_t>(vertices.getVerticesCount());
 
 				// For each frame to load.
 				for (std::vector<std::vector<Vector2> >::iterator i = texCoords.begin();
@@ -103,9 +103,9 @@ void RenderInfo::loadTexCoords(VerticesGroup &vertices,
 					unsigned int j2 = 0;
 
 					for (std::vector<Vector2>::iterator j1 = i->begin();
-					     j1 != i->end() && j2 < verticesCount; ++j1) {
-						j1->setXY(offsetX + (verticesArray[j2].getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
-						          offsetY + (verticesArray[j2].getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
+					     j1 != i->end() && j2 < vertices.getVerticesCount(); ++j1) {
+						j1->setXY(offsetX + (tempVertices[j2]->getX() - position.getX() / size.getX()) / static_cast<float>(texInfo->poweredWidth),
+						          offsetY + (tempVertices[j2]->getY() - position.getY() / size.getY()) / static_cast<float>(texInfo->poweredHeight));
 						++j2;
 					}
 
@@ -222,7 +222,7 @@ const Color &RenderInfo::getColor() const {
 	return color;
 }
 
-TextureInfo *RenderInfo::getTexInfo() {
+TextureInformation *RenderInfo::getTexInfo() {
 	return texInfo;
 }
 
@@ -235,7 +235,7 @@ void RenderInfo::setColor(const Color &newColor) {
 	colorNeedUpdate = true;
 }
 
-void RenderInfo::setTexInfo(TextureInfo *newTexInfo) {
+void RenderInfo::setTexInfo(TextureInformation *newTexInfo) {
 	texInfo = newTexInfo;
 }
 bool RenderInfo::animationExists(const std::string &name) const {
@@ -397,3 +397,5 @@ namespace RedBox {
 		return output;
 	}
 }
+
+#endif

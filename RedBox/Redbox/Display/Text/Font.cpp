@@ -7,16 +7,16 @@ void Font::initializeFontRenderer() {
 	FontImplementation::initializeFontRenderer();
 }
 
-const std::string& Font::getName() const {
+const std::string &Font::getName() const {
 	return fontPimpl->getName();
 }
 
-Font::Font(const std::string& name, const std::string& path) : fontPimpl(NULL) {
+Font::Font(const std::string &name, const std::string &path) : fontPimpl(NULL) {
 	fontPimpl = new FontImplementation(name, path);
 }
 
-Glyph* Font::getGlyph(Char32 unicodeValue) {
-	return fontPimpl->getGlyph(unicodeValue);
+const GlyphInformation *Font::getGlyphInformation(Char32 unicodeValue) {
+	return fontPimpl->getGlyphInformation(unicodeValue);
 }
 
 void Font::setPixelSize(int pixelSize) {

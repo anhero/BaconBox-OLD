@@ -2,266 +2,524 @@
  * @file
  * @ingroup TextDisplay
  */
+#ifndef RB_GRAPHIC_STRING_H
+#define RB_GRAPHIC_STRING_H
 
-#ifndef RB_GRAPHICSTRING_H
-#define RB_GRAPHICSTRING_H
+#include <cassert>
 
 #include <list>
+#include <utility>
 
-#include "GraphicBody.h"
-#include "StringFX.h"
-#include "Sprite.h"
-#include "RBString32.h"
-#include "Glyph.h"
-#include "TextAlignment.h"
+#include "Font.h"
+#include "GlyphInformation.h"
+#include "ResourceManager.h"
+#include "UTFConvert.h"
+#include "Maskable.h"
 #include "TextDirection.h"
-#include "Color.h"
+#include "TextAlignment.h"
+#include "Colorable.h"
+#include "InanimateGraphicElement.h"
+#include "RBString32.h"
+#include "StandardVerticesArray.h"
+#include "StaticAssert.h"
+#include "IsBaseOf.h"
+#include "Transformable.h"
 
 namespace RedBox {
-	class Font;
 	/**
-	 * A GraphicString is a GraphicBody object that print text
-	 * to the screen.
-	 * @ingroup Group
+	 * A GraphicString is a body object used to diplay text.
+	 * @tparam T Either Transformable or Collidable.
+	 * @ingroup TextDisplay
 	 */
-	class GraphicString : public GraphicBody {
+	template <typename T>
+	class GraphicString : virtual public Maskable, public T,
+		public Colorable {
 	public:
 		/**
-		 * Parameterized constructor.
-		 * @param newAlignment Alignment of the string (left, center or right),
-		 * left by default.
-		 * @param newDirection String direction, useful when you want to support
-		 * i18n, left to right by default.
-		 * @see RedBox::GraphicString::alignment
-		 * @see RedBox::GraphicString::direction
-		 */
-		GraphicString(Font* newFont,
-		              TextAlignment newAlignment = TextAlignment::LEFT,
-		              TextDirection newDirection = TextDirection::LEFT_TO_RIGHT);
-
-		/**
-		 * Gets the rendering font for the string.
-		 * @return Pointer to the current rendering font used.
+		 * Parameterized constructor. Initializes the graphic string with a
+		 * font, an alignment, a direction and a starting position.
+		 * @param fontKey Key for the font to use in the ResourceManager.
+		 * @param newAlignment Graphic string's text alignment.
+		 * @param newDirection Graphic string's text direction.
+		 * @param startingPosition Starting position (upper left corner).
+		 * @see RedBox::ResourceManager
 		 * @see RedBox::GraphicString::font
-		 */
-		Font* getFont();
-
-		/**
-		 * Sets the rendering font for the string.
-		 * @param newFont Pointer to the font to use for displaying the graphic
-		 * string.
-		 * @param RedBox::GraphicString::font
-		 */
-		void setFont(Font* newFont);
-
-		/**
-		 * Gets the graphic string's color.
-		 * @return Current color used to display the graphic string.
-		 * @see RedBox::GraphicString::color
-		 */
-		const Color& getColor() const;
-
-		/**
-		 * Sets the graphic string's color.
-		 * @param newcolor New color to use to display the graphic string.
-		 * @see RedBox::GraphicString::color
-		 */
-		void setColor(const Color& newColor);
-
-		/**
-		 * Gets the graphic string's alignment.
-		 * @return Graphic string's current text alignment. Either left, center
-		 * or right.
 		 * @see RedBox::GraphicString::alignment
-		 */
-		TextAlignment getAlignment() const;
-
-		/**
-		 * Sets the graphic string's alignment.
-		 * @param newAlignment New text alignment. It's either left, center or
-		 * right.
-		 * @see RedBox::GraphicString::alignment
-		 */
-		void setAlignment(TextAlignment newAlignment);
-
-		/**
-		 * Gets the rendering direction.
-		 * @return Current rendering direction.
 		 * @see RedBox::GraphicString::direction
 		 */
-		TextDirection getDirection() const;
+		explicit GraphicString(const std::string &fontKey,
+		                       TextAlignment newAlignment = TextAlignment::LEFT,
+		                       TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
+		                       const Vector2 &startingPosition = Vector2()) :
+			Maskable(), T(startingPosition), Colorable(Color::BLACK),
+			font(ResourceManager::getFont(fontKey)), text(),
+			alignment(newAlignment), direction(newDirection), characters(),
+			vertices(4, startingPosition), currentMask(NULL) {
+			initialize();
+		}
 
 		/**
-		 * Sets the rendering direction.
-		 * @param newDirection New rendering direction.
+		 * Parameterized constructor. Initializes the graphic string with a
+		 * font, a text, an alignment, a direction and a starting position.
+		 * @param newFont Pointer to the font to use to display the string.
+		 * @param newAlignment Graphic string's text alignment.
+		 * @param newDirection Graphic string's text direction.
+		 * @param startingPosition Starting position (upper left corner).
+		 * @see RedBox::GraphicString::font
+		 * @see RedBox::GraphicString::alignment
 		 * @see RedBox::GraphicString::direction
 		 */
-		void setDirection(TextDirection newDirection);
+		explicit GraphicString(Font *newFont,
+		                       TextAlignment newAlignment = TextAlignment::LEFT,
+		                       TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
+		                       const Vector2 &startingPosition = Vector2()) :
+			Maskable(), T(startingPosition), Colorable(Color::BLACK),
+			font(newFont), text(), alignment(newAlignment), direction(newDirection),
+			characters(), vertices(4, startingPosition), currentMask(NULL) {
+			initialize();
+		}
 
 		/**
-		 * Gets the graphic string's text in utf8.
-		 * @return Utf8 string containing the graphic string's text.
+		 * Parameterized constructor. Initializes the graphic string with a
+		 * font, a text, an alignment, a direction and a starting position.
+		 * @param fontKey Key for the font to use in the ResourceManager.
+		 * @param newText UTF8 string to use as the string's text.
+		 * @param newAlignment Graphic string's text alignment.
+		 * @param newDirection Graphic string's text direction.
+		 * @param startingPosition Starting position (upper left corner).
+		 * @see RedBox::ResourceManager
+		 * @see RedBox::GraphicString::font
+		 * @see RedBox::GraphicString::text
+		 * @see RedBox::GraphicString::alignment
+		 * @see RedBox::GraphicString::direction
 		 */
-		std::string getText() const;
+		GraphicString(const std::string &fontKey,
+		              const std::string &newText,
+		              TextAlignment newAlignment = TextAlignment::LEFT,
+		              TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
+		              const Vector2 &startingPosition = Vector2()) :
+			Maskable(), T(startingPosition), Colorable(Color::BLACK),
+			font(ResourceManager::getFont(fontKey)), text(UTFConvert::decodeUTF8(newText)),
+			alignment(newAlignment), direction(newDirection), characters(),
+			vertices(4, startingPosition), currentMask(NULL) {
+			initialize();
+		}
 
 		/**
-		 * Gets the graphic string's text in utf32.
-		 * @return Utf32 string containing the graphic string's text.
+		 * Parameterized constructor. Initializes the graphic string with a
+		 * font, a text, an alignment, a direction and a starting position.
+		 * @param newFont Pointer to the font to use to display the string.
+		 * @param newText UTF8 string to use as the string's text.
+		 * @param newAlignment Graphic string's text alignment.
+		 * @param newDirection Graphic string's text direction.
+		 * @param startingPosition Starting position (upper left corner).
+		 * @see RedBox::GraphicString::font
+		 * @see RedBox::GraphicString::text
+		 * @see RedBox::GraphicString::alignment
+		 * @see RedBox::GraphicString::direction
 		 */
-		const String32& getTextUtf32() const;
+		GraphicString(Font *newFont,
+		              const std::string &newText,
+		              TextAlignment newAlignment = TextAlignment::LEFT,
+		              TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
+		              const Vector2 &startingPosition = Vector2()) :
+			Maskable(), T(startingPosition), Colorable(Color::BLACK),
+			font(newFont), text(UTFConvert::decodeUTF8(newText)),
+			alignment(newAlignment), direction(newDirection), characters(),
+			vertices(4, startingPosition), currentMask(NULL) {
+			initialize();
+		}
 
 		/**
-		 * Sets the graphic string's text from a UTF8 string.
-		 * @param text New text for the GraphicString.
-		 * @see RedBox::GraphicString::internalString
+		 * Parameterized constructor. Initializes the graphic string with a
+		 * font, a text, an alignment, a direction and a starting position.
+		 * @param fontKey Key for the font to use in the ResourceManager.
+		 * @param newText Unicode string to use as the string's text.
+		 * @param newAlignment Graphic string's text alignment.
+		 * @param newDirection Graphic string's text direction.
+		 * @param startingPosition Starting position (upper left corner).
+		 * @see RedBox::ResourceManager
+		 * @see RedBox::GraphicString::font
+		 * @see RedBox::GraphicString::text
+		 * @see RedBox::GraphicString::alignment
+		 * @see RedBox::GraphicString::direction
 		 */
-		void setText(const std::string& newText);
+		GraphicString(const std::string &fontKey,
+		              const String32 &newText,
+		              TextAlignment newAlignment = TextAlignment::LEFT,
+		              TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
+		              const Vector2 &startingPosition = Vector2()) :
+			Maskable(), T(startingPosition), Colorable(Color::BLACK),
+			font(ResourceManager::getFont(fontKey)), text(newText),
+			alignment(newAlignment), direction(newDirection), characters(),
+			vertices(4, startingPosition), currentMask(NULL) {
+			initialize();
+		}
 
 		/**
-		 * Sets the graphic string's text from a UTF32 string.
-		 * @param text New text for the GraphicString.
-		 * @see RedBox::GraphicString::internalString
+		 * Parameterized constructor. Initializes the graphic string with a
+		 * font, a text, an alignment, a direction and a starting position.
+		 * @param newFont Pointer to the font to use to display the string.
+		 * @param newText Unicode string to use as the string's text.
+		 * @param newAlignment Graphic string's text alignment.
+		 * @param newDirection Graphic string's text direction.
+		 * @param startingPosition Starting position (upper left corner).
+		 * @see RedBox::GraphicString::font
+		 * @see RedBox::GraphicString::text
+		 * @see RedBox::GraphicString::alignment
+		 * @see RedBox::GraphicString::direction
 		 */
-		void setText(const String32& newText);
-
-		using GraphicBody::setPosition;
+		GraphicString(Font *newFont,
+		              const String32 &newText,
+		              TextAlignment newAlignment = TextAlignment::LEFT,
+		              TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
+		              const Vector2 &startingPosition = Vector2()) :
+			Maskable(), T(startingPosition), Colorable(Color::BLACK),
+			font(newFont), text(newText), alignment(newAlignment),
+			direction(newDirection), characters(), vertices(4, startingPosition),
+			currentMask(NULL) {
+			initialize();
+		}
 
 		/**
-		 * Sets the GraphicString's position. Depending on the alignment, the
-		 * position will correspond to the left side, center or right side of
-		 * the string.
-		 * WARNING! The origin of a string (In horizontal rendering) is the
-		 * top-left, top-center or top-right (depending on the alignment of the
-		 * line height. Some character CAN be higher than the line height, so
-		 * don't assume that every character are lower than the position you
-		 * set. For vertical rendering it's the same thing but with a horizontal
-		 * line "height" and a top-left, middle-left, bottom-left origin.
+		 * Copy constructor.
+		 * @param src GraphicString to make a copy of.
 		 */
-		void setPosition(float newXPosition, float newYPosition);
-
-		using GraphicBody::scaleFromPoint;
+		GraphicString(const GraphicString<T> &src) : Maskable(src),
+			T(src), Colorable(src), font(src.font), text(src.text),
+			alignment(src.alignment), direction(src.direction),
+			characters(src.characters), vertices(src.vertices),
+			currentMask(src.currentMask) {
+		}
 
 		/**
-		 * Scales the graphic strin from a specific point.
-		 * @param xScaling Horizontal scaling to apply. For example, if
-		 * 2.0f is passed, the graphic string will be twice as wide.
-		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
-		 * passed, the graphic string will be twice as high.
-		 * @param fromPoint Anchor point from which to apply the scaling.
-		 * @see RedBox::GraphicBody::scaling
+		 * Destructor.
 		 */
-		virtual void scaleFromPoint(float xScaling, float yScaling,
-		                            const Vector2& fromPoint);
+		virtual ~GraphicString() {
+			clearCharacters();
+		}
 
 		/**
-		 * Rotates the graphic string from a point.
-		 * @param rotationAngle Angle to rotate the graphic string.
-		 * @param rotationPoint Origin point on which to apply the rotation.
-		 * @see RedBox::GraphicBody::angle
+		 * Assignment operator overloading.
+		 * @param src GraphicString to make a copy of.
+		 * @return Reference to the modified GraphicString.
 		 */
-		void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
+		GraphicString &operator=(const GraphicString &src) {
+			this->T::operator=(src);
+			this->Colorable::operator=(src);
+
+			if (this != &src) {
+				font = src.font;
+				text = src.text;
+				alignment = src.alignment;
+				direction = src.direction;
+				clearCharacters();
+				characters.clear();
+
+				for (GlyphList::const_iterator i = src.characters.begin();
+				     i != src.characters.end(); ++i) {
+					characters.push_back(std::make_pair(i->first, ((i->second) ? (new InanimateGraphicElement<Transformable>(*i->second)) : (i->second))));
+				}
+
+				vertices = src.vertices;
+			}
+
+			return *this;
+		}
 
 		/**
-		 * Set the string size in pixel.
-		 * Warning: character wont necesserly be "pixelSize" wide.
-		 * @param pixelSize New pixel size. Characters will not necessarily have
-		 * that width.
+		 * Renders the body in the context.
 		 */
-		void setPixelSize(int pixelSize);
-
-		/**
-		 * Set the string size in font point (1/72 inch).
-		 * The function require the dpi to fix the appropriate
-		 * pixel size.
-		 * @param pointSize Size in font point (1/72 inch)
-		 * @param dpi DPI of the screen (pixel per inch)
-		 */
-		void setPointSize(int pointSize, int dpi);
-
-		/**
-		 * Tell the rendering font to use automatic line height (which is not
-		 * always availlable, but it's there most of the time.
-		 */
-		void setAutomaticLineHeight();
-
-		/**
-		 * Tells the rendering font to use the given line height and resets the
-		 * string. Call setAutomaticLineHeight() to return to the default
-		 * automatic line height.
-		 * @param lineHeight New line height (in pixels).
-		 */
-		void setManualLineHeight(int lineHeight);
-
-		/**
-		 * Updates the graphic string.
-		 */
-		void update();
-
-		/**
-		 * Renders the graphic string.
-		 */
-		void render();
+		virtual void render() {
+			for (GlyphList::const_iterator i = characters.begin();
+			     i != characters.end(); ++i) {
+				if (i->second) {
+					i->second->render();
+				}
+			}
+		}
 
 		/**
 		 * Similar to the render function except that it will only
-		 * render to the alpha component of the color buffer. It is
-		 * used to mask the next rendered graphic body (if the next graphic
-		 * body is set as a masked sprite).
+		 * render to the alpha component of the color buffer. It is used to mask
+		 * the next rendered renderable body (if the next renderable body is set
+		 * as a masked renderable body).
 		 */
-		void mask();
+		virtual void mask() {
+			for (GlyphList::const_iterator i = characters.begin();
+			     i != characters.end(); ++i) {
+				if (i->second) {
+					i->second->mask();
+				}
+			}
+		}
 
 		/**
-		 * Undo what the mask function did. This function
-		 * MUST be once after the masked graphic string has been rendered.
+		 * Undo what the mask function did. This function must be once after the
+		 * masked renderable body has been rendered.
 		 */
-		void unmask();
+		virtual void unmask() {
+			for (GlyphList::const_iterator i = characters.begin();
+			     i != characters.end(); ++i) {
+				if (i->second) {
+					i->second->unmask();
+				}
+			}
+		}
 
 		/**
-		 * Gets the graphic body masking the current graphic string.
-		 * @return Pointer to the graphic string's mask.
+		 * Gets the renderable body masking the current renderable body.
+		 * @return Pointer to the renderable body's mask.
 		 */
-		GraphicBody* getMask();
+		virtual Maskable *getMask() const {
+			return currentMask;
+		}
 
 		/**
-		 * Sets the graphic string used to mask the graphic string.
-		 * @param newMask A mask graphic string.
-		 * @param inversed Set this parameter to true if you want to inverse
+		 * Sets the renderable body used to mask the parent renderstep.
+		 * @param newMask A mask sprite.
+		 * @param inverted Sets this parameter to true if you want to invert
 		 * the effect of the mask. False by default.
 		 */
-		void setMask(GraphicBody* newMask, bool inversed = false);
+		virtual void setMask(Maskable *newMask, bool inverted = false) {
+			currentMask = newMask;
+
+			for (GlyphList::const_iterator i = characters.begin();
+			     i != characters.end(); ++i) {
+				if (i->second) {
+					i->second->setMask(newMask, inverted);
+				}
+			}
+		}
+
+		using Collidable::move;
 
 		/**
-		 * Gets the graphic string's width.
+		 * Moves the Positionable horizontally and vertically.
+		 * @param xDelta Value to add to the Positionable's horizontal position
+		 * (in pixels). Positive value moves the Positionable to the right and a
+		 * negative value moves the Positionable to the left.
+		 * @param yDelta Value to add to the Positionable's vertical position (in
+		 * pixels). Positive value moves the Positionable down and a negative
+		 * value moves the Positionable up.
+		 * @see RedBox::Positionable::move(const Vector2& delta);
+		 * @see RedBox::Positionable::position
+		 */
+		virtual void move(float xDelta, float yDelta) {
+			this->Collidable::move(xDelta, yDelta);
+
+			for (GlyphList::const_iterator i = characters.begin();
+			     i != characters.end(); ++i) {
+				if (i->second) {
+					i->second->move(xDelta, yDelta);
+				}
+			}
+
+			vertices.move(xDelta, yDelta);
+		}
+
+		/**
+		 * Gets the body's size. Can be overloaded for performance.
+		 * @return Vector2 containing the width and height of the body.
+		 */
+		virtual const Vector2 getSize() const {
+			return vertices.getSize();
+		}
+
+		/**
+		 * Gets the body's width.
 		 * @return Width in pixels (by default).
 		 */
-		float getWidth() const;
+		virtual float getWidth() const {
+			return vertices.getWidth();
+		}
 
 		/**
-		 * Gets the graphic string's height.
+		 * Gets the body's height.
 		 * @return Height in pixels (by default).
 		 */
-		float getHeight() const;
+		virtual float getHeight() const {
+			return vertices.getHeight();
+		}
+
+		using Collidable::scaleFromPoint;
 
 		/**
-		 * Gets the font's line height.
-		 * @return Font's line height (in pixels). If no valid font is set,
-		 * returns 0.
+		 * Scales the body from a specific point.
+		 * @param xScaling Horizontal scaling to apply. For example, if
+		 * 2.0f is passed, the body will be twice as wide.
+		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
+		 * passed, the body will be twice as high.
+		 * @param fromPoint Anchor point from which to apply the scaling.
+		 * @see RedBox::Transformable::scaling
 		 */
-		int getLineHeight() const;
+		virtual void scaleFromPoint(float xScaling, float yScaling,
+		                            const Vector2 &fromPoint) {
+			this->Collidable::scaleFromPoint(xScaling, yScaling, fromPoint);
+
+			for (GlyphList::const_iterator i = characters.begin();
+			     i != characters.end(); ++i) {
+				if (i->second) {
+					i->second->scaleFromPoint(xScaling, yScaling, fromPoint);
+				}
+			}
+
+			vertices.scaleFromPoint(xScaling, yScaling, fromPoint);
+			refreshPosition();
+		}
 
 		/**
-		 * Creates a copy of the current graphic string.
-		 * @return Pointer to the new graphic string.
+		 * Rotates the graphic body from a point.
+		 * @param rotationAngle Angle to rotate the graphic body.
+		 * @param rotationPoint Origin point on which to apply the rotation.
+		 * @see RedBox::Transformable::angle
 		 */
-		GraphicBody* clone() const;
+		virtual void rotateFromPoint(float rotationAngle,
+		                             const Vector2 &rotationPoint) {
+			this->Collidable::rotateFromPoint(rotationAngle, rotationPoint);
+
+			for (GlyphList::const_iterator i = characters.begin();
+			     i != characters.end(); ++i) {
+				if (i->second) {
+					i->second->rotateFromPoint(rotationAngle, rotationPoint);
+				}
+			}
+
+			vertices.rotateFromPoint(rotationAngle, rotationPoint);
+			refreshPosition();
+		}
+
+		/**
+		 * Sets the body's color.
+		 * @param newColor New color.
+		 * @see RedBox::Colorable::color
+		 */
+		virtual void setColor(const Color &newColor) {
+			this->Colorable::setColor(newColor);
+
+			for (GlyphList::const_iterator i = characters.begin();
+			     i != characters.end(); ++i) {
+				if (i->second) {
+					i->second->setColor(newColor);
+				}
+			}
+		}
+
+		/**
+		 * Gets the graphic string's font.
+		 * @return Pointer to the graphic string's font.
+		 * @see RedBox::GraphicString::font
+		 */
+		Font *getFont() const {
+			return font;
+		}
+
+		/**
+		 * Sets the graphic string's font and refreshes the text to use the
+		 * given font. Does nothing and keeps the old font if the new font is
+		 * NULL.
+		 * @param newFont Pointer to the new font to use.
+		 */
+		void setFont(Font *newFont) {
+			// We make sure the new font is valid.
+			if (newFont) {
+				font = newFont;
+			}
+		}
+
+		/**
+		 * Gets the graphic string's text in UTF8.
+		 * @return A copy of the graphic string's UTF32 string in UTF8 format.
+		 * @see RedBox::GraphicString::text
+		 */
+		std::string getText() const {
+			return UTFConvert::encodeToUTF8(text);
+		}
+
+		/**
+		 * Sets the graphic string's text.
+		 * @param newText UTF8 string to use as the graphic string's text.
+		 * Converts it to UTF32 to store it.
+		 * @see RedBox::GraphicString::text
+		 */
+		void setText(const std::string newText) {
+			setUtf32Text(UTFConvert::decodeUTF8(newText));
+		}
+
+		/**
+		 * Gets the graphic string's text in UTF32.
+		 * @return String used by the graphic string as the text.
+		 * @see RedBox::GraphicString::text
+		 */
+		const String32 &getUtf32Text() const {
+			return text;
+		}
+
+		/**
+		 * Sets the graphic string's text.
+		 * @param newText UTF32 string to use as the graphic string's text.
+		 * @see RedBox::GraphicString::text
+		 */
+		void setUtf32Text(const String32 &newText) {
+			if (text != newText) {
+				text = newText;
+				buildString();
+			}
+		}
+
+		/**
+		 * Gets the graphic string's text alignment.
+		 * @return Current text alignment
+		 * @see RedBox::GraphicString::alignment
+		 */
+		TextAlignment getAlignment() const {
+			return alignment;
+		}
+
+
+		/**
+		 * Sets the graphic string's text alignment. Doesn't change the already
+		 * displayed text, will be used the next time the text is changed.
+		 * @param newAlignment New text alignment to use.
+		 * @see RedBox::GraphicString::alignment
+		 */
+		void setAlignment(TextAlignment newAlignment) {
+			alignment = newAlignment;
+		}
+
+		/**
+		 * Gets the graphic string's text direction.
+		 * @return Current text direction.
+		 * @see RedBox::GraphicString::direction
+		 */
+		TextDirection getDirection() const {
+			return direction;
+		}
+
+		/**
+		 * Sets the graphic string's text direction. Refreshes the already
+		 * displayed text.
+		 * @param newDirection New text direction to use.
+		 * @see RedBox::GraphicString::direction
+		 */
+		void setDirection(TextDirection newDirection) {
+			if (direction != newDirection) {
+				direction = newDirection;
+				buildString();
+			}
+		}
 	private:
-		typedef std::list<std::pair<Glyph*, Sprite*> > GlyphList;
+		/// Makes sure the body type is derived from the Manageable class.
+		typedef typename StaticAssert<IsBaseOf<Positionable, T>::RESULT>::Result IsAtLeastTransformable;
+
+		/// Type used to represent the list of displayed glyphs.
+		typedef std::list<std::pair<const GlyphInformation *, InanimateGraphicElement<Transformable> *> > GlyphList;
 
 		/// Rendering font.
-		Font* font;
+		Font *font;
 
-		/// RGBA color components of the string. The range is 0 to 255.
-		Color color;
+		/// Unicode values of the GraphicString
+		String32 text;
 
 		/// Alignment of the string (Left, right, center)
 		TextAlignment alignment;
@@ -272,27 +530,213 @@ namespace RedBox {
 		 */
 		TextDirection direction;
 
-		/// Unicode values of the GraphicString
-		String32 text;
-
-		/// List of StringFX applied to the current string.
-		std::list<StringFX> renderEffects;
-
 		/// List of sprite representing each glyph.
 		GlyphList characters;
 
-		/**
-		 * Frees memory occupied by the sprites in the character list and
-		 * flushes it.
-		 */
-		void clearCharacters();
+		/// Vertices representing the graphic string's rectangle.
+		StandardVerticesArray vertices;
+
+		/// Pointer to the current mask.
+		Maskable *currentMask;
 
 		/**
-		 * Finds the real horizontal and vertical position and sets graphic
-		 * string's position to them.
+		 * Initializes the graphic string.
 		 */
-		void refreshPosition();
+		void initialize() {
+			Vector2 tmpPosition;
+			buildString();
+			this->setPosition(tmpPosition);
+		}
+
+		/**
+		 * Builds the graphic string's list of glyphs.
+		 * @see RedBox::GraphicString::characters;
+		 */
+		void buildString() {
+			Vector2 alignmentPosition;
+			assert(vertices.getNbVertices() == 4);
+
+			if (alignment == TextAlignment::LEFT) {
+				StandardVerticesArray::ConstIterator i = vertices.getBegin();
+				Vector2 tmp = *i;
+				++i;
+				++i;
+				++i;
+				alignmentPosition = tmp + (*i - tmp) * 0.5f;
+
+			} else if (alignment == TextAlignment::RIGHT) {
+				StandardVerticesArray::ConstIterator i = vertices.getBegin();
+				++i;
+				Vector2 tmp = *i;
+				++i;
+				alignmentPosition = tmp + (*i - tmp) * 0.5f;
+
+			} else {
+				alignmentPosition = vertices.getCentroid();
+			}
+
+			clearCharacters();
+			characters.clear();
+
+			// We make sure the font is valid.
+			if (font) {
+				// We check the text direction.
+				if (direction == TextDirection::LEFT_TO_RIGHT) {
+					// We generate the list of glyphs (one for each of the text's
+					// characters).
+					const GlyphInformation *newGlyph;
+					InanimateGraphicElement<Transformable> *newGraphic;
+
+					for (String32::const_iterator i = text.begin();
+					     i != text.end(); ++i) {
+						newGlyph = font->getGlyphInformation(*i);
+
+						if (newGlyph->size.getX() > 0.0f) {
+							newGraphic = new InanimateGraphicElement<Transformable>(newGlyph->textureInformation, Vector2(0.0f, 0.0f), newGlyph->size);
+							newGraphic->setScaling(this->getScaling());
+							newGraphic->setColor(getColor());
+
+						} else {
+							newGraphic = NULL;
+						}
+
+						characters.push_back(std::make_pair(newGlyph, newGraphic));
+					}
+
+				} else if (direction == TextDirection::RIGHT_TO_LEFT) {
+					const GlyphInformation *newGlyph;
+					InanimateGraphicElement<Transformable> *newGraphic;
+
+					for (String32::const_reverse_iterator i = text.rbegin();
+					     i != text.rend(); ++i) {
+						newGlyph = font->getGlyphInformation(*i);
+
+						if (newGlyph->size.getX() > 0.0f) {
+							newGraphic = new InanimateGraphicElement<Transformable>(newGlyph->textureInformation, Vector2(0.0f, 0.0f), newGlyph->size);
+							newGraphic->setScaling(this->getScaling());
+							newGraphic->setColor(getColor());
+
+						} else {
+							newGraphic = NULL;
+						}
+
+						characters.push_back(std::make_pair(newGlyph, newGraphic));
+					}
+				}
+
+				float lineHeight = static_cast<float>(font->getLineHeight());
+
+				float tmpX = 0.0f, xMin = 0.0f, xMax = 0.0f, yMin = 0.0f, yMax = 0.0f;
+				Vector2 tmpMax;
+
+				for (GlyphList::iterator i = characters.begin();
+				     i != characters.end(); ++i) {
+					// We have to check for NULL pointers because spaces
+					// do not have graphics.
+					if (i->second) {
+						i->second->setPosition(tmpX + i->first->horizontalBearing.getX() * this->getXScaling(),
+						                       (lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY() * this->getYScaling()));
+
+						tmpMax = i->second->getVertices().getMaximumXY();
+
+						if (i->second->getXPosition() < xMin) {
+							xMin = i->second->getXPosition();
+						}
+
+						if (tmpMax.getX() > xMax) {
+							xMax = tmpMax.getX();
+						}
+
+						if (i->second->getYPosition() < yMin) {
+							yMin = i->second->getYPosition();
+						}
+
+						if (tmpMax.getY() > yMax) {
+							yMax = tmpMax.getY();
+						}
+					}
+
+					tmpX += i->first->advance.getX() * this->getXScaling();
+				}
+
+				// We set the vertices.
+				StandardVerticesArray::Iterator it = vertices.getBegin();
+				it->setXY(xMin, yMin);
+				++it;
+				it->setXY(xMax, yMin);
+				++it;
+				it->setXY(xMax, yMax);
+				++it;
+				it->setXY(xMin, yMax);
+
+				// We check the text alignment.
+
+				Vector2 delta;
+
+				if (alignment == TextAlignment::LEFT) {
+					// We find the delta we have to apply to align the text
+					// with the alignment position.
+					it = vertices.getBegin();
+					delta = *it;
+					++it;
+					++it;
+					++it;
+					delta = alignmentPosition - (delta + (*it - delta) * 0.5f);
+
+				} else if (alignment == TextAlignment::RIGHT) {
+					// We find the delta we have to apply to align the text
+					// with the alignment position.
+					it = vertices.getBegin();
+					++it;
+					delta = *it;
+					++it;
+					delta = alignmentPosition - (delta + (*it - delta) * 0.5f);
+
+				} else if (alignment == TextAlignment::CENTER) {
+					delta = alignmentPosition - vertices.getCentroid();
+				}
+
+				// We apply this delta and the rotation to the vertices and
+				// the graphics.
+				vertices.move(delta.getX(), delta.getY());
+				vertices.rotateFromPoint(this->getAngle(), alignmentPosition);
+
+				for (GlyphList::iterator i = characters.begin();
+				     i != characters.end(); ++i) {
+					if (i->second) {
+						i->second->move(delta);
+						i->second->rotateFromPoint(this->getAngle(), alignmentPosition);
+					}
+				}
+
+				// We update the collidable's stored position.
+				refreshPosition();
+
+			}
+		}
+
+		/**
+		 * Refreshes the collidable's position using the graphic string's.
+		 * vertices.
+		 */
+		void refreshPosition() {
+			Vector2 delta = vertices.getMinimumXY() - this->getPosition();
+			this->Collidable::move(delta.getX(), delta.getY());
+		}
+
+		/**
+		 * Clears the characters attribute.
+		 * @see RedBox::GraphicString::characters
+		 */
+		void clearCharacters() {
+			for (GlyphList::iterator i = characters.begin();
+			     i != characters.end(); ++i) {
+				if (i->second) {
+					delete i->second;
+				}
+			}
+		}
 	};
 }
 
-#endif
+#endif // RB_GRAPHIC_STRING_H

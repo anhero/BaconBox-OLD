@@ -1,6 +1,6 @@
 @echo off
 echo =================================
-echo = Cleaning RedBoxApp on Windows =
+echo = Cleaning RedBox on Windows    =
 echo =================================
 
 

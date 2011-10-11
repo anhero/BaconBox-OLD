@@ -1,49 +1,348 @@
+/**
+ * @file
+ */
 #ifndef RB_LINE_SLIDER_H
 #define RB_LINE_SLIDER_H
 
 #include <algorithm>
 
 #include "Slider.h"
-#include "Sprite.h"
 #include "Pointer.h"
+#include "Layerable.h"
+#include "Collidable.h"
+#include "InanimateGraphicElement.h"
+#include "Pointer.h"
+#include "Engine.h"
+#include "StandardVerticesArray.h"
 
 namespace RedBox {
 	template <typename T>
-	class LineSlider : public Slider<T> {
+	class LineSlider : public Slider<T>, public Collidable, public Layerable {
 	public:
 		typedef typename Slider<T>::ValueType ValueType;
 
 		sigly::Signal0<> release;
 
 		/**
-		 * Parameterized constructor. Creates the line and the slider's
-		 * button from texture keys.
-		 * @param newMinimumValue Slider's minimum value.
-		 * @param newMaximumValue Slider's maximum value.
-		 * @param startingValue Slider's starting value. Clamped to stay
-		 * within the slider's range.
-		 * @param lineTextureKey Texture key to use for the line's texture.
-		 * @param buttonTextureKey Texture key to use for the button's texture.
-		 * @see RedBox::LineSlider<T>::lineSprite
-		 * @see RedBox::LineSlider<T>::buttonSprite
-		 * @see RedBox::Slider<T>
+		 * Parameterized constructor. Sets the minimum and maximum value.
+		 * Clamps the current value to be within the possible range.
+		 * @param newMinimumValue Range's minimum value.
+		 * @param newMaximumValue Range's maximum value.
+		 * @param newLineTextureKey Key of the texture to use to render the
+		 * background line.
+		 * @param newButtonTextureKey Key of the texture to use to render the
+		 * movable button.
+		 * @param startingPosition Position at which to place the line slider.
+		 * @param newLineSize Size of the line background.
+		 * @param newButtonSize Size of the movable button.
+		 * @param newLineTextureOffset Offset in the texture of the background
+		 * line.
+		 * @param newButtonTextureOffset Offset in the texture of the movable
+		 * button.
+		 * @see RedBox::Slider<T>::minimumValue
+		 * @see RedBox::Slider<T>::maximumValue
+		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
 		 */
 		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
-		           ValueType startingValue, const std::string &lineTextureKey,
-		           const std::string &buttonTextureKey) :
-			Slider<T>(newMinimumValue, newMaximumValue, startingValue),
-			lineSprite(lineTextureKey), buttonSprite(buttonTextureKey),
-			down(false) {
-			placeButton();
+		           const std::string &newLineTextureKey,
+		           const std::string &newButtonTextureKey,
+		           const Vector2 &startingPosition = Vector2(),
+		           const Vector2 &newLineSize = Vector2(),
+		           const Vector2 &newButtonSize = Vector2(),
+		           const Vector2 &newLineTextureOffset = Vector2(),
+		           const Vector2 &newButtonTextureOffset = Vector2()) :
+			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
+			lineSprite(newLineTextureKey, startingPosition, newLineSize,
+			           newLineTextureOffset),
+			buttonSprite(newButtonTextureKey, startingPosition, newButtonSize,
+			             newButtonTextureOffset), down(false),
+			vertices(4, startingPosition) {
+			initialize(newMinimumValue, newMaximumValue, newMinimumValue,
+			           startingPosition);
+		}
+
+		/**
+		 * Parameterized constructor. Sets the minimum and maximum value.
+		 * Clamps the current value to be within the possible range.
+		 * @param newMinimumValue Range's minimum value.
+		 * @param newMaximumValue Range's maximum value.
+		 * @param newLineTextureInformation Pointer to the texture information
+		 * to use to render the background line.
+		 * @param newButtonTextureKey Key of the texture to use to render the
+		 * movable button.
+		 * @param startingPosition Position at which to place the line slider.
+		 * @param newLineSize Size of the line background.
+		 * @param newButtonSize Size of the movable button.
+		 * @param newLineTextureOffset Offset in the texture of the background
+		 * line.
+		 * @param newButtonTextureOffset Offset in the texture of the movable
+		 * button.
+		 * @see RedBox::Slider<T>::minimumValue
+		 * @see RedBox::Slider<T>::maximumValue
+		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
+		 */
+		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
+		           const TextureInformation *newLineTextureInformation,
+		           const std::string &newButtonTextureKey,
+		           const Vector2 &startingPosition = Vector2(),
+		           const Vector2 &newLineSize = Vector2(),
+		           const Vector2 &newButtonSize = Vector2(),
+		           const Vector2 &newLineTextureOffset = Vector2(),
+		           const Vector2 &newButtonTextureOffset = Vector2()) :
+			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
+			lineSprite(newLineTextureInformation, startingPosition, newLineSize,
+			           newLineTextureOffset),
+			buttonSprite(newButtonTextureKey, startingPosition, newButtonSize,
+			             newButtonTextureOffset), down(false),
+			vertices(4, startingPosition) {
+			initialize(newMinimumValue, newMaximumValue, newMinimumValue,
+			           startingPosition);
+		}
+
+		/**
+		 * Parameterized constructor. Sets the minimum and maximum value.
+		 * Clamps the current value to be within the possible range.
+		 * @param newMinimumValue Range's minimum value.
+		 * @param newMaximumValue Range's maximum value.
+		 * @param newLineTextureKey Key of the texture to use to render the
+		 * background line.
+		 * @param newButtonTextureInformation Pointer to the texture
+		 * information to use to render the movable button.
+		 * @param startingPosition Position at which to place the line slider.
+		 * @param newLineSize Size of the line background.
+		 * @param newButtonSize Size of the movable button.
+		 * @param newLineTextureOffset Offset in the texture of the background
+		 * line.
+		 * @param newButtonTextureOffset Offset in the texture of the movable
+		 * button.
+		 * @see RedBox::Slider<T>::minimumValue
+		 * @see RedBox::Slider<T>::maximumValue
+		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
+		 */
+		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
+		           const std::string &newLineTextureKey,
+		           const TextureInformation *newButtonTextureInformation,
+		           const Vector2 &startingPosition = Vector2(),
+		           const Vector2 &newLineSize = Vector2(),
+		           const Vector2 &newButtonSize = Vector2(),
+		           const Vector2 &newLineTextureOffset = Vector2(),
+		           const Vector2 &newButtonTextureOffset = Vector2()) :
+			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
+			lineSprite(newLineTextureKey, startingPosition, newLineSize,
+			           newLineTextureOffset),
+			buttonSprite(newButtonTextureInformation, startingPosition,
+			             newButtonSize, newButtonTextureOffset), down(false),
+			vertices(4, startingPosition) {
+			initialize(newMinimumValue, newMaximumValue, newMinimumValue,
+			           startingPosition);
+		}
+
+		/**
+		 * Parameterized constructor. Sets the minimum and maximum value.
+		 * Clamps the current value to be within the possible range.
+		 * @param newMinimumValue Range's minimum value.
+		 * @param newMaximumValue Range's maximum value.
+		 * @param newLineTextureInformation Pointer to the texture information
+		 * to use to render the background line.
+		 * @param newButtonTextureInformation Pointer to the texture
+		 * information to use to render the movable button.
+		 * @param startingPosition Position at which to place the line slider.
+		 * @param newLineSize Size of the line background.
+		 * @param newButtonSize Size of the movable button.
+		 * @param newLineTextureOffset Offset in the texture of the background
+		 * line.
+		 * @param newButtonTextureOffset Offset in the texture of the movable
+		 * button.
+		 * @see RedBox::Slider<T>::minimumValue
+		 * @see RedBox::Slider<T>::maximumValue
+		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
+		 */
+		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
+		           const TextureInformation *newLineTextureInformation,
+		           const TextureInformation *newButtonTextureInformation,
+		           const Vector2 &startingPosition = Vector2(),
+		           const Vector2 &newLineSize = Vector2(),
+		           const Vector2 &newButtonSize = Vector2(),
+		           const Vector2 &newLineTextureOffset = Vector2(),
+		           const Vector2 &newButtonTextureOffset = Vector2()) :
+			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
+			lineSprite(newLineTextureInformation, startingPosition, newLineSize,
+			           newLineTextureOffset),
+			buttonSprite(newButtonTextureInformation, startingPosition,
+			             newButtonSize, newButtonTextureOffset), down(false),
+			vertices(4, startingPosition) {
+			initialize(newMinimumValue, newMaximumValue, newMinimumValue,
+			           startingPosition);
+		}
+
+		/**
+		 * Parameterized constructor. Sets the minimum and maximum value.
+		 * Clamps the current value to be within the possible range.
+		 * @param newMinimumValue Range's minimum value.
+		 * @param newMaximumValue Range's maximum value.
+		 * @param startingValue Starting current value.
+		 * @param newLineTextureKey Key of the texture to use to render the
+		 * background line.
+		 * @param newButtonTextureKey Key of the texture to use to render the
+		 * movable button.
+		 * @param startingPosition Position at which to place the line slider.
+		 * @param newLineSize Size of the line background.
+		 * @param newButtonSize Size of the movable button.
+		 * @param newLineTextureOffset Offset in the texture of the background
+		 * line.
+		 * @param newButtonTextureOffset Offset in the texture of the movable
+		 * button.
+		 * @see RedBox::Slider<T>::minimumValue
+		 * @see RedBox::Slider<T>::maximumValue
+		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
+		 */
+		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
+		           ValueType startingValue,
+		           const std::string &newLineTextureKey,
+		           const std::string &newButtonTextureKey,
+		           const Vector2 &startingPosition = Vector2(),
+		           const Vector2 &newLineSize = Vector2(),
+		           const Vector2 &newButtonSize = Vector2(),
+		           const Vector2 &newLineTextureOffset = Vector2(),
+		           const Vector2 &newButtonTextureOffset = Vector2()) :
+			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
+			lineSprite(newLineTextureKey, startingPosition, newLineSize,
+			           newLineTextureOffset),
+			buttonSprite(newButtonTextureKey, startingPosition, newButtonSize,
+			             newButtonTextureOffset), down(false),
+			vertices(4, startingPosition) {
+			initialize(newMinimumValue, newMaximumValue, startingValue,
+			           startingPosition);
+		}
+
+		/**
+		 * Parameterized constructor. Sets the minimum and maximum value.
+		 * Clamps the current value to be within the possible range.
+		 * @param newMinimumValue Range's minimum value.
+		 * @param newMaximumValue Range's maximum value.
+		 * @param startingValue Starting current value.
+		 * @param newLineTextureInformation Pointer to the texture information
+		 * to use to render the background line.
+		 * @param newButtonTextureKey Key of the texture to use to render the
+		 * movable button.
+		 * @param startingPosition Position at which to place the line slider.
+		 * @param newLineSize Size of the line background.
+		 * @param newButtonSize Size of the movable button.
+		 * @param newLineTextureOffset Offset in the texture of the background
+		 * line.
+		 * @param newButtonTextureOffset Offset in the texture of the movable
+		 * button.
+		 * @see RedBox::Slider<T>::minimumValue
+		 * @see RedBox::Slider<T>::maximumValue
+		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
+		 */
+		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
+		           ValueType startingValue,
+		           const TextureInformation *newLineTextureInformation,
+		           const std::string &newButtonTextureKey,
+		           const Vector2 &startingPosition = Vector2(),
+		           const Vector2 &newLineSize = Vector2(),
+		           const Vector2 &newButtonSize = Vector2(),
+		           const Vector2 &newLineTextureOffset = Vector2(),
+		           const Vector2 &newButtonTextureOffset = Vector2()) :
+			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
+			lineSprite(newLineTextureInformation, startingPosition, newLineSize,
+			           newLineTextureOffset),
+			buttonSprite(newButtonTextureKey, startingPosition, newButtonSize,
+			             newButtonTextureOffset), down(false),
+			vertices(4, startingPosition) {
+			initialize(newMinimumValue, newMaximumValue, startingValue,
+			           startingPosition);
+		}
+
+		/**
+		 * Parameterized constructor. Sets the minimum and maximum value.
+		 * Clamps the current value to be within the possible range.
+		 * @param newMinimumValue Range's minimum value.
+		 * @param newMaximumValue Range's maximum value.
+		 * @param startingValue Starting current value.
+		 * @param newLineTextureKey Key of the texture to use to render the
+		 * background line.
+		 * @param newButtonTextureInformation Pointer to the texture
+		 * information to use to render the movable button.
+		 * @param startingPosition Position at which to place the line slider.
+		 * @param newLineSize Size of the line background.
+		 * @param newButtonSize Size of the movable button.
+		 * @param newLineTextureOffset Offset in the texture of the background
+		 * line.
+		 * @param newButtonTextureOffset Offset in the texture of the movable
+		 * button.
+		 * @see RedBox::Slider<T>::minimumValue
+		 * @see RedBox::Slider<T>::maximumValue
+		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
+		 */
+		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
+		           ValueType startingValue,
+		           const std::string &newLineTextureKey,
+		           const TextureInformation *newButtonTextureInformation,
+		           const Vector2 &startingPosition = Vector2(),
+		           const Vector2 &newLineSize = Vector2(),
+		           const Vector2 &newButtonSize = Vector2(),
+		           const Vector2 &newLineTextureOffset = Vector2(),
+		           const Vector2 &newButtonTextureOffset = Vector2()) :
+			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
+			lineSprite(newLineTextureKey, startingPosition, newLineSize,
+			           newLineTextureOffset),
+			buttonSprite(newButtonTextureInformation, startingPosition,
+			             newButtonSize, newButtonTextureOffset), down(false),
+			vertices(4, startingPosition) {
+			initialize(newMinimumValue, newMaximumValue, startingValue,
+			           startingPosition);
+		}
+
+		/**
+		 * Parameterized constructor. Sets the minimum and maximum value.
+		 * Clamps the current value to be within the possible range.
+		 * @param newMinimumValue Range's minimum value.
+		 * @param newMaximumValue Range's maximum value.
+		 * @param startingValue Starting current value.
+		 * @param newLineTextureInformation Pointer to the texture information
+		 * to use to render the background line.
+		 * @param newButtonTextureInformation Pointer to the texture
+		 * information to use to render the movable button.
+		 * @param startingPosition Position at which to place the line slider.
+		 * @param newLineSize Size of the line background.
+		 * @param newButtonSize Size of the movable button.
+		 * @param newLineTextureOffset Offset in the texture of the background
+		 * line.
+		 * @param newButtonTextureOffset Offset in the texture of the movable
+		 * button.
+		 * @see RedBox::Slider<T>::minimumValue
+		 * @see RedBox::Slider<T>::maximumValue
+		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
+		 */
+		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
+		           ValueType startingValue,
+		           const TextureInformation *newLineTextureInformation,
+		           const TextureInformation *newButtonTextureInformation,
+		           const Vector2 &startingPosition = Vector2(),
+		           const Vector2 &newLineSize = Vector2(),
+		           const Vector2 &newButtonSize = Vector2(),
+		           const Vector2 &newLineTextureOffset = Vector2(),
+		           const Vector2 &newButtonTextureOffset = Vector2()) :
+			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
+			lineSprite(newLineTextureInformation, startingPosition, newLineSize,
+			           newLineTextureOffset),
+			buttonSprite(newButtonTextureInformation, startingPosition,
+			             newButtonSize, newButtonTextureOffset), down(false),
+			vertices(4, startingPosition) {
+			initialize(newMinimumValue, newMaximumValue, startingValue,
+			           startingPosition);
 		}
 
 		/**
 		 * Copy constructor.
 		 * @param src Line slider to make a copy of.
 		 */
-		LineSlider(const LineSlider<ValueType>& src) : Slider<T>(src),
-			lineSprite(src.lineSprite), buttonSprite(src.buttonSprite),
-			down(false) {
+		LineSlider(const LineSlider<ValueType>& src) : Slider<ValueType>(src),
+			Collidable(src), Layerable(src), lineSprite(src.lineSprite),
+			buttonSprite(src.buttonSprite), down(src.down),
+			vertices(src.vertices) {
 		}
 
 		/**
@@ -53,30 +352,33 @@ namespace RedBox {
 		 */
 		LineSlider<ValueType>& operator=(const LineSlider<ValueType>& src) {
 			this->Slider<T>::operator=(src);
+			this->Collidable::operator=(src);
+			this->Layerable::operator=(src);
 
 			if (this != &src) {
 				lineSprite = src.lineSprite;
 				buttonSprite = src.buttonSprite;
 				down = false;
+				vertices = src.vertices;
 			}
 
 			return *this;
 		}
 
 		/**
-		 * Updates the slider and its sprites.
+		 * Updates the slider.
 		 */
 		void update() {
-			this->Slider<T>::update();
-			lineSprite.update();
-			buttonSprite.update();
+			this->Collidable::update();
 			Pointer *ptr = Pointer::getDefault();
+			State *currentState = Engine::getCurrentState();
 
-			if (ptr) {
+			if (ptr && currentState) {
 				const CursorState &cur = ptr->getState().getCursorState();
 
 				if (!down) {
-					if (cur.isButtonPressed(CursorButton::LEFT) && AABB::overlaps(cur.getPosition(), lineSprite.getAABB())) {
+					if (cur.isButtonPressed(CursorButton::LEFT) &&
+					    this->getAxisAlignedBoundingBox().overlaps(currentState->getCamera().screenToWorld(cur.getPosition()))) {
 						down = true;
 					}
 				}
@@ -91,36 +393,34 @@ namespace RedBox {
 
 					} else {
 						// We get the button's sprite's real width.
-						unsigned int i = 0;
-						Vector2 *tmpArray = buttonSprite.getVertices().getVertices().array;
-						//std::vector<Vector2>::iterator i = buttonSprite.getVertices().getVertices().begin();
-						Vector2 tmpLine(tmpArray[i]);
+						VerticesArray::ConstIterator i = buttonSprite.getVertices().getBegin();
+						Vector2 tmpLine(*i);
 						++i;
-						Vector2 line(tmpArray[i]);
-						Vector2 horizontalLine = line - tmpLine;
+						Vector2 horizontalLine = *i - tmpLine;
 						// We get the upper left vertex's position.
-						i = 0;
-						tmpArray = lineSprite.getVertices().getVertices().array;
-						tmpLine = tmpArray[i];
+						i = lineSprite.getVertices().getBegin();
+						tmpLine = *i;
 						// We get the upper right vertex's position.
 						++i;
-						line = tmpArray[i];
-						// We get the line's sprite's real center right position.
+						Vector2 line(*i);
+						// We get the line's sprite's real center right
+						// position.
 						++i;
-						line += (tmpArray[i] - line) * 0.5f;
-						line -= horizontalLine * 0.5f;
-						// We get the line's sprite's real center left position.
+						line.addToXY((*i - line) * 0.5f);
+						line.subtractFromXY(horizontalLine * 0.5f);
+						// We get the line's sprite's real center left
+						// position.
 						++i;
-						tmpLine += (tmpArray[i] - tmpLine) * 0.5f;
-						tmpLine += horizontalLine * 0.5f;
+						tmpLine.addToXY((*i - tmpLine) * 0.5f);
+						tmpLine.addToXY(horizontalLine * 0.5f);
 						// We get the line that goes from the line's sprite's
 						// left center position to its right center position.
-						line -= tmpLine;
+						line.subtractFromXY(tmpLine);
 						// We get the cursor's position relative to the line's
 						// sprite's left center position.
-						tmpLine = cur.getPosition() - tmpLine;
-						// We project the cursor's relative position onto
-						// the line's sprite's horizontal center line.
+						tmpLine = currentState->getCamera().screenToWorld(cur.getPosition()) - tmpLine;
+						// We project the cursor's relative position onto the
+						// line's sprite's horizontal center line.
 						tmpLine.project(line);
 						// We calculate the new current value from the
 						// projected cursor's position's length.
@@ -140,9 +440,9 @@ namespace RedBox {
 
 		/**
 		 * Similar to the render function except that it will only
-		 * render to the alpha component of the color buffer. It is
-		 * used to mask the next rendered graphic body (if the next graphic
-		 * body is set as a masked sprite).
+		 * render to the alpha component of the color buffer. It is used to mask
+		 * the next rendered renderable body (if the next renderable body is set
+		 * as a masked renderable body).
 		 */
 		void mask() {
 			lineSprite.mask();
@@ -150,8 +450,8 @@ namespace RedBox {
 		}
 
 		/**
-		 * Undo what the mask function did. This function
-		 * MUST be once after the masked graphic body has been rendered.
+		 * Undo what the mask function did. This function must be once after the
+		 * masked renderable body has been rendered.
 		 */
 		void unmask() {
 			lineSprite.unmask();
@@ -159,39 +459,50 @@ namespace RedBox {
 		}
 
 		/**
-		 * Gets the graphic body masking the current button.
-		 * @return Pointer to the slider's mask.
+		 * Gets the renderable body masking the current renderable body.
+		 * @return Pointer to the renderable body's mask.
 		 */
-		GraphicBody *getMask() {
+		Maskable *getMask() const {
 			return lineSprite.getMask();
 		}
 
 		/**
-		 * Sets the graphic body used to mask the slider.
-		 * @param newMask A mask graphic body.
-		 * @param inversed Set this parameter to true if you want to inverse
+		 * Sets the renderable body used to mask the parent renderstep.
+		 * @param newMask A mask sprite.
+		 * @param inverted Sets this parameter to true if you want to invert
 		 * the effect of the mask. False by default.
 		 */
-		void setMask(GraphicBody *newMask, bool inversed = false) {
-			lineSprite.setMask(newMask, inversed);
-			buttonSprite.setMask(newMask, inversed);
+		void setMask(Maskable *newMask, bool inverted = false) {
+			lineSprite.setMask(newMask, inverted);
+			buttonSprite.setMask(newMask, inverted);
 		}
 
-		using GraphicBody::setPosition;
+		using Collidable::move;
 
 		/**
-		 * Sets the line slider's horizontal and vertical position.
-		 * @param newXPosition New horizontal position (in pixels). Lower value
-		 * means more to the left.
-		 * @param newYPosition New vertical position (in pixels). Lower value
-		 * means more at the top.
+		 * Moves the Positionable horizontally and vertically.
+		 * @param xDelta Value to add to the Positionable's horizontal position
+		 * (in pixels). Positive value moves the Positionable to the right and a
+		 * negative value moves the Positionable to the left.
+		 * @param yDelta Value to add to the Positionable's vertical position (in
+		 * pixels). Positive value moves the Positionable down and a negative
+		 * value moves the Positionable up.
+		 * @see RedBox::Positionable::move(const Vector2& delta);
+		 * @see RedBox::Positionable::position
 		 */
-		void setPosition(float newXPosition, float newYPosition) {
-			Vector2 delta(newXPosition, newYPosition);
-			delta -= this->getPosition();
-			this->Slider<T>::setPosition(newXPosition, newYPosition);
-			lineSprite.move(delta);
-			buttonSprite.move(delta);
+		virtual void move(float xDelta, float yDelta) {
+			this->Collidable::move(xDelta, yDelta);
+			lineSprite.move(xDelta, yDelta);
+			buttonSprite.move(xDelta, yDelta);
+			vertices.move(xDelta, yDelta);
+		}
+
+		/**
+		 * Gets the body's size. Can be overloaded for performance.
+		 * @return Vector2 containing the width and height of the body.
+		 */
+		const Vector2 getSize() const {
+			return vertices.getSize();
 		}
 
 		/**
@@ -199,8 +510,7 @@ namespace RedBox {
 		 * @return Width in pixels (by default).
 		 */
 		float getWidth() const {
-			return std::max(lineSprite.getXPosition() + lineSprite.getWidth(), buttonSprite.getXPosition() + buttonSprite.getWidth()) -
-			       std::min(lineSprite.getXPosition(), buttonSprite.getXPosition());
+			return vertices.getWidth();
 		}
 
 		/**
@@ -208,11 +518,10 @@ namespace RedBox {
 		 * @return Height in pixels (by default).
 		 */
 		float getHeight() const {
-			return std::max(lineSprite.getYPosition() + lineSprite.getHeight(), buttonSprite.getYPosition() + buttonSprite.getHeight()) -
-			       std::min(lineSprite.getYPosition(), buttonSprite.getYPosition());
+			return vertices.getHeight();
 		}
 
-		using GraphicBody::scaleFromPoint;
+		using Collidable::scaleFromPoint;
 
 		/**
 		 * Scales the line slider from a specific point.
@@ -225,9 +534,10 @@ namespace RedBox {
 		 */
 		virtual void scaleFromPoint(float xScaling, float yScaling,
 		                            const Vector2 &fromPoint) {
-			this->Slider<T>::scaleFromPoint(xScaling, yScaling, fromPoint);
+			this->Collidable::scaleFromPoint(xScaling, yScaling, fromPoint);
 			lineSprite.scaleFromPoint(xScaling, yScaling, fromPoint);
 			buttonSprite.scaleFromPoint(xScaling, yScaling, fromPoint);
+			vertices.scaleFromPoint(xScaling, yScaling, fromPoint);
 			refreshPosition();
 		}
 
@@ -238,18 +548,11 @@ namespace RedBox {
 		 * @see RedBox::GraphicBody::angle
 		 */
 		void rotateFromPoint(float rotationAngle, const Vector2 &rotationPoint) {
-			this->Slider<T>::rotateFromPoint(rotationAngle, rotationPoint);
+			this->Collidable::rotateFromPoint(rotationAngle, rotationPoint);
 			lineSprite.rotateFromPoint(rotationAngle, rotationPoint);
 			buttonSprite.rotateFromPoint(rotationAngle, rotationPoint);
+			vertices.rotateFromPoint(rotationAngle, rotationPoint);
 			refreshPosition();
-		}
-
-		/**
-		 * Creates a copy of the current simple button.
-		 * @return Pointer to the new simple button.
-		 */
-		GraphicBody *clone() const {
-			return new LineSlider<ValueType>(*this);
 		}
 
 		/**
@@ -263,48 +566,91 @@ namespace RedBox {
 		}
 	private:
 		/// Sprite used to represent the background line.
-		Sprite lineSprite;
+		InanimateGraphicElement<Transformable> lineSprite;
 
 		/// Sprite used to represent the selecting button.
-		Sprite buttonSprite;
+		InanimateGraphicElement<Transformable> buttonSprite;
 
 		/// Set to true when the slider is being slided.
 		bool down;
 
+		/// Array containing the 4 vertices for the bounding box.
+		StandardVerticesArray vertices;
+
 		/**
-		 * Places the button at the position corresponding to the curent value.
+		 * Initializes the line slider.
 		 */
-		void placeButton() {
-			float tmpAngle = this->getAngle();
-
-			if (tmpAngle != 0.0f) {
-				this->setAngle(0.0f);
-			}
-
-			if (this->getMaximumValue() == this->getMinimumValue()) {
-				buttonSprite.setPosition(lineSprite.getPositionCenter() - Vector2(buttonSprite.getWidth(), buttonSprite.getHeight()) * 0.5f);
-
-			} else {
-				float clampedValue = static_cast<float>(this->getCurrentValue() - this->getMinimumValue()) / static_cast<float>(this->getMaximumValue() - this->getMinimumValue());
-				buttonSprite.setPosition(lineSprite.getXPosition() + (lineSprite.getWidth() - buttonSprite.getWidth()) * clampedValue,
-				                         lineSprite.getYPositionCenter() - buttonSprite.getHeight() * 0.5f);
-			}
-
-			if (tmpAngle != 0.0f) {
-				this->setAngle(tmpAngle);
-			}
-
-			refreshPosition();
+		void initialize(ValueType newMinimumValue, ValueType newMaximumValue,
+		                ValueType startingValue,
+		                const Vector2 &startingPosition) {
+			// We initialize the minimum, the maximum and the starting values.
+			this->setMinimumMaximumValue(newMinimumValue, newMaximumValue);
+			this->setCurrentValue(startingValue);
+			// We position the line and the button at the starting position.
+			Vector2 delta(std::min(lineSprite.getXPosition(), buttonSprite.getXPosition()),
+			              std::min(lineSprite.getYPosition(), buttonSprite.getYPosition()));
+			delta = startingPosition - delta;
+			lineSprite.move(delta);
+			buttonSprite.move(delta);
+			// We initialize the vertices representing the control's box.
+			initializeVertices();
 		}
 
 		/**
-		 * Refreshes the parent graphic body's position.
+		 * Places the button at the position corresponding to the current value.
+		 */
+		void placeButton() {
+			// We clamp the current value between 0 and 1.
+			float clampedValue = static_cast<float>(this->getCurrentValue() - this->getMinimumValue()) / static_cast<float>(this->getMaximumValue() - this->getMinimumValue());
+
+			// If there is no range, we make sure the button is at the center.
+			if (this->getMaximumValue() == this->getMinimumValue()) {
+				clampedValue = 0.5f;
+			}
+
+			// We get the initial upper left corner's position.
+			VerticesArray::ConstIterator i = lineSprite.getVertices().getBegin();
+			Vector2 initialPosition = *i;
+			++i;
+			// While we're doing that, we take note of the line's real
+			// width.
+			Vector2 lineLength = *i - initialPosition;
+			++i;
+			++i;
+			initialPosition.addToXY((*i - initialPosition) * 0.5f);
+			i = buttonSprite.getVertices().getBegin();
+			Vector2 tmpPosition = *i;
+			++i;
+			lineLength.subtractFromXY(*i - tmpPosition);
+			++i;
+			++i;
+			initialPosition += (tmpPosition - *i) * 0.5f;
+			buttonSprite.move((initialPosition + (lineLength * clampedValue)) - *buttonSprite.getVertices().getBegin());
+		}
+
+		/**
+		 * Refreshes the position.
 		 */
 		void refreshPosition() {
-			this->Slider<T>::setPosition(std::min(lineSprite.getXPosition(), buttonSprite.getXPosition()),
-			                             std::min(lineSprite.getYPosition(), buttonSprite.getYPosition()));
+			Vector2 delta = vertices.getMinimumXY() - getPosition();
+			this->Collidable::move(delta.getX(), delta.getY());
+		}
+
+		/**
+		 * Initializes the vertices.
+		 */
+		void initializeVertices() {
+			StandardVerticesArray::Iterator i = vertices.getBegin();
+			++i;
+			Vector2 realSize(std::max(lineSprite.getWidth(), buttonSprite.getWidth()),
+			                 std::max(lineSprite.getHeight(), buttonSprite.getHeight()));
+			i->addToX(realSize.getX());
+			++i;
+			i->addToXY(realSize);
+			++i;
+			i->addToY(realSize.getY());
 		}
 	};
 }
 
-#endif
+#endif // RB_LINE_SLIDER_H

@@ -6,50 +6,47 @@
 #define RB_FONT_H
 
 #include <string>
-#include "Glyph.h"
+#include "GlyphInformation.h"
 #include "RBString32.h"
 
 namespace RedBox {
-	
 	class FontImplementation;
-	
-	/** 
+	/**
 	 * Font use a font file (loaded by the resourceManager) to render glyphs.
-     * @ingroup TextDisplay
-     */
+	 * @ingroup TextDisplay
+	 */
 	class Font {
 	public:
-				
 		/**
 		 * Initialize the font renderer (freetype)
 		 */
 		static void initializeFontRenderer();
-		
+
 		/**
 		 * Constructor. Load the font in memory.
 		 * @param name Name of the font.
 		 * @param path Path of the font.
 		 */
-		Font(const std::string& name, const std::string& path);
-		
+		Font(const std::string &name, const std::string &path);
+
 		/**
 		 * Return the name of the font.
 		 */
-		const std::string& getName() const;
-		
+		const std::string &getName() const;
+
 		/**
 		 * Return the glyph specified by the unicode value.
-		 * The size of the font should be set before calling 
+		 * The size of the font should be set before calling
 		 * this function.
 		 */
-		Glyph* getGlyph(Char32 unicodeValue);
-		
+		const GlyphInformation *getGlyphInformation(Char32 unicodeValue);
+
 		/**
 		 * Set the font size in pixel.
 		 * Warning: character wont necesserly be "pixelSize" wide.
 		 */
 		void setPixelSize(int pixelSize);
-		
+
 		/**
 		 * Set the font size in font point (1/72 inch).
 		 * The function require the dpi to fix the appropriate
@@ -58,7 +55,7 @@ namespace RedBox {
 		 * @param dpi DPI of the screen (pixel per inch)
 		 */
 		void setPointSize(int pointSize, int dpi);
-		
+
 		/**
 		 * Tell the rendering font to use automatic line height (which is not always availlable,
 		 * but it's there most of the time.
@@ -77,16 +74,16 @@ namespace RedBox {
 		 * @return Line's height in pixels.
 		 */
 		int getLineHeight() const;
-		
+
 	private:
-		
+
 		/**
 		 * Private implementation of the font (pimpl idiom) It is used to
 		 * abstract/hide freetype from the engine user point of view. If we
 		 * don't do this, the user will need to specify where are the
 		 * freetype's header in is project.
 		 */
-		FontImplementation* fontPimpl;
+		FontImplementation *fontPimpl;
 
 	};
 }

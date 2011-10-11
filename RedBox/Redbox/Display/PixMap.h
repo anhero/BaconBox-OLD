@@ -7,7 +7,6 @@
 
 #include <stdint.h>
 
-#include "Object.h"
 #include "ColorFormat.h"
 
 namespace RedBox {
@@ -18,7 +17,7 @@ namespace RedBox {
 	 * 255 for each color component.
 	 * @ingroup Display
 	 */
-	class PixMap : public Object {
+	class PixMap {
 	public:
 		/**
 		 * Default constructor.

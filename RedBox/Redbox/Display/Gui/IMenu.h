@@ -5,14 +5,16 @@
 #ifndef IMENU_H
 #define IMENU_H
 
-#include "GraphicBody.h"
+
 #include "IMenuElement.h"
+#include "Layerable.h"
+#include "Collidable.h"
 namespace RedBox {
 	/**
 	 * Interface class for all Menu implementations.
 	 * @ingroup GUI
 	 */
-class IMenu : public RedBox::GraphicBody{
+	class IMenu : public Collidable, public Layerable{
 public:
 	/**
 	 * Default constructor.

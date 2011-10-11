@@ -30,7 +30,7 @@ namespace RedBox {
 		 * Cloner.
 		 * @return a copy of the menu.
 		 */
-		ScrollingMenu* clone() const;
+		SelectingMenu* clone() const;
 
 		/**
 		 * Adds an element to the menu.

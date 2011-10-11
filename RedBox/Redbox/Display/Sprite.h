@@ -5,30 +5,25 @@
 #ifndef RB_SPRITE_H
 #define RB_SPRITE_H
 
-#include <string>
-
-#include "GraphicBody.h"
-#include "VerticesGroup.h"
-#include "Color.h"
-#include "RenderInfo.h"
-#include "RenderMode.h"
-#include "FlagSet.h"
+#include "Collidable.h"
+#include "Layerable.h"
+#include "Graphic.h"
+#include "Animatable.h"
 
 namespace RedBox {
-	struct TextureInfo;
 	/**
-	 * Represents a sprite. A is used to display animated or non-animated
-	 * images or display colored shapes. To use a sprite, initialize it and
-	 * pass it to a State. A sprite can only be in one state at a time. Once
-	 * you have given the pointer to the state, you don't have to worry about
-	 * deleting it, the state takes care of that for you. To remove a sprite
-	 * from a state, simply call setToBeDeleted(true), which is inherited from
-	 * GraphicBody.
-	 * @ingroup Display
-	 * @see RedBox::GraphicBody
-	 * @see RedBox::State
-	 */
-	class Sprite : public GraphicBody {
+     * Represents a sprite. A is used to display animated or non-animated
+     * images or display colored shapes. To use a sprite, initialize it and
+     * add it to a State. A sprite can only be in one state at a time. Once
+     * you have given the pointer to the state, you don't have to worry about
+     * deleting it, the state takes care of that for you. To remove a sprite
+     * from a state, simply call setToBeDeleted(true), which is inherited from
+     * Layerable.
+     * @ingroup Display
+     * @see RedBox::State
+     */
+class Sprite : public Graphic<Animatable>, public Collidable,
+		public Layerable {
 	public:
 		/**
 		 * Default constructor.
@@ -36,397 +31,143 @@ namespace RedBox {
 		Sprite();
 
 		/**
-		 * Simple parameterized constructor.
-		 * @param textureKey Key to the texture to create a sprite from.
+		 * Parameterized constructor. Loads the vertices and the texture
+		 * coordinates. If the specified size has a coordinate equal to 0 or
+		 * lower, it loads the the full texture as the size and image.
+		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param startingPosition Starting position at which to place the
+		 * sprite.
+		 * @param newSize Size of the sprite.
+		 * @param newTextureOffset Texture coordinates' offset if needed.
+		 * @param nbFrames Number of frames to load.
+		 * @see RedBox::Texturable::textureInformation
 		 */
-		Sprite(const std::string& textureKey);
+		explicit Sprite(const std::string &newTextureKey,
+		                const Vector2 &startingPosition = Vector2(),
+		                const Vector2 &newSize = Vector2(),
+		                const Vector2 &newTextureOffset = Vector2(),
+		                unsigned int nbFrames = 1);
 
 		/**
-		 * Simple parameterized constructor. Does the same thing as the
-		 * constructor that recieves an key.
-		 * @param textureInfo Pointer to the texture information to load the sprite
-		 * with.
-		 * @see RedBox::RenderInfo::texInfo
+		 * Parameterized constructor. Loads the vertices and the texture
+		 * coordinates. If the specified size has a coordinate equal to 0 or
+		 * lower, it loads the the full texture as the size and image.
+		 * @param newTextureInformation Pointer to the texture information to
+		 * load the sprite with.
+		 * @param startingPosition Starting position at which to place the
+		 * sprite.
+		 * @param newSize Size of the sprite.
+		 * @param newTextureOffset Texture coordinates' offset if needed.
+		 * @param nbFrames Number of frames to load.
+		 * @see RedBox::Texturable::textureInformation
 		 */
-		Sprite(TextureInfo* textureInfo);
+		explicit Sprite(const TextureInformation *newTextureInformation,
+		                const Vector2 &startingPosition = Vector2(),
+		                const Vector2 &newSize = Vector2(),
+		                const Vector2 &newTextureOffset = Vector2(),
+		                unsigned int nbFrames = 1);
 
 		/**
-		 * Parameterized constructor. Loads a sprite using the texture in the
-		 * resource manager with the corresponding key. Only takes the asked
-		 * part of the texture with the given width and height.
-		 * @param textureKey Texture's key in the ResourceManager to use for the
-		 * constructed sprite.
-		 * @param frameWidth Width of the frames to read from the image (in
-		 * pixels).
-		 * @param frameHeight Height of the frames to read from the image (in
-		 * pixels).
-		 * @param nbFrames Number of frames the sprite will load (for
-		 * animations)
-		 */
-		Sprite(const std::string& textureKey,
-		       unsigned int frameWidth,
-		       unsigned int frameHeight,
-		       unsigned int nbFrames = 1);
+		* Copy constructor.
+		* @param src Sprite to make a copy of.
+		*/
+		Sprite(const Sprite &src);
 
 		/**
-		 * Parameterized constructor. Loads a sprite using a pointer to a
-		 * TextureInfo. Only takes the asked part of the texture with the given
-		 * width and height.
-		 * @param textureInfo Pointer to the texture information to load the
-		 * sprite from.
-		 * @param frameWidth Width of the frames to read from the image (in
-		 * pixels).
-		 * @param frameHeight Height of the frames to read from the image (in
-		 * pixels).
-		 * @param nbFrames Number of frames the sprite will load (for
-		 * animations).
-		 */
-		Sprite(TextureInfo* textureInfo,
-		       unsigned int frameWidth,
-		       unsigned int frameHeight,
-		       unsigned int nbFrames = 1);
-
-		/**
-		 * Copy constructor.
-		 * @param src Sprite to make a copy of.
-		 */
-		Sprite(const Sprite& src);
-
-		/**
-		 * Assignation operator overload.
-		 * @param src Sprite to make a copy of.
-		 * @return Reference to the modified sprite.
-		 */
-		Sprite& operator=(const Sprite& src);
-
-		/**
-		 * Destructor. Frees up all allocated memory.
-		 */
+		* Destructor.
+		*/
 		virtual ~Sprite();
 
 		/**
-		 * Updates the sprite.
-		 */
-		virtual void update();
+		* Assignment operator.
+		* @param src Sprite to make a copy of.
+		* @return Reference to the modified Sprite.
+		*/
+		Sprite &operator=(const Sprite &src);
+
+		using Collidable::move;
 
 		/**
-		 * Renders the sprite.
+		 * Moves the Positionable horizontally and vertically.
+		 * @param xDelta Value to add to the Positionable's horizontal position
+		 * (in pixels). Positive value moves the Positionable to the right and a
+		 * negative value moves the Positionable to the left.
+		 * @param yDelta Value to add to the Positionable's vertical position (in
+		 * pixels). Positive value moves the Positionable down and a negative
+		 * value moves the Positionable up.
+		 * @see RedBox::Positionable::move(const Vector2& delta);
+		 * @see RedBox::Positionable::position
 		 */
-		virtual void render();
+		virtual void move(float xDelta, float yDelta);
 
 		/**
-		 * Similar to the render function except that it will only
-		 * render to the alpha component of the color buffer. It is
-		 * used to mask the next rendered sprite (if the next sprite
-		 * is set as a masked sprite).
+		 * Gets the geometric center of the body. Same as the position center
+		 * in symmetrical polygons, but must be overloaded for classes that
+		 * support irregular polygons.
+		 * @return Geometric center of the body (barycenter).
 		 */
-		virtual void mask();
+		virtual const Vector2 getCentroid() const;
 
 		/**
-		 * Undo what the mask function did. This function
-		 * MUST be once after the masked sprite has been rendered.
+		 * Gets the body's size. Can be overloaded for performance.
+		 * @return Vector2 containing the width and height of the body.
 		 */
-		virtual void unmask();
+		virtual const Vector2 getSize() const;
 
 		/**
-		 * Gets the graphic body masking the current graphic body.
-		 * @return Pointer to the graphic body's mask.
-		 */
-		virtual GraphicBody* getMask();
-
-		/**
-		 * Set the sprite used to mask the parent renderstep.
-		 * @param newMask A mask sprite.
-		 * @param inversed Set this parameter to true if you want to inverse
-		 * the effect of the mask. False by default.
-		 */
-		virtual void setMask(GraphicBody* newMask, bool inversed = false);
-
-		/**
-		 * Creates a vertex in the vertices group.
-		 * @param x Horizontal position.
-		 * @param y Vertical position.
-		 */
-		void createVertex(float x, float y);
-
-		using GraphicBody::setPosition;
-
-		/**
-		 * Sets the sprite's horizontal and vertical position.
-		 * @param newXPosition New horizontal position (in pixels). Lower value
-		 * means more to the left.
-		 * @param newYPosition New vertical position (in pixels). Lower value
-		 * means more at the top.
-		 */
-		virtual void setPosition(float newXPosition, float newYPosition);
-
-		/**
-		 * Gets the sprite's width and height.
-		 * @return Vector2 containing the sprite's width and height.
-		 */
-		const Vector2 getSize() const;
-
-		/**
-		 * Gets the sprite's width.
-		 * @return Sprite's width.
+		 * Gets the body's width.
+		 * @return Width in pixels (by default).
 		 */
 		virtual float getWidth() const;
 
 		/**
-		 * Gets the sprite's height.
-		 * @return Sprite's height.
+		 * Gets the body's height.
+		 * @return Height in pixels (by default).
 		 */
 		virtual float getHeight() const;
 
-		/**
-		 * Gets the sprite's main color.
-		 * @return Color object containing the color component of the sprite.
-		 */
-		const Color& getMainColor() const;
+		using Collidable::scaleFromPoint;
 
 		/**
-		 * Set the color of the main renderStep with the
-		 * given color components Range are from 0 to 255.
-		 * Componentes are RGBA.
-		 */
-		virtual void setMainColor(const Color& newColor);
-
-		/**
-		 * Gets the main color's alpha component.
-		 * @return Alpha component of the sprite's main color.
-		 */
-		uint8_t getMainAlpha() const;
-
-		/**
-		 * Sets the alpha component on the main renderstep.
-		 * @param alpha New alpha component. Range is from 0 to 255.
-		 */
-		void setMainAlpha(int32_t newAlpha);
-
-		/**
-		 * Gets the vertices group.
-		 * @return Reference to the sprite's group of vertices.
-		 */
-		VerticesGroup& getVertices();
-
-		/**
-		 * Gets the vertices group.
-		 * @return Reference to the sprite's group of vertices.
-		 */
-		const VerticesGroup& getVertices() const;
-
-		/**
-		 * Gets the sprite's left side's position.
-		 * @return Sprite's left side's position.
-		 */
-		float getMinX() const;
-
-		/**
-		 * Gets the sprite's right side's position.
-		 * @return Sprite's right side's position.
-		 */
-		float getMaxX() const;
-
-		/**
-		 * Gets the sprite's top side's position.
-		 * @return Sprite's top side's position.
-		 */
-		float getMinY() const;
-
-		/**
-		 * Gets the sprite's bottom side's position.
-		 * @return Sprite's bottom side's position.
-		 */
-		float getMaxY() const;
-
-		/**
-		 * Gets the sprite's render info.
-		 * @return Reference to the sprite's render information.
-		 */
-		RenderInfo& getRenderInfo();
-
-		/**
-		 * Gets the sprite's render info.
-		 * @return Reference to the sprite's render information.
-		 */
-		const RenderInfo& getRenderInfo() const;
-
-		/**
-		 * Checks if the sprite's animation is paused.
-		 * @return True if the animation is paused, false if not.
-		 * @see RedBox::Sprite::animationPaused
-		 */
-		bool isAnimationPaused() const;
-
-		/**
-		 * Sets the current animation.
-		 * @param name Name of the animation to play.
-		 */
-		void playAnimation(const std::string& name);
-
-		/**
-		 * Pauses the sprite's animation. Stays paused until resumeAnimation()
-		 * or playAnimation(...) is called.
-		 */
-		void pauseAnimation();
-
-		/**
-		 * Resumes the paused animation, does nothing if the animation wasn't
-		 * paused.
-		 */
-		void resumeAnimation();
-
-		/**
-		 * Gets the name of the current animation.
-		 * @return String containing the sprite's current animation. Empty
-		 * string if there is no current animation.
-		 */
-		const std::string& getCurrentAnimation() const;
-
-		/**
-		 * Adds an animation. Accepts a variable number of parameters for each
-		 * animation frame. For example, an animation of 7 frames could be added
-		 * as such:
-		 * addAnimation("myAnimationName", 0.2, -1, 7, 0, 1, 2, 4, 3, 5, 6);
-		 * @param name Animation's name used for identification when playing it.
-		 * @param timePerFrame Time in seconds that each frame lasts during the
-		 * animation.
-		 * @param nbLoops Number of times the animation will play before
-		 * stopping. -1 means it will loop infinitely.
-		 * @param nbFrames Number of frames the animation has.
-		 */
-		void addAnimation(const std::string& name,
-		                  double timePerFrame,
-		                  int nbLoops,
-		                  unsigned int nbFrames, ...);
-
-		/**
-		 * Gets the rendering modes.
-		 * @return Current rendering modes.
-		 */
-		const FlagSet<RenderMode>& getRenderModes() const;
-
-		/**
-		 * Sets the rendering modes.
-		 * @param newMode New mode to be set.
-		 */
-		void setRenderModes(const FlagSet<RenderMode>& newRenderModes);
-
-		/**
-		 * Adds a mode with the bitwise inclusive OR. More than one mode can
-		 * be added at the same time using the same operator.
-		 * @param newMode New mode to add.
-		 */
-		void addRenderModes(const FlagSet<RenderMode>& newRenderModes);
-
-		/**
-		 * Adds a mode with the bitwise inclusive OR. More than one mode can
-		 * be added at the same time using the same operator.
-		 * @param newMode New mode to add.
-		 */
-		void addRenderMode(RenderMode newRenderMode);
-
-		/**
-		 * Flip off given mode flags.
-		 * @param mode Mode(s) to flip off. You can pass more than one flag like
-		 * this: (Flag1 | Flag2).
-		 * @see RedBox::RenderStep::mode
-		 */
-		void removeRenderModes(const FlagSet<RenderMode>& renderModesToRemove);
-
-		/**
-		 * Flip off given mode flag.
-		 * @param mode Mode(s) to flip off. You can pass more than one flag like
-		 * this: (Flag1 | Flag2).
-		 * @see RedBox::RenderStep::mode
-		 */
-		void removeRenderMode(RenderMode renderModeToRemove);
-
-		using GraphicBody::scaleFromPoint;
-
-		/**
-		 * Scales the sprite from a specific point.
+		 * Scales the body from a specific point.
 		 * @param xScaling Horizontal scaling to apply. For example, if
-		 * 2.0f is passed, the sprite will be twice as wide.
+		 * 2.0f is passed, the body will be twice as wide.
 		 * @param yScaling Vertical scaling to apply. For example, if 2.0f is
-		 * passed, the sprite will be twice as high.
+		 * passed, the body will be twice as high.
 		 * @param fromPoint Anchor point from which to apply the scaling.
-		 * @see RedBox::GraphicBody::scaling
+		 * @see RedBox::Transformable::scaling
 		 */
 		virtual void scaleFromPoint(float xScaling, float yScaling,
-		                            const Vector2& fromPoint);
+		                            const Vector2 &fromPoint);
 
 		/**
-		 * Rotates the sprite from a point.
-		 * @param rotationAngle Angle to rotate the sprite.
+		 * Rotates the graphic body from a point.
+		 * @param rotationAngle Angle to rotate the graphic body.
 		 * @param rotationPoint Origin point on which to apply the rotation.
-		 * @see RedBox::GraphicBody::angle
+		 * @see RedBox::Transformable::angle
 		 */
 		virtual void rotateFromPoint(float rotationAngle,
-		                             const Vector2& rotationPoint);
+		                             const Vector2 &rotationPoint);
 
 		/**
-		 * Clones the sprite.
-		 * @return Pointer to the new Sprite.
+		 * Updates the body.
 		 */
-		virtual GraphicBody* clone() const;
-        
-        /**
-         * Point the c array pointers (vertices and texture coordinates)
-         * to the batchcall's arrays.
-         */
-        void setBatchPointer(Vector2* verticesPointer, Vector2 * textureCoordPointer, unsigned char * colors);
-        
-        
-        /**
-         * Set the verticesGroup and RenderInfo to use internal data instead of 
-         * the renderbatch data.
-         */
-        void setInternalBatchPointer();
-
-
-	private:
-        /**
-         * The GraphicDriver call for masked sprite is called in this function.
-         * This way it's possible to call the masked version without calling 
-         * mask() and unmask() on the mask.
-         */
-        void maskedRender(bool inversedMask);
-        
-		/// Vertices making up the sprite.
-		VerticesGroup vertices;
-
-		/// Contains the render information.
-		RenderInfo renderInfo;
-
-		/// Flag set of render modes.
-		FlagSet<RenderMode> renderModes;
-
-		/// Set to true if the animation is paused (false by default).
-		bool animationPaused;
-
-		/// Internal time counter for animations.
-		double animationCounter;
+		virtual void update();
 
 		/**
-		 * Constructs the sprite using the given info.
-		 * @param textureInfo Pointer to the texture's information.
-		 * @param frameWidth Width of the frames to read from the image (in
-		 * pixels).
-		 * @param frameHeight Height of the frames to read from the image (in
-		 * pixels).
-		 * @param nbFrames Number of frames the sprite will load (for
-		 * animations).
+		 * Generates the vertices and the texture coordinates for the
+		 * sprite.
+		 * @param newSize Size of the sprite.
+		 * @param newPosition Position of the sprite in the world.
+		 * @param newTextureOffset Texture coordinates' offset if needed.
+		 * @param nbFrames Number of frames to load.
 		 */
-		void construct(TextureInfo* textureInfo,
-		               unsigned int frameWidth,
-		               unsigned int frameHeight,
+		void construct(const Vector2 &newSize,
+		               const Vector2 &newPosition,
+		               const Vector2 &newTextureOffset = Vector2(),
 		               unsigned int nbFrames = 1);
-        
-#ifdef RB_OPENGL
-        friend class OpenGLDriver;
-#endif
 	};
+
 }
 
 #endif // RB_SPRITE_H

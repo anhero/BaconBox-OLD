@@ -17,7 +17,7 @@ LoopingMenu::~LoopingMenu(){
 		i++;
 	}
 }
-LoopingMenu* LoopingMenu::clone() const{
+SelectingMenu* LoopingMenu::clone() const{
 	return new LoopingMenu (*this);
 }
 void LoopingMenu::render(){
@@ -188,7 +188,7 @@ void LoopingMenu::setElementAngle(float newAngle){
 	}
 	SelectingMenu::setElementAngle(newAngle);
 }
-void LoopingMenu::setInternalMask(RedBox::Sprite* internalMask, bool inverted){
+void LoopingMenu::setInternalMask(GraphicElement<Transformable>* internalMask, bool inverted){
 	SelectingMenu::setInternalMask(internalMask, inverted);
 	std::list<IMenuElement*>::iterator i = fillingElements.begin();
 	while (i != fillingElements.end()) {
@@ -200,7 +200,7 @@ void LoopingMenu::onClick(Vector2 ptr){
 	(*middle)->isSelected = false;
 	std::list<IMenuElement*>::iterator i = elements.begin();
 	while (i != elements.end() && !(*i)->isSelected) {
-		if(AABB::overlaps(ptr, (*i)->getAABB())){
+		if((*i)->getAxisAlignedBoundingBox().overlaps(ptr)){
 			(*i)->select();
 			(*i)->isSelected = true;
 			(*middle)->deselect();
@@ -213,7 +213,7 @@ void LoopingMenu::onClick(Vector2 ptr){
 	}else{
 		std::list<IMenuElement*>::iterator i = fillingElements.begin();
 		while (i != fillingElements.end() && !(*i)->isSelected) {
-			if(AABB::overlaps(ptr, (*i)->getAABB())){
+			if((*i)->getAxisAlignedBoundingBox().overlaps(ptr)){
 				(*i)->select();
 				(*i)->isSelected = true;
 				(*middle)->deselect();

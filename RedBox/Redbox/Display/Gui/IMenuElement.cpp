@@ -22,7 +22,7 @@ IMenuElement::~IMenuElement(){
 }
 
 void IMenuElement::setVisible(bool newVisible){
-	Body::setVisible(newVisible);
+	setVisible(newVisible);
 }
 std::string IMenuElement::getKey(){
 	return key;

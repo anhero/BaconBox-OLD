@@ -8,13 +8,18 @@
 
 #include <sigly.h>
 
-#include "GraphicBody.h"
+#include "Collidable.h"
+#include "Layerable.h"
+#include "Graphic.h"
+#include "Animatable.h"
+
 namespace RedBox{
 	/**
 	 * Interface class for all MenuElement implementations. This class is abstract.
 	 * @ingroup GUI
 	 */
-	class IMenuElement : public RedBox::GraphicBody, public sigly::HasSlots<> {
+	class IMenuElement : public Graphic<Animatable>, public Collidable,
+	public Layerable, public sigly::HasSlots<> {
 	public:
 		/**
 		 * Default constructor.

@@ -63,10 +63,13 @@
 #include <RedBox/SimpleButton.h>
 #include <RedBox/Checkbox.h>
 #include <RedBox/LineSlider.h>
+#include <RedBox/InanimateGraphicElement.h>
+#include <RedBox/GraphicElement.h>
+#include <RedBox/InanimateSprite.h>
 #include <RedBox/Sprite.h>
 #include <RedBox/Stopwatch.h>
 #include <RedBox/Font.h>
-#include <RedBox/GraphicString.h>
+#include <RedBox/Text.h>
 #include <RedBox/Parser.h>
 #include <RedBox/AudioEngine.h>
 #include <RedBox/MusicEngine.h>

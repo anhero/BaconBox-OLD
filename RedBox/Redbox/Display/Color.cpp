@@ -13,27 +13,25 @@ const Color Color::YELLOW = Color(Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONE
 const Color Color::PINK = Color(Color::MAX_COMPONENT_VALUE, 0, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE);
 const Color Color::TEAL = Color(0, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE);
 
-Color::Color() : Object() {
+Color::Color() {
 	operator=(BLACK);
 }
 
-Color::Color(int32_t red, int32_t green, int32_t blue, int32_t alpha) :
-Object() {
+Color::Color(int32_t red, int32_t green, int32_t blue, int32_t alpha) {
 	setRGBA(red, green, blue, alpha);
 }
 
-Color::Color(uint32_t rgba) : Object() {
+Color::Color(uint32_t rgba) {
 	setRGBA(rgba);
 }
 
-Color::Color(const Color& src) : Object(src) {
+Color::Color(const Color& src) {
 	if(this != &src) {
 		setRGBA(src.getRed(), src.getGreen(), src.getBlue(), src.getAlpha());
 	}
 }
 
 Color& Color::operator=(const Color& src) {
-	Object::operator=(src);
 	if(this != &src) {
 		setRGBA(src.getRed(), src.getGreen(), src.getBlue(), src.getAlpha());
 	}

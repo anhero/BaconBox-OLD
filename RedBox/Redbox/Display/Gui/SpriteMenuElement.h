@@ -74,7 +74,7 @@ namespace RedBox {
 		 * @param newMask The new element's mask.
 		 * @param inverted The mask is going to be applied inversly or not.
 		 */
-		void setMask(GraphicBody* newMask, bool inverted = false);
+		void setMask(Maskable* newMask, bool inverted = false);
 		/**
 		 * Similar to the render function except that it will only
 		 * render to the alpha component of the color buffer. It is
@@ -91,12 +91,12 @@ namespace RedBox {
 		 * Gets a pointer to the mask of the element.
 		 * @return A pointer to the current mask.
 		 */
-		GraphicBody* getMask();
+		Maskable* getMask();
 	protected:
 		///The visible part of the element.
 		Sprite* image;
 		///The masked part of the element.
-		GraphicBody* currentMask;
+		Maskable* currentMask;
 	};
 }
 #endif

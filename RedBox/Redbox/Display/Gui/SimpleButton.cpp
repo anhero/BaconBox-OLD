@@ -1,128 +1,89 @@
 #include "SimpleButton.h"
 
-using namespace RedBox;
+#include "TextureInformation.h"
 
-SimpleButton::SimpleButton(TextureInfo* textureInfo, unsigned int frameWidth,
-                           unsigned int frameHeight) : IButton(),
-	buttonSprite(textureInfo, frameWidth, frameHeight, 4) {
-	initializeAnimations();
-}
+namespace RedBox {
+	SimpleButton::SimpleButton(const std::string &newTextureKey,
+	                           const Vector2 &startingPosition,
+	                           const Vector2 &newSize,
+	                           const Vector2 &newTextureOffset) : Button() {
+		this->setTextureInformation(newTextureKey);
 
-SimpleButton::SimpleButton(const std::string& textureKey,
-                           unsigned int frameWidth, unsigned int frameHeight) :
-	IButton(), buttonSprite(textureKey, frameWidth, frameHeight, 4) {
-	initializeAnimations();
-}
+		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
+			construct(newSize, startingPosition, newTextureOffset, 4);
+			this->initializeAnimations();
 
-SimpleButton::SimpleButton(const SimpleButton& src) : IButton(src),
-	buttonSprite(src.buttonSprite) {
-}
-
-SimpleButton::~SimpleButton() {
-}
-
-SimpleButton& SimpleButton::operator=(const SimpleButton& src) {
-	this->IButton::operator=(src);
-
-	if(this != &src) {
-		buttonSprite = src.buttonSprite;
+		} else if (this->getTextureInformation()) {
+			construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth / 4),
+			                  static_cast<float>(this->getTextureInformation()->imageHeight)),
+			          startingPosition, newTextureOffset, 4);
+			this->initializeAnimations();
+		}
 	}
 
-	return *this;
-}
+	SimpleButton::SimpleButton(const TextureInformation *newTextureInformation,
+	                           const Vector2 &startingPosition,
+	                           const Vector2 &newSize,
+	                           const Vector2 &newTextureOffset) : Button() {
+		this->setTextureInformation(newTextureInformation);
 
-void SimpleButton::update() {
-	this->IButton::update();
-	buttonSprite.update();
-}
+		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
+			construct(newSize, startingPosition, newTextureOffset, 4);
+			this->initializeAnimations();
 
-void SimpleButton::render() {
-	buttonSprite.render();
-}
+		} else if (this->getTextureInformation()) {
+			construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth / 4),
+			                  static_cast<float>(this->getTextureInformation()->imageHeight)),
+			          startingPosition, newTextureOffset, 4);
+			this->initializeAnimations();
+		}
+	}
 
-void SimpleButton::mask() {
-	buttonSprite.mask();
-}
+	SimpleButton::SimpleButton(const SimpleButton &src) : Button(src) {
+	}
 
-void SimpleButton::unmask() {
-	buttonSprite.unmask();
-}
+	SimpleButton::~SimpleButton() {
+	}
 
-GraphicBody* SimpleButton::getMask() {
-	return buttonSprite.getMask();
-}
+	SimpleButton &SimpleButton::operator=(const SimpleButton &src) {
+		this->Button::operator=(src);
+		return *this;
+	}
 
-void SimpleButton::setMask(GraphicBody* newMask, bool inversed) {
-	buttonSprite.setMask(newMask, inversed);
-}
+	const TextureCoordinates &SimpleButton::getCurrentTextureCoordinates() const {
+		if (this->isActive()) {
+			return this->Button::getCurrentTextureCoordinates();
 
-void SimpleButton::setPosition(float newXPosition, float newYPosition) {
-	this->GraphicBody::setPosition(newXPosition, newYPosition);
-	buttonSprite.setPosition(newXPosition, newYPosition);
-}
+		} else {
+			return this->getFrames()[3];
+		}
+	}
 
-float SimpleButton::getWidth() const {
-	return buttonSprite.getWidth();
-}
+	void SimpleButton::onPress() {
+		this->startAnimation("p");
+	}
 
-float SimpleButton::getHeight() const {
-	return buttonSprite.getHeight();
-}
+	void SimpleButton::onHold() {
+	}
 
-void SimpleButton::scaleFromPoint(float xScaling, float yScaling,
-                                  const Vector2& fromPoint) {
-	this->GraphicBody::scaleFromPoint(xScaling, yScaling, fromPoint);
-	buttonSprite.scaleFromPoint(xScaling, yScaling, fromPoint);
-	this->GraphicBody::setPosition(buttonSprite.getXPosition(),
-	                               buttonSprite.getYPosition());
-}
+	void SimpleButton::onRelease() {
+		this->startAnimation("h");
+		click();
+	}
 
-void SimpleButton::rotateFromPoint(float rotationAngle,
-                                   const Vector2& rotationPoint) {
-	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
-	buttonSprite.rotateFromPoint(rotationAngle, rotationPoint);
-	this->GraphicBody::setPosition(buttonSprite.getXPosition(),
-	                               buttonSprite.getYPosition());
-}
+	void SimpleButton::onEnter() {
+		this->startAnimation("h");
+		hover();
+	}
 
-void SimpleButton::setActive(bool newActive) {
-	this->IButton::setActive(newActive);
-	if(newActive) {
-		onLeave();
-	} else {
-		buttonSprite.playAnimation("i");
+	void SimpleButton::onLeave() {
+		this->startAnimation("n");
+	}
+
+	void SimpleButton::initializeAnimations() {
+		this->addAnimation("n", 0.0, 1, 1, 0);
+		this->addAnimation("h", 0.0, 1, 1, 1);
+		this->addAnimation("p", 0.0, 1, 1, 2);
+		this->addAnimation("i", 0.0, 1, 1, 3);
 	}
 }
-
-GraphicBody* SimpleButton::clone() const {
-	return new SimpleButton(*this);
-}
-
-void SimpleButton::onPress() {
-	buttonSprite.playAnimation("p");
-}
-
-void SimpleButton::onHold() {
-}
-
-void SimpleButton::onRelease() {
-	buttonSprite.playAnimation("h");
-	click();
-}
-
-void SimpleButton::onEnter() {
-	buttonSprite.playAnimation("h");
-	hover();
-}
-
-void SimpleButton::onLeave() {
-	buttonSprite.playAnimation("n");
-}
-
-void SimpleButton::initializeAnimations() {
-	buttonSprite.addAnimation("n", 0.0, 1, 1, 0);
-	buttonSprite.addAnimation("h", 0.0, 1, 1, 1);
-	buttonSprite.addAnimation("p", 0.0, 1, 1, 2);
-	buttonSprite.addAnimation("i", 0.0, 1, 1, 3);
-}
-

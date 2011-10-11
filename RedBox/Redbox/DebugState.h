@@ -1,3 +1,4 @@
+#if 0
 /**
  * @file
  * @ingroup Debug
@@ -54,4 +55,5 @@ namespace RedBox {
 	};
 }
 
+#endif
 #endif

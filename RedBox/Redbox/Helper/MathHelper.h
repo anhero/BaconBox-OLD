@@ -117,6 +117,14 @@ namespace RedBox {
         static float ease(float t, Ease easeType, float b = 0.0f,
                           float c = 1.0f, float d = 1.0f);
 
+		/**
+		 * Gives the equivalent angle in the range from -180 to 180 degrees.
+		 * @param angle Angle to make sure is from -180 to 180.
+		 * @return The angle converted to be from -180 to 180.
+		 * @tparam T Type of the angle, either int or float.
+		 */
+		template <typename T>
+		static T clampAngle(T angle);
 	private:
 		template <typename T>
 		struct RadiansToDegrees {

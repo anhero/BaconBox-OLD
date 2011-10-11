@@ -44,7 +44,7 @@ void SelectingMenu::setCenterPosition(RedBox::Vector2 vect){
 }
 void SelectingMenu::setPosition(float x, float y){
 	
-	GraphicBody::setPosition(x, y);
+	Collidable::setPosition(x, y);
 	if(internalMask != NULL){
 		internalMask->setPosition(x, y);
 	}
@@ -58,7 +58,7 @@ Vector2 SelectingMenu::getCenterPosition(){
 
 void SelectingMenu::rotateFromPoint(float rotationAngle, const Vector2& rotationPoint){
 	Vector2 vect = getCenterPosition();
-	this->GraphicBody::rotateFromPoint(rotationAngle, rotationPoint);
+	this->Collidable::rotateFromPoint(rotationAngle, rotationPoint);
 	if (internalMask != NULL) {
 		internalMask->rotateFromPoint(rotationAngle, rotationPoint);
 	}
@@ -77,7 +77,7 @@ void SelectingMenu::setElementAngle(float newAngle){
 	}
 	updateElementsPosition();
 }
-void SelectingMenu::setInternalMask(RedBox::Sprite* mask, bool inverted){
+void SelectingMenu::setInternalMask(GraphicElement<Transformable>* mask, bool inverted){
 	internalMask = mask;
 	internalMask->setPosition(this->getCenterPosition()-Vector2(internalMask->getWidth()/2,+internalMask->getHeight()/2));
 	std::list<IMenuElement*>::iterator i = elements.begin();
@@ -86,13 +86,13 @@ void SelectingMenu::setInternalMask(RedBox::Sprite* mask, bool inverted){
 		i++;
 	}
 }
-void SelectingMenu::setMask(RedBox::GraphicBody* mask, bool inverted){
-	this->currentMask = mask;
+void SelectingMenu::setMask(Maskable* mask, bool inverted){
+
 }
-RedBox::GraphicBody* SelectingMenu::getMask(){
+Maskable* SelectingMenu::getMask() const{
 	return this->currentMask;
 }
-RedBox::GraphicBody* SelectingMenu::getInternalMask(){
+Maskable* SelectingMenu::getInternalMask(){
 	return this->internalMask;
 }
 float SelectingMenu::getElementAngle(){
@@ -106,7 +106,7 @@ void SelectingMenu::onClick(Vector2 ptr){
 	(*middle)->isSelected = false;
 	std::list<IMenuElement*>::iterator i = elements.begin();
 	while (i != elements.end() && !(*i)->isSelected) {
-		if(AABB::overlaps(ptr, (*i)->getAABB())){
+		if((*i)->getAxisAlignedBoundingBox().overlaps(ptr)){
 			(*i)->select();
 			(*i)->isSelected = true;
 			(*middle)->deselect();

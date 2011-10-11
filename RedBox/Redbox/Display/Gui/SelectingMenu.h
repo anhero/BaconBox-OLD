@@ -7,6 +7,7 @@
 #define SELECTINGMENU_H
 
 #include "IMenu.h"
+#include "GraphicElement.h"
 #include "Sprite.h"
 #include "Tween.h"
 namespace RedBox {
@@ -98,23 +99,23 @@ namespace RedBox {
 		 * Gets the menu's mask.
 		 * @return the menu's mask.
 		 */
-		GraphicBody* getMask();
+		virtual Maskable* getMask() const;
 		/**
 		 * Sets a mask to the menu.
 		 * @param newMask The new menu's mask.
 		 * @param inverted The mask is going to be applied inversly or not.
 		 */
-		void setMask(GraphicBody* newMask, bool inverted = false);
+		virtual void setMask(Maskable* newMask, bool inverted = false);
 		/**
 		 * Gets the internal mask, the one applied to the menu's elements.
 		 * @return The internal mask.
 		 */
-		GraphicBody* getInternalMask();
+		Maskable* getInternalMask();
 		/**
 		 * Sets the internal mask, the one applied to the menu's elements.
 		 * @param The internal mask.
 		 */
-		virtual void setInternalMask(Sprite* internalMask, bool inverted = false);
+		virtual void setInternalMask(GraphicElement<Transformable>* internalMask, bool inverted = false);
 		/**
 		 * Scale the internalMask proportionnaly with the menu.
 		 * @param x the ratio in X between the internalMask and the menu.
@@ -141,9 +142,9 @@ namespace RedBox {
 		///The way the current tween reaches 0.
 		Ease ease;
 		///The mask applied to the menu
-		GraphicBody* currentMask;
+		Maskable* currentMask;
 		///The mask applied to the menu
-		GraphicBody* internalMask;
+		GraphicElement<Transformable>* internalMask;
 		/**
 		 * Virtual method to update the element's position and their visibility.
 		 */

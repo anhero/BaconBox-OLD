@@ -42,7 +42,7 @@ float IMenu::getWidth() const{
 	if(!elements.empty()){
 		Vector2 vect = Vector2(width, height);
 		vect.rotate(getAngle());
-		//std::cout << higherX << " : " << lesserX << " : " << getXPosition() << std::endl;
+		//the absolute X value of the vect is the width
 		return (vect.getX() > -vect.getX())? vect.getX() : -vect.getX();
 	}else{
 		return 0;
@@ -52,6 +52,7 @@ float IMenu::getHeight() const{
 	if(!elements.empty()){
 		Vector2 vect = Vector2(width, height);
 		vect.rotate(getAngle());
+		//the absolute Y value of the vect is the height
 		return (vect.getY() > -vect.getY())? vect.getY() : -vect.getY();
 	}else{
 		return 0;

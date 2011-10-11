@@ -34,7 +34,7 @@ namespace RedBox {
 		 * Cloner.
 		 * @return a copy of the menu.
 		 */
-		LoopingMenu* clone() const;
+		SelectingMenu* clone() const;
 		/**
 		 * Renders the MenuElement.
 		 */
@@ -52,7 +52,7 @@ namespace RedBox {
 		 * Sets the internal mask, the one applied to the menu's elements.
 		 * @param The internal mask.
 		 */
-		virtual void setInternalMask(Sprite* internalMask, bool inverted = false);
+		virtual void setInternalMask(GraphicElement<Transformable>* internalMask, bool inverted = false);
 	protected:
 		/*The list of the doubles in case the menu don't have enough elements
 		 * to loop properly.

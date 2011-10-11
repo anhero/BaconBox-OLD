@@ -18,6 +18,12 @@ IOSPointer::~IOSPointer() {
 }
 
 void IOSPointer::updateDevice() {
+    
+    // We check the touch moving event.
+	getCursorPreviousPosition(0) = getCursorPosition(0);
+	getCursorPosition(0) = iosPosition;
+    
+    
 	// We check the touch press event.
 	getCursorPreviousButtons(0)[CursorButton::LEFT] = getCursorButtons(0)[0];
 	getCursorButtons(0)[CursorButton::LEFT] = isTouchDown;
@@ -30,9 +36,7 @@ void IOSPointer::updateDevice() {
 		buttonRelease(PointerButtonSignalData(state, 0, CursorButton::LEFT));
 	}
 	
-	// We check the touch moving event.
-	getCursorPreviousPosition(0) = getCursorPosition(0);
-	getCursorPosition(0) = iosPosition;
+	
 	if(hasMoved()) {
 		Pointer::move.shoot(PointerSignalData(state, 0));
 	}

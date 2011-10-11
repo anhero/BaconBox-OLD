@@ -31,19 +31,19 @@ float SpriteMenuElement::getHeight() const{
 	return image->getHeight();
 }
 void SpriteMenuElement::setPosition(float x, float y){
-	GraphicBody::setPosition(x, y);
+	Collidable::setPosition(x, y);
 	image->setPosition(x,y);
 }
 void SpriteMenuElement::rotateFromPoint(float rotationAngle, const Vector2& vect){
-	GraphicBody::rotateFromPoint(rotationAngle, vect);
+	Collidable::rotateFromPoint(rotationAngle, vect);
 	image->rotateFromPoint(rotationAngle, vect);
 }
-void SpriteMenuElement::setMask(GraphicBody* mask, bool inversed){
+void SpriteMenuElement::setMask(Maskable* mask, bool inversed){
 	currentMask = mask;
 	image->setMask(currentMask,inversed);
 }
 
-GraphicBody* SpriteMenuElement::getMask(){
+Maskable* SpriteMenuElement::getMask(){
 	return this->currentMask;
 }
 void SpriteMenuElement::mask(){
