@@ -22,7 +22,7 @@ namespace RedBox {
 	 */
 	class State : public Updateable, public Renderable,
 		public BodyManager<Layerable, Layerable::LessCompare>,
-        sigly::HasSlots<> {
+        public sigly::HasSlots<> {
 		friend class Engine;
 	public:
 		/**
