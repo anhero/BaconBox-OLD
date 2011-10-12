@@ -195,7 +195,7 @@ namespace RedBox {
 			bool okay = true;
 			std::vector<unsigned int>::const_iterator i = newAnimationDefinition.frames.begin();
 
-			while (i != newAnimationDefinition.frames.end()) {
+			while (i != newAnimationDefinition.frames.end() && okay) {
 				if (*i >= frames.size()) {
 					okay = false;
 
@@ -219,6 +219,11 @@ namespace RedBox {
 						startAnimation(newName);
 					}
 				}
+			} else {
+				Console::print("Failed to add the animation named \"");
+				Console::print(newName);
+				Console::println("\" because one of its frame index was too high.");
+				Console::printTrace();
 			}
 		}
 	}

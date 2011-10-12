@@ -277,4 +277,19 @@ namespace RedBox {
 			i->addToXY(rotationPoint);
 		}
 	}
+
+	bool VerticesArray::overlaps(const Vector2 &point) const {
+		bool result = false;
+		for (VerticesArray::ConstIterator i = this->getBegin(), j = --this->getEnd(); i != this->getEnd(); ++i) {
+			if ((i->getY() < point.getY() && j->getY() >= point.getY() ||
+			     j->getY() < point.getY() && i->getY() >= point.getY()) &&
+			    (i->getX() <= point.getX() || j->getX() <= point.getX())) {
+				if (i->getX() + (point.getY() - i->getY()) / (j->getY() - i->getY()) * (j->getX() - i->getX()) < point.getX()) {
+					result = !result;
+				}
+			}
+			j = i;
+		}
+		return result;
+	}
 }

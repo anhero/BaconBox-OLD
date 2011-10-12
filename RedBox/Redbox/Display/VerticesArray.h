@@ -275,6 +275,13 @@ namespace RedBox {
 		 */
 		void rotateFromPoint(float rotationAngle,
 		                     const Vector2 &rotationPoint);
+
+		/**
+		 * Checks if a point is inside the polygon represented by the vertices.
+		 * @param point Point to check if it is inside the polygon.
+		 * @return True if the point is inside the polygon, false if not.
+		 */
+		bool overlaps(const Vector2 &point) const;
 	};
 }
 #endif

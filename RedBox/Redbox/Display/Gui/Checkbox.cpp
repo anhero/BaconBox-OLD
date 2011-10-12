@@ -7,6 +7,7 @@ namespace RedBox {
 	                   const Vector2 &startingPosition,
 	                   const Vector2 &newSize,
 	                   const Vector2 &newTextureOffset) : Button() {
+		this->setPosition(startingPosition);
 		this->setTextureInformation(newTexture);
 
 		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
@@ -21,7 +22,7 @@ namespace RedBox {
 		}
 	}
 
-	Checkbox::Checkbox(const Checkbox &src) : Button(src) {
+	Checkbox::Checkbox(const Checkbox &src) : Button(src), checked(src.checked) {
 	}
 
 	Checkbox::~Checkbox() {
@@ -29,6 +30,9 @@ namespace RedBox {
 
 	Checkbox &Checkbox::operator=(const Checkbox &src) {
 		this->Button::operator=(src);
+		if (this != &src) {
+			checked = src.checked;
+		}
 		return *this;
 	}
 

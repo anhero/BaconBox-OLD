@@ -8,7 +8,7 @@
 namespace RedBox {
 	template <typename T, typename U, bool CALL>
 	struct CallUpdate {
-		void operator() (T *ptr) {
+		void operator() (T *) {
 		}
 	};
 
