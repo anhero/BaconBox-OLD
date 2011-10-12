@@ -78,11 +78,11 @@ void LoopingMenu::scrollTo(std::list<IMenuElement *>::iterator dest, bool force)
 }
 void LoopingMenu::updateElementsPosition(){
 	if(!elements.empty()){
+		
 		(*middle)->setPosition(this->getCenterPosition() + 
 							   Vector2(-(*middle)->getWidth()/2,
 									-(*middle)->getHeight()/2) +
 							   theTween.getValue());
-
 		for (std::list<IMenuElement*>::iterator i = elements.begin(); i != elements.end(); i++) {
 			(*i)->setVisible(false);
 		}

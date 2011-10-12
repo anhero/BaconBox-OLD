@@ -35,7 +35,7 @@ namespace RedBox {
 		 * Cloner.
 		 * @return a copy of the menu.
 		 */
-		SpriteMenuElement* clone() const;
+		IMenuElement* clone() const;
 		/**
 		 * Destructor.
 		 */
@@ -62,7 +62,7 @@ namespace RedBox {
 		 * Sets a new position for the Sprite.
 		 * @param vect The vector of the new position
 		 */
-		void setPosition(float x, float y);
+		void move(float xDelta, float yDelta);
 		/**
 		 * Rotate the element around a certain point.
 		 * @param rotationAngle the angle to be added to the element.

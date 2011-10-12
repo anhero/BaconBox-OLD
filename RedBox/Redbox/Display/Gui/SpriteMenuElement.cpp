@@ -10,7 +10,7 @@ SpriteMenuElement::SpriteMenuElement(const std::string& imageKey,const std::stri
 SpriteMenuElement::SpriteMenuElement(const SpriteMenuElement &src):IMenuElement(src.key){
 	image = new Sprite(src.key);
 }
-SpriteMenuElement* SpriteMenuElement::clone() const{
+IMenuElement* SpriteMenuElement::clone() const{
 	return new SpriteMenuElement (*this);
 }
 SpriteMenuElement::~SpriteMenuElement(){
@@ -30,9 +30,9 @@ float SpriteMenuElement::getWidth() const{
 float SpriteMenuElement::getHeight() const{
 	return image->getHeight();
 }
-void SpriteMenuElement::setPosition(float x, float y){
-	Collidable::setPosition(x, y);
-	image->setPosition(x,y);
+void SpriteMenuElement::move(float xDelta, float yDelta){
+	Collidable::move(xDelta, yDelta);
+	image->move(xDelta, yDelta);
 }
 void SpriteMenuElement::rotateFromPoint(float rotationAngle, const Vector2& vect){
 	Collidable::rotateFromPoint(rotationAngle, vect);
