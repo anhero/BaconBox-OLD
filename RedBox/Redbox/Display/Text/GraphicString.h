@@ -24,6 +24,7 @@
 #include "IsBaseOf.h"
 #include "Transformable.h"
 #include "FontPointer.h"
+#include "Console.h"
 
 namespace RedBox {
 	/**
@@ -552,7 +553,8 @@ namespace RedBox {
 
 				float lineHeight = static_cast<float>(font->getLineHeight());
 
-				float tmpX = 0.0f, xMin = 0.0f, xMax = 0.0f, yMin = 0.0f, yMax = 0.0f;
+				bool started = false;
+				float tmpX, xMin, xMax, yMin, yMax;
 				Vector2 tmpMax;
 
 				for (GlyphList::iterator i = characters.begin();
@@ -565,19 +567,29 @@ namespace RedBox {
 
 						tmpMax = i->second->getVertices().getMaximumXY();
 
-						if (i->second->getXPosition() < xMin) {
+						if (started) {
+							if (i->second->getXPosition() < xMin) {
+								xMin = i->second->getXPosition();
+							}
+
+							if (tmpMax.getX() > xMax) {
+								xMax = tmpMax.getX();
+							}
+
+							if (i->second->getYPosition() < yMin) {
+								yMin = i->second->getYPosition();
+							}
+
+							if (tmpMax.getY() > yMax) {
+								yMax = tmpMax.getY();
+							}
+
+						} else {
+							started = true;
+							tmpMax = i->second->getVertices().getMaximumXY();
 							xMin = i->second->getXPosition();
-						}
-
-						if (tmpMax.getX() > xMax) {
 							xMax = tmpMax.getX();
-						}
-
-						if (i->second->getYPosition() < yMin) {
 							yMin = i->second->getYPosition();
-						}
-
-						if (tmpMax.getY() > yMax) {
 							yMax = tmpMax.getY();
 						}
 					}
