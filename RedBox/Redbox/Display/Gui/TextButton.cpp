@@ -1,5 +1,7 @@
 #include "TextButton.h"
 
+#include <cmath>
+
 #include "TextureInformation.h"
 
 namespace RedBox {
@@ -192,6 +194,8 @@ namespace RedBox {
 	}
 
 	void TextButton::refreshTextPosition() {
-		text.setPosition(getPosition() + getSize() * 0.5f - text.getSize() * 0.5f);
+		Vector2 tmp(getPosition() + getSize() * 0.5f - text.getSize() * 0.5f);
+		tmp.setXY(floorf(tmp.getX()), floorf(tmp.getY()));
+		text.setPosition(tmp);
 	}
 }
