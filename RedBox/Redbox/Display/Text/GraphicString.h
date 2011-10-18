@@ -597,6 +597,11 @@ namespace RedBox {
 					tmpX += i->first->advance.getX() * this->getXScaling();
 				}
 
+				if (!started) {
+					xMin = xMax = this->getXPosition();
+					yMin = yMax = this->getYPosition();
+				}
+
 				// We set the vertices.
 				StandardVerticesArray::Iterator it = vertices.getBegin();
 				it->setXY(xMin, yMin);
