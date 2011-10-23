@@ -16,6 +16,7 @@ namespace RedBox {
 	 * @ingroup WindowDisplay
 	 */
 	class MainWindow : public sigly::HasSlots<> {
+		friend class Engine;
 	public:
 		/// Default name given to all new main windows.
 		static const std::string DEFAULT_NAME;
@@ -96,15 +97,30 @@ namespace RedBox {
          */
         virtual void setContextSize(float contextWidth, float contextHeight);
 
-        ///Return the current window resolution width
+		/**
+		 * Gets the resolution width.
+		 * @return Current window resolution width.
+		 */
         unsigned int getResolutionWidth();
-        ///Return the current window resolution height
-        unsigned int getResolutionHeight();
-        ///Return the current context width
-        float getContextWidth();
-        ///Return the current context height
-        float getContextHeight();
 
+		/**
+		 * Gets the resolution height.
+		 * @return Current window resolution height.
+		 */
+        unsigned int getResolutionHeight();
+
+        /// Return the current context width
+		/**
+		 * Gets the context width.
+		 * @return Current context width.
+		 */
+        float getContextWidth();
+
+		/**
+		 * Gets the context height.
+		 * @return Curren context height.
+		 */
+        float getContextHeight();
     protected:
         ///True if the current window is fullscreen.
         bool fullscreen;
@@ -115,9 +131,15 @@ namespace RedBox {
 		/// Screen's height resolution (or height of the window in window mode).
 		unsigned int resolutionHeight;
         
-        ///Render context width (if you want to work with pixel set it to the same value as resolutionWidth.
+        /**
+		 * Render context width (if you want to work with pixel set it to the
+		 * same value as resolutionWidth.
+		 */
         unsigned int contextWidth;
-        ///Render context width (if you want to work with pixel set it to the same value as resolutionHeight.
+        /**
+		 * Render context width (if you want to work with pixel set it to the
+		 * same value as resolutionHeight.
+		 */
         unsigned int contextHeight;
         
 		/**

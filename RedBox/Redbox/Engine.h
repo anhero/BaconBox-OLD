@@ -12,6 +12,10 @@
 
 #include "State.h"
 namespace RedBox {
+	class MainWindow;
+	class GraphicDriver;
+	class SoundEngine;
+	class MusicEngine;
 	/**
 	 * Class managing the states.
 	 * @ingroup StateMachine
@@ -147,6 +151,30 @@ namespace RedBox {
 		 * Gets the application's argument values, generally as passed to main.
 		 */
 		static char **getApplicationArgv();
+
+		/**
+		 * Gets the main window.
+		 * @return Reference to the main window.
+		 */
+		static MainWindow &getMainWindow();
+
+		/**
+		 * Gets the graphic driver.
+		 * @return Reference to the graphic driver.
+		 */
+		static GraphicDriver &getGraphicDriver();
+
+		/**
+		 * Gets the sound engine.
+		 * @return Reference to the sound engine.
+		 */
+		static SoundEngine &getSoundEngine();
+
+		/**
+		 * Gets the music engine.
+		 * @return Reference to the music engine.
+		 */
+		static MusicEngine &getMusicEngine();
 	private:
 		/// Map of states in the engine.
 		std::map<std::string, State *> states;
@@ -189,6 +217,18 @@ namespace RedBox {
 
 		/// Path to the current application binary.
 		std::string applicationPath;
+
+		/// Pointer to the main window.
+		MainWindow *mainWindow;
+
+		/// Pointer to the graphic driver.
+		GraphicDriver *graphicDriver;
+
+		/// Pointer to the sound engine instance.
+		SoundEngine *soundEngine;
+
+		/// Pointer to the music engine instance.
+		MusicEngine *musicEngine;
 
 		/// A copy of argc
 		static int argc;

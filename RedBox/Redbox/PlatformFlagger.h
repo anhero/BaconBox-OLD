@@ -1,9 +1,9 @@
 #ifndef RB_PLATFORM_FLAGGER_H
 #define RB_PLATFORM_FLAGGER_H
 
-/* ****************************************************************************
+/*******************************************************************************
  * Basic platform defines/detection
- */
+ **************************************************************************** */
 #ifdef QT
 	#ifndef RB_QT
 		#define RB_QT
@@ -14,9 +14,10 @@
 	#define RB_SDL
 #endif
 
-/* ****************************************************************************
+
+/*******************************************************************************
  * System-specific defines
- */
+ ******************************************************************************/
 //Android platform
 #ifdef __ANDROID__
 	#define RB_ANDROID
@@ -85,9 +86,9 @@
 	#define RB_HAS_GCC_STACKTRACE
 #endif // __APPLE__
 
-/* ****************************************************************************
+/*******************************************************************************
  * Platform-specific defines
- */
+ ******************************************************************************/
 
 //SDL platform
 #ifdef RB_SDL
@@ -95,21 +96,24 @@
 	#define RB_OPENGL
 
 	//Sound engine for SDL
-	#define RB_SOUND_ENGINE SDLMixerEngine::getInstance()
+	#define RB_SOUND_ENGINE_IMPL new SDLMixerEngine()
 	#define RB_SOUND_ENGINE_INCLUDE "SDLMixerEngine.h"
-	#define RB_MUSIC_ENGINE SDLMixerEngine::getInstance()
+
+	#define RB_MUSIC_ENGINE_IMPL SDLMixerEngine::getInstance()
 	#define RB_MUSIC_ENGINE_INCLUDE "SDLMixerEngine.h"
 
 	//Input engine for SDL
 	#define RB_KEYBOARD_IMPL new SDLKeyboard()
 	#define RB_KEYBOARD_INCLUDE "SDLKeyboard.h"
+
 	#define RB_POINTER_IMPL new SDLPointer()
 	#define RB_POINTER_INCLUDE "SDLPointer.h"
+
 	#define RB_INPUT_MANAGER_IMPL RedBox::SDLInputManager
 	#define RB_INPUT_MANAGER_INCLUDE "SDLInputManager.h"
 
-	#define RB_MAINWINDOW_IMPL SDLMainWindow::getInstance()
-	#define RB_MAINWINDOW_INCLUDE "SDLMainWindow.h"
+	#define RB_MAIN_WINDOW_IMPL new SDLMainWindow()
+	#define RB_MAIN_WINDOW_INCLUDE "SDLMainWindow.h"
 #endif // RB_SDL
 
 //Qt platform
@@ -119,29 +123,30 @@
 
 	//Sound engine for Qt
 	#define RB_OPENAL
-	#define RB_SOUND_ENGINE OpenALEngine::getInstance()
+	#define RB_SOUND_ENGINE_IMPL new OpenALEngine()
 	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
 
 	//Input engine for Qt
 	#define RB_KEYBOARD_IMPL new QtKeyboard()
 	#define RB_KEYBOARD_INCLUDE "QtKeyboard.h"
+
 	#define RB_POINTER_IMPL new QtPointer()
 	#define RB_POINTER_INCLUDE "QtPointer.h"
 
-	#define RB_MAINWINDOW_IMPL QtMainWindow::getInstance()
-	#define RB_MAINWINDOW_INCLUDE "QtMainWindow.h"
+	#define RB_MAIN_WINDOW_IMPL new QtMainWindow()
+	#define RB_MAIN_WINDOW_INCLUDE "QtMainWindow.h"
 #endif // RB_QT
 
 //iOS platform
 #ifdef RB_IPHONE_PLATFORM
 	//Sound engine for iOS
 	#define RB_OPENAL
-	#define RB_SOUND_ENGINE OpenALEngine::getInstance()
+	#define RB_SOUND_ENGINE_IMPL new OpenALEngine()
 	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
 
 	//Music engine for iOS
 	#define RB_AV_AUDIO_PLAYER
-	#define RB_MUSIC_ENGINE RBAudioPlayerEngine::getInstance()
+	#define RB_MUSIC_ENGINE_IMPL new RBAudioPlayerEngine()
 	#define RB_MUSIC_ENGINE_INCLUDE "RBAudioPlayerEngine.h"
 
 
@@ -149,12 +154,12 @@
 	#define RB_POINTER_INCLUDE "IOSPointer.h"
 	#define RB_POINTER_IMPL new IOSPointer()
 
-	#define RB_MAINWINDOW_INCLUDE "IOSMainWindow.h"
-	#define RB_MAINWINDOW_IMPL IOSMainWindow::getInstance()
+	#define RB_MAIN_WINDOW_IMPL new IOSMainWindow()
+	#define RB_MAIN_WINDOW_INCLUDE "IOSMainWindow.h"
 #endif // RB_IPHONE_PLATFORM
 
 #if defined (RB_OPENGL) || defined (RB_OPENGLES)
-	#define RB_GRAPHIC_DRIVER OpenGLDriver::getInstance()
+	#define RB_GRAPHIC_DRIVER_IMPL new OpenGLDriver()
 	#define RB_GRAPHIC_DRIVER_INCLUDE "OpenGLDriver.h"
 #endif
 
@@ -163,18 +168,18 @@
 //TODO: Support mac platform with cocoa only and related defines
 #if defined(RB_MAC_PLATFORM)
 	#if defined(RB_QT)
-		#define RB_MUSIC_ENGINE NULL
+		#define RB_MUSIC_ENGINE_IMPL NULL
 	#else
 		#define RB_MUSIC_ENGINE_INCLUDE "RBAudioPlayerEngine.h"
-		#define RB_MUSIC_ENGINE new RBAudioPlayerEngine()
+		#define RB_MUSIC_ENGINE_IMPL new RBAudioPlayerEngine()
 	#endif
 #endif
 */
 
 
-/* ****************************************************************************
+/*******************************************************************************
  * Defaulting implementations if not defined
- */
+ ******************************************************************************/
 
 // For NULL inputs
 #ifndef RB_POINTER_IMPL
@@ -190,21 +195,27 @@
 	#define RB_GAME_PAD_IMPL NULL
 #endif
 
+// For NULL main window.
+#ifndef RB_MAIN_WINDOW_IMPL
+	#define RB_MAIN_WINDOW_IMPL new NullMainWindow()
+	#define RB_MAIN_WINDOW_INCLUDE "NullMainWindow.h"
+#endif
+
 // For NULL sound engine
-#ifndef RB_SOUND_ENGINE
-	#define RB_SOUND_ENGINE NullAudioEngine::getInstance()
+#ifndef RB_SOUND_ENGINE_IMPL
+	#define RB_SOUND_ENGINE_IMPL new NullAudioEngine()
 	#define RB_SOUND_ENGINE_INCLUDE "NullAudioEngine.h"
-#endif // RB_SOUND_ENGINE
+#endif // RB_SOUND_ENGINE_IMPL
 
 // For NULL music engine
-#ifndef RB_MUSIC_ENGINE
-	#define RB_MUSIC_ENGINE NullAudioEngine::getInstance()
+#ifndef RB_MUSIC_ENGINE_IMPL
+	#define RB_MUSIC_ENGINE_IMPL new NullAudioEngine()
 	#define RB_MUSIC_ENGINE_INCLUDE "NullAudioEngine.h"
-#endif // RB_MUSIC_ENGINE
+#endif // RB_MUSIC_ENGINE_IMPL
 
 // For NULL graphic driver.
-#ifndef RB_GRAPHIC_DRIVER
-	#define RB_GRAPHIC_DRIVER NullGraphicDriver::getInstance()
+#ifndef RB_GRAPHIC_DRIVER_IMPL
+	#define RB_GRAPHIC_DRIVER_IMPL new NullGraphicDriver()
 	#define RB_GRAPHIC_DRIVER_INCLUDE "NullGraphicDriver.h"
 #endif
 

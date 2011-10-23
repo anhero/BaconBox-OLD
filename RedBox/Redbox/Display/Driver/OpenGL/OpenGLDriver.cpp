@@ -14,11 +14,6 @@
 #define GET_TEX_PTR(textureCoordinates) reinterpret_cast<const GLfloat *>(textureCoordinates.data())
 
 namespace RedBox {
-	OpenGLDriver &OpenGLDriver::getInstance() {
-		static OpenGLDriver instance;
-		return instance;
-	}
-
 	void OpenGLDriver::drawShapeWithTextureAndColor(const VerticesArray &vertices,
 	                                                const TextureInformation *textureInformation,
 	                                                const TextureCoordinates &textureCoordinates,

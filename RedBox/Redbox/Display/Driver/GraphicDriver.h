@@ -22,6 +22,7 @@ namespace RedBox {
 	 * @ingroup Driver
 	 */
 	class GraphicDriver {
+		friend class Engine;
 	public:
 		/**
 		 * Gets the graphic driver instance.
