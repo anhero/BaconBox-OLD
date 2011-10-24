@@ -131,8 +131,13 @@ namespace RedBox {
 						i->second.alphaCounter -= static_cast<double>(tmp);
 					}
 
-					i->second.graphic->addToScaling(i->second.scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()));
-					i->second.graphic->rotate(i->second.anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()));
+					if (i->second.scalingPerSecond != Vector2()) {
+						i->second.graphic->addToScaling(i->second.scalingPerSecond * static_cast<float>(Engine::getSinceLastUpdate()));
+					}
+
+					if (i->second.anglePerSecond != 0.0f) {
+						i->second.graphic->rotate(i->second.anglePerSecond * static_cast<float>(Engine::getSinceLastUpdate()));
+					}
 
 					// We update the graphic.
 					i->second.graphic->update();
@@ -141,7 +146,7 @@ namespace RedBox {
 				}
 
 				// We update the particle's phase.
-				while (i->first != getPhases().end() && i->second.timeLeft <= 0.0) {
+				while (i->second.timeLeft <= 0.0 && i->first != getPhases().end()) {
 					++(i->first);
 
 					if (i->first == getPhases().end()) {
@@ -171,7 +176,7 @@ namespace RedBox {
 				if (notFound) {
 					stop();
 					// We set the emitter to be deleted if it is managed.
-					CallSetToBeDeleted<ParticleEmitter<Parent, ParticleType>, Parent, IsBaseOf<Manageable, Parent>::RESULT>()(true, this);
+					done();
 				}
 			}
 		}
@@ -382,6 +387,16 @@ namespace RedBox {
 				nbParticles = 0;
 			}
 		}
+
+	protected:
+		/**
+		 * Called when the particle emitter is ready to be deleted. Must be
+		 * overriden to take the necessary actions to delete the particle
+		 * emitter.
+		 */
+		virtual void done() {
+		}
+
 	private:
 		/// Makes sure the particles are collidable (thus updateable too).
 		typedef typename StaticAssert<IsBaseOf<Collidable, ParticleType>::RESULT>::Result AreParticlesCollidable;

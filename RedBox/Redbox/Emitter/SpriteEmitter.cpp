@@ -19,4 +19,8 @@ namespace RedBox {
 		this->Layerable::operator=(src);
 		return *this;
 	}
+
+	void SpriteEmitter::done() {
+		this->setToBeDeleted(true);
+	}
 }

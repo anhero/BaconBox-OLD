@@ -19,16 +19,16 @@ namespace RedBox {
 		}
 	};
 
-	template <typename T, typename U, bool CALL>
+	template <typename T, bool CALL>
 	struct CallSetToBeDeleted {
 		void operator() (bool, T *) {
 		}
 	};
 
-	template <typename T, typename U>
-	struct CallSetToBeDeleted<T, U, true> {
+	template <typename T>
+	struct CallSetToBeDeleted<T, true> {
 		void operator() (bool newToBeDeleted, T *ptr) {
-			ptr->U::setToBeDeleted(newToBeDeleted);
+			ptr->setToBeDeleted(newToBeDeleted);
 		}
 	};
 }

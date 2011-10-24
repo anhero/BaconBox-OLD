@@ -32,7 +32,7 @@ namespace RedBox {
 
 	Collidable::Collidable(const Vector2 &newPosition) :
 		Updateable(), Transformable(newPosition), oldPosition(newPosition),
-	    velocity(), maximumVelocity(NO_MAX_VELOCITY, NO_MAX_VELOCITY),
+		velocity(), maximumVelocity(NO_MAX_VELOCITY, NO_MAX_VELOCITY),
 		acceleration(), drag(), collidableSides(ALL_SIDES),
 		elasticity(0.0f), staticBody(false), offset(),
 		collidingBoxRatio(1.0f, 1.0f) {
@@ -40,10 +40,10 @@ namespace RedBox {
 
 	Collidable::Collidable(const Collidable &src) : Updateable(src),
 		Transformable(src), oldPosition(src.oldPosition), velocity(src.velocity),
-	    maximumVelocity(src.maximumVelocity), acceleration(src.acceleration),
-	    drag(src.drag), collidableSides(src.collidableSides),
-	    elasticity(src.elasticity), staticBody(src.staticBody),
-	    offset(src.offset), collidingBoxRatio(src.collidingBoxRatio) {
+		maximumVelocity(src.maximumVelocity), acceleration(src.acceleration),
+		drag(src.drag), collidableSides(src.collidableSides),
+		elasticity(src.elasticity), staticBody(src.staticBody),
+		offset(src.offset), collidingBoxRatio(src.collidingBoxRatio) {
 	}
 
 	Collidable::~Collidable() {
@@ -519,7 +519,7 @@ namespace RedBox {
 	}
 
 	std::pair<bool, std::list<std::pair<bool, CollisionDetails> > > Collidable::collide(const std::list<Collidable *> &collidables1,
-	                                                                  const std::list<Collidable *> &collidables2) {
+	        const std::list<Collidable *> &collidables2) {
 		std::pair<bool, std::list<std::pair<bool, CollisionDetails> > > result(false, std::list<std::pair<bool, CollisionDetails> >());
 
 		// We test the collisions with each collidable from the lists.
@@ -565,11 +565,17 @@ namespace RedBox {
 	}
 
 	float Collidable::checkMaximumVelocity(float *velocity, float maximumVelocity) {
-		if (velocity && *velocity != 0.0f && maximumVelocity >= 0.0f) {
-			*velocity = MathHelper::clamp(*velocity, -maximumVelocity, maximumVelocity);
-		}
+		if (velocity) {
+			if (*velocity != 0.0f && maximumVelocity >= 0.0f) {
+				*velocity = MathHelper::clamp(*velocity, -maximumVelocity, maximumVelocity);
+			}
 
-		return *velocity;
+			return *velocity;
+
+		} else {
+			Console::println("Checking maximum velocity, but recieved a null pointer.");
+			return 0.0f;
+		}
 	}
 
 	float Collidable::checkMaximumVelocity(float velocity, float maximumVelocity) {
@@ -664,6 +670,7 @@ namespace RedBox {
 			} else {
 				return false;
 			}
+
 		} else {
 			return false;
 		}
@@ -760,6 +767,7 @@ namespace RedBox {
 			} else {
 				return false;
 			}
+
 		} else {
 			return false;
 		}

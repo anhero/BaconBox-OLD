@@ -160,6 +160,10 @@ namespace RedBox {
 			}
 		}
 
+		unsigned int getNbBodies() const {
+			return bodies.size() + toAdd.size() + keyChange.size();
+		}
+
 	protected:
 		/// Represents the container's type to use to store the managed bodies.
 		typedef std::multiset<KeyType *, KeyCompare> BodyMap;
