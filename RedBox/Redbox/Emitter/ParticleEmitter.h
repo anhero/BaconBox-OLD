@@ -122,13 +122,16 @@ namespace RedBox {
 				// We check if it is still alive.
 				if (i->second.timeLeft > 0.0) {
 					assert(i->second.graphic);
-					// We update the particle.
-					i->second.alphaCounter += static_cast<float>(Engine::getSinceLastUpdate()) * i->second.alphaPerSecond;
-					int32_t tmp = static_cast<int32_t>(floor(i->second.alphaCounter));
-					i->second.graphic->setAlpha(i->second.graphic->getAlpha() + tmp);
 
-					if (tmp > 0) {
-						i->second.alphaCounter -= static_cast<double>(tmp);
+					// We update the particle.
+					if (i->second.alphaPerSecond != 0.0f) {
+						i->second.alphaCounter += static_cast<float>(Engine::getSinceLastUpdate()) * i->second.alphaPerSecond;
+						int32_t tmp = static_cast<int32_t>(floor(i->second.alphaCounter));
+						i->second.graphic->setAlpha(i->second.graphic->getAlpha() + tmp);
+
+						if (tmp > 0) {
+							i->second.alphaCounter -= static_cast<double>(tmp);
+						}
 					}
 
 					if (i->second.scalingPerSecond != Vector2()) {
