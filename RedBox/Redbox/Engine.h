@@ -114,6 +114,12 @@ namespace RedBox {
 		 */
 		static double getSinceLastUpdate();
 
+		/**
+		 * Gets the time elapsed since the last render called on a state.
+		 * @return Time in seconds since the last render called on a state.
+		 */
+		static double getSinceLastRender();
+
 
 		/**
 		 * Checks if the buffer was swapped since the last update.
@@ -187,6 +193,9 @@ namespace RedBox {
 
 		/// Time at which the last update was called on the current state.
 		double lastUpdate;
+
+		/// Time at which the last render was called on the current state.
+		double lastRender;
 
 		/// Internal update count between each render.
 		unsigned int loops;

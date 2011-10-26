@@ -154,6 +154,7 @@ namespace RedBox {
 				engine.currentState->internalRender();
 				engine.renderedSinceLastUpdate = true;
 				engine.bufferSwapped = false;
+				engine.lastRender = TimeHelper::getInstance().getSinceStartComplete();
 			}
 
 			if (static_cast<AudioEngine *>(engine.soundEngine) != static_cast<AudioEngine *>(engine.musicEngine)) {
@@ -187,6 +188,11 @@ namespace RedBox {
 	double Engine::getSinceLastUpdate() {
 		Engine &engine = getInstance();
 		return (engine.lastUpdate) ? (TimeHelper::getInstance().getSinceStartComplete() - engine.lastUpdate) : (engine.lastUpdate);
+	}
+
+	double Engine::getSinceLastRender() {
+		Engine &engine = getInstance();
+		return (engine.lastRender) ? (TimeHelper::getInstance().getSinceStartComplete() - engine.lastRender) : (engine.lastRender);
 	}
 
 	bool Engine::isBufferSwapped() {
@@ -248,7 +254,7 @@ namespace RedBox {
 		return instance;
 	}
 
-	Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0),
+	Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0), lastRender(0.0),
 		loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
 		minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false), needsExit(false),
 		tmpExitCode(0), renderedSinceLastUpdate(false), mainWindow(NULL),

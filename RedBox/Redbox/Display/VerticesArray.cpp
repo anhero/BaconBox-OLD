@@ -248,9 +248,11 @@ namespace RedBox {
 
 	const Vector2 VerticesArray::getSumOfVertices() const {
 		Vector2 result;
+
 		for (ConstIterator i = getBegin(); i != getEnd(); ++i) {
 			result.addToXY(*i);
 		}
+
 		return result;
 	}
 
@@ -280,6 +282,7 @@ namespace RedBox {
 
 	bool VerticesArray::overlaps(const Vector2 &point) const {
 		bool result = false;
+
 		for (VerticesArray::ConstIterator i = this->getBegin(), j = --this->getEnd(); i != this->getEnd(); ++i) {
 			if ((i->getY() < point.getY() && j->getY() >= point.getY() ||
 			     j->getY() < point.getY() && i->getY() >= point.getY()) &&
@@ -288,8 +291,112 @@ namespace RedBox {
 					result = !result;
 				}
 			}
+
 			j = i;
 		}
+
+		return result;
+	}
+
+	AxisAlignedBoundingBox VerticesArray::getAxisAlignedBoundingBox() const {
+		AxisAlignedBoundingBox result;
+
+		if (!isEmpty()) {
+			ConstIterator i = getBegin();
+			result.setPosition(*i);
+			result.setSize(*i);
+			++i;
+
+			while (i != getEnd()) {
+				if (i->getX() < result.getXPosition()) {
+					result.setXPosition(i->getX());
+
+				} else if (i->getX() > result.getWidth()) {
+					result.setWidth(i->getX());
+				}
+
+				if (i->getY() < result.getYPosition()) {
+					result.setYPosition(i->getY());
+
+				} else if (i->getY() > result.getHeight()) {
+					result.setHeight(i->getY());
+				}
+
+				++i;
+			}
+
+			result.setSize(result.getSize() - result.getPosition());
+		}
+
+		return result;
+	}
+
+	bool VerticesArray::intersects(const VerticesArray &other) const {
+		bool result = false;
+
+		// We make sure the arrays aren't empty.
+		if (getNbVertices() >= 3 && other.getNbVertices() >= 3) {
+			// Useless to check for intersection if the polygons' bounding box
+			// aren't even colliding.
+			if (getAxisAlignedBoundingBox().overlaps(other.getAxisAlignedBoundingBox())) {
+				result = true;
+				Vector2 line;
+				ConstIterator i = getBegin();
+				ConstIterator iNext = getBegin();
+				++iNext;
+				ConstIterator j;
+				float proj, min1, min2, max1, max2;
+
+				while (result && iNext != getEnd()) {
+					// We take the line representing the edge.
+					line = *iNext - *i;
+					// We get the line perendicular to the edge's line.
+					line.setXY(-line.getY(), line.getX());
+					// We normalize the axis.
+					line.normalize();
+
+					// Project every vertex in the first polygon on the axis and
+					// store min and max.
+					j = getBegin();
+					min1 = max1 = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
+					++j;
+					while (j != getEnd()) {
+						proj = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
+						if (proj < min1) {
+							min1 = proj;
+						} else if (proj > max1) {
+							max1 = proj;
+						}
+						++j;
+					}
+
+					// Project every vertex in the second polygon on the axis
+					// and store min and max.
+					j = other.getBegin();
+					min2 = max2 = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
+					++j;
+					while (j != other.getEnd()) {
+						proj = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
+						if (proj < min2) {
+							min2 = proj;
+						} else if (proj > max2) {
+							max2 = proj;
+						}
+						++j;
+					}
+
+					// If the projections don't overlap, it means there are no
+					// collisions.
+					if(!(max1 >= min2 && min1 <= max2)) {
+						result = false;
+					}
+
+					++i;
+					++iNext;
+				}
+			}
+		}
+
 		return result;
 	}
 }
