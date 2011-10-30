@@ -80,6 +80,7 @@
 #include <RedBox/Timer.h>
 #include <RedBox/SpriteEmitter.h>
 #include <RedBox/SpriteFactory.h>
+#include <RedBox/ShapeFactory.h>
 #include <RedBox/InputManager.h>
 #include <RedBox/Console.h>
 #include <RedBox/Tween.h>

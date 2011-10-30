@@ -21,6 +21,7 @@ namespace RedBox {
 			Vector2 tmpPosition(radius * sinf(MathHelper::degreesToRadians(angle)),
 			                    radius * cosf(MathHelper::degreesToRadians(angle)));
 			*i = tmpPosition;
+			angle += incrementer;
 			++i;
 
 			while (i != vertices->getEnd()) {

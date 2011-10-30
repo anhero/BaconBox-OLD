@@ -1,4 +1,3 @@
-#if 0
 /**
  * @file
  * @ingroup Helper
@@ -7,10 +6,10 @@
 #ifndef RB_SPRITE_FACTORY_H
 #define RB_SPRITE_FACTORY_H
 
-#include "Color.h"
-
 namespace RedBox {
 	class Sprite;
+	class InanimateSprite;
+	class Color;
 	/**
 	 * Factory that constructs sprites.
 	 * @ingroup Helper
@@ -26,11 +25,24 @@ namespace RedBox {
 		 * @param color Polygon's color when rendered.
 		 * @return Pointer to the sprite constructed.
 		 */
-		static Sprite* makePolygon(unsigned int nbSides, float sideLength,
-								   const Color& color);
+		static Sprite *makePolygon(unsigned int nbSides, float sideLength,
+		                           const Color &color);
+
+		/**
+		 * Constructs a polygon. The polygon will be constructed using the
+		 * number of sides and side length recieved in the parameters. The
+		 * polygons constructed are always regular.
+		 * @param nbSides Number of sides the polygon will have.
+		 * @param sideLength Length the polygon will have (in points).
+		 * @param color Polygon's color when rendered.
+		 * @return Pointer to the inanimate sprite constructed.
+		 */
+		static InanimateSprite *makeInanimatePolygon(unsigned int nbSides,
+		                                             float sideLength,
+		                                             const Color &color);
 	private:
-		
-		
+
+
 		/**
 		 * Converts degrees to radians.
 		 * @param degree Angle in degrees to convert to radians.
@@ -50,5 +62,4 @@ namespace RedBox {
 	};
 }
 
-#endif
 #endif
