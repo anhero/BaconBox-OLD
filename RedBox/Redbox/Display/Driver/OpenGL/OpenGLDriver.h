@@ -18,13 +18,8 @@ namespace RedBox {
 	 * @ingroup GraphicDrivers
 	 */
 	class OpenGLDriver : public GraphicDriver {
+		friend class Engine;
 	public:
-		/**
-		 * Gets the OpenGL driver instance.
-		 * @return Reference to the OpenGL driver singleton.
-		 */
-		static OpenGLDriver &getInstance();
-
 		/**
 		 * Draw a colored and textured shape with the given vertices, texture
 		 * coordinate, rendering informations (colors array and texture) and

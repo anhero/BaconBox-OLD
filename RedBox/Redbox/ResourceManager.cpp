@@ -13,6 +13,10 @@
 #include "GraphicDriver.h"
 #include "ResourcePathHandler.h"
 
+#ifndef RB_ANDROID
+#include "Font.h"
+#endif
+
 //For LibPNG
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +30,7 @@ namespace RedBox {
 #ifndef RB_ANDROID
 	std::map<std::string, Font *> ResourceManager::fonts = std::map<std::string, Font *>();
 #endif
+
 	TextureInformation *ResourceManager::addTexture(const std::string &key, PixMap *aPixmap,
 	                                                bool overwrite) {
 		TextureInformation *texInfo = NULL;
@@ -87,7 +92,12 @@ namespace RedBox {
 	}
 
 	TextureInformation *ResourceManager::getTexture(const std::string &key) {
-		return textures[key];
+		std::map<std::string, TextureInformation *>::iterator itr = textures.find(key);
+		return (itr != textures.end()) ? (itr->second) : (NULL);
+	}
+
+	TextureInformation *ResourceManager::getTexture(const char *key) {
+		return getTexture(std::string(key));
 	}
 
 	SoundInfo *ResourceManager::getSound(const std::string &key) {
@@ -95,9 +105,17 @@ namespace RedBox {
 		return (itr != sounds.end()) ? (itr->second) : (NULL);
 	}
 
+	SoundInfo *ResourceManager::getSound(const char *key) {
+		return getSound(std::string(key));
+	}
+
 	MusicInfo *ResourceManager::getMusic(const std::string &key) {
 		std::map<std::string, MusicInfo *>::iterator itr = musics.find(key);
 		return (itr != musics.end()) ? (itr->second) : (NULL);
+	}
+
+	MusicInfo *ResourceManager::getMusic(const char *key) {
+		return getMusic(std::string(key));
 	}
 
 	SoundInfo *ResourceManager::loadSound(const std::string &key,
@@ -360,14 +378,12 @@ namespace RedBox {
 	}
 
 	Font *ResourceManager::getFont(const std::string &key) {
-		std::map<std::string, Font *>::iterator i = fonts.find(key);
+		std::map<std::string, Font *>::iterator itr = fonts.find(key);
+		return (itr != fonts.end()) ? (itr->second) : (NULL);
+	}
 
-		if (i != fonts.end()) {
-			return (*i).second;
-
-		} else {
-			return NULL;
-		}
+	Font *ResourceManager::getFont(const char *key) {
+		return getFont(std::string(key));
 	}
 
 	void ResourceManager::removeFont(const std::string &key) {

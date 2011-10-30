@@ -39,7 +39,7 @@ namespace RedBox {
 		Vector2 size;
 
 		/// Pointer to the texture handle and texture size.
-		const TextureInformation *textureInformation;
+		TextureInformation *textureInformation;
 
 		/**
 		 * Default constructor.
@@ -57,7 +57,7 @@ namespace RedBox {
 		GlyphInformation(const Vector2 &newAdvance,
 		                 const Vector2 &newHorizontalBearing,
 		                 const Vector2 &newSize,
-		                 const TextureInformation *newTextureInformation);
+		                 TextureInformation *newTextureInformation);
 
 		/**
 		 * Copy constructor.

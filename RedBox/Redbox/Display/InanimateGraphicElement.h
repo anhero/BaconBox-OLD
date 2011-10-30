@@ -12,8 +12,16 @@
 #include "StaticAssert.h"
 #include "IsBaseOf.h"
 #include "IsSame.h"
+#include "TexturePointer.h"
 
 namespace RedBox {
+	/**
+	 * Graphic element that cannot be animated, just like the inanimate sprite,
+	 * but not layerable and can be collidable or only transformable (collidable means
+	 * it is also transformable).
+	 * @tparam Parent Collidable or Transformable.
+	 * @ingroup Display
+	 */
 	template <typename Parent>
 	class InanimateGraphicElement : public Graphic<Inanimate>,
 		public Parent {
@@ -29,50 +37,18 @@ namespace RedBox {
 		 * Parameterized constructor. Loads the vertices and the texture
 		 * coordinates. If the specified size has a coordinate equal to 0 or
 		 * lower, it loads the the full texture as the size and image.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @param startingPosition Starting position at which to place the
 		 * graphic element.
 		 * @param newSize Size of the graphic element.
 		 * @param newTextureOffset Texture coordinates' offset if needed.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		explicit InanimateGraphicElement(const std::string &newTextureKey,
+		explicit InanimateGraphicElement(TexturePointer newTexture,
 		                                 const Vector2 &startingPosition = Vector2(),
 		                                 const Vector2 &newSize = Vector2(),
 		                                 const Vector2 &newTextureOffset = Vector2()) :
-			Graphic<Inanimate>(newTextureKey), Parent(startingPosition) {
-			// We check if we have to use the texture as the full image.
-			if (newSize.getX() <= 0.0f || newSize.getY() <= 0.0f) {
-				// We make sure the texture information is valid.
-				if (this->getTextureInformation()) {
-					construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth),
-					                  static_cast<float>(this->getTextureInformation()->imageHeight)),
-					          startingPosition);
-				}
-
-			} else {
-				construct(newSize, startingPosition, newTextureOffset);
-			}
-		}
-
-		/**
-		 * Parameterized constructor. Loads the vertices and the texture
-		 * coordinates. If the specified size has a coordinate equal to 0 or
-		 * lower, it loads the the full texture as the size and image.
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the graphic element with.
-		 * @param startingPosition Starting position at which to place the
-		 * graphic element.
-		 * @param newSize Size of the graphic element.
-		 * @param newTextureOffset Texture coordinates' offset if needed.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		explicit InanimateGraphicElement(const TextureInformation *newTextureInformation,
-		                                 const Vector2 &startingPosition = Vector2(),
-		                                 const Vector2 &newSize = Vector2(),
-		                                 const Vector2 &newTextureOffset = Vector2()) :
-			Graphic<Inanimate>(newTextureInformation),
-			Parent(startingPosition) {
+			Graphic<Inanimate>(newTexture), Parent(startingPosition) {
 			// We check if we have to use the texture as the full image.
 			if (newSize.getX() <= 0.0f || newSize.getY() <= 0.0f) {
 				// We make sure the texture information is valid.

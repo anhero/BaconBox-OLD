@@ -78,7 +78,7 @@ namespace RedBox {
 		 */
 		virtual void internalUpdate() {
 			// We add the bodies to the BodyMap.
-			std::for_each(toAdd.begin(), toAdd.end(), std::bind1st(std::mem_fun(&BodyManager<Key, Compare>::addDirect), this));
+			std::for_each(toAdd.rbegin(), toAdd.rend(), std::bind1st(std::mem_fun(&BodyManager<Key, Compare>::addDirect), this));
 			// We clear the temporary list of bodies to add.
 			toAdd.clear();
 
@@ -158,6 +158,10 @@ namespace RedBox {
 			} else {
 				Console::println("Tried to add an invalid body (" + Console::toString(newBody) + ") to the body manager.");
 			}
+		}
+
+		unsigned int getNbBodies() const {
+			return bodies.size() + toAdd.size() + keyChange.size();
 		}
 
 	protected:

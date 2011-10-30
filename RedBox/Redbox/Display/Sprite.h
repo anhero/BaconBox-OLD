@@ -9,20 +9,21 @@
 #include "Layerable.h"
 #include "Graphic.h"
 #include "Animatable.h"
+#include "TexturePointer.h"
 
 namespace RedBox {
 	/**
-     * Represents a sprite. A is used to display animated or non-animated
-     * images or display colored shapes. To use a sprite, initialize it and
-     * add it to a State. A sprite can only be in one state at a time. Once
-     * you have given the pointer to the state, you don't have to worry about
-     * deleting it, the state takes care of that for you. To remove a sprite
-     * from a state, simply call setToBeDeleted(true), which is inherited from
-     * Layerable.
-     * @ingroup Display
-     * @see RedBox::State
-     */
-class Sprite : public Graphic<Animatable>, public Collidable,
+	 * Represents a sprite. A is used to display animated or non-animated
+	 * images or display colored shapes. To use a sprite, initialize it and
+	 * add it to a State. A sprite can only be in one state at a time. Once
+	 * you have given the pointer to the state, you don't have to worry about
+	 * deleting it, the state takes care of that for you. To remove a sprite
+	 * from a state, simply call setToBeDeleted(true), which is inherited from
+	 * Layerable.
+	 * @ingroup Display
+	 * @see RedBox::State
+	 */
+	class Sprite : public Graphic<Animatable>, public Collidable,
 		public Layerable {
 	public:
 		/**
@@ -34,7 +35,7 @@ class Sprite : public Graphic<Animatable>, public Collidable,
 		 * Parameterized constructor. Loads the vertices and the texture
 		 * coordinates. If the specified size has a coordinate equal to 0 or
 		 * lower, it loads the the full texture as the size and image.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @param startingPosition Starting position at which to place the
 		 * sprite.
 		 * @param newSize Size of the sprite.
@@ -42,26 +43,7 @@ class Sprite : public Graphic<Animatable>, public Collidable,
 		 * @param nbFrames Number of frames to load.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		explicit Sprite(const std::string &newTextureKey,
-		                const Vector2 &startingPosition = Vector2(),
-		                const Vector2 &newSize = Vector2(),
-		                const Vector2 &newTextureOffset = Vector2(),
-		                unsigned int nbFrames = 1);
-
-		/**
-		 * Parameterized constructor. Loads the vertices and the texture
-		 * coordinates. If the specified size has a coordinate equal to 0 or
-		 * lower, it loads the the full texture as the size and image.
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the sprite with.
-		 * @param startingPosition Starting position at which to place the
-		 * sprite.
-		 * @param newSize Size of the sprite.
-		 * @param newTextureOffset Texture coordinates' offset if needed.
-		 * @param nbFrames Number of frames to load.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		explicit Sprite(const TextureInformation *newTextureInformation,
+		explicit Sprite(TexturePointer newTexture,
 		                const Vector2 &startingPosition = Vector2(),
 		                const Vector2 &newSize = Vector2(),
 		                const Vector2 &newTextureOffset = Vector2(),

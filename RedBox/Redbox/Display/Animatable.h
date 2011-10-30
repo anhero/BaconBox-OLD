@@ -14,6 +14,7 @@
 #include "TextureMappable.h"
 #include "TextureCoordinates.h"
 #include "AnimationDefinition.h"
+#include "TexturePointer.h"
 
 namespace RedBox {
 	/**
@@ -23,53 +24,22 @@ namespace RedBox {
 	class Animatable : virtual public Updateable, public TextureMappable {
 	public:
 		/**
-		 * Default constructor.
-		 */
-		Animatable();
-
-		/**
 		 * Simple parameterized constructor.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 */
-		explicit Animatable(const std::string &newTextureKey);
-
-		/**
-		 * Simple parameterized constructor. Does the same thing as the
-		 * constructor that recieves an key. Does not load the texture
-		 * coordinates
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the body with.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		explicit Animatable(const TextureInformation *newTextureInformation);
+		explicit Animatable(TexturePointer newTexture = TexturePointer());
 
 		/**
 		 * Parameterized constructor. Does not check if the number of frames
 		 * to load makes sense.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @param vertices Vertices to use to load the texture coordinates.
 		 * @param offset Offset in the texture to use when loading the texture
 		 * coordinates.
 		 * @param nbFrames Number of frames to load.
-		 * @see RedBox::Inanimate::textureCoordinates
+		 * @see RedBox::Animatable::frames
 		 */
-		Animatable(const std::string &newTextureKey,
-		           const VerticesArray &vertices,
-		           const Vector2 &offset,
-		           unsigned int nbFrames = 1);
-
-		/**
-		 * Parameterized constructor. Does not check if the number of frames
-		 * to load makes sense.
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the body with.
-		 * @param vertices Vertices to use to load the texture coordinates.
-		 * @param offset Offset in the texture to use when loading the texture
-		 * coordinates.
-		 * @param nbFrames Number of frames to load.
-		 * @see RedBox::Inanimate::textureCoordinates
-		 */
-		Animatable(const TextureInformation *newTextureInformation,
+		Animatable(TexturePointer newTexture,
 		           const VerticesArray &vertices,
 		           const Vector2 &offset,
 		           unsigned int nbFrames = 1);
@@ -281,31 +251,14 @@ namespace RedBox {
 		/**
 		 * Loads the texture coordinates. Does not check if the number of frames
 		 * to load makes sense.
-		 * @param newTextureKey Key to the texture to load the texture
-		 * coordinates from.
+		 * @param newTexture Texture pointer to use as the new texture.
 		 * @param vertices Vertices to use to load the texture coordinates.
 		 * @param offset Offset from the upper left corner of the texture (in
 		 * pixels).
 		 * @param nbFrames Number of frames to load.
 		 * @see RedBox::Animatable::frames
 		 */
-		void loadTextureCoordinates(const std::string &newTextureKey,
-		                            const VerticesArray &vertices,
-		                            const Vector2 &offset,
-		                            unsigned int nbFrames = 1);
-
-		/**
-		 * Loads the texture coordinates. Does not check if the number of
-		 * frames to load makes sense.
-		 * @param newTextureInformation Pointer to the new texture information
-		 * to use to load the texture coordinates.
-		 * @param vertices Vertices to use to load the texture coordinates.
-		 * @param offset Offset from the upper left corner of the texture (in
-		 * pixels).
-		 * @param nbFrames Number of frames to load.
-		 * @see RedBox::Animatable::frames
-		 */
-		void loadTextureCoordinates(const TextureInformation *newTextureInformation,
+		void loadTextureCoordinates(TexturePointer newTexture,
 		                            const VerticesArray &vertices,
 		                            const Vector2 &offset,
 		                            unsigned int nbFrames = 1);

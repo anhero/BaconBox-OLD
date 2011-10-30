@@ -1,5 +1,6 @@
 /**
  * @file
+ * @ingroup Display
  */
 #ifndef RB_GRAPHIC_ELEMENT_H
 #define RB_GRAPHIC_ELEMENT_H
@@ -13,8 +14,16 @@
 #include "IsBaseOf.h"
 #include "StaticAssert.h"
 #include "IsSame.h"
+#include "TexturePointer.h"
 
 namespace RedBox {
+	/**
+	 * Graphic element that can be animated, just like the sprite, but not
+	 * layerable and can be collidable or only transformable (collidable means
+	 * it is also transformable).
+	 * @tparam Parent Collidable or Transformable.
+	 * @ingroup Display
+	 */
 	template <typename Parent>
 	class GraphicElement : public Graphic<Animatable>, public Parent {
 	public:
@@ -28,7 +37,7 @@ namespace RedBox {
 		 * Parameterized constructor. Loads the vertices and the texture
 		 * coordinates. If the specified size has a coordinate equal to 0 or
 		 * lower, it loads the the full texture as the size and image.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @param startingPosition Starting position at which to place the
 		 * graphic element.
 		 * @param newSize Size of the graphic element.
@@ -36,46 +45,12 @@ namespace RedBox {
 		 * @param nbFrames Number of frames to load.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		explicit GraphicElement(const std::string &newTextureKey,
+		explicit GraphicElement(TexturePointer newTexture,
 		                        const Vector2 &startingPosition = Vector2(),
 		                        const Vector2 &newSize = Vector2(),
 		                        const Vector2 &newTextureOffset = Vector2(),
 		                        unsigned int nbFrames = 1) :
-			Graphic<Animatable>(newTextureKey),
-			Parent(startingPosition) {
-			// We check if we have to use the texture as the full image.
-			if (newSize.getX() <= 0.0f || newSize.getY() <= 0.0f) {
-				// We make sure the texture information is valid.
-				if (this->getTextureInformation()) {
-					construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth),
-					                  static_cast<float>(this->getTextureInformation()->imageHeight)),
-					          startingPosition);
-				}
-
-			} else {
-				construct(newSize, startingPosition, newTextureOffset, nbFrames);
-			}
-		}
-
-		/**
-		 * Parameterized constructor. Loads the vertices and the texture
-		 * coordinates. If the specified size has a coordinate equal to 0 or
-		 * lower, it loads the the full texture as the size and image.
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the graphic element with.
-		 * @param startingPosition Starting position at which to place the
-		 * graphic element.
-		 * @param newSize Size of the graphic element.
-		 * @param newTextureOffset Texture coordinates' offset if needed.
-		 * @param nbFrames Number of frames to load.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		explicit GraphicElement(const TextureInformation *newTextureInformation,
-		                        const Vector2 &startingPosition = Vector2(),
-		                        const Vector2 &newSize = Vector2(),
-		                        const Vector2 &newTextureOffset = Vector2(),
-		                        unsigned int nbFrames = 1) :
-			Graphic<Animatable>(newTextureInformation),
+			Graphic<Animatable>(newTexture),
 			Parent(startingPosition) {
 			// We check if we have to use the texture as the full image.
 			if (newSize.getX() <= 0.0f || newSize.getY() <= 0.0f) {
@@ -197,7 +172,7 @@ namespace RedBox {
 		}
 
 		/**
-		 * Rotates the graphic body from a point.
+		 * Rotates the body from a point.
 		 * @param rotationAngle Angle to rotate the graphic body.
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::Transformable::angle

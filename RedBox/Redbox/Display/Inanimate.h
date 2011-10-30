@@ -7,6 +7,7 @@
 
 #include "TextureMappable.h"
 #include "TextureCoordinates.h"
+#include "TexturePointer.h"
 
 namespace RedBox {
 	class VerticesArray;
@@ -18,48 +19,20 @@ namespace RedBox {
 	class Inanimate : public TextureMappable {
 	public:
 		/**
-		 * Default constructor. Does not load the texture coordinates.
-		 */
-		Inanimate();
-
-		/**
 		 * Simple parameterized constructor.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 */
-		explicit Inanimate(const std::string &newTextureKey);
-
-		/**
-		 * Simple parameterized constructor. Does the same thing as the
-		 * constructor that recieves an key. Does not load the texture
-		 * coordinates
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the body with.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		explicit Inanimate(const TextureInformation *newTextureInformation);
+		explicit Inanimate(TexturePointer newTexture = TexturePointer());
 
 		/**
 		 * Parameterized constructor.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @param vertices Vertices to use to load the texture coordinates.
 		 * @param offset Offset in the texture to use when loading the texture
 		 * coordinates.
 		 * @see RedBox::Inanimate::textureCoordinates
 		 */
-		Inanimate(const std::string &newTextureKey,
-		          const VerticesArray &vertices,
-		          const Vector2 &offset);
-
-		/**
-		 * Parameterized constructor.
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the body with.
-		 * @param vertices Vertices to use to load the texture coordinates.
-		 * @param offset Offset in the texture to use when loading the texture
-		 * coordinates.
-		 * @see RedBox::Inanimate::textureCoordinates
-		 */
-		Inanimate(const TextureInformation *newTextureInformation,
+		Inanimate(TexturePointer newTexture,
 		          const VerticesArray &vertices,
 		          const Vector2 &offset);
 
@@ -108,27 +81,13 @@ namespace RedBox {
 
 		/**
 		 * Loads the texture coordinates.
-		 * @param newTextureKey Key to the texture to load the texture
-		 * coordinates from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @param vertices Vertices to use to load the texture coordinates.
 		 * @param offset Offset from the upper left corner of the texture (in
 		 * pixels).
 		 * @see RedBox::Inanimate::textureCoordinates
 		 */
-		void loadTextureCoordinates(const std::string &newTextureKey,
-		                            const VerticesArray &vertices,
-		                            const Vector2 &offset);
-
-		/**
-		 * Loads the texture coordinates.
-		 * @param newTextureInformation Pointer to the new texture information
-		 * to use to load the texture coordinates.
-		 * @param vertices Vertices to use to load the texture coordinates.
-		 * @param offset Offset from the upper left corner of the texture (in
-		 * pixels).
-		 * @see RedBox::Inanimate::textureCoordinates
-		 */
-		void loadTextureCoordinates(const TextureInformation *newTextureInformation,
+		void loadTextureCoordinates(TexturePointer newTexture,
 		                            const VerticesArray &vertices,
 		                            const Vector2 &offset);
 	private:

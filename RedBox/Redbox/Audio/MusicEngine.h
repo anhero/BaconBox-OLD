@@ -22,6 +22,7 @@ namespace RedBox {
 	class MusicEngine : public virtual AudioEngine {
 		friend class ResourceManager;
 		friend class AudioEngine;
+		friend class Engine;
 	public:
 		/**
 		 * Constructs a background music. Gets the music's data associated with

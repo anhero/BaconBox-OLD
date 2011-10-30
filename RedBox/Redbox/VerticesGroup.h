@@ -13,7 +13,6 @@
 
 #include "PlatformFlagger.h"
 
-#include "Object.h"
 #include "Vector2.h"
 #include "CArray.h"
 namespace RedBox {
@@ -23,7 +22,7 @@ namespace RedBox {
 	 * with information accessible for OpenGL and RedBox.
 	 * @ingroup Display
 	 */
-	class VerticesGroup : public Object {
+	class VerticesGroup {
 		/**
 		 * Outputs the vertices group's content.
 		 * @param output The ostream in which the vertices group is output.

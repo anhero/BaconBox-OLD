@@ -9,9 +9,11 @@
 #include "TimeHelper.h"
 #include "GraphicDriver.h"
 #include "DeleteHelper.h"
+
 #ifndef RB_ANDROID
 #include "Font.h"
 #endif
+
 #include "AudioEngine.h"
 #include "SoundEngine.h"
 #include "MusicEngine.h"
@@ -21,7 +23,10 @@
 #include "Console.h"
 #include <libgen.h>
 
-#include RB_MAINWINDOW_INCLUDE
+#include RB_MAIN_WINDOW_INCLUDE
+#include RB_SOUND_ENGINE_INCLUDE
+#include RB_MUSIC_ENGINE_INCLUDE
+#include RB_GRAPHIC_DRIVER_INCLUDE
 
 namespace RedBox {
 	const double Engine::DEFAULT_UPDATES_PER_SECOND = 60.0;
@@ -149,11 +154,14 @@ namespace RedBox {
 				engine.currentState->internalRender();
 				engine.renderedSinceLastUpdate = true;
 				engine.bufferSwapped = false;
+				engine.lastRender = TimeHelper::getInstance().getSinceStartComplete();
 			}
 
-			AudioEngine::getSoundEngine().update();
+			if (static_cast<AudioEngine *>(engine.soundEngine) != static_cast<AudioEngine *>(engine.musicEngine)) {
+				engine.soundEngine->update();
+			}
 
-			AudioEngine::getMusicEngine().update();
+			engine.musicEngine->update();
 		}
 
 		if (engine.needsExit) {
@@ -171,7 +179,7 @@ namespace RedBox {
 		InputManager::getInstance();
 		onInitialize.shoot(resolutionWidth, resolutionHeight, contextWidth, contextHeight);
 
-		GraphicDriver::getInstance().initializeGraphicDriver(MainWindow::getInstance().getResolutionWidth(), MainWindow::getInstance().getResolutionHeight());
+		getInstance().graphicDriver->initializeGraphicDriver(MainWindow::getInstance().getResolutionWidth(), MainWindow::getInstance().getResolutionHeight());
 #ifndef RB_ANDROID
 		Font::initializeFontRenderer();
 #endif
@@ -180,6 +188,11 @@ namespace RedBox {
 	double Engine::getSinceLastUpdate() {
 		Engine &engine = getInstance();
 		return (engine.lastUpdate) ? (TimeHelper::getInstance().getSinceStartComplete() - engine.lastUpdate) : (engine.lastUpdate);
+	}
+
+	double Engine::getSinceLastRender() {
+		Engine &engine = getInstance();
+		return (engine.lastRender) ? (TimeHelper::getInstance().getSinceStartComplete() - engine.lastRender) : (engine.lastRender);
 	}
 
 	bool Engine::isBufferSwapped() {
@@ -203,7 +216,6 @@ namespace RedBox {
 		return getInstance().applicationPath;
 	}
 
-
 	int Engine::argc;
 	char **Engine::argv;
 
@@ -215,11 +227,26 @@ namespace RedBox {
 		return Engine::argv;
 	}
 
-
 	void Engine::application(int argc, char *argv[]) {
 		Engine::argc = argc;
 		Engine::argv = argv;
 		getInstance().applicationPath = dirname(argv[0]);
+	}
+
+	MainWindow &Engine::getMainWindow() {
+		return *getInstance().mainWindow;
+	}
+
+	GraphicDriver &Engine::getGraphicDriver() {
+		return *getInstance().graphicDriver;
+	}
+
+	SoundEngine &Engine::getSoundEngine() {
+		return *getInstance().soundEngine;
+	}
+
+	MusicEngine &Engine::getMusicEngine() {
+		return *getInstance().musicEngine;
 	}
 
 	Engine &Engine::getInstance() {
@@ -227,11 +254,16 @@ namespace RedBox {
 		return instance;
 	}
 
-	Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0),
+	Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0), lastRender(0.0),
 		loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
 		minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false), needsExit(false),
-		tmpExitCode(0), renderedSinceLastUpdate(false) {
-		MainWindow::getInstance().setCaption(MainWindow::DEFAULT_NAME);
+		tmpExitCode(0), renderedSinceLastUpdate(false), mainWindow(NULL),
+		graphicDriver(NULL), soundEngine(NULL), musicEngine(NULL) {
+
+		mainWindow = RB_MAIN_WINDOW_IMPL;
+		graphicDriver = RB_GRAPHIC_DRIVER_IMPL;
+		soundEngine = RB_SOUND_ENGINE_IMPL;
+		musicEngine = RB_MUSIC_ENGINE_IMPL;
 	}
 
 	Engine::~Engine() {
@@ -240,5 +272,29 @@ namespace RedBox {
 
 		// We unload the resources.
 		ResourceManager::unloadAll();
+
+		// We unload the audio engines.
+		if (static_cast<AudioEngine *>(musicEngine) == static_cast<AudioEngine *>(soundEngine)) {
+			delete musicEngine;
+
+		} else {
+			if (musicEngine) {
+				delete musicEngine;
+			}
+
+			if (soundEngine) {
+				delete soundEngine;
+			}
+		}
+
+		// We unload the graphic driver;
+		if (graphicDriver) {
+			delete graphicDriver;
+		}
+
+		// We unload the main window;
+		if (mainWindow) {
+			delete mainWindow;
+		}
 	}
 }

@@ -1,43 +1,40 @@
-#if 0
 #include "SpriteFactory.h"
 
-#include <cmath>
-#include <vector>
-
 #include "Sprite.h"
-#include "MathHelper.h"
+#include "InanimateSprite.h"
+#include "ShapeFactory.h"
 
-using namespace RedBox;
+namespace RedBox {
 
-Sprite* SpriteFactory::makePolygon(unsigned int nbSides, float sideLength,
-								   const Color& color) {
-	if(nbSides >= 3 && sideLength > 0.0f) {
-		// We calculate the polygon's radius.
-		float radius = sideLength / (2.0f * sin(MathHelper::PI<float>() / nbSides));
+	Sprite *SpriteFactory::makePolygon(unsigned int nbSides, float sideLength,
+	                                   const Color &color) {
+		Sprite *result = NULL;
 
-		// Angle from the polygon's center.
-		float angle = 360.0f / nbSides / 2.0f;
-
-		Sprite* result = new Sprite();
-		
-		for(unsigned int i = 0; i < nbSides; ++i) {
-			result->createVertex(radius * sin(MathHelper::degreesToRadians(angle)),
-								 radius * cos(MathHelper::degreesToRadians(angle)));
-			angle += 360.0f / nbSides;
+		if (nbSides >= 3 && sideLength > 0.0f) {
+			result = new Sprite();
+			result->getVertices().resize(nbSides);
+			ShapeFactory::createRegularPolygon(nbSides, sideLength, Vector2(), &(result->getVertices()));
+			result->setColor(color);
+			result->setRenderModes(FlagSet<RenderMode>(RenderMode::SHAPE) |
+			                       FlagSet<RenderMode>(RenderMode::COLOR));
 		}
 
-		result->setMainColor(color);
-		result->setRenderModes(FlagSet<RenderMode>(RenderMode::SHAPE) |
-		                       FlagSet<RenderMode>(RenderMode::COLOR));
+		return result;
+	}
 
-		Vector2 tmpVec(result->getVertices().getPosition());
-		result->GraphicBody::setPosition(tmpVec.getX(), tmpVec.getY());
+	InanimateSprite *SpriteFactory::makeInanimatePolygon(unsigned int nbSides,
+	                                                     float sideLength,
+	                                                     const Color &color) {
+		InanimateSprite *result = NULL;
 
-		result->setPosition(0.0f, 0.0f);
+		if (nbSides >= 3 && sideLength > 0.0f) {
+			result = new InanimateSprite();
+			ShapeFactory::createRegularPolygon(nbSides, sideLength, Vector2(), &(result->getVertices()));
+			result->setColor(color);
+			result->setRenderModes(FlagSet<RenderMode>(RenderMode::SHAPE) |
+			                       FlagSet<RenderMode>(RenderMode::COLOR));
+		}
 
 		return result;
-	} else {
-		return NULL;
 	}
 }
-#endif

@@ -40,6 +40,11 @@ namespace RedBox {
 		 * @return Reference to the modified SpriteEmitter.
 		 */
 		SpriteEmitter &operator=(const SpriteEmitter &src);
+	private:
+		/**
+		 * Calls the setToBeDeleted(true) method.
+		 */
+		void done();
 	};
 
 }
