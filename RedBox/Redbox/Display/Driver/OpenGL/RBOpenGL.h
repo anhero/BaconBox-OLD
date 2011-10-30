@@ -6,7 +6,7 @@
 #if defined (RB_OPENGL) || defined (RB_OPENGLES)
 
 #if defined(RB_MAC_PLATFORM) && defined(RB_SDL)
-#include <OpenGl/OpenGL.h>
+#include <OpenGL/OpenGL.h>
 #endif
 
 #if defined(RB_IPHONE_PLATFORM)

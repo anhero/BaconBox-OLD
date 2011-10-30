@@ -84,4 +84,7 @@
 #include <RedBox/InputManager.h>
 #include <RedBox/Console.h>
 #include <RedBox/Tween.h>
+#include <RedBox/LoopingMenu.h>
+#include <RedBox/ScrollingMenu.h>
+#include <RedBox/SpriteMenuElement.h>
 #include <RedBox/StandardVerticesArray.h>
