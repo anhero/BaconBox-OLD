@@ -21,14 +21,8 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	class RBAudioPlayerEngine : public MusicEngine {
-		friend class AudioEngine;
-		friend class ResourceManager;
+		friend class Engine;
 	public:
-		/**
-		 * Gets a reference to the RBAudioPlayerEngine singleton.
-		 * @return Reference to the current singleton.
-		 */
-		static RBAudioPlayerEngine& getInstance();
 		/**
 		 * Constructs a background music. Gets the music's data associated with
 		 * the key. In AVAudioPlayerEngine's case, the music is really loaded

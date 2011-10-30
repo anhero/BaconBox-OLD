@@ -9,69 +9,64 @@
 #include "RedBoxAppAppDelegate.h"
 #import <UIKit/UIKit.h>
 
-using namespace RedBox;
-
-IOSMainWindow& IOSMainWindow::getInstance() {
-	static IOSMainWindow instance;
-	return instance;
+namespace RedBox {
+	
+	void IOSMainWindow::onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight) {
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		
+		InputManager::getInstance().setNbPointers(1);
+		
+		CGRect screenBounds = [[UIScreen mainScreen] bounds];
+		this->resolutionWidth = screenBounds.size.width;
+		this->resolutionHeight = screenBounds.size.height;
+		setContextSize(contextWidth, contextHeight);
+		
+		
+		RedBoxAppViewController* viewController = [[RedBoxAppViewController alloc] initWithFrame:screenBounds];
+		[RedBoxAppAppDelegate setViewController:viewController];
+		[pool release];
+		
+	}
+	
+	IOSMainWindow::IOSMainWindow() : MainWindow() {
+		fullscreen = true;
+	}
+	
+	void IOSMainWindow::setCaption(const std::string& caption) {
+	}
+	
+	bool IOSMainWindow::isFullScreen() const {
+		return true;
+	}
+	
+	void IOSMainWindow::setFullScreen(bool) {
+	}
+	
+	bool IOSMainWindow::isInputGrabbed() const {
+		return true;
+	}
+	
+	void IOSMainWindow::setInputGrabbed(bool newInputGrabbed) {
+	}
+	
+	void IOSMainWindow::show() {
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		//Need the next to lines of code to prevent the dead code strip 
+		//from striping the RedBoxAppDelegate Class
+		RedBoxAppAppDelegate * appDelegate = [RedBoxAppAppDelegate alloc];
+		[appDelegate release];
+		
+		UIApplicationMain(Engine::getApplicationArgc(), Engine::getApplicationArgv(), nil, @"RedBoxAppAppDelegate");
+		[pool release];
+	}
+	
+	IOSMainWindow::~IOSMainWindow() {
+		//SDL_Quit();
+	}
+	
+	void IOSMainWindow::setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight){
+		
+	}
+	
 }
-
-void IOSMainWindow::onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight) {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
-	InputManager::getInstance().setNbPointers(1);
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    this->resolutionWidth = screenBounds.size.width;
-    this->resolutionHeight = screenBounds.size.height;
-    setContextSize(contextWidth, contextHeight);
-
-
-    RedBoxAppViewController* viewController = [[RedBoxAppViewController alloc] initWithFrame:screenBounds];
-    [RedBoxAppAppDelegate setViewController:viewController];
-    [pool release];
-
-}
-
-IOSMainWindow::IOSMainWindow() : MainWindow() {
-	fullscreen = true;
-}
-
-void IOSMainWindow::setCaption(const std::string& caption) {
-}
-
-bool IOSMainWindow::isFullScreen() const {
-	return true;
-}
-
-void IOSMainWindow::setFullScreen(bool) {
-}
-
-bool IOSMainWindow::isInputGrabbed() const {
-	return true;
-}
-
-void IOSMainWindow::setInputGrabbed(bool newInputGrabbed) {
-}
-
-void IOSMainWindow::show() {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    //Need the next to lines of code to prevent the dead code strip 
-    //from striping the RedBoxAppDelegate Class
-    RedBoxAppAppDelegate * appDelegate = [RedBoxAppAppDelegate alloc];
-    [appDelegate release];
-    
-	UIApplicationMain(Engine::getApplicationArgc(), Engine::getApplicationArgv(), nil, @"RedBoxAppAppDelegate");
-    [pool release];
-}
-
-IOSMainWindow::~IOSMainWindow() {
-	//SDL_Quit();
-}
-
-void IOSMainWindow::setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight){
-
-}
-
-
 

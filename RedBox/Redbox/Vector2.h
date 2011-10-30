@@ -510,8 +510,8 @@ namespace RedBox {
 		 */
 		void rotate(ValueType angle) {
 			float radians = MathHelper::degreesToRadians(angle);
-			x = x * cosf(radians) + y * sinf(radians);
-			y = y * cosf(radians) - y * sinf(radians);
+			setXY(x * cosf(radians) + y * sinf(radians),
+			      y * cosf(radians) - x * sinf(radians));
 		}
 
 		/**

@@ -14,12 +14,12 @@
 #include <list>
 
 #include "RBOpenAL.h"
-#include "OpenALSoundFX.h"
 #include "SoundEngine.h"
 #include "SoundParameters.h"
 
 namespace RedBox {
 	class SoundFX;
+	class OpenALSoundFX;
 	class NullAudio;
 	struct SoundInfo;
 	/**
@@ -27,13 +27,8 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	class OpenALEngine: public SoundEngine {
-		friend class AudioEngine;
+		friend class Engine;
 	public:
-		/**
-		 * Gets OpenALEngine's instance.
-		 * @return Reference to the OpenAL sound engine.
-		 */
-		static OpenALEngine& getInstance();
 		/**
 		 * Converts the RedBox volume to its OpenAL equivalent.
 		 * @param openALVolume OpenAL volume to convert.

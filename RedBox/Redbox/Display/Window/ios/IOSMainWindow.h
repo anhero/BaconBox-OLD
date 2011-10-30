@@ -13,9 +13,8 @@ namespace RedBox {
 	 * This is an implementation of MainWindow for IOS.
 	 */
 	class IOSMainWindow : public MainWindow {
+		friend class Engine;
 	public:
-		/// Gets the singleton instance of IOSMainWindow.
-		static IOSMainWindow& getInstance();
 		void onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight);
 		void show();
 		void setCaption(const std::string& caption);
