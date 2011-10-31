@@ -169,8 +169,7 @@ namespace RedBox {
 		                          const Color &backgroundColor) = 0;
 
 
-		virtual void initializeGraphicDriver(float contextWidth,
-		                                     float contextHeight) = 0;
+		virtual void initializeGraphicDriver() = 0;
 
 		/**
 		 * Pushes the current matrix on the stack.

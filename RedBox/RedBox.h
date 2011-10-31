@@ -56,6 +56,7 @@
  */
 
 #include <RedBox/Engine.h>
+#include <RedBox/MainWindow.h>
 #include <RedBox/State.h>
 #include <RedBox/DebugState.h>
 #include <RedBox/ResourceManager.h>

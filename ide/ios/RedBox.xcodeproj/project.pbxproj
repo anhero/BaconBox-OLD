@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		241CE3C9145EE0680063AD9B /* WindowOrientation.h in Headers */ = {isa = PBXBuildFile; fileRef = 241CE3C8145EE0680063AD9B /* WindowOrientation.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		24560DEE145DC08D00C24EBA /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24560C80145DC08C00C24EBA /* AudioEngine.cpp */; };
 		24560DEF145DC08D00C24EBA /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560C81145DC08C00C24EBA /* AudioEngine.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		24560DF0145DC08D00C24EBA /* AudioState.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560C82145DC08C00C24EBA /* AudioState.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -281,7 +282,7 @@
 		24560F16145DC08D00C24EBA /* VerticesGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24560DEB145DC08D00C24EBA /* VerticesGroup.cpp */; };
 		24560F17145DC08D00C24EBA /* VerticesGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560DEC145DC08D00C24EBA /* VerticesGroup.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		24560F18145DC08D00C24EBA /* RedBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560DED145DC08D00C24EBA /* RedBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		245EAF10134E62CD002F0596 /* sigly.h in Headers */ = {isa = PBXBuildFile; fileRef = 245EAF0F134E62CD002F0596 /* sigly.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		245EAF10134E62CD002F0596 /* sigly.h in Headers */ = {isa = PBXBuildFile; fileRef = 245EAF0F134E62CD002F0596 /* sigly.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A9351410E8934500D144F4 /* AudioToolbox.framework */; };
 		51927C0711D5EA3E00C65B15 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5102AA7A10F547D300585718 /* AVFoundation.framework */; };
 		51927C0811D5EA4200C65B15 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 512D586C109B6D45009D504E /* libz.dylib */; };
@@ -298,6 +299,7 @@
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		241CE3C8145EE0680063AD9B /* WindowOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowOrientation.h; sourceTree = "<group>"; };
 		24560C80145DC08C00C24EBA /* AudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEngine.cpp; sourceTree = "<group>"; };
 		24560C81145DC08C00C24EBA /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
 		24560C82145DC08C00C24EBA /* AudioState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioState.h; sourceTree = "<group>"; };
@@ -367,7 +369,6 @@
 		24560CD2145DC08C00C24EBA /* NullGraphicDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NullGraphicDriver.cpp; sourceTree = "<group>"; };
 		24560CD3145DC08C00C24EBA /* NullGraphicDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullGraphicDriver.h; sourceTree = "<group>"; };
 		24560CD5145DC08C00C24EBA /* OpenGLDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLDriver.cpp; sourceTree = "<group>"; };
-		24560CD6145DC08C00C24EBA /* OpenGLDriver.cpp.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenGLDriver.cpp.orig; sourceTree = "<group>"; };
 		24560CD7145DC08C00C24EBA /* OpenGLDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLDriver.h; sourceTree = "<group>"; };
 		24560CD8145DC08C00C24EBA /* RBOpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBOpenGL.h; sourceTree = "<group>"; };
 		24560CDB145DC08C00C24EBA /* Graphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graphic.h; sourceTree = "<group>"; };
@@ -406,7 +407,6 @@
 		24560CFE145DC08D00C24EBA /* Renderable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Renderable.cpp; sourceTree = "<group>"; };
 		24560CFF145DC08D00C24EBA /* Renderable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderable.h; sourceTree = "<group>"; };
 		24560D00145DC08D00C24EBA /* RenderBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderBatch.cpp; sourceTree = "<group>"; };
-		24560D01145DC08D00C24EBA /* RenderBatch.cpp.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RenderBatch.cpp.orig; sourceTree = "<group>"; };
 		24560D02145DC08D00C24EBA /* RenderBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderBatch.h; sourceTree = "<group>"; };
 		24560D03145DC08D00C24EBA /* RenderInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderInfo.cpp; sourceTree = "<group>"; };
 		24560D04145DC08D00C24EBA /* RenderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderInfo.h; sourceTree = "<group>"; };
@@ -762,7 +762,6 @@
 				24560CFE145DC08D00C24EBA /* Renderable.cpp */,
 				24560CFF145DC08D00C24EBA /* Renderable.h */,
 				24560D00145DC08D00C24EBA /* RenderBatch.cpp */,
-				24560D01145DC08D00C24EBA /* RenderBatch.cpp.orig */,
 				24560D02145DC08D00C24EBA /* RenderBatch.h */,
 				24560D03145DC08D00C24EBA /* RenderInfo.cpp */,
 				24560D04145DC08D00C24EBA /* RenderInfo.h */,
@@ -810,7 +809,6 @@
 			isa = PBXGroup;
 			children = (
 				24560CD5145DC08C00C24EBA /* OpenGLDriver.cpp */,
-				24560CD6145DC08C00C24EBA /* OpenGLDriver.cpp.orig */,
 				24560CD7145DC08C00C24EBA /* OpenGLDriver.h */,
 				24560CD8145DC08C00C24EBA /* RBOpenGL.h */,
 			);
@@ -868,6 +866,7 @@
 				24560D2D145DC08D00C24EBA /* ios */,
 				24560D36145DC08D00C24EBA /* MainWindow.cpp */,
 				24560D37145DC08D00C24EBA /* MainWindow.h */,
+				241CE3C8145EE0680063AD9B /* WindowOrientation.h */,
 			);
 			path = Window;
 			sourceTree = "<group>";
@@ -1288,6 +1287,7 @@
 				24560F13145DC08D00C24EBA /* State.h in Headers */,
 				24560F15145DC08D00C24EBA /* Vector2.h in Headers */,
 				24560F17145DC08D00C24EBA /* VerticesGroup.h in Headers */,
+				241CE3C9145EE0680063AD9B /* WindowOrientation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

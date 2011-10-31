@@ -2,37 +2,37 @@
 
 #include "PlatformFlagger.h"
 
-
 #include "RBOpenGL.h"
 #include "Engine.h"
 #include "InputManager.h"
 #include "RedBoxAppAppDelegate.h"
+
 #import <UIKit/UIKit.h>
 
 namespace RedBox {
 	
-	void IOSMainWindow::onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight) {
+	void IOSMainWindow::onRedBoxInit(unsigned int resolutionWidth,
+									 unsigned int resolutionHeight,
+									 float contextWidth, float contextHeight) {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
 		InputManager::getInstance().setNbPointers(1);
 		
 		CGRect screenBounds = [[UIScreen mainScreen] bounds];
-		this->resolutionWidth = screenBounds.size.width;
-		this->resolutionHeight = screenBounds.size.height;
+		this->MainWindow::setResolution(screenBounds.size.width, screenBounds.size.height);
 		setContextSize(contextWidth, contextHeight);
 		
 		
-		RedBoxAppViewController* viewController = [[RedBoxAppViewController alloc] initWithFrame:screenBounds];
-		[RedBoxAppAppDelegate setViewController:viewController];
+		RedBoxAppViewController *viewController = [[RedBoxAppViewController alloc] initWithFrame: screenBounds];
+		[RedBoxAppAppDelegate setViewController: viewController];
 		[pool release];
 		
 	}
 	
 	IOSMainWindow::IOSMainWindow() : MainWindow() {
-		fullscreen = true;
 	}
 	
-	void IOSMainWindow::setCaption(const std::string& caption) {
+	void IOSMainWindow::setCaption(const std::string &caption) {
 	}
 	
 	bool IOSMainWindow::isFullScreen() const {
@@ -51,9 +51,9 @@ namespace RedBox {
 	
 	void IOSMainWindow::show() {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		//Need the next to lines of code to prevent the dead code strip 
+		//Need the next to lines of code to prevent the dead code strip
 		//from striping the RedBoxAppDelegate Class
-		RedBoxAppAppDelegate * appDelegate = [RedBoxAppAppDelegate alloc];
+		RedBoxAppAppDelegate *appDelegate = [RedBoxAppAppDelegate alloc];
 		[appDelegate release];
 		
 		UIApplicationMain(Engine::getApplicationArgc(), Engine::getApplicationArgv(), nil, @"RedBoxAppAppDelegate");
@@ -61,12 +61,10 @@ namespace RedBox {
 	}
 	
 	IOSMainWindow::~IOSMainWindow() {
-		//SDL_Quit();
 	}
 	
-	void IOSMainWindow::setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight){
-		
+	void IOSMainWindow::setResolution(unsigned int resolutionWidth,
+	                                  unsigned int resolutionHeight) {
 	}
-	
 }
 

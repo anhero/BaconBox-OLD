@@ -9,6 +9,7 @@
 #include "VerticesArray.h"
 #include "Color.h"
 #include "PixMap.h"
+#include "Console.h"
 
 #define GET_PTR(vertices) reinterpret_cast<const GLfloat *>(&(*vertices.getBegin()))
 #define GET_TEX_PTR(textureCoordinates) reinterpret_cast<const GLfloat *>(textureCoordinates.data())
@@ -442,26 +443,72 @@ namespace RedBox {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
+		switch (MainWindow::getInstance().getOrientation().underlying()) {
+		case WindowOrientation::HORIZONTAL_LEFT:
+			glRotatef(-90.0f, 0, 0, 1);
+			glTranslatef(-static_cast<float>(MainWindow::getInstance().getContextWidth()), 0.0f, 0.0f);
+			break;
+
+		case WindowOrientation::HORIZONTAL_RIGHT:
+			glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
+			glTranslatef(0.0f, -static_cast<float>(MainWindow::getInstance().getContextHeight()), 0.0f);
+			break;
+
+		default:
+			break;
+		}
+
 		glScalef(zoom.getX(), zoom.getY(), 1);
 		glRotatef(angle, 0, 0, 1);
 		glTranslatef(-(position.getX()), -(position.getY()), 0);
 
 	}
 
-	void OpenGLDriver::initializeGraphicDriver(float contextWidth,
-	                                           float contextHeight) {
+	void OpenGLDriver::initializeGraphicDriver() {
 		glShadeModel(GL_FLAT);
 
-		glViewport(0, 0, static_cast<int>(contextWidth),
-		           static_cast<int>(contextHeight));
+		if (MainWindow::getInstance().getOrientation() == WindowOrientation::NORMAL ||
+		    MainWindow::getInstance().getOrientation() == WindowOrientation::UPSIDE_DOWN) {
+			glViewport(0, 0, static_cast<int>(MainWindow::getInstance().getResolutionWidth()), static_cast<int>(MainWindow::getInstance().getResolutionHeight()));
+
+		} else {
+			glViewport(0, 0, static_cast<int>(MainWindow::getInstance().getResolutionHeight()), static_cast<int>(MainWindow::getInstance().getResolutionWidth()));
+		}
 
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
+		float left, right, bottom, top;
+
+		if (MainWindow::getInstance().getOrientation() == WindowOrientation::NORMAL) {
+			left = 0.0f;
+			right = static_cast<float>(MainWindow::getInstance().getContextWidth());
+			bottom = static_cast<float>(MainWindow::getInstance().getContextHeight());
+			top = 0.0f;
+
+		} else if (MainWindow::getInstance().getOrientation() == WindowOrientation::UPSIDE_DOWN) {
+			left = 0.0f;
+			right = static_cast<float>(MainWindow::getInstance().getContextWidth());
+			bottom = 0.0f;
+			top = static_cast<float>(MainWindow::getInstance().getContextHeight());
+
+		} else if (MainWindow::getInstance().getOrientation() == WindowOrientation::HORIZONTAL_LEFT) {
+			left = static_cast<float>(MainWindow::getInstance().getContextHeight());
+			right = 0.0f;
+			bottom = 0.0f;
+			top = static_cast<float>(MainWindow::getInstance().getContextWidth());
+
+		} else if (MainWindow::getInstance().getOrientation() == WindowOrientation::HORIZONTAL_RIGHT) {
+			left = static_cast<float>(MainWindow::getInstance().getContextHeight());
+			right = 0.0f;
+			bottom = 0.0f;
+			top = static_cast<float>(MainWindow::getInstance().getContextWidth());
+		}
+
 #ifdef RB_OPENGLES
-		glOrthof(0.0f, static_cast<float>(contextWidth), static_cast<float>(contextHeight), 0.0f, -1.0f, 1.0f);
+		glOrthof(left, right, bottom, top, -1.0f, 1.0f);
 #else
-		glOrtho(0.0, static_cast<double>(contextWidth), static_cast<double>(contextHeight), 0.0, -1.0, 1.0);
+		glOrtho(static_cast<double>(left), static_cast<double>(right), static_cast<double>(bottom), static_cast<double>(top), -1.0, 1.0);
 #endif
 #if defined(RB_MAC_PLATFORM) && defined(RB_SDL)
 		int swapInterval = 1;
@@ -477,15 +524,35 @@ namespace RedBox {
 #endif
 		originalFramebuffer = static_cast<GLuint>(tempBuffer);
 #ifdef RB_OPENGLES
+
+		if (maskedTextureInformation) {
+			glBindFramebufferOES(GL_FRAMEBUFFER_OES, 0);
+			glDeleteFramebuffersOES(1, &maskedFramebuffer);
+		}
+
 		glGenFramebuffersOES(1, &maskedFramebuffer);
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, maskedFramebuffer);
 #else
-		glGenFramebuffersEXT(1, &maskedFramebuffer);
+
+		if (maskedTextureInformation) {
+			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+			glDeleteFramebuffersEXT(1, &maskedFramebuffer);
+		}
+
+		glGenFramebuffersEXT(1, &maskeddFramebuffer);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, maskedFramebuffer);
 #endif
 
+		if (maskedTextureInformation) {
+			glDeleteTextures(1, &maskedTexture);
+		}
+
 		glGenTextures(1, &maskedTexture);
 		glBindTexture(GL_TEXTURE_2D, maskedTexture);
+
+		if (maskedTextureInformation) {
+			delete maskedTextureInformation;
+		}
 
 		maskedTextureInformation = new TextureInformation();
 		maskedTextureInformation->textureId = maskedTexture;
@@ -502,6 +569,10 @@ namespace RedBox {
 
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		if (maskedGraphic) {
+			delete maskedGraphic;
+		}
 
 		maskedGraphic = new Graphic<Inanimate>();
 		maskedGraphic->setTextureInformation(maskedTextureInformation);

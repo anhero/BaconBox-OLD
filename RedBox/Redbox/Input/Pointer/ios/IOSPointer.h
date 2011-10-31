@@ -45,6 +45,14 @@ namespace RedBox {
 		Vector2 iosPosition;
 		/// Temporary button state for ios' event handling.
 		bool isTouchDown;
+		
+		/**
+		 * Converts the position we receive to RedBox's format.
+		 * @param newIosPosition Pointer to the vector to set the RedBox
+		 * screen position.
+		 */
+		static void convertToRedBoxScreenPosition(Vector2 *newIosPosition);
+		
 		/**
 		 * Called when EAGLView gets a touchesBegan event.
 		 */

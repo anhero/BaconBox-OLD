@@ -1,6 +1,7 @@
 #include "MainWindow.h"
-#include "PlatformFlagger.h"
+
 #include "Engine.h"
+#include "GraphicDriver.h"
 
 namespace RedBox {
 	const std::string MainWindow::DEFAULT_NAME = std::string("An unnamed RedBox application");
@@ -17,39 +18,72 @@ namespace RedBox {
 		setInputGrabbed(false);
 	}
 
-	MainWindow::MainWindow() : sigly::HasSlots<>() {
-		Engine::onInitialize.connect(this, &MainWindow::onRedBoxInit);
-	}
-
-	MainWindow::~MainWindow() {
-	}
-
 	unsigned int MainWindow::getResolutionWidth() {
 		return resolutionWidth;
 	}
+	
 	unsigned int MainWindow::getResolutionHeight() {
 		return resolutionHeight;
 	}
+	
+	void MainWindow::setResolution(unsigned int newResolutionWidth,
+								   unsigned int newResolutionHeight) {
+		resolutionWidth = newResolutionWidth;
+		resolutionHeight = newResolutionHeight;
+	}
+	
 	float MainWindow::getContextWidth() {
 		return contextWidth;
 	}
+	
 	float MainWindow::getContextHeight() {
 		return contextHeight;
 	}
 
-	void MainWindow::setContextSize(float contextWidth, float contextHeight) {
-		if (this->contextWidth == 0) {
-			this->contextWidth = resolutionWidth;
+	void MainWindow::setContextSize(float newContextWidth, float newContextHeight) {
+		if (newContextWidth == 0) {
+			contextWidth = resolutionWidth;
 
 		} else {
-			this->contextWidth = contextWidth;
+			contextWidth = newContextWidth;
 		}
 
-		if (this->contextHeight == 0) {
-			this->contextHeight = resolutionHeight;
+		if (newContextHeight == 0) {
+			contextHeight = resolutionHeight;
 
 		} else {
-			this->contextHeight = contextHeight;
+			contextHeight = newContextHeight;
 		}
+	}
+	
+	WindowOrientation MainWindow::getOrientation() const {
+		return orientation;
+	}
+	
+	void MainWindow::setOrientation(WindowOrientation newOrientation) {
+		if (orientation != newOrientation) {
+			if (((orientation == WindowOrientation::NORMAL ||
+				orientation == WindowOrientation::UPSIDE_DOWN) &&
+				(newOrientation == WindowOrientation::HORIZONTAL_LEFT ||
+				 newOrientation == WindowOrientation::HORIZONTAL_RIGHT)) ||
+				((orientation == WindowOrientation::HORIZONTAL_LEFT ||
+				 orientation == WindowOrientation::HORIZONTAL_RIGHT) &&
+				 (newOrientation == WindowOrientation::NORMAL ||
+				  newOrientation == WindowOrientation::UPSIDE_DOWN))) {
+					 unsigned int tmp = resolutionWidth;
+					 resolutionWidth = resolutionHeight;
+					 resolutionHeight = tmp;
+				}
+			orientation = newOrientation;
+			GraphicDriver::getInstance().initializeGraphicDriver();
+		}
+	}
+	
+	MainWindow::MainWindow() : sigly::HasSlots<>(), resolutionWidth(0), resolutionHeight(0),
+		contextWidth(0), contextHeight(0), orientation(WindowOrientation::NORMAL) {
+		Engine::onInitialize.connect(this, &MainWindow::onRedBoxInit);
+	}
+	
+	MainWindow::~MainWindow() {
 	}
 }

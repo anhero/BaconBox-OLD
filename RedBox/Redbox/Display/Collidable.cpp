@@ -8,6 +8,7 @@
 #include "MathHelper.h"
 
 namespace RedBox {
+	const float Collidable::NO_MAX_VELOCITY = -1.0f;
 	const float OVERLAP_BIAS = 4.0f;
 	FlagSet<Side> initAllSides();
 

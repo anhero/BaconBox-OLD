@@ -179,7 +179,7 @@ namespace RedBox {
 		InputManager::getInstance();
 		onInitialize.shoot(resolutionWidth, resolutionHeight, contextWidth, contextHeight);
 
-		getInstance().graphicDriver->initializeGraphicDriver(MainWindow::getInstance().getResolutionWidth(), MainWindow::getInstance().getResolutionHeight());
+		getInstance().graphicDriver->initializeGraphicDriver();
 #ifndef RB_ANDROID
 		Font::initializeFontRenderer();
 #endif

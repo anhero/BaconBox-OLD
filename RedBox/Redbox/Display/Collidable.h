@@ -19,7 +19,7 @@ namespace RedBox {
 	class Collidable : virtual public Updateable, public Transformable {
 	public:
 		/// Value used to represent an infinite maximum velocity.
-		static const float NO_MAX_VELOCITY = -1.0f;
+		static const float NO_MAX_VELOCITY;
 
 		/// Flag set will all flags raised.
 		static const FlagSet<Side> ALL_SIDES;

@@ -5,19 +5,19 @@
 #ifndef RB_IOS_MAIN_WINDOW_H
 #define RB_IOS_MAIN_WINDOW_H
 
-#include <sigly.h>
 #include "MainWindow.h"
 
 namespace RedBox {
 	/**
 	 * This is an implementation of MainWindow for IOS.
+	 * @ingroup WindowDisplay
 	 */
 	class IOSMainWindow : public MainWindow {
 		friend class Engine;
 	public:
 		void onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight);
 		void show();
-		void setCaption(const std::string& caption);
+		void setCaption(const std::string &caption);
 		bool isFullScreen() const;
 		void setFullScreen(bool);
 		/**
@@ -26,19 +26,20 @@ namespace RedBox {
 		 * @return True if the main window grabbed the input, false if not.
 		 */
 		bool isInputGrabbed() const;
-		
+
 		/**
 		 * Sets if the main window grabbed the input or not.
 		 * @param newInputGrabbed
 		 */
 		void setInputGrabbed(bool newInputGrabbed);
-        /** 
-         * Set the resolution of the window.
-         */
-        void setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight);
-        
+		/**
+		 * Set the resolution of the window.
+		 */
+		void setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight);
+
 	private:
 		IOSMainWindow();
+
 		~IOSMainWindow();
 	};
 }

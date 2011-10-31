@@ -32,6 +32,7 @@ namespace RedBox {
 	
 	void RBAudioPlayerEngine::setMusicVolume(int newMusicVolume) {
 		this->MusicEngine::setMusicVolume(newMusicVolume);
+		RBAudioPlayerMusic::refreshVolume();
 	}
 	
 	RBAudioPlayerEngine::RBAudioPlayerEngine(): MusicEngine() {
