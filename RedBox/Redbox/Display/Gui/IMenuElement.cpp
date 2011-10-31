@@ -22,7 +22,7 @@ IMenuElement::~IMenuElement(){
 }
 
 void IMenuElement::setVisible(bool newVisible){
-	setVisible(newVisible);
+	this->Layerable::setVisible(newVisible);
 }
 std::string IMenuElement::getKey(){
 	return key;

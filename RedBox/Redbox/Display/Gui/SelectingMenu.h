@@ -59,6 +59,8 @@ namespace RedBox {
 		 * @param rotationPoint the point around witch the rotation must be made.
 		 */
 		void rotateFromPoint(float rotationAngle, const Vector2& rotationPoint);
+		void scaleFromPoint(float xScaling, float yScaling,
+		                            const Vector2 &fromPoint); 
 		/**
 		 * Sets a new element to the elements.
 		 * @param newAngle the new angle to be setted to the elements

@@ -68,6 +68,14 @@ void SelectingMenu::rotateFromPoint(float rotationAngle, const Vector2& rotation
 		internalMask->setPosition(this->getCenterPosition()-Vector2(internalMask->getWidth()/2,internalMask->getHeight()/2));
 	}
 }
+void SelectingMenu::scaleFromPoint(float xScaling, float yScaling,const Vector2 &fromPoint){
+	std::list<IMenuElement*>::iterator i = elements.begin();
+	while (i != elements.end()) {
+		(*i)->scaleFromPoint(xScaling, yScaling, fromPoint);
+		i++;
+	}
+	Transformable::scaleFromPoint(xScaling, yScaling, fromPoint);
+}
 void SelectingMenu::setElementAngle(float newAngle){
 	elementsAngle = newAngle;
 	std::list<IMenuElement*>::iterator i = elements.begin();
