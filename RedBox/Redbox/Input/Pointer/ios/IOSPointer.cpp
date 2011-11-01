@@ -3,9 +3,12 @@
 #include "CursorButton.h"
 #include "MainWindow.h"
 #include <algorithm>
+#define RB_MAX_IOS_NB_OF_TOUCH 11
+
+
 
 namespace RedBox {
-	
+
 	sigly::Signal2<NSSet*, UIEvent*> IOSPointer::touchBegin = sigly::Signal2<NSSet*, UIEvent*>();
 	sigly::Signal2<NSSet*, UIEvent*> IOSPointer::touchEnd = sigly::Signal2<NSSet*, UIEvent*>();
 	sigly::Signal2<NSSet*, UIEvent*> IOSPointer::touchMove = sigly::Signal2<NSSet*, UIEvent*>();
@@ -16,6 +19,7 @@ namespace RedBox {
 		touchEnd.connect(this, &IOSPointer::onTouchEnd);
 		touchMove.connect(this, &IOSPointer::onTouchMove);
 	}
+
 	
 	IOSPointer::~IOSPointer() {
 	}
@@ -92,4 +96,5 @@ namespace RedBox {
 		convertToRedBoxScreenPosition(&iosPosition);
 	}
 	
+
 }

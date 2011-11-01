@@ -31,6 +31,7 @@
                                         [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
                                         kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
                                         nil];
+        self.multipleTouchEnabled = YES;
     }
     
     return self;
@@ -66,6 +67,10 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 	RedBox::IOSPointer::touchMove.shoot(touches, event);
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+	RedBox::IOSPointer::touchCancelled.shoot(touches, event);
 }
 
 - (void)createFramebuffer
