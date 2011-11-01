@@ -74,28 +74,25 @@ namespace RedBox {
 	private:
 		/// Chunk ID wav files should have.
 		static const uint32_t CHUNK_ID_RIFF = 1179011410;
+		
 		/// Format the wav files should have.
 		static const uint32_t FORMAT_WAVE = 1163280727;
-		/// Device to load.
-		std::string defaultDevice;
-		/// List of devices available.
-		std::vector<std::string> deviceList;
-		/// Sources being played.
-		std::list<OpenALSoundFX*> sources;
-		/// Non-surviving NullAudios that were returned.
-		std::list<NullAudio*> nullsToClean;
+		
 		/**
 		 * Default constructor.
 		 */
 		OpenALEngine();
+		
 		/**
 		 * Destructor, closes OpenAL.
 		 */
 		~OpenALEngine();
+		
 		/**
 		 * Updates OpenAL.
 		 */
 		void update();
+		
 		/**
 		 * Loads a sound effect from a file. For now, it must be a wav file.
 		 * @param filePath Path to the sound effect's file.
@@ -103,6 +100,7 @@ namespace RedBox {
 		 * failed.
 		 */
 		SoundInfo* loadSound(const std::string& filePath);
+		
 		/**
 		 * Loads a sound effect from information.
 		 * @param info Information about the sound effect to load.
@@ -110,6 +108,7 @@ namespace RedBox {
 		 * failed.
 		 */
 		SoundInfo* loadSound(const SoundParameters& params);
+		
 		/**
 		 * Unloads sound data. Called by the resource loader either by demand
 		 * of the user or when it is unloading everything before unloading the
@@ -119,11 +118,13 @@ namespace RedBox {
 		 * @return True if the unloading was done correctly, false if not.
 		 */
 		bool unloadSound(SoundInfo* sound);
+		
 		/**
 		 * Deletes all sources using a specific buffer.
 		 * @param buffer ID of the buffer.
 		 */
 		void deleteBufferSources(ALuint buffer);
+		
 		/**
 		 * Loads data from a wav file.
 		 * @param fileName Path to the file to load.
@@ -138,6 +139,18 @@ namespace RedBox {
 							ALsizei& bufferSize,
 							ALenum& format,
 							ALsizei& freq);
+		
+		/// Device to load.
+		std::string defaultDevice;
+		
+		/// List of devices available.
+		std::vector<std::string> deviceList;
+		
+		/// Sources being played.
+		std::list<OpenALSoundFX*> sources;
+		
+		/// Non-surviving NullAudios that were returned.
+		std::list<NullAudio*> nullsToClean;
 	};
 }
 #endif

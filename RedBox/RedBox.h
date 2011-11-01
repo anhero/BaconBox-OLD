@@ -86,3 +86,4 @@
 #include <RedBox/Console.h>
 #include <RedBox/Tween.h>
 #include <RedBox/StandardVerticesArray.h>
+#include <RedBox/Console.h>
