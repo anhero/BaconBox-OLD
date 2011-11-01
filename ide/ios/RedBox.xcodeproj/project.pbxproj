@@ -82,17 +82,6 @@
 		24560E3A145DC08D00C24EBA /* RBOpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CD8145DC08C00C24EBA /* RBOpenGL.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		24560E3B145DC08D00C24EBA /* Graphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CDB145DC08C00C24EBA /* Graphic.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		24560E3C145DC08D00C24EBA /* GraphicElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CDC145DC08C00C24EBA /* GraphicElement.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		24560E3D145DC08D00C24EBA /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24560CDE145DC08C00C24EBA /* Button.cpp */; };
-		24560E3E145DC08D00C24EBA /* Button.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CDF145DC08C00C24EBA /* Button.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		24560E3F145DC08D00C24EBA /* ButtonState.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CE0145DC08C00C24EBA /* ButtonState.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		24560E40145DC08D00C24EBA /* Checkbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24560CE1145DC08C00C24EBA /* Checkbox.cpp */; };
-		24560E41145DC08D00C24EBA /* Checkbox.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CE2145DC08C00C24EBA /* Checkbox.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		24560E42145DC08D00C24EBA /* LineSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CE3145DC08C00C24EBA /* LineSlider.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		24560E43145DC08D00C24EBA /* SimpleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24560CE4145DC08C00C24EBA /* SimpleButton.cpp */; };
-		24560E44145DC08D00C24EBA /* SimpleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CE5145DC08C00C24EBA /* SimpleButton.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		24560E45145DC08D00C24EBA /* Slider.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CE6145DC08C00C24EBA /* Slider.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		24560E46145DC08D00C24EBA /* TextButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24560CE8145DC08C00C24EBA /* TextButton.cpp */; };
-		24560E47145DC08D00C24EBA /* TextButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CE9145DC08C00C24EBA /* TextButton.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		24560E48145DC08D00C24EBA /* Hidable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24560CEA145DC08C00C24EBA /* Hidable.cpp */; };
 		24560E49145DC08D00C24EBA /* Hidable.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560CEB145DC08C00C24EBA /* Hidable.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		24560E4A145DC08D00C24EBA /* Inanimate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24560CEC145DC08C00C24EBA /* Inanimate.cpp */; };
@@ -293,6 +282,29 @@
 		51927C0E11D5EA5000C65B15 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		51927C0F11D5EA5000C65B15 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		51927C1011D5EA5100C65B15 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		51A2B2A51460752F001657B2 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A2B28E1460752F001657B2 /* Button.cpp */; };
+		51A2B2A61460752F001657B2 /* Button.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B28F1460752F001657B2 /* Button.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2A71460752F001657B2 /* ButtonState.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B2901460752F001657B2 /* ButtonState.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2A81460752F001657B2 /* Checkbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A2B2911460752F001657B2 /* Checkbox.cpp */; };
+		51A2B2A91460752F001657B2 /* Checkbox.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B2921460752F001657B2 /* Checkbox.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2AA1460752F001657B2 /* IMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A2B2931460752F001657B2 /* IMenu.cpp */; };
+		51A2B2AB1460752F001657B2 /* IMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B2941460752F001657B2 /* IMenu.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2AC1460752F001657B2 /* IMenuElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A2B2951460752F001657B2 /* IMenuElement.cpp */; };
+		51A2B2AD1460752F001657B2 /* IMenuElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B2961460752F001657B2 /* IMenuElement.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2AE1460752F001657B2 /* LineSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B2971460752F001657B2 /* LineSlider.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2AF1460752F001657B2 /* LoopingMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A2B2981460752F001657B2 /* LoopingMenu.cpp */; };
+		51A2B2B01460752F001657B2 /* LoopingMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B2991460752F001657B2 /* LoopingMenu.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2B11460752F001657B2 /* ScrollingMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A2B29A1460752F001657B2 /* ScrollingMenu.cpp */; };
+		51A2B2B21460752F001657B2 /* ScrollingMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B29B1460752F001657B2 /* ScrollingMenu.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2B31460752F001657B2 /* SelectingMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A2B29C1460752F001657B2 /* SelectingMenu.cpp */; };
+		51A2B2B41460752F001657B2 /* SelectingMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B29D1460752F001657B2 /* SelectingMenu.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2B51460752F001657B2 /* SimpleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A2B29E1460752F001657B2 /* SimpleButton.cpp */; };
+		51A2B2B61460752F001657B2 /* SimpleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B29F1460752F001657B2 /* SimpleButton.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2B71460752F001657B2 /* Slider.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B2A01460752F001657B2 /* Slider.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2B81460752F001657B2 /* SpriteMenuElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A2B2A11460752F001657B2 /* SpriteMenuElement.cpp */; };
+		51A2B2B91460752F001657B2 /* SpriteMenuElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B2A21460752F001657B2 /* SpriteMenuElement.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51A2B2BA1460752F001657B2 /* TextButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51A2B2A31460752F001657B2 /* TextButton.cpp */; };
+		51A2B2BB1460752F001657B2 /* TextButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A2B2A41460752F001657B2 /* TextButton.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7EF711F1132D35C100524FBB /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711ED132D35C100524FBB /* libfreetype.a */; };
 		7EF711F2132D35C100524FBB /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF711EE132D35C100524FBB /* libpng.a */; };
 /* End PBXBuildFile section */
@@ -375,17 +387,6 @@
 		24560CD8145DC08C00C24EBA /* RBOpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBOpenGL.h; sourceTree = "<group>"; };
 		24560CDB145DC08C00C24EBA /* Graphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graphic.h; sourceTree = "<group>"; };
 		24560CDC145DC08C00C24EBA /* GraphicElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicElement.h; sourceTree = "<group>"; };
-		24560CDE145DC08C00C24EBA /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
-		24560CDF145DC08C00C24EBA /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
-		24560CE0145DC08C00C24EBA /* ButtonState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonState.h; sourceTree = "<group>"; };
-		24560CE1145DC08C00C24EBA /* Checkbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Checkbox.cpp; sourceTree = "<group>"; };
-		24560CE2145DC08C00C24EBA /* Checkbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Checkbox.h; sourceTree = "<group>"; };
-		24560CE3145DC08C00C24EBA /* LineSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineSlider.h; sourceTree = "<group>"; };
-		24560CE4145DC08C00C24EBA /* SimpleButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleButton.cpp; sourceTree = "<group>"; };
-		24560CE5145DC08C00C24EBA /* SimpleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleButton.h; sourceTree = "<group>"; };
-		24560CE6145DC08C00C24EBA /* Slider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slider.h; sourceTree = "<group>"; };
-		24560CE8145DC08C00C24EBA /* TextButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextButton.cpp; sourceTree = "<group>"; };
-		24560CE9145DC08C00C24EBA /* TextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextButton.h; sourceTree = "<group>"; };
 		24560CEA145DC08C00C24EBA /* Hidable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Hidable.cpp; sourceTree = "<group>"; };
 		24560CEB145DC08C00C24EBA /* Hidable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hidable.h; sourceTree = "<group>"; };
 		24560CEC145DC08C00C24EBA /* Inanimate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Inanimate.cpp; sourceTree = "<group>"; };
@@ -584,6 +585,29 @@
 		515EB50512FF34AA004FB469 /* libRedBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRedBox.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		517BDCDD11B04CA80095F001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		517D7C3210F87AB10022BBF2 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		51A2B28E1460752F001657B2 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
+		51A2B28F1460752F001657B2 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
+		51A2B2901460752F001657B2 /* ButtonState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonState.h; sourceTree = "<group>"; };
+		51A2B2911460752F001657B2 /* Checkbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Checkbox.cpp; sourceTree = "<group>"; };
+		51A2B2921460752F001657B2 /* Checkbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Checkbox.h; sourceTree = "<group>"; };
+		51A2B2931460752F001657B2 /* IMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IMenu.cpp; sourceTree = "<group>"; };
+		51A2B2941460752F001657B2 /* IMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMenu.h; sourceTree = "<group>"; };
+		51A2B2951460752F001657B2 /* IMenuElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IMenuElement.cpp; sourceTree = "<group>"; };
+		51A2B2961460752F001657B2 /* IMenuElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMenuElement.h; sourceTree = "<group>"; };
+		51A2B2971460752F001657B2 /* LineSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineSlider.h; sourceTree = "<group>"; };
+		51A2B2981460752F001657B2 /* LoopingMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoopingMenu.cpp; sourceTree = "<group>"; };
+		51A2B2991460752F001657B2 /* LoopingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoopingMenu.h; sourceTree = "<group>"; };
+		51A2B29A1460752F001657B2 /* ScrollingMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollingMenu.cpp; sourceTree = "<group>"; };
+		51A2B29B1460752F001657B2 /* ScrollingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollingMenu.h; sourceTree = "<group>"; };
+		51A2B29C1460752F001657B2 /* SelectingMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SelectingMenu.cpp; sourceTree = "<group>"; };
+		51A2B29D1460752F001657B2 /* SelectingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectingMenu.h; sourceTree = "<group>"; };
+		51A2B29E1460752F001657B2 /* SimpleButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleButton.cpp; sourceTree = "<group>"; };
+		51A2B29F1460752F001657B2 /* SimpleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleButton.h; sourceTree = "<group>"; };
+		51A2B2A01460752F001657B2 /* Slider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slider.h; sourceTree = "<group>"; };
+		51A2B2A11460752F001657B2 /* SpriteMenuElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteMenuElement.cpp; sourceTree = "<group>"; };
+		51A2B2A21460752F001657B2 /* SpriteMenuElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteMenuElement.h; sourceTree = "<group>"; };
+		51A2B2A31460752F001657B2 /* TextButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextButton.cpp; sourceTree = "<group>"; };
+		51A2B2A41460752F001657B2 /* TextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextButton.h; sourceTree = "<group>"; };
 		51A9351410E8934500D144F4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7EF711ED132D35C100524FBB /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../libraries/build/lib/libfreetype.a; sourceTree = "<group>"; };
 		7EF711EE132D35C100524FBB /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../libraries/build/lib/libpng.a; sourceTree = "<group>"; };
@@ -821,17 +845,29 @@
 		24560CDD145DC08C00C24EBA /* Gui */ = {
 			isa = PBXGroup;
 			children = (
-				24560CDE145DC08C00C24EBA /* Button.cpp */,
-				24560CDF145DC08C00C24EBA /* Button.h */,
-				24560CE0145DC08C00C24EBA /* ButtonState.h */,
-				24560CE1145DC08C00C24EBA /* Checkbox.cpp */,
-				24560CE2145DC08C00C24EBA /* Checkbox.h */,
-				24560CE3145DC08C00C24EBA /* LineSlider.h */,
-				24560CE4145DC08C00C24EBA /* SimpleButton.cpp */,
-				24560CE5145DC08C00C24EBA /* SimpleButton.h */,
-				24560CE6145DC08C00C24EBA /* Slider.h */,
-				24560CE8145DC08C00C24EBA /* TextButton.cpp */,
-				24560CE9145DC08C00C24EBA /* TextButton.h */,
+				51A2B28E1460752F001657B2 /* Button.cpp */,
+				51A2B28F1460752F001657B2 /* Button.h */,
+				51A2B2901460752F001657B2 /* ButtonState.h */,
+				51A2B2911460752F001657B2 /* Checkbox.cpp */,
+				51A2B2921460752F001657B2 /* Checkbox.h */,
+				51A2B2931460752F001657B2 /* IMenu.cpp */,
+				51A2B2941460752F001657B2 /* IMenu.h */,
+				51A2B2951460752F001657B2 /* IMenuElement.cpp */,
+				51A2B2961460752F001657B2 /* IMenuElement.h */,
+				51A2B2971460752F001657B2 /* LineSlider.h */,
+				51A2B2981460752F001657B2 /* LoopingMenu.cpp */,
+				51A2B2991460752F001657B2 /* LoopingMenu.h */,
+				51A2B29A1460752F001657B2 /* ScrollingMenu.cpp */,
+				51A2B29B1460752F001657B2 /* ScrollingMenu.h */,
+				51A2B29C1460752F001657B2 /* SelectingMenu.cpp */,
+				51A2B29D1460752F001657B2 /* SelectingMenu.h */,
+				51A2B29E1460752F001657B2 /* SimpleButton.cpp */,
+				51A2B29F1460752F001657B2 /* SimpleButton.h */,
+				51A2B2A01460752F001657B2 /* Slider.h */,
+				51A2B2A11460752F001657B2 /* SpriteMenuElement.cpp */,
+				51A2B2A21460752F001657B2 /* SpriteMenuElement.h */,
+				51A2B2A31460752F001657B2 /* TextButton.cpp */,
+				51A2B2A41460752F001657B2 /* TextButton.h */,
 			);
 			path = Gui;
 			sourceTree = "<group>";
@@ -1176,13 +1212,6 @@
 				24560E3A145DC08D00C24EBA /* RBOpenGL.h in Headers */,
 				24560E3B145DC08D00C24EBA /* Graphic.h in Headers */,
 				24560E3C145DC08D00C24EBA /* GraphicElement.h in Headers */,
-				24560E3E145DC08D00C24EBA /* Button.h in Headers */,
-				24560E3F145DC08D00C24EBA /* ButtonState.h in Headers */,
-				24560E41145DC08D00C24EBA /* Checkbox.h in Headers */,
-				24560E42145DC08D00C24EBA /* LineSlider.h in Headers */,
-				24560E44145DC08D00C24EBA /* SimpleButton.h in Headers */,
-				24560E45145DC08D00C24EBA /* Slider.h in Headers */,
-				24560E47145DC08D00C24EBA /* TextButton.h in Headers */,
 				24560E49145DC08D00C24EBA /* Hidable.h in Headers */,
 				24560E4B145DC08D00C24EBA /* Inanimate.h in Headers */,
 				24560E4C145DC08D00C24EBA /* InanimateGraphicElement.h in Headers */,
@@ -1288,6 +1317,19 @@
 				24560F0F145DC08D00C24EBA /* SignalAnalyzerManager.h in Headers */,
 				24560F11145DC08D00C24EBA /* SignalData.h in Headers */,
 				24560F13145DC08D00C24EBA /* State.h in Headers */,
+				51A2B2A61460752F001657B2 /* Button.h in Headers */,
+				51A2B2A71460752F001657B2 /* ButtonState.h in Headers */,
+				51A2B2A91460752F001657B2 /* Checkbox.h in Headers */,
+				51A2B2AB1460752F001657B2 /* IMenu.h in Headers */,
+				51A2B2AD1460752F001657B2 /* IMenuElement.h in Headers */,
+				51A2B2AE1460752F001657B2 /* LineSlider.h in Headers */,
+				51A2B2B01460752F001657B2 /* LoopingMenu.h in Headers */,
+				51A2B2B21460752F001657B2 /* ScrollingMenu.h in Headers */,
+				51A2B2B41460752F001657B2 /* SelectingMenu.h in Headers */,
+				51A2B2B61460752F001657B2 /* SimpleButton.h in Headers */,
+				51A2B2B71460752F001657B2 /* Slider.h in Headers */,
+				51A2B2B91460752F001657B2 /* SpriteMenuElement.h in Headers */,
+				51A2B2BB1460752F001657B2 /* TextButton.h in Headers */,
 				24560F15145DC08D00C24EBA /* Vector2.h in Headers */,
 				24560F17145DC08D00C24EBA /* VerticesGroup.h in Headers */,
 				241CE3C9145EE0680063AD9B /* WindowOrientation.h in Headers */,
@@ -1394,10 +1436,6 @@
 				24560E34145DC08D00C24EBA /* GraphicDriver.cpp in Sources */,
 				24560E36145DC08D00C24EBA /* NullGraphicDriver.cpp in Sources */,
 				24560E38145DC08D00C24EBA /* OpenGLDriver.cpp in Sources */,
-				24560E3D145DC08D00C24EBA /* Button.cpp in Sources */,
-				24560E40145DC08D00C24EBA /* Checkbox.cpp in Sources */,
-				24560E43145DC08D00C24EBA /* SimpleButton.cpp in Sources */,
-				24560E46145DC08D00C24EBA /* TextButton.cpp in Sources */,
 				24560E48145DC08D00C24EBA /* Hidable.cpp in Sources */,
 				24560E4A145DC08D00C24EBA /* Inanimate.cpp in Sources */,
 				24560E4D145DC08D00C24EBA /* InanimateSprite.cpp in Sources */,
@@ -1481,6 +1519,16 @@
 				24560F14145DC08D00C24EBA /* Vector2.cpp in Sources */,
 				24560F16145DC08D00C24EBA /* VerticesGroup.cpp in Sources */,
 				241CE3CE145F33930063AD9B /* WavHeader.cpp in Sources */,
+				51A2B2A51460752F001657B2 /* Button.cpp in Sources */,
+				51A2B2A81460752F001657B2 /* Checkbox.cpp in Sources */,
+				51A2B2AA1460752F001657B2 /* IMenu.cpp in Sources */,
+				51A2B2AC1460752F001657B2 /* IMenuElement.cpp in Sources */,
+				51A2B2AF1460752F001657B2 /* LoopingMenu.cpp in Sources */,
+				51A2B2B11460752F001657B2 /* ScrollingMenu.cpp in Sources */,
+				51A2B2B31460752F001657B2 /* SelectingMenu.cpp in Sources */,
+				51A2B2B51460752F001657B2 /* SimpleButton.cpp in Sources */,
+				51A2B2B81460752F001657B2 /* SpriteMenuElement.cpp in Sources */,
+				51A2B2BA1460752F001657B2 /* TextButton.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
