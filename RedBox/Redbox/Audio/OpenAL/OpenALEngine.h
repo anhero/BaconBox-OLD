@@ -49,6 +49,7 @@ namespace RedBox {
 		 * @param newDevice Name of the device to set as the default device.
 		 */
 		void setDefaultDevice(const std::string& newDevice);
+		
 		/**
 		 * Gets the list of available auio devices on the system.
 		 * @return Vector containing the device names.

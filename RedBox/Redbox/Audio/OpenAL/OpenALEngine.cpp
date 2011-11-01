@@ -268,6 +268,7 @@ namespace RedBox {
 		// We check if the file is correctly opened.
 		if (binFile.is_open() && binFile.good()) {
 			// We get the file's starting position.
+			binFile.seekg(0, std::ios::beg);
 			long begin = binFile.tellg();
 			// We move at the end of the file.
 			binFile.seekg(0, std::ios::end);
@@ -279,7 +280,17 @@ namespace RedBox {
 			WavHeader wav;
 			// We read the wav header information from the file and put it in the
 			// wav variable.
-			binFile.read(reinterpret_cast<char*>(&wav), sizeof(wav));
+			binFile.read(reinterpret_cast<char*>(&wav), sizeof(WavHeader));
+			
+			if (wav.blockAlign != wav.nbChannels * (wav.bitsPerSample / 8)) {
+				wav.blockAlign = wav.nbChannels * (wav.bitsPerSample / 8);
+				Console::println("The wav's block alignment was wrong, we calculated the correct value.");
+			}
+			
+			if (wav.byteRate != wav.sampleRate * wav.nbChannels * (wav.bitsPerSample / 8)) {
+				wav.byteRate = wav.sampleRate * wav.nbChannels * (wav.bitsPerSample / 8);
+				Console::println("The wav's byte rate was wrong, we calculated the correct value.");
+			}
 			
 			// We check what wav we are reading.
 			if(wav.chunkId == OpenALEngine::CHUNK_ID_RIFF ||
@@ -305,7 +316,7 @@ namespace RedBox {
 					// We check to calculate the buffer size. The information in the header
 					// can sometimes be wrong, so we can calculate it using the file's size
 					// and substracting the header's size to it.
-					bufferSize = end - begin - sizeof(wav);
+					bufferSize = end - begin - sizeof(WavHeader);
 					// We allocate memory for the buffe data.
 					bufferData = new char[bufferSize];
 					// We read the data from the file.

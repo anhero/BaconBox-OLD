@@ -4,6 +4,11 @@
  */
 #ifndef RB_WAV_HEADER_H
 #define RB_WAV_HEADER_H
+
+#include <iostream>
+
+#include <stdint.h>
+
 namespace RedBox {
 #pragma pack(1)
 	/**
@@ -25,6 +30,8 @@ namespace RedBox {
 		uint32_t subchunk2Id;
 		uint32_t subchunk2Size;
 	};
+	
+	std::ostream &operator<<(std::ostream &output, const WavHeader &wh);
 }
 #pragma pack()
 #endif

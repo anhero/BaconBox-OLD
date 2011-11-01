@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		241CE3C9145EE0680063AD9B /* WindowOrientation.h in Headers */ = {isa = PBXBuildFile; fileRef = 241CE3C8145EE0680063AD9B /* WindowOrientation.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		241CE3CE145F33930063AD9B /* WavHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 241CE3CD145F33920063AD9B /* WavHeader.cpp */; };
 		24560DEE145DC08D00C24EBA /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24560C80145DC08C00C24EBA /* AudioEngine.cpp */; };
 		24560DEF145DC08D00C24EBA /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560C81145DC08C00C24EBA /* AudioEngine.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		24560DF0145DC08D00C24EBA /* AudioState.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560C82145DC08C00C24EBA /* AudioState.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -300,6 +301,7 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		241CE3C8145EE0680063AD9B /* WindowOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowOrientation.h; sourceTree = "<group>"; };
+		241CE3CD145F33920063AD9B /* WavHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WavHeader.cpp; sourceTree = "<group>"; };
 		24560C80145DC08C00C24EBA /* AudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEngine.cpp; sourceTree = "<group>"; };
 		24560C81145DC08C00C24EBA /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
 		24560C82145DC08C00C24EBA /* AudioState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioState.h; sourceTree = "<group>"; };
@@ -706,6 +708,7 @@
 				24560C9A145DC08C00C24EBA /* OpenALSoundFX.cpp */,
 				24560C9B145DC08C00C24EBA /* OpenALSoundFX.h */,
 				24560C9C145DC08C00C24EBA /* RBOpenAL.h */,
+				241CE3CD145F33920063AD9B /* WavHeader.cpp */,
 				24560C9E145DC08C00C24EBA /* WavHeader.h */,
 			);
 			path = OpenAL;
@@ -1477,6 +1480,7 @@
 				24560F12145DC08D00C24EBA /* State.cpp in Sources */,
 				24560F14145DC08D00C24EBA /* Vector2.cpp in Sources */,
 				24560F16145DC08D00C24EBA /* VerticesGroup.cpp in Sources */,
+				241CE3CE145F33930063AD9B /* WavHeader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

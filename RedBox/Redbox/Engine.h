@@ -30,6 +30,7 @@ namespace RedBox {
 
 		/// Signal sent when the RedBox engine is initialized.
 		static sigly::Signal4<unsigned int, unsigned int, float, float> onInitialize;
+		
 		/**
 		 * Adds a state to the engine's list.
 		 * @param newState Pointer to the state to add to the engine.
