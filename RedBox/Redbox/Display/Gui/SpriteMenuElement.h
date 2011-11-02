@@ -35,7 +35,7 @@ namespace RedBox {
 		 * Cloner.
 		 * @return a copy of the menu.
 		 */
-		IMenuElement* clone() const;
+		SpriteMenuElement* clone() const;
 		/**
 		 * Destructor.
 		 */

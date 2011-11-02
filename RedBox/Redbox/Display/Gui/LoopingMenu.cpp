@@ -71,7 +71,6 @@ void LoopingMenu::scrollTo(std::list<IMenuElement *>::iterator dest, bool force)
 		theTween.stop();
 		theTween.setStartValue(currentTween);
 		theTween.start();
-		//Tween::to(currentTween,Vector2(0.0,0), 1, ease);
 		(*middle)->select();
 		updateElementsPosition();
 	}
@@ -140,8 +139,10 @@ void LoopingMenu::updateElementsPosition(){
 					while ((*it)->getKey() != (*iRight)->getKey() || (*it)->isVisible()) {
 						it++;
 					}
-					(*it)->setPosition((*middle)->getPosition()+vect);
-					(*it)->setVisible(true);
+					if (it != fillingElements.end()) {
+						(*it)->setPosition((*middle)->getPosition()+vect);
+						(*it)->setVisible(true);
+					}
 				}else{
 					//Set the position of the real item
 					(*iRight)->setPosition((*middle)->getPosition()+vect);

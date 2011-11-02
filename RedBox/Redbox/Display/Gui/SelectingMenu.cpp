@@ -16,7 +16,7 @@ SelectingMenu::~SelectingMenu(){
 }
 void SelectingMenu::update(){
 	IMenu::update();
-	if(currentTween != Vector2(0.0,0.0)){
+	if(theTween.getValue() != Vector2(0.0,0.0)){
 		updateElementsPosition();
 	}
 //	Pointer* ptr = Pointer::getDefault();

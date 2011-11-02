@@ -7,10 +7,10 @@ SpriteMenuElement::SpriteMenuElement(const std::string& imageKey):IMenuElement(i
 SpriteMenuElement::SpriteMenuElement(const std::string& imageKey,const std::string& idKey):IMenuElement(idKey){
 	image = new Sprite(imageKey);
 }
-SpriteMenuElement::SpriteMenuElement(const SpriteMenuElement &src):IMenuElement(src.key){
-	image = new Sprite(src.key);
+SpriteMenuElement::SpriteMenuElement(const SpriteMenuElement &src):IMenuElement(src), image(new Sprite(*src.image)),
+currentMask(src.currentMask) {
 }
-IMenuElement* SpriteMenuElement::clone() const{
+SpriteMenuElement* SpriteMenuElement::clone() const{
 	return new SpriteMenuElement (*this);
 }
 SpriteMenuElement::~SpriteMenuElement(){
@@ -38,6 +38,7 @@ void SpriteMenuElement::rotateFromPoint(float rotationAngle, const Vector2& vect
 	Collidable::rotateFromPoint(rotationAngle, vect);
 	image->rotateFromPoint(rotationAngle, vect);
 }
+
 void SpriteMenuElement::setMask(Maskable* mask, bool inversed){
 	currentMask = mask;
 	image->setMask(currentMask,inversed);

@@ -4,7 +4,7 @@ using namespace RedBox;
 /**
  * Default constructor.
  */
-IMenuElement::IMenuElement(const std::string& newKey): isSelected(false), key(newKey){
+IMenuElement::IMenuElement(const std::string& newKey): Graphic<Animatable>(), Collidable(), Layerable(), sigly::HasSlots<>(), isSelected(false), key(newKey){
 	
 }
 
@@ -12,7 +12,7 @@ IMenuElement::IMenuElement(const std::string& newKey): isSelected(false), key(ne
  * Copy constructor.
  * @param src Emitter to make a copy of.
  */
-IMenuElement::IMenuElement(const IMenuElement& src){
+IMenuElement::IMenuElement(const IMenuElement& src) : Graphic<Animatable>(src), Collidable(src), Layerable(src), sigly::HasSlots<>(src), key(src.key) {
 }
 
 /**
