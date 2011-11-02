@@ -3,29 +3,12 @@
 #include "TextureInformation.h"
 
 namespace RedBox {
-	SimpleButton::SimpleButton(const std::string &newTextureKey,
+	SimpleButton::SimpleButton(TexturePointer newTexture,
 	                           const Vector2 &startingPosition,
 	                           const Vector2 &newSize,
 	                           const Vector2 &newTextureOffset) : Button() {
-		this->setTextureInformation(newTextureKey);
-
-		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
-			construct(newSize, startingPosition, newTextureOffset, 4);
-			this->initializeAnimations();
-
-		} else if (this->getTextureInformation()) {
-			construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth / 4),
-			                  static_cast<float>(this->getTextureInformation()->imageHeight)),
-			          startingPosition, newTextureOffset, 4);
-			this->initializeAnimations();
-		}
-	}
-
-	SimpleButton::SimpleButton(const TextureInformation *newTextureInformation,
-	                           const Vector2 &startingPosition,
-	                           const Vector2 &newSize,
-	                           const Vector2 &newTextureOffset) : Button() {
-		this->setTextureInformation(newTextureInformation);
+		this->setPosition(startingPosition);
+		this->setTextureInformation(newTexture);
 
 		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
 			construct(newSize, startingPosition, newTextureOffset, 4);

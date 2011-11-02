@@ -15,13 +15,8 @@ namespace RedBox {
 	 * @ingroup WindowDisplay
 	 */
 	class SDLMainWindow : public MainWindow {
+		friend class Engine;
 	public:
-		/**
-		 * Gets the singleton instance of SDLMainWindow.
-		 * @return Reference to the singleton.
-		 */
-		static SDLMainWindow& getInstance();
-
 		/**
 		 * Method called when the engine is initialized.
 		 * It is used to setup the geometry of the window.

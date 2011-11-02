@@ -56,11 +56,13 @@
  */
 
 #include <RedBox/Engine.h>
+#include <RedBox/MainWindow.h>
 #include <RedBox/State.h>
 #include <RedBox/DebugState.h>
 #include <RedBox/ResourceManager.h>
 #include <RedBox/ResourcePathHandler.h>
 #include <RedBox/SimpleButton.h>
+#include <RedBox/TextButton.h>
 #include <RedBox/Checkbox.h>
 #include <RedBox/LineSlider.h>
 #include <RedBox/InanimateGraphicElement.h>
@@ -78,8 +80,8 @@
 #include <RedBox/SoundFX.h>
 #include <RedBox/Timer.h>
 #include <RedBox/SpriteEmitter.h>
-#include <RedBox/RenderInfo.h>
 #include <RedBox/SpriteFactory.h>
+#include <RedBox/ShapeFactory.h>
 #include <RedBox/InputManager.h>
 #include <RedBox/Console.h>
 #include <RedBox/Tween.h>
@@ -87,3 +89,5 @@
 #include <RedBox/DraggingMenu.h>
 #include <RedBox/ScrollingMenu.h>
 #include <RedBox/SpriteMenuElement.h>
+#include <RedBox/StandardVerticesArray.h>
+#include <RedBox/Console.h>

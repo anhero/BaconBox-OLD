@@ -5,14 +5,14 @@
 
 namespace RedBox {
 	InanimateSprite::InanimateSprite() : Graphic<Inanimate>(), Collidable(),
-	    Layerable() {
+		Layerable() {
 	}
 
-	InanimateSprite::InanimateSprite(const std::string &newTextureKey,
+	InanimateSprite::InanimateSprite(TexturePointer newTexture,
 	                                 const Vector2 &startingPosition,
 	                                 const Vector2 &newSize,
 	                                 const Vector2 &newTextureOffset) :
-	    Graphic<Inanimate>(newTextureKey), Collidable(startingPosition), Layerable() {
+		Graphic<Inanimate>(newTexture), Collidable(startingPosition), Layerable() {
 		// We check if we have to use the texture as the full image.
 		if (newSize.getX() <= 0.0f || newSize.getY() <= 0.0f) {
 			// We make sure the texture information is valid.
@@ -21,24 +21,7 @@ namespace RedBox {
 				                  static_cast<float>(this->getTextureInformation()->imageHeight)),
 				          startingPosition);
 			}
-		} else {
-			construct(newSize, startingPosition, newTextureOffset);
-		}
-	}
 
-	InanimateSprite::InanimateSprite(const TextureInformation *newTextureInformation,
-	                                 const Vector2 &startingPosition,
-	                                 const Vector2 &newSize,
-	                                 const Vector2 &newTextureOffset) :
-	    Graphic<Inanimate>(newTextureInformation), Collidable(startingPosition), Layerable() {
-		// We check if we have to use the texture as the full image.
-		if (newSize.getX() <= 0.0f || newSize.getY() <= 0.0f) {
-			// We make sure the texture information is valid.
-			if (this->getTextureInformation()) {
-				construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth),
-				                  static_cast<float>(this->getTextureInformation()->imageHeight)),
-				          startingPosition);
-			}
 		} else {
 			construct(newSize, startingPosition, newTextureOffset);
 		}

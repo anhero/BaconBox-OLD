@@ -79,7 +79,7 @@ namespace RedBox {
 	}
 
 
-	void NullGraphicDriver::initializeGraphicDriver(float, float) {
+	void NullGraphicDriver::initializeGraphicDriver() {
 	}
 
 	void NullGraphicDriver::pushMatrix() {

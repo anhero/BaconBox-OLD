@@ -61,8 +61,8 @@ namespace RedBox {
 		 */
 		Vector2T<ValueType>& operator=(const Vector2T<ValueType>& src) {
 			if (this != &src) {
-				setX(src.getX());
-				setY(src.getY());
+				x = src.x;
+				y = src.y;
 			}
 
 			return *this;
@@ -76,7 +76,8 @@ namespace RedBox {
 		 * @return Reference to the modified instance.
 		 */
 		Vector2T<ValueType>& operator+=(const Vector2T<ValueType>& rhs) {
-			addToXY(rhs);
+			x += rhs.x;
+			y += rhs.y;
 			return *this;
 		}
 
@@ -86,7 +87,8 @@ namespace RedBox {
 		 * @return Reference to the modified instance.
 		 */
 		Vector2T<ValueType>& operator+=(ValueType rhs) {
-			addToXY(rhs);
+			x += rhs;
+			y += rhs;
 			return *this;
 		}
 
@@ -98,7 +100,8 @@ namespace RedBox {
 		 * @return Reference to the modified instance.
 		 */
 		Vector2T<ValueType>& operator-=(const Vector2T<ValueType>& rhs) {
-			subtractFromXY(rhs);
+			x -= rhs.x;
+			y -= rhs.y;
 			return *this;
 		}
 
@@ -108,7 +111,8 @@ namespace RedBox {
 		 * @return Reference to the modified instance.
 		 */
 		Vector2T<ValueType>& operator-=(ValueType rhs) {
-			subtractFromXY(rhs);
+			x -= rhs;
+			y -= rhs;
 			return *this;
 		}
 
@@ -118,7 +122,8 @@ namespace RedBox {
 		 * @return Reference to the modified instance.
 		 */
 		Vector2T<ValueType>& operator*=(ValueType rhs) {
-			scalarMultiplication(rhs);
+			x *= rhs;
+			y *= rhs;
 			return *this;
 		}
 
@@ -128,7 +133,8 @@ namespace RedBox {
 		 * @return Reference to the modified instance.
 		 */
 		Vector2T<ValueType>& operator/=(ValueType rhs) {
-			scalarDivision(rhs);
+			x /= rhs;
+			y /= rhs;
 			return *this;
 		}
 
@@ -140,7 +146,8 @@ namespace RedBox {
 		 * @return Reference to the modified insance.
 		 */
 		Vector2T<ValueType>& operator/=(const Vector2T<ValueType> &rhs) {
-			scalarDivision(rhs);
+			x /= rhs.x;
+			y /= rhs.y;
 			return *this;
 		}
 
@@ -231,7 +238,7 @@ namespace RedBox {
 		 * recieved vector, false if not.
 		 */
 		bool operator==(const Vector2T<ValueType>& other) const {
-			return getX() == other.getX() && getY() == other.getY();
+			return x == other.x && y == other.y;
 		}
 
 		/**
@@ -289,8 +296,8 @@ namespace RedBox {
 		 * @see RedBox::Vector2T<T>::y
 		 */
 		void setXY(ValueType newX, ValueType newY) {
-			setX(newX);
-			setY(newY);
+			x = newX;
+			y = newY;
 		}
 
 		/**
@@ -298,7 +305,7 @@ namespace RedBox {
 		 * @param xDelta Value to add to the instance's x coordinate.
 		 */
 		void addToX(ValueType xDelta) {
-			setX(getX() + xDelta);
+			x += xDelta;
 		}
 
 		/**
@@ -306,7 +313,7 @@ namespace RedBox {
 		 * @param yDelta Value to add to the instance's y coordinate.
 		 */
 		void addToY(ValueType yDelta) {
-			setY(getY() + yDelta);
+			y += yDelta;
 		}
 
 		/**
@@ -315,8 +322,8 @@ namespace RedBox {
 		 * @param yDelta Value to add to the instance's y coordinate.
 		 */
 		void addToXY(ValueType xDelta, ValueType yDelta) {
-			addToX(xDelta);
-			addToY(yDelta);
+			x += xDelta;
+			y += yDelta;
 		}
 
 		/**
@@ -325,7 +332,8 @@ namespace RedBox {
 		 * @param delta Vector to add to the instance.
 		 */
 		void addToXY(const Vector2T<ValueType>& delta) {
-			addToXY(delta.x, delta.y);
+			x += delta.x;
+			y += delta.y;
 		}
 
 		/**
@@ -333,7 +341,8 @@ namespace RedBox {
 		 * @param delta Value to add to the instance's coordinates.
 		 */
 		void addToXY(ValueType delta) {
-			addToXY(delta, delta);
+			x += delta;
+			y += delta;
 		}
 
 		/**
@@ -341,7 +350,7 @@ namespace RedBox {
 		 * @param xDelta Value to subtract from the instance's x coordinate.
 		 */
 		void subtractFromX(ValueType xDelta) {
-			setX(getX() - xDelta);
+			x -= xDelta;
 		}
 
 		/**
@@ -349,7 +358,7 @@ namespace RedBox {
 		 * @param yDelta Value to subtract from the instance's y coordinate.
 		 */
 		void subtractFromY(ValueType yDelta) {
-			setY(getY() - yDelta);
+			y -= yDelta;
 		}
 
 		/**
@@ -358,8 +367,8 @@ namespace RedBox {
 		 * @param yDelta Value to subtract from the instance's y coordinate.
 		 */
 		void subtractFromXY(ValueType xDelta, ValueType yDelta) {
-			subtractFromX(xDelta);
-			subtractFromY(yDelta);
+			x -= xDelta;
+			y -= yDelta;
 		}
 
 		/**
@@ -368,7 +377,8 @@ namespace RedBox {
 		 * @param delta Vector to subtract from the instance.
 		 */
 		void subtractFromXY(const Vector2T<ValueType>& delta) {
-			subtractFromXY(delta.x, delta.y);
+			x -= delta.x;
+			y -= delta.y;
 		}
 
 		/**
@@ -376,7 +386,8 @@ namespace RedBox {
 		 * @param delta Value to subtract from the instance's coordinates.
 		 */
 		void subtractFromXY(ValueType delta) {
-			subtractFromXY(delta, delta);
+			x -= delta;
+			y -= delta;
 		}
 
 		/**
@@ -385,7 +396,8 @@ namespace RedBox {
 		 * @param yFactor Y factor to multiply the instance's x coordinate by.
 		 */
 		void scalarMultiplication(ValueType xFactor, ValueType yFactor) {
-			setXY(getX() * xFactor, getY() * yFactor);
+			x *= xFactor;
+			y *= yFactor;
 		}
 
 		/**
@@ -395,7 +407,8 @@ namespace RedBox {
 		 * instance's coordinates by.
 		 */
 		void scalarMultiplication(const Vector2T<ValueType>& factor) {
-			scalarMultiplication(factor.getX(), factor.getY());
+			x *= factor.x;
+			y *= factor.y;
 		}
 
 		/**
@@ -403,7 +416,8 @@ namespace RedBox {
 		 * @param factor Factor to multiply the instance's coordinates by.
 		 */
 		void scalarMultiplication(ValueType factor) {
-			scalarMultiplication(factor, factor);
+			x *= factor;
+			y *= factor;
 		}
 
 		/**
@@ -412,7 +426,8 @@ namespace RedBox {
 		 * @param yDivisor Y divisor to divide the instance's x coordinate by.
 		 */
 		void scalarDivision(ValueType xDivisor, ValueType yDivisor) {
-			setXY(getX() / xDivisor, getY() / yDivisor);
+			x /= xDivisor;
+			y /= yDivisor;
 		}
 
 		/**
@@ -421,7 +436,8 @@ namespace RedBox {
 		 * divisors.
 		 */
 		void scalarDivision(const Vector2T<ValueType> &divisor) {
-			scalarDivision(divisor.getX(), divisor.getY());
+			x /= divisor.x;
+			y /= divisor.y;
 		}
 
 		/**
@@ -429,7 +445,8 @@ namespace RedBox {
 		 * @param divisor Divisor to divide the instance's coordinates by.
 		 */
 		void scalarDivision(ValueType divisor) {
-			scalarDivision(divisor, divisor);
+			x /= divisor;
+			y /= divisor;
 		}
 
 		/**
@@ -438,7 +455,7 @@ namespace RedBox {
 		 * @return Resulting dot product.
 		 */
 		ValueType getDotProduct(const Vector2T<ValueType>& other) const {
-			return getX() * other.getX() + getY() * other.getY();
+			return x * other.x + y * other.y;
 		}
 
 		/**
@@ -482,7 +499,7 @@ namespace RedBox {
 		 * clockwise.
 		 */
 		ValueType getAngle() const {
-			return (getX() < DEFAULT_VALUE) ? (-getAngleBetween(UP)) : (getAngleBetween(UP));
+			return (x < DEFAULT_VALUE) ? (-getAngleBetween(UP)) : (getAngleBetween(UP));
 		}
 
 		/**
@@ -493,8 +510,8 @@ namespace RedBox {
 		 */
 		void rotate(ValueType angle) {
 			float radians = MathHelper::degreesToRadians(angle);
-			setXY(getX() * cosf(radians) + getY() * sinf(radians),
-			      getY() * cosf(radians) - getX() * sinf(radians));
+			setXY(x * cosf(radians) + y * sinf(radians),
+			      y * cosf(radians) - x * sinf(radians));
 		}
 
 		/**

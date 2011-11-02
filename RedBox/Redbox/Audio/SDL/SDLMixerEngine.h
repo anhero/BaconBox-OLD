@@ -27,13 +27,13 @@ namespace RedBox {
 	 * @ingroup Audio
 	 */
 	class SDLMixerEngine : public SoundEngine, public MusicEngine {
-		friend class AudioEngine;
+		friend class Engine;
 	public:
 		/**
 		 * Gets the singleton instance.
 		 * @return Pointer to the audio engine's instance.
 		 */
-		static SDLMixerEngine& getInstance();
+		static SDLMixerEngine *getInstance();
 
 		/**
 		 * Converts the SDL volume to its RedBox equivalent.
@@ -111,22 +111,31 @@ namespace RedBox {
 	private:
 		/// Playback frequency
 		static const int AUDIO_RATE = 44100;
+
 		/// Playback audio format.
 		static const uint16_t AUDIO_FORMAT = AUDIO_S16SYS;
+
 		/// Number of audio channels. By default, it's in Stereo.
 		static const int AUDIO_CHANNELS = 2;
+
 		/// Size of the audio buffer for music playing.
 		static const int AUDIO_BUFFERS = 4096;
+
 		/// Number of possible simultaneous sound effects.
 		static const int NB_SOUND_CHANNELS = 32;
+
 		/**
 		 * Number of ticks (ms) between each fade update when a music is
 		 * fading to pause or resume.
 		 */
 		static const unsigned int NB_TICKS_PER_FADE = 100;
 
+		/// Pointer to the singleton instance.
+		static SDLMixerEngine *instance;
+
 		/// Last tick at which the fade update was called.
 		unsigned int lastFadeTick;
+
 		/// Flag used to ask to be disconnected from the fadeUpdate signal.
 		bool disconnect;
 

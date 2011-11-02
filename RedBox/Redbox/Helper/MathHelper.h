@@ -125,6 +125,17 @@ namespace RedBox {
 		 */
 		template <typename T>
 		static T clampAngle(T angle);
+
+		/**
+		 * Calculates the distance between two one-dimensional segments.
+		 * @return Distance between the two segments. Negative value if they
+		 * overlap.
+		 */
+		template <typename T>
+		static T distance(T minA, T maxA, T minB, T maxB) {
+			return (minA < minB) ? (minB - maxA) : (minA - maxB);
+		}
+
 	private:
 		template <typename T>
 		struct RadiansToDegrees {

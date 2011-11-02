@@ -19,7 +19,7 @@ namespace RedBox {
 		/**
 		 * Parameterized constructor. Initializes the graphic string with a
 		 * font, an alignment, a direction and a starting position.
-		 * @param fontKey Key for the font to use in the ResourceManager.
+		 * @param newFont Font pointer to use as the text's font.
 		 * @param newAlignment Graphic string's text alignment.
 		 * @param newDirection Graphic string's text direction.
 		 * @param startingPosition Starting position (upper left corner).
@@ -28,7 +28,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicString::alignment
 		 * @see RedBox::GraphicString::direction
 		 */
-		explicit Text(const std::string &fontKey,
+		explicit Text(FontPointer newFont,
 		              TextAlignment newAlignment = TextAlignment::LEFT,
 		              TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
 		              const Vector2 &startingPosition = Vector2());
@@ -36,23 +36,7 @@ namespace RedBox {
 		/**
 		 * Parameterized constructor. Initializes the graphic string with a
 		 * font, a text, an alignment, a direction and a starting position.
-		 * @param newFont Pointer to the font to use to display the string.
-		 * @param newAlignment Graphic string's text alignment.
-		 * @param newDirection Graphic string's text direction.
-		 * @param startingPosition Starting position (upper left corner).
-		 * @see RedBox::GraphicString::font
-		 * @see RedBox::GraphicString::alignment
-		 * @see RedBox::GraphicString::direction
-		 */
-		explicit Text(Font *newFont,
-		              TextAlignment newAlignment = TextAlignment::LEFT,
-		              TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
-		              const Vector2 &startingPosition = Vector2());
-
-		/**
-		 * Parameterized constructor. Initializes the graphic string with a
-		 * font, a text, an alignment, a direction and a starting position.
-		 * @param fontKey Key for the font to use in the ResourceManager.
+		 * @param newFont Font pointer to use as the text's font.
 		 * @param newText UTF8 string to use as the string's text.
 		 * @param newAlignment Graphic string's text alignment.
 		 * @param newDirection Graphic string's text direction.
@@ -63,7 +47,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicString::alignment
 		 * @see RedBox::GraphicString::direction
 		 */
-		Text(const std::string &fontKey,
+		Text(FontPointer newFont,
 		     const std::string &newText,
 		     TextAlignment newAlignment = TextAlignment::LEFT,
 		     TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
@@ -72,26 +56,7 @@ namespace RedBox {
 		/**
 		 * Parameterized constructor. Initializes the graphic string with a
 		 * font, a text, an alignment, a direction and a starting position.
-		 * @param newFont Pointer to the font to use to display the string.
-		 * @param newText UTF8 string to use as the string's text.
-		 * @param newAlignment Graphic string's text alignment.
-		 * @param newDirection Graphic string's text direction.
-		 * @param startingPosition Starting position (upper left corner).
-		 * @see RedBox::GraphicString::font
-		 * @see RedBox::GraphicString::text
-		 * @see RedBox::GraphicString::alignment
-		 * @see RedBox::GraphicString::direction
-		 */
-		Text(Font *newFont,
-		     const std::string &newText,
-		     TextAlignment newAlignment = TextAlignment::LEFT,
-		     TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
-		     const Vector2 &startingPosition = Vector2());
-
-		/**
-		 * Parameterized constructor. Initializes the graphic string with a
-		 * font, a text, an alignment, a direction and a starting position.
-		 * @param fontKey Key for the font to use in the ResourceManager.
+		 * @param newFont Font pointer to use as the text's font.
 		 * @param newText Unicode string to use as the string's text.
 		 * @param newAlignment Graphic string's text alignment.
 		 * @param newDirection Graphic string's text direction.
@@ -102,26 +67,7 @@ namespace RedBox {
 		 * @see RedBox::GraphicString::alignment
 		 * @see RedBox::GraphicString::direction
 		 */
-		Text(const std::string &fontKey,
-		     const String32 &newText,
-		     TextAlignment newAlignment = TextAlignment::LEFT,
-		     TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,
-		     const Vector2 &startingPosition = Vector2());
-
-		/**
-		 * Parameterized constructor. Initializes the graphic string with a
-		 * font, a text, an alignment, a direction and a starting position.
-		 * @param newFont Pointer to the font to use to display the string.
-		 * @param newText Unicode string to use as the string's text.
-		 * @param newAlignment Graphic string's text alignment.
-		 * @param newDirection Graphic string's text direction.
-		 * @param startingPosition Starting position (upper left corner).
-		 * @see RedBox::GraphicString::font
-		 * @see RedBox::GraphicString::text
-		 * @see RedBox::GraphicString::alignment
-		 * @see RedBox::GraphicString::direction
-		 */
-		Text(Font *newFont,
+		Text(FontPointer newFont,
 		     const String32 &newText,
 		     TextAlignment newAlignment = TextAlignment::LEFT,
 		     TextDirection newDirection = TextDirection::LEFT_TO_RIGHT,

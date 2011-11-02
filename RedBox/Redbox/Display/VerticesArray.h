@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "Vector2.h"
+#include "AxisAlignedBoundingBox.h"
 
 namespace RedBox {
 	/**
@@ -275,6 +276,27 @@ namespace RedBox {
 		 */
 		void rotateFromPoint(float rotationAngle,
 		                     const Vector2 &rotationPoint);
+
+		/**
+		 * Checks if a point is inside the polygon represented by the vertices.
+		 * @param point Point to check if it is inside the polygon.
+		 * @return True if the point is inside the polygon, false if not.
+		 */
+		bool overlaps(const Vector2 &point) const;
+
+		/**
+		 * Gets the axis aligned bounding box that surronds the vertices array.
+		 * @return Axis aligned bounding box for the vertices array.
+		 */
+		AxisAlignedBoundingBox getAxisAlignedBoundingBox() const;
+
+		/**
+		 * Checks if two polygons are intersecting (touching each other). Uses
+		 * the Separating Axis Theorem.
+		 * @param other VerticesArray to use for the other polygon.
+		 * @return True if the polygons are intersecting, false if not.
+		 */
+		bool intersects(const VerticesArray &other) const;
 	};
 }
 #endif

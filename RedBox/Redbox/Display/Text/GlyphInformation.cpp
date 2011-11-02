@@ -8,7 +8,7 @@ namespace RedBox {
 	GlyphInformation::GlyphInformation(const Vector2 &newAdvance,
 	                                   const Vector2 &newHorizontalBearing,
 	                                   const Vector2 &newSize,
-	                                   const TextureInformation *newTextureInformation) :
+	                                   TextureInformation *newTextureInformation) :
 		advance(newAdvance), horizontalBearing(newHorizontalBearing),
 		size(newSize), textureInformation(newTextureInformation) {
 	}

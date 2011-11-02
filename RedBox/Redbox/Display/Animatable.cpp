@@ -7,40 +7,18 @@
 #include "TextureInformation.h"
 
 namespace RedBox {
-	Animatable::Animatable() : Updateable(), TextureMappable(), frames(),
+	Animatable::Animatable(TexturePointer newTexture) :
+		Updateable(), TextureMappable(newTexture), frames(),
 		currentFrame(0), currentNbLoops(-1), animationPaused(true),
 		animationCounter(0.0), defaultFrame(0), animations(),
 		currentAnimation() {
 	}
 
-	Animatable::Animatable(const std::string &newTextureKey) : Updateable(),
-		TextureMappable(newTextureKey), frames(), currentFrame(0),
-		currentNbLoops(-1), animationPaused(true), animationCounter(0.0),
-		defaultFrame(0), animations(), currentAnimation() {
-	}
-
-	Animatable::Animatable(const TextureInformation *newTextureInformation) :
-		Updateable(), TextureMappable(newTextureInformation), frames(),
-		currentFrame(0), currentNbLoops(-1), animationPaused(true),
-		animationCounter(0.0), defaultFrame(0), animations(),
-		currentAnimation() {
-	}
-
-	Animatable::Animatable(const std::string &newTextureKey,
+	Animatable::Animatable(TexturePointer newTexture,
 	                       const VerticesArray &vertices,
 	                       const Vector2 &offset,
 	                       unsigned int nbFrames) : Updateable(),
-		TextureMappable(newTextureKey), frames(), currentFrame(0),
-		currentNbLoops(-1), animationPaused(true), animationCounter(0.0),
-		defaultFrame(0), animations(), currentAnimation() {
-		loadTextureCoordinates(vertices, offset, nbFrames);
-	}
-
-	Animatable::Animatable(const TextureInformation *newTextureInformation,
-	                       const VerticesArray &vertices,
-	                       const Vector2 &offset,
-	                       unsigned int nbFrames) : Updateable(),
-		TextureMappable(newTextureInformation), frames(), currentFrame(0),
+		TextureMappable(newTexture), frames(), currentFrame(0),
 		currentNbLoops(-1), animationPaused(true), animationCounter(0.0),
 		defaultFrame(0), animations(), currentAnimation() {
 		loadTextureCoordinates(vertices, offset, nbFrames);
@@ -217,7 +195,7 @@ namespace RedBox {
 			bool okay = true;
 			std::vector<unsigned int>::const_iterator i = newAnimationDefinition.frames.begin();
 
-			while (i != newAnimationDefinition.frames.end()) {
+			while (i != newAnimationDefinition.frames.end() && okay) {
 				if (*i >= frames.size()) {
 					okay = false;
 
@@ -241,6 +219,11 @@ namespace RedBox {
 						startAnimation(newName);
 					}
 				}
+			} else {
+				Console::print("Failed to add the animation named \"");
+				Console::print(newName);
+				Console::println("\" because one of its frame index was too high.");
+				Console::printTrace();
 			}
 		}
 	}
@@ -261,12 +244,15 @@ namespace RedBox {
 
 				std::vector<unsigned int>::iterator i = insertionResult.first->second.frames.begin();
 				bool okay = true;
+
 				while (okay &&
 				       i != insertionResult.first->second.frames.end()) {
 					*i = va_arg(lstFrames, unsigned int);
+
 					if (*i >= frames.size()) {
 						okay = false;
 					}
+
 					++i;
 				}
 
@@ -275,10 +261,12 @@ namespace RedBox {
 				if (okay) {
 					insertionResult.first->second.timePerFrame = newTimePerFrame;
 					insertionResult.first->second.nbLoops = newNbLoops;
+
 				} else {
 					animations.erase(insertionResult.first);
 				}
 			}
+
 		} else {
 			Console::print("Failed to add the animation named : ");
 			Console::println(newName);
@@ -346,26 +334,21 @@ namespace RedBox {
 			TextureMappable::loadTextureCoordinates(this->getTextureInformation(), vertices, tmpOffset, &(*i));
 			tmpOffset.addToX(delta.getX());
 
-			if (tmpOffset.getX() + delta.getX() > static_cast<float>(this->getTextureInformation()->imageWidth)) {
+			// We make sure the texture information is valid before checking
+			// its image width.
+			if (this->getTextureInformation() &&
+			    tmpOffset.getX() + delta.getX() > static_cast<float>(this->getTextureInformation()->imageWidth)) {
 				tmpOffset.addToY(delta.getY());
 				tmpOffset.setX(0.0f);
 			}
 		}
 	}
 
-	void Animatable::loadTextureCoordinates(const std::string &newTextureKey,
+	void Animatable::loadTextureCoordinates(TexturePointer newTexture,
 	                                        const VerticesArray &vertices,
 	                                        const Vector2 &offset,
 	                                        unsigned int nbFrames) {
-		this->setTextureInformation(newTextureKey);
-		this->loadTextureCoordinates(vertices, offset, nbFrames);
-	}
-
-	void Animatable::loadTextureCoordinates(const TextureInformation *newTextureInformation,
-	                                        const VerticesArray &vertices,
-	                                        const Vector2 &offset,
-	                                        unsigned int nbFrames) {
-		this->setTextureInformation(newTextureInformation);
+		this->setTextureInformation(newTexture);
 		this->loadTextureCoordinates(vertices, offset, nbFrames);
 	}
 }

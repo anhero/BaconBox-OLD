@@ -2,18 +2,16 @@
 
 using namespace RedBox;
 
-Stopwatch::Stopwatch(): Object(), startTime(0.0), pausedTime(0.0),
+Stopwatch::Stopwatch(): startTime(0.0), pausedTime(0.0),
 	paused(false), started(false), timeType(TimeHelper::SCALABLE_PAUSABLE) {
 }
 
-Stopwatch::Stopwatch(const Stopwatch &src) : Object(src),
-	startTime(src.startTime), pausedTime(src.pausedTime), paused(src.paused),
-	started(src.started), timeType(src.timeType) {
+Stopwatch::Stopwatch(const Stopwatch &src) : startTime(src.startTime),
+	pausedTime(src.pausedTime), paused(src.paused), started(src.started),
+	timeType(src.timeType) {
 }
 
 Stopwatch &Stopwatch::operator=(const Stopwatch &src) {
-	this->Object::operator=(src);
-
 	if (this != &src) {
 		startTime = src.startTime;
 		pausedTime = src.pausedTime;

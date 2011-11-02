@@ -9,10 +9,11 @@
 #include "Graphic.h"
 #include "Collidable.h"
 #include "Layerable.h"
+#include "TexturePointer.h"
 
 namespace RedBox {
 	class InanimateSprite : public Graphic<Inanimate>, public Collidable,
-	        public Layerable {
+		public Layerable {
 	public:
 		/**
 		 * Default constructor.
@@ -23,31 +24,14 @@ namespace RedBox {
 		 * Parameterized constructor. Loads the vertices and the texture
 		 * coordinates. If the specified size has a coordinate equal to 0 or
 		 * lower, it loads the the full texture as the size and image.
-		 * @param newTextureKey Key to the texture to create a texturable from.
+		 * @param newTexture Texture pointer to use as the texture.
 		 * @param startingPosition Starting position at which to place the
 		 * sprite.
 		 * @param newSize Size of the sprite.
 		 * @param newTextureOffset Texture coordinates' offset if needed.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		explicit InanimateSprite(const std::string &newTextureKey,
-		                         const Vector2 &startingPosition = Vector2(),
-		                         const Vector2 &newSize = Vector2(),
-		                         const Vector2 &newTextureOffset = Vector2());
-
-		/**
-		 * Parameterized constructor. Loads the vertices and the texture
-		 * coordinates. If the specified size has a coordinate equal to 0 or
-		 * lower, it loads the the full texture as the size and image.
-		 * @param newTextureInformation Pointer to the texture information to
-		 * load the sprite with.
-		 * @param startingPosition Starting position at which to place the
-		 * sprite.
-		 * @param newSize Size of the sprite.
-		 * @param newTextureOffset Texture coordinates' offset if needed.
-		 * @see RedBox::Texturable::textureInformation
-		 */
-		explicit InanimateSprite(const TextureInformation *newTextureInformation,
+		explicit InanimateSprite(TexturePointer newTexture,
 		                         const Vector2 &startingPosition = Vector2(),
 		                         const Vector2 &newSize = Vector2(),
 		                         const Vector2 &newTextureOffset = Vector2());

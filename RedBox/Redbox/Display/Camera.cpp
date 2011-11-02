@@ -104,6 +104,7 @@ namespace RedBox {
 	const Vector2 Camera::screenToWorld(const Vector2 &positionOnScreen) const {
 		// We apply the camera's scaling and rotation to the position on screen.
 		Vector2 result(positionOnScreen);
+		result.scalarMultiplication((getSize() / Vector2(static_cast<float>(MainWindow::getInstance().getResolutionWidth()), static_cast<float>(MainWindow::getInstance().getResolutionHeight()))));
 		result.scalarDivision(this->getScaling());
 		result.rotate(this->getAngle());
 		// We add this new vector to the camera's first vertices, which
@@ -131,6 +132,7 @@ namespace RedBox {
 		// We then unapply the rotation and the scaling.
 		result.rotate(-this->getAngle());
 		result.scalarMultiplication(this->getScaling());
+		result.scalarMultiplication((getSize() / Vector2(static_cast<float>(MainWindow::getInstance().getResolutionWidth()), static_cast<float>(MainWindow::getInstance().getResolutionHeight()))));
 		return result;
 	}
 

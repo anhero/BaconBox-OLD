@@ -22,6 +22,7 @@ void RBAudioPlayerMusic::play(int nbTimes, double fadeIn) {
 		if(fadeIn >= 0.0) {
 			[bgm fadeInPlay:nbTimes :static_cast<float>(fadeIn)];
 			playedOnce = true;
+			currentMusic = this;
 		} else {
 			Console::print("Tried to play a music with an invalid fade in time : " +
 				Console::toString(fadeIn) + " sec.");
@@ -37,6 +38,7 @@ void RBAudioPlayerMusic::stop(double fadeOut) {
 	assert(bgm);
 	if(fadeOut >= 0.0) {
 		[bgm fadeOutStop:static_cast<float>(fadeOut)];
+		currentMusic = NULL;
 	} else {
 		Console::print("Tried to stop a music with an invalid fade out time : " +
 			  Console::toString(fadeOut) + " sec.");
@@ -98,6 +100,7 @@ RBAudioPlayerMusic::~RBAudioPlayerMusic() {
 
 void RBAudioPlayerMusic::refreshVolume() {
 	if(currentMusic) {
+		[currentMusic->bgm refreshVolume];
 	}
 }
 

@@ -21,7 +21,7 @@
 
 - (void)stopFading {
 	fading = NOT_FADING;
-	BGMusic.volume = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())));
+	BGMusic.volume = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME)));
 }
 
 - (void)play:(int)nbLoops{
@@ -31,7 +31,7 @@
 			nbLoops = -1;
 		}
 		BGMusic.numberOfLoops = (nbLoops > -1) ? (nbLoops) : (-1);
-		BGMusic.volume = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())));
+		BGMusic.volume = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME)));
 		[BGMusic stop];
 		[BGMusic play];
 	}
@@ -58,7 +58,7 @@
 		[self stop];
 	} else {
 		fading = FADING_OUT_STOP;
-		fadeDelta = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()))) / (time / FADE_TICK_TIME);
+		fadeDelta = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME))) / (time / FADE_TICK_TIME);
 		[self fadeOutStop];
 	}
 }
@@ -79,7 +79,7 @@
 		[self pause];
 	} else {
 		fading = FADING_OUT_PAUSE;
-		fadeDelta = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()))) / (time / FADE_TICK_TIME);
+		fadeDelta = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME))) / (time / FADE_TICK_TIME);
 		[self fadeOutPause];
 	}
 }
@@ -96,7 +96,7 @@
 }
 
 - (void)fadeInPlay:(int)nbLoops :(float)time {
-	if (BGMusic.volume < (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()))) || !BGMusic.playing) {
+	if (BGMusic.volume < (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME))) || !BGMusic.playing) {
 		if(time == 0.0) {
 			[self play:nbLoops];
 		} else {
@@ -114,14 +114,14 @@
 }
 
 - (void)fadeInPlay {
-	if(fading == FADING_IN_PLAY && BGMusic.volume < (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())))) {
-		BGMusic.volume = (BGMusic.volume + fadeDelta > (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())))) ? ((realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())))) : (BGMusic.volume + fadeDelta);
+	if(fading == FADING_IN_PLAY && BGMusic.volume < (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME)))) {
+		BGMusic.volume = (BGMusic.volume + fadeDelta > (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())))) ? ((realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME)))) : (BGMusic.volume + fadeDelta);
 		[self performSelector:@selector(fadeInPlay) withObject:nil afterDelay: FADE_TICK_TIME];
 	}
 }
 
 - (void)fadeInResume:(float)time{
-	if(BGMusic.volume < (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()))) || !BGMusic.playing) {
+	if(BGMusic.volume < (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME))) || !BGMusic.playing) {
 		if(time == 0.0) {
 			[self resume];
 		} else {
@@ -130,21 +130,21 @@
 				BGMusic.volume = 0.0;
 				[BGMusic play];
 			}
-			fadeDelta = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()))) / (time / FADE_TICK_TIME);
+			fadeDelta = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME))) / (time / FADE_TICK_TIME);
 			[self fadeInResume];
 		}
 	}
 }
 
 - (void)fadeInResume{
-	if(fading == FADING_IN_RESUME && BGMusic.volume < (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())))) {
-		BGMusic.volume = (BGMusic.volume + fadeDelta > (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())))) ? ((realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())))) : (BGMusic.volume + fadeDelta);
+	if(fading == FADING_IN_RESUME && BGMusic.volume < (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME)))) {
+		BGMusic.volume = (BGMusic.volume + fadeDelta > (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())))) ? ((realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME)))) : (BGMusic.volume + fadeDelta);
 		[self performSelector:@selector(fadeInResume) withObject:nil afterDelay: FADE_TICK_TIME];
 	}
 }
 
 - (void)refreshVolume {
-	BGMusic.volume = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume())));
+	BGMusic.volume = (realVolume * (static_cast<float>(RedBox::AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(RedBox::Sound::MAX_VOLUME)));
 }
 
 - (BOOL)isLooping{

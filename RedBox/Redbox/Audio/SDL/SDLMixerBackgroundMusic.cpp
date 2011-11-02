@@ -139,7 +139,7 @@ void SDLMixerBackgroundMusic::pause(double fadeOut) {
 		fadeTime = static_cast<unsigned int>(fadeOut * 1000.0);
 		fadeStart = SDL_GetTicks();
 		fadeType = FADE_OUT;
-		SDLMixerEngine::getInstance().fadeUpdate.connect(this, &SDLMixerBackgroundMusic::fadeUpdate);
+		SDLMixerEngine::getInstance()->fadeUpdate.connect(this, &SDLMixerBackgroundMusic::fadeUpdate);
 	}
 }
 
@@ -149,7 +149,7 @@ void SDLMixerBackgroundMusic::resume(double fadeIn) {
 		fadeTime = static_cast<unsigned int>(fadeIn * 1000.0);
 		fadeStart = SDL_GetTicks();
 		fadeType = FADE_IN;
-		SDLMixerEngine::getInstance().fadeUpdate.connect(this, &SDLMixerBackgroundMusic::fadeUpdate);
+		SDLMixerEngine::getInstance()->fadeUpdate.connect(this, &SDLMixerBackgroundMusic::fadeUpdate);
 		setSDLMusicVolume(0);
 		Mix_ResumeMusic();
 	}
@@ -196,7 +196,7 @@ void SDLMixerBackgroundMusic::fadeUpdate(unsigned int ticks) {
 			}
 		}
 	} else {
-		SDLMixerEngine::getInstance().askForDisconnect();
+		SDLMixerEngine::getInstance()->askForDisconnect();
 	}
 }
 

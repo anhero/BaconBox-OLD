@@ -28,10 +28,10 @@ namespace RedBox {
 		 * Clamps the current value to be within the possible range.
 		 * @param newMinimumValue Range's minimum value.
 		 * @param newMaximumValue Range's maximum value.
-		 * @param newLineTextureKey Key of the texture to use to render the
+		 * @param newLineTexture Texture pointer to use as the texture for the
 		 * background line.
-		 * @param newButtonTextureKey Key of the texture to use to render the
-		 * movable button.
+		 * @param newButtonTexture Texture pointer to use as the texture for
+		 * the movable button.
 		 * @param startingPosition Position at which to place the line slider.
 		 * @param newLineSize Size of the line background.
 		 * @param newButtonSize Size of the movable button.
@@ -44,132 +44,18 @@ namespace RedBox {
 		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
 		 */
 		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
-		           const std::string &newLineTextureKey,
-		           const std::string &newButtonTextureKey,
+		           TexturePointer newLineTexture,
+		           TexturePointer newButtonTexture,
 		           const Vector2 &startingPosition = Vector2(),
 		           const Vector2 &newLineSize = Vector2(),
 		           const Vector2 &newButtonSize = Vector2(),
 		           const Vector2 &newLineTextureOffset = Vector2(),
 		           const Vector2 &newButtonTextureOffset = Vector2()) :
 			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
-			lineSprite(newLineTextureKey, startingPosition, newLineSize,
+			lineSprite(newLineTexture, startingPosition, newLineSize,
 			           newLineTextureOffset),
-			buttonSprite(newButtonTextureKey, startingPosition, newButtonSize,
+			buttonSprite(newButtonTexture, startingPosition, newButtonSize,
 			             newButtonTextureOffset), down(false),
-			vertices(4, startingPosition) {
-			initialize(newMinimumValue, newMaximumValue, newMinimumValue,
-			           startingPosition);
-		}
-
-		/**
-		 * Parameterized constructor. Sets the minimum and maximum value.
-		 * Clamps the current value to be within the possible range.
-		 * @param newMinimumValue Range's minimum value.
-		 * @param newMaximumValue Range's maximum value.
-		 * @param newLineTextureInformation Pointer to the texture information
-		 * to use to render the background line.
-		 * @param newButtonTextureKey Key of the texture to use to render the
-		 * movable button.
-		 * @param startingPosition Position at which to place the line slider.
-		 * @param newLineSize Size of the line background.
-		 * @param newButtonSize Size of the movable button.
-		 * @param newLineTextureOffset Offset in the texture of the background
-		 * line.
-		 * @param newButtonTextureOffset Offset in the texture of the movable
-		 * button.
-		 * @see RedBox::Slider<T>::minimumValue
-		 * @see RedBox::Slider<T>::maximumValue
-		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
-		 */
-		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
-		           const TextureInformation *newLineTextureInformation,
-		           const std::string &newButtonTextureKey,
-		           const Vector2 &startingPosition = Vector2(),
-		           const Vector2 &newLineSize = Vector2(),
-		           const Vector2 &newButtonSize = Vector2(),
-		           const Vector2 &newLineTextureOffset = Vector2(),
-		           const Vector2 &newButtonTextureOffset = Vector2()) :
-			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
-			lineSprite(newLineTextureInformation, startingPosition, newLineSize,
-			           newLineTextureOffset),
-			buttonSprite(newButtonTextureKey, startingPosition, newButtonSize,
-			             newButtonTextureOffset), down(false),
-			vertices(4, startingPosition) {
-			initialize(newMinimumValue, newMaximumValue, newMinimumValue,
-			           startingPosition);
-		}
-
-		/**
-		 * Parameterized constructor. Sets the minimum and maximum value.
-		 * Clamps the current value to be within the possible range.
-		 * @param newMinimumValue Range's minimum value.
-		 * @param newMaximumValue Range's maximum value.
-		 * @param newLineTextureKey Key of the texture to use to render the
-		 * background line.
-		 * @param newButtonTextureInformation Pointer to the texture
-		 * information to use to render the movable button.
-		 * @param startingPosition Position at which to place the line slider.
-		 * @param newLineSize Size of the line background.
-		 * @param newButtonSize Size of the movable button.
-		 * @param newLineTextureOffset Offset in the texture of the background
-		 * line.
-		 * @param newButtonTextureOffset Offset in the texture of the movable
-		 * button.
-		 * @see RedBox::Slider<T>::minimumValue
-		 * @see RedBox::Slider<T>::maximumValue
-		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
-		 */
-		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
-		           const std::string &newLineTextureKey,
-		           const TextureInformation *newButtonTextureInformation,
-		           const Vector2 &startingPosition = Vector2(),
-		           const Vector2 &newLineSize = Vector2(),
-		           const Vector2 &newButtonSize = Vector2(),
-		           const Vector2 &newLineTextureOffset = Vector2(),
-		           const Vector2 &newButtonTextureOffset = Vector2()) :
-			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
-			lineSprite(newLineTextureKey, startingPosition, newLineSize,
-			           newLineTextureOffset),
-			buttonSprite(newButtonTextureInformation, startingPosition,
-			             newButtonSize, newButtonTextureOffset), down(false),
-			vertices(4, startingPosition) {
-			initialize(newMinimumValue, newMaximumValue, newMinimumValue,
-			           startingPosition);
-		}
-
-		/**
-		 * Parameterized constructor. Sets the minimum and maximum value.
-		 * Clamps the current value to be within the possible range.
-		 * @param newMinimumValue Range's minimum value.
-		 * @param newMaximumValue Range's maximum value.
-		 * @param newLineTextureInformation Pointer to the texture information
-		 * to use to render the background line.
-		 * @param newButtonTextureInformation Pointer to the texture
-		 * information to use to render the movable button.
-		 * @param startingPosition Position at which to place the line slider.
-		 * @param newLineSize Size of the line background.
-		 * @param newButtonSize Size of the movable button.
-		 * @param newLineTextureOffset Offset in the texture of the background
-		 * line.
-		 * @param newButtonTextureOffset Offset in the texture of the movable
-		 * button.
-		 * @see RedBox::Slider<T>::minimumValue
-		 * @see RedBox::Slider<T>::maximumValue
-		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
-		 */
-		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
-		           const TextureInformation *newLineTextureInformation,
-		           const TextureInformation *newButtonTextureInformation,
-		           const Vector2 &startingPosition = Vector2(),
-		           const Vector2 &newLineSize = Vector2(),
-		           const Vector2 &newButtonSize = Vector2(),
-		           const Vector2 &newLineTextureOffset = Vector2(),
-		           const Vector2 &newButtonTextureOffset = Vector2()) :
-			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
-			lineSprite(newLineTextureInformation, startingPosition, newLineSize,
-			           newLineTextureOffset),
-			buttonSprite(newButtonTextureInformation, startingPosition,
-			             newButtonSize, newButtonTextureOffset), down(false),
 			vertices(4, startingPosition) {
 			initialize(newMinimumValue, newMaximumValue, newMinimumValue,
 			           startingPosition);
@@ -181,10 +67,10 @@ namespace RedBox {
 		 * @param newMinimumValue Range's minimum value.
 		 * @param newMaximumValue Range's maximum value.
 		 * @param startingValue Starting current value.
-		 * @param newLineTextureKey Key of the texture to use to render the
+		 * @param newLineTexture Texture pointer to use as the texture for the
 		 * background line.
-		 * @param newButtonTextureKey Key of the texture to use to render the
-		 * movable button.
+		 * @param newButtonTexture Texture pointer to use as the texture for
+		 * the movable button.
 		 * @param startingPosition Position at which to place the line slider.
 		 * @param newLineSize Size of the line background.
 		 * @param newButtonSize Size of the movable button.
@@ -198,138 +84,18 @@ namespace RedBox {
 		 */
 		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
 		           ValueType startingValue,
-		           const std::string &newLineTextureKey,
-		           const std::string &newButtonTextureKey,
+		           TexturePointer newLineTexture,
+		           TexturePointer newButtonTexture,
 		           const Vector2 &startingPosition = Vector2(),
 		           const Vector2 &newLineSize = Vector2(),
 		           const Vector2 &newButtonSize = Vector2(),
 		           const Vector2 &newLineTextureOffset = Vector2(),
 		           const Vector2 &newButtonTextureOffset = Vector2()) :
 			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
-			lineSprite(newLineTextureKey, startingPosition, newLineSize,
+			lineSprite(newLineTexture, startingPosition, newLineSize,
 			           newLineTextureOffset),
-			buttonSprite(newButtonTextureKey, startingPosition, newButtonSize,
+			buttonSprite(newButtonTexture, startingPosition, newButtonSize,
 			             newButtonTextureOffset), down(false),
-			vertices(4, startingPosition) {
-			initialize(newMinimumValue, newMaximumValue, startingValue,
-			           startingPosition);
-		}
-
-		/**
-		 * Parameterized constructor. Sets the minimum and maximum value.
-		 * Clamps the current value to be within the possible range.
-		 * @param newMinimumValue Range's minimum value.
-		 * @param newMaximumValue Range's maximum value.
-		 * @param startingValue Starting current value.
-		 * @param newLineTextureInformation Pointer to the texture information
-		 * to use to render the background line.
-		 * @param newButtonTextureKey Key of the texture to use to render the
-		 * movable button.
-		 * @param startingPosition Position at which to place the line slider.
-		 * @param newLineSize Size of the line background.
-		 * @param newButtonSize Size of the movable button.
-		 * @param newLineTextureOffset Offset in the texture of the background
-		 * line.
-		 * @param newButtonTextureOffset Offset in the texture of the movable
-		 * button.
-		 * @see RedBox::Slider<T>::minimumValue
-		 * @see RedBox::Slider<T>::maximumValue
-		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
-		 */
-		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
-		           ValueType startingValue,
-		           const TextureInformation *newLineTextureInformation,
-		           const std::string &newButtonTextureKey,
-		           const Vector2 &startingPosition = Vector2(),
-		           const Vector2 &newLineSize = Vector2(),
-		           const Vector2 &newButtonSize = Vector2(),
-		           const Vector2 &newLineTextureOffset = Vector2(),
-		           const Vector2 &newButtonTextureOffset = Vector2()) :
-			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
-			lineSprite(newLineTextureInformation, startingPosition, newLineSize,
-			           newLineTextureOffset),
-			buttonSprite(newButtonTextureKey, startingPosition, newButtonSize,
-			             newButtonTextureOffset), down(false),
-			vertices(4, startingPosition) {
-			initialize(newMinimumValue, newMaximumValue, startingValue,
-			           startingPosition);
-		}
-
-		/**
-		 * Parameterized constructor. Sets the minimum and maximum value.
-		 * Clamps the current value to be within the possible range.
-		 * @param newMinimumValue Range's minimum value.
-		 * @param newMaximumValue Range's maximum value.
-		 * @param startingValue Starting current value.
-		 * @param newLineTextureKey Key of the texture to use to render the
-		 * background line.
-		 * @param newButtonTextureInformation Pointer to the texture
-		 * information to use to render the movable button.
-		 * @param startingPosition Position at which to place the line slider.
-		 * @param newLineSize Size of the line background.
-		 * @param newButtonSize Size of the movable button.
-		 * @param newLineTextureOffset Offset in the texture of the background
-		 * line.
-		 * @param newButtonTextureOffset Offset in the texture of the movable
-		 * button.
-		 * @see RedBox::Slider<T>::minimumValue
-		 * @see RedBox::Slider<T>::maximumValue
-		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
-		 */
-		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
-		           ValueType startingValue,
-		           const std::string &newLineTextureKey,
-		           const TextureInformation *newButtonTextureInformation,
-		           const Vector2 &startingPosition = Vector2(),
-		           const Vector2 &newLineSize = Vector2(),
-		           const Vector2 &newButtonSize = Vector2(),
-		           const Vector2 &newLineTextureOffset = Vector2(),
-		           const Vector2 &newButtonTextureOffset = Vector2()) :
-			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
-			lineSprite(newLineTextureKey, startingPosition, newLineSize,
-			           newLineTextureOffset),
-			buttonSprite(newButtonTextureInformation, startingPosition,
-			             newButtonSize, newButtonTextureOffset), down(false),
-			vertices(4, startingPosition) {
-			initialize(newMinimumValue, newMaximumValue, startingValue,
-			           startingPosition);
-		}
-
-		/**
-		 * Parameterized constructor. Sets the minimum and maximum value.
-		 * Clamps the current value to be within the possible range.
-		 * @param newMinimumValue Range's minimum value.
-		 * @param newMaximumValue Range's maximum value.
-		 * @param startingValue Starting current value.
-		 * @param newLineTextureInformation Pointer to the texture information
-		 * to use to render the background line.
-		 * @param newButtonTextureInformation Pointer to the texture
-		 * information to use to render the movable button.
-		 * @param startingPosition Position at which to place the line slider.
-		 * @param newLineSize Size of the line background.
-		 * @param newButtonSize Size of the movable button.
-		 * @param newLineTextureOffset Offset in the texture of the background
-		 * line.
-		 * @param newButtonTextureOffset Offset in the texture of the movable
-		 * button.
-		 * @see RedBox::Slider<T>::minimumValue
-		 * @see RedBox::Slider<T>::maximumValue
-		 * @see RedBox::Slider<T>::setMinimumMaximumValue(ValueType newMinimumValue, ValueType newMaximumValue)
-		 */
-		LineSlider(ValueType newMinimumValue, ValueType newMaximumValue,
-		           ValueType startingValue,
-		           const TextureInformation *newLineTextureInformation,
-		           const TextureInformation *newButtonTextureInformation,
-		           const Vector2 &startingPosition = Vector2(),
-		           const Vector2 &newLineSize = Vector2(),
-		           const Vector2 &newButtonSize = Vector2(),
-		           const Vector2 &newLineTextureOffset = Vector2(),
-		           const Vector2 &newButtonTextureOffset = Vector2()) :
-			Slider<ValueType>(), Collidable(startingPosition), Layerable(),
-			lineSprite(newLineTextureInformation, startingPosition, newLineSize,
-			           newLineTextureOffset),
-			buttonSprite(newButtonTextureInformation, startingPosition,
-			             newButtonSize, newButtonTextureOffset), down(false),
 			vertices(4, startingPosition) {
 			initialize(newMinimumValue, newMaximumValue, startingValue,
 			           startingPosition);

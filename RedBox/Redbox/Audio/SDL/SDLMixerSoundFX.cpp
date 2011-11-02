@@ -76,7 +76,7 @@ SDLMixerSoundFX::~SDLMixerSoundFX() {
 SDLMixerSoundFX::SDLMixerSoundFX() : SoundFX(), looping(false), channel(-1),
 	data(NULL), hasPlayed(false) {
 	haltChannel.connect(this, &SDLMixerSoundFX::onChannelHalt);
-	SDLMixerEngine::getInstance().soundVolumeChange.connect(this, &SDLMixerSoundFX::soundVolumeChanged);
+	SDLMixerEngine::getInstance()->soundVolumeChange.connect(this, &SDLMixerSoundFX::soundVolumeChanged);
 }
 
 void SDLMixerSoundFX::load(Mix_Chunk* newData) {
@@ -100,6 +100,6 @@ void SDLMixerSoundFX::soundVolumeChanged() {
 
 void SDLMixerSoundFX::refreshVolume(int newVolume) {
 	if(channel != INVALID_CHANNEL) {
-		Mix_Volume(channel, SDLMixerEngine::redBoxToSdlVolume(static_cast<int>(static_cast<float>(newVolume) * (static_cast<float>(SDLMixerEngine::getInstance().getSoundVolume()) / static_cast<float>(Sound::MAX_VOLUME)))));
+		Mix_Volume(channel, SDLMixerEngine::redBoxToSdlVolume(static_cast<int>(static_cast<float>(newVolume) * (static_cast<float>(SDLMixerEngine::getInstance()->getSoundVolume()) / static_cast<float>(Sound::MAX_VOLUME)))));
 	}
 }
