@@ -32,6 +32,13 @@ namespace RedBox {
 
 		/// Default value.
 		static const ValueType DEFAULT_VALUE;
+		
+		/**
+		 * 
+		 */
+		static const Vector2T<ValueType> scalarMultiplication(const Vector2T<ValueType> &first, const Vector2T<ValueType> &second) {
+			return Vector2T<ValueType>(first.x * second.x, first.y * second.y);
+		}
 
 		/**
 		 * Default constructor.
