@@ -41,14 +41,14 @@ namespace RedBox {
 	}
 
 	void MainWindow::setContextSize(float newContextWidth, float newContextHeight) {
-		if (newContextWidth == 0) {
+		if (newContextWidth == 0.0f) {
 			contextWidth = resolutionWidth;
 
 		} else {
 			contextWidth = newContextWidth;
 		}
 
-		if (newContextHeight == 0) {
+		if (newContextHeight == 0.0f) {
 			contextHeight = resolutionHeight;
 
 		} else {

@@ -5,17 +5,19 @@
 #include "SDLInputManager.h"
 #include "RBOpenGL.h"
 #include "Engine.h"
+#include "GraphicDriver.h"
 
 namespace RedBox {
 
 	void SDLMainWindow::onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight) {
-		this->resolutionWidth = resolutionWidth;
-		this->resolutionHeight = resolutionHeight;
-		setContextSize(contextWidth, contextHeight);
+		this->MainWindow::setResolution(resolutionWidth, resolutionHeight);
+		this->MainWindow::setContextSize(contextWidth, contextHeight);
 
 		mainWindow = SDL_CreateWindow(MainWindow::DEFAULT_NAME.c_str(),
 		                              SDL_WINDOWPOS_CENTERED,
-		                              SDL_WINDOWPOS_CENTERED, this->resolutionWidth, this->resolutionHeight,
+		                              SDL_WINDOWPOS_CENTERED,
+		                              static_cast<int>(this->getResolutionWidth()),
+		                              static_cast<int>(this->getResolutionHeight()),
 		                              SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 		mainContext = SDL_GL_CreateContext(mainWindow);
 
@@ -42,8 +44,17 @@ namespace RedBox {
 		}
 	}
 
-	void SDLMainWindow::setResolution(unsigned int /*resolutionWidth*/, unsigned int /*resolutionHeight*/) {
-		//TODO!!!!
+	void SDLMainWindow::setResolution(unsigned int resolutionWidth,
+	                                  unsigned int resolutionHeight) {
+		this->MainWindow::setResolution(resolutionWidth, resolutionHeight);
+		SDL_SetWindowSize(mainWindow, static_cast<int>(this->getResolutionWidth()), static_cast<int>(this->getResolutionHeight()));
+		GraphicDriver::getInstance().initializeGraphicDriver();
+	}
+
+	void SDLMainWindow::setContextSize(float newContextWidth,
+	                                   float newContextHeight) {
+		this->MainWindow::setContextSize(newContextWidth, newContextHeight);
+		GraphicDriver::getInstance().initializeGraphicDriver();
 	}
 
 	void SDLMainWindow::setCaption(const std::string &caption) {

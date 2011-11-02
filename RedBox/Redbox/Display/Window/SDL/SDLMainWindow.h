@@ -35,7 +35,7 @@ namespace RedBox {
 		 * the title in the titlebar.
 		 * @param caption The text used to replace the title.
 		 */
-		void setCaption(const std::string& caption);
+		void setCaption(const std::string &caption);
 
 		/**
 		 * Checks if the main window is full screen.
@@ -62,12 +62,19 @@ namespace RedBox {
 		 * @param newInputGrabbed
 		 */
 		void setInputGrabbed(bool newInputGrabbed);
-        
-        /** 
-         * Set the resolution of the window.
-         */
-        void setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight);
-      
+
+		/**
+		 * Set the resolution of the window.
+		 */
+		void setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight);
+
+
+		/**
+		 * Sets the context size. If you want to work in pixels, set them to 0 and they
+		 * will automagically match the current resolution width and height
+		 */
+		void setContextSize(float newContextWidth,
+		                    float newContextHeight);
 	private:
 		/**
 		 * Initializes SDL.
@@ -80,7 +87,7 @@ namespace RedBox {
 		~SDLMainWindow();
 
 		/// Handle to the main window.
-		SDL_Window* mainWindow;
+		SDL_Window *mainWindow;
 
 		/// Handle to the OpenGL context in the main window.
 		SDL_GLContext mainContext;
