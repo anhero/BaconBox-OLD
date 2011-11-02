@@ -539,7 +539,7 @@ namespace RedBox {
 			glDeleteFramebuffersEXT(1, &maskedFramebuffer);
 		}
 
-		glGenFramebuffersEXT(1, &maskeddFramebuffer);
+		glGenFramebuffersEXT(1, &maskedFramebuffer);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, maskedFramebuffer);
 #endif
 
