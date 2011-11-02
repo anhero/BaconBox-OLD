@@ -273,6 +273,8 @@
 		24560F17145DC08D00C24EBA /* VerticesGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560DEC145DC08D00C24EBA /* VerticesGroup.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		24560F18145DC08D00C24EBA /* RedBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 24560DED145DC08D00C24EBA /* RedBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		245EAF10134E62CD002F0596 /* sigly.h in Headers */ = {isa = PBXBuildFile; fileRef = 245EAF0F134E62CD002F0596 /* sigly.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2477FEA114618F3E00D1834B /* DraggingMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2477FE9F14618F3E00D1834B /* DraggingMenu.cpp */; };
+		2477FEA214618F3E00D1834B /* DraggingMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 2477FEA014618F3E00D1834B /* DraggingMenu.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A9351410E8934500D144F4 /* AudioToolbox.framework */; };
 		51927C0711D5EA3E00C65B15 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5102AA7A10F547D300585718 /* AVFoundation.framework */; };
 		51927C0811D5EA4200C65B15 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 512D586C109B6D45009D504E /* libz.dylib */; };
@@ -578,6 +580,8 @@
 		24560DEC145DC08D00C24EBA /* VerticesGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticesGroup.h; sourceTree = "<group>"; };
 		24560DED145DC08D00C24EBA /* RedBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBox.h; sourceTree = "<group>"; };
 		245EAF0F134E62CD002F0596 /* sigly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sigly.h; path = ../../libraries/ios/universal/include/sigly.h; sourceTree = "<group>"; };
+		2477FE9F14618F3E00D1834B /* DraggingMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DraggingMenu.cpp; sourceTree = "<group>"; };
+		2477FEA014618F3E00D1834B /* DraggingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggingMenu.h; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -850,6 +854,8 @@
 				51A2B2901460752F001657B2 /* ButtonState.h */,
 				51A2B2911460752F001657B2 /* Checkbox.cpp */,
 				51A2B2921460752F001657B2 /* Checkbox.h */,
+				2477FE9F14618F3E00D1834B /* DraggingMenu.cpp */,
+				2477FEA014618F3E00D1834B /* DraggingMenu.h */,
 				51A2B2931460752F001657B2 /* IMenu.cpp */,
 				51A2B2941460752F001657B2 /* IMenu.h */,
 				51A2B2951460752F001657B2 /* IMenuElement.cpp */,
@@ -1333,6 +1339,7 @@
 				24560F15145DC08D00C24EBA /* Vector2.h in Headers */,
 				24560F17145DC08D00C24EBA /* VerticesGroup.h in Headers */,
 				241CE3C9145EE0680063AD9B /* WindowOrientation.h in Headers */,
+				2477FEA214618F3E00D1834B /* DraggingMenu.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,6 +1536,7 @@
 				51A2B2B51460752F001657B2 /* SimpleButton.cpp in Sources */,
 				51A2B2B81460752F001657B2 /* SpriteMenuElement.cpp in Sources */,
 				51A2B2BA1460752F001657B2 /* TextButton.cpp in Sources */,
+				2477FEA114618F3E00D1834B /* DraggingMenu.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

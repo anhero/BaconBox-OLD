@@ -91,3 +91,4 @@
 #include <RedBox/SpriteMenuElement.h>
 #include <RedBox/StandardVerticesArray.h>
 #include <RedBox/Console.h>
+#include <RedBox/PlatformFlagger.h>
