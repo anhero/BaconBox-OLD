@@ -17,6 +17,10 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self.view = [[[EAGLView alloc] initWithFrame:frame] autorelease];
+    
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && [[UIScreen mainScreen] scale] == 2){
+        [self.view setContentScaleFactor:2.0f];
+    }
     //self.view.clipsToBounds = YES;
     
     EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
