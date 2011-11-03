@@ -308,16 +308,6 @@ namespace RedBox {
 		return AxisAlignedBoundingBox(getPosition() + getOffset(), getCollidingSize());
 	}
 
-	const AxisAlignedBoundingBox Collidable::getXCollidingBox() const {
-		return AxisAlignedBoundingBox(Vector2(std::min(getXPosition(), getOldXPosition()), getYPosition()) + getOffset(),
-		                              getCollidingSize());
-	}
-
-	const AxisAlignedBoundingBox Collidable::getYCollidingBox() const {
-		return AxisAlignedBoundingBox(Vector2(getXPosition(), std::min(getYPosition(), getOldYPosition())) + getOffset(),
-		                              getCollidingSize());
-	}
-
 	std::pair<bool, CollisionDetails> Collidable::collide(Collidable *other) {
 		std::pair<bool, CollisionDetails> result(false, CollisionDetails());
 		result.second.body1 = this;
@@ -611,13 +601,17 @@ namespace RedBox {
 			// If they have the same speed, it means they are following each
 			// other.
 			if (obj1Delta != obj2Delta) {
+				float obj1DeltaAbs = fabsf(obj1Delta);
+				float obj2DeltaAbs = fabsf(obj2Delta);
 				// We create AABBs of the old position with the updated horizontal
 				//position.
-				AxisAlignedBoundingBox box1 = getXCollidingBox();
-				AxisAlignedBoundingBox box2 = other->getXCollidingBox();
+				AxisAlignedBoundingBox box1(Vector2(getXPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)), getOldYPosition()),
+				                            Vector2(getWidth() + obj1DeltaAbs, getHeight()));
+				AxisAlignedBoundingBox box2(Vector2(other->getXPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)), other->getOldYPosition()),
+				                            Vector2(other->getWidth() + obj2DeltaAbs, other->getHeight()));
 
 				if (box1.overlaps(box2)) {
-					float maxOverlap = fabsf(obj1Delta) + fabsf(obj2Delta) + OVERLAP_BIAS;
+					float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + OVERLAP_BIAS;
 
 					if (obj1Delta > obj2Delta) {
 						overlap = box1.getRight() - box2.getLeft();
@@ -694,13 +688,17 @@ namespace RedBox {
 			// If they have the same speed, it means they are following each
 			// other.
 			if (obj1Delta != obj2Delta) {
+				float obj1DeltaAbs = fabsf(obj1Delta);
+				float obj2DeltaAbs = fabsf(obj2Delta);
 				// We create AABBs of the old position with the updated horizontal
 				//position.
-				AxisAlignedBoundingBox box1 = getYCollidingBox();
-				AxisAlignedBoundingBox box2 = other->getYCollidingBox();
+				AxisAlignedBoundingBox box1(Vector2(getXPosition(), getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f))),
+				                            Vector2(getWidth(), getHeight() + obj1DeltaAbs));
+				AxisAlignedBoundingBox box2(Vector2(other->getXPosition(), other->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f))),
+				                            Vector2(other->getWidth(), other->getHeight() + obj1DeltaAbs));
 
 				if (box1.overlaps(box2)) {
-					float maxOverlap = fabsf(obj1Delta) + fabsf(obj2Delta) + OVERLAP_BIAS;
+					float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + OVERLAP_BIAS;
 
 					if (obj1Delta > obj2Delta) {
 						overlap = box1.getBottom() - box2.getTop();

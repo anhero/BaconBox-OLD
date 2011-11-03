@@ -484,20 +484,6 @@ namespace RedBox {
 		const AxisAlignedBoundingBox getAxisAlignedBoundingBox() const;
 
 		/**
-		 * Gets the colliding box taking into account the horizontal movement.
-		 * @return Axis-aligned bounding box for the collidable taking into
-		 * account the horizontal movement.
-		 */
-		const AxisAlignedBoundingBox getXCollidingBox() const;
-
-		/**
-		 * Gets the colliding box taking into account the vertical movement.
-		 * @return Axis-aligned bounding box for the collidable taking into
-		 * account the vertical movement.
-		 */
-		const AxisAlignedBoundingBox getYCollidingBox() const;
-
-		/**
 		 * Collides two collidables against each other. It tests if they are
 		 * colliding and returns a pair containing the collision information.
 		 * Applies the elasticity, takes into account if the bodies are static,

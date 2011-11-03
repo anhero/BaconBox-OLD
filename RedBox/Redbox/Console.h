@@ -31,6 +31,12 @@
 #define Console__printf(...) Console::_printf(__FILE__, __LINE__, __VA_ARGS__);
 #define Console__log(a)      Console::_log(__FILE__, __LINE__, #a, a);
 
+#ifdef RB_ANDROID
+#define PV(x) ;
+#else
+#define PV(x) std::cout << #x << ": " << x << std::endl
+#endif
+
 namespace RedBox {
 	class Console {
 	public:
