@@ -17,6 +17,7 @@ SpriteMenuElement::~SpriteMenuElement(){
 	delete image;
 }
 void SpriteMenuElement::update(){
+	Collidable::update();
 	image->update();
 }
 void SpriteMenuElement::render(){

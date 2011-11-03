@@ -10,6 +10,7 @@
 #include "GraphicElement.h"
 #include "Sprite.h"
 #include "Tween.h"
+#include "SpriteFactory.h"
 namespace RedBox {
 	/** 
 	 * A implementation of a IMenu which has a middle(selected) element. 
@@ -38,6 +39,7 @@ namespace RedBox {
 		 * menu.
 		 */
 		DraggingMenu(float width, float height, float spacing);
+		void render();
 		/**
 		 * Sets a new position for the center of the menu.
 		 * @param vect The vector of the new center position
@@ -105,15 +107,17 @@ namespace RedBox {
 		/**
 		 * Is called when a menu's element is triggered.
 		 */
-		virtual void onHoldNMove(const Vector2, const Vector2);
-		void onRelease(Vector2 ptr);
+		virtual void onHold(const Vector2 lastPtr, const Vector2 newPtr);
+		void onRelease(const Vector2 lastPtr, const Vector2 newPtr);
 		void addElement(IMenuElement* newElement);
+		void setCursor(const std::string&);
 	protected:
 		IMenuElement* selectedElement;
+		void updateCursor();
 		Sprite* cursor;
-		Tween<Vector2> theTween;
 		///The angle of the elements
 		int elementsAngle;
+		bool isHolded;
 		///The spacing between the element's middle
 		float spacing;
 		///The mask applied to the menu
@@ -123,7 +127,7 @@ namespace RedBox {
 		/**
 		 * Virtual method to update the element's visibility.
 		 */
-		void updateElementsVisibility();
+		void updateVisibility();
 		/**
 		 * Virtual method to update the element's position.
 		 */
