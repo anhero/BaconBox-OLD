@@ -64,7 +64,6 @@ Vector2 DraggingMenu::getCenterPosition(){
 void DraggingMenu::addElement(IMenuElement* newElement){
 	IMenu::addElement(newElement);
 	if(elements.size() == 1){
-		std::cout << this->getElementAngle()<<std::endl;
 		newElement->setScaling(this->getScaling());
 		newElement->setAngle(this->getElementAngle());
 		newElement->setPosition(this->getPosition());
@@ -217,7 +216,6 @@ void DraggingMenu::updateElementsPosition(){
 	left =  elements.back()->getPosition()+Vector2(elements.back()->getWidth(),0) - (this->getPosition()+Vector2(this->getWidth(),0));
 	right.rotate(-this->getAngle());
 	left.rotate(-this->getAngle());
-	std::cout << left << std::endl;
 	if (elements.front()->getAcceleration() == Vector2(0.0,0.0) && (right.getX() > 0 || left.getX() < 0)) {
 		// If the elements aren't accelerating and are off limits.
 		// This sets a completly arbiatrary acceleration to all elements.
