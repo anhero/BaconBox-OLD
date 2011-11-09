@@ -88,6 +88,9 @@ namespace RedBox {
 	void NullGraphicDriver::translate(const Vector2 &) {
 	}
 
+	void NullGraphicDriver::loadIdentity() {
+	}
+
 	void NullGraphicDriver::popMatrix() {
 	}
 

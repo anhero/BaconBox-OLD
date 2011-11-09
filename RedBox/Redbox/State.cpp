@@ -71,6 +71,7 @@ namespace RedBox {
 			BodyMap::iterator i = bodies.begin();
 			// We get the first body's scroll factor.
 			Vector2 lastScrollFactor = (*i)->getScrollFactor();
+			bool hudStarted = (*i)->isHud();
 			// We apply the scroll factor.
 			graphicDriver.pushMatrix();
 			graphicDriver.translate(Vector2(-(1.0f - lastScrollFactor.getX()) * camera.getXPosition(),
@@ -80,16 +81,26 @@ namespace RedBox {
 			while (i != bodies.end()) {
 				// We make sure it is enabled and visible.
 				if ((*i)->isEnabled() && (*i)->isVisible()) {
-					// We check if it has a scroll factor different than the
-					// one already in place.
-					if (lastScrollFactor != (*i)->getScrollFactor()) {
-						// We remove the old scroll factor apply the new scroll
-						// factor.
-						lastScrollFactor = (*i)->getScrollFactor();
+					if (!hudStarted && (*i)->isHud()) {
 						graphicDriver.popMatrix();
 						graphicDriver.pushMatrix();
-						graphicDriver.translate(Vector2(-(1.0f - lastScrollFactor.getX()) * camera.getXPosition(),
-						                                -(1.0f - lastScrollFactor.getY()) * camera.getYPosition()));
+						graphicDriver.loadIdentity();
+						hudStarted = true;
+					}
+
+					if (!hudStarted) {
+						// We check if it has a scroll factor different than the
+						// one already in place.
+						if (lastScrollFactor != (*i)->getScrollFactor()) {
+							// We remove the old scroll factor apply the new scroll
+							// factor.
+							lastScrollFactor = (*i)->getScrollFactor();
+							graphicDriver.popMatrix();
+							graphicDriver.pushMatrix();
+
+							graphicDriver.translate(Vector2(-(1.0f - lastScrollFactor.getX()) * camera.getXPosition(),
+							                                -(1.0f - lastScrollFactor.getY()) * camera.getYPosition()));
+						}
 					}
 
 					// We render the body.

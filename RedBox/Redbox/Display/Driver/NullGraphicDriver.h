@@ -172,6 +172,11 @@ namespace RedBox {
 		void translate(const Vector2 &translation);
 
 		/**
+		 * Loads the identity matrix as the current matrix.
+		 */
+		void loadIdentity();
+
+		/**
 		 * Pops the current matrix from the stack.
 		 */
 		void popMatrix();

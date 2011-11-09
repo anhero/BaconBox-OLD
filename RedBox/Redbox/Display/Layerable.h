@@ -81,6 +81,14 @@ namespace RedBox {
 		 * @see RedBox::Scrollable::scrollFactor
 		 */
 		void setScrollFactor(float newXScrollFactor, float newYScrollFactor);
+
+		/**
+		 * Sets whether the scrollable body is a hud element or not.
+		 * @param newHud True to make the body a hud element, false to make it a
+		 * normal body.
+		 * @see RedBox::Scrollable::hud
+		 */
+		void setHud(bool newHud);
 	};
 
 }

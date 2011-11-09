@@ -2,12 +2,13 @@
 
 namespace RedBox {
 	bool Layerable::LessCompare::operator()(const Layerable *l1,
-	                                          const Layerable *l2) {
-		return (l1 && l2) && (l1->getZ() < l2->getZ() ||
-		                      (l1->getZ() == l2->getZ() &&
-		                       (l1->getXScrollFactor() < l2->getXScrollFactor() ||
-		                        (l1->getXScrollFactor() == l2->getXScrollFactor() &&
-		                         l1->getYScrollFactor() < l2->getYScrollFactor()))));
+	                                        const Layerable *l2) {
+		return (l1 && l2) && ((!l1->isHud() && l2->isHud()) || (!l1->isHud() && !l2->isHud() && (l1->getZ() < l2->getZ() ||
+		                                                        (l1->getZ() == l2->getZ() &&
+		                                                         (l1->getXScrollFactor() < l2->getXScrollFactor() ||
+		                                                          (l1->getXScrollFactor() == l2->getXScrollFactor() &&
+		                                                           l1->getYScrollFactor() < l2->getYScrollFactor()))))) ||
+		                      (l1->isHud() && l2->isHud() && l1->getZ() < l2->getZ()));
 	}
 
 	Layerable::Layerable() : Disableable(), Manageable(), Orderable(),
@@ -35,8 +36,13 @@ namespace RedBox {
 	}
 
 	void Layerable::setScrollFactor(float newXScrollFactor,
-	                                  float newYScrollFactor) {
+	                                float newYScrollFactor) {
 		this->Scrollable::setScrollFactor(newXScrollFactor, newYScrollFactor);
+		this->keyChange();
+	}
+
+	void Layerable::setHud(bool newHud) {
+		this->Scrollable::setHud(newHud);
 		this->keyChange();
 	}
 }

@@ -1,11 +1,11 @@
 #include "Scrollable.h"
 
 namespace RedBox {
-	Scrollable::Scrollable() : scrollFactor(1.0f, 1.0f) {
+	Scrollable::Scrollable() : scrollFactor(1.0f, 1.0f), hud(false) {
 	}
 
 	Scrollable::Scrollable(const Scrollable &src) :
-		scrollFactor(src.scrollFactor) {
+	    scrollFactor(src.scrollFactor), hud(src.hud) {
 	}
 
 	Scrollable::~Scrollable() {
@@ -14,6 +14,7 @@ namespace RedBox {
 	Scrollable &Scrollable::operator=(const Scrollable &src) {
 		if (this != &src) {
 			scrollFactor = src.scrollFactor;
+			hud = src.hud;
 		}
 
 		return *this;
@@ -46,5 +47,13 @@ namespace RedBox {
 
 	void Scrollable::setYScrollFactor(float newYScrollFactor) {
 		setScrollFactor(scrollFactor.getX(), newYScrollFactor);
+	}
+
+	bool Scrollable::isHud() const {
+		return hud;
+	}
+
+	void Scrollable::setHud(bool newHud) {
+		hud = newHud;
 	}
 }

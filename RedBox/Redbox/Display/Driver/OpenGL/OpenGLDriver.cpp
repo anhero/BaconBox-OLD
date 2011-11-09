@@ -592,6 +592,10 @@ namespace RedBox {
 		glTranslatef(-translation.getX(), -translation.getY(), 0.0f);
 	}
 
+	void OpenGLDriver::loadIdentity() {
+		glLoadIdentity();
+	}
+
 	void OpenGLDriver::popMatrix() {
 		glPopMatrix();
 	}

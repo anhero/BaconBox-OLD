@@ -109,6 +109,21 @@ namespace RedBox {
 		 * @see RedBox::Scrollable::scrollFactor
 		 */
 		void setYScrollFactor(float newYScrollFactor);
+
+		/**
+		 * Checks whether the scrollable body is a hud element or not.
+		 * @return True if the body is a hud element, false if not.
+		 * @see RedBox::Scrollable::hud
+		 */
+		bool isHud() const;
+
+		/**
+		 * Sets whether the scrollable body is a hud element or not.
+		 * @param newHud True to make the body a hud element, false to make it a
+		 * normal body.
+		 * @see RedBox::Scrollable::hud
+		 */
+		virtual void setHud(bool newHud);
 	private:
 		/**
 		 * Scroll factor. Factor applied to the bodies' coordinates to have
@@ -121,6 +136,13 @@ namespace RedBox {
 		 * and vertically.
 		 */
 		Vector2 scrollFactor;
+
+		/**
+		 * Set to true if the scrollable item is a hud element. The scroll
+		 * factor will be ignored and a hud element is not affected by the
+		 * camera's position, rotation or scaling.
+		 */
+		bool hud;
 	};
 
 }
