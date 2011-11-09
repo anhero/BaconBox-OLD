@@ -144,12 +144,12 @@ namespace RedBox {
 
 				if (!down) {
 					if (cur.isButtonPressed(CursorButton::LEFT) &&
-					    this->getAxisAlignedBoundingBox().overlaps(currentState->getCamera().screenToWorld(cur.getPosition()))) {
-						down = true;
-					}
+					this->getAxisAlignedBoundingBox().overlaps((isHud()) ? (cur.getPosition()) : (currentState->getCamera().screenToWorld(cur.getPosition()))) {
+					down = true;
 				}
+			}
 
-				if (down) {
+			if (down) {
 					if (cur.isButtonReleased(CursorButton::LEFT)) {
 						down = false;
 						release.shoot();

@@ -44,7 +44,7 @@ namespace RedBox {
 		// We make sure the pointer is initialized.
 		if (ptr) {
 			// If the cursor is over the button.
-			if (this->getAxisAlignedBoundingBox().overlaps(Engine::getCurrentState()->getCamera().screenToWorld(ptr->getPosition()))) {
+			if (this->getAxisAlignedBoundingBox().overlaps((isHud()) ? (ptr->getPosition()) : (Engine::getCurrentState()->getCamera().screenToWorld(ptr->getPosition())))) {
 				switch (buttonState.underlying()) {
 					// If the button is currently in the normal state.
 				case ButtonState::NORMAL:
