@@ -64,15 +64,17 @@ namespace RedBox {
 			camera.render();
 		}
 
+		GraphicDriver &graphicDriver = GraphicDriver::getInstance();
+
 		// We check if there are bodies to be rendered.
 		if (!bodies.empty()) {
 			BodyMap::iterator i = bodies.begin();
 			// We get the first body's scroll factor.
 			Vector2 lastScrollFactor = (*i)->getScrollFactor();
 			// We apply the scroll factor.
-			GraphicDriver::getInstance().pushMatrix();
-			GraphicDriver::getInstance().translate(Vector2(-(1.0f - lastScrollFactor.getX()) * camera.getXPosition(),
-			                                               -(1.0f - lastScrollFactor.getY()) * camera.getYPosition()));
+			graphicDriver.pushMatrix();
+			graphicDriver.translate(Vector2(-(1.0f - lastScrollFactor.getX()) * camera.getXPosition(),
+			                                -(1.0f - lastScrollFactor.getY()) * camera.getYPosition()));
 
 			// For each body.
 			while (i != bodies.end()) {
@@ -84,10 +86,10 @@ namespace RedBox {
 						// We remove the old scroll factor apply the new scroll
 						// factor.
 						lastScrollFactor = (*i)->getScrollFactor();
-						GraphicDriver::getInstance().popMatrix();
-						GraphicDriver::getInstance().pushMatrix();
-						GraphicDriver::getInstance().translate(Vector2(-(1.0f - lastScrollFactor.getX()) * camera.getXPosition(),
-						                                               -(1.0f - lastScrollFactor.getY()) * camera.getYPosition()));
+						graphicDriver.popMatrix();
+						graphicDriver.pushMatrix();
+						graphicDriver.translate(Vector2(-(1.0f - lastScrollFactor.getX()) * camera.getXPosition(),
+						                                -(1.0f - lastScrollFactor.getY()) * camera.getYPosition()));
 					}
 
 					// We render the body.
@@ -97,7 +99,7 @@ namespace RedBox {
 				++i;
 			}
 
-			GraphicDriver::getInstance().popMatrix();
+			graphicDriver.popMatrix();
 		}
 
 		render();
