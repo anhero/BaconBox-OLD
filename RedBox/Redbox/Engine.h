@@ -25,12 +25,23 @@ namespace RedBox {
 	public:
 		static const double DEFAULT_UPDATES_PER_SECOND;
 		static const unsigned int DEFAULT_MIN_FRAMES_PER_SECOND = 5;
-		///This function must be called by the main function. The main function arguments must be passed this function
-		static void application(int argc, char *argv[]);
+		static const std::string DEFAULT_APPLICATION_NAME;
+
+		/**
+		 * This function must be called by the main function. The main function
+		 * arguments must be passed this function along with the desired
+		 * application name.
+		 * @param argc Main's received argc.
+		 * @param argv Main's received argv.
+		 * @param name Application's name (your game's title for example). Set
+		 * to "RedBoxApp" by default.
+		 */
+		static void application(int argc, char *argv[],
+		                        const std::string &name = DEFAULT_APPLICATION_NAME);
 
 		/// Signal sent when the RedBox engine is initialized.
 		static sigly::Signal4<unsigned int, unsigned int, float, float> onInitialize;
-		
+
 		/**
 		 * Adds a state to the engine's list.
 		 * @param newState Pointer to the state to add to the engine.
@@ -146,8 +157,17 @@ namespace RedBox {
 
 		/**
 		 * Gets the application's path in the filesystem.
+		 * @return String containing the application's path in the filesystem.
+		 * @see RedBox::Engine::applicationPath
 		 */
 		static const std::string &getApplicationPath();
+
+		/**
+		 * Gets the application's name.
+		 * @return String containing the application/game's name.
+		 * @see RedBox::Engine::applicationName
+		 */
+		static const std::string &getApplicationName();
 
 		/**
 		 * Gets the application's argument count, generally as passed to main.
@@ -183,6 +203,28 @@ namespace RedBox {
 		 */
 		static MusicEngine &getMusicEngine();
 	private:
+		/**
+		 * Gets the engine singleton instance.
+		 * @return Reference to the engine's singleton.
+		 */
+		static Engine &getInstance();
+
+		/// A copy of argc
+		static int argc;
+
+		/// A copy of argv
+		static char **argv;
+
+		/**
+		 * Default constructor.
+		 */
+		Engine();
+
+		/**
+		 * Destructor.
+		 */
+		~Engine();
+
 		/// Map of states in the engine.
 		std::map<std::string, State *> states;
 
@@ -228,6 +270,9 @@ namespace RedBox {
 		/// Path to the current application binary.
 		std::string applicationPath;
 
+		/// Name of the application.
+		std::string applicationName;
+
 		/// Pointer to the main window.
 		MainWindow *mainWindow;
 
@@ -239,28 +284,6 @@ namespace RedBox {
 
 		/// Pointer to the music engine instance.
 		MusicEngine *musicEngine;
-
-		/// A copy of argc
-		static int argc;
-
-		/// A copy of argv
-		static char **argv;
-
-		/**
-		 * Gets the engine singleton instance.
-		 * @return Reference to the engine's singleton.
-		 */
-		static Engine &getInstance();
-
-		/**
-		 * Default constructor.
-		 */
-		Engine();
-
-		/**
-		 * Destructor.
-		 */
-		~Engine();
 	};
 }
 

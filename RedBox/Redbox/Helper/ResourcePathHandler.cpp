@@ -44,7 +44,7 @@ namespace RedBox {
 
 	std::string ResourcePathHandler::getDocumentPathFor(const std::string &item) {
 		std::string documentPath = getDocumentPath();
-		documentPath +=  "/" + item;
+		documentPath.append(item);
 		return documentPath;
 	}
 
@@ -60,8 +60,13 @@ namespace RedBox {
 #elif defined(RB_QT)
 		return QDesktopServices::storageLocation(QDesktopServices::DataLocation).toStdString();
 #elif defined RB_MAC_PLATFORM
+		static bool firstTime = true;
 		std::stringstream ss;
-		ss << getpwnam(getlogin())->pw_dir << "/Library/Application Support/";
+		ss << getpwnam(getlogin())->pw_dir << "/Library/Application Support/" << Engine::getApplicationName() << "/";
+		if (firstTime) {
+			createFolder(ss.str());
+			firstTime = false;
+		}
 		return ss.str();
 #else
 		return std::string();
@@ -106,7 +111,6 @@ namespace RedBox {
 			// For each character in the path.
 			while (!result && i != path.end()) {
 				tmpPath.append(1, *i);
-				Console::println(tmpPath);
 
 				// If we encounter a slash and the folder doesn't already exist,
 				// we try to create the folder.

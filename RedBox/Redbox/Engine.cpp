@@ -30,7 +30,18 @@
 
 namespace RedBox {
 	const double Engine::DEFAULT_UPDATES_PER_SECOND = 60.0;
+	const std::string Engine::DEFAULT_APPLICATION_NAME = std::string("RedBoxApp");
 	sigly::Signal4<unsigned int, unsigned int, float, float> Engine::onInitialize = sigly::Signal4<unsigned int, unsigned int, float, float>();
+
+	int Engine::argc;
+	char **Engine::argv;
+
+	void Engine::application(int argc, char *argv[], const std::string &name) {
+		Engine::argc = argc;
+		Engine::argv = argv;
+		getInstance().applicationPath = dirname(argv[0]);
+		getInstance().applicationName = name;
+	}
 
 	State *Engine::addState(State *newState) {
 		Engine &engine = getInstance();
@@ -216,8 +227,9 @@ namespace RedBox {
 		return getInstance().applicationPath;
 	}
 
-	int Engine::argc;
-	char **Engine::argv;
+	const std::string &Engine::getApplicationName() {
+		return getInstance().applicationName;
+	}
 
 	int &Engine::getApplicationArgc() {
 		return Engine::argc;
@@ -225,12 +237,6 @@ namespace RedBox {
 
 	char **Engine::getApplicationArgv() {
 		return Engine::argv;
-	}
-
-	void Engine::application(int argc, char *argv[]) {
-		Engine::argc = argc;
-		Engine::argv = argv;
-		getInstance().applicationPath = dirname(argv[0]);
 	}
 
 	MainWindow &Engine::getMainWindow() {
@@ -257,7 +263,8 @@ namespace RedBox {
 	Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0), lastRender(0.0),
 		loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
 		minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false), needsExit(false),
-		tmpExitCode(0), renderedSinceLastUpdate(false), mainWindow(NULL),
+	    tmpExitCode(0), renderedSinceLastUpdate(false), applicationPath(),
+	    applicationName(DEFAULT_APPLICATION_NAME), mainWindow(NULL),
 		graphicDriver(NULL), soundEngine(NULL), musicEngine(NULL) {
 
 		mainWindow = RB_MAIN_WINDOW_IMPL;
