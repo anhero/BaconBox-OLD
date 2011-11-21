@@ -508,6 +508,13 @@ namespace RedBox {
 		ValueType getAngle() const {
 			return (x < DEFAULT_VALUE) ? (-getAngleBetween(UP)) : (getAngleBetween(UP));
 		}
+        
+        /**
+         * Set the angle of the vector without affecting it's lenght.
+         */
+        void setAngle(ValueType angle){
+            rotate(angle-getAngle());
+        }
 
 		/**
 		 * Rotates the instance.

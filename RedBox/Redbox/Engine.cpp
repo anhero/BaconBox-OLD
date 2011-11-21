@@ -226,11 +226,17 @@ namespace RedBox {
 	char **Engine::getApplicationArgv() {
 		return Engine::argv;
 	}
+    
+    const std::string & Engine::getAppName(){
+        return appName;
+    }
 
-	void Engine::application(int argc, char *argv[]) {
+
+	void Engine::application(int argc, char *argv[], const std::string & appName) {
 		Engine::argc = argc;
 		Engine::argv = argv;
 		getInstance().applicationPath = dirname(argv[0]);
+        getInstance().appName = appName;
 	}
 
 	MainWindow &Engine::getMainWindow() {

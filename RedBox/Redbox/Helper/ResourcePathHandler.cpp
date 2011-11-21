@@ -33,11 +33,13 @@ namespace RedBox {
 #else
 
 		path = Engine::getApplicationPath();
-#endif
+        
 #ifdef RB_MAC_PLATFORM
 		path = path + "/../Resources/" + item;
 #else
 		path = path + "/resources/" + item;
+#endif
+
 #endif
 		return path;
 	}
@@ -61,7 +63,7 @@ namespace RedBox {
 		return QDesktopServices::storageLocation(QDesktopServices::DataLocation).toStdString();
 #elif defined RB_MAC_PLATFORM
 		std::stringstream ss;
-		ss << getpwnam(getlogin())->pw_dir << "/Library/Application Support/";
+		ss << getpwnam(getlogin())->pw_dir << "/Library/Application\\ Support/" << Engine::getInstance().getAppName();
 		return ss.str();
 #else
 		return std::string();
