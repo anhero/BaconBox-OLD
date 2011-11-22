@@ -238,6 +238,10 @@ namespace RedBox {
 	char **Engine::getApplicationArgv() {
 		return Engine::argv;
 	}
+    
+    const std::string & Engine::getAppName(){
+        return appName;
+    }
 
 	MainWindow &Engine::getMainWindow() {
 		return *getInstance().mainWindow;

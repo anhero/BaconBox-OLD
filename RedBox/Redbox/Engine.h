@@ -25,6 +25,7 @@ namespace RedBox {
 	public:
 		static const double DEFAULT_UPDATES_PER_SECOND;
 		static const unsigned int DEFAULT_MIN_FRAMES_PER_SECOND = 5;
+
 		static const std::string DEFAULT_APPLICATION_NAME;
 
 		/**
@@ -38,6 +39,7 @@ namespace RedBox {
 		 */
 		static void application(int argc, char *argv[],
 		                        const std::string &name = DEFAULT_APPLICATION_NAME);
+
 
 		/// Signal sent when the RedBox engine is initialized.
 		static sigly::Signal4<unsigned int, unsigned int, float, float> onInitialize;
@@ -67,6 +69,11 @@ namespace RedBox {
 		 * @return Pointer to the state being played.
 		 */
 		static State *getCurrentState();
+        
+        /**
+         * Return the name of the application.
+         */
+        const std::string & getAppName();
 
 		/**
 		 * Gets the minimum fps.
@@ -203,6 +210,7 @@ namespace RedBox {
 		 */
 		static MusicEngine &getMusicEngine();
 	private:
+
 		/**
 		 * Gets the engine singleton instance.
 		 * @return Reference to the engine's singleton.
