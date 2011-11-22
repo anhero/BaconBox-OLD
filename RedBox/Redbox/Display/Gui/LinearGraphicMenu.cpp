@@ -1,4 +1,5 @@
 #include "LinearGraphicMenu.h"
+#include "Pointer.h"
 
 using namespace RedBox;
 
@@ -11,6 +12,14 @@ LinearGraphicMenu::LinearGraphicMenu(Layout newLayout):layout(newLayout){}
    
 }
 
+void LinearGraphicMenu::update(){
+    Pointer *ptr = Pointer::getDefault();
+    
+    // We make sure the pointer is initialized.
+    if (ptr) {
+        
+    }
+}
 
 
 void LinearGraphicMenu::updateElementPosition(){

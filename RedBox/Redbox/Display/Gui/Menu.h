@@ -55,12 +55,12 @@ namespace RedBox{
         /**
          * Call the render function on it's MenuElement.
          */
-        void render();
+        virtual void render();
         
         /**
          * Call the update function on it's MenuElement.
          */
-        void update();
+        virtual void update();
         
         
         void move(float xDelta, float yDelta);

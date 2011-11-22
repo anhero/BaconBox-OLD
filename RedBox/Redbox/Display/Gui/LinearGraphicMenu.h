@@ -27,6 +27,7 @@ namespace RedBox{
          */
         void setLayout(Layout layout);
         
+        void update();
         
         virtual void addElement(MenuElement* newElement);
         
