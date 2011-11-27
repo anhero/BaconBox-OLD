@@ -183,7 +183,8 @@
 
 // For NULL inputs
 #ifndef RB_POINTER_IMPL
-	#define RB_POINTER_IMPL NULL
+	#define RB_POINTER_IMPL new NullPointer()
+	#define RB_POINTER_INCLUDE "NullPointer.h"
 #endif
 #ifndef RB_KEYBOARD_IMPL
 	#define RB_KEYBOARD_IMPL NULL

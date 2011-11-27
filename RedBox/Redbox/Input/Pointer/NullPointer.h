@@ -1,0 +1,34 @@
+/**
+ * @file
+ * @ingroup Input
+ */
+#ifndef RB_NULL_POINTER_H
+#define RB_NULL_POINTER_H
+
+#include "Pointer.h"
+
+namespace RedBox {
+	/**
+	 * Null pointing device, used when the platform doesn't have a pointing
+	 * device.
+	 */
+	class NullPointer : public Pointer {
+	public:
+		/**
+		 * Default constructor.
+		 */
+		NullPointer();
+
+		/**
+		 * Destructor.
+		 */
+		~NullPointer();
+
+		/**
+		 * Updates the pointing device. It actually does not do anything.
+		 */
+		void updateDevice();
+	};
+}
+
+#endif // RB_NULL_POINTER_H
