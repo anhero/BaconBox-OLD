@@ -11,6 +11,7 @@ namespace RedBox {
 	/**
 	 * Null pointing device, used when the platform doesn't have a pointing
 	 * device.
+	 * @ingroup Input
 	 */
 	class NullPointer : public Pointer {
 	public:

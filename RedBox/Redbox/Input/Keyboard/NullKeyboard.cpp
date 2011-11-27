@@ -1,7 +1,7 @@
 #include "NullKeyboard.h"
 
 namespace RedBox {
-	NullKeyboard::NullKeyboard() {
+	NullKeyboard::NullKeyboard() : Keyboard() {
 	}
 
 	NullKeyboard::~NullKeyboard() {

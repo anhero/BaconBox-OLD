@@ -191,7 +191,8 @@
 	#define RB_KEYBOARD_INCLUDE "NullKeyboard.h"
 #endif
 #ifndef RB_ACCELEROMETER_IMPL
-	#define RB_ACCELEROMETER_IMPL NULL
+	#define RB_ACCELEROMETER_IMPL new NullAccelerometer()
+	#define RB_ACCELEROMETER_INCLUDE "NullAccelerometer.h"
 #endif
 #ifndef RB_GAME_PAD_IMPL
 	#define RB_GAME_PAD_IMPL NULL
