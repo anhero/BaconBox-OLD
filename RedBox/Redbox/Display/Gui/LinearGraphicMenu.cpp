@@ -1,10 +1,11 @@
 #include "LinearGraphicMenu.h"
-#include "Pointer.h"
+
+
 
 using namespace RedBox;
 
 
-LinearGraphicMenu::LinearGraphicMenu():layout(Horizontal){}
+LinearGraphicMenu::LinearGraphicMenu():layout(Horizontal), needPositionUpdate(false){}
 
 LinearGraphicMenu::LinearGraphicMenu(Layout newLayout):layout(newLayout){}
 
@@ -12,15 +13,17 @@ LinearGraphicMenu::LinearGraphicMenu(Layout newLayout):layout(newLayout){}
    
 }
 
-void LinearGraphicMenu::update(){
-    Pointer *ptr = Pointer::getDefault();
-    
-    // We make sure the pointer is initialized.
-    if (ptr) {
-        
+void LinearGraphicMenu::render(){
+    if (needPositionUpdate) {
+        needPositionUpdate = false;
+        updateElementPosition();
     }
+    Menu::render();
 }
 
+LinearGraphicMenu::Layout LinearGraphicMenu::getLayout(){
+    return layout;
+}
 
 void LinearGraphicMenu::updateElementPosition(){
     std::list<MenuElement*>::iterator i = menuElements.begin();
@@ -29,7 +32,7 @@ void LinearGraphicMenu::updateElementPosition(){
     i++;
     
     for (; i != menuElements.end(); i++) {
-        (*i)->setPosition((*previousElement)->getPosition() + (*i)->getOffset());
+        (*i)->setPosition((*previousElement)->getPosition()-(*previousElement)->getOffset() + (*i)->getOffset());
         
         if (layout==Horizontal) {
             (*i)->moveX((*previousElement)->getWidth() + elementSpacing);
@@ -37,17 +40,14 @@ void LinearGraphicMenu::updateElementPosition(){
         else{
             (*i)->moveY((*previousElement)->getHeight() + elementSpacing);
         }
+        previousElement = i;
     }
    
 }
 
 void LinearGraphicMenu::addElement(MenuElement* newElement){
     this->Menu::addElement(newElement);
-    updateElementPosition();
-
-    for (std::list<MenuElement*>::iterator i = menuElements.begin(); i != menuElements.end(); i++) {
-        
-    }
+    needPositionUpdate = true;
 }
 
 

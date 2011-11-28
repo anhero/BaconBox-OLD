@@ -1,5 +1,9 @@
 #include "Menu.h"
 
+#include "Engine.h"
+#include "Pointer.h"
+
+
 using namespace RedBox;
 
 Menu::Menu():elementSpacing(0){}
@@ -35,6 +39,40 @@ void Menu::update(){
     for (std::list<MenuElement*>::iterator i = menuElements.begin(); i != menuElements.end(); i++) {
         (*i)->update();
     }
+    
+    Pointer *ptr = Pointer::getDefault();
+    
+    // We make sure the pointer is initialized.
+    if (ptr) {
+        if (this->getAxisAlignedBoundingBox().overlaps((isHud()) ? (ptr->getPosition()) : (Engine::getCurrentState()->getCamera().screenToWorld(ptr->getPosition())))) {
+            if (ptr->isButtonPressed(CursorButton::LEFT)) {
+                tmpHold = true;
+                onPress(ptr->getPosition());
+            }
+            else if (tmpHold && ptr->isButtonHeld(CursorButton::LEFT)){
+                onHeld(ptr->getPosition(), true);
+            }
+            else if (tmpHold && ptr->isButtonReleased(CursorButton::LEFT)) {
+                tmpHold = false;
+                onRelease(ptr->getPosition(), true);
+            }
+            else{
+                onHover(ptr->getPosition());
+            }
+        }
+        else if(tmpHold){
+            if (ptr->isButtonReleased(CursorButton::LEFT)) {
+                tmpHold = false;
+                onRelease(ptr->getPosition(), false);
+            }
+            else if (ptr->isButtonHeld(CursorButton::LEFT)){
+                onHeld(ptr->getPosition(), false);
+            }  
+        }
+        
+        
+    }
+    
 }
 
 
@@ -52,6 +90,9 @@ float Menu::getWidth() const{
     float max = (*i)->getXPosition()+ (*i)->getWidth();
     i++;
     for (; i != menuElements.end(); i++) {
+        
+        float tempXposition = (*i)->getXPosition();
+        float tempWidth = (*i)->getWidth();
         temp = (*i)->getXPosition()+ (*i)->getWidth();
         
         if (min > (*i)->getXPosition()) {
@@ -111,3 +152,11 @@ void Menu::setMask(Maskable *newMask, bool inverted){
         (*i)->setMask(newMask, inverted);
     }
 }
+
+void Menu::onPress(const Vector2 & position){}
+
+void Menu::onRelease(const Vector2 & position, bool onMenu){}
+
+void Menu::onHover(const Vector2 & position){}
+
+void Menu::onHeld(const Vector2 & position, bool onMenu){}

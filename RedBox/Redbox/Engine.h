@@ -69,11 +69,6 @@ namespace RedBox {
 		 * @return Pointer to the state being played.
 		 */
 		static State *getCurrentState();
-        
-        /**
-         * Return the name of the application.
-         */
-        const std::string & getAppName();
 
 		/**
 		 * Gets the minimum fps.

@@ -22,7 +22,7 @@ namespace RedBox{
         /**
          * Default constructor
          */
-        PersistentSelectionMenu(): selectedElementIterator(menuElements.begin()), 
+        PersistentSelectionMenu(): Parent(), selectedElementIterator(this->Parent::menuElements.begin()), 
         selectionIsActive(false){}
     
         /** 
@@ -54,6 +54,21 @@ namespace RedBox{
             
         }
         
+        virtual void addElement(MenuElement* newElement){
+            this->Parent::addElement(newElement);
+            clearSelection();
+        }
+        
+        void selectFirstElement(){
+            selectAnElement(this->Parent::menuElements.begin());
+        }
+        
+        
+        virtual void selectAnElement(std::list<MenuElement*>::iterator elementIterator){
+            selectedElementIterator = elementIterator;
+            selectionIsActive = true;
+        }
+        
         /**
          * Select the next menu element.
          * If no element is selected it will select the first one.
@@ -63,13 +78,22 @@ namespace RedBox{
         void selectNextElement(){
             if(selectionIsActive){
                 selectedElementIterator++;
-                if (selectedElementIterator == menuElements.end()) {
+                //Calling select an element this way won't change the iterator, since we 
+                //we change it with the ++ operator, but it give inheriting menu the oportunity
+                //of overloading the selecting behavior without having to overload every selecting function
+                //(only the selectAnElement function).
+                selectAnElement(selectedElementIterator);
+                if (selectedElementIterator == this->Parent::menuElements.end()) {
                     selectedElementIterator--;
+                    //Calling selectAnElement this way won't change the iterator, since we 
+                    //we change it with the -- operator, but it give inheriting menu the oportunity
+                    //of overloading the selecting behavior without having to overload every selecting function
+                    //(only the selectAnElement function).
+                    selectAnElement(selectedElementIterator);
                 }
             }
             else{
-                selectedElementIterator = menuElements.begin();
-                selectionIsActive = true;
+                selectFirstElement();
             }
         }
         
@@ -81,21 +105,26 @@ namespace RedBox{
          */
         void selectPreviousElement(){
             if(selectionIsActive){
-                if (selectedElementIterator != menuElements.begin()) {
+                if (selectedElementIterator != this->Parent::menuElements.begin()) {
                     selectedElementIterator--;
+                    //Calling selectAnElement this way won't change the iterator, since we 
+                    //we change it with the -- operator, but it give inheriting menu the oportunity
+                    //of overloading the selecting behavior without having to overload every selecting function
+                    //(only the selectAnElement function).
+                    selectAnElement(selectedElementIterator);
                 }
             }
             else{
-                selectedElementIterator = menuElements.begin();
-                selectionIsActive = true;
+                selectFirstElement();
             }
         }
         
         /**
          * Unselect the selected element.
          */
-        void clearSelection(){
+        virtual void clearSelection(){
             selectionIsActive = false;
+            selectedElementIterator = this->Parent::menuElements.end();
         }
 
 	protected:

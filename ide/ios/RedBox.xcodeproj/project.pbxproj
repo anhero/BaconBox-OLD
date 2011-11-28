@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		245EAF10134E62CD002F0596 /* sigly.h in Headers */ = {isa = PBXBuildFile; fileRef = 245EAF0F134E62CD002F0596 /* sigly.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		510C5AEB1481B21F00FF92AF /* LinearGraphicSelectMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 510C5AEA1481B21E00FF92AF /* LinearGraphicSelectMenu.cpp */; };
+		510C5AED1481B23500FF92AF /* LinearGraphicSelectMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 510C5AEC1481B23500FF92AF /* LinearGraphicSelectMenu.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A9351410E8934500D144F4 /* AudioToolbox.framework */; };
 		51927C0711D5EA3E00C65B15 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5102AA7A10F547D300585718 /* AVFoundation.framework */; };
 		51927C0811D5EA4200C65B15 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 512D586C109B6D45009D504E /* libz.dylib */; };
@@ -313,6 +315,8 @@
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		510C5AEA1481B21E00FF92AF /* LinearGraphicSelectMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LinearGraphicSelectMenu.cpp; sourceTree = "<group>"; };
+		510C5AEC1481B23500FF92AF /* LinearGraphicSelectMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinearGraphicSelectMenu.h; sourceTree = "<group>"; };
 		512D586C109B6D45009D504E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		515EB50512FF34AA004FB469 /* libRedBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRedBox.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		517BDCDD11B04CA80095F001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -896,6 +900,8 @@
 				51E8AD27147AC72500262667 /* Slider.h */,
 				51E8AD29147AC72500262667 /* TextButton.cpp */,
 				51E8AD2A147AC72500262667 /* TextButton.h */,
+				510C5AEA1481B21E00FF92AF /* LinearGraphicSelectMenu.cpp */,
+				510C5AEC1481B23500FF92AF /* LinearGraphicSelectMenu.h */,
 			);
 			path = Gui;
 			sourceTree = "<group>";
@@ -1322,6 +1328,7 @@
 				51E8AF5D147AC72600262667 /* SignalData.h in Headers */,
 				51E8AF5F147AC72600262667 /* State.h in Headers */,
 				51E8AF61147AC72600262667 /* Vector2.h in Headers */,
+				510C5AED1481B23500FF92AF /* LinearGraphicSelectMenu.h in Headers */,
 				51E8AF63147AC72600262667 /* VerticesGroup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1517,6 +1524,7 @@
 				51E8AF5E147AC72600262667 /* State.cpp in Sources */,
 				51E8AF60147AC72600262667 /* Vector2.cpp in Sources */,
 				51E8AF62147AC72600262667 /* VerticesGroup.cpp in Sources */,
+				510C5AEB1481B21F00FF92AF /* LinearGraphicSelectMenu.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

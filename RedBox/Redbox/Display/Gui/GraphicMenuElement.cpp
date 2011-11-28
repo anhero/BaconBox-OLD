@@ -32,6 +32,13 @@ void GraphicMenuElement::unmask(){
     graphicElement->unmask();
 }
 
+void GraphicMenuElement::setColor(const Color &setColor){
+    graphicElement->setColor(setColor);
+}
+
+const Vector2 & GraphicMenuElement::getOffset(){
+    return offset;
+}
 
 Maskable * GraphicMenuElement::getMask() const {
     return graphicElement->getMask();
@@ -50,5 +57,6 @@ float GraphicMenuElement::getHeight() const{
 }
 
 void GraphicMenuElement::move(float xDelta, float yDelta){
+    MenuElement::move(xDelta, yDelta);
     graphicElement->move(xDelta, yDelta);
 }

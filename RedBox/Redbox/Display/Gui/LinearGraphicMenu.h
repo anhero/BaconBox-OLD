@@ -27,13 +27,13 @@ namespace RedBox{
          */
         void setLayout(Layout layout);
         
-        void update();
+        Layout getLayout();
         
         virtual void addElement(MenuElement* newElement);
         
-        
+        virtual void render();
 
-        
+    
 	private:
         
         
@@ -43,8 +43,9 @@ namespace RedBox{
         void updateElementPosition();
         
         
-        
+        bool needPositionUpdate;
         ///Layout (Horizontal or Vertical) of the menu
+        
         Layout layout;
         
         Vector2 elementOffset;

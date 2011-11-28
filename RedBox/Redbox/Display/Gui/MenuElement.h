@@ -9,8 +9,7 @@
 #include <string>
 
 #include "Maskable.h"
-#include "Transformable.h"
-#include "Updateable.h"
+#include "Collidable.h"
 
 namespace RedBox{
 	/** 
@@ -18,7 +17,7 @@ namespace RedBox{
      * Ex. A menu that let you select a gender contain two MenuElement (Male or Female).
 	 * @ingroup GUI
 	 */
-	class MenuElement : public Maskable, public Updateable, public Transformable{
+	class MenuElement : public Maskable, public Collidable{
 	public:
         
         /**

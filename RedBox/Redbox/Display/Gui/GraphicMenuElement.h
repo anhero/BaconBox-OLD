@@ -9,6 +9,7 @@
 #include "MenuElement.h"
 #include "GraphicElement.h"
 #include "Transformable.h"
+#include "Colorable.h"
 
 namespace RedBox{
 	/** 
@@ -16,7 +17,7 @@ namespace RedBox{
      * which are similar to simple Sprite.
      * @ingroup GUI
      */
-	class GraphicMenuElement : public MenuElement{
+	class GraphicMenuElement : public MenuElement, public Colorable{
 	public:
         /**
          * Parametrized constructor.
@@ -53,6 +54,8 @@ namespace RedBox{
         void move(float xDelta, float yDelta);
 
         const Vector2 & getOffset();
+        
+        void setColor(const Color &newColor);
 	private:
         GraphicElement<Transformable> * graphicElement;
         

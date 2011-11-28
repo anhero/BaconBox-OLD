@@ -13,6 +13,8 @@
 #include "Layerable.h"
 #include <vector>
 
+
+
 namespace RedBox{
 	/** 
      * Abstract menu interface defining functions that every menu should implements and implement 
@@ -63,7 +65,7 @@ namespace RedBox{
         virtual void update();
         
         
-        void move(float xDelta, float yDelta);
+        virtual void move(float xDelta, float yDelta);
         
         float getWidth() const;
         
@@ -85,6 +87,20 @@ namespace RedBox{
         float elementSpacing;
         
         Maskable * renderMask;
+        
+        virtual void onPress(const Vector2 & position);
+        
+        virtual void onRelease(const Vector2 & position, bool onMenu);
+        
+        virtual void onHover(const Vector2 & position);
+        
+        virtual void onHeld(const Vector2 & position, bool onMenu);
+
+        
+        
+    private:
+        
+		bool tmpHold;
         
 	};
 }
