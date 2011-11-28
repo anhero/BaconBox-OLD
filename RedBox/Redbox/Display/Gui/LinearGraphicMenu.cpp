@@ -10,7 +10,7 @@ LinearGraphicMenu::LinearGraphicMenu():layout(Horizontal), needPositionUpdate(fa
 LinearGraphicMenu::LinearGraphicMenu(Layout newLayout):layout(newLayout){}
 
  void LinearGraphicMenu::setLayout(Layout layout){
-   
+     this->layout = layout;
 }
 
 void LinearGraphicMenu::render(){

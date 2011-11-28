@@ -4,8 +4,8 @@ namespace RedBox {
     
     
     LinearGraphicSelectMenu::LinearGraphicSelectMenu(GraphicMenuElement * selector, LinearGraphicMenu::Layout layout, float selectingTolerance): selectingTolerance(selectingTolerance){
-        this->setLayout(layout);
         this->selector = selector;
+        this->setLayout(layout);
     }
     
     void LinearGraphicSelectMenu::setSelectingTolerance(float selectingTolerance){
