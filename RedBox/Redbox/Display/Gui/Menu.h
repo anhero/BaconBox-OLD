@@ -23,6 +23,7 @@ namespace RedBox{
 	 */
 	class Menu : public Maskable, public Collidable, public Layerable {
 	public:
+        
         /**
          * Default constructor
          */

@@ -7,7 +7,7 @@
 #define RB_PERSISTENTSELECTIONMENU_H
 
 #include "Menu.h"
-
+#include "sigly.h"
 namespace RedBox{
 	/** 
 	 * Abstract class implementing common functions of Persistent Selection Menu. 
@@ -19,11 +19,16 @@ namespace RedBox{
     class PersistentSelectionMenu : public Parent {
 	public:
         
+        sigly::Signal1<const std::string&> selectingAnElement;
+        
+
+        
         /**
          * Default constructor
          */
         PersistentSelectionMenu(): Parent(), selectedElementIterator(this->Parent::menuElements.begin()), 
-        selectionIsActive(false){}
+        selectionIsActive(false), selectingAnElement(){}
+        
     
         /** 
          * Returns a pointer to the currently selected menu element.
@@ -67,6 +72,7 @@ namespace RedBox{
         virtual void selectAnElement(std::list<MenuElement*>::iterator elementIterator){
             selectedElementIterator = elementIterator;
             selectionIsActive = true;
+            selectingAnElement((*selectedElementIterator)->getKey());
         }
         
         /**

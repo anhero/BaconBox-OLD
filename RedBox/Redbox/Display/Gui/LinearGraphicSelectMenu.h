@@ -28,6 +28,8 @@ namespace RedBox {
         
         void selectAnElement(std::list<MenuElement*>::iterator elementIterator);
         
+    
+        
     protected:
         
         
