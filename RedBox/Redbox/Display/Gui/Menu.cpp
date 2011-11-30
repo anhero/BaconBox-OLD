@@ -90,9 +90,6 @@ float Menu::getWidth() const{
     float max = (*i)->getXPosition()+ (*i)->getWidth();
     i++;
     for (; i != menuElements.end(); i++) {
-        
-        float tempXposition = (*i)->getXPosition();
-        float tempWidth = (*i)->getWidth();
         temp = (*i)->getXPosition()+ (*i)->getWidth();
         
         if (min > (*i)->getXPosition()) {
