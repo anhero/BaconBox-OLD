@@ -172,7 +172,7 @@ namespace RedBox {
 		 * definition was found.
 		 * @see RedBox::Animatable::animations
 		 */
-		const AnimationDefinition *getAnimation(const std::string &name) const;
+		AnimationDefinition *getAnimation(const std::string &name);
 
 		/**
 		 * Adds an animation definition. Does nothing if the animation

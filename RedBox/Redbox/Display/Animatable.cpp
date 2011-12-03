@@ -173,8 +173,8 @@ namespace RedBox {
 		}
 	}
 
-	const AnimationDefinition *Animatable::getAnimation(const std::string &name) const {
-		AnimationMap::const_iterator definition = animations.find(name);
+	AnimationDefinition *Animatable::getAnimation(const std::string &name) {
+		AnimationMap::iterator definition = animations.find(name);
 
 		// We return NULL if the animation wasn't found.
 		if (definition == animations.end()) {
