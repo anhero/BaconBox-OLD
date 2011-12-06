@@ -167,7 +167,7 @@ namespace RedBox {
 		const Enum SEPARATOR = 143;
 		const Enum SLEEP = 144;
 		const Enum SPACE = 145;
-		const Enum SUBSTRACT = 146;
+		const Enum SUBTRACT = 146;
 		const Enum T = 147;
 		const Enum TAB = 148;
 		const Enum U = 149;
