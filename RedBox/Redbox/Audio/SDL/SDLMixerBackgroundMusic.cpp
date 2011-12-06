@@ -36,7 +36,7 @@ void SDLMixerBackgroundMusic::play(int nbTimes) {
 		resetPauseResumeFade();
 		Mix_HaltMusic();
 
-		if(!Mix_PlayMusic(music, nbTimes)) {
+		if(Mix_PlayMusic(music, nbTimes) != -1) {
 			setSDLMusicVolume(getVolume());
 			currentMusic = this;
 			looping = (nbTimes == -1);

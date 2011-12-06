@@ -57,7 +57,7 @@ namespace RedBox {
 		/// Texture width powered to 2
 		unsigned int poweredWidth;
 
-		/// Texure height powered to 2
+		/// Texture height powered to 2
 		unsigned int poweredHeight;
 
 		/// Texture's image width.

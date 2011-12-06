@@ -75,9 +75,9 @@ namespace RedBox {
 		/**
 		 * Scales the body horizontally and vertically.
 		 * @param scalingToApply Horizontal and vertical scaling to apply.
-		 * Simply does a scalar multiplication to the scaling with the recieved
+		 * Simply does a scalar multiplication to the scaling with the received
 		 * scaling to apply. So if a body has a scaling of (2.0, 1.5) and this
-		 * method recieves (2.0, 2.0), the body's scaling will become
+		 * method receives (2.0, 2.0), the body's scaling will become
 		 * (4.0, 3.0).
 		 * @see RedBox::Transformable::scaling
 		 */
@@ -86,9 +86,9 @@ namespace RedBox {
 		/**
 		 * Scales the body horizontally and vertically.
 		 * @param xScaling Horizontal scaling to apply. Simply does a scalar
-		 * multiplication to the horizontal scaling with the recieved scaling
+		 * multiplication to the horizontal scaling with the received scaling
 		 * to apply. So if a body has a horizontal scaling of 2.0 and this
-		 * method recieves 1.5, the body's new horizontal scaling will become
+		 * method receives 1.5, the body's new horizontal scaling will become
 		 * 3.0.
 		 * @param yScaling Vertical scaling to apply. Same thing as the
 		 * xScaling parameter, but for the body's height.
@@ -154,9 +154,9 @@ namespace RedBox {
 		/**
 		 * Scales the body horizontally.
 		 * @param xScaling Horizontal scaling to apply. Simply does a scalar
-		 * multiplication to the horizontal scaling with the recieved scaling
+		 * multiplication to the horizontal scaling with the received scaling
 		 * to apply. So if a body has a horizontal scaling of 2.0 and this
-		 * method recieves 1.5, the body's new horizontal scaling will become
+		 * method receives 1.5, the body's new horizontal scaling will become
 		 * 3.0.
 		 * @see RedBox::Transformable::scaling
 		 */
@@ -188,9 +188,9 @@ namespace RedBox {
 		/**
 		 * Scales the body vertically.
 		 * @param yScaling Vertical scaling to apply. Simply does a scalar
-		 * multiplication to the vertical scaling with the recieved scaling
+		 * multiplication to the vertical scaling with the received scaling
 		 * to apply. So if a body has a vertical scaling of 2.0 and this
-		 * method recieves 1.5, the body's new vertical scaling will become
+		 * method receives 1.5, the body's new vertical scaling will become
 		 * 3.0.
 		 * @see RedBox::Transformable::scaling
 		 */

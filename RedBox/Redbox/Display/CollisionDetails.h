@@ -5,6 +5,8 @@
 #ifndef RB_COLLISION_DETAILS_H
 #define RB_COLLISION_DETAILS_H
 
+#include <cstdlib>
+
 #include "FlagSet.h"
 #include "Side.h"
 

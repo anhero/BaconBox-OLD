@@ -31,7 +31,7 @@ namespace RedBox {
 		 * Amount in pixel we must add to the vertical position
 		 * before rendering the glyph in horizontal layout.
 		 * (We need this value because character are not all drawn
-		 * at the the same height EX. 'y' go below the baseline)
+		 * at the same height EX. 'y' go below the baseline)
 		 */
 		Vector2 horizontalBearing;
 

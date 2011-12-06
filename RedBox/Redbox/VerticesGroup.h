@@ -59,7 +59,7 @@ namespace RedBox {
 		void addVertex(float x, float y);
 
 		/**
-		 * Adds multiple vertices. Can recieve a variable number of parameters.
+		 * Adds multiple vertices. Can receive a variable number of parameters.
 		 * @param nbVertices Number of vertices to add. Each of the following
 		 * parameters must be floats. The number of parameters must equal to
 		 * twice the number of vertices to add. In the order, the floats are the

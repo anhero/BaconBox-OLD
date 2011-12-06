@@ -25,7 +25,7 @@ namespace RedBox {
 		friend class InputManager;
 	public:
 		/**
-		 * Used to make the keyboard recieve input events.
+		 * Used to make the keyboard receive input events.
 		 * @param Pointer to the keyboard's parent widget.
 		 */
 		static void setParentWidget(QWidget* parent);
@@ -72,7 +72,7 @@ namespace RedBox {
 		 * Gets RedBox's equivalent key code for a Qt key code.
 		 * @param qtKey Qt key code to get its equivalent.
 		 * @return RedBox key code for the corresponding Qt key code. Returns
-		 * Key::INVALID for non-existant mappings.
+		 * Key::INVALID for non-existent mappings.
 		 */
 		Key::Enum getMapping(int qtKey) const;
 	};

@@ -50,14 +50,14 @@ namespace RedBox {
 		 * If the folder to create already exists, it is not considered as an
 		 * error.
 		 * @param path Absolute path of the folder to create.
-		 * @return True if an error occured, false if not.
+		 * @return True if an error occurred, false if not.
 		 */
 		static bool createFolder(const std::string &path);
 
 		/**
 		 * Creates the folder hierarchy from the path.
 		 * @param path Path of the folders to create.
-		 * @return True if an error occured, false if not.
+		 * @return True if an error occurred, false if not.
 		 */
 		static bool createFolderTree(const std::string &path);
 

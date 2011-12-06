@@ -34,7 +34,7 @@ namespace RedBox {
 		/**
 		 * Parameterized constructor. Loads the vertices and the texture
 		 * coordinates. If the specified size has a coordinate equal to 0 or
-		 * lower, it loads the the full texture as the size and image.
+		 * lower, it loads the full texture as the size and image.
 		 * @param newTexture Texture pointer to use as the texture.
 		 * @param startingPosition Starting position at which to place the
 		 * sprite.

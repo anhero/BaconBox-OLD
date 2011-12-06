@@ -220,7 +220,7 @@ void DraggingMenu::updateElementsPosition(){
 	std::cout << left << std::endl;
 	if (elements.front()->getAcceleration() == Vector2(0.0,0.0) && (right.getX() > 0 || left.getX() < 0)) {
 		// If the elements aren't accelerating and are off limits.
-		// This sets a completly arbiatrary acceleration to all elements.
+		// This sets a completely arbitrary acceleration to all elements.
 		Vector2 acc = (right.getX() > 0) ? Vector2(-1500,0) : Vector2(1500,0);
 		acc.rotate(this->getAngle());
 		std::list<IMenuElement*>::iterator i = elements.begin();

@@ -174,7 +174,7 @@ namespace RedBox {
 		void setTexInfo(TextureInformation *newTexInfo);
 
 		/**
-		 * Checks wether an animation exists or not.
+		 * Checks whether an animation exists or not.
 		 * @param name Name of the animation to check.
 		 * @return True if the animation exists, false if not.
 		 */

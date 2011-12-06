@@ -525,7 +525,7 @@ namespace RedBox {
 
 		/**
 		 * Pointer to the default base graphic to use for each particle. Uses
-		 * ParticleType's copy constructor to copy from the defaul graphic, so
+		 * ParticleType's copy constructor to copy from the default graphic, so
 		 * for particles of derived type, use a different template parameter.
 		 * The default graphic is not deleted when the emitter is destroyed, so
 		 * you can have multiple emitters with the same default graphic. If it

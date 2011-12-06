@@ -261,7 +261,7 @@ namespace RedBox {
 			alDeleteBuffers(1, &sound->bufferId);
 		}
 
-		// We check if it was released succesfully.
+		// We check if it was released successfully.
 		return !alIsBuffer(sound->bufferId);
 	}
 
@@ -354,9 +354,9 @@ namespace RedBox {
 
 					// We check to calculate the buffer size. The information in the header
 					// can sometimes be wrong, so we can calculate it using the file's size
-					// and substracting the header's size to it.
+					// and subtracting the header's size to it.
 					bufferSize = end - begin - sizeof(WavHeader);
-					// We allocate memory for the buffe data.
+					// We allocate memory for the buffer data.
 					bufferData = new char[bufferSize];
 					// We read the data from the file.
 					binFile.read(bufferData, bufferSize);

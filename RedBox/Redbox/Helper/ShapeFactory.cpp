@@ -8,7 +8,7 @@ namespace RedBox {
 	void ShapeFactory::createRegularPolygon(unsigned int nbSides, float sideLength,
 	                                        const Vector2 &position,
 	                                        VerticesArray *vertices) {
-		// We make sure the recieved parameters are valid.
+		// We make sure the received parameters are valid.
 		if (nbSides >= 3 && vertices && vertices->getNbVertices() == nbSides &&
 		    sideLength > 0.0f) {
 			// We calculate the polygon's radius.

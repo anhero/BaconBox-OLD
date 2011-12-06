@@ -15,7 +15,7 @@ namespace RedBox {
 	/**
 	 * Represents the state of a cursor. Can be a mouse or a touch. In the case
 	 * of a touch, there would be only one button. The number of buttons can
-	 * be set to accomodate the pointing device.
+	 * be set to accommodate the pointing device.
 	 * @ingroup Input
 	 */
 	class CursorState {

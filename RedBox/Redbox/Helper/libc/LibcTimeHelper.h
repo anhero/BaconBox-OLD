@@ -46,9 +46,9 @@ namespace RedBox {
 
 		/**
 		 * Substracts two timevals.
-		 * @param x Timeval to be substracted.
-		 * @param y Timeval to substract.
-		 * @result Result of the substraction.
+		 * @param x Timeval to be subtracted.
+		 * @param y Timeval to subtract.
+		 * @result Result of the subtraction.
 		 */
 		static void timevalSubstract(timeval& x, timeval& y, timeval& result);
 		/**

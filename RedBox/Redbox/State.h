@@ -17,7 +17,7 @@
 
 namespace RedBox {
 	/**
-	 * A state represents the the game's different states, it contains and
+	 * A state represents the game's different states, it contains and
 	 * manages the Layerable objects. Ex: the PlayState, the MenuState.
 	 */
 	class State : public Updateable, public Renderable,

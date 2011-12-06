@@ -65,7 +65,7 @@ namespace RedBox {
 							const Vector2 &fromPoint); 
 		/**
 		 * Sets a new element to the elements.
-		 * @param newAngle the new angle to be setted to the elements
+		 * @param newAngle the new angle to be set to the elements
 		 */
 		virtual void setElementAngle(float newAngle);
 		/**
@@ -84,7 +84,7 @@ namespace RedBox {
 		/**
 		 * Sets a mask to the menu.
 		 * @param newMask The new menu's mask.
-		 * @param inverted The mask is going to be applied inversly or not.
+		 * @param inverted The mask is going to be applied inversely or not.
 		 */
 		virtual void setMask(Maskable* newMask, bool inverted = false);
 		/**
@@ -98,7 +98,7 @@ namespace RedBox {
 		 */
 		virtual void setInternalMask(GraphicElement<Transformable>* internalMask, bool inverted = false);
 		/**
-		 * Scale the internalMask proportionnaly with the menu.
+		 * Scale the internalMask proportionally with the menu.
 		 * @param x the ratio in X between the internalMask and the menu.
 		 * @param y the ratio in Y between the internalMask and the menu.
 		 */

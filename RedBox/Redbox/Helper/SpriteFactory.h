@@ -18,7 +18,7 @@ namespace RedBox {
 	public:
 		/**
 		 * Constructs a polygon. The polygon will be constructed using the
-		 * number of sides and side length recieved in the parameters. The
+		 * number of sides and side length received in the parameters. The
 		 * polygons constructed are always regular.
 		 * @param nbSides Number of sides the polygon will have.
 		 * @param sideLength Length the polygon will have (in points).
@@ -30,7 +30,7 @@ namespace RedBox {
 
 		/**
 		 * Constructs a polygon. The polygon will be constructed using the
-		 * number of sides and side length recieved in the parameters. The
+		 * number of sides and side length received in the parameters. The
 		 * polygons constructed are always regular.
 		 * @param nbSides Number of sides the polygon will have.
 		 * @param sideLength Length the polygon will have (in points).
@@ -46,7 +46,7 @@ namespace RedBox {
 		/**
 		 * Converts degrees to radians.
 		 * @param degree Angle in degrees to convert to radians.
-		 * @return Angle in radians converted from the degrees recieved.
+		 * @return Angle in radians converted from the degrees received.
 		 */
 		static inline float degreeToRadian(float degree);
 

@@ -18,7 +18,7 @@ namespace RedBox {
 	public:
 		/**
 		 * Generates a random integer. The number generated will inclusively be
-		 * between the min and the max recieved.
+		 * between the min and the max received.
 		 * @param min Minimum value the generated number can have.
 		 * @param max Maximum value the generated number can have.
 		 * @return Number generated randomly between min and max (inclusively).
@@ -31,7 +31,7 @@ namespace RedBox {
 		static bool getRandomBool();
 		/**
 		 * Generates a random double. The number generated will inclusively be
-		 * between the min and the max recieved.
+		 * between the min and the max received.
 		 * @param min Minimum value the generated number can have.
 		 * @param max Maximum value the generated number can have.
 		 * @return Number generated randomly between min and max (inclusively).
@@ -40,7 +40,7 @@ namespace RedBox {
 
 		/**
 		 * Generates a random float. The number generated will inclusively be
-		 * between the min and the max recieved.
+		 * between the min and the max received.
 		 * @param min Minimum value the generated number can have.
 		 * @param max Maximum value the generated number can have.
 		 * @return Number generated randomly between min and max (inclusively).

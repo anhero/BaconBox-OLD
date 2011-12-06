@@ -24,7 +24,7 @@ namespace RedBox {
 		friend class InputManager;
 	public:
 		/**
-		 * Used to make the mouse recieve input events.
+		 * Used to make the mouse receive input events.
 		 * @param Pointer to the mouse's parent widget.
 		 */
 		static void setParentWidget(QWidget* parent);

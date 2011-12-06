@@ -14,17 +14,17 @@ KeyboardState::~KeyboardState() {
 }
 
 bool KeyboardState::isKeyPressed(Key::Enum key) const {
-	// We make sure the key recieved makes sense before returning our answer.
+	// We make sure the key received makes sense before returning our answer.
 	return (key < Key::NB_KEYS) ? (keys[key] && !previousKeys[key]) : (false);
 }
 
 bool KeyboardState::isKeyHeld(Key::Enum key) const {
-	// We make sure the key recieved makes sense before returning our answer.
+	// We make sure the key received makes sense before returning our answer.
 	return (key < Key::NB_KEYS) ? (keys[key] && previousKeys[key]) : (false);
 }
 
 bool KeyboardState::isKeyReleased(Key::Enum key) const {
-	// We make sure the key recieved makes sense before returning our answer.
+	// We make sure the key received makes sense before returning our answer.
 	return (key < Key::NB_KEYS) ? (!keys[key] && previousKeys[key]) : (false);
 }
 

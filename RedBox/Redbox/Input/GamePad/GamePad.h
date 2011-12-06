@@ -20,7 +20,7 @@ namespace RedBox {
 	class GamePad : public InputDevice {
 		friend class InputManager;
 	public:
-		/// Signal sent when a buton is pressed down.
+		/// Signal sent when a button is pressed down.
 		sigly::Signal1<GamePadButtonSignalData> buttonPress;
 		
 		/// Signal sent when a button is being held.

@@ -150,7 +150,7 @@ namespace RedBox {
 		 * right-hand side's coordinates as the divisiors.
 		 * @param rhs Vector containing the coordinates to be used as the
 		 * divisors.
-		 * @return Reference to the modified insance.
+		 * @return Reference to the modified instance.
 		 */
 		Vector2T<ValueType>& operator/=(const Vector2T<ValueType> &rhs) {
 			x /= rhs.x;
@@ -161,7 +161,7 @@ namespace RedBox {
 		/**
 		 * Adds to vectors's coordinates together.
 		 * @param other Vector to add to the instance's copy.
-		 * @return Sum of the instance's copy and the recieved vector.
+		 * @return Sum of the instance's copy and the received vector.
 		 */
 		const Vector2T<ValueType> operator+(const Vector2T<ValueType>& other) const {
 			return Vector2T<ValueType>(*this) += other;
@@ -170,7 +170,7 @@ namespace RedBox {
 		/**
 		 * Adds a vector and a scalar value together.
 		 * @param other Scalar value to add to the instance's copy.
-		 * @return Sum of the instance's copy and the recieved scalar value.
+		 * @return Sum of the instance's copy and the received scalar value.
 		 */
 		const Vector2T<ValueType> operator+(ValueType other) const {
 			return Vector2T<ValueType>(*this) += other;
@@ -179,7 +179,7 @@ namespace RedBox {
 		/**
 		 * Subtracts a vector from another vector.
 		 * @param other Vector representing the subtraction's subtrahend.
-		 * @return Difference between the instance's copy and the recieved
+		 * @return Difference between the instance's copy and the received
 		 * vector.
 		 */
 		const Vector2T<ValueType> operator-(const Vector2T<ValueType>& other) const {
@@ -187,9 +187,9 @@ namespace RedBox {
 		}
 
 		/**
-		 * Substracts a scalar value from a vector's coordinates.
+		 * Subtracts a scalar value from a vector's coordinates.
 		 * @param other Scalar value representing the subtraction's subtrahend.
-		 * @return Difference between the instance's copy and the recieved
+		 * @return Difference between the instance's copy and the received
 		 * scalar value.
 		 */
 		const Vector2T<ValueType> operator-(ValueType other) const {
@@ -200,7 +200,7 @@ namespace RedBox {
 		 * Multiplies a vector's coordinates with a scalar value.
 		 * @param other Scalar value to multiply the copy of the instance's
 		 * coordinates with.
-		 * @return Product of the copy of the instance and the recieved
+		 * @return Product of the copy of the instance and the received
 		 * scalar value.
 		 */
 		const Vector2T<ValueType> operator*(ValueType other) const {
@@ -210,7 +210,7 @@ namespace RedBox {
 		/**
 		 * Calculates the dot product between two vectors (V1 ∙ V2).
 		 * @param other Vector to use as the right factor.
-		 * @result Dot product between the instance and the recieved vector.
+		 * @result Dot product between the instance and the received vector.
 		 */
 		ValueType operator*(const Vector2T<ValueType>& other) const {
 			return getDotProduct(other);
@@ -220,7 +220,7 @@ namespace RedBox {
 		 * Divides a vector's coordinates by a scalar value.
 		 * @param other Scalar value to divide the copy of the instance's
 		 * coordinates by.
-		 * @return Quotient of the copy of the instance and the recieved
+		 * @return Quotient of the copy of the instance and the received
 		 * scalar value.
 		 */
 		const Vector2T<ValueType> operator/(ValueType other) const {
@@ -231,7 +231,7 @@ namespace RedBox {
 		 * Divides a vector's coordinates by another vector's coordinates.
 		 * @param other Vector containing the coordinates to use as the
 		 * divisors.
-		 * @return Quotient of the copy of the instance and the recieved
+		 * @return Quotient of the copy of the instance and the received
 		 * vector.
 		 */
 		const Vector2T<ValueType> operator/(const Vector2T<ValueType> &other) const {
@@ -242,7 +242,7 @@ namespace RedBox {
 		 * Checks if the instance has the same coordinates as another vector.
 		 * @param other Vector to check equality with.
 		 * @return True if the instance has the same coordinate values as the
-		 * recieved vector, false if not.
+		 * received vector, false if not.
 		 */
 		bool operator==(const Vector2T<ValueType>& other) const {
 			return x == other.x && y == other.y;
@@ -253,7 +253,7 @@ namespace RedBox {
 		 * vector.
 		 * @param other Vector to check inequality with.
 		 * @return True if the instance's coordinates are different from the
-		 * recieved vector, false if they are equal.
+		 * received vector, false if they are equal.
 		 */
 		bool operator!=(const Vector2T<ValueType>& other) const {
 			return !(*this == other);
@@ -410,7 +410,7 @@ namespace RedBox {
 		/**
 		 * Mulitplies the instance's coordinates by another vector's
 		 * coordinates.
-		 * @param factor Vector containing the coordinates to mulitply the
+		 * @param factor Vector containing the coordinates to multiply the
 		 * instance's coordinates by.
 		 */
 		void scalarMultiplication(const Vector2T<ValueType>& factor) {
@@ -531,7 +531,7 @@ namespace RedBox {
 
 		/**
 		 * Reflects the instance about another vector.
-		 * @param other Vector to reflect the the instance about.
+		 * @param other Vector to reflect the instance about.
 		 */
 		void reflect(const Vector2T<ValueType>& other) {
 			Vector2T<ValueType> original(*this);
@@ -540,7 +540,7 @@ namespace RedBox {
 		}
 	private:
 		/**
-		 * X coordinate. Positive values inscrease towards the right, while
+		 * X coordinate. Positive values increase towards the right, while
 		 * negative values decrease towards the left.
 		 */
 		ValueType x;

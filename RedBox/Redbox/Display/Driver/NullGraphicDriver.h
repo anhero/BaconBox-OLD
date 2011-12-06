@@ -93,7 +93,7 @@ namespace RedBox {
 		 * Draw the giver shape masked by using a blend between the alpha
 		 * component of the shape and the inversed alpha component
 		 * of the color buffer. So if a mask has been rendered with any
-		 * "drawMaskShape..." function, the given shape will apear through
+		 * "drawMaskShape..." function, the given shape will appear through
 		 * the transparent part of the mask.
 		 * This version of the function render with a texture and a color.
 		 * @param vertices Array of vertices to draw. They have to be like this:

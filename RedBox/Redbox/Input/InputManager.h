@@ -111,7 +111,7 @@ namespace RedBox {
 		/**
 		 * Gets an accelerometer.
 		 * @param index Index of the accelerometer to get.
-		 * @return Pointer to the accelerometer corresponding to the recieved
+		 * @return Pointer to the accelerometer corresponding to the received
 		 * index.
 		 */
 		Accelerometer* getAccelerometer(unsigned int index = 0);
@@ -119,21 +119,21 @@ namespace RedBox {
 		/**
 		 * Gets a game pad.
 		 * @param index Index of the game pad to get.
-		 * @return Pointer to the game pad corresponding to the recieved index.
+		 * @return Pointer to the game pad corresponding to the received index.
 		 */
 		GamePad* getGamePad(unsigned int index = 0);
 		
 		/**
 		 * Gets a keyboard.
 		 * @param index Index of the keyboard to get.
-		 * @return Pointer to the keyboard corresponding to the recieved index.
+		 * @return Pointer to the keyboard corresponding to the received index.
 		 */
 		Keyboard* getKeyboard(unsigned int index = 0);
 		
 		/**
 		 * Gets a pointer.
 		 * @param index Index of the pointer to get.
-		 * @return Pointer to the pointer corresponding to the recieved index.
+		 * @return Pointer to the pointer corresponding to the received index.
 		 */
 		Pointer* getPointer(unsigned int index = 0);
 		

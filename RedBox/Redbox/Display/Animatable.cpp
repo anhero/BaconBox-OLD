@@ -79,7 +79,7 @@ namespace RedBox {
 	}
 
 	const TextureCoordinates &Animatable::getCurrentTextureCoordinates() const {
-		// We check if there is an animation selected, wheter it is paused or
+		// We check if there is an animation selected, whether it is paused or
 		// not does not matter.
 		if (!currentAnimation.empty()) {
 			AnimationMap::const_iterator definition = animations.find(currentAnimation);

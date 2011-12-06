@@ -564,7 +564,7 @@ namespace RedBox {
 			return *velocity;
 
 		} else {
-			Console::println("Checking maximum velocity, but recieved a null pointer.");
+			Console::println("Checking maximum velocity, but received a null pointer.");
 			return 0.0f;
 		}
 	}

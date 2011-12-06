@@ -115,7 +115,7 @@ namespace RedBox {
 
 		/**
 		 * Gets the context height.
-		 * @return Curren context height.
+		 * @return Current context height.
 		 */
 		float getContextHeight();
 		

@@ -28,7 +28,7 @@
 
 namespace RedBox {
 	/**
-	 * A GraphicString is a body object used to diplay text.
+	 * A GraphicString is a body object used to display text.
 	 * @tparam T Either Transformable or Collidable.
 	 * @ingroup TextDisplay
 	 */
@@ -554,7 +554,7 @@ namespace RedBox {
 				float lineHeight = static_cast<float>(font->getLineHeight());
 
 				bool started = false;
-				float tmpX, xMin, xMax, yMin, yMax;
+				float tmpX = 0, xMin = 0, xMax = 0, yMin = 0, yMax = 0;
 				Vector2 tmpMax;
 
 				for (GlyphList::iterator i = characters.begin();

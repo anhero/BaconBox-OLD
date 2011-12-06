@@ -24,7 +24,7 @@ namespace RedBox {
 		 * be higher than 0.
 		 * @param position Position of the upper left corner of the polygon.
 		 * @param vertices Pointer to the vertices array to modify. It must
-		 * have a number of vertices equal to the number of sides recieved.
+		 * have a number of vertices equal to the number of sides received.
 		 */
 		static void createRegularPolygon(unsigned int nbSides, float sideLength,
 		                                 const Vector2 &position,

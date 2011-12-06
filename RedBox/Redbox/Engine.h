@@ -45,7 +45,7 @@ namespace RedBox {
 		/**
 		 * Adds a state to the engine's list.
 		 * @param newState Pointer to the state to add to the engine.
-		 * @return Pointer to the added state. The same as the one recieved.
+		 * @return Pointer to the added state. The same as the one received.
 		 */
 		static State *addState(State *newState);
 

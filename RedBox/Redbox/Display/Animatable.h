@@ -113,7 +113,7 @@ namespace RedBox {
 
 		/**
 		 * Gets the number of times the animation has looped.
-		 * @return Number of times the the animation has looped. -1 if the
+		 * @return Number of times the animation has looped. -1 if the
 		 * animation is looping infinitely.
 		 * @see RedBox::Animatable::currentNbLoops
 		 */
@@ -145,7 +145,7 @@ namespace RedBox {
 
 		/**
 		 * Resumes the paused animation. Does nothing if no animation was
-		 * explicitely paused.
+		 * explicitly paused.
 		 * @see RedBox::Animatable::animationPaused
 		 */
 		void resumeAnimation();

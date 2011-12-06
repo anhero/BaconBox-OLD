@@ -15,7 +15,7 @@ namespace RedBox {
 		 * Get the char from a key.
 		 * @param key Key to get the char of. Must be an alphabet letter (A-Z
 		 * key codes).
-		 * @return Char equivalent to the key. If the key recieved is not a
+		 * @return Char equivalent to the key. If the key received is not a
 		 * letter from A to Z, it returns the null character '\0'.
 		 */
 		char toChar(Enum key);
