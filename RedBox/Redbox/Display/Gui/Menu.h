@@ -21,7 +21,7 @@ namespace RedBox{
      * and implement function that are common to every type of menu.
 	 * @ingroup GUI
 	 */
-	class Menu : public Maskable, public Collidable, public Layerable {
+	class Menu : public Collidable, public Layerable {
 	public:
         
         /**
