@@ -104,9 +104,10 @@ namespace RedBox {
 	const Vector2 Camera::screenToWorld(const Vector2 &positionOnScreen) const {
 		// We apply the camera's scaling and rotation to the position on screen.
 		Vector2 result(positionOnScreen);
-		result.scalarMultiplication((getSize() / Vector2(static_cast<float>(MainWindow::getInstance().getResolutionWidth()), static_cast<float>(MainWindow::getInstance().getResolutionHeight()))));
-		result.scalarDivision(this->getScaling());
 		result.rotate(this->getAngle());
+		Vector2 v(MainWindow::getInstance().getContextWidth(), MainWindow::getInstance().getContextHeight());
+		v.scalarDivision(this->getScaling());
+		result.scalarMultiplication((v / Vector2(static_cast<float>(MainWindow::getInstance().getResolutionWidth()), static_cast<float>(MainWindow::getInstance().getResolutionHeight()))));
 		// We add this new vector to the camera's first vertices, which
 		// corresponds to the screen's upper left corner.
 		return *this->getVertices().getBegin() + result;
@@ -127,12 +128,16 @@ namespace RedBox {
 	const Vector2 Camera::worldToScreen(const Vector2 &positionInWorld) const {
 		// We subtract the screen's upper left corner's world position from
 		// the position in world received.
-		Vector2 result(positionInWorld);
-		result.subtractFromXY(*this->getVertices().getBegin());
-		// We then unapply the rotation and the scaling.
+		Vector2 result(positionInWorld - *this->getVertices().getBegin());
+		// We unapply the scaling while taking into account the fact that the
+		// window's context's size isn't necessarily the same as the resolution.
+		Vector2 v(MainWindow::getInstance().getContextWidth(), MainWindow::getInstance().getContextHeight());
+		v.scalarDivision(this->getScaling());
+		v.scalarDivision(Vector2(static_cast<float>(MainWindow::getInstance().getResolutionWidth()), static_cast<float>(MainWindow::getInstance().getResolutionHeight())));
+		result.scalarDivision(v);
+		// We remove the rotation.
 		result.rotate(-this->getAngle());
-		result.scalarMultiplication(this->getScaling());
-		result.scalarMultiplication((getSize() / Vector2(static_cast<float>(MainWindow::getInstance().getResolutionWidth()), static_cast<float>(MainWindow::getInstance().getResolutionHeight()))));
+
 		return result;
 	}
 
