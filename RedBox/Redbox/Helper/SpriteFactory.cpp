@@ -29,6 +29,7 @@ namespace RedBox {
 
 		if (nbSides >= 3 && sideLength > 0.0f) {
 			result = new InanimateSprite();
+			result->getVertices().resize(nbSides);
 			ShapeFactory::createRegularPolygon(nbSides, sideLength, Vector2(), &(result->getVertices()));
 			result->setColor(color);
 			result->setRenderModes(FlagSet<RenderMode>(RenderMode::SHAPE) |
