@@ -13,7 +13,7 @@ namespace RedBox {
 		this->MainWindow::setResolution(resolutionWidth, resolutionHeight);
 		this->MainWindow::setContextSize(contextWidth, contextHeight);
 
-		mainWindow = SDL_CreateWindow(MainWindow::DEFAULT_NAME.c_str(),
+		mainWindow = SDL_CreateWindow(Engine::getApplicationName().c_str(),
 		                              SDL_WINDOWPOS_CENTERED,
 		                              SDL_WINDOWPOS_CENTERED,
 		                              static_cast<int>(this->getResolutionWidth()),
