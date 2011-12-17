@@ -36,7 +36,7 @@ namespace RedBox {
 		 * Set the resolution of the window.
 		 */
 		void setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight);
-
+        
 	private:
 		IOSMainWindow();
 

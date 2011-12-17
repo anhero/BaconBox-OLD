@@ -83,12 +83,12 @@ namespace RedBox {
         /**
          * Hide the pointer. The pointer still work, but it won't be visible.
          */
-        virtual void hideCursor() = 0;
+        virtual void hideCursor();
         
         /**
          * Show the pointer. If you called hideCursor(), this will reactivate it.
          */
-        virtual void showCursor() = 0;
+        virtual void showCursor();
 
 		/**
 		 * Grabs the input.
