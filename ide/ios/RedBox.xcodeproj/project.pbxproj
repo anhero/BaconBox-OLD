@@ -10,6 +10,10 @@
 		245EAF10134E62CD002F0596 /* sigly.h in Headers */ = {isa = PBXBuildFile; fileRef = 245EAF0F134E62CD002F0596 /* sigly.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		510C5AEB1481B21F00FF92AF /* LinearGraphicSelectMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 510C5AEA1481B21E00FF92AF /* LinearGraphicSelectMenu.cpp */; };
 		510C5AED1481B23500FF92AF /* LinearGraphicSelectMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 510C5AEC1481B23500FF92AF /* LinearGraphicSelectMenu.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51245560149D77690029E42F /* NullAccelerometer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5124555E149D77690029E42F /* NullAccelerometer.cpp */; };
+		51245561149D77690029E42F /* NullAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5124555F149D77690029E42F /* NullAccelerometer.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51245565149D77990029E42F /* NullKeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51245563149D77990029E42F /* NullKeyboard.cpp */; };
+		51245566149D77990029E42F /* NullKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 51245564149D77990029E42F /* NullKeyboard.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A9351410E8934500D144F4 /* AudioToolbox.framework */; };
 		51927C0711D5EA3E00C65B15 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5102AA7A10F547D300585718 /* AVFoundation.framework */; };
 		51927C0811D5EA4200C65B15 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 512D586C109B6D45009D504E /* libz.dylib */; };
@@ -317,6 +321,10 @@
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		510C5AEA1481B21E00FF92AF /* LinearGraphicSelectMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LinearGraphicSelectMenu.cpp; sourceTree = "<group>"; };
 		510C5AEC1481B23500FF92AF /* LinearGraphicSelectMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinearGraphicSelectMenu.h; sourceTree = "<group>"; };
+		5124555E149D77690029E42F /* NullAccelerometer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NullAccelerometer.cpp; sourceTree = "<group>"; };
+		5124555F149D77690029E42F /* NullAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullAccelerometer.h; sourceTree = "<group>"; };
+		51245563149D77990029E42F /* NullKeyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NullKeyboard.cpp; sourceTree = "<group>"; };
+		51245564149D77990029E42F /* NullKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullKeyboard.h; sourceTree = "<group>"; };
 		512D586C109B6D45009D504E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		515EB50512FF34AA004FB469 /* libRedBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRedBox.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		517BDCDD11B04CA80095F001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1061,6 +1069,8 @@
 		51E8ADC9147AC72500262667 /* Accelerometer */ = {
 			isa = PBXGroup;
 			children = (
+				5124555E149D77690029E42F /* NullAccelerometer.cpp */,
+				5124555F149D77690029E42F /* NullAccelerometer.h */,
 				51E8ADCA147AC72500262667 /* Accelerometer.cpp */,
 				51E8ADCB147AC72500262667 /* Accelerometer.h */,
 				51E8ADCC147AC72500262667 /* AccelerometerSignalData.cpp */,
@@ -1091,6 +1101,8 @@
 		51E8ADE5147AC72500262667 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				51245563149D77990029E42F /* NullKeyboard.cpp */,
+				51245564149D77990029E42F /* NullKeyboard.h */,
 				51E8ADE6147AC72500262667 /* Key.cpp */,
 				51E8ADE7147AC72500262667 /* Key.h */,
 				51E8ADE8147AC72500262667 /* KeyMaskSignalData.cpp */,
@@ -1329,6 +1341,8 @@
 				51E8AF5F147AC72600262667 /* State.h in Headers */,
 				51E8AF61147AC72600262667 /* Vector2.h in Headers */,
 				510C5AED1481B23500FF92AF /* LinearGraphicSelectMenu.h in Headers */,
+				51245561149D77690029E42F /* NullAccelerometer.h in Headers */,
+				51245566149D77990029E42F /* NullKeyboard.h in Headers */,
 				51E8AF63147AC72600262667 /* VerticesGroup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1525,6 +1539,8 @@
 				51E8AF60147AC72600262667 /* Vector2.cpp in Sources */,
 				51E8AF62147AC72600262667 /* VerticesGroup.cpp in Sources */,
 				510C5AEB1481B21F00FF92AF /* LinearGraphicSelectMenu.cpp in Sources */,
+				51245560149D77690029E42F /* NullAccelerometer.cpp in Sources */,
+				51245565149D77990029E42F /* NullKeyboard.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
