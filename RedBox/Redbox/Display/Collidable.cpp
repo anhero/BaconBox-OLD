@@ -28,7 +28,7 @@ namespace RedBox {
 		maximumVelocity(NO_MAX_VELOCITY, NO_MAX_VELOCITY),
 		acceleration(), drag(), collidableSides(ALL_SIDES),
 		elasticity(0.0f), staticBody(false), offset(),
-		collidingBoxRatio(1.0f, 1.0f) {
+		collidingBoxRatio(1.0f, 1.0f), offsetRatio(false) {
 	}
 
 	Collidable::Collidable(const Vector2 &newPosition) :
@@ -36,7 +36,7 @@ namespace RedBox {
 		velocity(), maximumVelocity(NO_MAX_VELOCITY, NO_MAX_VELOCITY),
 		acceleration(), drag(), collidableSides(ALL_SIDES),
 		elasticity(0.0f), staticBody(false), offset(),
-		collidingBoxRatio(1.0f, 1.0f) {
+		collidingBoxRatio(1.0f, 1.0f), offsetRatio(false) {
 	}
 
 	Collidable::Collidable(const Collidable &src) : Updateable(src),
@@ -44,7 +44,8 @@ namespace RedBox {
 		maximumVelocity(src.maximumVelocity), acceleration(src.acceleration),
 		drag(src.drag), collidableSides(src.collidableSides),
 		elasticity(src.elasticity), staticBody(src.staticBody),
-		offset(src.offset), collidingBoxRatio(src.collidingBoxRatio) {
+		offset(src.offset), collidingBoxRatio(src.collidingBoxRatio),
+		offsetRatio(src.offsetRatio) {
 	}
 
 	Collidable::~Collidable() {
@@ -64,6 +65,7 @@ namespace RedBox {
 			staticBody = src.staticBody;
 			offset = src.offset;
 			collidingBoxRatio = src.collidingBoxRatio;
+			offsetRatio = src.offsetRatio;
 		}
 
 		return *this;
@@ -304,8 +306,21 @@ namespace RedBox {
 		return getHeight() * getYCollidingBoxRatio();
 	}
 
+	bool Collidable::isOffsetRatio() const {
+		return offsetRatio;
+	}
+
+	void Collidable::setOffsetRatio(bool newOffsetRatio) {
+		offsetRatio = newOffsetRatio;
+	}
+
 	const AxisAlignedBoundingBox Collidable::getAxisAlignedBoundingBox() const {
-		return AxisAlignedBoundingBox(getPosition() + getOffset(), getCollidingSize());
+		if (offsetRatio) {
+			return AxisAlignedBoundingBox(getPosition() + Vector2(getOffset().getX() * getCollidingWidth(), getOffset().getY() * getCollidingHeight()),
+										  getCollidingSize());
+		} else {
+			return AxisAlignedBoundingBox(getPosition() + getOffset(), getCollidingSize());
+		}
 	}
 
 	std::pair<bool, CollisionDetails> Collidable::collide(Collidable *other) {

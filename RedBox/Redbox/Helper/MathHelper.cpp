@@ -180,18 +180,11 @@ namespace RedBox {
 	template <>
 	float MathHelper::clampAngle(float angle) {
 		if (angle > 180.0f || angle <= -180.0f) {
-			float tmp = angle / 180.0f;
-			float tmp2;
-			modff(tmp, &tmp2);
-
-			if (angle > 180.0f) {
-				tmp2 += 1.0f;
-
+			if (angle > 0.0f) {
+				angle = angle - (static_cast<float>(static_cast<int>(angle + 180.0f) / 360) * 360.0f);
 			} else {
-				tmp2 -= 1.0f;
+				angle = angle + (static_cast<float>(static_cast<int>(angle - 180.0f) / -360) * 360.0f);
 			}
-
-			angle -= tmp2 * 180.0f;
 		}
 
 		return angle;
@@ -200,18 +193,11 @@ namespace RedBox {
 	template <>
 	double MathHelper::clampAngle(double angle) {
 		if (angle > 180.0 || angle <= -180.0) {
-			double tmp = angle / 180.0;
-			double tmp2;
-			modf(tmp, &tmp2);
-
-			if (angle > 180.0) {
-				tmp2 += 1.0;
-
+			if (angle > 0.0) {
+				angle = angle - (static_cast<double>(static_cast<int>(angle + 180.0) / 360) * 360.0);
 			} else {
-				tmp2 -= 1.0;
+				angle = angle + (static_cast<double>(static_cast<int>(angle - 180.0) / -360) * 360.0);
 			}
-
-			angle -= tmp2 * 180.0;
 		}
 
 		return angle;

@@ -506,7 +506,7 @@ namespace RedBox {
 		 * clockwise.
 		 */
 		ValueType getAngle() const {
-			return (x < DEFAULT_VALUE) ? (-getAngleBetween(UP)) : (getAngleBetween(UP));
+			return (x < DEFAULT_VALUE) ? (getAngleBetween(UP)) : (-getAngleBetween(UP));
 		}
 
 		/**

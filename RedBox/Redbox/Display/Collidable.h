@@ -477,6 +477,21 @@ namespace RedBox {
 		float getCollidingHeight() const;
 
 		/**
+		 * Checks whether or not the offset is a ratio or is in pixels.
+		 * @return True if the offset is a ratio or if it is in pixels.
+		 * @see RedBox::Collidable::offsetRatio
+		 */
+		bool isOffsetRatio() const;
+
+		/**
+		 * Sets whether or not the offset is a ratio or is in pixels.
+		 * @param newOffsetRatio Set it to true for the offset to be a ratio or
+		 * false for it to be in pixels.
+		 * @see RedBox::Collidable::offsetRatio
+		 */
+		void setOffsetRatio(bool newOffsetRatio);
+
+		/**
 		 * Gets the axis-aligned bounding box for the collidable.
 		 * @return Axis-aligned bounding box for the collidable. Takes into
 		 * account its offset and colliding box ratio.
@@ -660,6 +675,12 @@ namespace RedBox {
 		 * (0.5f, 0.5f).
 		 */
 		Vector2 collidingBoxRatio;
+
+		/**
+		 * True if the offset is a proportion of the collidable's size, false if
+		 * it is in pixels.
+		 */
+		bool offsetRatio;
 
 		/**
 		 * Computes velocity. Applies acceleration, drag and takes into account
