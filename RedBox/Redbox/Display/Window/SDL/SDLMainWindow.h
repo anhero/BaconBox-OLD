@@ -67,6 +67,16 @@ namespace RedBox {
 		 * Set the resolution of the window.
 		 */
 		void setResolution(unsigned int resolutionWidth, unsigned int resolutionHeight);
+        
+        /**
+         * Hide the pointer. The pointer still work, but it won't be visible.
+         */
+        void hideCursor();
+        
+        /**
+         * Show the pointer. If you called hideCursor(), this will reactivate it.
+         */
+        void showCursor();
 
 
 		/**

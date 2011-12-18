@@ -78,6 +78,17 @@ namespace RedBox {
 		 * @param newInputGrabbed
 		 */
 		virtual void setInputGrabbed(bool newInputGrabbed) = 0;
+        
+        
+        /**
+         * Hide the pointer. The pointer still work, but it won't be visible.
+         */
+        virtual void hideCursor();
+        
+        /**
+         * Show the pointer. If you called hideCursor(), this will reactivate it.
+         */
+        virtual void showCursor();
 
 		/**
 		 * Grabs the input.

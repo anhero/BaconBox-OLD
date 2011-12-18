@@ -40,7 +40,8 @@ namespace RedBox {
 		 * sprite.
 		 * @param newSize Size of the sprite.
 		 * @param newTextureOffset Texture coordinates' offset if needed.
-		 * @param nbFrames Number of frames to load.
+		 * @param nbFrames Number of frames to load. If set to 0, it will use the maximum frame number 
+         * for the texture and size of the Animatable object.
 		 * @see RedBox::Texturable::textureInformation
 		 */
 		explicit Sprite(TexturePointer newTexture,
