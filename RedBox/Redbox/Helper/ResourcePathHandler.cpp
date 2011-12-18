@@ -33,11 +33,13 @@ namespace RedBox {
 #else
 
 		path = Engine::getApplicationPath();
-#endif
+        
 #ifdef RB_MAC_PLATFORM
 		path = path + "/../Resources/" + item;
 #else
 		path = path + "/resources/" + item;
+#endif
+
 #endif
 		return path;
 	}
@@ -62,6 +64,7 @@ namespace RedBox {
 #elif defined RB_MAC_PLATFORM
 		static bool firstTime = true;
 		std::stringstream ss;
+
 		ss << getpwnam(getlogin())->pw_dir << "/Library/Application Support/" << Engine::getApplicationName() << "/";
 		if (firstTime) {
 			createFolder(ss.str());

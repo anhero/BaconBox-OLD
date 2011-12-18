@@ -326,6 +326,13 @@ namespace RedBox {
 	                                        unsigned int nbFrames) {
 		Vector2 delta(vertices.getSize());
 		Vector2 tmpOffset(offset);
+        
+        if (nbFrames == 0) {
+            unsigned int nbOfXframe = this->getTextureInformation()->imageWidth/vertices.getWidth();
+            unsigned int nbOfYframe = this->getTextureInformation()->imageHeight/vertices.getHeight();
+            nbFrames = nbOfXframe * nbOfYframe;
+        }
+        
 		frames.resize(nbFrames);
 
 		for (std::vector<TextureCoordinates>::iterator i = frames.begin();
