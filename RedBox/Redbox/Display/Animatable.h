@@ -241,7 +241,8 @@ namespace RedBox {
 		 * to load makes sense.
 		 * @param vertices Vertices to use to load the texture coordinates.
 		 * @param offset Offset from the upper left corner of the texture.
-		 * @param nbFrames Number of frames to load.
+		 * @param nbFrames Number of frames to load. If set to 0, it will use the maximum frame number 
+         * for the texture and size of the Animatable object.
 		 * @see RedBox::Animatable::frames
 		 */
 		void loadTextureCoordinates(const VerticesArray &vertices,

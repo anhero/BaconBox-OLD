@@ -88,6 +88,7 @@ namespace RedBox {
 	void Sprite::construct(const Vector2 &newSize, const Vector2 &newPosition,
 	                       const Vector2 &newTextureOffset,
 	                       unsigned int nbFrames) {
+        
 		// We initialize the vertices.
 		this->getVertices().resize(4);
 		ShapeFactory::createRectangle(newSize, newPosition,
