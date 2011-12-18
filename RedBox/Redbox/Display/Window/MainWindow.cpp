@@ -39,6 +39,14 @@ namespace RedBox {
 	float MainWindow::getContextHeight() {
 		return contextHeight;
 	}
+    
+    void MainWindow::showCursor(){
+        
+    }
+    
+    void MainWindow::hideCursor(){
+        
+    }
 
 	void MainWindow::setContextSize(float newContextWidth, float newContextHeight) {
 		if (newContextWidth == 0.0f) {

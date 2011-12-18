@@ -115,4 +115,12 @@ namespace RedBox {
 
 		SDL_Quit();
 	}
+    
+    void SDLMainWindow::hideCursor(){
+        SDL_ShowCursor(SDL_DISABLE);
+    }
+    
+    void SDLMainWindow::showCursor(){
+        SDL_ShowCursor(SDL_ENABLE);
+    }
 }
