@@ -211,6 +211,7 @@ namespace RedBox {
 	}
 
 	void Camera::update() {
+		this->Collidable::update();
 		double timeSinceStarted = TimeHelper::getInstance().getSinceStart() - shakeStart;
 
 		if (timeSinceStarted < shakeDuration) {
