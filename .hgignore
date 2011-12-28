@@ -59,6 +59,8 @@ Release
 #.a libraries
 *.a
 
+prefix/
+
 glob:libraries/current
 #libbuildtool ignore rules
 regexp:^libraries/.*/.*$
