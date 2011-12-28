@@ -1,0 +1,128 @@
+#!/usr/bin/env BoxFactory
+
+project.setname RedBox
+
+project.discover_directory
+
+## This is generally a good default; auto-discovery.
+#project.discover_directory
+
+# Change this to change the library name
+# An idea would be to default to the last directory in the project_directory path, once resolved.
+# For project /home/homer/Projects/foo/bar/baz/ this would resolve as project_name "baz"
+#project.setname RedBox
+
+# Here we load the modules this project uses.
+module.load compilers/cpp
+module.load compilers/cpp.cxx
+module.load linker
+module.load documentation/doxygen
+
+#module.load projects/projects
+
+cpp.settype "staticlib"
+
+#echo "------------------"
+#echo "------------------"
+#echo "------------------"
+#
+#echo "------------------"
+#echo "TESTING THINGS OUT"
+#echo "------------------"
+#
+#if module.loaded compiler/cpp; then
+#	echo CPP module is loaded
+#else
+#	echo no CPP module loader...
+#fi
+#
+#echo "------------------"
+#echo "------------------"
+#echo "------------------"
+
+#exit 2
+
+# Using local is valid; this is run in a function especially for this reason.
+local source_files; declare -a source_files
+local public_headers; declare -a public_headers
+local private_headers; declare -a private_headers
+local include_paths; declare -a include_paths
+
+local source_path
+
+local platforms
+local platform
+
+# A list of platforms we support
+# TODO: Properly rename platform folders...
+platforms=( "Qt" "iOS" "ios" "SDL" "MusicIOS" "OpenAL" "Windows" )
+
+# The default platform is set here
+platform=${platform:-SDL}
+
+cpp.add_define "${platform}"
+
+if [[ -n "${DEBUG:-}" ]]; then
+	cpp.add_define "DEBUG"
+	cpp.set_debug
+fi
+
+# We remove the current platform from the list of available platforms
+array_remove platforms "$platform"
+
+source_path="$(project.getdirectory)/RedBox"
+
+include_paths=( "$(project.getdirectory)/RedBox/" "$(project.getdirectory)/libraries/current/include/" )
+
+# Creating an array of parameters for excludes.
+# This is a "lazy" way to do it instead of passing the args manually
+for p in "${platforms[@]:-}"; do
+	platforms_excludes+=( "-X" "*/$p" )
+done
+
+add_files -r "${platforms_excludes[@]:-}" \
+	source_files "${source_path}" "*.cpp"
+
+add_files "${platforms_excludes[@]:-}" \
+	public_headers "${source_path}/" "*.h"
+
+add_files -r "${platforms_excludes[@]:-}" \
+	private_headers "${source_path}/$(project.getname)" "*.h"
+
+add_folders -r "${platforms_excludes[@]:-}" \
+	include_paths "${source_path}"
+
+cpp.add_source_files    "${source_files[@]}"
+cpp.add_public_headers  "${public_headers[@]}"
+cpp.add_private_headers "${private_headers[@]}"
+cpp.add_include_paths "${include_paths[@]}"
+
+# ------------------------------------------------------------------------------
+# - Hooks                                                                      -
+# ------------------------------------------------------------------------------
+
+# Step to run after build
+# The function name is not important.
+# Putting long commands in a function is easier than writing them in the hooks
+# array.
+post_build() {
+	echo "Calling an external script: linkscript.sh"
+
+	#TODO: Include this in BoxFactory (static big libs linking)
+
+	$(project.getdirectory)/script/linkscript.sh \
+		${build_directory}/$(cpp.getoutfile) \
+		$(project.getdirectory)/libraries/current/lib/libfreetype.a \
+		$(project.getdirectory)/libraries/current/lib/libpng.a \
+		$(project.getdirectory)/libraries/current/lib/libz.a \
+		$(project.getdirectory)/libraries/current/lib/libSDL.a \
+		$(project.getdirectory)/libraries/current/lib/libSDL_mixer.a \
+		$(project.getdirectory)/libraries/current/lib/libogg.a \
+		$(project.getdirectory)/libraries/current/lib/libvorbis.a \
+		$(project.getdirectory)/libraries/current/lib/libvorbisenc.a \
+		$(project.getdirectory)/libraries/current/lib/libvorbisfile.a \
+		${build_directory}/$(cpp.getoutfile)
+
+}
+# Hooking the function as a post build step.
+hook_step_post_build+=( "post_build" )

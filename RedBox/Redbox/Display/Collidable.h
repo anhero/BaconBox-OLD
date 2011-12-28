@@ -247,63 +247,52 @@ namespace RedBox {
 		void setYAcceleration(float newYAcceleration);
 
 		/**
-		 * Gets the drag.
-		 * @return Vector2 containing the deceleration applied when there is no
-		 * acceleration until velocity reaches 0.
-		 * @see RedBox::Collidable::drag
+		 * Gets the drag applied on the velocity's direction when there is no
+		 * acceleration.
+		 * @return Current global drag.
+		 * @see RedBox::Collidable::globalDrag
 		 */
-		const Vector2 &getDrag() const;
+		float getGlobalDrag() const;
 
 		/**
-		 * Sets the drag.
-		 * @param newDrag New drag. Deceleration applied when there is no
-		 * acceleration until velocity reaches 0.
-		 * @see RedBox::Collidable::drag
+		 * Sets the drag applied on the velocity's direction when there is no
+		 * acceleration.
+		 * @param newGlobalDrag New global drag to set.
+		 * @see RedBox::Collidable::globalDrag
 		 */
-		void setDrag(const Vector2 &newDrag);
+		void setGlobalDrag(float newGlobalDrag);
 
 		/**
-		 * Sets the drag.
-		 * @param newXDrag New horizontal drag. Deceleration applied when there
-		 * is no horizontal acceleration until horizontal velocity reaches 0.
-		 * @param newYDrag New vertical drag. Deceleration applied when there is
-		 * no vertical acceleration until vertical velocity reaches 0.
-		 * @see RedBox::Collidable::drag
+		 * Gets the horizontal drag applied on the horizontal velocity when
+		 * there is no horizontal acceleration (there could be a vertical
+		 * acceleration while the horizontal drag is being applied).
+		 * @return Current horizontal drag.
 		 */
-		void setDrag(float newXDrag, float newYDrag);
+		float getHorizontalDrag() const;
 
 		/**
-		 * Gets the horizontal drag.
-		 * @return Float containing the horizontal deceleration applied when
-		 * there is no horizontal acceleration until horizontal velocity reaches
-		 * 0.
-		 * @see RedBox::Collidable::drag
+		 * Sets the horizontal drag applied on the horizontal velocity when
+		 * there is no horizontal acceleration (there could be a vertical
+		 * acceleration while the horizontal drag is being applied).
+		 * @param newHorizontalDrag New horizontal drag.
 		 */
-		float getXDrag() const;
+		void setHorizontalDrag(float newHorizontalDrag);
 
 		/**
-		 * Sets the horizontal drag.
-		 * @param newXDrag New horizontal drag. Deceleration applied when there
-		 * is no horizontal acceleration until horizontal velocity reaches 0.
-		 * @see RedBox::Collidable::drag
+		 * Gets the vertical drag applied on the vertical velocity when there is
+		 * vertical acceleration (there could be a horizontal acceleration while
+		 * the vertical drag is being applied).
+		 * @return Current vertical drag.
 		 */
-		void setXDrag(float newXDrag);
+		float getVerticalDrag() const;
 
 		/**
-		 * Gets the vertical drag.
-		 * @return Float containing the vertical deceleration applied when
-		 * there is no vertical acceleration until vertical velocity reaches 0.
-		 * @see RedBox::Collidable::drag
+		 * Sets the vertical drag applied on the vertical velocity when there is
+		 * no vertical acceleration (there could be a horizontal acceleration
+		 * while the vertical drag is being applied).
+		 * @param newVerticalDrag New vertical drag.
 		 */
-		float getYDrag() const;
-
-		/**
-		 * Sets the vertical drag.
-		 * @param newYDrag New vertical drag. Deceleration applied when there is
-		 * no vertical acceleration until vertical velocity reaches 0.
-		 * @see RedBox::Collidable::drag
-		 */
-		void setYDrag(float newYDrag);
+		void setVerticalDrag(float newVerticalDrag);
 
 		/**
 		 * Gets the flag set of collidable sides. Used to get which side of the
@@ -638,10 +627,24 @@ namespace RedBox {
 		Vector2 acceleration;
 
 		/**
-		 * Deceleration applied when there is no acceleration until velocity
-		 * reaches 0.
+		 * Deceleration applied when there is neither a horizontal nor a
+		 * vertical accleration until velocity reaches 0.
 		 */
-		Vector2 drag;
+		float globalDrag;
+
+		/**
+		 * Horizontal deceleration applied when there is no horizontal
+		 * acceleration until horizontal velocity reaches 0. So there could be
+		 * a vertical acceleration while the horizontal drag is being applied.
+		 */
+		float horizontalDrag;
+
+		/**
+		 * Vertical deceleration applied when there is no vertical acceleration
+		 * until vertical velocity reaches 0. So there could be a horizontal
+		 * acceleration while the vertical drag is being applied.
+		 */
+		float verticalDrag;
 
 		/**
 		 * Contain "Side" flag (see Side.h). It tells which side can collide. A

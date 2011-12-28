@@ -26,23 +26,26 @@ namespace RedBox {
 	Collidable::Collidable() : Updateable(), Transformable(),
 		oldPosition(getPosition()), velocity(),
 		maximumVelocity(NO_MAX_VELOCITY, NO_MAX_VELOCITY),
-		acceleration(), drag(), collidableSides(ALL_SIDES),
-		elasticity(0.0f), staticBody(false), offset(),
-		collidingBoxRatio(1.0f, 1.0f), offsetRatio(false) {
+		acceleration(), globalDrag(0.0f), horizontalDrag(0.0f),
+		verticalDrag(0.0f), collidableSides(ALL_SIDES), elasticity(0.0f),
+		staticBody(false), offset(), collidingBoxRatio(1.0f, 1.0f),
+		offsetRatio(false) {
 	}
 
 	Collidable::Collidable(const Vector2 &newPosition) :
 		Updateable(), Transformable(newPosition), oldPosition(newPosition),
 		velocity(), maximumVelocity(NO_MAX_VELOCITY, NO_MAX_VELOCITY),
-		acceleration(), drag(), collidableSides(ALL_SIDES),
-		elasticity(0.0f), staticBody(false), offset(),
-		collidingBoxRatio(1.0f, 1.0f), offsetRatio(false) {
+		acceleration(), globalDrag(0.0f), horizontalDrag(0.0f),
+		verticalDrag(0.0f), collidableSides(ALL_SIDES), elasticity(0.0f),
+		staticBody(false), offset(), collidingBoxRatio(1.0f, 1.0f),
+		offsetRatio(false) {
 	}
 
 	Collidable::Collidable(const Collidable &src) : Updateable(src),
 		Transformable(src), oldPosition(src.oldPosition), velocity(src.velocity),
 		maximumVelocity(src.maximumVelocity), acceleration(src.acceleration),
-		drag(src.drag), collidableSides(src.collidableSides),
+		globalDrag(src.globalDrag), horizontalDrag(src.horizontalDrag),
+		verticalDrag(src.verticalDrag), collidableSides(src.collidableSides),
 		elasticity(src.elasticity), staticBody(src.staticBody),
 		offset(src.offset), collidingBoxRatio(src.collidingBoxRatio),
 		offsetRatio(src.offsetRatio) {
@@ -59,7 +62,9 @@ namespace RedBox {
 			velocity = src.velocity;
 			maximumVelocity = src.maximumVelocity;
 			acceleration = src.acceleration;
-			drag = src.drag;
+			globalDrag = src.globalDrag;
+			horizontalDrag = src.horizontalDrag;
+			verticalDrag = src.globalDrag;
 			collidableSides = src.collidableSides;
 			elasticity = src.elasticity;
 			staticBody = src.staticBody;
@@ -188,32 +193,28 @@ namespace RedBox {
 		acceleration.setY(newYAcceleration);
 	}
 
-	const Vector2 &Collidable::getDrag() const {
-		return drag;
+	float Collidable::getGlobalDrag() const {
+		return globalDrag;
 	}
 
-	void Collidable::setDrag(const Vector2 &newDrag) {
-		drag = newDrag;
+	void Collidable::setGlobalDrag(float newGlobalDrag) {
+		globalDrag = newGlobalDrag;
 	}
 
-	void Collidable::setDrag(float newXDrag, float newYDrag) {
-		drag.setXY(newXDrag, newYDrag);
+	float Collidable::getHorizontalDrag() const {
+		return horizontalDrag;
 	}
 
-	float Collidable::getXDrag() const {
-		return drag.getX();
+	void Collidable::setHorizontalDrag(float newHorizontalDrag) {
+		horizontalDrag = newHorizontalDrag;
 	}
 
-	void Collidable::setXDrag(float newXDrag) {
-		drag.setX(newXDrag);
+	float Collidable::getVerticalDrag() const {
+		return verticalDrag;
 	}
 
-	float Collidable::getYDrag() const {
-		return drag.getY();
-	}
-
-	void Collidable::setYDrag(float newYDrag) {
-		drag.setY(newYDrag);
+	void Collidable::setVerticalDrag(float newVerticalDrag) {
+		verticalDrag = newVerticalDrag;
 	}
 
 	FlagSet<Side> &Collidable::getCollidableSides() {
@@ -317,7 +318,8 @@ namespace RedBox {
 	const AxisAlignedBoundingBox Collidable::getAxisAlignedBoundingBox() const {
 		if (offsetRatio) {
 			return AxisAlignedBoundingBox(getPosition() + Vector2(getOffset().getX() * getCollidingWidth(), getOffset().getY() * getCollidingHeight()),
-										  getCollidingSize());
+			                              getCollidingSize());
+
 		} else {
 			return AxisAlignedBoundingBox(getPosition() + getOffset(), getCollidingSize());
 		}
@@ -547,29 +549,6 @@ namespace RedBox {
 		return result;
 	}
 
-	float Collidable::computeVelocity(float velocity, float acceleration, float drag, float maximumVelocity) {
-		if (acceleration != 0.0f) {
-			velocity += acceleration * static_cast<float>(Engine::getSinceLastUpdate());
-
-		} else if (drag != 0.0f) {
-			float tmpDrag = drag * static_cast<float>(Engine::getSinceLastUpdate());
-
-			if (velocity - tmpDrag > 0.0f) {
-				velocity -= tmpDrag;
-
-			} else if (velocity + tmpDrag < 0.0f) {
-				velocity += tmpDrag;
-
-			} else {
-				velocity = 0.0f;
-			}
-		}
-
-		checkMaximumVelocity(&velocity, maximumVelocity);
-
-		return velocity;
-	}
-
 	float Collidable::checkMaximumVelocity(float *velocity, float maximumVelocity) {
 		if (velocity) {
 			if (*velocity != 0.0f && maximumVelocity >= 0.0f) {
@@ -589,8 +568,49 @@ namespace RedBox {
 	}
 
 	void Collidable::computeVelocity() {
-		velocity.setXY(computeVelocity(velocity.getX(), acceleration.getX(), drag.getX(), maximumVelocity.getX()),
-		               computeVelocity(velocity.getY(), acceleration.getY(), drag.getY(), maximumVelocity.getY()));
+		float time = static_cast<float>(Engine::getSinceLastUpdate());
+		velocity.addToXY(acceleration * time);
+
+		if (acceleration.getX() == 0.0f) {
+			float tmp = horizontalDrag * time;
+
+			if (velocity.getX() - tmp > 0.0f) {
+				velocity.subtractFromX(tmp);
+
+			} else if (velocity.getX() + tmp < 0.0f) {
+				velocity.addToX(tmp);
+
+			} else {
+				velocity.setX(0.0f);
+			}
+		}
+
+		if (acceleration.getY() == 0.0f) {
+			float tmp = verticalDrag * time;
+
+			if (velocity.getY() - tmp > 0.0f) {
+				velocity.subtractFromY(tmp);
+
+			} else if (velocity.getY() + tmp < 0.0f) {
+				velocity.addToY(tmp);
+
+			} else {
+				velocity.setY(0.0f);
+			}
+		}
+
+		if (acceleration == Vector2()) {
+			float tmp = velocity.getLength() - globalDrag * time;
+
+			if (tmp > 0.0f) {
+				velocity.setLength(tmp);
+
+			} else {
+				velocity.setXY(0.0f, 0.0f);
+			}
+		}
+
+		checkMaximumVelocity();
 	}
 
 	void Collidable::checkMaximumVelocity() {
