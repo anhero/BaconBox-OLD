@@ -484,6 +484,14 @@ namespace RedBox {
 		}
 
 		/**
+		 * Gets a normalized version of the instance.
+		 * @return Copy of the instance, but normalized.
+		 */
+		const Vector2T<ValueType> getNorm() {
+			return *this / getLength();
+		}
+
+		/**
 		 * Normalizes the instance. Makes the instance have a length of 1, but
 		 * keeps the same angle.
 		 */
