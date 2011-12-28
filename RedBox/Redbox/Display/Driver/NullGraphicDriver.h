@@ -31,7 +31,7 @@ namespace RedBox {
 		 * draw.
 		 * @param color Color to render.
 		 */
-		void drawShapeWithTextureAndColor(const VerticesArray &vertices,
+		void drawShapeWithTextureAndColor(const VertexArray &vertices,
 		                                  const TextureInformation *textureInformation,
 		                                  const TextureCoordinates &textureCoordinates,
 		                                  const Color &color);
@@ -45,7 +45,7 @@ namespace RedBox {
 		 * @param textureCoordinates Texture coordinates in the texture to
 		 * draw.
 		 */
-		void drawShapeWithTexture(const VerticesArray &vertices,
+		void drawShapeWithTexture(const VertexArray &vertices,
 		                          const TextureInformation *textureInformation,
 		                          const TextureCoordinates &textureCoordinates);
 
@@ -54,7 +54,7 @@ namespace RedBox {
 		 * @param vertices Vertices to draw.
 		 * @param color Color to render.
 		 */
-		void drawShapeWithColor(const VerticesArray &vertices,
+		void drawShapeWithColor(const VertexArray &vertices,
 		                        const Color &color);
 
 		/**
@@ -70,7 +70,7 @@ namespace RedBox {
 		 * draw.
 		 * @param color Color to render.
 		 */
-		void drawMaskShapeWithTextureAndColor(const VerticesArray &vertices,
+		void drawMaskShapeWithTextureAndColor(const VertexArray &vertices,
 		                                      const TextureInformation *textureInformation,
 		                                      const TextureCoordinates &textureCoordinates,
 		                                      const Color &color);
@@ -85,7 +85,7 @@ namespace RedBox {
 		 * @param textureCoordinates Texture coordinates in the texture to
 		 * draw.
 		 */
-		void drawMaskShapeWithTexture(const VerticesArray &vertices,
+		void drawMaskShapeWithTexture(const VertexArray &vertices,
 		                              const TextureInformation *textureInformation,
 		                              const TextureCoordinates &textureCoordinates);
 
@@ -104,7 +104,7 @@ namespace RedBox {
 		 * @param color Color to render.
 		 * @param invertedMask If true, the mask effect will be inverted.
 		 */
-		void drawMaskedShapeWithTextureAndColor(const VerticesArray &vertices,
+		void drawMaskedShapeWithTextureAndColor(const VertexArray &vertices,
 		                                        const TextureInformation *textureInformation,
 		                                        const TextureCoordinates &textureCoordinates,
 		                                        const Color &color,
@@ -115,34 +115,34 @@ namespace RedBox {
 		 * to any "drawMask..." function.
 		 * @param vertices Vertices to draw.
 		 */
-		void unmaskShape(const VerticesArray &vertices);
+		void unmaskShape(const VertexArray &vertices);
 
-		void drawBatchWithTextureAndColor(const VerticesArray &vertices,
+		void drawBatchWithTextureAndColor(const VertexArray &vertices,
 		                                  const TextureInformation *textureInformation,
 		                                  const TextureCoordinates &textureCoordinates,
-		                                  const std::vector<unsigned short> &indices,
-		                                  const std::vector<unsigned char> &colors);
+		                                  const IndiceArray &indices,
+		                                  const ColorArray &colors);
 
-		void drawBatchWithTexture(const VerticesArray &vertices,
+		void drawBatchWithTexture(const VertexArray &vertices,
 		                          const TextureInformation *textureInformation,
 		                          const TextureCoordinates &textureCoordinates,
-		                          const std::vector<unsigned short> &indices);
+		                          const IndiceArray &indices);
 
-		void drawMaskBatchWithTextureAndColor(const VerticesArray &vertices,
+		void drawMaskBatchWithTextureAndColor(const VertexArray &vertices,
 		                                      const TextureInformation *textureInformation,
 		                                      const TextureCoordinates &textureCoordinates,
-		                                      const std::vector<unsigned short> &indices,
-		                                      const std::vector<unsigned char> &colors);
+		                                      const IndiceArray &indices,
+		                                      const ColorArray &colors);
 
-		void drawMaskedBatchWithTextureAndColor(const VerticesArray &vertices,
+		void drawMaskedBatchWithTextureAndColor(const VertexArray &vertices,
 		                                        const TextureInformation *textureInformation,
 		                                        const TextureCoordinates &textureCoordinates,
-		                                        const std::vector<unsigned short> &indices,
-		                                        const std::vector<unsigned char> &colors,
+		                                        const IndiceArray &indices,
+		                                        const ColorArray &colors,
 		                                        bool invertedMask);
 
-		void unmaskBatch(const VerticesArray &vertices,
-		                 const std::vector<unsigned short> &indices);
+		void unmaskBatch(const VertexArray &vertices,
+		                 const IndiceArray &indices);
 
 		/**
 		 * Prepare the scene before rendering object.

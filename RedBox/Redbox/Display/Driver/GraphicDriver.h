@@ -5,12 +5,13 @@
 #ifndef RB_GRAPHIC_DRIVER_H
 #define RB_GRAPHIC_DRIVER_H
 
-#include <vector>
+#include "ColorArray.h"
+#include "IndiceArray.h"
 
 #include "TextureCoordinates.h"
 
 namespace RedBox {
-	class VerticesArray;
+	class VertexArray;
 	struct TextureInformation;
 	class Color;
 	class PixMap;
@@ -41,7 +42,7 @@ namespace RedBox {
 		 * draw.
 		 * @param color Color to render.
 		 */
-		virtual void drawShapeWithTextureAndColor(const VerticesArray &vertices,
+		virtual void drawShapeWithTextureAndColor(const VertexArray &vertices,
 		                                          const TextureInformation *textureInformation,
 		                                          const TextureCoordinates &textureCoordinates,
 		                                          const Color &color) = 0;
@@ -55,7 +56,7 @@ namespace RedBox {
 		 * @param textureCoordinates Texture coordinates in the texture to
 		 * draw.
 		 */
-		virtual void drawShapeWithTexture(const VerticesArray &vertices,
+		virtual void drawShapeWithTexture(const VertexArray &vertices,
 		                                  const TextureInformation *textureInformation,
 		                                  const TextureCoordinates &textureCoordinates) = 0;
 
@@ -64,7 +65,7 @@ namespace RedBox {
 		 * @param vertices Vertices to draw.
 		 * @param color Color to render.
 		 */
-		virtual void drawShapeWithColor(const VerticesArray &vertices,
+		virtual void drawShapeWithColor(const VertexArray &vertices,
 		                                const Color &color) = 0;
 
 		/**
@@ -80,7 +81,7 @@ namespace RedBox {
 		 * draw.
 		 * @param color Color to render.
 		 */
-		virtual void drawMaskShapeWithTextureAndColor(const VerticesArray &vertices,
+		virtual void drawMaskShapeWithTextureAndColor(const VertexArray &vertices,
 		                                              const TextureInformation *textureInformation,
 		                                              const TextureCoordinates &textureCoordinates,
 		                                              const Color &color) = 0;
@@ -95,7 +96,7 @@ namespace RedBox {
 		 * @param textureCoordinates Texture coordinates in the texture to
 		 * draw.
 		 */
-		virtual void drawMaskShapeWithTexture(const VerticesArray &vertices,
+		virtual void drawMaskShapeWithTexture(const VertexArray &vertices,
 		                                      const TextureInformation *textureInformation,
 		                                      const TextureCoordinates &textureCoordinates) = 0;
 
@@ -114,7 +115,7 @@ namespace RedBox {
 		 * @param color Color to render.
 		 * @param invertedMask If true, the mask effect will be inverted.
 		 */
-		virtual void drawMaskedShapeWithTextureAndColor(const VerticesArray &vertices,
+		virtual void drawMaskedShapeWithTextureAndColor(const VertexArray &vertices,
 		                                                const TextureInformation *textureInformation,
 		                                                const TextureCoordinates &textureCoordinates,
 		                                                const Color &color,
@@ -125,34 +126,34 @@ namespace RedBox {
 		 * to any "drawMask..." function.
 		 * @param vertices Vertices to draw.
 		 */
-		virtual void unmaskShape(const VerticesArray &vertices) = 0;
+		virtual void unmaskShape(const VertexArray &vertices) = 0;
 
-		virtual void drawBatchWithTextureAndColor(const VerticesArray &vertices,
+		virtual void drawBatchWithTextureAndColor(const VertexArray &vertices,
 		                                          const TextureInformation *textureInformation,
 		                                          const TextureCoordinates &textureCoordinates,
-		                                          const std::vector<unsigned short> &indices,
-		                                          const std::vector<unsigned char> &colors) = 0;
+		                                          const IndiceArray &indices,
+		                                          const ColorArray &colors) = 0;
 
-		virtual void drawBatchWithTexture(const VerticesArray &vertices,
+		virtual void drawBatchWithTexture(const VertexArray &vertices,
 		                                  const TextureInformation *textureInformation,
 		                                  const TextureCoordinates &textureCoordinates,
-		                                  const std::vector<unsigned short> &indices) = 0;
+		                                  const IndiceArray &indices) = 0;
 
-		virtual void drawMaskBatchWithTextureAndColor(const VerticesArray &vertices,
+		virtual void drawMaskBatchWithTextureAndColor(const VertexArray &vertices,
 		                                              const TextureInformation *textureInformation,
 		                                              const TextureCoordinates &textureCoordinates,
-		                                              const std::vector<unsigned short> &indices,
-		                                              const std::vector<unsigned char> &colors) = 0;
+		                                              const IndiceArray &indices,
+		                                              const ColorArray &colors) = 0;
 
-		virtual void drawMaskedBatchWithTextureAndColor(const VerticesArray &vertices,
+		virtual void drawMaskedBatchWithTextureAndColor(const VertexArray &vertices,
 		                                                const TextureInformation *textureInformation,
 		                                                const TextureCoordinates &textureCoordinates,
-		                                                const std::vector<unsigned short> &indices,
-		                                                const std::vector<unsigned char> &colors,
+		                                                const IndiceArray &indices,
+		                                                const ColorArray &colors,
 		                                                bool invertedMask) = 0;
 
-		virtual void unmaskBatch(const VerticesArray &vertices,
-		                         const std::vector<unsigned short> &indices) = 0;
+		virtual void unmaskBatch(const VertexArray &vertices,
+		                         const IndiceArray &indices) = 0;
 
 		/**
 		 * Prepare the scene before rendering object.

@@ -10,13 +10,14 @@
 #include <iostream>
 
 namespace RedBox {
+#pragma pack(1)
 	/**
 	 * Simple class that represents a color in an RGBA format. Each component
 	 * ranges from 0 to 255.
 	 * @ingroup Display
 	 */
 	class Color {
-		friend std::ostream& operator<<(std::ostream& output, const Color& color);
+		friend std::ostream &operator<<(std::ostream &output, const Color &color);
 	public:
 		/// Number of components each color has.
 		static const unsigned int NB_COMPONENTS = 4;
@@ -43,10 +44,10 @@ namespace RedBox {
 
 		/// Enumeration for the indexes of the color's array of components.
 		enum Component {
-			R = 0,
-			G,
-			B,
-			A
+		    R = 0,
+		    G,
+		    B,
+		    A
 		};
 
 		/// HSV color components.
@@ -73,7 +74,7 @@ namespace RedBox {
 		 * @param alpha Alpha component.
 		 */
 		Color(int32_t red, int32_t green, int32_t blue,
-			  int32_t alpha = MAX_COMPONENT_VALUE);
+		      int32_t alpha = MAX_COMPONENT_VALUE);
 
 		/**
 		 * Parameterized constructor with one parameter.
@@ -86,25 +87,25 @@ namespace RedBox {
 		 * components.
 		 * @param src Color to make a copy of.
 		 */
-		Color(const Color& src);
+		Color(const Color &src);
 
 		/**
 		 * Assignation operator overload.
 		 * @param src Color to make a copy of.
 		 */
-		Color& operator=(const Color& src);
+		Color &operator=(const Color &src);
 
 		/**
 		 * Comparison operator overlaod.
 		 * @param other Other color to compare to.
 		 */
-		bool operator==(const Color& other);
+		bool operator==(const Color &other);
 
 		/**
 		 * Comparison operator overlaod.
 		 * @param other Other color to compare to.
 		 */
-		bool operator!=(const Color& other);
+		bool operator!=(const Color &other);
 
 		/**
 		 * Operator to cast the color into one component.
@@ -181,7 +182,7 @@ namespace RedBox {
 		 * @param rgb Color in the format 0x000000.
 		 */
 		void setRGB(uint32_t rgb);
-		
+
 		/**
 		 * Sets the color's red, green and blue components. Simply calls
 		 * setRed(), setGreen() and setBlue().
@@ -191,7 +192,7 @@ namespace RedBox {
 		 * @param alpha New alpha component.
 		 */
 		void setRGBA(int32_t red, int32_t green, int32_t blue, int32_t alpha);
-		
+
 		/**
 		 * Set the 4 components with one integer.
 		 * @param rgba Color in the format 0x00000000.
@@ -202,7 +203,7 @@ namespace RedBox {
 		 * Directly gets the color's array of components.
 		 * @return Array containing the four components in the order RGBA.
 		 */
-		const uint8_t* getComponents() const;
+		const uint8_t *getComponents() const;
 
 		/**
 		 * Gets the color as HSV representation.
@@ -265,6 +266,7 @@ namespace RedBox {
 		 */
 		static uint8_t getWithinRange(int32_t component);
 	};
+#pragma pack()
 }
 
 #endif

@@ -2,12 +2,12 @@
 
 #include <cmath>
 
-#include "VerticesArray.h"
+#include "VertexArray.h"
 
 namespace RedBox {
 	void ShapeFactory::createRegularPolygon(unsigned int nbSides, float sideLength,
 	                                        const Vector2 &position,
-	                                        VerticesArray *vertices) {
+	                                        VertexArray *vertices) {
 		// We make sure the received parameters are valid.
 		if (nbSides >= 3 && vertices && vertices->getNbVertices() == nbSides &&
 		    sideLength > 0.0f) {
@@ -17,7 +17,7 @@ namespace RedBox {
 			// Angle from the polygon's center.
 			float incrementer = 360.0f / nbSides;
 			float angle = incrementer / 2.0f;
-			VerticesArray::Iterator i = vertices->getBegin();
+			VertexArray::Iterator i = vertices->getBegin();
 			Vector2 tmpPosition(radius * sinf(MathHelper::degreesToRadians(angle)),
 			                    radius * cosf(MathHelper::degreesToRadians(angle)));
 			*i = tmpPosition;
@@ -57,12 +57,12 @@ namespace RedBox {
 
 	void ShapeFactory::createRectangle(const Vector2 &size,
 	                                   const Vector2 &position,
-	                                   VerticesArray *vertices) {
+	                                   VertexArray *vertices) {
 		// We make sure the size makes sense, that the vertices are valid and
 		// that we have 4 vertices.
 		if (size.getX() > 0.0f && size.getY() > 0.0f && vertices &&
 		    vertices->getNbVertices() == 4) {
-			VerticesArray::Iterator i = vertices->getBegin();
+			VertexArray::Iterator i = vertices->getBegin();
 
 			i->setXY(position.getX(), position.getY());
 			++i;
@@ -75,7 +75,7 @@ namespace RedBox {
 	}
 
 	void ShapeFactory::createSquare(float sideLength, const Vector2 &position,
-	                                VerticesArray *vertices) {
+	                                VertexArray *vertices) {
 		createRectangle(Vector2(sideLength, sideLength), position, vertices);
 	}
 

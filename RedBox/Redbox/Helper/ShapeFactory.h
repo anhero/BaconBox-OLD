@@ -8,7 +8,7 @@
 #include "Vector2.h"
 
 namespace RedBox {
-	class VerticesArray;
+	class VertexArray;
 	/**
 	 * Class used to calculate the vertices of different shapes.
 	 * @ingroup Helper
@@ -28,7 +28,7 @@ namespace RedBox {
 		 */
 		static void createRegularPolygon(unsigned int nbSides, float sideLength,
 		                                 const Vector2 &position,
-		                                 VerticesArray *vertices);
+		                                 VertexArray *vertices);
 
 		/**
 		 * Calculates the vertices of a rectangle. If any of the parameters'
@@ -41,7 +41,7 @@ namespace RedBox {
 		 */
 		static void createRectangle(const Vector2 &size,
 		                            const Vector2 &position,
-		                            VerticesArray *vertices);
+		                            VertexArray *vertices);
 
 		/**
 		 * Calculates the vertices of a square. If any of the parameters'
@@ -54,7 +54,7 @@ namespace RedBox {
 		 */
 		static void createSquare(float sideLength,
 		                         const Vector2 &position,
-		                         VerticesArray *vertices);
+		                         VertexArray *vertices);
 	private:
 		/**
 		 * Private constructor. Declared private so no ShapeFactory can be

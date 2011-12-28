@@ -3,12 +3,12 @@
 #include "Console.h"
 #include "Vector2.h"
 #include "TextureCoordinates.h"
-#include "VerticesArray.h"
+#include "VertexArray.h"
 #include "TextureInformation.h"
 
 namespace RedBox {
 	void TextureMappable::loadTextureCoordinates(TexturePointer texture,
-	                                             const VerticesArray &vertices,
+	                                             const VertexArray &vertices,
 	                                             const Vector2 &offset,
 	                                             TextureCoordinates *textureCoordinates) {
 		// We make sure the texture coordinates container is valid.
@@ -33,7 +33,7 @@ namespace RedBox {
 						Vector2 poweredSize(static_cast<float>(texture.pointer->poweredWidth),
 						                    static_cast<float>(texture.pointer->poweredHeight));
 
-						VerticesArray::ConstIterator i = vertices.getBegin();
+						VertexArray::ConstIterator i = vertices.getBegin();
 						TextureCoordinates::iterator i2 = textureCoordinates->begin();
 
 						// We load all texture coordinates from the vertices.

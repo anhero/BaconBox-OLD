@@ -13,7 +13,7 @@
 #include "InanimateGraphicElement.h"
 #include "Pointer.h"
 #include "Engine.h"
-#include "StandardVerticesArray.h"
+#include "StandardVertexArray.h"
 
 namespace RedBox {
 	template <typename T>
@@ -159,7 +159,7 @@ namespace RedBox {
 
 					} else {
 						// We get the button's sprite's real width.
-						VerticesArray::ConstIterator i = buttonSprite.getVertices().getBegin();
+						VertexArray::ConstIterator i = buttonSprite.getVertices().getBegin();
 						Vector2 tmpLine(*i);
 						++i;
 						Vector2 horizontalLine = *i - tmpLine;
@@ -341,7 +341,7 @@ namespace RedBox {
 		bool down;
 
 		/// Array containing the 4 vertices for the bounding box.
-		StandardVerticesArray vertices;
+		StandardVertexArray vertices;
 
 		/**
 		 * Initializes the line slider.
@@ -375,7 +375,7 @@ namespace RedBox {
 			}
 
 			// We get the initial upper left corner's position.
-			VerticesArray::ConstIterator i = lineSprite.getVertices().getBegin();
+			VertexArray::ConstIterator i = lineSprite.getVertices().getBegin();
 			Vector2 initialPosition = *i;
 			++i;
 			// While we're doing that, we take note of the line's real
@@ -406,7 +406,7 @@ namespace RedBox {
 		 * Initializes the vertices.
 		 */
 		void initializeVertices() {
-			StandardVerticesArray::Iterator i = vertices.getBegin();
+			StandardVertexArray::Iterator i = vertices.getBegin();
 			++i;
 			Vector2 realSize(std::max(lineSprite.getWidth(), buttonSprite.getWidth()),
 			                 std::max(lineSprite.getHeight(), buttonSprite.getHeight()));

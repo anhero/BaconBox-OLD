@@ -10,7 +10,7 @@
 #include "TexturePointer.h"
 
 namespace RedBox {
-	class VerticesArray;
+	class VertexArray;
 	/**
 	 * All bodies that have texture coordinates are derived from this class.
 	 * @ingroup Display
@@ -28,7 +28,7 @@ namespace RedBox {
 		 * vertices.
 		 */
 		static void loadTextureCoordinates(TexturePointer texture,
-		                                   const VerticesArray &vertices,
+		                                   const VertexArray &vertices,
 		                                   const Vector2 &offset,
 		                                   TextureCoordinates *textureCoordinates);
 

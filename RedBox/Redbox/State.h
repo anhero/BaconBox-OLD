@@ -12,8 +12,6 @@
 #include "Color.h"
 #include "BodyManager.h"
 #include "Layerable.h"
-#include "Renderable.h"
-#include "Updateable.h"
 
 namespace RedBox {
 	/**

@@ -1,4 +1,3 @@
-#if 0
 /**
  * @file
  * @ingroup Display
@@ -6,115 +5,471 @@
 #ifndef RB_RENDERBATCH_H
 #define RB_RENDERBATCH_H
 
+#include <set>
+#include <list>
 #include <vector>
+#include <utility>
+#include <algorithm>
 
-#include "Sprite.h"
-#include "GraphicBody.h"
+#include "Orderable.h"
+#include "Updateable.h"
+#include "Maskable.h"
+#include "Vector2.h"
+#include "ColorArray.h"
+#include "IndiceArray.h"
+#include "RenderModable.h"
+#include "Console.h"
+#include "GraphicDriver.h"
+#include "StandardVertexArray.h"
+#include "TextureCoordinates.h"
 #include "TextureInformation.h"
+#include "Texturable.h"
 
 namespace RedBox {
 	/**
+	 * Represents a batch of sprites to render at the same time.
 	 * @ingroup Display
+	 * @tparam Type of graphic contained. Either BatchedSprite or
+	 * BatchedInanimateSprite.
 	 */
-	class RenderBatch : public GraphicBody {
+	template <typename T>
+	class RenderBatch : virtual public Updateable, virtual public Maskable,
+		public RenderModable, public Texturable {
+		template <typename U, typename V> friend class BatchedGraphic;
+		template <typename U> friend class BatchedVertexArray;
 	public:
-		RenderBatch();
-		virtual ~RenderBatch();
+		typedef std::multiset<T *, Orderable::LessCompare> BodyMap;
+
+		typedef std::list<BodyMap::value_type> BodyList;
 
 		/**
-		 *  Reconstruct the internal batch arrays from the sprites in the batch.
+		 * Default constructor.
 		 */
-		void reconstruct();
+		RenderBatch() : Updateable(), Maskable(), RenderModable(), Texturable(),
+			bodies(), toAdd(), toRemove(), toChange(), indices(), vertices(),
+			textureCoordinates(), colors(), updating(false), currentMask(NULL) {
+		}
 
 		/**
-		 * Updates the sprites in the batch.
+		 * Destructor.
 		 */
-		virtual void update();
+		virtual ~RenderBatch() {
+			free();
+		}
+
 		/**
-		 * Renders the batch.
+		 * Updates the body.
 		 */
-		virtual void render();
+		virtual void update() {
+			// We add the sprites that are waiting to be added.
+			std::for_each(toAdd.rbegin(), toAdd.rend(), std::bind1st(std::mem_fun(&RenderBatch::add), this));
+
+			toAdd.clear();
+
+			// We take note that we are updating the batch's bodies.
+			updating = true;
+
+			BodyMap::value_type tmpBody;
+
+			// We update the bodies.
+			BodyMap::iterator i = bodies.begin();
+
+			while (i != bodies.end()) {
+				// We check if it needs to be deleted.
+				if ((*i)->isToBeDeleted()) {
+					// We add it to the list of sprites that are waiting to be
+					// removed.
+					toRemove.push_back(*i);
+
+					// We remove the body from the container.
+					bodies.erase(i++);
+
+				} else {
+					// We update the body.
+					(*i)->update();
+
+					// We check if the body's z coordinate has changed.
+					if ((*i)->isKeyChanged()) {
+						// We make a backup copy of its vertices.
+						(*i)->vertices.unlinkVertices();
+
+						// We remove the body's vertices from the array.
+						tmpBody = *i;
+						bodies.erase(i++);
+						removeVertices(tmpBody->vertices.begin, tmpBody->vertices.getNbVertices());
+
+						toChange.push_back(tmpBody);
+
+					} else {
+						++i;
+					}
+				}
+			}
+
+			// We take note that we are done updating the batch's bodies.
+			updating = false;
+
+			// We remove the bodies that are waiting to be removed.
+			BodyList::value_type tmp;
+
+			while (!toRemove.empty()) {
+				tmp = toRemove.front();
+				toRemove.pop_front();
+				removeVertices(tmp->vertices.begin, tmp->vertices.getNbVertices());
+				delete tmp;
+			}
+
+			// We re-insert the bodies that had their z changed.
+			std::for_each(toChange.begin(), toChange.end(), std::bind1st(std::mem_fun(&RenderBatch::add), this));
+
+			toChange.clear();
+		}
+
+		/**
+		 * Renders the body in the context.
+		 */
+		virtual void render() {
+			// The render mode for textures has to be set.
+			if (renderModes.isSet(RenderMode::TEXTURE)) {
+				if (renderModes.isSet(RenderMode::INVERSE_MASKED)) {
+					if (currentMask) {
+						currentMask->mask();
+
+						GraphicDriver::getInstance().drawMaskedBatchWithTextureAndColor(vertices,
+						                                                                this->getTextureInformation(),
+						                                                                textureCoordinates,
+						                                                                indices,
+						                                                                colors,
+						                                                                true);
+
+						currentMask->unmask();
+					}
+
+				} else if (renderModes.isSet(RenderMode::MASKED)) {
+					if (currentMask) {
+						currentMask->mask();
+
+						GraphicDriver::getInstance().drawMaskedBatchWithTextureAndColor(vertices,
+						                                                                this->getTextureInformation(),
+						                                                                textureCoordinates,
+						                                                                indices,
+						                                                                colors,
+						                                                                true);
+
+						currentMask->unmask();
+					}
+
+				} else {
+					GraphicDriver::getInstance().drawBatchWithTextureAndColor(vertices,
+					                                                          this->getTextureInformation(),
+					                                                          textureCoordinates,
+					                                                          indices,
+					                                                          colors);
+				}
+			}
+		}
 
 		/**
 		 * Similar to the render function except that it will only
-		 * render to the alpha component of the color buffer. It is
-		 * used to mask the next rendered sprite (if the next sprite
-		 * is set as a masked sprite).
+		 * render to the alpha component of the color buffer. It is used to mask
+		 * the next rendered renderable body (if the next renderable body is set
+		 * as a masked renderable body).
 		 */
-		virtual void mask();
+		virtual void mask() {
+			GraphicDriver::getInstance().drawMaskBatchWithTextureAndColor(vertices, this->getTextureInformation(), textureCoordnates, indices, colors);
+		}
 
 		/**
-		 * Undo what the mask function did. This function
-		 * MUST be once after the masked sprite has been rendered.
+		 * Undo what the mask function did. This function must be once after the
+		 * masked renderable body has been rendered.
 		 */
-		virtual void unmask();
+		virtual void unmask() {
+			GraphicDriver::getInstance().unmaskBatch(vertices, indices);
+		}
 
 		/**
-		 * Set the sprite used to mask the parent renderstep.
+		 * Gets the renderable body masking the current renderable body.
+		 * @return Pointer to the renderable body's mask.
+		 */
+		virtual Maskable *getMask() const {
+			return currentMask;
+		}
+
+		/**
+		 * Sets the renderable body used to mask the parent renderstep.
 		 * @param newMask A mask sprite.
-		 * @param inversed Set this parameter to true if you want to inverse
+		 * @param inverted Sets this parameter to true if you want to invert
 		 * the effect of the mask. False by default.
 		 */
-		virtual void setMask(GraphicBody *newMask, bool inversed = false);
+		virtual void setMask(Maskable *newMask, bool inverted = false) {
+			currentMask = newMask;
 
+			// If the new mask is valid.
+			if (currentMask) {
+				// We set the flags correctly depending on the "inverted"
+				// parameter.
+				renderModes.set(RenderMode::INVERSE_MASKED, inverted);
+				renderModes.set(RenderMode::MASKED, !inverted);
 
-		virtual float getWidth() const;
-		virtual float getHeight() const;
-		/**
-		 * Gets the graphic body masking the current graphic body.
-		 * @return Pointer to the graphic body's mask.
-		 */
-		virtual GraphicBody *getMask();
-
-		virtual GraphicBody *clone() const;
-
-
-		/**
-		 * Add a sprite in the batch.
-		 * All the sprites must use the same texture (or no texture if they
-		 * don't use textures.
-		 */
-		void addSprite(Sprite *aSprite);
+			} else {
+				// If we removed the batch's mask, we reset the flags.
+				renderModes.set(RenderMode::INVERSE_MASKED, false);
+				renderModes.set(RenderMode::MASKED, false);
+			}
+		}
 
 		/**
-		 * Remove the given sprite from the batch
+		 * Adds a body to the render batch.
+		 * @param nbVertices Number of vertices to give to the sprite.
+		 * @param z Z layer in the batch to insert the new sprite.
 		 */
-		void removeSprite(Sprite *aSprite);
+		BodyMap::value_type add(VertexArray::SizeType nbVertices, int z) {
+			BodyMap::value_type result;
+
+			if (updating) {
+				//toAdd.push_back(new Batched);
+			}
+
+			return result;
+		}
+
+		/**
+		 * Adds a sprite to the render batch.
+		 * @param newBody Pointer to the new batched sprite to add to the render
+		 * batch. A sprite cannot be in two render batches.
+		 */
+		BodyMap::value_type add(BodyMap::value_type newBody);
 	private:
+		/**
+		 * Clears the render batch.
+		 */
+		void clear() {
+			if (!updating) {
+				free();
 
-		///Batch of sprite
-		std::set<Sprite *> sprites;
+				bodies.clear();
+				toAdd.clear();
+				toRemove.clear();
+				toChange.clear();
+				vertices.clear();
+				textureCoordinates.clear();
+				colors.clear();
 
-		///Batch array of texture coordinate
-		Vector2 *textureCoord;
-		///Batch array of vertices
-		Vector2 *vertices;
-
-		///Batch array of colors
-		unsigned char *colors;
-
-		std::vector<unsigned short> indices;
-
-		///Number of vertices in the batch
-		unsigned int verticesCount;
-
-		///Number of sprites in the batch
-		unsigned int spritesCount;
-
-		FlagSet<RenderMode> renderModes;
+			} else {
+				Console::println("Could not clear the render batch because it's currently updating its bodies.");
+			}
+		}
 
 		/**
-		 * Pointer to a mask sprite. Pointer is NULL if the parent render step
-		 * is not masked.
+		 * Frees all memory dynamically allocated by the batch.
 		 */
-		GraphicBody *maskBody;
+		void free() {
+			for (BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
+				delete *i;
+			}
 
-		///Number of color channel in the texture
-		unsigned int colorChannelCount;
+			for (BodyList::iterator i = toAdd.begin(); i != toAdd.end(); ++i) {
+				delete *i;
+			}
 
-		TextureInformation textureInfo;
+			for (BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
+				delete *i;
+			}
+
+			for (BodyList::iterator i = toChange.begin(); i != toChange.end(); ++i) {
+				delete *i;
+			}
+		}
+
+		/**
+		 * Adds vertices in the batch.
+		 * @param position
+		 */
+		void addVertices(VertexArray::SizeType position,
+		                 VertexArray::SizeType nbVertices) {
+			// We make sure the given parameters make sense.
+			if (nbVertices && position < vertices.getSize()) {
+
+				// We update the bodies' vertices index.
+				for (BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
+					if ((*i)->vertices.begin >= position) {
+						(*i)->vertices.begin += nbVertices;
+					}
+				}
+
+				// We do so too for the bodies that are to be removed but aren't
+				// yet.
+				for (BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
+					if ((*i)->vertices.begin >= position) {
+						(*i)->vertices.begin += nbVertices;
+					}
+				}
+
+				// We add the vertices to the arrays.
+				vertices.insert(vertices.getBegin() + position, nbVertices);
+				textureCoordinates.insert(textureCoordinates.begin() + position, nbVertices, TextureCoordinates::value_type());
+				colors.insert(colors.begin() + position, nbVertices, ColorArray::value_type());
+
+				// We refresh the indices, the texture coordinates and the color
+				// arrays.
+				this->refreshAll();
+
+			} else {
+				Console::print("Failed to add ");
+				Console::print(nbVertices);
+				Console::print(" vertices at the position ");
+				Console::print(position);
+				Console::print(" in a batch that has ");
+				Console::print(vertices.getSize());
+				Console::print(" vertices.");
+				Console::printTrace();
+			}
+		}
+
+		/**
+		 * Removes vertices from the batch array.
+		 * @param position Index of the first vertex to remove.
+		 * @param nbVertices Number of vertices to remove.
+		 */
+		void removeVertices(VectorArray::size_type position,
+		                    VectorArray::size_type nbVertices) {
+			// We make sure the given parameters make sense.
+			if (nbVertices && position < vertices.getSize()) {
+
+				// We update the bodies' vertices index.
+				for (BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
+					if ((*i)->vertices.begin >= position) {
+						(*i)->vertices.begin -= nbVertices;
+					}
+				}
+
+				// We do so too for the bodies that are to be removed but aren't
+				// yet.
+				for (BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
+					if ((*i)->vertices.begin >= position) {
+						(*i)->vertices.begin -= nbVertices;
+					}
+				}
+
+				// We remove the vertices to the arrays.
+				vertices.erase(vertices.getBegin() + position, vertices.getBegin() + position + nbVertices);
+				textureCoordinates.erase(textureCoordinates.begin() + position, textureCoordinates.begin() + position + nbVertices);
+				colors.erase(colors.begin() + position, colors.begin() + position + nbVertices);
+
+				// We refresh the indices, the texture coordinates and the color
+				// arrays.
+				this->refreshAll();
+
+			} else {
+				Console::print("Failed to remove ");
+				Console::print(nbVertices);
+				Console::print(" vertices at the position ");
+				Console::print(position);
+				Console::print(" in a batch that has ");
+				Console::print(vertices.getSize());
+				Console::print(" vertices.");
+				Console::printTrace();
+			}
+		}
+
+		/**
+		 * Reconstructs the indices.
+		 */
+		void refreshIndices() {
+			// We clear the current indices.
+			indices.clear();
+
+			// We calculate the number of indices we'll need in the array.
+			IndiceArray::size_type nbIndices = 0;
+
+			for (BodyMap::const_iterator i = bodies.begin(); i != bodies.end(); ++i) {
+				nbIndices += ((*i)->vertices.getNbVertices() - 2) * 5 + 1;
+			}
+
+			// We reserve the necessary memory.
+			indices.reserve(nbIndices);
+
+			IndiceArray::value_type indiceIterator = 0;
+
+			// We initialize the indices for each body's vertices.
+			for (BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
+
+				// We make sure the body has at least 3 vertices.
+				if ((*i)->vertices.getNbVertices >= 3) {
+					// We get the body's first vertex's indice.
+					indiceIterator = static_cast<IndiceArray::value_type>((*i)->vertices.begin);
+
+					// We add the indices for each of the body's triangles.
+					for (IndiceArray::value_type j = 0;
+					     j < static_cast<IndiceArray::value_type>((*i)->vertices.getNbVertices());
+					     ++j) {
+						indices.push_back(indiceIterator);
+						indices.push_back(indiceIterator);
+						indices.push_back(indiceIterator + j + 1);
+						indices.push_back(indiceIterator + j + 2);
+						indices.push_back(indiceIterator + j + 2);
+					}
+				}
+			}
+		}
+
+		/**
+		 * Reconstructs the indices and refreshes the colors and the texture
+		 * coordinates.
+		 */
+		void refreshAll() {
+			refreshIndices();
+
+			// We update each body's color and texture coordinates.
+			for (BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
+				(*i)->setColor((*i)->getColor());
+				(*i)->refreshTextureCoordinates();
+			}
+		}
+
+		/// Contains all of the bodies to be rendered in batch.
+		BodyMap bodies;
+
+		/**
+		 * Contains all the bodies that are waiting to be added in the main
+		 * container.
+		 */
+		BodyList toAdd;
+
+		/**
+		 * Contains all the bodies that are waiting to be removed from the main
+		 * container.
+		 */
+		BodyList toRemove;
+
+		/**
+		 * Contains all the bodies that are waiting to be re-inserted in the
+		 * main container after their z has changed.
+		 */
+		BodyList toChange;
+
+		/// Array of vertex indices for the bodies' triangles.
+		IndiceArray indices;
+
+		/// Array containing all the bodies' vertices.
+		StandardVertexArray vertices;
+
+		/// Array containing the texture coordinates for each vertex.
+		TextureCoordinates textureCoordinates;
+
+		/// Array containint the colors for each vertex.
+		ColorArray colors;
+
+		/**
+		 * Set to true while the render batch is looping through its bodies to
+		 * update them. Used to prevent bad access errors when trying to remove
+		 * or add bodies to the batch when inside the batch's update loop.
+		 */
+		bool updating;
+
+		/// Render batch's current mask.
+		Maskable *currentMask;
 	};
 }
 
-#endif
 #endif

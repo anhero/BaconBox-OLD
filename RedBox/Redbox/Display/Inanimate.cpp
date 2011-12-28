@@ -1,6 +1,6 @@
 #include "Inanimate.h"
 
-#include "VerticesArray.h"
+#include "VertexArray.h"
 
 namespace RedBox {
 	Inanimate::Inanimate(TexturePointer newTexture) :
@@ -8,7 +8,7 @@ namespace RedBox {
 	}
 
 	Inanimate::Inanimate(TexturePointer newTexture,
-	                     const VerticesArray &vertices, const Vector2 &offset) :
+	                     const VertexArray &vertices, const Vector2 &offset) :
 		TextureMappable(newTexture), textureCoordinates(vertices.getNbVertices()) {
 		loadTextureCoordinates(vertices, offset);
 	}
@@ -38,14 +38,14 @@ namespace RedBox {
 		return textureCoordinates;
 	}
 
-	void Inanimate::loadTextureCoordinates(const VerticesArray &vertices, const Vector2 &offset) {
+	void Inanimate::loadTextureCoordinates(const VertexArray &vertices, const Vector2 &offset) {
 		TextureMappable::loadTextureCoordinates(getTextureInformation(),
 		                                        vertices, offset,
 		                                        &textureCoordinates);
 	}
 
 	void Inanimate::loadTextureCoordinates(TexturePointer newTexture,
-	                                       const VerticesArray &vertices,
+	                                       const VertexArray &vertices,
 	                                       const Vector2 &offset) {
 		setTextureInformation(newTexture);
 		loadTextureCoordinates(vertices, offset);

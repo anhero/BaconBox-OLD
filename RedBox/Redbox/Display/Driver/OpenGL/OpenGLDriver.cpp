@@ -6,7 +6,7 @@
 #include "TextureInformation.h"
 #include "MathHelper.h"
 #include "MainWindow.h"
-#include "VerticesArray.h"
+#include "VertexArray.h"
 #include "Color.h"
 #include "PixMap.h"
 #include "Console.h"
@@ -15,7 +15,7 @@
 #define GET_TEX_PTR(textureCoordinates) reinterpret_cast<const GLfloat *>(textureCoordinates.data())
 
 namespace RedBox {
-	void OpenGLDriver::drawShapeWithTextureAndColor(const VerticesArray &vertices,
+	void OpenGLDriver::drawShapeWithTextureAndColor(const VertexArray &vertices,
 	                                                const TextureInformation *textureInformation,
 	                                                const TextureCoordinates &textureCoordinates,
 	                                                const Color &color) {
@@ -31,7 +31,7 @@ namespace RedBox {
 		}
 	}
 
-	void OpenGLDriver::drawShapeWithTexture(const VerticesArray &vertices,
+	void OpenGLDriver::drawShapeWithTexture(const VertexArray &vertices,
 	                                        const TextureInformation *textureInformation,
 	                                        const TextureCoordinates &textureCoordinates) {
 		// We make sure the texture information is valid.
@@ -62,7 +62,7 @@ namespace RedBox {
 		}
 	}
 
-	void OpenGLDriver::drawShapeWithColor(const VerticesArray &vertices,
+	void OpenGLDriver::drawShapeWithColor(const VertexArray &vertices,
 	                                      const Color &color) {
 		if (color.getAlpha() > 0u) {
 			glColor4ub(color.getRed(), color.getGreen(), color.getBlue(),
@@ -88,7 +88,7 @@ namespace RedBox {
 		}
 	}
 
-	void OpenGLDriver::drawMaskShapeWithTextureAndColor(const VerticesArray &vertices,
+	void OpenGLDriver::drawMaskShapeWithTextureAndColor(const VertexArray &vertices,
 	                                                    const TextureInformation *textureInformation,
 	                                                    const TextureCoordinates &textureCoordinates,
 	                                                    const Color &color) {
@@ -104,7 +104,7 @@ namespace RedBox {
 		}
 	}
 
-	void OpenGLDriver::drawMaskShapeWithTexture(const VerticesArray &vertices,
+	void OpenGLDriver::drawMaskShapeWithTexture(const VertexArray &vertices,
 	                                            const TextureInformation *textureInformation,
 	                                            const TextureCoordinates &textureCoordinates) {
 		// We make sure the texture information is valid.
@@ -136,7 +136,7 @@ namespace RedBox {
 		}
 	}
 
-	void OpenGLDriver::drawMaskedShapeWithTextureAndColor(const VerticesArray &vertices,
+	void OpenGLDriver::drawMaskedShapeWithTextureAndColor(const VertexArray &vertices,
 	                                                      const TextureInformation *textureInformation,
 	                                                      const TextureCoordinates &textureCoordinates,
 	                                                      const Color &color,
@@ -223,7 +223,7 @@ namespace RedBox {
 		}
 	}
 
-	void OpenGLDriver::unmaskShape(const VerticesArray &vertices) {
+	void OpenGLDriver::unmaskShape(const VertexArray &vertices) {
 		glEnable(GL_BLEND);
 		glVertexPointer(2, GL_FLOAT, 0, GET_PTR(vertices));
 		glEnableClientState(GL_VERTEX_ARRAY);
@@ -244,18 +244,18 @@ namespace RedBox {
 		glDisable(GL_BLEND);
 	}
 
-	void OpenGLDriver::drawBatchWithTextureAndColor(const VerticesArray &vertices,
+	void OpenGLDriver::drawBatchWithTextureAndColor(const VertexArray &vertices,
 	                                                const TextureInformation *textureInformation,
 	                                                const TextureCoordinates &textureCoordinates,
-	                                                const std::vector<unsigned short> &indices,
+	                                                const IndiceArray &indices,
 	                                                const std::vector<unsigned char> &colors) {
 		drawBatchWithTextureAndColor(vertices, textureInformation, textureCoordinates, indices, colors, false);
 	}
 
-	void OpenGLDriver::drawBatchWithTextureAndColor(const VerticesArray &vertices,
+	void OpenGLDriver::drawBatchWithTextureAndColor(const VertexArray &vertices,
 	                                                const TextureInformation *textureInformation,
 	                                                const TextureCoordinates &textureCoordinates,
-	                                                const std::vector<unsigned short> &indices,
+	                                                const IndiceArray &indices,
 	                                                const std::vector<unsigned char> &colors,
 	                                                bool printAlpha) {
 		glEnableClientState(GL_COLOR_ARRAY);
@@ -266,17 +266,17 @@ namespace RedBox {
 		glDisableClientState(GL_COLOR_ARRAY);
 	}
 
-	void OpenGLDriver::drawBatchWithTexture(const VerticesArray &vertices,
+	void OpenGLDriver::drawBatchWithTexture(const VertexArray &vertices,
 	                                        const TextureInformation *textureInformation,
 	                                        const TextureCoordinates &textureCoordinates,
-	                                        const std::vector<unsigned short> &indices) {
+	                                        const IndiceArray &indices) {
 		drawBatchWithTexture(vertices, textureInformation, textureCoordinates, indices, false);
 	}
 
-	void OpenGLDriver::drawBatchWithTexture(const VerticesArray &vertices,
+	void OpenGLDriver::drawBatchWithTexture(const VertexArray &vertices,
 	                                        const TextureInformation *textureInformation,
 	                                        const TextureCoordinates &textureCoordinates,
-	                                        const std::vector<unsigned short> &indices,
+	                                        const IndiceArray &indices,
 	                                        bool printAlpha) {
 		glBindTexture(GL_TEXTURE_2D, textureInformation->textureId);
 
@@ -322,10 +322,10 @@ namespace RedBox {
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
 
-	void OpenGLDriver::drawMaskBatchWithTextureAndColor(const VerticesArray &vertices,
+	void OpenGLDriver::drawMaskBatchWithTextureAndColor(const VertexArray &vertices,
 	                                                    const TextureInformation *textureInformation,
 	                                                    const TextureCoordinates &textureCoordinates,
-	                                                    const std::vector<unsigned short> &indices,
+	                                                    const IndiceArray &indices,
 	                                                    const std::vector<unsigned char> &/*colors*/) {
 		// TODO: Check if there is a reason we're not using the "colors"
 		// parameter.
@@ -359,10 +359,10 @@ namespace RedBox {
 		}
 	}
 
-	void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const VerticesArray &vertices,
+	void OpenGLDriver::drawMaskedBatchWithTextureAndColor(const VertexArray &vertices,
 	                                                      const TextureInformation *textureInformation,
 	                                                      const TextureCoordinates &textureCoordinates,
-	                                                      const std::vector<unsigned short> &indices,
+	                                                      const IndiceArray &indices,
 	                                                      const std::vector<unsigned char> &colors,
 	                                                      bool invertedMask) {
 #ifdef RB_OPENGLES
@@ -410,8 +410,8 @@ namespace RedBox {
 		glPopMatrix();
 	}
 
-	void OpenGLDriver::unmaskBatch(const VerticesArray &vertices,
-	                               const std::vector<unsigned short> &indices) {
+	void OpenGLDriver::unmaskBatch(const VertexArray &vertices,
+	                               const IndiceArray &indices) {
 		glEnable(GL_BLEND);
 		glVertexPointer(2, GL_FLOAT, 0, GET_PTR(vertices));
 		glEnableClientState(GL_VERTEX_ARRAY);

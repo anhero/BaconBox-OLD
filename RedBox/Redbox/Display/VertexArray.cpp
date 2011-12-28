@@ -1,10 +1,10 @@
-#include "VerticesArray.h"
+#include "VertexArray.h"
 
 namespace RedBox {
-	VerticesArray::~VerticesArray() {
+	VertexArray::~VertexArray() {
 	}
 
-	bool VerticesArray::operator==(const VerticesArray &rhs) const {
+	bool VertexArray::operator==(const VertexArray &rhs) const {
 		bool equal = true;
 		ConstIterator i = getBegin();
 		ConstIterator i2 = rhs.getBegin();
@@ -22,11 +22,11 @@ namespace RedBox {
 		return equal && i == getEnd() && i2 == rhs.getEnd();
 	}
 
-	bool VerticesArray::operator !=(const VerticesArray &rhs) const {
+	bool VertexArray::operator !=(const VertexArray &rhs) const {
 		return !(this->operator==(rhs));
 	}
 
-	const Vector2 VerticesArray::getMinimumXY() const {
+	const Vector2 VertexArray::getMinimumXY() const {
 		if (isEmpty()) {
 			return Vector2(0.0f, 0.0f);
 
@@ -51,7 +51,7 @@ namespace RedBox {
 		}
 	}
 
-	float VerticesArray::getMinimumX() const {
+	float VertexArray::getMinimumX() const {
 		if (isEmpty()) {
 			return 0.0f;
 
@@ -72,7 +72,7 @@ namespace RedBox {
 		}
 	}
 
-	float VerticesArray::getMinimumY() const {
+	float VertexArray::getMinimumY() const {
 		if (isEmpty()) {
 			return 0.0f;
 
@@ -93,7 +93,7 @@ namespace RedBox {
 		}
 	}
 
-	const Vector2 VerticesArray::getMaximumXY() const {
+	const Vector2 VertexArray::getMaximumXY() const {
 		if (isEmpty()) {
 			return Vector2(0.0f, 0.0f);
 
@@ -118,7 +118,7 @@ namespace RedBox {
 		}
 	}
 
-	float VerticesArray::getMaximumX() const {
+	float VertexArray::getMaximumX() const {
 		if (isEmpty()) {
 			return 0.0f;
 
@@ -139,7 +139,7 @@ namespace RedBox {
 		}
 	}
 
-	float VerticesArray::getMaximumY() const {
+	float VertexArray::getMaximumY() const {
 		if (isEmpty()) {
 			return 0.0f;
 
@@ -160,7 +160,7 @@ namespace RedBox {
 		}
 	}
 
-	const Vector2 VerticesArray::getSize() const {
+	const Vector2 VertexArray::getSize() const {
 		if (isEmpty()) {
 			return Vector2(0.0f, 0.0f);
 
@@ -192,7 +192,7 @@ namespace RedBox {
 		}
 	}
 
-	float VerticesArray::getWidth() const {
+	float VertexArray::getWidth() const {
 		if (isEmpty()) {
 			return 0.0f;
 
@@ -217,7 +217,7 @@ namespace RedBox {
 		}
 	}
 
-	float VerticesArray::getHeight() const {
+	float VertexArray::getHeight() const {
 		if (isEmpty()) {
 			return 0.0f;
 
@@ -242,11 +242,11 @@ namespace RedBox {
 		}
 	}
 
-	const Vector2 VerticesArray::getCentroid() const {
+	const Vector2 VertexArray::getCentroid() const {
 		return getSumOfVertices() / static_cast<float>(getNbVertices());
 	}
 
-	const Vector2 VerticesArray::getSumOfVertices() const {
+	const Vector2 VertexArray::getSumOfVertices() const {
 		Vector2 result;
 
 		for (ConstIterator i = getBegin(); i != getEnd(); ++i) {
@@ -256,13 +256,13 @@ namespace RedBox {
 		return result;
 	}
 
-	void VerticesArray::move(float xDelta, float yDelta) {
+	void VertexArray::move(float xDelta, float yDelta) {
 		for (Iterator i = getBegin(); i != getEnd(); ++i) {
 			i->addToXY(xDelta, yDelta);
 		}
 	}
 
-	void VerticesArray::scaleFromPoint(float xScaling, float yScaling,
+	void VertexArray::scaleFromPoint(float xScaling, float yScaling,
 	                                   const Vector2 &fromPoint) {
 		for (Iterator i = getBegin(); i != getEnd(); ++i) {
 			i->subtractFromXY(fromPoint);
@@ -271,7 +271,7 @@ namespace RedBox {
 		}
 	}
 
-	void VerticesArray::rotateFromPoint(float rotationAngle,
+	void VertexArray::rotateFromPoint(float rotationAngle,
 	                                    const Vector2 &rotationPoint) {
 		for (Iterator i = getBegin(); i != getEnd(); ++i) {
 			i->subtractFromXY(rotationPoint);
@@ -280,10 +280,10 @@ namespace RedBox {
 		}
 	}
 
-	bool VerticesArray::overlaps(const Vector2 &point) const {
+	bool VertexArray::overlaps(const Vector2 &point) const {
 		bool result = false;
 
-		for (VerticesArray::ConstIterator i = this->getBegin(), j = --this->getEnd(); i != this->getEnd(); ++i) {
+		for (VertexArray::ConstIterator i = this->getBegin(), j = --this->getEnd(); i != this->getEnd(); ++i) {
 			if ((i->getY() < point.getY() && j->getY() >= point.getY() ||
 			     j->getY() < point.getY() && i->getY() >= point.getY()) &&
 			    (i->getX() <= point.getX() || j->getX() <= point.getX())) {
@@ -298,7 +298,7 @@ namespace RedBox {
 		return result;
 	}
 
-	AxisAlignedBoundingBox VerticesArray::getAxisAlignedBoundingBox() const {
+	AxisAlignedBoundingBox VertexArray::getAxisAlignedBoundingBox() const {
 		AxisAlignedBoundingBox result;
 
 		if (!isEmpty()) {
@@ -331,7 +331,7 @@ namespace RedBox {
 		return result;
 	}
 
-	bool VerticesArray::intersects(const VerticesArray &other) const {
+	bool VertexArray::intersects(const VertexArray &other) const {
 		bool result = false;
 
 		// We make sure the arrays aren't empty.

@@ -6,72 +6,72 @@ namespace RedBox {
 		return instance;
 	}
 
-	void NullGraphicDriver::drawShapeWithTextureAndColor(const VerticesArray &,
+	void NullGraphicDriver::drawShapeWithTextureAndColor(const VertexArray &,
 	                                                     const TextureInformation *,
 	                                                     const TextureCoordinates &,
 	                                                     const Color &) {
 	}
 
-	void NullGraphicDriver::drawShapeWithTexture(const VerticesArray &,
+	void NullGraphicDriver::drawShapeWithTexture(const VertexArray &,
 	                                             const TextureInformation *,
 	                                             const TextureCoordinates &) {
 	}
 
-	void NullGraphicDriver::drawShapeWithColor(const VerticesArray &,
+	void NullGraphicDriver::drawShapeWithColor(const VertexArray &,
 	                                           const Color &) {
 	}
 
-	void NullGraphicDriver::drawMaskShapeWithTextureAndColor(const VerticesArray &,
+	void NullGraphicDriver::drawMaskShapeWithTextureAndColor(const VertexArray &,
 	                                                         const TextureInformation *,
 	                                                         const TextureCoordinates &,
 	                                                         const Color &) {
 	}
 
-	void NullGraphicDriver::drawMaskShapeWithTexture(const VerticesArray &,
+	void NullGraphicDriver::drawMaskShapeWithTexture(const VertexArray &,
 	                                                 const TextureInformation *,
 	                                                 const TextureCoordinates &) {
 	}
 
-	void NullGraphicDriver::drawMaskedShapeWithTextureAndColor(const VerticesArray &,
+	void NullGraphicDriver::drawMaskedShapeWithTextureAndColor(const VertexArray &,
 	                                                           const TextureInformation *,
 	                                                           const TextureCoordinates &,
 	                                                           const Color &,
 	                                                           bool) {
 	}
 
-	void NullGraphicDriver::unmaskShape(const VerticesArray &) {
+	void NullGraphicDriver::unmaskShape(const VertexArray &) {
 	}
 
-	void NullGraphicDriver::drawBatchWithTextureAndColor(const VerticesArray &,
+	void NullGraphicDriver::drawBatchWithTextureAndColor(const VertexArray &,
 	                                                     const TextureInformation *,
 	                                                     const TextureCoordinates &,
-	                                                     const std::vector<unsigned short> &,
-	                                                     const std::vector<unsigned char> &) {
+	                                                     const IndiceArray &,
+	                                                     const ColorArray &) {
 	}
 
-	void NullGraphicDriver::drawBatchWithTexture(const VerticesArray &,
+	void NullGraphicDriver::drawBatchWithTexture(const VertexArray &,
 	                                             const TextureInformation *,
 	                                             const TextureCoordinates &,
-	                                             const std::vector<unsigned short> &) {
+	                                             const IndiceArray &) {
 	}
 
-	void NullGraphicDriver::drawMaskBatchWithTextureAndColor(const VerticesArray &,
+	void NullGraphicDriver::drawMaskBatchWithTextureAndColor(const VertexArray &,
 	                                                         const TextureInformation *,
 	                                                         const TextureCoordinates &,
-	                                                         const std::vector<unsigned short> &,
-	                                                         const std::vector<unsigned char> &) {
+	                                                         const IndiceArray &,
+	                                                         const ColorArray &) {
 	}
 
-	void NullGraphicDriver::drawMaskedBatchWithTextureAndColor(const VerticesArray &,
+	void NullGraphicDriver::drawMaskedBatchWithTextureAndColor(const VertexArray &,
 	                                                           const TextureInformation *,
 	                                                           const TextureCoordinates &,
-	                                                           const std::vector<unsigned short> &,
-	                                                           const std::vector<unsigned char> &,
+	                                                           const IndiceArray &,
+	                                                           const ColorArray &,
 	                                                           bool) {
 	}
 
-	void NullGraphicDriver::unmaskBatch(const VerticesArray &,
-	                                    const std::vector<unsigned short> &) {
+	void NullGraphicDriver::unmaskBatch(const VertexArray &,
+	                                    const IndiceArray &) {
 	}
 
 	void NullGraphicDriver::prepareScene(const Vector2 &, float,

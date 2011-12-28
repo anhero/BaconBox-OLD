@@ -5,7 +5,7 @@
 #ifndef RB_SHAPABLE_H
 #define RB_SHAPABLE_H
 
-#include "VerticesArray.h"
+#include "VertexArray.h"
 #include "IsBaseOf.h"
 #include "StaticAssert.h"
 
@@ -21,6 +21,9 @@ namespace RedBox {
 		 * Default constructor.
 		 */
 		Shapable() : vertices() {
+		}
+
+		explicit Shapable(const T &newVertices) : vertices(newVertices) {
 		}
 
 		/**
@@ -68,7 +71,7 @@ namespace RedBox {
 		}
 	private:
 		/// Makes sure we are containing an array of vertices.
-		typedef typename StaticAssert<IsBaseOf<VerticesArray, T>::RESULT>::Result IsVerticesArray;
+		typedef typename StaticAssert<IsBaseOf<VertexArray, T>::RESULT>::Result IsVertexArray;
 
 		/// Array containing the body's vertices.
 		T vertices;

@@ -40,7 +40,7 @@ namespace RedBox {
 		 * @see RedBox::Animatable::frames
 		 */
 		Animatable(TexturePointer newTexture,
-		           const VerticesArray &vertices,
+		           const VertexArray &vertices,
 		           const Vector2 &offset,
 		           unsigned int nbFrames = 1);
 
@@ -245,7 +245,7 @@ namespace RedBox {
          * for the texture and size of the Animatable object.
 		 * @see RedBox::Animatable::frames
 		 */
-		void loadTextureCoordinates(const VerticesArray &vertices,
+		void loadTextureCoordinates(const VertexArray &vertices,
 		                            const Vector2 &offset,
 		                            unsigned int nbFrames = 1);
 
@@ -260,7 +260,7 @@ namespace RedBox {
 		 * @see RedBox::Animatable::frames
 		 */
 		void loadTextureCoordinates(TexturePointer newTexture,
-		                            const VerticesArray &vertices,
+		                            const VertexArray &vertices,
 		                            const Vector2 &offset,
 		                            unsigned int nbFrames = 1);
 	private:

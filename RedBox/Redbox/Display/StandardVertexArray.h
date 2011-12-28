@@ -5,42 +5,42 @@
 #ifndef RB_STANDARD_VERTICES_ARRAY_H
 #define RB_STANDARD_VERTICES_ARRAY_H
 
-#include "VerticesArray.h"
+#include "VertexArray.h"
 
 namespace RedBox {
-	class StandardVerticesArray : public VerticesArray {
+	class StandardVertexArray : public VertexArray {
 	public:
 		/**
 		 * Default constructor.
 		 */
-		StandardVerticesArray();
+		StandardVertexArray();
 
 		/**
 		 * Parameterized constructor.
 		 * @param newSize Size of the array at initialization.
 		 * @param defaultValue Value to use to fill the array.
-		 * @see RedBox::StandardVerticesArray::vertices
+		 * @see RedBox::StandardVertexArray::vertices
 		 */
-		explicit StandardVerticesArray(SizeType newSize,
+		explicit StandardVertexArray(SizeType newSize,
 		                               ConstReference defaultValue = ValueType());
 
 		/**
 		 * Copy constructor.
-		 * @param src StandardVerticesArray to make a copy of.
+		 * @param src StandardVertexArray to make a copy of.
 		 */
-		StandardVerticesArray(const StandardVerticesArray &src);
+		StandardVertexArray(const StandardVertexArray &src);
 
 		/**
 		 * Destructor.
 		 */
-		~StandardVerticesArray();
+		~StandardVertexArray();
 
 		/**
 		 * Assignment operator.
-		 * @param src StandardVerticesArray to make a copy of.
-		 * @return Reference to the modified StandardVerticesArray.
+		 * @param src StandardVertexArray to make a copy of.
+		 * @return Reference to the modified StandardVertexArray.
 		 */
-		StandardVerticesArray &operator=(const StandardVerticesArray &src);
+		StandardVertexArray &operator=(const StandardVertexArray &src);
 
 		/**
 		 * Gets the iterator pointing to the first vertex.

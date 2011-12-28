@@ -16,7 +16,7 @@ namespace RedBox {
 	 * not.
 	 * @ingroup Display
 	 */
-	class VerticesArray {
+	class VertexArray {
 	public:
 		typedef std::vector<Vector2> ContainerType;
 		typedef ContainerType::value_type ValueType;
@@ -33,7 +33,7 @@ namespace RedBox {
 		/**
 		 * Destructor.
 		 */
-		virtual ~VerticesArray();
+		virtual ~VertexArray();
 
 		/**
 		 * Comparison operator overload.
@@ -41,7 +41,7 @@ namespace RedBox {
 		 * @return True if the two array of vertices have the same values, false
 		 * if not.
 		 */
-		bool operator==(const VerticesArray &rhs) const;
+		bool operator==(const VertexArray &rhs) const;
 
 		/**
 		 * Comparison operator overload.
@@ -49,7 +49,7 @@ namespace RedBox {
 		 * @return True if the two array of vertices have different values,
 		 * false if not.
 		 */
-		bool operator!=(const VerticesArray &rhs) const;
+		bool operator!=(const VertexArray &rhs) const;
 
 		/**
 		 * Gets the iterator pointing to the first vertex.
@@ -293,10 +293,10 @@ namespace RedBox {
 		/**
 		 * Checks if two polygons are intersecting (touching each other). Uses
 		 * the Separating Axis Theorem.
-		 * @param other VerticesArray to use for the other polygon.
+		 * @param other VertexArray to use for the other polygon.
 		 * @return True if the polygons are intersecting, false if not.
 		 */
-		bool intersects(const VerticesArray &other) const;
+		bool intersects(const VertexArray &other) const;
 	};
 }
 #endif

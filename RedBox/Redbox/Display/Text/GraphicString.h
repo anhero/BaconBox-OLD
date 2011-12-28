@@ -19,7 +19,7 @@
 #include "Colorable.h"
 #include "InanimateGraphicElement.h"
 #include "RBString32.h"
-#include "StandardVerticesArray.h"
+#include "StandardVertexArray.h"
 #include "StaticAssert.h"
 #include "IsBaseOf.h"
 #include "Transformable.h"
@@ -461,7 +461,7 @@ namespace RedBox {
 		GlyphList characters;
 
 		/// Vertices representing the graphic string's rectangle.
-		StandardVerticesArray vertices;
+		StandardVertexArray vertices;
 
 		/// Pointer to the current mask.
 		Maskable *currentMask;
@@ -484,7 +484,7 @@ namespace RedBox {
 			assert(vertices.getNbVertices() == 4);
 
 			if (alignment == TextAlignment::LEFT) {
-				StandardVerticesArray::ConstIterator i = vertices.getBegin();
+				StandardVertexArray::ConstIterator i = vertices.getBegin();
 				Vector2 tmp = *i;
 				++i;
 				++i;
@@ -492,7 +492,7 @@ namespace RedBox {
 				alignmentPosition = tmp + (*i - tmp) * 0.5f;
 
 			} else if (alignment == TextAlignment::RIGHT) {
-				StandardVerticesArray::ConstIterator i = vertices.getBegin();
+				StandardVertexArray::ConstIterator i = vertices.getBegin();
 				++i;
 				Vector2 tmp = *i;
 				++i;
@@ -603,7 +603,7 @@ namespace RedBox {
 				}
 
 				// We set the vertices.
-				StandardVerticesArray::Iterator it = vertices.getBegin();
+				StandardVertexArray::Iterator it = vertices.getBegin();
 				it->setXY(xMin, yMin);
 				++it;
 				it->setXY(xMax, yMin);

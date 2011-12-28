@@ -10,7 +10,7 @@
 #include "TexturePointer.h"
 
 namespace RedBox {
-	class VerticesArray;
+	class VertexArray;
 	/**
 	 * All bodies that are sure to not be animated can be derived from this
 	 * class for a more lightweight implementation.
@@ -33,7 +33,7 @@ namespace RedBox {
 		 * @see RedBox::Inanimate::textureCoordinates
 		 */
 		Inanimate(TexturePointer newTexture,
-		          const VerticesArray &vertices,
+		          const VertexArray &vertices,
 		          const Vector2 &offset);
 
 		/**
@@ -76,7 +76,7 @@ namespace RedBox {
 		 * @param offset Offset from the upper left corner of the texture.
 		 * @see RedBox::Inanimate::textureCoordinates
 		 */
-		void loadTextureCoordinates(const VerticesArray &vertices,
+		void loadTextureCoordinates(const VertexArray &vertices,
 		                            const Vector2 &offset);
 
 		/**
@@ -88,7 +88,7 @@ namespace RedBox {
 		 * @see RedBox::Inanimate::textureCoordinates
 		 */
 		void loadTextureCoordinates(TexturePointer newTexture,
-		                            const VerticesArray &vertices,
+		                            const VertexArray &vertices,
 		                            const Vector2 &offset);
 	private:
 		/// Contains the texture coordinates.

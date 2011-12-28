@@ -11,7 +11,7 @@
 #include "Renderable.h"
 #include "Collidable.h"
 #include "Disableable.h"
-#include "StandardVerticesArray.h"
+#include "StandardVertexArray.h"
 #include "Shapable.h"
 
 namespace RedBox {
@@ -22,7 +22,7 @@ namespace RedBox {
 	 * @ingroup Display
 	 */
 	class Camera : public Collidable, public Disableable,
-		public Shapable<StandardVerticesArray> {
+		public Shapable<StandardVertexArray> {
 		friend class State;
 	public:
 		struct ShakeAxesDef {

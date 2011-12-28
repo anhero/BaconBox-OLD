@@ -11,29 +11,28 @@
 #include "Maskable.h"
 #include "Shapable.h"
 #include "Colorable.h"
-#include "StandardVerticesArray.h"
+#include "StandardVertexArray.h"
 #include "GraphicDriver.h"
-#include "FlagSet.h"
-#include "RenderMode.h"
+#include "RenderModable.h"
 #include "TexturePointer.h"
 
 namespace RedBox {
 	/**
 	 * All graphics that are not batched are derived from this class, whether
 	 * they are animated or not.
-	 * @tparam T Type specification to specify if the graphic can be aninated or
+	 * @tparam T Type specification to specify if the graphic can be animated or
 	 * not.
 	 * @ingroup Display
 	 */
 	template <typename T>
 	class Graphic : virtual public Maskable, public Colorable,
-		public Shapable<StandardVerticesArray>, public T {
+		public RenderModable, public Shapable<StandardVertexArray>, public T {
 	public:
 		/**
 		 * Default constructor.
 		 */
-		Graphic() : Maskable(), Colorable(), Shapable<StandardVerticesArray>(),
-			T(), renderModes(), currentMask(NULL) {
+		Graphic() : Maskable(), Colorable(), RenderModable(),
+		    Shapable<StandardVertexArray>(), T(), currentMask(NULL) {
 		}
 
 		/**
@@ -43,8 +42,8 @@ namespace RedBox {
 		 * @see RedBox::Texturable::textureInformation
 		 */
 		explicit Graphic(TexturePointer newTexture) : Maskable(),
-			Colorable(), Shapable<StandardVerticesArray>(), T(newTexture),
-			renderModes(), currentMask(NULL) {
+		    Colorable(), RenderModable(), Shapable<StandardVertexArray>(),
+		    T(newTexture), currentMask(NULL) {
 		}
 
 		/**
@@ -52,8 +51,8 @@ namespace RedBox {
 		 * @param src Graphic to make a copy of.
 		 */
 		Graphic(const Graphic<T> &src) : Maskable(src), Colorable(src),
-		    Shapable<StandardVerticesArray>(src), T(src),
-		    renderModes(src.renderModes), currentMask(src.currentMask) {
+			RenderModable(src), Shapable<StandardVertexArray>(src), T(src),
+		    currentMask(src.currentMask) {
 		}
 
 		/**
@@ -69,12 +68,12 @@ namespace RedBox {
 		 */
 		Graphic &operator=(const Graphic<T> &src) {
 			this->Colorable::operator=(src);
-			this->Shapable<StandardVerticesArray>::operator=(src);
+			this->RenderModable::operator=(src);
+			this->Shapable<StandardVertexArray>::operator=(src);
 			this->T::operator=(src);
 
 			if (this != &src) {
 				currentMask = src.currentMask;
-				renderModes = src.renderModes;
 			}
 
 			return *this;
@@ -180,64 +179,9 @@ namespace RedBox {
 				renderModes.set(RenderMode::MASKED, false);
 			}
 		}
-
-		/**
-		 * Gets the rendering modes.
-		 * @return Current rendering modes.
-		 */
-		const FlagSet<RenderMode>& getRenderModes() const {
-			return renderModes;
-		}
-
-		/**
-		 * Sets the rendering modes. Replaces the current rendering modes with
-		 * the ones given.
-		 * @param newRenderModes New mode to be set.
-		 */
-		void setRenderModes(const FlagSet<RenderMode> &newRenderModes) {
-			renderModes = newRenderModes;
-		}
-
-		/**
-		 * Adds modes with the bitwise inclusive OR. More than one mode can
-		 * be added at the same time.
-		 * @param newRenderModes New modes to add.
-		 */
-		void addRenderModes(const FlagSet<RenderMode> &newRenderModes) {
-			renderModes |= newRenderModes;
-		}
-
-		/**
-		 * Adds a mode with the bitwise inclusive OR. More than one mode can
-		 * be added at the same time using the same operator.
-		 * @param newRenderMode New render mode to add.
-		 */
-		void addRenderMode(RenderMode newRenderMode) {
-			renderModes.set(newRenderMode);
-		}
-
-		/**
-		 * Flip off given mode flags.
-		 * @param renderModesToRemove Render mode(s) flags to flip off.
-		 */
-		void removeRenderModes(const FlagSet<RenderMode>& renderModesToRemove) {
-			renderModes.reset(renderModesToRemove);
-		}
-
-		/**
-		 * Flip off given mode flag.
-		 * @param renderModeToRemove Mode to flip off.
-		 */
-		void removeRenderMode(RenderMode renderModeToRemove) {
-			renderModes.reset(renderModeToRemove);
-		}
-
 	private:
 		/// We make sure the Graphic is derived from a texture mappable type.
 		typedef typename StaticAssert<IsBaseOf<TextureMappable, T>::RESULT>::Result IsTextureMappable;
-
-		/// Flag set of render modes.
-		FlagSet<RenderMode> renderModes;
 
 		/**
 		 * Pointer to the current mask used to mask the graphic. Contains NULL

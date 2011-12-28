@@ -10,10 +10,10 @@
 
 namespace RedBox {
 	Camera::Camera() : Collidable(), Disableable(),
-		Shapable<StandardVerticesArray>(), backgroundColor(Color::BLACK),
+		Shapable<StandardVertexArray>(), backgroundColor(Color::BLACK),
 		shakeIntensity(0.0f), shakeStart(0.0), shakeDuration(0.0), shakeAxes(ShakeAxes::BOTH_AXES), offset() {
 		this->getVertices().resize(4);
-		StandardVerticesArray::Iterator i = this->getVertices().getBegin();
+		StandardVertexArray::Iterator i = this->getVertices().getBegin();
 		++i;
 		i->setXY(MainWindow::getInstance().getContextWidth(), 0.0f);
 		++i;
@@ -24,7 +24,7 @@ namespace RedBox {
 	}
 
 	Camera::Camera(const Camera &src) : Collidable(src), Disableable(src),
-		Shapable<StandardVerticesArray>(src),
+		Shapable<StandardVertexArray>(src),
 		backgroundColor(src.backgroundColor),
 		shakeIntensity(src.shakeIntensity), shakeStart(src.shakeStart),
 		shakeDuration(src.shakeDuration), shakeAxes(src.shakeAxes),
@@ -34,7 +34,7 @@ namespace RedBox {
 	Camera &Camera::operator=(const Camera &src) {
 		this->Collidable::operator=(src);
 		this->Disableable::operator=(src);
-		this->Shapable<StandardVerticesArray>::operator=(src);
+		this->Shapable<StandardVertexArray>::operator=(src);
 
 		if (this != &src) {
 			backgroundColor = src.backgroundColor;

@@ -15,7 +15,7 @@ namespace RedBox {
 	}
 
 	Animatable::Animatable(TexturePointer newTexture,
-	                       const VerticesArray &vertices,
+	                       const VertexArray &vertices,
 	                       const Vector2 &offset,
 	                       unsigned int nbFrames) : Updateable(),
 		TextureMappable(newTexture), frames(), currentFrame(0),
@@ -321,7 +321,7 @@ namespace RedBox {
 		animationCounter = 0.0;
 	}
 
-	void Animatable::loadTextureCoordinates(const VerticesArray &vertices,
+	void Animatable::loadTextureCoordinates(const VertexArray &vertices,
 	                                        const Vector2 &offset,
 	                                        unsigned int nbFrames) {
 		Vector2 delta(vertices.getSize());
@@ -352,7 +352,7 @@ namespace RedBox {
 	}
 
 	void Animatable::loadTextureCoordinates(TexturePointer newTexture,
-	                                        const VerticesArray &vertices,
+	                                        const VertexArray &vertices,
 	                                        const Vector2 &offset,
 	                                        unsigned int nbFrames) {
 		this->setTextureInformation(newTexture);
