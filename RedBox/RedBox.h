@@ -69,6 +69,7 @@
 #include <RedBox/GraphicElement.h>
 #include <RedBox/InanimateSprite.h>
 #include <RedBox/Sprite.h>
+#include <RedBox/SpriteBatch.h>
 #include <RedBox/Stopwatch.h>
 #include <RedBox/Font.h>
 #include <RedBox/Text.h>

@@ -29,7 +29,19 @@ namespace RedBox {
 		}
 	}
 
+	BatchedSprite::BatchedSprite(const BatchedSprite &src) :
+		BatchedGraphic<Animatable, BatchedSprite>(src), Collidable(src),
+		BatchedBody(src) {
+	}
+
 	BatchedSprite::~BatchedSprite() {
+	}
+
+	BatchedSprite &BatchedSprite::operator=(const BatchedSprite &src) {
+		this->BatchedGraphic<Animatable, BatchedSprite>::operator=(src);
+		this->Collidable::operator=(src);
+		this->BatchedBody::operator=(src);
+		return *this;
 	}
 
 	void BatchedSprite::move(float xDelta, float yDelta) {
@@ -91,6 +103,10 @@ namespace RedBox {
 		}
 
 		this->refreshTextureCoordinates();
+	}
+
+	BatchedSprite *BatchedSprite::clone() const {
+		return new BatchedSprite(*this);
 	}
 
 	BatchedSprite::BatchedSprite(RenderBatch<BatchedSprite> *newBatch,

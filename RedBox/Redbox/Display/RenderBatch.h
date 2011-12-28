@@ -24,6 +24,8 @@
 #include "TextureCoordinates.h"
 #include "TextureInformation.h"
 #include "Texturable.h"
+#include "CallHelper.h"
+#include "IsBaseOf.h"
 
 namespace RedBox {
 	/**
@@ -47,6 +49,19 @@ namespace RedBox {
 		 */
 		RenderBatch() : Updateable(), Maskable(), RenderModable(), Texturable(),
 			bodies(), toAdd(), toRemove(), toChange(), indices(), vertices(),
+			textureCoordinates(), colors(), updating(false), currentMask(NULL) {
+			renderModes.set(RenderMode::TEXTURE);
+		}
+
+		/**
+		 * Parameterized constructor. Constructs the render batch and sets its
+		 * texture.
+		 * @param newTexture Texture pointer to use as the batch's texture. All
+		 * bodies in the batch will use this texture.
+		 */
+		explicit RenderBatch(TexturePointer newTexture) : Updateable(), Maskable(),
+			RenderModable(), Texturable(newTexture), bodies(), toAdd(),
+			toRemove(), toChange(), indices(), vertices(),
 			textureCoordinates(), colors(), updating(false), currentMask(NULL) {
 			renderModes.set(RenderMode::TEXTURE);
 		}
@@ -87,7 +102,9 @@ namespace RedBox {
 
 				} else {
 					// We update the body.
-					(*i)->update();
+					if ((*i)->isActive()) {
+						CallUpdate<T, T, IsBaseOf<Updateable, T>::RESULT>()(*i);
+					}
 
 					// We check if the body's z coordinate has changed.
 					if ((*i)->isKeyChanged()) {
@@ -292,8 +309,8 @@ namespace RedBox {
 
 		/**
 		 * Adds a sprite to the render batch.
-		 * @param newBody Pointer to the new batched sprite to add to the render
-		 * batch. A sprite cannot be in two render batches.
+		 * @param newBody Pointer to the new body to add to the render batch. A
+		 * body cannot be in two render batches.
 		 */
 		typename BodyMap::value_type add(typename BodyMap::value_type newBody) {
 			// We make sure the pointer is valid and that the body isn't already
@@ -311,25 +328,22 @@ namespace RedBox {
 					newBody->keyChanged = false;
 
 					// We insert the new body in the batch.
-					bodies.insert(newBody);
+					typename BodyMap::iterator inserted = bodies.insert(newBody);
 
-					// We update the bodies' index and we get the new body's
-					// index.
-					VertexArray::SizeType tmpBegin = 0;
-					bool found = false;
+					// We set its first vertex's index.
+					if (inserted != bodies.begin()) {
+						--inserted;
+						newBody->getVertices().begin = (*inserted)->getVertices().begin + (*inserted)->getVertices().nbVertices;
+						++inserted;
+					} else {
+						newBody->getVertices().begin = 0;
+					}
 
-					for (typename BodyMap::iterator i = bodies.begin();
-					     i != bodies.end(); ++i) {
-						if (found) {
-							(*i)->getVertices().begin += newBody->getVertices().nbVertices;
+					++inserted;
 
-						} else if (*i == newBody) {
-							newBody->getVertices().begin = tmpBegin;
-							found = true;
-
-						} else {
-							tmpBegin = (*i)->getVertices().begin + (*i)->getVertices().nbVertices;
-						}
+					// We increment all the indexes for the following bodies.
+					for (typename BodyMap::iterator i = inserted; i != bodies.end(); ++i) {
+						(*i)->getVertices().begin += newBody->getVertices().nbVertices;
 					}
 
 					for (typename BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
@@ -342,16 +356,205 @@ namespace RedBox {
 					textureCoordinates.insert(textureCoordinates.begin() + newBody->getVertices().begin, newBody->getVertices().getNbVertices(), Vector2());
 					colors.insert(colors.begin() + newBody->getVertices().begin, newBody->getVertices().getNbVertices(), newBody->getColor());
 
-					newBody->refreshTextureCoordinates();
-
 					delete newBody->getVertices().vertices;
 					newBody->getVertices().vertices = NULL;
+
+					newBody->refreshTextureCoordinates();
 
 					refreshIndices();
 				}
 			}
 
 			return newBody;
+		}
+
+		/**
+		 * Adds new bodies to the render batch. If the given body is already
+		 * managed by a render batch, it will add only clones of it. If it is
+		 * not already managed, it will add the new body and "nbToAdd - 1"
+		 * clones of it.
+		 * @param newBody Pointer to the new body to add.
+		 */
+		void add(typename BodyMap::value_type newBody,
+		         typename BodyMap::size_type nbToAdd) {
+			if (nbToAdd > 0 && newBody &&
+			    newBody->getVertices().getNbVertices() > 0) {
+
+				// We prepare the batch for the number of vertices we are going
+				// to add.
+				this->reserveVertices(nbToAdd * newBody->getVertices().getNbVertices());
+
+				// If the body is to be added to the batch, we do so.
+				if (!newBody->isManaged() && newBody->getVertices().vertices) {
+					--nbToAdd;
+					this->add(newBody);
+				}
+
+				// We add the bodies.
+				if (updating) {
+					for (typename BodyMap::size_type i = 0; i < nbToAdd; ++i) {
+						toAdd.push_back(newBody->clone());
+					}
+
+				} else {
+					typename BodyMap::value_type tmp;
+
+					for (typename BodyMap::size_type i = 0; i < nbToAdd; ++i) {
+						tmp = newBody->clone();
+
+						// We make sure the number of vertices is correct.
+						tmp->getVertices().nbVertices = tmp->getVertices().vertices->size();
+						tmp->getVertices().batch = this;
+						tmp->managed = true;
+						tmp->keyChanged = false;
+
+						// We insert the new body in the batch.
+						typename BodyMap::iterator inserted = bodies.insert(tmp);
+
+						// We set its first vertex's index.
+						if (inserted != bodies.begin()) {
+							--inserted;
+							tmp->getVertices().begin = (*inserted)->getVertices().begin + (*inserted)->getVertices().nbVertices;
+							++inserted;
+						} else {
+							tmp->getVertices().begin = 0;
+						}
+
+						++inserted;
+
+						// We increment all the indexes for the following bodies.
+						for (typename BodyMap::iterator i = inserted; i != bodies.end(); ++i) {
+							(*i)->getVertices().begin += tmp->getVertices().nbVertices;
+						}
+
+						for (typename BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
+							if ((*i)->getVertices().begin >= tmp->getVertices().begin) {
+								(*i)->getVertices().begin += tmp->getVertices().nbVertices;
+							}
+						}
+
+						vertices.insert(vertices.getBegin() + tmp->getVertices().begin, tmp->getVertices().vertices->begin(), tmp->getVertices().vertices->end());
+						textureCoordinates.insert(textureCoordinates.begin() + tmp->getVertices().begin, tmp->getVertices().getNbVertices(), Vector2());
+						colors.insert(colors.begin() + tmp->getVertices().begin, tmp->getVertices().getNbVertices(), tmp->getColor());
+
+						delete tmp->getVertices().vertices;
+						tmp->getVertices().vertices = NULL;
+
+						tmp->refreshTextureCoordinates();
+					}
+
+					refreshIndices();
+				}
+			}
+		}
+
+		/**
+		 * Increases the batch's capacity to prepare to add new sprites to the
+		 * batch. For example, it would be usefull to use before adding 100
+		 * batched sprites that each have 4 vertices, you would ask the batch
+		 * with this function to reserve 400 vertices. The addition of those
+		 * batched sprites would then be a lot faster.
+		 * @param nbVerticesToReserve Number of vertices to reserve. If you're
+		 * about to add 300 sprites with 5 vertices each, you would call this
+		 * function and give the value 1500 to this parameter.
+		 */
+		void reserveVertices(VertexArray::SizeType nbVerticesToReserve) {
+			vertices.reserve(vertices.getNbVertices() + nbVerticesToReserve);
+			textureCoordinates.reserve(textureCoordinates.size() + nbVerticesToReserve);
+			colors.reserve(colors.size() + nbVerticesToReserve);
+		}
+
+		/**
+		 * Gets the iterator to the batch's first body.
+		 * @return Iterator to the batch's first body.
+		 * @see RedBox::RenderBatch<T>::bodies
+		 */
+		typename BodyMap::iterator getBegin() {
+			return bodies.begin();
+		}
+
+		/**
+		 * Gets the const iterator to the batch's first body.
+		 * @return Const iterator to the batch's first body.
+		 * @see RedBox::RenderBatch<T>::bodies
+		 */
+		typename BodyMap::const_iterator getBegin() const {
+			return bodies.begin();
+		}
+
+		/**
+		 * Gets the iterator to the element body following the last body. This
+		 * element acts as a placeholder, attempting to access it results in
+		 * undefined behavior.
+		 * @return Iterator to the body following the last body.
+		 * @see RedBox::RenderBatch<T>::bodies
+		 */
+		typename BodyMap::iterator getEnd() {
+			return bodies.end();
+		}
+
+		/**
+		 * Gets the const iterator to the element body following the last body.
+		 * This element acts as a placeholder, attempting to access it results
+		 * in undefined behavior.
+		 * @return Const iterator to the body following the last body.
+		 * @see RedBox::RenderBatch<T>::bodies
+		 */
+		typename BodyMap::const_iterator getEnd() const {
+			return bodies.end();
+		}
+
+		/**
+		 * Gets the reverse iterator to the first body of the reversed render
+		 * batch. Corresponds to the last body of the non-reversed render batch.
+		 * @return Reverse iterator to the first body.
+		 * @see RedBox::RenderBatch<T>::bodies
+		 */
+		typename BodyMap::reverse_iterator getReverseBegin() {
+			return bodies.rbegin();
+		}
+
+		/**
+		 * Gets the const reverse iterator to the first body of the reversed
+		 * render batch. Corresponds to the last body of the non-reversed render
+		 * batch.
+		 * @return Const everse iterator to the first body.
+		 * @see RedBox::RenderBatch<T>::bodies
+		 */
+		typename BodyMap::const_reverse_iterator getReverseBegin() const {
+			return bodies.rbegin();
+		}
+
+		/**
+		 * Gets the reverse iterator to the body following the last body of the
+		 * reversed render batch. It corresponds to the body preceding the first
+		 * body of the non-reversed render batch. This body acts as a
+		 * placeholder, attempting to access it results in undefined behavior.
+		 * @return Reverse iterator to the body follwing the last body.
+		 * @see RedBox::RenderBatch<T>::bodies
+		 */
+		typename BodyMap::reverse_iterator getReverseEnd() {
+			return bodies.rend();
+		}
+
+		/**
+		 * Gets the const reverse iterator to the body following the last body
+		 * of the reversed render batch. It corresponds to the body preceding
+		 * the first body of the non-reversed render batch. This body acts as a
+		 * placeholder, attempting to access it results in undefined behavior.
+		 * @return Const reverse iterator to the body follwing the last body.
+		 * @see RedBox::RenderBatch<T>::bodies
+		 */
+		typename BodyMap::const_reverse_iterator getReverseEnd() const {
+			return bodies.rend();
+		}
+
+		/**
+		 * Gets the number of bodies in the render batch.
+		 * @return Number of bodies the render batch contains.
+		 */
+		typename BodyMap::size_type getNbBodies() const {
+			return bodies.size();
 		}
 	private:
 		/**
@@ -514,9 +717,9 @@ namespace RedBox {
 					indiceIterator = static_cast<IndiceArray::value_type>((*i)->getVertices().begin);
 
 					// We add the indices for each of the body's triangles.
-					for (IndiceArray::value_type j = 0;
-					     j < static_cast<IndiceArray::value_type>((*i)->getVertices().getNbVertices());
-					     ++j) {
+					IndiceArray::value_type nbTriangles = static_cast<IndiceArray::value_type>((*i)->getVertices().getNbVertices() - 2);
+
+					for (IndiceArray::value_type j = 0; j < nbTriangles; ++j) {
 						indices.push_back(indiceIterator);
 						indices.push_back(indiceIterator);
 						indices.push_back(indiceIterator + j + 1);
@@ -541,7 +744,10 @@ namespace RedBox {
 			}
 		}
 
-		/// Contains all of the bodies to be rendered in batch.
+		/**
+		 * Contains all of the bodies to be rendered in batch. Bodies are sorted
+		 * by their z value (ascending).
+		 */
 		BodyMap bodies;
 
 		/**

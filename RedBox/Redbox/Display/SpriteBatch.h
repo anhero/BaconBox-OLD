@@ -21,6 +21,14 @@ namespace RedBox {
 		SpriteBatch();
 
 		/**
+		 * Parameterized constructor. Constructs the sprite batch and sets its
+		 * texture.
+		 * @param newTexture Texture pointer to use as the batch's texture. All
+		 * sprites in the batch will use this texture.
+		 */
+		explicit SpriteBatch(TexturePointer newTexture);
+
+		/**
 		 * Copy constructor.
 		 * @param src Sprite batch to make a copy of.
 		 */

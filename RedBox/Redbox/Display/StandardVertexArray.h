@@ -131,6 +131,12 @@ namespace RedBox {
 		 */
 		void insert(Iterator position, SizeType count, ConstReference value = ValueType());
 
+		/**
+		 * Inserts vertices to specified position in the vertex array.
+		 * @param position Vertex before which the content will be inserted.
+		 * @param first First vertex to be inserted.
+		 * @param last Vertex after the last vertex to be inserted.
+		 */
 		void insert(Iterator position, Iterator first, Iterator last);
 
 		/**
@@ -167,6 +173,13 @@ namespace RedBox {
 		 * @param value Value to insert if the new size is bigger.
 		 */
 		void resize(SizeType count, ConstReference value = ValueType());
+
+		/**
+		 * Sets the capacity of the container to at least the given size. New
+		 * storage is allocated if necessary.
+		 * @param size New capacity of the container.
+		 */
+		void reserve(SizeType size);
 	private:
 		ContainerType vertices;
 	};

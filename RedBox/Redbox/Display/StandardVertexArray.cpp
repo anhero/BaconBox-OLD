@@ -103,4 +103,8 @@ namespace RedBox {
 	void StandardVertexArray::resize(SizeType count, ConstReference value) {
 		vertices.resize(count, value);
 	}
+
+	void StandardVertexArray::reserve(SizeType size) {
+		vertices.reserve(size);
+	}
 }

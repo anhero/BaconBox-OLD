@@ -40,9 +40,22 @@ namespace RedBox {
 		                       unsigned int nbFrames = 1);
 
 		/**
+		 * Copy constructor.
+		 * @param src Batched sprite to make a copy of.
+		 */
+		BatchedSprite(const BatchedSprite &src);
+
+		/**
 		 * Destructor.
 		 */
 		virtual ~BatchedSprite();
+
+		/**
+		 * Assignation operator overload.
+		 * @param src Batched sprite to make a copy of.
+		 * @return Batched sprite resulting of the copy.
+		 */
+		BatchedSprite &operator=(const BatchedSprite &src);
 
 		using Collidable::move;
 
@@ -125,6 +138,11 @@ namespace RedBox {
 		               const Vector2 &newPosition,
 		               const Vector2 &newTextureOffset = Vector2(),
 		               unsigned int nbFrames = 1);
+		/**
+		 * Clones the current batched sprite.
+		 * @return Pointer to the new allocated batched sprite.
+		 */
+		BatchedSprite *clone() const;
 	private:
 
 		/**

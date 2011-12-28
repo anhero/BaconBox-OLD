@@ -125,6 +125,10 @@ namespace RedBox {
 			this->getVertices().begin = newBegin;
 		}
 
+		/**
+		 * Clones the current batched graphic.
+		 * @return Pointer to the new allocated batched graphic.
+		 */
 		virtual BatchedGraphic<T, U> *clone() const {
 			return new BatchedGraphic<T, U>(*this);
 		}
