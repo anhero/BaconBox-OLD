@@ -15,6 +15,10 @@ namespace RedBox {
 		template <typename U> friend class RenderBatch;
 		template <typename U, typename V> friend class BatchedGraphic;
 	public:
+		BatchedVertexArray() : VertexArray(), begin(0), nbVertices(0),
+			batch(NULL), vertices(NULL) {
+		}
+
 		/**
 		 * Parameterized constructor. Links the vertex array with a render
 		 * batch.
@@ -23,8 +27,9 @@ namespace RedBox {
 		 * @param newBatch Pointer to the batch containing the vertices.
 		 */
 		BatchedVertexArray(SizeType newBegin, SizeType newNbVertices,
-		                     RenderBatch<T> *newBatch) : begin(newBegin),
-			nbVertices(newNbVertices), batch(newBatch), vertices(NULL) {
+		                   RenderBatch<T> *newBatch) : VertexArray(),
+			begin(newBegin), nbVertices(newNbVertices), batch(newBatch),
+			vertices(NULL) {
 		}
 
 		/**
@@ -32,11 +37,32 @@ namespace RedBox {
 		 * a render batch.
 		 * @param newNbVertices Number of vertices to create.
 		 * @param defaultValue Value to initialize the vertices with.
+		 * @param newBatch Pointer to the parent batch. NULL by default.
 		 */
 		BatchedVertexArray(SizeType newNbVertices,
-		                     const ValueType &defaultValue = ValueType()) :
-		    begin(0), nbVertices(newNbVertices), batch(NULL),
-		    vertices(new ContainerType(newNbVertices, defaultValue)) {
+		                   const ValueType &defaultValue = ValueType(),
+		                   RenderBatch<T> *newBatch = NULL) : VertexArray(),
+			begin(0), nbVertices(newNbVertices), batch(NULL),
+			vertices(new ContainerType(newNbVertices, defaultValue)) {
+		}
+
+		/**
+		 * Copy constructor.
+		 * @param src Batched vertex array to make a copy of.
+		 */
+		BatchedVertexArray(const BatchedVertexArray<T> &src) : VertexArray(src),
+			begin(0), nbVertices(src.nbVertices), batch(NULL),
+			vertices(new ContainerType(nbVertices)) {
+			std::copy(src.getBegin(), src.getEnd(), vertices->begin());
+		}
+
+		/**
+		 * Destructor.
+		 */
+		~BatchedVertexArray() {
+			if (vertices) {
+				delete vertices;
+			}
 		}
 
 		/**
@@ -45,7 +71,7 @@ namespace RedBox {
 		 */
 		Iterator getBegin() {
 			if (batch) {
-				return batch->vertices.begin() + begin;
+				return batch->vertices.getBegin() + begin;
 
 			} else if (vertices) {
 				return vertices->begin();
@@ -61,7 +87,7 @@ namespace RedBox {
 		 */
 		ConstIterator getBegin() const {
 			if (batch) {
-				return batch->vertices.begin() + begin;
+				return batch->vertices.getBegin() + begin;
 
 			} else if (vertices) {
 				return vertices->begin();
@@ -78,7 +104,7 @@ namespace RedBox {
 		 */
 		Iterator getEnd() {
 			if (batch) {
-				return batch->vertices.begin() + begin + nbVertices;
+				return batch->vertices.getBegin() + begin + nbVertices;
 
 			} else if (vertices) {
 				return vertices->end();
@@ -95,7 +121,7 @@ namespace RedBox {
 		 */
 		ConstIterator getEnd() const {
 			if (batch) {
-				return batch->vertices.begin() + begin + nbVertices;
+				return batch->vertices.getBegin() + begin + nbVertices;
 
 			} else if (vertices) {
 				return vertices->end();
@@ -111,7 +137,7 @@ namespace RedBox {
 		 */
 		ReverseIterator getReverseBegin() {
 			if (batch) {
-				return batch->vertices.rbegin() + (batch->vertices.size() - begin - nbVertices);
+				return batch->vertices.getReverseBegin() + (batch->vertices.getNbVertices() - begin - nbVertices);
 
 			} else if (vertices) {
 				return vertices->rbegin();
@@ -128,7 +154,7 @@ namespace RedBox {
 		 */
 		ConstReverseIterator getReverseBegin() const {
 			if (batch) {
-				return batch->vertices.rbegin() + (batch->vertices.size() - begin - nbVertices);
+				return batch->vertices.getReverseBegin() + (batch->vertices.getNbVertices() - begin - nbVertices);
 
 			} else if (vertices) {
 				return vertices->rbegin();
@@ -145,7 +171,7 @@ namespace RedBox {
 		 */
 		ReverseIterator getReverseEnd() {
 			if (batch) {
-				return batch->vertices.rbegin() + (batch->vertices.size() - begin);
+				return batch->vertices.getReverseBegin() + (batch->vertices.getNbVertices() - begin);
 
 			} else if (vertices) {
 				return vertices->rend();
@@ -163,7 +189,7 @@ namespace RedBox {
 		 */
 		ConstReverseIterator getReverseEnd() const {
 			if (batch) {
-				return batch->vertices.rbegin() + (batch->vertices.size() - begin);
+				return batch->vertices.getReverseBegin() + (batch->vertices.getNbVertices() - begin);
 
 			} else if (vertices) {
 				return vertices->rend();
@@ -196,7 +222,7 @@ namespace RedBox {
 			if (batch) {
 				this->erase(this->getBegin(), this->getEnd());
 
-			} else {
+			} else if (vertices) {
 				vertices->clear();
 				nbVertices = 0;
 			}
@@ -225,9 +251,14 @@ namespace RedBox {
 					}
 				}
 
+				return batch->vertices.getBegin() + tmp + 1;
+
 			} else if (vertices) {
-				vertices->insert(position, value);
 				++nbVertices;
+				return vertices->insert(position, value);
+
+			} else {
+				return Iterator();
 			}
 		}
 
@@ -281,9 +312,14 @@ namespace RedBox {
 					}
 				}
 
+				return batch->vertices.getBegin() + tmp;
+
 			} else if (vertices) {
-				vertices->erase(position);
 				--nbVertices;
+				return vertices->erase(position);
+
+			} else {
+				return Iterator();
 			}
 		}
 
@@ -304,8 +340,13 @@ namespace RedBox {
 					batch->removeVertices(tmpFirst, tmpLast - tmpFirst);
 				}
 
+				return batch->vertices.getBegin() + tmpFirst;
+
 			} else if (vertices) {
-				vertices->erase(first, last);
+				return vertices->erase(first, last);
+
+			} else {
+				return Iterator();
 			}
 		}
 
@@ -353,6 +394,10 @@ namespace RedBox {
 
 			} else if (vertices) {
 				vertices->resize(count, value);
+				nbVertices = count;
+			} else {
+				vertices = new ContainerType(count, value);
+				nbVertices = count;
 			}
 		}
 

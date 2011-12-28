@@ -263,6 +263,12 @@ namespace RedBox {
 		                            const VertexArray &vertices,
 		                            const Vector2 &offset,
 		                            unsigned int nbFrames = 1);
+	protected:
+		/**
+		 * Method called internally when the current frame is changed.
+		 */
+		virtual void currentFrameChange();
+
 	private:
 		// Type of the map containing the animation definitions.
 		typedef std::map<std::string, AnimationDefinition> AnimationMap;

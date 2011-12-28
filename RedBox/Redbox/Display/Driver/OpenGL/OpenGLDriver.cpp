@@ -248,7 +248,7 @@ namespace RedBox {
 	                                                const TextureInformation *textureInformation,
 	                                                const TextureCoordinates &textureCoordinates,
 	                                                const IndiceArray &indices,
-	                                                const std::vector<unsigned char> &colors) {
+	                                                const ColorArray &colors) {
 		drawBatchWithTextureAndColor(vertices, textureInformation, textureCoordinates, indices, colors, false);
 	}
 
@@ -256,7 +256,7 @@ namespace RedBox {
 	                                                const TextureInformation *textureInformation,
 	                                                const TextureCoordinates &textureCoordinates,
 	                                                const IndiceArray &indices,
-	                                                const std::vector<unsigned char> &colors,
+	                                                const ColorArray &colors,
 	                                                bool printAlpha) {
 		glEnableClientState(GL_COLOR_ARRAY);
 		glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors.data());
@@ -326,7 +326,7 @@ namespace RedBox {
 	                                                    const TextureInformation *textureInformation,
 	                                                    const TextureCoordinates &textureCoordinates,
 	                                                    const IndiceArray &indices,
-	                                                    const std::vector<unsigned char> &/*colors*/) {
+	                                                    const ColorArray &/*colors*/) {
 		// TODO: Check if there is a reason we're not using the "colors"
 		// parameter.
 
@@ -363,7 +363,7 @@ namespace RedBox {
 	                                                      const TextureInformation *textureInformation,
 	                                                      const TextureCoordinates &textureCoordinates,
 	                                                      const IndiceArray &indices,
-	                                                      const std::vector<unsigned char> &colors,
+	                                                      const ColorArray &colors,
 	                                                      bool invertedMask) {
 #ifdef RB_OPENGLES
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, maskedFramebuffer);

@@ -40,7 +40,7 @@ namespace RedBox {
 	public:
 		typedef std::multiset<T *, Orderable::LessCompare> BodyMap;
 
-		typedef std::list<BodyMap::value_type> BodyList;
+		typedef std::list<typename BodyMap::value_type> BodyList;
 
 		/**
 		 * Default constructor.
@@ -48,6 +48,7 @@ namespace RedBox {
 		RenderBatch() : Updateable(), Maskable(), RenderModable(), Texturable(),
 			bodies(), toAdd(), toRemove(), toChange(), indices(), vertices(),
 			textureCoordinates(), colors(), updating(false), currentMask(NULL) {
+			renderModes.set(RenderMode::TEXTURE);
 		}
 
 		/**
@@ -62,17 +63,17 @@ namespace RedBox {
 		 */
 		virtual void update() {
 			// We add the sprites that are waiting to be added.
-			std::for_each(toAdd.rbegin(), toAdd.rend(), std::bind1st(std::mem_fun(&RenderBatch::add), this));
+			std::for_each(toAdd.rbegin(), toAdd.rend(), std::bind1st(std::mem_fun(&RenderBatch<T>::add), this));
 
 			toAdd.clear();
 
 			// We take note that we are updating the batch's bodies.
 			updating = true;
 
-			BodyMap::value_type tmpBody;
+			typename BodyMap::value_type tmpBody;
 
 			// We update the bodies.
-			BodyMap::iterator i = bodies.begin();
+			typename BodyMap::iterator i = bodies.begin();
 
 			while (i != bodies.end()) {
 				// We check if it needs to be deleted.
@@ -91,12 +92,12 @@ namespace RedBox {
 					// We check if the body's z coordinate has changed.
 					if ((*i)->isKeyChanged()) {
 						// We make a backup copy of its vertices.
-						(*i)->vertices.unlinkVertices();
+						(*i)->getVertices().unlinkVertices();
 
 						// We remove the body's vertices from the array.
 						tmpBody = *i;
 						bodies.erase(i++);
-						removeVertices(tmpBody->vertices.begin, tmpBody->vertices.getNbVertices());
+						removeVertices(tmpBody->getVertices().begin, tmpBody->getVertices().getNbVertices());
 
 						toChange.push_back(tmpBody);
 
@@ -110,12 +111,12 @@ namespace RedBox {
 			updating = false;
 
 			// We remove the bodies that are waiting to be removed.
-			BodyList::value_type tmp;
+			typename BodyList::value_type tmp;
 
 			while (!toRemove.empty()) {
 				tmp = toRemove.front();
 				toRemove.pop_front();
-				removeVertices(tmp->vertices.begin, tmp->vertices.getNbVertices());
+				removeVertices(tmp->getVertices().begin, tmp->getVertices().getNbVertices());
 				delete tmp;
 			}
 
@@ -176,7 +177,7 @@ namespace RedBox {
 		 * as a masked renderable body).
 		 */
 		virtual void mask() {
-			GraphicDriver::getInstance().drawMaskBatchWithTextureAndColor(vertices, this->getTextureInformation(), textureCoordnates, indices, colors);
+			GraphicDriver::getInstance().drawMaskBatchWithTextureAndColor(vertices, this->getTextureInformation(), textureCoordinates, indices, colors);
 		}
 
 		/**
@@ -223,11 +224,67 @@ namespace RedBox {
 		 * @param nbVertices Number of vertices to give to the sprite.
 		 * @param z Z layer in the batch to insert the new sprite.
 		 */
-		BodyMap::value_type add(VertexArray::SizeType nbVertices, int z) {
-			BodyMap::value_type result;
+		typename BodyMap::value_type add(VertexArray::SizeType nbVertices, int z) {
+			typename BodyMap::value_type result;
 
 			if (updating) {
-				//toAdd.push_back(new Batched);
+				toAdd.push_back(new T(this, new VertexArray::ContainerType(nbVertices)));
+				result = toAdd.back();
+
+			} else {
+				// We initialize the body.
+				result = new T(this, 0, nbVertices);
+				// We set its z.
+				result->setZ(z);
+				// We tell it it's now managed.
+				result->managed = true;
+				// We reset the keyChanged to false.
+				result->keyChanged = false;
+				// We insert the body in the batch.
+				bodies.insert(result);
+
+				// We find the place to insert the body's vertices, texture
+				// coordinates and colors in the arrays.
+				VertexArray::SizeType tmpBegin = 0;
+				bool found = false;
+
+				for (typename BodyMap::iterator i = bodies.begin();
+				     i != bodies.end(); ++i) {
+					if (found) {
+						(*i)->getVertices().begin += nbVertices;
+
+					} else if (*i == result) {
+						result->getVertices().begin = tmpBegin;
+						found = true;
+
+					} else {
+						tmpBegin = (*i)->getVertices().begin +
+						           (*i)->getVertices().getNbVertices();
+					}
+				}
+
+				// We make sure to also keep the bodies' index updated in the
+				// list of bodies to remove.
+				for (typename BodyList::iterator i = toRemove.begin();
+				     i != toRemove.end(); ++i) {
+					if ((*i)->getVertices().begin >= result->getVertices().begin) {
+						(*i)->getVertices().begin += nbVertices;
+					}
+				}
+
+				// We insert the vertices, the texture coordinates and the
+				// colors in the arrays.
+				vertices.insert(vertices.getBegin() + result->getVertices().begin,
+				                nbVertices, Vector2());
+				textureCoordinates.insert(textureCoordinates.begin() + result->getVertices().begin,
+				                          nbVertices, Vector2());
+				colors.insert(colors.begin() + result->getVertices().begin, nbVertices, result->getColor());
+
+				// We ref*resh the batch's indices.
+				refreshIndices();
+
+				// We refresh the new body's texture coordinates.
+				result->refreshTextureCoordinates();
 			}
 
 			return result;
@@ -238,7 +295,64 @@ namespace RedBox {
 		 * @param newBody Pointer to the new batched sprite to add to the render
 		 * batch. A sprite cannot be in two render batches.
 		 */
-		BodyMap::value_type add(BodyMap::value_type newBody);
+		typename BodyMap::value_type add(typename BodyMap::value_type newBody) {
+			// We make sure the pointer is valid and that the body isn't already
+			// managed.
+			if (newBody && !newBody->isManaged() &&
+			    newBody->getVertices().vertices) {
+				if (updating) {
+					toAdd.push_back(newBody);
+
+				} else {
+					// We make sure the number of vertices is correct.
+					newBody->getVertices().nbVertices = newBody->getVertices().vertices->size();
+					newBody->getVertices().batch = this;
+					newBody->managed = true;
+					newBody->keyChanged = false;
+
+					// We insert the new body in the batch.
+					bodies.insert(newBody);
+
+					// We update the bodies' index and we get the new body's
+					// index.
+					VertexArray::SizeType tmpBegin = 0;
+					bool found = false;
+
+					for (typename BodyMap::iterator i = bodies.begin();
+					     i != bodies.end(); ++i) {
+						if (found) {
+							(*i)->getVertices().begin += newBody->getVertices().nbVertices;
+
+						} else if (*i == newBody) {
+							newBody->getVertices().begin = tmpBegin;
+							found = true;
+
+						} else {
+							tmpBegin = (*i)->getVertices().begin + (*i)->getVertices().nbVertices;
+						}
+					}
+
+					for (typename BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
+						if ((*i)->getVertices().begin >= newBody->getVertices().begin) {
+							(*i)->getVertices().begin += newBody->getVertices().nbVertices;
+						}
+					}
+
+					vertices.insert(vertices.getBegin() + newBody->getVertices().begin, newBody->getVertices().vertices->begin(), newBody->getVertices().vertices->end());
+					textureCoordinates.insert(textureCoordinates.begin() + newBody->getVertices().begin, newBody->getVertices().getNbVertices(), Vector2());
+					colors.insert(colors.begin() + newBody->getVertices().begin, newBody->getVertices().getNbVertices(), newBody->getColor());
+
+					newBody->refreshTextureCoordinates();
+
+					delete newBody->getVertices().vertices;
+					newBody->getVertices().vertices = NULL;
+
+					refreshIndices();
+				}
+			}
+
+			return newBody;
+		}
 	private:
 		/**
 		 * Clears the render batch.
@@ -264,19 +378,19 @@ namespace RedBox {
 		 * Frees all memory dynamically allocated by the batch.
 		 */
 		void free() {
-			for (BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
+			for (typename BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
 				delete *i;
 			}
 
-			for (BodyList::iterator i = toAdd.begin(); i != toAdd.end(); ++i) {
+			for (typename BodyList::iterator i = toAdd.begin(); i != toAdd.end(); ++i) {
 				delete *i;
 			}
 
-			for (BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
+			for (typename BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
 				delete *i;
 			}
 
-			for (BodyList::iterator i = toChange.begin(); i != toChange.end(); ++i) {
+			for (typename BodyList::iterator i = toChange.begin(); i != toChange.end(); ++i) {
 				delete *i;
 			}
 		}
@@ -288,20 +402,20 @@ namespace RedBox {
 		void addVertices(VertexArray::SizeType position,
 		                 VertexArray::SizeType nbVertices) {
 			// We make sure the given parameters make sense.
-			if (nbVertices && position < vertices.getSize()) {
+			if (nbVertices && position < vertices.getNbVertices()) {
 
 				// We update the bodies' vertices index.
-				for (BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
-					if ((*i)->vertices.begin >= position) {
-						(*i)->vertices.begin += nbVertices;
+				for (typename BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
+					if ((*i)->getVertices().begin >= position) {
+						(*i)->getVertices().begin += nbVertices;
 					}
 				}
 
 				// We do so too for the bodies that are to be removed but aren't
 				// yet.
-				for (BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
-					if ((*i)->vertices.begin >= position) {
-						(*i)->vertices.begin += nbVertices;
+				for (typename BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
+					if ((*i)->getVertices().begin >= position) {
+						(*i)->getVertices().begin += nbVertices;
 					}
 				}
 
@@ -331,23 +445,23 @@ namespace RedBox {
 		 * @param position Index of the first vertex to remove.
 		 * @param nbVertices Number of vertices to remove.
 		 */
-		void removeVertices(VectorArray::size_type position,
-		                    VectorArray::size_type nbVertices) {
+		void removeVertices(VertexArray::SizeType position,
+		                    VertexArray::SizeType nbVertices) {
 			// We make sure the given parameters make sense.
-			if (nbVertices && position < vertices.getSize()) {
+			if (nbVertices && position < vertices.getNbVertices()) {
 
 				// We update the bodies' vertices index.
-				for (BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
-					if ((*i)->vertices.begin >= position) {
-						(*i)->vertices.begin -= nbVertices;
+				for (typename BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
+					if ((*i)->getVertices().begin >= position) {
+						(*i)->getVertices().begin -= nbVertices;
 					}
 				}
 
 				// We do so too for the bodies that are to be removed but aren't
 				// yet.
-				for (BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
-					if ((*i)->vertices.begin >= position) {
-						(*i)->vertices.begin -= nbVertices;
+				for (typename BodyList::iterator i = toRemove.begin(); i != toRemove.end(); ++i) {
+					if ((*i)->getVertices().begin >= position) {
+						(*i)->getVertices().begin -= nbVertices;
 					}
 				}
 
@@ -366,7 +480,7 @@ namespace RedBox {
 				Console::print(" vertices at the position ");
 				Console::print(position);
 				Console::print(" in a batch that has ");
-				Console::print(vertices.getSize());
+				Console::print(vertices.getNbVertices());
 				Console::print(" vertices.");
 				Console::printTrace();
 			}
@@ -382,8 +496,8 @@ namespace RedBox {
 			// We calculate the number of indices we'll need in the array.
 			IndiceArray::size_type nbIndices = 0;
 
-			for (BodyMap::const_iterator i = bodies.begin(); i != bodies.end(); ++i) {
-				nbIndices += ((*i)->vertices.getNbVertices() - 2) * 5 + 1;
+			for (typename BodyMap::const_iterator i = bodies.begin(); i != bodies.end(); ++i) {
+				nbIndices += ((*i)->getVertices().getNbVertices() - 2) * 5 + 1;
 			}
 
 			// We reserve the necessary memory.
@@ -392,16 +506,16 @@ namespace RedBox {
 			IndiceArray::value_type indiceIterator = 0;
 
 			// We initialize the indices for each body's vertices.
-			for (BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
+			for (typename BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
 
 				// We make sure the body has at least 3 vertices.
-				if ((*i)->vertices.getNbVertices >= 3) {
+				if ((*i)->getVertices().getNbVertices() >= 3) {
 					// We get the body's first vertex's indice.
-					indiceIterator = static_cast<IndiceArray::value_type>((*i)->vertices.begin);
+					indiceIterator = static_cast<IndiceArray::value_type>((*i)->getVertices().begin);
 
 					// We add the indices for each of the body's triangles.
 					for (IndiceArray::value_type j = 0;
-					     j < static_cast<IndiceArray::value_type>((*i)->vertices.getNbVertices());
+					     j < static_cast<IndiceArray::value_type>((*i)->getVertices().getNbVertices());
 					     ++j) {
 						indices.push_back(indiceIterator);
 						indices.push_back(indiceIterator);
@@ -421,7 +535,7 @@ namespace RedBox {
 			refreshIndices();
 
 			// We update each body's color and texture coordinates.
-			for (BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
+			for (typename BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
 				(*i)->setColor((*i)->getColor());
 				(*i)->refreshTextureCoordinates();
 			}

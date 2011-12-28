@@ -114,6 +114,7 @@ namespace RedBox {
 			// We make sure the new current frame is valid.
 			if (newCurrentFrame < definition->second.frames.size()) {
 				currentFrame = newCurrentFrame;
+				this->currentFrameChange();
 			}
 		}
 	}
@@ -138,6 +139,7 @@ namespace RedBox {
 					currentFrame = definition->second.frames.size() - 1;
 				}
 			}
+			this->currentFrameChange();
 		}
 	}
 
@@ -308,6 +310,7 @@ namespace RedBox {
 				animationPaused = false;
 				currentNbLoops = (definition->second.nbLoops < 0) ? (-1) : (0);
 				animationCounter = 0.0;
+				this->currentFrameChange();
 			}
 		}
 	}
@@ -319,6 +322,7 @@ namespace RedBox {
 		animationPaused = true;
 		currentNbLoops = -1;
 		animationCounter = 0.0;
+		this->currentFrameChange();
 	}
 
 	void Animatable::loadTextureCoordinates(const VertexArray &vertices,
@@ -357,5 +361,8 @@ namespace RedBox {
 	                                        unsigned int nbFrames) {
 		this->setTextureInformation(newTexture);
 		this->loadTextureCoordinates(vertices, offset, nbFrames);
+	}
+
+	void Animatable::currentFrameChange() {
 	}
 }

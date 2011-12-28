@@ -79,6 +79,10 @@ namespace RedBox {
 		vertices.insert(position, count, value);
 	}
 
+	void StandardVertexArray::insert(Iterator position, Iterator first, Iterator last) {
+		vertices.insert(position, first, last);
+	}
+
 	StandardVertexArray::Iterator StandardVertexArray::erase(Iterator position) {
 		return vertices.erase(position);
 	}

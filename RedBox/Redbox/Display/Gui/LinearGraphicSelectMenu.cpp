@@ -42,7 +42,7 @@ namespace RedBox {
         Menu::move(xDelta, yDelta);
     }
     
-    void LinearGraphicSelectMenu::onHover(const Vector2 & position){        
+	void LinearGraphicSelectMenu::onHover(const Vector2 & position){
     }
     
     void LinearGraphicSelectMenu::onHeld(const Vector2 & position, bool onMenu){

@@ -211,7 +211,7 @@ namespace RedBox {
 		 * Gets the number of raised flags.
 		 * @return Number of flags that are raised.
 		 */
-		size_t count() const {
+		typename std::set<T>::size_type count() const {
 			return bits.size();
 		}
 	private:

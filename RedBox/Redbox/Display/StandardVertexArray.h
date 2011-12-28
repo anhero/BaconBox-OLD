@@ -22,7 +22,7 @@ namespace RedBox {
 		 * @see RedBox::StandardVertexArray::vertices
 		 */
 		explicit StandardVertexArray(SizeType newSize,
-		                               ConstReference defaultValue = ValueType());
+		                             ConstReference defaultValue = ValueType());
 
 		/**
 		 * Copy constructor.
@@ -130,6 +130,8 @@ namespace RedBox {
 		 * @param value Value to insert.
 		 */
 		void insert(Iterator position, SizeType count, ConstReference value = ValueType());
+
+		void insert(Iterator position, Iterator first, Iterator last);
 
 		/**
 		 * Erases the specified vertex.
