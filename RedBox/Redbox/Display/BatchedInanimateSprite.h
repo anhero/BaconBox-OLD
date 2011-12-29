@@ -1,15 +1,20 @@
 /**
  * @file
+ * @ingroup Display
  */
 #ifndef RB_BATCHED_INANIMATE_SPRITE_H
 #define RB_BATCHED_INANIMATE_SPRITE_H
 
-#include "Inanimate.h"
-#include "BatchableGraphic.h"
+#include "BatchedInanimateGraphicElement.h"
 #include "Collidable.h"
-#include "Orderable.h"
 
 namespace RedBox {
+	/**
+	 * Represents a batched inanimate sprite. Can be initialized and manipulated
+	 * while out of an inanimate sprite batch, but to be rendered, it needs to
+	 * be in one.
+	 */
+	typedef BatchedInanimateGraphicElement<Collidable> BatchedInanimateSprite;
 }
 
 #endif // RB_BATCHED_INANIMATE_SPRITE_H

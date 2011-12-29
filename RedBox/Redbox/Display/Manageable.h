@@ -13,7 +13,8 @@ namespace RedBox {
 	 */
 	class Manageable {
 		template <typename Key, typename Compare> friend class BodyManager;
-		template <typename T> friend class RenderBatch;
+		template <typename T> friend class RenderBatchParent;
+		template <typename T, bool ANIMATABLE> friend class RenderBatchMiddle;
 	public:
 		/**
 		 * Default constructor.

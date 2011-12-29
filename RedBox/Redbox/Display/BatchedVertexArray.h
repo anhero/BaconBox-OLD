@@ -12,7 +12,8 @@
 namespace RedBox {
 	template <typename T>
 	class BatchedVertexArray : public VertexArray {
-		template <typename U> friend class RenderBatch;
+		template <typename U> friend class RenderBatchParent;
+		template <typename U, bool ANIMATABLE> friend class RenderBatchMiddle;
 		template <typename U, typename V> friend class BatchedGraphic;
 	public:
 		BatchedVertexArray() : VertexArray(), begin(0), nbVertices(0),
@@ -419,7 +420,7 @@ namespace RedBox {
 		SizeType nbVertices;
 
 		/// Pointer to the parent batch.
-		RenderBatch<T> *batch;
+		RenderBatchParent<T> *batch;
 
 		/// Pointer to the temporary array of vertices.
 		ContainerType *vertices;

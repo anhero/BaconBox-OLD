@@ -25,7 +25,8 @@ namespace RedBox {
 	template <typename T, typename U>
 	class BatchedGraphic : public Colorable,
 		public Shapable<BatchedVertexArray<U> >, public T {
-		template <typename V> friend class RenderBatch;
+		template <typename V> friend class RenderBatchParent;
+		template <typename V, bool ANIMATABLE> friend class RenderBatchMiddle;
 	public:
 		/**
 		 * Default constructor.
@@ -47,6 +48,8 @@ namespace RedBox {
 		 */
 		BatchedGraphic(const BatchedGraphic<T, U> &src) : Colorable(src),
 			Shapable<BatchedVertexArray<U> >(src), T(src) {
+			this->setColor(src.getColor());
+			this->refreshTextureCoordinates();
 		}
 
 		/**
@@ -93,6 +96,14 @@ namespace RedBox {
 				          this->getVertices().batch->textureCoordinates.begin() + this->getVertices().begin);
 			}
 		}
+
+		/**
+		 * Clones the current batched graphic.
+		 * @return Pointer to the new allocated batched graphic.
+		 */
+		virtual BatchedGraphic<T, U> *clone() const {
+			return new BatchedGraphic<T, U>(*this);
+		}
 	protected:
 		/**
 		 * Parameterized constructor.
@@ -101,11 +112,17 @@ namespace RedBox {
 		 * graphic's vertex array will manage this pointer.
 		 */
 		BatchedGraphic(RenderBatch<U> *newBatch,
-		               typename BatchedVertexArray<U>::ContainerType *newVertices) :
-			Colorable(), Shapable<BatchedVertexArray<U> >(),
-			T((newBatch) ? (newBatch->getTextureInformation()) : (TexturePointer())) {
+					   typename BatchedVertexArray<U>::ContainerType *newVertices,
+					   const BatchedGraphic<T, U> &src) :
+			Colorable(src), Shapable<BatchedVertexArray<U> >(), T(src) {
 			this->getVertices().batch = newBatch;
 			this->getVertices().vertices = newVertices;
+
+			std::copy(src.getVertices().getBegin(), src.getVertices().getEnd(),
+					  this->getVertices().getBegin());
+
+			this->setColor(src.getColor());
+			this->refreshTextureCoordinates();
 		}
 
 		/**
@@ -117,20 +134,18 @@ namespace RedBox {
 		 */
 		BatchedGraphic(RenderBatch<U> *newBatch,
 		               typename BatchedVertexArray<U>::SizeType newBegin,
-		               typename BatchedVertexArray<U>::SizeType newNbVertices) :
-			Colorable(), Shapable<BatchedVertexArray<U> >(),
-			T((newBatch) ? (newBatch->getTextureInformation()) : (TexturePointer())) {
+					   typename BatchedVertexArray<U>::SizeType newNbVertices,
+					   const BatchedGraphic<T, U> &src) :
+			Colorable(src), Shapable<BatchedVertexArray<U> >(), T(src) {
 			this->getVertices().batch = newBatch;
 			this->getVertices().nbVertices = newNbVertices;
 			this->getVertices().begin = newBegin;
-		}
 
-		/**
-		 * Clones the current batched graphic.
-		 * @return Pointer to the new allocated batched graphic.
-		 */
-		virtual BatchedGraphic<T, U> *clone() const {
-			return new BatchedGraphic<T, U>(*this);
+			std::copy(src.getVertices().getBegin(), src.getVertices().getEnd(),
+					  this->getVertices().getBegin());
+
+			this->setColor(src.getColor());
+			this->refreshTextureCoordinates();
 		}
 	private:
 		/// We make sure the Graphic is derived from a texture mappable type.

@@ -2,56 +2,62 @@
  * @file
  * @ingroup Display
  */
-#ifndef RB_GRAPHIC_ELEMENT_H
-#define RB_GRAPHIC_ELEMENT_H
+#ifndef RB_BATCHED_GRAPHIC_ELEMENT_H
+#define RB_BATCHED_GRAPHIC_ELEMENT_H
 
+#include "BatchedGraphic.h"
 #include "Animatable.h"
-#include "Graphic.h"
-#include "Transformable.h"
-#include "TextureInformation.h"
+#include "BatchedBody.h"
 #include "ShapeFactory.h"
+#include "TextureInformation.h"
 #include "CallHelper.h"
 #include "IsBaseOf.h"
 #include "StaticAssert.h"
 #include "IsSame.h"
-#include "TexturePointer.h"
+#include "Transformable.h"
 
 namespace RedBox {
 	/**
-	 * Graphic element that can be animated, just like the sprite, but not
-	 * layerable and can be collidable or only transformable (collidable means
-	 * it is also transformable).
-	 * @tparam Parent Collidable or Transformable.
+	 * Represents a batched animatable graphic element. Can be initialized and
+	 * manipulated while out of a sprite batch, but must be part of a batch to
+	 * be rendered.
+	 * @tparam Parent Either Transformable or Collidable.
 	 * @ingroup Display
 	 */
 	template <typename Parent>
-	class GraphicElement : public Graphic<Animatable>, public Parent {
+	class BatchedGraphicElement :
+		public BatchedGraphic<Animatable, BatchedGraphicElement<Parent> >,
+		public Parent, public BatchedBody {
+		template <typename T> friend class RenderBatchParent;
+		template <typename T, bool ANIMATABLE> friend class RenderBatchMiddle;
 	public:
 		/**
 		 * Default constructor.
 		 */
-		GraphicElement() : Graphic<Animatable>(), Parent() {
+		BatchedGraphicElement() :
+			BatchedGraphic<Animatable, BatchedGraphicElement<Parent> >(),
+			Parent(), BatchedBody() {
 		}
 
 		/**
 		 * Parameterized constructor. Loads the vertices and the texture
 		 * coordinates. If the specified size has a coordinate equal to 0 or
-		 * lower, it loads the full texture as the size and image.
+		 * lower, it loads the the full texture as the size and image.
 		 * @param newTexture Texture pointer to use as the texture.
 		 * @param startingPosition Starting position at which to place the
-		 * graphic element.
-		 * @param newSize Size of the graphic element.
+		 * sprite.
+		 * @param newSize Size of the sprite.
 		 * @param newTextureOffset Texture coordinates' offset if needed.
 		 * @param nbFrames Number of frames to load.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		explicit GraphicElement(TexturePointer newTexture,
-		                        const Vector2 &startingPosition = Vector2(),
-		                        const Vector2 &newSize = Vector2(),
-		                        const Vector2 &newTextureOffset = Vector2(),
-		                        unsigned int nbFrames = 1) :
-			Graphic<Animatable>(newTexture),
-			Parent(startingPosition) {
+		explicit BatchedGraphicElement(TexturePointer newTexture,
+		                               const Vector2 &startingPosition = Vector2(),
+		                               const Vector2 &newSize = Vector2(),
+		                               const Vector2 &newTextureOffset = Vector2(),
+		                               unsigned int nbFrames = 1) :
+			BatchedGraphic<Animatable, BatchedGraphicElement<Parent> >(newTexture),
+			Parent(startingPosition), BatchedBody() {
 			// We check if we have to use the texture as the full image.
 			if (newSize.getX() <= 0.0f || newSize.getY() <= 0.0f) {
 				// We make sure the texture information is valid.
@@ -68,35 +74,29 @@ namespace RedBox {
 
 		/**
 		 * Copy constructor.
-		 * @param src GraphicElement to make a copy of.
+		 * @param src Batched graphic element to make a copy of.
 		 */
-		GraphicElement(const GraphicElement<Parent> &src) :
-			Graphic<Animatable>(src), Parent(src) {
+		BatchedGraphicElement(const BatchedGraphicElement<Parent> &src) :
+			BatchedGraphic<Animatable, BatchedGraphicElement<Parent> >(src),
+			Parent(src), BatchedBody(src) {
 		}
 
 		/**
 		 * Destructor.
 		 */
-		virtual ~GraphicElement() {
+		virtual ~BatchedGraphicElement() {
 		}
 
 		/**
-		 * Assignment operator.
-		 * @param src GraphicElement to make a copy of.
-		 * @return Reference to the modified GraphicElement.
+		 * Assignation operator overload.
+		 * @param src Batched sprite to make a copy of.
+		 * @return Batched sprite resulting of the copy.
 		 */
-		GraphicElement &operator=(const GraphicElement &src) {
-			this->Graphic<Animatable>::operator=(src);
+		BatchedGraphicElement<Parent> &operator=(const BatchedGraphicElement<Parent> &src) {
+			this->BatchedGraphic<Animatable, BatchedGraphicElement<Parent> >::operator=(src);
 			this->Parent::operator=(src);
+			this->BatchedBody::operator=(src);
 			return *this;
-		}
-
-		/**
-		 * Updates the body.
-		 */
-		virtual void update() {
-			this->Graphic<Animatable>::update();
-			CallUpdate<GraphicElement<Parent>, Parent, IsBaseOf<Updateable, Parent>::RESULT>()(this);
 		}
 
 		using Parent::move;
@@ -151,7 +151,7 @@ namespace RedBox {
 			return this->getVertices().getHeight();
 		}
 
-		using Transformable::scaleFromPoint;
+		using Parent::scaleFromPoint;
 
 		/**
 		 * Scales the body from a specific point.
@@ -164,33 +164,41 @@ namespace RedBox {
 		 */
 		virtual void scaleFromPoint(float xScaling, float yScaling,
 		                            const Vector2 &fromPoint) {
-			this->Transformable::scaleFromPoint(xScaling, yScaling, fromPoint);
+			this->Parent::scaleFromPoint(xScaling, yScaling, fromPoint);
 			this->getVertices().scaleFromPoint(xScaling, yScaling, fromPoint);
 			Vector2 tmpPosition = this->getVertices().getMinimumXY();
-			this->Transformable::move(tmpPosition.getX() - this->getXPosition(),
-			                          tmpPosition.getY() - this->getYPosition());
+			this->Parent::move(tmpPosition.getX() - this->getXPosition(),
+			                   tmpPosition.getY() - this->getYPosition());
 		}
 
 		/**
-		 * Rotates the body from a point.
+		 * Rotates the graphic body from a point.
 		 * @param rotationAngle Angle to rotate the graphic body.
 		 * @param rotationPoint Origin point on which to apply the rotation.
 		 * @see RedBox::Transformable::angle
 		 */
 		virtual void rotateFromPoint(float rotationAngle,
 		                             const Vector2 &rotationPoint) {
-			this->Transformable::rotateFromPoint(rotationAngle, rotationPoint);
+			this->Parent::rotateFromPoint(rotationAngle, rotationPoint);
 			this->getVertices().rotateFromPoint(rotationAngle, rotationPoint);
 			Vector2 tmpPosition = this->getVertices().getMinimumXY();
-			this->Transformable::move(tmpPosition.getX() - this->getXPosition(),
-			                          tmpPosition.getY() - this->getYPosition());
+			this->Parent::move(tmpPosition.getX() - this->getXPosition(),
+			                   tmpPosition.getY() - this->getYPosition());
+		}
+
+		/**
+		 * Updates the body.
+		 */
+		virtual void update() {
+			CallUpdate<BatchedGraphicElement<Parent>, Parent, IsBaseOf<Updateable, Parent>::RESULT>()(this);
+			this->BatchedGraphic<Animatable, BatchedGraphicElement<Parent> >::update();
 		}
 
 		/**
 		 * Generates the vertices and the texture coordinates for the
-		 * graphic element.
-		 * @param newSize Size of the graphic element.
-		 * @param newPosition Position of the graphic element in the world.
+		 * sprite.
+		 * @param newSize Size of the sprite.
+		 * @param newPosition Position of the sprite in the world.
 		 * @param newTextureOffset Texture coordinates' offset if needed.
 		 * @param nbFrames Number of frames to load.
 		 */
@@ -202,29 +210,55 @@ namespace RedBox {
 			this->getVertices().resize(4);
 			ShapeFactory::createRectangle(newSize, newPosition,
 			                              &this->getVertices());
-			// We specify the render mode.
-			addRenderMode(RenderMode::SHAPE);
-			addRenderMode(RenderMode::COLOR);
 
 			// We check if we have to initialize the texture coordinates.
-			if (getTextureInformation()) {
+			if (this->getTextureInformation()) {
 				loadTextureCoordinates(this->getVertices(), newTextureOffset,
 				                       nbFrames);
-
-				// We make sure the texture coordinates were loaded correctly.
-				if (this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
-					addRenderMode(RenderMode::TEXTURE);
-				}
-
-			} else {
-				removeRenderMode(RenderMode::TEXTURE);
 			}
+
+			this->refreshTextureCoordinates();
+		}
+
+		/**
+		 * Clones the current batched sprite.
+		 * @return Pointer to the new allocated batched sprite.
+		 */
+		BatchedGraphicElement<Parent> *clone() const {
+			return new BatchedGraphicElement<Parent>(*this);
 		}
 	private:
 		/// Makes sure the parent type is at least transformable.
-		typedef typename StaticAssert<IsBaseOf<Transformable, Parent>::RESULT || IsSame<Transformable, Parent>::RESULT>::Result IsParentTransformable;
-	};
+		typedef typename StaticAssert < IsBaseOf<Transformable, Parent>::RESULT || IsSame<Transformable, Parent>::RESULT >::Result IsParentTransformable;
 
+		/**
+		 * Parameterized constructor. Used internally by the render batch.
+		 * @param newBatch Pointer to the parent batch.
+		 * @param newVertices Pointer to the array of vertices to use. The
+		 * sprite's vertex array will manage this pointer.
+		 */
+		BatchedGraphicElement(RenderBatch<BatchedGraphicElement<Parent> > *newBatch,
+							  typename BatchedVertexArray<BatchedGraphicElement<Parent> >::ContainerType *newVertices,
+							  const BatchedGraphicElement<Parent> &src) :
+			BatchedGraphic<Animatable, BatchedGraphicElement<Parent> >(newBatch, newVertices, src),
+			Parent(src), BatchedBody(src) {
+		}
+
+		/**
+		 * Paremeterized constructor. Used internally by the render batch.
+		 * @param newBatch Pointer to the parent batch.
+		 * @param newBegin Index in the batch's array where the sprite's
+		 * vertices begin.
+		 * @param newNbVertices Number of vertices the sprite has.
+		 */
+		BatchedGraphicElement(RenderBatch<BatchedGraphicElement<Parent> > *newBatch,
+		                      typename BatchedVertexArray<BatchedGraphicElement<Parent> >::SizeType newBegin,
+							  typename BatchedVertexArray<BatchedGraphicElement<Parent> >::SizeType newNbVertices,
+							  const BatchedGraphicElement<Parent> &src) :
+			BatchedGraphic<Animatable, BatchedGraphicElement<Parent> >(newBatch, newBegin, newNbVertices, src),
+			Parent(src), BatchedBody(src) {
+		}
+	};
 }
 
-#endif // RB_GRAPHIC_ELEMENT_H
+#endif // RB_BATCHED_GRAPHIC_ELEMENT_H

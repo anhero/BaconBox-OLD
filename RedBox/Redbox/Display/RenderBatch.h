@@ -2,8 +2,8 @@
  * @file
  * @ingroup Display
  */
-#ifndef RB_RENDERBATCH_H
-#define RB_RENDERBATCH_H
+#ifndef RB_RENDER_BATCH_H
+#define RB_RENDER_BATCH_H
 
 #include <set>
 #include <list>
@@ -24,8 +24,8 @@
 #include "TextureCoordinates.h"
 #include "TextureInformation.h"
 #include "Texturable.h"
-#include "CallHelper.h"
 #include "IsBaseOf.h"
+#include "Animatable.h"
 
 namespace RedBox {
 	/**
@@ -35,7 +35,7 @@ namespace RedBox {
 	 * BatchedInanimateSprite.
 	 */
 	template <typename T>
-	class RenderBatch : virtual public Updateable, virtual public Maskable,
+	class RenderBatchParent : virtual public Updateable, virtual public Maskable,
 		public RenderModable, public Texturable {
 		template <typename U, typename V> friend class BatchedGraphic;
 		template <typename U> friend class BatchedVertexArray;
@@ -47,7 +47,7 @@ namespace RedBox {
 		/**
 		 * Default constructor.
 		 */
-		RenderBatch() : Updateable(), Maskable(), RenderModable(), Texturable(),
+		RenderBatchParent() : Updateable(), Maskable(), RenderModable(), Texturable(),
 			bodies(), toAdd(), toRemove(), toChange(), indices(), vertices(),
 			textureCoordinates(), colors(), updating(false), currentMask(NULL) {
 			renderModes.set(RenderMode::TEXTURE);
@@ -59,7 +59,7 @@ namespace RedBox {
 		 * @param newTexture Texture pointer to use as the batch's texture. All
 		 * bodies in the batch will use this texture.
 		 */
-		explicit RenderBatch(TexturePointer newTexture) : Updateable(), Maskable(),
+		explicit RenderBatchParent(TexturePointer newTexture) : Updateable(), Maskable(),
 			RenderModable(), Texturable(newTexture), bodies(), toAdd(),
 			toRemove(), toChange(), indices(), vertices(),
 			textureCoordinates(), colors(), updating(false), currentMask(NULL) {
@@ -69,7 +69,7 @@ namespace RedBox {
 		/**
 		 * Destructor.
 		 */
-		virtual ~RenderBatch() {
+		virtual ~RenderBatchParent() {
 			free();
 		}
 
@@ -78,7 +78,7 @@ namespace RedBox {
 		 */
 		virtual void update() {
 			// We add the sprites that are waiting to be added.
-			std::for_each(toAdd.rbegin(), toAdd.rend(), std::bind1st(std::mem_fun(&RenderBatch<T>::add), this));
+			std::for_each(toAdd.rbegin(), toAdd.rend(), std::bind1st(std::mem_fun(&RenderBatchParent<T>::add), this));
 
 			toAdd.clear();
 
@@ -103,7 +103,7 @@ namespace RedBox {
 				} else {
 					// We update the body.
 					if ((*i)->isActive()) {
-						CallUpdate<T, T, IsBaseOf<Updateable, T>::RESULT>()(*i);
+						(*i)->update();
 					}
 
 					// We check if the body's z coordinate has changed.
@@ -138,7 +138,7 @@ namespace RedBox {
 			}
 
 			// We re-insert the bodies that had their z changed.
-			std::for_each(toChange.begin(), toChange.end(), std::bind1st(std::mem_fun(&RenderBatch::add), this));
+			std::for_each(toChange.begin(), toChange.end(), std::bind1st(std::mem_fun(&RenderBatchParent::add), this));
 
 			toChange.clear();
 		}
@@ -335,6 +335,7 @@ namespace RedBox {
 						--inserted;
 						newBody->getVertices().begin = (*inserted)->getVertices().begin + (*inserted)->getVertices().nbVertices;
 						++inserted;
+
 					} else {
 						newBody->getVertices().begin = 0;
 					}
@@ -416,6 +417,7 @@ namespace RedBox {
 							--inserted;
 							tmp->getVertices().begin = (*inserted)->getVertices().begin + (*inserted)->getVertices().nbVertices;
 							++inserted;
+
 						} else {
 							tmp->getVertices().begin = 0;
 						}
@@ -467,7 +469,7 @@ namespace RedBox {
 		/**
 		 * Gets the iterator to the batch's first body.
 		 * @return Iterator to the batch's first body.
-		 * @see RedBox::RenderBatch<T>::bodies
+		 * @see RedBox::RenderBatchParent<T>::bodies
 		 */
 		typename BodyMap::iterator getBegin() {
 			return bodies.begin();
@@ -476,7 +478,7 @@ namespace RedBox {
 		/**
 		 * Gets the const iterator to the batch's first body.
 		 * @return Const iterator to the batch's first body.
-		 * @see RedBox::RenderBatch<T>::bodies
+		 * @see RedBox::RenderBatchParent<T>::bodies
 		 */
 		typename BodyMap::const_iterator getBegin() const {
 			return bodies.begin();
@@ -487,7 +489,7 @@ namespace RedBox {
 		 * element acts as a placeholder, attempting to access it results in
 		 * undefined behavior.
 		 * @return Iterator to the body following the last body.
-		 * @see RedBox::RenderBatch<T>::bodies
+		 * @see RedBox::RenderBatchParent<T>::bodies
 		 */
 		typename BodyMap::iterator getEnd() {
 			return bodies.end();
@@ -498,7 +500,7 @@ namespace RedBox {
 		 * This element acts as a placeholder, attempting to access it results
 		 * in undefined behavior.
 		 * @return Const iterator to the body following the last body.
-		 * @see RedBox::RenderBatch<T>::bodies
+		 * @see RedBox::RenderBatchParent<T>::bodies
 		 */
 		typename BodyMap::const_iterator getEnd() const {
 			return bodies.end();
@@ -508,7 +510,7 @@ namespace RedBox {
 		 * Gets the reverse iterator to the first body of the reversed render
 		 * batch. Corresponds to the last body of the non-reversed render batch.
 		 * @return Reverse iterator to the first body.
-		 * @see RedBox::RenderBatch<T>::bodies
+		 * @see RedBox::RenderBatchParent<T>::bodies
 		 */
 		typename BodyMap::reverse_iterator getReverseBegin() {
 			return bodies.rbegin();
@@ -519,7 +521,7 @@ namespace RedBox {
 		 * render batch. Corresponds to the last body of the non-reversed render
 		 * batch.
 		 * @return Const everse iterator to the first body.
-		 * @see RedBox::RenderBatch<T>::bodies
+		 * @see RedBox::RenderBatchParent<T>::bodies
 		 */
 		typename BodyMap::const_reverse_iterator getReverseBegin() const {
 			return bodies.rbegin();
@@ -531,7 +533,7 @@ namespace RedBox {
 		 * body of the non-reversed render batch. This body acts as a
 		 * placeholder, attempting to access it results in undefined behavior.
 		 * @return Reverse iterator to the body follwing the last body.
-		 * @see RedBox::RenderBatch<T>::bodies
+		 * @see RedBox::RenderBatchParent<T>::bodies
 		 */
 		typename BodyMap::reverse_iterator getReverseEnd() {
 			return bodies.rend();
@@ -543,7 +545,7 @@ namespace RedBox {
 		 * the first body of the non-reversed render batch. This body acts as a
 		 * placeholder, attempting to access it results in undefined behavior.
 		 * @return Const reverse iterator to the body follwing the last body.
-		 * @see RedBox::RenderBatch<T>::bodies
+		 * @see RedBox::RenderBatchParent<T>::bodies
 		 */
 		typename BodyMap::const_reverse_iterator getReverseEnd() const {
 			return bodies.rend();
@@ -556,7 +558,7 @@ namespace RedBox {
 		typename BodyMap::size_type getNbBodies() const {
 			return bodies.size();
 		}
-	private:
+	protected:
 		/**
 		 * Clears the render batch.
 		 */
@@ -790,6 +792,84 @@ namespace RedBox {
 		/// Render batch's current mask.
 		Maskable *currentMask;
 	};
+
+	template <typename T, bool ANIMATABLE>
+	class RenderBatchMiddle : public RenderBatchParent<T> {
+	public:
+		/**
+		 * Default constructor.
+		 */
+		RenderBatchMiddle() : RenderBatchParent<T>() {
+		}
+
+		/**
+		 * Parameterized constructor. Constructs the render batch and sets its
+		 * texture.
+		 * @param newTexture Texture pointer to use as the batch's texture. All
+		 * bodies in the batch will use this texture.
+		 */
+		explicit RenderBatchMiddle(TexturePointer newTexture) :
+			RenderBatchParent<T>(newTexture) {
+		}
+
+		/**
+		 * Destructor.
+		 */
+		virtual ~RenderBatchMiddle() {
+		}
+	};
+
+	template <typename T>
+	class RenderBatchMiddle<T, true> : public RenderBatchParent<T> {
+	public:
+		/**
+		 * Default constructor.
+		 */
+		RenderBatchMiddle() : RenderBatchParent<T>() {
+		}
+
+		/**
+		 * Parameterized constructor. Constructs the render batch and sets its
+		 * texture.
+		 * @param newTexture Texture pointer to use as the batch's texture. All
+		 * bodies in the batch will use this texture.
+		 */
+		explicit RenderBatchMiddle(TexturePointer newTexture) :
+			RenderBatchParent<T>(newTexture) {
+		}
+
+		/**
+		 * Destructor.
+		 */
+		virtual ~RenderBatchMiddle() {
+		}
+	};
+
+	template <typename T>
+	class RenderBatch : public RenderBatchMiddle<T, IsBaseOf<Animatable, T>::RESULT> {
+	public:
+		/**
+		 * Default constructor.
+		 */
+		RenderBatch() : RenderBatchMiddle<T, IsBaseOf<Animatable, T>::RESULT>() {
+		}
+
+		/**
+		 * Parameterized constructor. Constructs the render batch and sets its
+		 * texture.
+		 * @param newTexture Texture pointer to use as the batch's texture. All
+		 * bodies in the batch will use this texture.
+		 */
+		explicit RenderBatch(TexturePointer newTexture) :
+			RenderBatchMiddle<T, IsBaseOf<Animatable, T>::RESULT>(newTexture) {
+		}
+
+		/**
+		 * Destructor.
+		 */
+		virtual ~RenderBatch() {
+		}
+	};
 }
 
-#endif
+#endif \\ RB_RENDER_BATCH_H
