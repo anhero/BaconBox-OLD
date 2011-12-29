@@ -80,8 +80,52 @@ namespace RedBox {
 		oldPosition = getPosition();
 
 		// Update the motion.
-		computeVelocity();
-		Vector2 delta = velocity * static_cast<float>(Engine::getSinceLastUpdate());
+		float time = static_cast<float>(Engine::getSinceLastUpdate());
+
+		velocity.addToXY(acceleration * time);
+
+		if (acceleration.getX() == 0.0f) {
+			float tmp = horizontalDrag * time;
+
+			if (velocity.getX() - tmp > 0.0f) {
+				velocity.subtractFromX(tmp);
+
+			} else if (velocity.getX() + tmp < 0.0f) {
+				velocity.addToX(tmp);
+
+			} else {
+				velocity.setX(0.0f);
+			}
+		}
+
+		if (acceleration.getY() == 0.0f) {
+			float tmp = verticalDrag * time;
+
+			if (velocity.getY() - tmp > 0.0f) {
+				velocity.subtractFromY(tmp);
+
+			} else if (velocity.getY() + tmp < 0.0f) {
+				velocity.addToY(tmp);
+
+			} else {
+				velocity.setY(0.0f);
+			}
+		}
+
+		if (acceleration == Vector2()) {
+			float tmp = velocity.getLength() - globalDrag * time;
+
+			if (tmp > 0.0f) {
+				velocity.setLength(tmp);
+
+			} else {
+				velocity.setXY(0.0f, 0.0f);
+			}
+		}
+
+		checkMaximumVelocity();
+
+		Vector2 delta = velocity * time;
 
 		if (delta != Vector2(0.0f, 0.0f)) {
 			move(delta);
@@ -565,52 +609,6 @@ namespace RedBox {
 
 	float Collidable::checkMaximumVelocity(float velocity, float maximumVelocity) {
 		return checkMaximumVelocity(&velocity, maximumVelocity);
-	}
-
-	void Collidable::computeVelocity() {
-		float time = static_cast<float>(Engine::getSinceLastUpdate());
-		velocity.addToXY(acceleration * time);
-
-		if (acceleration.getX() == 0.0f) {
-			float tmp = horizontalDrag * time;
-
-			if (velocity.getX() - tmp > 0.0f) {
-				velocity.subtractFromX(tmp);
-
-			} else if (velocity.getX() + tmp < 0.0f) {
-				velocity.addToX(tmp);
-
-			} else {
-				velocity.setX(0.0f);
-			}
-		}
-
-		if (acceleration.getY() == 0.0f) {
-			float tmp = verticalDrag * time;
-
-			if (velocity.getY() - tmp > 0.0f) {
-				velocity.subtractFromY(tmp);
-
-			} else if (velocity.getY() + tmp < 0.0f) {
-				velocity.addToY(tmp);
-
-			} else {
-				velocity.setY(0.0f);
-			}
-		}
-
-		if (acceleration == Vector2()) {
-			float tmp = velocity.getLength() - globalDrag * time;
-
-			if (tmp > 0.0f) {
-				velocity.setLength(tmp);
-
-			} else {
-				velocity.setXY(0.0f, 0.0f);
-			}
-		}
-
-		checkMaximumVelocity();
 	}
 
 	void Collidable::checkMaximumVelocity() {

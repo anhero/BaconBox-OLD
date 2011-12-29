@@ -582,18 +582,6 @@ namespace RedBox {
 		                                                             const std::list<Collidable *> &collidables2);
 	private:
 		/**
-		 * Computes velocity. Applies acceleration, drag and takes into account
-		 * the maximum velocity that happened since the engine's last update.
-		 * @param velocity Velocity to have the acceleration and drag applied.
-		 * @param acceleration Acceleration to apply to the velocity.
-		 * @param drag Drag to apply if there is no acceleration going on.
-		 * @param maximumVelocity Maximum velocity that can be calculated.
-		 * @return Velocity delta with the acceleration and drag applied.
-		 */
-		static float computeVelocity(float velocity, float acceleration,
-		                             float drag, float maximumVelocity);
-
-		/**
 		 * Makes sure the given velocity isn't over the maximum velocity. Only
 		 * applies the maximumVelocity if it is over 0.
 		 * @param velocity Velocity to check.
@@ -684,12 +672,6 @@ namespace RedBox {
 		 * it is in pixels.
 		 */
 		bool offsetRatio;
-
-		/**
-		 * Computes velocity. Applies acceleration, drag and takes into account
-		 * the maximum velocity that happened since the engine's last update.
-		 */
-		void computeVelocity();
 
 		/**
 		 * Makes sure the velocity is within the maximum velocity's bounds.
