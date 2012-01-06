@@ -123,4 +123,11 @@ namespace RedBox {
 	bool AxisAlignedBoundingBox::overlapsVerticalLine(float xPosition) const {
 		return getRight() > xPosition && getLeft() < xPosition;
 	}
+
+	bool AxisAlignedBoundingBox::isCompletelyInside(const AxisAlignedBoundingBox &other) const {
+		return this->getLeft() >= other.getLeft() &&
+		       this->getRight() <= other.getRight() &&
+		       this->getTop() >= other.getTop() &&
+		       this->getBottom() <= other.getBottom();
+	}
 }

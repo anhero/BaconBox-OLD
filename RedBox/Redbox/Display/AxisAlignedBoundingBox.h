@@ -191,6 +191,15 @@ namespace RedBox {
 		 * false if not.
 		 */
 		bool overlapsVerticalLine(float xPosition) const;
+
+		/**
+		 * Checks whether or not the current box is completely inside another
+		 * box.
+		 * @param other Box to check if it completely envelops the instance.
+		 * @return True if the instance is completely inside the given box,
+		 * false if not.
+		 */
+		bool isCompletelyInside(const AxisAlignedBoundingBox &other) const;
 	private:
 		/// Size in pixels (by default) of the bounding box.
 		Vector2 size;
