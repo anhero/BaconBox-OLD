@@ -28,6 +28,14 @@ namespace RedBox {
 		return *this;
 	}
 
+	bool AxisAlignedBoundingBox::operator==(const AxisAlignedBoundingBox &other) const {
+		return getPosition() == other.getPosition() && size == other.size;
+	}
+
+	bool AxisAlignedBoundingBox::operator!=(const AxisAlignedBoundingBox &other) const {
+		return !(*this == other);
+	}
+
 	const Vector2 AxisAlignedBoundingBox::getSize() const {
 		return size;
 	}

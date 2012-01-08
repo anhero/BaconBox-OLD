@@ -48,6 +48,22 @@ namespace RedBox {
 		AxisAlignedBoundingBox &operator=(const AxisAlignedBoundingBox &src);
 
 		/**
+		 * Comparison operator. Checks if both the boxes are equivalent.
+		 * @param other Other box to check equality with.
+		 * @return True if the boxes have the same position and size, false if
+		 * not.
+		 */
+		bool operator==(const AxisAlignedBoundingBox &other) const;
+
+		/**
+		 * Comparison operator. Checks if two boxes are different.
+		 * @param other Other box to check non-equality with.
+		 * @return True if the boxes have different position or size, false if
+		 * not.
+		 */
+		bool operator!=(const AxisAlignedBoundingBox &other) const;
+
+		/**
 		 * Gets the bounding box's size.
 		 * @return Vector2 containing the width and height of the bounding box.
 		 * @see RedBox::AxisAlignedBoundingBox::size
