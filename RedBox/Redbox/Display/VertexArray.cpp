@@ -284,9 +284,9 @@ namespace RedBox {
 		bool result = false;
 
 		for (VertexArray::ConstIterator i = this->getBegin(), j = --this->getEnd(); i != this->getEnd(); ++i) {
-			if ((i->getY() < point.getY() && j->getY() >= point.getY() ||
-			     j->getY() < point.getY() && i->getY() >= point.getY()) &&
-			    (i->getX() <= point.getX() || j->getX() <= point.getX())) {
+			if ((i->getY() < point.getY() && j->getY() >= point.getY()) ||
+				 ((j->getY() < point.getY() && i->getY() >= point.getY()) &&
+				(i->getX() <= point.getX() || j->getX() <= point.getX()))) {
 				if (i->getX() + (point.getY() - i->getY()) / (j->getY() - i->getY()) * (j->getX() - i->getX()) < point.getX()) {
 					result = !result;
 				}

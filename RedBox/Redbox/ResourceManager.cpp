@@ -96,26 +96,14 @@ namespace RedBox {
 		return (itr != textures.end()) ? (itr->second) : (NULL);
 	}
 
-	TextureInformation *ResourceManager::getTexture(const char *key) {
-		return getTexture(std::string(key));
-	}
-
 	SoundInfo *ResourceManager::getSound(const std::string &key) {
 		std::map<std::string, SoundInfo *>::iterator itr = sounds.find(key);
 		return (itr != sounds.end()) ? (itr->second) : (NULL);
 	}
 
-	SoundInfo *ResourceManager::getSound(const char *key) {
-		return getSound(std::string(key));
-	}
-
 	MusicInfo *ResourceManager::getMusic(const std::string &key) {
 		std::map<std::string, MusicInfo *>::iterator itr = musics.find(key);
 		return (itr != musics.end()) ? (itr->second) : (NULL);
-	}
-
-	MusicInfo *ResourceManager::getMusic(const char *key) {
-		return getMusic(std::string(key));
 	}
 
 	SoundInfo *ResourceManager::loadSound(const std::string &key,
@@ -380,10 +368,6 @@ namespace RedBox {
 	Font *ResourceManager::getFont(const std::string &key) {
 		std::map<std::string, Font *>::iterator itr = fonts.find(key);
 		return (itr != fonts.end()) ? (itr->second) : (NULL);
-	}
-
-	Font *ResourceManager::getFont(const char *key) {
-		return getFont(std::string(key));
 	}
 
 	void ResourceManager::removeFont(const std::string &key) {

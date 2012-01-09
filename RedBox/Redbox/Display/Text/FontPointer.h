@@ -9,7 +9,7 @@
 
 namespace RedBox {
 	class Font;
-	typedef ResourcePointer<Font, &ResourceManager::getFont, &ResourceManager::getFont> FontPointer;
+	typedef ResourcePointer<Font, &ResourceManager::getFont> FontPointer;
 }
 
 #endif // RB_FONT_POINTER_H

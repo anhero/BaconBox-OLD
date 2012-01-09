@@ -12,13 +12,11 @@ namespace RedBox {
 	 * to initialize from a string or directly from the pointer. To be used
 	 * with typedef for more ease.
 	 * @tparam T Type to use as the pointer.
-	 * @tparam POINTER1 Pointer to the function to use to find the pointer using
+	 * @tparam POINTER Pointer to the function to use to find the pointer using
 	 * a std::string.
-	 * @tparam POINTER2 Pointer to the function to use to find the pointer using
-	 * a const char*.
 	 * @see RedBox::ResourceManager
 	 */
-	template <typename T, T * (*POINTER1)(const std::string &), T * (*POINTER2)(const char *)>
+	template <typename T, T * (*POINTER)(const std::string &)>
 	struct ResourcePointer {
 		/**
 		 * Default constructor.
@@ -40,7 +38,7 @@ namespace RedBox {
 		 * @param newKey Key to use to get the pointer to the resource.
 		 * @see RedBox::ResourcePointer::pointer
 		 */
-		ResourcePointer(const std::string &newKey) : pointer((*POINTER1)(newKey)) {
+		ResourcePointer(const std::string &newKey) : pointer((*POINTER)(newKey)) {
 		}
 
 		/**
@@ -48,14 +46,14 @@ namespace RedBox {
 		 * @param newKey Key to use to get the pointer to the resource.
 		 * @see RedBox::ResourcePointer::pointer
 		 */
-		ResourcePointer(const char *newKey) : pointer((*POINTER2)(newKey)) {
+		ResourcePointer(const char *newKey) : pointer((*POINTER)(std::string(newKey))) {
 		}
 
 		/**
 		 * Copy constructor.
 		 * @param src ResourcePoiner to make a copy of.
 		 */
-		ResourcePointer(const ResourcePointer<T, POINTER1, POINTER2> &src) :
+		ResourcePointer(const ResourcePointer<T, POINTER> &src) :
 			pointer(src.pointer) {
 		}
 
@@ -64,7 +62,7 @@ namespace RedBox {
 		 * @param src ResourcePoiner to make a copy of.
 		 * @return Reference to the modified ResourcePoiner.
 		 */
-		ResourcePointer<T, POINTER1, POINTER2> &operator=(const ResourcePointer<T, POINTER1, POINTER2> &src) {
+		ResourcePointer<T, POINTER> &operator=(const ResourcePointer<T, POINTER> &src) {
 			if (this != &src) {
 				pointer = src.pointer;
 			}

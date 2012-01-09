@@ -93,27 +93,11 @@ namespace RedBox {
 		static TextureInformation *getTexture(const std::string &key);
 
 		/**
-		 * Gets the information about the asked texture. Uses the texture's key
-		 * to find it.
-		 * @param key Key used to identify and find the asked texture.
-		 * @return Pointer to the texture requested, NULL if no texture is
-		 * associated with the given key.
-		 */
-		static TextureInformation *getTexture(const char *key);
-
-		/**
 		 * Gets a pointer to the asked sound effect.
 		 * @param key Name of the sound effect to get a pointer of.
 		 * @return Pointer to the asked sound effect, NULL if it doesn't exist.
 		 */
 		static SoundInfo *getSound(const std::string &key);
-
-		/**
-		 * Gets a pointer to the asked sound effect.
-		 * @param key Name of the sound effect to get a pointer of.
-		 * @return Pointer to the asked sound effect, NULL if it doesn't exist.
-		 */
-		static SoundInfo *getSound(const char *key);
 
 		/**
 		 * Gets a pointer to the asked background music.
@@ -122,14 +106,6 @@ namespace RedBox {
 		 * exist.
 		 */
 		static MusicInfo *getMusic(const std::string &key);
-
-		/**
-		 * Gets a pointer to the asked background music.
-		 * @param key Name of the background music to get a pointer of.
-		 * @return Pointer to the asked background music, NULL if it doesn't
-		 * exist.
-		 */
-		static MusicInfo *getMusic(const char *key);
 
 		/**
 		 * Loads a sound effect.
@@ -262,13 +238,6 @@ namespace RedBox {
 		 * @return Pointer to the specified font, NULL if no font is found.
 		 */
 		static Font *getFont(const std::string &key);
-
-		/**
-		 * Return a pointer to the font specified by the given name.
-		 * @param key Key of the font to get.
-		 * @return Pointer to the specified font, NULL if no font is found.
-		 */
-		static Font *getFont(const char *key);
 
 		/**
 		 * Remove the specified font from the fonts' map.

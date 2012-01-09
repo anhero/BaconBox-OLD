@@ -2,14 +2,12 @@
  * @file
  * @ingroup Helper
  */
-
-#ifndef RB_UTFCONVERTER_H
-#define RB_UTFCONVERTER_H
-
+#ifndef RB_UTF_CONVERT_H
+#define RB_UTF_CONVERT_H
 
 #include <string>
-#include "RBString32.h"
 
+#include "RBString32.h"
 
 namespace RedBox {
 	/**
@@ -19,13 +17,14 @@ namespace RedBox {
 	class UTFConvert {
 	public:
 		/**
-		 * Encode the given UTF32 string to a 8bit UTF8 one. 
+		 * Encode the given UTF32 string to a 8bit UTF8 one.
 		 */
-		static std::string encodeToUTF8(String32 UTF32String);
+		static std::string encodeToUTF8(const String32 &utf32String);
+
 		/**
 		 * Decode the given 8bit UTF8 string to an UTF32 string.
 		 */
-		static String32 decodeUTF8(std::string UTF8String);
+		static String32 decodeUTF8(const std::string &utf8String);
 	};
 }
 

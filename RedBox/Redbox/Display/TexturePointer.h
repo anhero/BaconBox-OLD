@@ -9,7 +9,7 @@
 
 namespace RedBox {
 	struct TextureInformation;
-	typedef ResourcePointer<TextureInformation, &ResourceManager::getTexture, &ResourceManager::getTexture> TexturePointer;
+	typedef ResourcePointer<TextureInformation, &ResourceManager::getTexture> TexturePointer;
 }
 
 #endif // RB_TEXTURE_POINTER_H

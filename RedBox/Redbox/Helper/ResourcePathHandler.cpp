@@ -90,7 +90,8 @@ namespace RedBox {
 		} else {
 			return false;
 		}
-
+#else
+		return false;
 #endif
 	}
 
@@ -144,6 +145,8 @@ namespace RedBox {
 #elif defined RB_MAC_PLATFORM
 		struct stat st;
 		return stat(path.c_str(), &st) == 0;
+#else
+		false;
 #endif
 	}
 }
