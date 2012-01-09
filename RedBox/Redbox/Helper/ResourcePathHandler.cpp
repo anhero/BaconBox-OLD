@@ -4,19 +4,19 @@
 #ifdef RB_IPHONE_PLATFORM
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#elif defined RB_MAC_PLATFORM
+#elif defined(RB_MAC_PLATFORM) || defined(RB_LINUX)
 #include <sys/types.h>
 #include <pwd.h>
 #include <unistd.h>
 #include <sys/stat.h>
+
+#include <sstream>
 #elif defined(RB_QT)
 #include <QDir>
 #include <iostream>
 #include <QCoreApplication>
 #include <QDesktopServices>
 #endif
-
-#include <sstream>
 
 #include "Engine.h"
 
@@ -33,7 +33,7 @@ namespace RedBox {
 #else
 
 		path = Engine::getApplicationPath();
-        
+
 #ifdef RB_MAC_PLATFORM
 		path = path + "/../Resources/" + item;
 #else
@@ -56,20 +56,27 @@ namespace RedBox {
 
 		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 		NSString *documentsDirectory = [paths objectAtIndex: 0];
-		std::string documentPath = [documentsDirectory cStringUsingEncoding: NSASCIIStringEncoding];
+	std::string documentPath = [documentsDirectory cStringUsingEncoding: NSASCIIStringEncoding];
 		[pool release];
 		return documentPath;
 #elif defined(RB_QT)
 		return QDesktopServices::storageLocation(QDesktopServices::DataLocation).toStdString();
-#elif defined RB_MAC_PLATFORM
+#elif defined(RB_MAC_PLATFORM) || defined(RB_LINUX)
+#ifdef RB_MAC_PLATFORM
+		const std::string PATH = "/Library/Application Support/";
+#else
+		const std::string PATH = "/.config/";
+#endif
 		static bool firstTime = true;
 		std::stringstream ss;
 
-		ss << getpwnam(getlogin())->pw_dir << "/Library/Application Support/" << Engine::getApplicationName() << "/";
+		ss << getpwnam(getlogin())->pw_dir << PATH << Engine::getApplicationName() << "/";
+
 		if (firstTime) {
 			createFolder(ss.str());
 			firstTime = false;
 		}
+
 		return ss.str();
 #else
 		return std::string();
@@ -82,7 +89,7 @@ namespace RedBox {
 
 	bool ResourcePathHandler::createFolder(const std::string &path) {
 #ifdef RB_IPHONE_PLATFORM
-#elif defined RB_MAC_PLATFORM
+#elif defined(RB_MAC_PLATFORM) || defined(RB_LINUX)
 
 		if (mkdir(path.c_str(), 0755)) {
 			return true;
@@ -90,6 +97,7 @@ namespace RedBox {
 		} else {
 			return false;
 		}
+
 #else
 		return false;
 #endif
@@ -105,11 +113,13 @@ namespace RedBox {
 			tmpPath.reserve(path.size());
 
 #ifdef RB_WIN32
+
 			if (path.size() >= 2 && path.at(1) == ':' && ((path.at(0) >= 'A' && path.at(0) <= 'Z') || (path.at(0) >= 'a' && path.at(0) <= 'z'))) {
 				tmpPath.append(path, 0, 2);
 				++i;
 				++i;
 			}
+
 #endif
 
 			// For each character in the path.
@@ -124,6 +134,7 @@ namespace RedBox {
 					Console::println("\".");
 					result = true;
 				}
+
 				++i;
 			}
 
@@ -142,11 +153,11 @@ namespace RedBox {
 
 	bool ResourcePathHandler::folderExists(const std::string &path) {
 #ifdef RB_IPHONE_PLATFORM
-#elif defined RB_MAC_PLATFORM
+#elif defined(RB_MAC_PLATFORM) || defined(RB_LINUX)
 		struct stat st;
 		return stat(path.c_str(), &st) == 0;
 #else
-		false;
+		return false;
 #endif
 	}
 }
