@@ -44,7 +44,7 @@ namespace RedBox {
 		/**
 		 * Calls the setToBeDeleted(true) method.
 		 */
-		void done();
+		virtual void finished();
 	};
 
 }

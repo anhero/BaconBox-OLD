@@ -10,6 +10,8 @@
 #include <vector>
 #include <utility>
 
+#include <sigly.h>
+
 #include "MathHelper.h"
 #include "Updateable.h"
 #include "Maskable.h"
@@ -38,6 +40,22 @@ namespace RedBox {
 	class ParticleEmitter : virtual public Updateable, virtual public Maskable,
 		public Emitter, public Parent {
 	public:
+		/// Type definition for the parent type.
+		typedef ParticleEmitter<Parent, ParticleType> BaseType;
+
+		/// Signal shot when the particle emitter is done.
+		sigly::Signal1<BaseType *> done;
+
+		/**
+		 * Represents the type that contains the particles. The pair's first
+		 * element represents the particle's next phase to be started. So if the
+		 * next phase corresponds to the first phase, it means the particle
+		 * isn't active. If the next phase corresponds to the phase list's end,
+		 * it either means there aren't any phases defined or the particle is
+		 * currently in the last phase.
+		 */
+		typedef typename std::vector<std::pair<PhaseList::const_iterator, Particle<ParticleType> > > ParticleVector;
+
 		/**
 		 * Default constructor.
 		 */
@@ -179,7 +197,7 @@ namespace RedBox {
 				if (notFound) {
 					stop();
 					// We set the emitter to be deleted if it is managed.
-					done();
+					finished();
 				}
 			}
 		}
@@ -391,13 +409,32 @@ namespace RedBox {
 			}
 		}
 
+		/**
+		 * Gets the vector containing the particles.
+		 * @return Reference to the vector containing the particles.
+		 * @see RedBox::ParticleEmitter<Parent, ParticleType>::particles
+		 */
+		ParticleVector &getParticles() {
+			return particles;
+		}
+
+		/**
+		 * Gets the vector containing the particles.
+		 * @return Reference to the vector containing the particles.
+		 * @see RedBox::ParticleEmitter<Parent, ParticleType>::particles
+		 */
+		const ParticleVector &getParticles() const {
+			return particles;
+		}
+
 	protected:
 		/**
-		 * Called when the particle emitter is ready to be deleted. Must be
-		 * overriden to take the necessary actions to delete the particle
-		 * emitter.
+		 * Called when the particle emitter is done emitting. Used to shoot the
+		 * signal and to delete the emitter when done if needed. Must be
+		 * overridden to take the necessary actions for its deletion.
 		 */
-		virtual void done() {
+		virtual void finished() {
+			this->done.shoot(this);
 		}
 
 	private:
@@ -415,9 +452,6 @@ namespace RedBox {
 
 		/// Makes sure the parent type is at least transformable.
 		typedef typename StaticAssert < IsBaseOf<Transformable, Parent>::RESULT || IsSame<Transformable, Parent>::RESULT >::Result IsParentTransformable;
-
-		/// Represents the type that contains the particles.
-		typedef typename std::vector<std::pair<PhaseList::const_iterator, Particle<ParticleType> > > ParticleVector;
 
 		/**
 		 * De-allocate the memory used by the particles.

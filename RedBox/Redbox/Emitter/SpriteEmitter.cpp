@@ -20,7 +20,8 @@ namespace RedBox {
 		return *this;
 	}
 
-	void SpriteEmitter::done() {
+	void SpriteEmitter::finished() {
+		this->BaseType::finished();
 		this->setToBeDeleted(true);
 	}
 }
