@@ -1,20 +1,21 @@
 #!/bin/bash
 #Libraries to build
 
-libraries=( ${libraries[@]-} 'zlib' )
-libraries=( ${libraries[@]-} 'freetype' )
-libraries=( ${libraries[@]-} 'libpng' )
+
+libraries+=( 'zlib' )
+libraries+=( 'freetype' )
+libraries+=( 'libpng' )
 
 if [ ${libs_target-} != "ios" ]; then
-	libraries=( ${libraries[@]-} 'libogg' )
-	libraries=( ${libraries[@]-} 'libvorbis' )
-	#libraries=( ${libraries[@]-} 'libvorbis-tremor' )
+	libraries+=( 'libogg' )
+	libraries+=( 'libvorbis' )
+	#libraries+=( 'libvorbis-tremor' )
 fi
 
 if [ ${libs_target-} != "ios" -a ${libs_target-} != "android" ]; then
-	libraries=( ${libraries[@]-} 'sdl' )
-	libraries=( ${libraries[@]-} 'sdl_mixer' )
+	libraries+=( 'sdl' )
+	libraries+=( 'sdl_mixer' )
 fi
 
-libraries=( ${libraries[@]-} 'sigly' )
+libraries+=( 'sigly' )
 
