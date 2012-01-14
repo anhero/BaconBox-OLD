@@ -872,4 +872,4 @@ namespace RedBox {
 	};
 }
 
-#endif \\ RB_RENDER_BATCH_H
+#endif // RB_RENDER_BATCH_H
