@@ -71,6 +71,7 @@
 #include <RedBox/Sprite.h>
 #include <RedBox/SpriteBatch.h>
 #include <RedBox/InanimateSpriteBatch.h>
+#include <RedBox/CollisionGroup.h>
 #include <RedBox/Stopwatch.h>
 #include <RedBox/Font.h>
 #include <RedBox/Text.h>

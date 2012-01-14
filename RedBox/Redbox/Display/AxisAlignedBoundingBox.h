@@ -5,14 +5,14 @@
 #ifndef RB_AXIS_ALIGNED_BOUNDING_BOX_H
 #define RB_AXIS_ALIGNED_BOUNDING_BOX_H
 
-#include "Positionable.h"
+#include "Vector2.h"
 
 namespace RedBox {
 	/**
 	 * Represents an axis-aligned bounding box.
 	 * @ingroup Physics
 	 */
-	class AxisAlignedBoundingBox : public Positionable {
+	class AxisAlignedBoundingBox {
 	public:
 		/**
 		 * Default constructor.
@@ -23,22 +23,17 @@ namespace RedBox {
 		 * Parameterized constructor.
 		 * @param newPosition Starting position.
 		 * @param newSize Starting size.
-		 * @see RedBox::Positionable::position
+		 * @see RedBox::AxisAlignedBoundingBox::position
 		 * @see RedBox::AxisAlignedBoundingBox::size
 		 */
-		explicit AxisAlignedBoundingBox(const Vector2 &newPosition,
-		                                const Vector2 &newSize = Vector2());
+		AxisAlignedBoundingBox(const Vector2 &newPosition,
+		                       const Vector2 &newSize);
 
 		/**
 		 * Copy constructor.
 		 * @param src AxisAlignedBoundingBox to make a copy of.
 		 */
 		AxisAlignedBoundingBox(const AxisAlignedBoundingBox &src);
-
-		/**
-		 * Destructor.
-		 */
-		virtual ~AxisAlignedBoundingBox();
 
 		/**
 		 * Assignment operator.
@@ -64,11 +59,140 @@ namespace RedBox {
 		bool operator!=(const AxisAlignedBoundingBox &other) const;
 
 		/**
+		 * Gets the body's horizontal and vertical position.
+		 * @return 2D vector containing the horizontal and vertical position.
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		Vector2 &getPosition();
+
+		/**
+		 * Gets the body's horizontal and vertical position.
+		 * @return 2D vector containing the horizontal and vertical position.
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		const Vector2 &getPosition() const;
+
+		/**
+		 * Sets the AxisAlignedBoundingBox's horizontal and vertical position.
+		 * @param newPosition New horizontal and vertical position.
+		 * @see AxisAlignedBoundingBox::setPosition(float x, float y)
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		void setPosition(const Vector2 &newPosition);
+
+		/**
+		 * Sets the AxisAlignedBoundingBox's horizontal and vertical position.
+		 * @param newXPosition New horizontal position (in pixels). Lower value
+		 * means more to the left.
+		 * @param newYPosition New vertical position (in pixels). Lower value
+		 * means more at the top.
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		void setPosition(float newXPosition, float newYPosition);
+
+		/**
+		 * Moves the AxisAlignedBoundingBox horizontally and vertically.
+		 * @param delta 2D vector to add to the AxisAlignedBoundingBox's position (in
+		 * pixels).
+		 * @see RedBox::AxisAlignedBoundingBox::move(float deltaX, float deltaY)
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		void move(const Vector2 &delta);
+
+		/**
+		 * Moves the AxisAlignedBoundingBox horizontally and vertically.
+		 * @param xDelta Value to add to the AxisAlignedBoundingBox's horizontal position
+		 * (in pixels). Positive value moves the AxisAlignedBoundingBox to the right and a
+		 * negative value moves the AxisAlignedBoundingBox to the left.
+		 * @param yDelta Value to add to the AxisAlignedBoundingBox's vertical position (in
+		 * pixels). Positive value moves the AxisAlignedBoundingBox down and a negative
+		 * value moves the AxisAlignedBoundingBox up.
+		 * @see RedBox::AxisAlignedBoundingBox::move(const Vector2& delta);
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		void move(float xDelta, float yDelta);
+
+		/**
+		 * Gets the AxisAlignedBoundingBox's horizontal position.
+		 * @return Horizontal position (in pixels). Lower value means more to
+		 * the left.
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		float getXPosition() const;
+
+		/**
+		 * Sets the AxisAlignedBoundingBox's horizontal position.
+		 * @param newXPosition New horizontal position (in pixels). Lower value
+		 * means more to the left.
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		void setXPosition(float newXPosition);
+
+		/**
+		 * Moves the body horizontally.
+		 * @param xDelta Value to add to the AxisAlignedBoundingBox's horizontal position
+		 * (in pixels). Positive value moves the AxisAlignedBoundingBox to the right and a
+		 * negative value moves the AxisAlignedBoundingBox to the left.
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		void moveX(float xDelta);
+
+		/**
+		 * Gets the body's vertical position.
+		 * @return Vertical position (in pixels). Lower value means more at the
+		 * top.
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		float getYPosition() const;
+
+		/**
+		 * Sets the body's horizontal position.
+		 * @param newYPosition New vertical position (in pixels). Lower value
+		 * means more at the top.
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		void setYPosition(float newYPosition);
+
+		/**
+		 * Moves the AxisAlignedBoundingBox vertically.
+		 * @param yDelta Value to add to the AxisAlignedBoundingBox's vertical position (in
+		 * pixels). Positive value moves the AxisAlignedBoundingBox down and a negative
+		 * value moves the body up.
+		 * @see RedBox::AxisAlignedBoundingBox::position
+		 */
+		void moveY(float yDelta);
+
+		/**
+		 * Gets the body's center's position.
+		 * @return 2D vector containing the body's center's position.
+		 */
+		const Vector2 getPositionCenter() const;
+
+		/**
+		 * Gets the body's center's horizontal position.
+		 * @return Body's center's horizontal position.
+		 */
+		float getXPositionCenter() const;
+
+		/**
+		 * Gets the body's center's vertical position.
+		 * @return Body's center vertical position.
+		 */
+		float getYPositionCenter() const;
+
+		/**
 		 * Gets the bounding box's size.
 		 * @return Vector2 containing the width and height of the bounding box.
 		 * @see RedBox::AxisAlignedBoundingBox::size
 		 */
-		const Vector2 getSize() const;
+		Vector2 &getSize();
+
+		/**
+		 * Gets the bounding box's size.
+		 * @return Vector2 containing the width and height of the bounding box.
+		 * @see RedBox::AxisAlignedBoundingBox::size
+		 */
+		const Vector2 &getSize() const;
 
 		/**
 		 * Sets the bounding box's size.
@@ -217,6 +341,14 @@ namespace RedBox {
 		 */
 		bool isCompletelyInside(const AxisAlignedBoundingBox &other) const;
 	private:
+		/**
+		 * Horizontal and vertical position. Position (0, 0) is at the upper
+		 * left corner. The higher the horizontal value, the more to the right
+		 * the body is. The higher the vertical value, the more to the bottom
+		 * the body is.
+		 */
+		Vector2 position;
+
 		/// Size in pixels (by default) of the bounding box.
 		Vector2 size;
 	};

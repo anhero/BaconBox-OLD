@@ -3,25 +3,21 @@
 #include <algorithm>
 
 namespace RedBox {
-	AxisAlignedBoundingBox::AxisAlignedBoundingBox() : Positionable(), size() {
+	AxisAlignedBoundingBox::AxisAlignedBoundingBox() : position(), size() {
 	}
 
 	AxisAlignedBoundingBox::AxisAlignedBoundingBox(const Vector2 &newPosition,
 	                                               const Vector2 &newSize) :
-		Positionable(newPosition), size(newSize) {
+		position(newPosition), size(newSize) {
 	}
 
 	AxisAlignedBoundingBox::AxisAlignedBoundingBox(const AxisAlignedBoundingBox &src) :
-		Positionable(src), size(src.size) {
-	}
-
-	AxisAlignedBoundingBox::~AxisAlignedBoundingBox() {
+		position(src.position), size(src.size) {
 	}
 
 	AxisAlignedBoundingBox &AxisAlignedBoundingBox::operator=(const AxisAlignedBoundingBox &src) {
-		this->Positionable::operator=(src);
-
 		if (this != &src) {
+			position = src.position;
 			size = src.size;
 		}
 
@@ -29,14 +25,78 @@ namespace RedBox {
 	}
 
 	bool AxisAlignedBoundingBox::operator==(const AxisAlignedBoundingBox &other) const {
-		return getPosition() == other.getPosition() && size == other.size;
+		return position == other.position && size == other.size;
 	}
 
 	bool AxisAlignedBoundingBox::operator!=(const AxisAlignedBoundingBox &other) const {
 		return !(*this == other);
 	}
 
-	const Vector2 AxisAlignedBoundingBox::getSize() const {
+	Vector2 &AxisAlignedBoundingBox::getPosition() {
+		return position;
+	}
+
+	const Vector2 &AxisAlignedBoundingBox::getPosition() const {
+		return position;
+	}
+
+	void AxisAlignedBoundingBox::setPosition(const Vector2 &newPosition) {
+		position = newPosition;
+	}
+
+	void AxisAlignedBoundingBox::setPosition(float newXPosition, float newYPosition) {
+		position.setXY(newXPosition, newYPosition);
+	}
+
+	void AxisAlignedBoundingBox::move(const Vector2 &delta) {
+		position.addToXY(delta);
+	}
+
+	void AxisAlignedBoundingBox::move(float xDelta, float yDelta) {
+		position.addToXY(xDelta, yDelta);
+	}
+
+	float AxisAlignedBoundingBox::getXPosition() const {
+		return position.getX();
+	}
+
+	void AxisAlignedBoundingBox::setXPosition(float newXPosition) {
+		position.setX(newXPosition);
+	}
+
+	void AxisAlignedBoundingBox::moveX(float xDelta) {
+		position.addToX(xDelta);
+	}
+
+	float AxisAlignedBoundingBox::getYPosition() const {
+		return position.getY();
+	}
+
+	void AxisAlignedBoundingBox::setYPosition(float newYPosition) {
+		position.setY(newYPosition);
+	}
+
+	void AxisAlignedBoundingBox::moveY(float yDelta) {
+		position.addToY(yDelta);
+	}
+
+	const Vector2 AxisAlignedBoundingBox::getPositionCenter() const {
+		return Vector2(position + size * 0.5f);
+	}
+
+	float AxisAlignedBoundingBox::getXPositionCenter() const {
+		return position.getX() + size.getX() * 0.5f;
+	}
+
+	float AxisAlignedBoundingBox::getYPositionCenter() const {
+		return position.getY() + size.getY() * 0.5f;
+	}
+
+	Vector2 &AxisAlignedBoundingBox::getSize() {
+		return size;
+	}
+
+	const Vector2 &AxisAlignedBoundingBox::getSize() const {
 		return size;
 	}
 
@@ -65,19 +125,19 @@ namespace RedBox {
 	}
 
 	float AxisAlignedBoundingBox::getLeft() const {
-		return std::min(getXPosition(), getXPosition() + size.getX());
+		return position.getX();
 	}
 
 	float AxisAlignedBoundingBox::getRight() const {
-		return std::max(getXPosition(), getXPosition() + size.getX());
+		return position.getX() + size.getX();
 	}
 
 	float AxisAlignedBoundingBox::getTop() const {
-		return std::min(getYPosition(), getYPosition() + size.getY());
+		return position.getY();
 	}
 
 	float AxisAlignedBoundingBox::getBottom() const {
-		return std::max(getYPosition(), getYPosition() + size.getY());
+		return position.getY() + size.getY();
 	}
 
 	bool AxisAlignedBoundingBox::overlaps(const AxisAlignedBoundingBox &other) const {

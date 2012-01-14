@@ -378,8 +378,9 @@ namespace RedBox {
 		if (this != other) {
 			// The bool is set to true if there is either a horizontal or
 			// vertical collision.
-			result.first = solveXCollision(other, &result.second) ||
-			               solveYCollision(other, &result.second);
+			bool solvedX = solveXCollision(other, &result.second);
+			bool solvedY = solveYCollision(other, &result.second);
+			result.first = solvedX || solvedY;
 		}
 
 		return result;
@@ -728,7 +729,7 @@ namespace RedBox {
 				AxisAlignedBoundingBox box1(Vector2(getXPosition(), getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f))),
 				                            Vector2(getWidth(), getHeight() + obj1DeltaAbs));
 				AxisAlignedBoundingBox box2(Vector2(other->getXPosition(), other->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f))),
-				                            Vector2(other->getWidth(), other->getHeight() + obj1DeltaAbs));
+				                            Vector2(other->getWidth(), other->getHeight() + obj2DeltaAbs));
 
 				if (box1.overlaps(box2)) {
 					float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + OVERLAP_BIAS;
