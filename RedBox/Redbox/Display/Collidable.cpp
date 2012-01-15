@@ -674,15 +674,7 @@ namespace RedBox {
 
 			if (overlap != 0.0f) {
 
-				if (isStaticBody()) {
-					other->moveX(overlap);
-					other->setXVelocity(getXVelocity() - other->getXVelocity() * other->getElasticity());
-
-				} else if (other->isStaticBody()) {
-					moveX(-overlap);
-					setXVelocity(other->getXVelocity() - getXVelocity() * getElasticity());
-
-				} else {
+				if (!isStaticBody() && !other->isStaticBody()) {
 					overlap *= 0.5f;
 
 					moveX(-overlap);
@@ -692,6 +684,14 @@ namespace RedBox {
 
 					setXVelocity(average + (other->getXVelocity() - average) * getElasticity());
 					other->setXVelocity(average + (getXVelocity() - average) * other->getElasticity());
+
+				} else if (!isStaticBody()) {
+					moveX(-overlap);
+					setXVelocity(other->getXVelocity() - getXVelocity() * getElasticity());
+
+				} else if (!other->isStaticBody()) {
+					other->moveX(overlap);
+					other->setXVelocity(getXVelocity() - other->getXVelocity() * other->getElasticity());
 				}
 
 				return true;
@@ -761,18 +761,18 @@ namespace RedBox {
 
 			if (overlap != 0.0f) {
 
-				if (isStaticBody()) {
+				if (!isStaticBody() && !other->isStaticBody()) {
+					overlap *= 0.5f;
+
+					moveY(-overlap);
 					other->moveY(overlap);
-					other->setYVelocity(getYVelocity() - other->getYVelocity() * other->getElasticity());
 
-					// Special case code that handles cases like horizontally
-					// moving platforms that a collidable can ride.
-					if (getVelocity() != Vector2(0.0f, 0.0f) &&
-					    obj1Delta < obj2Delta) {
-						other->moveX(getXPosition() - getOldXPosition());
-					}
+					float average = (getYVelocity() + other->getYVelocity()) * 0.5f;
 
-				} else if (other->isStaticBody()) {
+					setYVelocity(average + (other->getYVelocity() - average) * getElasticity());
+					other->setYVelocity(average + (getYVelocity() - average) * other->getElasticity());
+
+				} else if (!isStaticBody()) {
 					moveY(-overlap);
 					setYVelocity(other->getYVelocity() - getYVelocity() * getElasticity());
 
@@ -783,16 +783,16 @@ namespace RedBox {
 						moveX(other->getXPosition() - other->getOldXPosition());
 					}
 
-				} else {
-					overlap *= 0.5f;
-
-					moveY(-overlap);
+				} else if (!other->isStaticBody()) {
 					other->moveY(overlap);
+					other->setYVelocity(getYVelocity() - other->getYVelocity() * other->getElasticity());
 
-					float average = (getYVelocity() + other->getYVelocity()) * 0.5f;
-
-					setYVelocity(average + (other->getYVelocity() - average) * getElasticity());
-					other->setYVelocity(average + (getYVelocity() - average) * other->getElasticity());
+					// Special case code that handles cases like horizontally
+					// moving platforms that a collidable can ride.
+					if (getVelocity() != Vector2(0.0f, 0.0f) &&
+					    obj1Delta < obj2Delta) {
+						other->moveX(getXPosition() - getOldXPosition());
+					}
 				}
 
 				return true;
