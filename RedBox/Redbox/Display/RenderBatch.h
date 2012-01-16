@@ -10,6 +10,7 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
+#include <limits>
 
 #include "Orderable.h"
 #include "Updateable.h"
@@ -695,6 +696,14 @@ namespace RedBox {
 		 * Reconstructs the indices.
 		 */
 		void refreshIndices() {
+			if (vertices.getNbVertices() > static_cast<StandardVertexArray::SizeType>(std::numeric_limits<IndiceArray::value_type>::max())) {
+				Console::print("Not all bodies will be rendered correctly in the batch ");
+				Console::print(this);
+				Console::print(" becase there are more than ");
+				Console::print(std::numeric_limits<IndiceArray::value_type>::max());
+				Console::println(" vertices.");
+				Console::printTrace();
+			}
 			// We clear the current indices.
 			indices.clear();
 

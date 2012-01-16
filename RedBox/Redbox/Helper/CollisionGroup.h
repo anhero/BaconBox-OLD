@@ -74,78 +74,237 @@ namespace RedBox {
 		void update();
 
 		/**
-		 * Adds a body to the collision group.
+		 * Adds a body to the collision group. The collision group will need to
+		 * be updated for this body to not be ignored when testing for
+		 * collisions.
 		 * @param newBody Pointer to the new body to add to the collision group.
+		 *
 		 */
 		void add(Collidable *newBody);
 
 		/**
-		 * Removes a body from the collision group.
+		 * Removes a body from the collision group. The collision group will
+		 * need to be updated after removing the body.
 		 * @param body Pointer to the body to remove from the group.
 		 */
 		void remove(Collidable *body);
 
 		/**
-		 * Test a body for collision with the collision group.
-		 * @return True if the body collides with at least one of the group's
-		 * bodies.
+		 * Tests a body for collision with the collision group.
+		 * @param body Pointer to the body to test collisions with.
+		 * @return List of collision details that occured. If the list is empty,
+		 * it means there were no collisions. In all the collision details,
+		 * the first body is the one in the group and the second body is the one
+		 * received in parameter here.
 		 */
 		const std::list<CollisionDetails> collide(Collidable *body);
 
+		/**
+		 * Tests collisions between two collision groups. You can test the
+		 * current collision group with itself or with any other collision
+		 * group.
+		 * @param collisionGroup Pointer to the collision group to detect
+		 * collisions with. Can be "this".
+		 * @return List containing the collision details of all the detected
+		 * collisions. If the list is empty, it means there were no collisions.
+		 */
 		const std::list<CollisionDetails> collide(CollisionGroup *collisionGroup);
 
+		/**
+		 * Tests collisions with itself. Effectively calls the function
+		 * collide(this).
+		 * @return List containing the collision details of all the detected
+		 * collisions. If the list is empty, it means there were no collisions.
+		 * @see RedBox::collide(CollisionGroup *collisionGroup)
+		 */
 		const std::list<CollisionDetails> collide();
 
+		/**
+		 * Gets the set containing the bodies that are in the
+		 * collision group.
+		 * @return Reference to the set containing the bodies.
+		 */
 		BodySet &getBodies();
 
+		/**
+		 * Gets the set containing the bodies that are in the
+		 * collision group.
+		 * @return Const reference to the set containing the bodies.
+		 */
 		const BodySet &getBodies() const;
 
+		/**
+		 * Gets the maximum depth of the collision group's quadtree.
+		 * @return Depth of the quadtree.
+		 * @see RedBox::CollisionGroup::depth
+		 */
 		unsigned int getDepth() const;
 
+		/**
+		 * Sets the maximum depth of the collision group's quadtree.
+		 * @param newDepth New depth of the quadtree. For this new value to be
+		 * taken into account, the collision group must be updated before
+		 * testing for collisions.
+		 */
 		void setDepth(unsigned int newDepth);
 
+		/**
+		 * Gets the collision group's initial bounds.
+		 * @return Reference to the collision group's bounds.
+		 * @see RedBox::CollisionGroup::bounds
+		 */
 		AxisAlignedBoundingBox &getBounds();
 
+		/**
+		 * Gets the collision group's initial bounds.
+		 * @return Const eference to the collision group's bounds.
+		 * @see RedBox::CollisionGroup::bounds
+		 */
 		const AxisAlignedBoundingBox &getBounds() const;
 
+		/**
+		 * Gets the depth used to calculate and initialize the maximum size of
+		 * the pool used to optimize the quadtree reconstruction speed.
+		 * @return Depth used to calculate the maximum pool size for the
+		 * quadtree nodes.
+		 * @see RedBox::CollisionGroup::poolDepth
+		 */
 		unsigned int getPoolDepth() const;
 
+		/**
+		 * Sets the depth used to calculate the maximum size of the pool. The
+		 * collision group must be updated after calling this function before
+		 * testing for collisions again.
+		 * @param newPoolDepth New depth used to calculate the maximum size of
+		 * the pool.
+		 * @see RedBox::CollisionGroup::poolDepth
+		 */
 		void setPoolDepth(unsigned int newPoolDepth);
 	private:
+		/// List of pointers of collidables, contained by the quad nodes.
 		typedef std::list<Collidable *> BodyList;
 
+		/// Index number of the north west quad.
 		static const unsigned int NW = 0;
+
+		/// Index number of the north east quad.
 		static const unsigned int NE = 1;
+
+		/// Index number of the south west quad.
 		static const unsigned int SW = 2;
+
+		/// Index number of the south east quad.
 		static const unsigned int SE = 3;
 
+		/**
+		 * Represents a node in the quadtree.
+		 */
 		struct QuadNode {
+			/**
+			 * Default constructor.
+			 */
 			QuadNode();
+			/**
+			 * Parameterized constructor.
+			 * @param newBounds Starting bounds for the node.
+			 */
 			QuadNode(const AxisAlignedBoundingBox &newBounds);
+
+			/// Quad's bounds.
 			AxisAlignedBoundingBox bounds;
+
+			/// Quad subdivisions.
 			QuadNode *nodes[4];
+
+			/// List of collidable bodies in the node.
 			BodyList boxes;
 		};
 
+		/**
+		 * Calculates the size of the pool for a specific depth.
+		 * @param Depth to use to calculate the pool size.
+		 * @return Maximum size of the pool to use. It corresponds to
+		 * ceil((1 - 4^depth) / (1 - 4)).
+		 */
 		static StackPool<QuadNode>::SizeType calculatePoolSize(unsigned int depth);
 
+		/**
+		 * Gets a new and available quad. From the pool if there's one available
+		 * else it dynamically allocates one.
+		 * @return Pointer to a new quad.
+		 */
 		QuadNode *getNewQuad();
+
+		/**
+		 * Gets a new and available quad. From the pool if there's one available
+		 * else it dynamically allocates one. Sets the new quad's bounds with
+		 * the ones given.
+		 * @param newBounds Bounds to set to the new quad.
+		 * @return Pointer to a new quad.
+		 */
 		QuadNode *getNewQuad(const AxisAlignedBoundingBox &newBounds);
 
+		/**
+		 * Inserts a new body in the subdivisions of the quadtree's roots.
+		 * @param newBox Colliding box of the new body.
+		 * @param newBody Pointer to the new body to insert in the quadtree.
+		 */
 		void subInsert(const AxisAlignedBoundingBox &newBox, Collidable *newBody);
+
+		/**
+		 * Inserts a new body higher than the root. Makes the root bigger until
+		 * the new body can fit in it.
+		 * @param newBox Colliding box of the new body.
+		 * @param newBody Pointer to the new body to insert in the quadtree.
+		 */
 		void supInsert(const AxisAlignedBoundingBox &newBox, Collidable *newBody);
 
+		/**
+		 * Clears the pool overflow.
+		 */
 		void clearOverflow();
 
+		/// Set of pointers to bodies that make up the collision group.
 		BodySet bodies;
+
+		/// Root quad node.
 		QuadNode *root;
+
+		/**
+		 * Maximum depth of the quadtree. If the collision group contains bodies
+		 * that are outside the initial bounds, the bounds will be adjusted and
+		 * the depth will increment temporarily using the tmpDepth member.
+		 * @see RedBox::CollisionGroup::bounds
+		 * @see RedBox::CollisionGroup::tmpDepth
+		 */
 		unsigned int depth;
+
+		/**
+		 * Temporary depth. Might be higher than the normal depth if there were
+		 * bodies outside the bounds when the collision group was updated.
+		 * @see RedBox::CollisionGroup::depth
+		 */
 		unsigned int tmpDepth;
 
+		/**
+		 * Bounds of the collision group. Not necessarily the same as final
+		 * root's bounds. The tree will grow upwards if there are bodies outside
+		 * the bounds found here.
+		 */
 		AxisAlignedBoundingBox bounds;
 
+		/// Depth used to calculate the maximum size of the pool.
 		unsigned int poolDepth;
+
+		/**
+		 * Pool of quad nodes used to optimize the collision group's quad tree's
+		 * construction.
+		 */
 		StackPool<QuadNode> quadPool;
+
+		/**
+		 * Used to contain pointers to quad nodes if the pool overflows.
+		 */
 		std::deque<QuadNode *> quadOverflow;
 	};
 }
