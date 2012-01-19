@@ -47,6 +47,8 @@ namespace RedBox {
 		 * @param newTexture Texture pointer to use as the texture.
 		 * @param newFont Font pointer to use as the text's font.
 		 * @param newText Unicode string to use as the string's text.
+		 * @param newTextOffset Offset to apply to the text when the button is
+		 * pressed down.
 		 * @param startingPosition Starting position at which to place the
 		 * button.
 		 * @param newSize Size of the button.

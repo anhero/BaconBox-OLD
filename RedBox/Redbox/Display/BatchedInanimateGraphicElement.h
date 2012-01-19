@@ -229,6 +229,8 @@ namespace RedBox {
 		 * @param newBatch Pointer to the parent batch.
 		 * @param newVertices Pointer to the array of vertices to use. The
 		 * sprite's vertex array will manage this pointer.
+		 * @param src Other batched inanimate graphic element from which to
+		 * base the initial values.
 		 */
 		BatchedInanimateGraphicElement(RenderBatch<BatchedInanimateGraphicElement<Parent> > *newBatch,
 		                               typename BatchedVertexArray<BatchedInanimateGraphicElement<Parent> >::ContainerType *newVertices,
@@ -243,6 +245,8 @@ namespace RedBox {
 		 * @param newBegin Index in the batch's array where the sprite's
 		 * vertices begin.
 		 * @param newNbVertices Number of vertices the sprite has.
+		 * @param src Other batched inanimate graphic element from which to
+		 * base the initial values.
 		 */
 		BatchedInanimateGraphicElement(RenderBatch<BatchedInanimateGraphicElement<Parent> > *newBatch,
 		                               typename BatchedVertexArray<BatchedInanimateGraphicElement<Parent> >::SizeType newBegin,

@@ -386,6 +386,7 @@ namespace RedBox {
 		 * not already managed, it will add the new body and "nbToAdd - 1"
 		 * clones of it.
 		 * @param newBody Pointer to the new body to add.
+		 * @param nbToAdd Number of bodies to add to the batch.
 		 */
 		void add(typename BodyMap::value_type newBody,
 		         typename BodyMap::size_type nbToAdd) {
@@ -613,7 +614,8 @@ namespace RedBox {
 
 		/**
 		 * Adds vertices in the batch.
-		 * @param position
+		 * @param position Position (index) in the batch to add vertices.
+		 * @param nbVertices Number of vertices to add.
 		 */
 		void addVertices(VertexArray::SizeType position,
 		                 VertexArray::SizeType nbVertices) {

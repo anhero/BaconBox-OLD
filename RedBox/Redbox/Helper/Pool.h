@@ -88,7 +88,7 @@ namespace RedBox {
 		 * allocated memory the item uses before calling this function.
 		 * Remember that you can call the destructor manually if it is what you
 		 * need.
-		 * @param Pointer to the item to be available again.
+		 * @param toRemove Pointer to the item to be available again.
 		 */
 		void remove(T *toRemove) {
 			if (!droplets.empty() && size > 0) {
@@ -267,7 +267,7 @@ namespace RedBox {
 		 * allocated memory the item uses before calling this function.
 		 * Remember that you can call the destructor manually if it is what you
 		 * need.
-		 * @param Pointer to the item to be available again.
+		 * @param toRemove Pointer to the item to be available again.
 		 */
 		void remove(T *toRemove) {
 			if (!droplets.empty() && !actives.empty()) {

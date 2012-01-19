@@ -109,7 +109,7 @@ namespace RedBox {
 		/**
 		 * Resumes the music with a fade in effect. Will only resume if the
 		 * sound has been paused.
-		 * @param fadeOut Time the fade in effect will last (in seconds).
+		 * @param fadeIn Time the fade in effect will last (in seconds).
 		 */
 		void resume(double fadeIn);
 	private:
@@ -126,13 +126,13 @@ namespace RedBox {
 		static const bool FADE_IN = false;
 
 		/// Pointer to the current music being played.
-		static SDLMixerBackgroundMusic* currentMusic;
+		static SDLMixerBackgroundMusic *currentMusic;
 
 		/// Set to true if the current music is on pause.
 		static bool isBeingPaused;
 
 		/// Pointer to the music to play.
-		Mix_Music* music;
+		Mix_Music *music;
 
 		/// Set to true if the music is infinitely looping.
 		bool looping;
@@ -172,7 +172,7 @@ namespace RedBox {
 		 * Sets the music.
 		 * @param newMusic Pointer to the music to set.
 		 */
-		void load(Mix_Music* newMusic);
+		void load(Mix_Music *newMusic);
 
 		/**
 		 * Slot called when a pause/resume fading is to be updated. SDL_mixer

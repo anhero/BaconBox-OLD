@@ -70,7 +70,7 @@ namespace RedBox {
 		 * automatically destroyed once the sound's state is at STOPPED. The
 		 * sound effect returned is at the INITIAL state.
 		 */
-		SoundFX* getSoundFX(const std::string& key, bool survive = true);
+		SoundFX *getSoundFX(const std::string &key, bool survive = true);
 
 		/**
 		 * Constructs a background music. Gets the music's data associated with
@@ -86,7 +86,7 @@ namespace RedBox {
 		 * be automatically destroyed once the music's state is at STOPPED. The
 		 * background music returned is at the INITIAL state.
 		 */
-		BackgroundMusic* getBackgroundMusic(const std::string& key,
+		BackgroundMusic *getBackgroundMusic(const std::string &key,
 		                                    bool survive = true);
 		/**
 		 * Called by background musics when the fading from a pause or a
@@ -142,7 +142,7 @@ namespace RedBox {
 		/**
 		 * List of pointers to sounds that the engine takes care of managing.
 		 */
-		std::list<Sound*> sounds;
+		std::list<Sound *> sounds;
 
 		/**
 		 * Default constructor.
@@ -165,7 +165,7 @@ namespace RedBox {
 		 * @param filePath Path to the sound file to load.
 		 * @return Pointer to the sound data loaded.
 		 */
-		SoundInfo* loadSound(const std::string& filePath);
+		SoundInfo *loadSound(const std::string &filePath);
 
 		/**
 		 * Loads sound data from engine specific parameters.
@@ -173,7 +173,7 @@ namespace RedBox {
 		 * has implementation different parameters.
 		 * @return Pointer to the sound data loaded.
 		 */
-		SoundInfo* loadSound(const SoundParameters& params);
+		SoundInfo *loadSound(const SoundParameters &params);
 
 		/**
 		 * Unloads sound data.
@@ -182,14 +182,14 @@ namespace RedBox {
 		 * care of that.
 		 * @return True if the unloading was successful, false if not.
 		 */
-		bool unloadSound(SoundInfo* sound);
+		bool unloadSound(SoundInfo *sound);
 
 		/**
 		 * Loads music data from a file.
 		 * @param filePath Path to the music file to load.
 		 * @return Pointer to the music data loaded.
 		 */
-		MusicInfo* loadMusic(const std::string& filePath);
+		MusicInfo *loadMusic(const std::string &filePath);
 
 		/**
 		 * Loads music data from engine specific parameters.
@@ -197,16 +197,16 @@ namespace RedBox {
 		 * has implementation different parameters.
 		 * @return Pointer to the music data loaded.
 		 */
-		MusicInfo* loadMusic(const MusicParameters& params);
+		MusicInfo *loadMusic(const MusicParameters &params);
 
 		/**
 		 * Unloads music data.
-		 * @param sound Sound data that needs to be unloaded. Delete must not be
+		 * @param music Music data that needs to be unloaded. Delete must not be
 		 * called on it, the resource manager that calls this function takes
 		 * care of that.
 		 * @return True if the unloading was successful, false if not.
 		 */
-		bool unloadMusic(MusicInfo* music);
+		bool unloadMusic(MusicInfo *music);
 	};
 }
 

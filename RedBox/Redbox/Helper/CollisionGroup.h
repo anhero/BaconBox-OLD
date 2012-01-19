@@ -19,13 +19,22 @@ namespace RedBox {
 
 	/**
 	 * Represents a group of bodies used to optimize collisions between a lot of
-	 * bodies.
+	 * bodies. Uses a quadtree that needs to be reconstructed with the method
+	 * update() when the bodies in the collision group are moved or when bodies
+	 * are added or removed. To speed up the reconstruction of the quadtree,
+	 * the collision group uses a pool of quad nodes.
+	 * @see RedBox::StackPool
 	 * @ingroup Physics
 	 */
 	class CollisionGroup {
 	public:
+		/// Type used to represent the set of bodies contained in the group.
 		typedef std::set<Collidable *> BodySet;
 
+		/**
+		 * Default depth of the quad tree and default depth used to calculate
+		 * the number of quad nodes to initialize in the pool.
+		 */
 		static const unsigned int DEFAULT_DEPTH = 5;
 
 		/**
@@ -198,6 +207,7 @@ namespace RedBox {
 
 		/**
 		 * Represents a node in the quadtree.
+		 * @ingroup Physics
 		 */
 		struct QuadNode {
 			/**
@@ -222,7 +232,7 @@ namespace RedBox {
 
 		/**
 		 * Calculates the size of the pool for a specific depth.
-		 * @param Depth to use to calculate the pool size.
+		 * @param depth Depth to use to calculate the pool size.
 		 * @return Maximum size of the pool to use. It corresponds to
 		 * ceil((1 - 4^depth) / (1 - 4)).
 		 */

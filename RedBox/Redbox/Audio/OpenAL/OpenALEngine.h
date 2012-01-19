@@ -48,8 +48,8 @@ namespace RedBox {
 		 * before initializing the engine.
 		 * @param newDevice Name of the device to set as the default device.
 		 */
-		void setDefaultDevice(const std::string& newDevice);
-		
+		void setDefaultDevice(const std::string &newDevice);
+
 		/**
 		 * Gets the list of available auio devices on the system.
 		 * @return Vector containing the device names.
@@ -63,8 +63,8 @@ namespace RedBox {
 		 * himself. False if he doesn't want to have to delete the sound
 		 * effect after he has started playing it.
 		 */
-		SoundFX* getSoundFX(const std::string& key, bool survive);
-		
+		SoundFX *getSoundFX(const std::string &key, bool survive);
+
 		/**
 		 * Sets the global sound effects volume.
 		 * @param newSoundVolume New global sound effects volume.
@@ -74,41 +74,41 @@ namespace RedBox {
 	private:
 		/// Chunk ID wav files should have.
 		static const uint32_t CHUNK_ID_RIFF = 1179011410;
-		
+
 		/// Format the wav files should have.
 		static const uint32_t FORMAT_WAVE = 1163280727;
-		
+
 		/**
 		 * Default constructor.
 		 */
 		OpenALEngine();
-		
+
 		/**
 		 * Destructor, closes OpenAL.
 		 */
 		~OpenALEngine();
-		
+
 		/**
 		 * Updates OpenAL.
 		 */
 		void update();
-		
+
 		/**
 		 * Loads a sound effect from a file. For now, it must be a wav file.
 		 * @param filePath Path to the sound effect's file.
 		 * @return Pointer to the loaded sound effect. Null if the loading
 		 * failed.
 		 */
-		SoundInfo* loadSound(const std::string& filePath);
-		
+		SoundInfo *loadSound(const std::string &filePath);
+
 		/**
 		 * Loads a sound effect from information.
-		 * @param info Information about the sound effect to load.
+		 * @param params Information about the sound effect to load.
 		 * @return Pointer to the loaded sound effect. Null if the loading
 		 * failed.
 		 */
-		SoundInfo* loadSound(const SoundParameters& params);
-		
+		SoundInfo *loadSound(const SoundParameters &params);
+
 		/**
 		 * Unloads sound data. Called by the resource loader either by demand
 		 * of the user or when it is unloading everything before unloading the
@@ -117,40 +117,40 @@ namespace RedBox {
 		 * @param sound Sound data to unload.
 		 * @return True if the unloading was done correctly, false if not.
 		 */
-		bool unloadSound(SoundInfo* sound);
-		
+		bool unloadSound(SoundInfo *sound);
+
 		/**
 		 * Deletes all sources using a specific buffer.
 		 * @param buffer ID of the buffer.
 		 */
 		void deleteBufferSources(ALuint buffer);
-		
+
 		/**
 		 * Loads data from a wav file.
-		 * @param fileName Path to the file to load.
+		 * @param filePath Path to the file to load.
 		 * @param bufferData Array containing the buffer data of the loaded wav
 		 * file.
 		 * @param bufferSize Will contain the size of the loaded buffer.
 		 * @param format Loaded audio's format.
 		 * @param freq Loaded audio's frequency.
 		 */
-		static void loadWav(const std::string& filePath,
-							char*& bufferData,
-							ALsizei& bufferSize,
-							ALenum& format,
-							ALsizei& freq);
-		
+		static void loadWav(const std::string &filePath,
+		                    char*& bufferData,
+		                    ALsizei &bufferSize,
+		                    ALenum &format,
+		                    ALsizei &freq);
+
 		/// Device to load.
 		std::string defaultDevice;
-		
+
 		/// List of devices available.
 		std::vector<std::string> deviceList;
-		
+
 		/// Sources being played.
-		std::list<OpenALSoundFX*> sources;
-		
+		std::list<OpenALSoundFX *> sources;
+
 		/// Non-surviving NullAudios that were returned.
-		std::list<NullAudio*> nullsToClean;
+		std::list<NullAudio *> nullsToClean;
 	};
 }
 #endif

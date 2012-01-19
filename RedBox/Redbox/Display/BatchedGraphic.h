@@ -37,6 +37,9 @@ namespace RedBox {
 
 		/**
 		 * Parameterized constructor.
+		 * @param newTexture Texture to use to load the graphic. If the texture
+		 * received here is not the same as the batch that contains it, it
+		 * might give unwanted result.
 		 */
 		explicit BatchedGraphic(TexturePointer newTexture) : Colorable(),
 			Shapable<BatchedVertexArray<U> >(), T(newTexture) {
@@ -110,16 +113,18 @@ namespace RedBox {
 		 * @param newBatch Pointer to the parent batch.
 		 * @param newVertices Pointer to the array of vertices to use. The
 		 * graphic's vertex array will manage this pointer.
+		 * @param src Other batched graphic from which to base the initial
+		 * values.
 		 */
 		BatchedGraphic(RenderBatch<U> *newBatch,
-					   typename BatchedVertexArray<U>::ContainerType *newVertices,
-					   const BatchedGraphic<T, U> &src) :
+		               typename BatchedVertexArray<U>::ContainerType *newVertices,
+		               const BatchedGraphic<T, U> &src) :
 			Colorable(src), Shapable<BatchedVertexArray<U> >(), T(src) {
 			this->getVertices().batch = newBatch;
 			this->getVertices().vertices = newVertices;
 
 			std::copy(src.getVertices().getBegin(), src.getVertices().getEnd(),
-					  this->getVertices().getBegin());
+			          this->getVertices().getBegin());
 
 			this->setColor(src.getColor());
 			this->refreshTextureCoordinates();
@@ -131,18 +136,20 @@ namespace RedBox {
 		 * @param newBegin Index at which the graphic's vertices begin in the
 		 * parent batch.
 		 * @param newNbVertices Number of vertices the graphic contains.
+		 * @param src Other batched graphic from which to base the initial
+		 * values.
 		 */
 		BatchedGraphic(RenderBatch<U> *newBatch,
 		               typename BatchedVertexArray<U>::SizeType newBegin,
-					   typename BatchedVertexArray<U>::SizeType newNbVertices,
-					   const BatchedGraphic<T, U> &src) :
+		               typename BatchedVertexArray<U>::SizeType newNbVertices,
+		               const BatchedGraphic<T, U> &src) :
 			Colorable(src), Shapable<BatchedVertexArray<U> >(), T(src) {
 			this->getVertices().batch = newBatch;
 			this->getVertices().nbVertices = newNbVertices;
 			this->getVertices().begin = newBegin;
 
 			std::copy(src.getVertices().getBegin(), src.getVertices().getEnd(),
-					  this->getVertices().getBegin());
+			          this->getVertices().getBegin());
 
 			this->setColor(src.getColor());
 			this->refreshTextureCoordinates();

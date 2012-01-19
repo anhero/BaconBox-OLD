@@ -9,7 +9,8 @@
 
 namespace RedBox {
 	/**
-	 * Class that can be used like a simple stopwatch.
+	 * Class that can be used like a simple stopwatch. Measures the time since
+	 * it was started. It can be paused, resumed and restarted.
 	 * @ingroup Helper
 	 */
 	class Stopwatch {
@@ -111,7 +112,7 @@ namespace RedBox {
 
 		/**
 		 * Adds time to the stopwatch.
-		 * @param time Time in seconds to add to the stopwatch.
+		 * @param timeToAdd Time in seconds to add to the stopwatch.
 		 */
 		void addToTime(double timeToAdd);
 	private:

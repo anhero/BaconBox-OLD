@@ -213,9 +213,9 @@ namespace RedBox {
 
 		/**
 		 * Sets the color from HSV representation.
-		 * @param color The color as an HSV struct.
+		 * @param hsvColor The color as an HSV struct.
 		 */
-		void setHSV(HSV color);
+		void setHSV(HSV hsvColor);
 
 		/**
 		 * Gets the hue for the current color.
@@ -251,7 +251,7 @@ namespace RedBox {
 
 		/**
 		 * Sets the HSV "value" of the current color.
-		 * @param hue The new value to apply
+		 * @param value The new value to apply
 		 */
 		void setValue(float value);
 
