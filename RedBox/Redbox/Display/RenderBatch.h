@@ -158,6 +158,7 @@ namespace RedBox {
 						                                                                this->getTextureInformation(),
 						                                                                textureCoordinates,
 						                                                                indices,
+						                                                                indiceList,
 						                                                                colors,
 						                                                                true);
 
@@ -172,6 +173,7 @@ namespace RedBox {
 						                                                                this->getTextureInformation(),
 						                                                                textureCoordinates,
 						                                                                indices,
+						                                                                indiceList,
 						                                                                colors,
 						                                                                true);
 
@@ -183,6 +185,7 @@ namespace RedBox {
 					                                                          this->getTextureInformation(),
 					                                                          textureCoordinates,
 					                                                          indices,
+					                                                          indiceList,
 					                                                          colors);
 				}
 			}
@@ -195,7 +198,12 @@ namespace RedBox {
 		 * as a masked renderable body).
 		 */
 		virtual void mask() {
-			GraphicDriver::getInstance().drawMaskBatchWithTextureAndColor(vertices, this->getTextureInformation(), textureCoordinates, indices, colors);
+			GraphicDriver::getInstance().drawMaskBatchWithTextureAndColor(vertices,
+			                                                              this->getTextureInformation(),
+			                                                              textureCoordinates,
+			                                                              indices,
+			                                                              indiceList,
+			                                                              colors);
 		}
 
 		/**
@@ -203,7 +211,9 @@ namespace RedBox {
 		 * masked renderable body has been rendered.
 		 */
 		virtual void unmask() {
-			GraphicDriver::getInstance().unmaskBatch(vertices, indices);
+			GraphicDriver::getInstance().unmaskBatch(vertices,
+			                                         indices,
+			                                         indiceList);
 		}
 
 		/**
@@ -298,7 +308,7 @@ namespace RedBox {
 				                          nbVertices, Vector2());
 				colors.insert(colors.begin() + result->getVertices().begin, nbVertices, result->getColor());
 
-				// We ref*resh the batch's indices.
+				// We refresh the batch's indices.
 				refreshIndices();
 
 				// We refresh the new body's texture coordinates.
@@ -696,16 +706,11 @@ namespace RedBox {
 		 * Reconstructs the indices.
 		 */
 		void refreshIndices() {
-			if (vertices.getNbVertices() > static_cast<StandardVertexArray::SizeType>(std::numeric_limits<IndiceArray::value_type>::max())) {
-				Console::print("Not all bodies will be rendered correctly in the batch ");
-				Console::print(this);
-				Console::print(" becase there are more than ");
-				Console::print(std::numeric_limits<IndiceArray::value_type>::max());
-				Console::println(" vertices.");
-				Console::printTrace();
-			}
+			static const StandardVertexArray::SizeType MAX_NB_INDICES = static_cast<StandardVertexArray::SizeType>(std::numeric_limits<IndiceArray::value_type>::max());
+
 			// We clear the current indices.
 			indices.clear();
+			indiceList.clear();
 
 			// We calculate the number of indices we'll need in the array.
 			IndiceArray::size_type nbIndices = 0;
@@ -719,13 +724,20 @@ namespace RedBox {
 
 			IndiceArray::value_type indiceIterator = 0;
 
+			indiceList.push_back(std::make_pair(0, 0));
+
 			// We initialize the indices for each body's vertices.
 			for (typename BodyMap::iterator i = bodies.begin(); i != bodies.end(); ++i) {
 
 				// We make sure the body has at least 3 vertices.
 				if ((*i)->getVertices().getNbVertices() >= 3) {
+
+					if (((*i)->getVertices().begin + (*i)->getVertices().getNbVertices()) > indiceList.back().first + MAX_NB_INDICES) {
+						indiceList.push_back(std::make_pair((*i)->getVertices().begin, indices.size()));
+					}
+
 					// We get the body's first vertex's indice.
-					indiceIterator = static_cast<IndiceArray::value_type>((*i)->getVertices().begin);
+					indiceIterator = static_cast<IndiceArray::value_type>((*i)->getVertices().begin - indiceList.back().first);
 
 					// We add the indices for each of the body's triangles.
 					IndiceArray::value_type nbTriangles = static_cast<IndiceArray::value_type>((*i)->getVertices().getNbVertices() - 2);
@@ -781,6 +793,9 @@ namespace RedBox {
 
 		/// Array of vertex indices for the bodies' triangles.
 		IndiceArray indices;
+
+		/// List of indexes for the the batches.
+		IndiceArrayList indiceList;
 
 		/// Array containing all the bodies' vertices.
 		StandardVertexArray vertices;

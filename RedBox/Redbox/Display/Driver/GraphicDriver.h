@@ -131,29 +131,34 @@ namespace RedBox {
 		virtual void drawBatchWithTextureAndColor(const VertexArray &vertices,
 		                                          const TextureInformation *textureInformation,
 		                                          const TextureCoordinates &textureCoordinates,
-		                                          const IndiceArray &indices,
-		                                          const ColorArray &colors) = 0;
+												  const IndiceArray &indices,
+												  const IndiceArrayList &indiceList,
+												  const ColorArray &colors) = 0;
 
 		virtual void drawBatchWithTexture(const VertexArray &vertices,
 		                                  const TextureInformation *textureInformation,
 		                                  const TextureCoordinates &textureCoordinates,
-		                                  const IndiceArray &indices) = 0;
+										  const IndiceArray &indices,
+										  const IndiceArrayList &indiceList) = 0;
 
 		virtual void drawMaskBatchWithTextureAndColor(const VertexArray &vertices,
 		                                              const TextureInformation *textureInformation,
 		                                              const TextureCoordinates &textureCoordinates,
-		                                              const IndiceArray &indices,
+													  const IndiceArray &indices,
+													  const IndiceArrayList &indiceList,
 		                                              const ColorArray &colors) = 0;
 
 		virtual void drawMaskedBatchWithTextureAndColor(const VertexArray &vertices,
 		                                                const TextureInformation *textureInformation,
 		                                                const TextureCoordinates &textureCoordinates,
-		                                                const IndiceArray &indices,
+														const IndiceArray &indices,
+														const IndiceArrayList &indiceList,
 		                                                const ColorArray &colors,
 		                                                bool invertedMask) = 0;
 
 		virtual void unmaskBatch(const VertexArray &vertices,
-		                         const IndiceArray &indices) = 0;
+								 const IndiceArray &indices,
+								 const IndiceArrayList &indiceList) = 0;
 
 		/**
 		 * Prepare the scene before rendering object.

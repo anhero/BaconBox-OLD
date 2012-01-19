@@ -116,42 +116,34 @@ namespace RedBox {
 		void drawBatchWithTextureAndColor(const VertexArray &vertices,
 		                                  const TextureInformation *textureInformation,
 		                                  const TextureCoordinates &textureCoordinates,
-		                                  const IndiceArray &indices,
+										  const IndiceArray &indices,
+										  const IndiceArrayList &indiceList,
 		                                  const ColorArray &colors);
 
-		void drawBatchWithTextureAndColor(const VertexArray &vertices,
-		                                  const TextureInformation *textureInformation,
-		                                  const TextureCoordinates &textureCoordinates,
-		                                  const IndiceArray &indices,
-		                                  const ColorArray &colors,
-		                                  bool printAlpha);
-
 		void drawBatchWithTexture(const VertexArray &vertices,
 		                          const TextureInformation *textureInformation,
 		                          const TextureCoordinates &textureCoordinates,
-		                          const IndiceArray &indices);
-
-		void drawBatchWithTexture(const VertexArray &vertices,
-		                          const TextureInformation *textureInformation,
-		                          const TextureCoordinates &textureCoordinates,
-		                          const IndiceArray &indices,
-		                          bool printAlpha);
+								  const IndiceArray &indices,
+								  const IndiceArrayList &indiceList);
 
 		void drawMaskBatchWithTextureAndColor(const VertexArray &vertices,
 		                                      const TextureInformation *textureInformation,
 		                                      const TextureCoordinates &textureCoordinates,
-		                                      const IndiceArray &indices,
+											  const IndiceArray &indices,
+											  const IndiceArrayList &indiceList,
 		                                      const ColorArray &colors);
 
 		void drawMaskedBatchWithTextureAndColor(const VertexArray &vertices,
 		                                        const TextureInformation *textureInformation,
 		                                        const TextureCoordinates &textureCoordinates,
-		                                        const IndiceArray &indices,
+												const IndiceArray &indices,
+												const IndiceArrayList &indiceList,
 		                                        const ColorArray &colors,
 		                                        bool invertedMask);
 
 		void unmaskBatch(const VertexArray &vertices,
-		                 const IndiceArray &indices);
+						 const IndiceArray &indices,
+						 const IndiceArrayList &indiceList);
 
 		/**
 		 * Prepare the scene before rendering object.

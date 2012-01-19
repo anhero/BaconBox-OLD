@@ -46,19 +46,22 @@ namespace RedBox {
 	                                                     const TextureInformation *,
 	                                                     const TextureCoordinates &,
 	                                                     const IndiceArray &,
+	                                                     const IndiceArrayList &,
 	                                                     const ColorArray &) {
 	}
 
 	void NullGraphicDriver::drawBatchWithTexture(const VertexArray &,
 	                                             const TextureInformation *,
 	                                             const TextureCoordinates &,
-	                                             const IndiceArray &) {
+	                                             const IndiceArray &,
+	                                             const IndiceArrayList &) {
 	}
 
 	void NullGraphicDriver::drawMaskBatchWithTextureAndColor(const VertexArray &,
 	                                                         const TextureInformation *,
 	                                                         const TextureCoordinates &,
 	                                                         const IndiceArray &,
+	                                                         const IndiceArrayList &,
 	                                                         const ColorArray &) {
 	}
 
@@ -66,12 +69,14 @@ namespace RedBox {
 	                                                           const TextureInformation *,
 	                                                           const TextureCoordinates &,
 	                                                           const IndiceArray &,
+	                                                           const IndiceArrayList &,
 	                                                           const ColorArray &,
 	                                                           bool) {
 	}
 
 	void NullGraphicDriver::unmaskBatch(const VertexArray &,
-	                                    const IndiceArray &) {
+	                                    const IndiceArray &,
+	                                    const IndiceArrayList &) {
 	}
 
 	void NullGraphicDriver::prepareScene(const Vector2 &, float,

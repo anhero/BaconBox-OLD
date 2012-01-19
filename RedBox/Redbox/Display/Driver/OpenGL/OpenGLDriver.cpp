@@ -12,7 +12,9 @@
 #include "Console.h"
 
 #define GET_PTR(vertices) reinterpret_cast<const GLfloat *>(&(*vertices.getBegin()))
-#define GET_TEX_PTR(textureCoordinates) reinterpret_cast<const GLfloat *>(textureCoordinates.data())
+#define GET_TEX_PTR(textureCoordinates) reinterpret_cast<const GLfloat *>(&(*textureCoordinates.begin()))
+#define GET_PTR_BATCH(vertices, adjustment) reinterpret_cast<const GLfloat *>(&(*(vertices.getBegin() + adjustment)))
+#define GET_TEX_PTR_BATCH(textureCoordinates, adjustment) reinterpret_cast<const GLfloat *>(&(*(textureCoordinates.begin() + adjustment)))
 
 namespace RedBox {
 	void OpenGLDriver::drawShapeWithTextureAndColor(const VertexArray &vertices,
@@ -248,114 +250,128 @@ namespace RedBox {
 	                                                const TextureInformation *textureInformation,
 	                                                const TextureCoordinates &textureCoordinates,
 	                                                const IndiceArray &indices,
+	                                                const IndiceArrayList &indiceList,
 	                                                const ColorArray &colors) {
-		drawBatchWithTextureAndColor(vertices, textureInformation, textureCoordinates, indices, colors, false);
-	}
+		for (IndiceArrayList::const_iterator i = indiceList.begin();
+		     i != indiceList.end(); ++i) {
+			glEnableClientState(GL_COLOR_ARRAY);
+			glColorPointer(4,
+			               GL_UNSIGNED_BYTE,
+			               0,
+			               GET_TEX_PTR_BATCH(colors, i->first));
 
-	void OpenGLDriver::drawBatchWithTextureAndColor(const VertexArray &vertices,
-	                                                const TextureInformation *textureInformation,
-	                                                const TextureCoordinates &textureCoordinates,
-	                                                const IndiceArray &indices,
-	                                                const ColorArray &colors,
-	                                                bool printAlpha) {
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors.data());
-
-		drawBatchWithTexture(vertices, textureInformation, textureCoordinates, indices, printAlpha);
-
-		glDisableClientState(GL_COLOR_ARRAY);
-	}
-
-	void OpenGLDriver::drawBatchWithTexture(const VertexArray &vertices,
-	                                        const TextureInformation *textureInformation,
-	                                        const TextureCoordinates &textureCoordinates,
-	                                        const IndiceArray &indices) {
-		drawBatchWithTexture(vertices, textureInformation, textureCoordinates, indices, false);
-	}
-
-	void OpenGLDriver::drawBatchWithTexture(const VertexArray &vertices,
-	                                        const TextureInformation *textureInformation,
-	                                        const TextureCoordinates &textureCoordinates,
-	                                        const IndiceArray &indices,
-	                                        bool printAlpha) {
-		glBindTexture(GL_TEXTURE_2D, textureInformation->textureId);
-
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-
-		if (printAlpha) {
-#ifdef RB_OPENGLES
-			glBlendEquationSeparateOES(GL_FUNC_ADD_OES, GL_MAX_EXT);
-			glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
-#else
-			glBlendEquationSeparate(GL_FUNC_ADD, GL_MAX);
-			glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
-#endif
-
-		} else {
-#ifdef RB_OPENGLES
-			glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
-#else
-			glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
-#endif
-		}
-
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-		glVertexPointer(2, GL_FLOAT, 0, GET_PTR(vertices));
-		glTexCoordPointer(2, GL_FLOAT, 0, GET_TEX_PTR(textureCoordinates));
-
-		glDrawElements(GL_TRIANGLE_STRIP, indices.size() , GL_UNSIGNED_SHORT, indices.data());
-
-		if (printAlpha) {
-#ifdef RB_OPENGLES
-			glBlendEquationOES(GL_FUNC_ADD_OES);
-#else
-			glBlendEquation(GL_FUNC_ADD);
-#endif
-		}
-
-		glDisable(GL_BLEND);
-		glDisable(GL_TEXTURE_2D);
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	}
-
-	void OpenGLDriver::drawMaskBatchWithTextureAndColor(const VertexArray &vertices,
-	                                                    const TextureInformation *textureInformation,
-	                                                    const TextureCoordinates &textureCoordinates,
-	                                                    const IndiceArray &indices,
-	                                                    const ColorArray &/*colors*/) {
-		// TODO: Check if there is a reason we're not using the "colors"
-		// parameter.
-
-		// We make sure the texture information is valid.
-		if (textureInformation) {
 			glBindTexture(GL_TEXTURE_2D, textureInformation->textureId);
 
 			glEnable(GL_TEXTURE_2D);
 			glEnable(GL_BLEND);
 
 #ifdef RB_OPENGLES
-			glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
+			glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
 #else
-			glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
+			glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
 #endif
-			glVertexPointer(2, GL_FLOAT, 0, GET_PTR(vertices));
-			glEnableClientState(GL_VERTEX_ARRAY);
 
-			glTexCoordPointer(2, GL_FLOAT, 0, GET_TEX_PTR(textureCoordinates));
+			glEnableClientState(GL_VERTEX_ARRAY);
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-			glDrawElements(GL_TRIANGLE_STRIP, indices.size(), GL_UNSIGNED_SHORT, indices.data());
+			glVertexPointer(2, GL_FLOAT, 0, GET_PTR_BATCH(vertices, i->first));
+			glTexCoordPointer(2, GL_FLOAT, 0, GET_TEX_PTR_BATCH(textureCoordinates, i->first));
 
+			if (i == --indiceList.end()) {
+				glDrawElements(GL_TRIANGLE_STRIP, indices.size() - i->second, GL_UNSIGNED_SHORT, GET_TEX_PTR_BATCH(indices, i->second));
 
-			glDisableClientState(GL_VERTEX_ARRAY);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+			} else {
+				glDrawElements(GL_TRIANGLE_STRIP, (++IndiceArrayList::const_iterator(i))->second - i->second, GL_UNSIGNED_SHORT, GET_TEX_PTR_BATCH(indices, i->second));
+			}
 
 			glDisable(GL_BLEND);
 			glDisable(GL_TEXTURE_2D);
+			glDisableClientState(GL_VERTEX_ARRAY);
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+			glDisableClientState(GL_COLOR_ARRAY);
+		}
+	}
+
+	void OpenGLDriver::drawBatchWithTexture(const VertexArray &vertices,
+	                                        const TextureInformation *textureInformation,
+	                                        const TextureCoordinates &textureCoordinates,
+	                                        const IndiceArray &indices,
+	                                        const IndiceArrayList &indiceList) {
+		for (IndiceArrayList::const_iterator i = indiceList.begin();
+		     i != indiceList.end(); ++i) {
+			glBindTexture(GL_TEXTURE_2D, textureInformation->textureId);
+
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+
+#ifdef RB_OPENGLES
+			glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
+#else
+			glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE);
+#endif
+
+			glEnableClientState(GL_VERTEX_ARRAY);
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+			glVertexPointer(2, GL_FLOAT, 0, GET_PTR_BATCH(vertices, i->first));
+			glTexCoordPointer(2, GL_FLOAT, 0, GET_TEX_PTR_BATCH(textureCoordinates, i->first));
+
+			if (i == --indiceList.end()) {
+				glDrawElements(GL_TRIANGLE_STRIP, indices.size() - i->second, GL_UNSIGNED_SHORT, GET_TEX_PTR_BATCH(indices, i->second));
+
+			} else {
+				glDrawElements(GL_TRIANGLE_STRIP, (++IndiceArrayList::const_iterator(i))->second - i->second, GL_UNSIGNED_SHORT, GET_TEX_PTR_BATCH(indices, i->second));
+			}
+
+			glDisable(GL_BLEND);
+			glDisable(GL_TEXTURE_2D);
+			glDisableClientState(GL_VERTEX_ARRAY);
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		}
+	}
+
+	void OpenGLDriver::drawMaskBatchWithTextureAndColor(const VertexArray &vertices,
+	                                                    const TextureInformation *textureInformation,
+	                                                    const TextureCoordinates &textureCoordinates,
+	                                                    const IndiceArray &indices,
+	                                                    const IndiceArrayList &indiceList,
+	                                                    const ColorArray &/*colors*/) {
+		// TODO: Check if there is a reason we're not using the "colors"
+		// parameter.
+
+		for (IndiceArrayList::const_iterator i = indiceList.begin();
+		     i != indiceList.end(); ++i) {
+			// We make sure the texture information is valid.
+			if (textureInformation) {
+				glBindTexture(GL_TEXTURE_2D, textureInformation->textureId);
+
+				glEnable(GL_TEXTURE_2D);
+				glEnable(GL_BLEND);
+
+#ifdef RB_OPENGLES
+				glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
+#else
+				glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ZERO, GL_SRC_ALPHA);
+#endif
+				glVertexPointer(2, GL_FLOAT, 0, GET_PTR_BATCH(vertices, i->first));
+				glEnableClientState(GL_VERTEX_ARRAY);
+
+				glTexCoordPointer(2, GL_FLOAT, 0, GET_TEX_PTR_BATCH(textureCoordinates, i->first));
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+				if (i == --indiceList.end()) {
+					glDrawElements(GL_TRIANGLE_STRIP, indices.size() - i->second, GL_UNSIGNED_SHORT, GET_TEX_PTR_BATCH(indices, i->second));
+
+				} else {
+					glDrawElements(GL_TRIANGLE_STRIP, (++IndiceArrayList::const_iterator(i))->second - i->second, GL_UNSIGNED_SHORT, GET_TEX_PTR_BATCH(indices, i->second));
+				}
+
+				glDisableClientState(GL_VERTEX_ARRAY);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+				glDisable(GL_BLEND);
+				glDisable(GL_TEXTURE_2D);
+			}
 		}
 	}
 
@@ -363,6 +379,7 @@ namespace RedBox {
 	                                                      const TextureInformation *textureInformation,
 	                                                      const TextureCoordinates &textureCoordinates,
 	                                                      const IndiceArray &indices,
+	                                                      const IndiceArrayList &indiceList,
 	                                                      const ColorArray &colors,
 	                                                      bool invertedMask) {
 #ifdef RB_OPENGLES
@@ -380,53 +397,99 @@ namespace RedBox {
 		glPushMatrix();
 		glLoadIdentity();
 
-		//We can't call glclearcolor on a texture binded framebuffer, so we draw quad to clear the texture
 		glColor4ub(0, 0, 0, 0);
-		glVertexPointer(2, GL_FLOAT, 0, GET_PTR(vertices));
+		glVertexPointer(2, GL_FLOAT, 0, GET_PTR(maskedGraphic->getVertices()));
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnable(GL_BLEND);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 		glPopMatrix();
 		glColor4ub(255, 255, 255, 255);
+		for (IndiceArrayList::const_iterator i = indiceList.begin();
+		     i != indiceList.end(); ++i) {
 
-		drawBatchWithTextureAndColor(vertices, textureInformation, textureCoordinates, indices, colors, true);
-		glDisable(GL_BLEND);
+			glEnableClientState(GL_COLOR_ARRAY);
+			glColorPointer(4,
+			               GL_UNSIGNED_BYTE,
+			               0,
+			               GET_TEX_PTR_BATCH(colors, i->first));
+
+			glBindTexture(GL_TEXTURE_2D, textureInformation->textureId);
+
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+
 #ifdef RB_OPENGLES
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, originalFramebuffer);
+			glBlendEquationSeparateOES(GL_FUNC_ADD_OES, GL_MAX_EXT);
+			glBlendFuncSeparateOES(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 #else
-		glBindFramebuffer(GL_FRAMEBUFFER, originalFramebuffer);
+			glBlendEquationSeparate(GL_FUNC_ADD, GL_MAX);
+			glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 #endif
 
-		glPushMatrix();
-		glLoadIdentity();
-		glScalef(1.0f, -1.0f, 1.0f);
-		glTranslatef(0.0f, -(MainWindow::getInstance().getContextHeight()), 0.0f);
+			glEnableClientState(GL_VERTEX_ARRAY);
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+			glVertexPointer(2, GL_FLOAT, 0, GET_PTR_BATCH(vertices, i->first));
+			glTexCoordPointer(2, GL_FLOAT, 0, GET_TEX_PTR_BATCH(textureCoordinates, i->first));
+
+			if (i == --indiceList.end()) {
+				glDrawElements(GL_TRIANGLE_STRIP, indices.size() - i->second, GL_UNSIGNED_SHORT, GET_TEX_PTR_BATCH(indices, i->second));
+
+			} else {
+				glDrawElements(GL_TRIANGLE_STRIP, (++IndiceArrayList::const_iterator(i))->second - i->second, GL_UNSIGNED_SHORT, GET_TEX_PTR_BATCH(indices, i->second));
+			}
+
+#ifdef RB_OPENGLES
+			glBlendEquationOES(GL_FUNC_ADD_OES);
+#else
+			glBlendEquation(GL_FUNC_ADD);
+#endif
+
+			glDisable(GL_BLEND);
+			glDisable(GL_TEXTURE_2D);
+			glDisableClientState(GL_VERTEX_ARRAY);
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+			glDisableClientState(GL_COLOR_ARRAY);
+		}
 
 		drawMaskedShapeWithTextureAndColor(maskedGraphic->getVertices(),
 		                                   maskedGraphic->getTextureInformation(),
 		                                   maskedGraphic->getCurrentTextureCoordinates(),
 		                                   maskedGraphic->getColor(),
 		                                   invertedMask);
+
 		glPopMatrix();
 	}
 
 	void OpenGLDriver::unmaskBatch(const VertexArray &vertices,
-	                               const IndiceArray &indices) {
+	                               const IndiceArray &indices,
+	                               const IndiceArrayList &indiceList) {
 		glEnable(GL_BLEND);
-		glVertexPointer(2, GL_FLOAT, 0, GET_PTR(vertices));
-		glEnableClientState(GL_VERTEX_ARRAY);
+
+		for (IndiceArrayList::const_iterator i = indiceList.begin();
+		     i != indiceList.end(); ++i) {
+			glVertexPointer(2, GL_FLOAT, 0, GET_PTR_BATCH(vertices, i->first));
+			glEnableClientState(GL_VERTEX_ARRAY);
 
 #ifdef RB_OPENGLES
-		glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE, GL_ONE);
+			glBlendFuncSeparateOES(GL_ZERO, GL_ONE, GL_ONE, GL_ONE);
 #else
-		glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE, GL_ONE);
+			glBlendFuncSeparate(GL_ZERO, GL_ONE, GL_ONE, GL_ONE);
 #endif
-		glColor4ub(Color::WHITE.getRed(), Color::WHITE.getGreen(),
-		           Color::WHITE.getBlue(), Color::WHITE.getAlpha());
+			glColor4ub(Color::WHITE.getRed(), Color::WHITE.getGreen(),
+			           Color::WHITE.getBlue(), Color::WHITE.getAlpha());
 
-		glDrawElements(GL_TRIANGLE_STRIP, indices.size() , GL_UNSIGNED_SHORT, indices.data());
+			if (i == --indiceList.end()) {
+				glDrawElements(GL_TRIANGLE_STRIP, indices.size() - i->second, GL_UNSIGNED_SHORT, GET_TEX_PTR_BATCH(indices, i->second));
 
-		glDisableClientState(GL_VERTEX_ARRAY);
+			} else {
+				glDrawElements(GL_TRIANGLE_STRIP, (++IndiceArrayList::const_iterator(i))->second - i->second, GL_UNSIGNED_SHORT, GET_TEX_PTR_BATCH(indices, i->second));
+			}
+
+			glDisableClientState(GL_VERTEX_ARRAY);
+		}
+
 		glDisable(GL_BLEND);
 	}
 

@@ -80,9 +80,9 @@ namespace RedBox {
 				Console::println("Can't extract glyph from freetype glyph slot");
 			}
 
-			FT_BitmapGlyph  currentBitmapGlyph = (FT_BitmapGlyph)currentGlyph;
+			FT_BitmapGlyph currentBitmapGlyph = (FT_BitmapGlyph)currentGlyph;
 
-			//We save the size of the glyph
+			// We save the size of the glyph
 			int glyphWidth = font->glyph->bitmap.width;
 			int glyphHeight = font->glyph->bitmap.rows;
 
@@ -105,8 +105,6 @@ namespace RedBox {
 		}
 
 		return result;
-
-
 	}
 
 	void FontImplementation::setPixelSize(int pixelSize) {
