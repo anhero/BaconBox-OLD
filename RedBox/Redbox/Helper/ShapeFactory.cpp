@@ -2,9 +2,18 @@
 
 #include <cmath>
 
+#include <algorithm>
+
 #include "VertexArray.h"
 
 namespace RedBox {
+
+	struct CompareVector {
+		bool operator() (const Vector2 &a, const Vector2 &b) {
+			return a.getY() < b.getY() || (a.getY() == b.getY() && a.getX() < b.getX());
+		}
+	};
+
 	void ShapeFactory::createRegularPolygon(unsigned int nbSides, float sideLength,
 	                                        const Vector2 &position,
 	                                        VertexArray *vertices) {
@@ -53,6 +62,7 @@ namespace RedBox {
 				++i;
 			}
 		}
+		std::sort(vertices->getBegin(), vertices->getEnd(), CompareVector());
 	}
 
 	void ShapeFactory::createRectangle(const Vector2 &size,
@@ -68,9 +78,9 @@ namespace RedBox {
 			++i;
 			i->setXY(position.getX() + size.getX(), position.getY());
 			++i;
-			i->setXY(position.getX() + size.getX(), position.getY() + size.getY());
-			++i;
 			i->setXY(position.getX(), position.getY() + size.getY());
+			++i;
+			i->setXY(position.getX() + size.getX(), position.getY() + size.getY());
 		}
 	}
 

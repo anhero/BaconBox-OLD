@@ -54,7 +54,7 @@ namespace RedBox {
 			glTexCoordPointer(2, GL_FLOAT, 0, GET_TEX_PTR(textureCoordinates));
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-			glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.getNbVertices());
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.getNbVertices());
 
 			glDisableClientState(GL_VERTEX_ARRAY);
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -80,7 +80,7 @@ namespace RedBox {
 #endif
 			glEnableClientState(GL_VERTEX_ARRAY);
 
-			glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.getNbVertices());
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.getNbVertices());
 
 			glDisableClientState(GL_VERTEX_ARRAY);
 			glDisable(GL_BLEND);
@@ -128,7 +128,7 @@ namespace RedBox {
 			glTexCoordPointer(2, GL_FLOAT, 0, GET_TEX_PTR(textureCoordinates));
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-			glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.getNbVertices());
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.getNbVertices());
 
 			glDisableClientState(GL_VERTEX_ARRAY);
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -165,7 +165,7 @@ namespace RedBox {
 					glVertexPointer(2, GL_FLOAT, 0, GET_PTR(vertices));
 					glEnableClientState(GL_VERTEX_ARRAY);
 
-					glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.getNbVertices());
+					glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.getNbVertices());
 
 				}
 
@@ -186,7 +186,7 @@ namespace RedBox {
 				glTexCoordPointer(2, GL_FLOAT, 0, GET_TEX_PTR(textureCoordinates));
 				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-				glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.getNbVertices());
+				glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.getNbVertices());
 
 				// Third render, we must render the color according to the buffer alpha channel,
 				glColor4ub(color.getRed(), color.getGreen(), color.getBlue(),
@@ -201,7 +201,7 @@ namespace RedBox {
 				glBlendFunc(GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA);
 
 
-				glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.getNbVertices());
+				glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.getNbVertices());
 
 
 
@@ -215,7 +215,7 @@ namespace RedBox {
 				glColor4ub(Color::WHITE.getRed(), Color::WHITE.getGreen(),
 				           Color::WHITE.getBlue(), Color::WHITE.getAlpha());
 
-				glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.getNbVertices());
+				glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.getNbVertices());
 
 
 				glDisableClientState(GL_VERTEX_ARRAY);
@@ -240,7 +240,7 @@ namespace RedBox {
 
 
 
-		glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.getNbVertices());
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.getNbVertices());
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisable(GL_BLEND);
@@ -401,7 +401,7 @@ namespace RedBox {
 		glVertexPointer(2, GL_FLOAT, 0, GET_PTR(maskedGraphic->getVertices()));
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnable(GL_BLEND);
-		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 		glPopMatrix();
 		glColor4ub(255, 255, 255, 255);
 		for (IndiceArrayList::const_iterator i = indiceList.begin();

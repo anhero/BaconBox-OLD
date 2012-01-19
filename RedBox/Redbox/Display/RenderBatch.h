@@ -741,12 +741,13 @@ namespace RedBox {
 					// We get the body's first vertex's indice.
 					indiceIterator = static_cast<IndiceArray::value_type>((*i)->getVertices().begin - indiceList.back().first);
 
+
 					// We add the indices for each of the body's triangles.
 					IndiceArray::value_type nbTriangles = static_cast<IndiceArray::value_type>((*i)->getVertices().getNbVertices() - 2);
 
 					for (IndiceArray::value_type j = 0; j < nbTriangles; ++j) {
-						indices.push_back(indiceIterator);
-						indices.push_back(indiceIterator);
+						indices.push_back(indiceIterator + j);
+						indices.push_back(indiceIterator + j);
 						indices.push_back(indiceIterator + j + 1);
 						indices.push_back(indiceIterator + j + 2);
 						indices.push_back(indiceIterator + j + 2);

@@ -172,11 +172,12 @@ namespace RedBox {
 						// We get the line's sprite's real center right
 						// position.
 						++i;
+						++i;
 						line.addToXY((*i - line) * 0.5f);
 						line.subtractFromXY(horizontalLine * 0.5f);
 						// We get the line's sprite's real center left
 						// position.
-						++i;
+						--i;
 						tmpLine.addToXY((*i - tmpLine) * 0.5f);
 						tmpLine.addToXY(horizontalLine * 0.5f);
 						// We get the line that goes from the line's sprite's
