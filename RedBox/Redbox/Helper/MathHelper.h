@@ -28,6 +28,10 @@ namespace RedBox {
 		 */
 		template <typename T>
 		struct PI {
+			/**
+			 * Cast operator overload to cast the PI type into a float, a double
+			 * or a long double (depending on the template parameter).
+			 */
 			operator T();
 		};
 		

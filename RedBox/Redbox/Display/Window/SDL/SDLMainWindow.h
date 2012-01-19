@@ -20,10 +20,15 @@ namespace RedBox {
 		/**
 		 * Method called when the engine is initialized.
 		 * It is used to setup the geometry of the window.
-		 * @param width The width of the window.
-		 * @param height The height of the window
+		 * @param resolutionWidth The width of the window (in pixels).
+		 * @param resolutionHeight The height of the window (in pixels).
+		 * @param contextWidth Width of the context (can be any value).
+		 * @param contextHeight Height of the context (can be any value).
 		 */
-		void onRedBoxInit(unsigned int resolutionWidth, unsigned int resolutionHeight, float contextWidth, float contextHeight);
+		void onRedBoxInit(unsigned int resolutionWidth,
+		                  unsigned int resolutionHeight,
+		                  float contextWidth,
+		                  float contextHeight);
 
 		/**
 		 * Activates and opens the window.
@@ -39,7 +44,7 @@ namespace RedBox {
 
 		/**
 		 * Checks if the main window is full screen.
-		 * @param True if the main window is in full screen, false if not.
+		 * @return True if the main window is in full screen, false if not.
 		 */
 		bool isFullScreen() const;
 

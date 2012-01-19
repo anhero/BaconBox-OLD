@@ -55,7 +55,7 @@ namespace RedBox {
 
 		/**
 		 * Checks if the main window is full screen.
-		 * @param True if the main window is in full screen, false if not.
+		 * @return True if the main window is in full screen, false if not.
 		 */
 		virtual bool isFullScreen() const = 0;
 
