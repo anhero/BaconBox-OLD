@@ -511,7 +511,7 @@ namespace RedBox {
 		/**
 		 * Gets the angle relative to the UP vector (in degrees).
 		 * @return Angle between -180 and 180. Angle increases as it goes
-		 * clockwise.
+		 * counter clockwise.
 		 */
 		ValueType getAngle() const {
 			return (x < DEFAULT_VALUE) ? (getAngleBetween(UP)) : (-getAngleBetween(UP));
@@ -527,13 +527,25 @@ namespace RedBox {
 		/**
 		 * Rotates the instance.
 		 * @param angle Angle to rotate the instance (in degrees). Positive
-		 * values make the instance rotate clockwise, while negative values make
-		 * the instance rotate counter clockwise.
+		 * values make the instance rotate counter clockwise, while negative
+		 * values make the instance rotate clockwise.
 		 */
 		void rotate(ValueType angle) {
 			float radians = MathHelper::degreesToRadians(angle);
 			setXY(x * cosf(radians) + y * sinf(radians),
 			      y * cosf(radians) - x * sinf(radians));
+		}
+
+		/**
+		 * Gets a copy of the vector, but rotated.
+		 * @param angle Angle to rotate the copy (in degrees). Positive values
+		 * make the instance rotate counter clockwise, while negative values
+		 * make the instance rotate clockwise.
+		 */
+		const Vector2T<ValueType> getRotated(ValueType angle) {
+			Vector2T<ValueType> result(*this);
+			result.rotate(angle);
+			return result;
 		}
 
 		/**

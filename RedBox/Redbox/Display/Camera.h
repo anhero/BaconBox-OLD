@@ -74,6 +74,8 @@ namespace RedBox {
 		 */
 		float getHeight() const;
 
+		using Collidable::move;
+
 		/**
 		 * Moves the camera horizontally and vertically.
 		 * @param xDelta Value to add to the camera's horizontal position
