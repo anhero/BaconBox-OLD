@@ -26,6 +26,22 @@ namespace RedBox {
 		return !(this->operator==(rhs));
 	}
 
+	VertexArray::ValueType &VertexArray::at(SizeType index) {
+		return *(getBegin() + index);
+	}
+
+	const VertexArray::ValueType &VertexArray::at(SizeType index) const {
+		return *(getBegin() + index);
+	}
+
+	VertexArray::ValueType &VertexArray::operator[](SizeType index) {
+		return *(getBegin() + index);
+	}
+
+	const VertexArray::ValueType &VertexArray::operator[](SizeType index) const {
+		return *(getBegin() + index);
+	}
+
 	const Vector2 VertexArray::getMinimumXY() const {
 		if (isEmpty()) {
 			return Vector2(0.0f, 0.0f);

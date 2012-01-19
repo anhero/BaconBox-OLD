@@ -52,6 +52,39 @@ namespace RedBox {
 		bool operator!=(const VertexArray &rhs) const;
 
 		/**
+		 * Gets a reference to the vertex at the specified index. No bounds
+		 * checking is performed.
+		 * @param index Position of the vertex to return.
+		 * @return Reference to the requested vertex.
+		 */
+		ValueType &at(SizeType index);
+
+		/**
+		 * Gets a reference to the vertex at the specified index. No bounds
+		 * checking is performed.
+		 * @param index Position of the vertex to return.
+		 * @return Reference to the requested vertex.
+		 */
+		const ValueType &at(SizeType index) const;
+
+		/**
+		 * Gets a reference to the vertex at the specified index. No bounds
+		 * checking is performed.
+		 * @param index Position of the vertex to return.
+		 * @return Reference to the requested vertex.
+		 */
+		ValueType &operator[](SizeType index);
+
+
+		/**
+		 * Gets a reference to the vertex at the specified index. No bounds
+		 * checking is performed.
+		 * @param index Position of the vertex to return.
+		 * @return Reference to the requested vertex.
+		 */
+		const ValueType &operator[](SizeType index) const;
+
+		/**
 		 * Gets the iterator pointing to the first vertex.
 		 * @return Iterator pointing to the first vertex in the array.
 		 */
