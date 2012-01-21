@@ -17,7 +17,7 @@
 #include "Console.h"
 
 namespace RedBox {
-
+    
 	/**
 	 * Represents a body manager. It manages bodies that can be ordered using
 	 * a value that is an attribute of the body.
@@ -33,13 +33,14 @@ namespace RedBox {
 		typedef Key ValueType;
 		typedef Compare KeyCompare;
 		typedef Compare ValueCompare;
-
+        
 		/**
 		 * Default constructor.
 		 */
 		BodyManager() {
+            manageMemory = true;
 		}
-
+        
 		/**
 		 * Copy constructor.
 		 * @param src BodyManager to make a copy of.
@@ -47,14 +48,23 @@ namespace RedBox {
 		BodyManager(const BodyManager<Key, Compare> &src) {
 			copyFrom(src);
 		}
-
+        
 		/**
 		 * Destructor.
 		 */
 		virtual ~BodyManager() {
 			clearBodies();
 		}
-
+        
+        /**
+         * Tells the BodyManager if it needs to delete its bodies.
+         * Must be set to false if you don't want the BodyManager to delete them.
+         * (Used by our LUA/swig bindings).
+         */
+        void setManageMemory(bool manageMemory){
+            this->manageMemory = manageMemory;
+        }
+        
 		/**
 		 * Assignment operator.
 		 * @param src BodyManager to make a copy of.
@@ -69,10 +79,10 @@ namespace RedBox {
 				bodies.clear();
 				copyFrom(src);
 			}
-
+            
 			return *this;
 		}
-
+        
 		/**
 		 * Internal update method called when the manager needs to be updated.
 		 */
@@ -81,10 +91,10 @@ namespace RedBox {
 			std::for_each(toAdd.rbegin(), toAdd.rend(), std::bind1st(std::mem_fun(&BodyManager<Key, Compare>::addDirect), this));
 			// We clear the temporary list of bodies to add.
 			toAdd.clear();
-
+            
 			// We update the bodies.
 			typename BodyMap::iterator i = bodies.begin();
-
+            
 			while (i != bodies.end()) {
 				// We check if the delete flag is on.
 				if ((*i)->isToBeDeleted()) {
@@ -92,12 +102,12 @@ namespace RedBox {
 					toDelete.push_back(*i);
 					// We remove the body from the BodyMap.
 					bodies.erase(i++);
-
+                    
 				} else {
 					if ((*i)->isEnabled() && (*i)->isActive()) {
 						// We update the body.
 						(*i)->update();
-
+                        
 						// We check if the key has changed.
 						if ((*i)->isKeyChanged()) {
 							// If so, we put it at the right layer in the
@@ -106,38 +116,40 @@ namespace RedBox {
 							keyChange.push_back((*i));
 							// We remove it from the BodyMap.
 							bodies.erase(i++);
-
+                            
 						} else {
 							++i;
 						}
-
+                        
 					} else {
 						++i;
 					}
 				}
 			}
-
+            
 			// We delete all the bodies from the list of GraphicBodys that need
 			// to be deleted.
-			std::for_each(toDelete.begin(), toDelete.end(), DeletePointer());
+            if(manageMemory){ 
+                std::for_each(toDelete.begin(), toDelete.end(), DeletePointer());
+            }
 			// We clear the list.
 			toDelete.clear();
-
+            
 			// Put the bodies which have had their key changed back into the
 			// BodyMap.
 			for (typename BodyList::iterator i = keyChange.begin(); i != keyChange.end();
 			     ++i) {
 				addDirect(*i);
 			}
-
+            
 			keyChange.clear();
 		}
-
+        
 		/**
 		 * Internal render method called when the manager needs to be rendered.
 		 */
 		virtual void internalRender() = 0;
-
+        
 		/**
 		 * Adds a body to the manager. The manager will take care of memory
 		 * freeing.
@@ -150,45 +162,47 @@ namespace RedBox {
 				if (!newBody->isManaged()) {
 					newBody->setManaged(true);
 					toAdd.push_front(newBody);
-
+                    
 				} else {
 					Console::println("Tried to add a body that is already in a body manager.");
 				}
-
+                
 			} else {
 				Console::println("Tried to add an invalid body (" + Console::toString(newBody) + ") to the body manager.");
 			}
 		}
-
+        
 		unsigned int getNbBodies() const {
 			return bodies.size() + toAdd.size() + keyChange.size();
 		}
-
+        
 	protected:
 		/// Represents the container's type to use to store the managed bodies.
 		typedef std::multiset<KeyType *, KeyCompare> BodyMap;
-
+        
 		/// Stores all the bodies that need to be updated and rendered.
 		BodyMap bodies;
 	private:
+        ///The BodyManager won't delete it's body if this boolean is set to false
+        bool manageMemory;
 		/// Makes sure the body type is derived from the Manageable class.
 		typedef typename StaticAssert<IsBaseOf<Manageable, KeyType>::RESULT>::Result IsManageable;
-
+        
 		/// Makes sure the body type is derived from the Disableable class.
 		typedef typename StaticAssert<IsBaseOf<Disableable, KeyType>::RESULT>::Result IsDisableable;
-
+        
 		/// Represents the container's type to temporarily store bodies in a list.
 		typedef std::list<KeyType *> BodyList;
-
+        
 		/// Temporarily stores the bodies to be deleted.
 		BodyList toDelete;
-
+        
 		/// Temporarily stores the bodies to be added.
 		BodyList toAdd;
-
+        
 		/// Temporarily stores the bodies that have had their key changed.
 		BodyList keyChange;
-
+        
 		/**
 		 * Directly adds a body in the BodyMap. It will then be able to be
 		 * updated and rendered correctly.
@@ -196,60 +210,62 @@ namespace RedBox {
 		 */
 		void addDirect(KeyType *newBody) {
 			assert(newBody && newBody->isManaged());
-
+            
 			newBody->resetKeyChanged();
 			bodies.insert(newBody);
 		}
-
+        
 		/**
 		 * Frees all memory used by the body manager.
 		 */
 		void clearBodies() {
-			// We delete all the bodies from the list of bodies that need to be
-			// deleted.
-			std::for_each(toDelete.begin(), toDelete.end(), DeletePointer());
-
-			// We delete the bodies that were waiting to be added.
-			std::for_each(toAdd.begin(), toAdd.end(), DeletePointer());
-
-			// We delete the bodies that had their key changed.
-			std::for_each(keyChange.begin(), keyChange.end(), DeletePointer());
-
-			// We delete the bodies.
-			std::for_each(bodies.begin(), bodies.end(), DeletePointer());
-		}
-
-		/**
-		 * Copies a body manager's bodies into the current body manager.
-		 * @param src Body manager to make a copy of.
-		 */
-		void copyFrom(const BodyManager<Key, Compare> &src) {
-			for (typename BodyList::const_iterator i = src.toDelete.begin();
-			     i != src.toDelete.end(); ++i) {
-				assert(*i);
-				toDelete.insert(new KeyType(**i));
-			}
-
-			for (typename BodyList::const_iterator i = src.toAdd.begin();
-			     i != src.toAdd.end(); ++i) {
-				assert(*i);
-				toAdd.insert(new KeyType(**i));
-			}
-
-			for (typename BodyList::const_iterator i = src.keyChange.begin();
-			     i != src.keyChange.end(); ++i) {
-				assert(*i);
-				keyChange.insert(new KeyType(**i));
-			}
-
-			for (typename BodyMap::const_iterator i = src.bodies.begin();
-			     i != src.bodies.end(); ++i) {
-				assert(*i);
-				bodies.insert(new KeyType(**i));
-			}
-		}
-	};
-
+            if(manageMemory){ 
+                // We delete all the bodies from the list of bodies that need to be
+                // deleted.
+                std::for_each(toDelete.begin(), toDelete.end(), DeletePointer());
+                
+                // We delete the bodies that were waiting to be added.
+                std::for_each(toAdd.begin(), toAdd.end(), DeletePointer());
+                
+                // We delete the bodies that had their key changed.
+                std::for_each(keyChange.begin(), keyChange.end(), DeletePointer());
+                
+                // We delete the bodies.
+                std::for_each(bodies.begin(), bodies.end(), DeletePointer());
+            }
+        }
+        
+        /**
+         * Copies a body manager's bodies into the current body manager.
+         * @param src Body manager to make a copy of.
+         */
+        void copyFrom(const BodyManager<Key, Compare> &src) {
+            for (typename BodyList::const_iterator i = src.toDelete.begin();
+                 i != src.toDelete.end(); ++i) {
+                assert(*i);
+                toDelete.insert(new KeyType(**i));
+            }
+            
+            for (typename BodyList::const_iterator i = src.toAdd.begin();
+                 i != src.toAdd.end(); ++i) {
+                assert(*i);
+                toAdd.insert(new KeyType(**i));
+            }
+            
+            for (typename BodyList::const_iterator i = src.keyChange.begin();
+                 i != src.keyChange.end(); ++i) {
+                assert(*i);
+                keyChange.insert(new KeyType(**i));
+            }
+            
+            for (typename BodyMap::const_iterator i = src.bodies.begin();
+                 i != src.bodies.end(); ++i) {
+                assert(*i);
+                bodies.insert(new KeyType(**i));
+            }
+        }
+    };
+    
 }
 
 #endif
