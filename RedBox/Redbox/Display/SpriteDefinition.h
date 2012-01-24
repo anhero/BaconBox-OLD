@@ -7,7 +7,8 @@
 
 #include <iostream>
 
-#include "FrameList.h"
+#include "StandardVertexArray.h"
+#include "FrameArray.h"
 #include "AnimationDefinition.h"
 
 namespace RedBox {
@@ -18,8 +19,11 @@ namespace RedBox {
 	 * @ingroup Display
 	 */
 	struct SpriteDefinition {
+		/// Array of vertices containing the information about the shape.
+		StandardVertexArray vertices;
+
 		/// List of frames to load from a texture.
-		FrameList frames;
+		FrameArray frames;
 
 		/// Animations to load for the sprite.
 		AnimationMap animations;
