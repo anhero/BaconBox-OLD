@@ -101,6 +101,10 @@ namespace RedBox {
 		return frames;
 	}
 
+	std::vector<TextureCoordinates> &Animatable::getFrames() {
+		return frames;
+	}
+
 	unsigned int Animatable::getCurrentFrame() const {
 		return currentFrame;
 	}

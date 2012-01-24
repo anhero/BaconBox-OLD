@@ -84,6 +84,15 @@ namespace RedBox {
 		const std::vector<TextureCoordinates> &getFrames() const;
 
 		/**
+		 * Gets the vector containing the texture coordinates for each of the
+		 * animatable body's frames.
+		 * @return Vector containing the texture coordinates for each of the
+		 * frames.
+		 * @see RedBox::Animatable::frames
+		 */
+		std::vector<TextureCoordinates> &getFrames();
+
+		/**
 		 * Gets the index of the current frame.
 		 * @return Index of the current frame in the current animation's array
 		 * list of frames. Zero if there is no animation playing.

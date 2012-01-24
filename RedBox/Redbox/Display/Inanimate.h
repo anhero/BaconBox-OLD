@@ -71,6 +71,14 @@ namespace RedBox {
 		const TextureCoordinates &getTextureCoordinates() const;
 
 		/**
+		 * Gets the texture coordinates for the body.
+		 * @return Texture coordinates used to map the texture on the body's
+		 * polygon.
+		 * @see RedBox::Inanimate::textureCoordinates
+		 */
+		TextureCoordinates &getTextureCoordinates();
+
+		/**
 		 * Loads the texture coordinates.
 		 * @param vertices Vertices to use to load the texture coordinates.
 		 * @param offset Offset from the upper left corner of the texture.

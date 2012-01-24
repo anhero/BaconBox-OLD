@@ -38,6 +38,10 @@ namespace RedBox {
 		return textureCoordinates;
 	}
 
+	TextureCoordinates &Inanimate::getTextureCoordinates() {
+		return textureCoordinates;
+	}
+
 	void Inanimate::loadTextureCoordinates(const VertexArray &vertices, const Vector2 &offset) {
 		TextureMappable::loadTextureCoordinates(getTextureInformation(),
 		                                        vertices, offset,
