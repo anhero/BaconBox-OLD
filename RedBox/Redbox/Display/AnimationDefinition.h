@@ -6,6 +6,7 @@
 #define RB_ANIMATION_DEFINITION_H
 
 #include <vector>
+#include <map>
 #include <string>
 #include <iostream>
 
@@ -57,6 +58,10 @@ namespace RedBox {
 		 */
 		int nbLoops;
 	};
+
+	// Type of the map containing the animation definitions.
+	typedef std::map<std::string, AnimationDefinition> AnimationMap;
+
 	/**
 	 * Outputs the AnimationDefinition' content.
 	 * @param output The ostream in which AnimationDefinition is output.
@@ -65,4 +70,5 @@ namespace RedBox {
 	 */
 	std::ostream &operator<<(std::ostream &output, const AnimationDefinition &a);
 }
+
 #endif

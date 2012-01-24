@@ -8,7 +8,6 @@
 #include <cstdarg>
 
 #include <vector>
-#include <map>
 
 #include "Updateable.h"
 #include "TextureMappable.h"
@@ -270,9 +269,6 @@ namespace RedBox {
 		virtual void currentFrameChange();
 
 	private:
-		// Type of the map containing the animation definitions.
-		typedef std::map<std::string, AnimationDefinition> AnimationMap;
-
 		/**
 		 * Vector containing the texture's coordinates for each animation frame.
 		 */
