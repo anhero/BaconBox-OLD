@@ -9,7 +9,7 @@
 #include <map>
 
 #include "TexturePointer.h"
-#include "FrameList.h"
+#include "SpriteDefinition.h"
 
 namespace RedBox {
 	struct TextureInformation;
@@ -24,7 +24,7 @@ namespace RedBox {
 	class TextureAtlas {
 	public:
 		/// Type used to map frame lists to a name.
-		typedef std::map<std::string, FrameList> FrameListMap;
+		typedef std::map<std::string, SpriteDefinition> SpriteMap;
 
 		/**
 		 * Default constructor.
@@ -57,21 +57,21 @@ namespace RedBox {
 		 * @return Reference to the frame list.
 		 * @see RedBox::TextureAtlas::frameLists
 		 */
-		FrameListMap::mapped_type &operator[](const FrameListMap::key_type &name);
+		SpriteMap::mapped_type &operator[](const SpriteMap::key_type &name);
 
 		/**
 		 * Gets the frame lists.
 		 * @return Reference to the frame lists mapped to their name.
 		 * @see RedBox::TextureAtlas::frameLists
 		 */
-		FrameListMap &getFrameLists();
+		SpriteMap &getSpriteDefinitions();
 
 		/**
 		 * Gets the frame lists.
 		 * @return Reference to the frame lists mapped to their name.
 		 * @see RedBox::TextureAtlas::frameLists
 		 */
-		const FrameListMap &getFrameLists() const;
+		const SpriteMap &getSpriteDefinitions() const;
 
 		/**
 		 * Gets the atlas's texture information.
@@ -91,8 +91,8 @@ namespace RedBox {
 		/// Pointer to the texture.
 		TextureInformation *textureInformation;
 
-		/// Lists of frames and their associated unique key.
-		FrameListMap frameLists;
+		/// Sprite definitions and their associated unique key.
+		SpriteMap spriteDefinitions;
 	};
 }
 

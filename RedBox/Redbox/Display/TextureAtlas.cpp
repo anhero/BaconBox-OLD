@@ -3,36 +3,38 @@
 #include "TextureInformation.h"
 
 namespace RedBox {
-	TextureAtlas::TextureAtlas() : textureInformation(NULL), frameLists() {
+	TextureAtlas::TextureAtlas() : textureInformation(NULL),
+		spriteDefinitions() {
 	}
 
 	TextureAtlas::TextureAtlas(TexturePointer newTexture) :
-		textureInformation(newTexture.pointer), frameLists() {
+		textureInformation(newTexture.pointer), spriteDefinitions() {
 	}
 
 	TextureAtlas::TextureAtlas(const TextureAtlas &src) :
-		textureInformation(src.textureInformation), frameLists(src.frameLists) {
+		textureInformation(src.textureInformation),
+		spriteDefinitions(src.spriteDefinitions) {
 	}
 
 	TextureAtlas &TextureAtlas::operator=(const TextureAtlas &src) {
 		if (this != &src) {
 			textureInformation = src.textureInformation;
-			frameLists = src.frameLists;
+			spriteDefinitions = src.spriteDefinitions;
 		}
 
 		return *this;
 	}
 
-	TextureAtlas::FrameListMap::mapped_type &TextureAtlas::operator[](const TextureAtlas::FrameListMap::key_type &name) {
-		return frameLists[name];
+	TextureAtlas::SpriteMap::mapped_type &TextureAtlas::operator[](const TextureAtlas::SpriteMap::key_type &name) {
+		return spriteDefinitions[name];
 	}
 
-	TextureAtlas::FrameListMap &TextureAtlas::getFrameLists() {
-		return frameLists;
+	TextureAtlas::SpriteMap &TextureAtlas::getSpriteDefinitions() {
+		return spriteDefinitions;
 	}
 
-	const TextureAtlas::FrameListMap &TextureAtlas::getFrameLists() const {
-		return frameLists;
+	const TextureAtlas::SpriteMap &TextureAtlas::getSpriteDefinitions() const {
+		return spriteDefinitions;
 	}
 
 	TextureInformation *TextureAtlas::getTextureInformation() const {
