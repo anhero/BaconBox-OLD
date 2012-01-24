@@ -586,7 +586,7 @@ namespace RedBox {
 
 	template <typename T>
 	std::ostream &operator<<(std::ostream &output, const Vector2T<T>& v) {
-		output << "{x: " << v.x << ", y: " << v.y << "}";
+		output << "{\"x\": " << v.x << ", \"y\": " << v.y << "}";
 		return output;
 	}
 

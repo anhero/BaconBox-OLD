@@ -5,9 +5,10 @@
 #ifndef RB_FRAME_DETAILS_H
 #define RB_FRAME_DETAILS_H
 
+#include <iostream>
+
 #include "Vector2.h"
 #include "SafeEnum.h"
-
 
 namespace RedBox {
 	/**
@@ -67,6 +68,8 @@ namespace RedBox {
 		 */
 		FrameDetails &operator=(const FrameDetails &src);
 	};
+
+	std::ostream &operator<<(std::ostream &output, const FrameDetails &fd);
 }
 
 #endif

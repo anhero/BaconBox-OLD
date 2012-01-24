@@ -21,4 +21,27 @@ namespace RedBox {
 
 		return *this;
 	}
+
+	std::ostream &operator<<(std::ostream &output, const FrameDetails &fd) {
+		output << "{\"position\": " << fd.position << ", \"orientation\": \"";
+		switch (fd.orientation.underlying()) {
+		case FrameDetails::Orientation::NORTH:
+			output << "NORTH";
+			break;
+		case FrameDetails::Orientation::SOUTH:
+			output << "SOUTH";
+			break;
+		case FrameDetails::Orientation::EAST:
+			output << "EAST";
+			break;
+		case FrameDetails::Orientation::WEST:
+			output << "WEST";
+			break;
+		default:
+			break;
+		}
+
+		output << "\"}";
+		return output;
+	}
 }

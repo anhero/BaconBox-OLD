@@ -5,6 +5,7 @@
 #ifndef RB_FRAME_LIST_H
 #define RB_FRAME_LIST_H
 
+#include <iostream>
 #include <vector>
 
 #include "Vector2.h"
@@ -40,7 +41,7 @@ namespace RedBox {
 		 * @see RedBox::FrameList::frameSize
 		 */
 		explicit FrameList(const Vector2 &newFrameSize,
-						   const FrameArray &newFrames = FrameArray());
+		                   const FrameArray &newFrames = FrameArray());
 
 		/**
 		 * Copy constructor.
@@ -55,6 +56,8 @@ namespace RedBox {
 		 */
 		FrameList &operator=(const FrameList &src);
 	};
+
+	std::ostream &operator<<(std::ostream &output, const FrameList &fl);
 }
 
 #endif

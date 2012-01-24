@@ -16,4 +16,20 @@ namespace RedBox {
 
 		return *this;
 	}
+
+	std::ostream &operator<<(std::ostream &output, SpriteDefinition &sd) {
+		output << "{ \"frames\": " << sd.frames << ", \"animations\": {";
+
+		for (AnimationMap::const_iterator i = sd.animations.begin(); i != sd.animations.end(); ++i) {
+			if (i != sd.animations.begin()) {
+				output << ", ";
+			}
+
+			output << "\"" << i->first << "\": " << i->second;
+		}
+
+		output << "}}";
+
+		return output;
+	}
 }

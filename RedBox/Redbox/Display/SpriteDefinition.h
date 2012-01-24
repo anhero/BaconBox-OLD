@@ -5,6 +5,8 @@
 #ifndef RB_SPRITE_DEFINITION_H
 #define RB_SPRITE_DEFINITION_H
 
+#include <iostream>
+
 #include "FrameList.h"
 #include "AnimationDefinition.h"
 
@@ -40,6 +42,8 @@ namespace RedBox {
 		 */
 		SpriteDefinition &operator=(const SpriteDefinition &src);
 	};
+
+	std::ostream &operator<<(std::ostream &output, const SpriteDefinition &sd);
 }
 
 #endif
