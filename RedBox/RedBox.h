@@ -92,6 +92,8 @@
 #include <RedBox/SpriteFactory.h>
 #include <RedBox/ShapeFactory.h>
 #include <RedBox/InputManager.h>
+#include <RedBox/JsonSerializer.h>
+#include <RedBox/Value.h>
 #include <RedBox/Console.h>
 #include <RedBox/Tween.h>
 #include <RedBox/StandardVertexArray.h>

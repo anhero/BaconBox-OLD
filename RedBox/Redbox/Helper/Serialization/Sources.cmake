@@ -4,9 +4,10 @@ file(GLOB RedBox_RedBox_Helper_Serialization_Sources ${Helper_Serialization_dir}
 
 list(APPEND Private_RedBox_Headers ${RedBox_RedBox_Helper_Serialization_Headers})
 
+include(${Helper_Serialization_dir}/JsonBox/Sources.cmake)
+
 list(APPEND RedBoxHeaders ${RedBox_RedBox_Helper_Serialization_Headers})
 list(APPEND RedBoxSources ${RedBox_RedBox_Helper_Serialization_Sources})
-
 
 source_group(RedBox\\Helper\\Serialization  FILES ${RedBox_RedBox_Helper_Serialization_Sources} ${RedBox_RedBox_Helper_Serialization_Headers})
 

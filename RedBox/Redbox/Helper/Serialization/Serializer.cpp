@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "Console.h"
+#include "Value.h"
 
 namespace RedBox {
 	Serializer::~Serializer() {

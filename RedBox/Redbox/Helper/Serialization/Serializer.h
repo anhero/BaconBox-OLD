@@ -6,10 +6,11 @@
 #define RB_SERIALIZER_H
 
 #include <iostream>
-
-#include "Value.h"
+#include <string>
 
 namespace RedBox {
+	class Value;
+
 	/**
 	 * Abstract base class for all formats of serializers.
 	 * @ingroup Serialization
