@@ -1,0 +1,25 @@
+#!/bin/bash
+
+_name="jsonbox"
+_license="MIT"
+_version="0.3.1"
+_archive="${_name}-${_version}-src.tar.gz"
+_archive_url="https://bitbucket.org/madbranch/${_name}/downloads/${_archive}"
+_hash="8ef85cb19788e459b3bf09260e30aa61" #tar.gz
+
+WGET_FLAGS="--no-check-certificate"
+
+load_base http.fetch
+
+function build() {
+	cd "${lib_workdir}/${_pkgdir}-src" || exit 1
+	mkdir build
+	cd build
+	cmake ../
+	make
+	mkdir -p "${libs_builddir}/lib/"
+	mv lib/* "${libs_builddir}/lib/"
+	cd ..
+	mkdir -p "${libs_builddir}/include/"
+	mv include/* "${libs_builddir}/include/" || exit 1
+}

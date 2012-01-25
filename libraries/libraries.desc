@@ -18,4 +18,5 @@ if [ ${libs_target-} != "ios" -a ${libs_target-} != "android" ]; then
 fi
 
 libraries+=( 'sigly' )
+libraries+=( 'jsonbox' )
 
