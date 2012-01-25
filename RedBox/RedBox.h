@@ -92,6 +92,7 @@
 #include <RedBox/SpriteFactory.h>
 #include <RedBox/ShapeFactory.h>
 #include <RedBox/InputManager.h>
+#include <RedBox/DefaultSerializer.h>
 #include <RedBox/JsonSerializer.h>
 #include <RedBox/Value.h>
 #include <RedBox/Console.h>
