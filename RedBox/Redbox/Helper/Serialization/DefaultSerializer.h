@@ -43,7 +43,7 @@ namespace RedBox {
 		 * @see RedBox::Serializable
 		 */
 		template <typename T>
-		void serialize(const T &input, Value &node) {
+		static void serialize(const T &input, Value &node) {
 			input.serialize(node);
 		}
 
@@ -58,7 +58,7 @@ namespace RedBox {
 		 * @tparam T Type of the instance to be deserialized.
 		 */
 		template <typename T>
-		bool deserialize(const Value &node, T &output) {
+		static bool deserialize(const Value &node, T &output) {
 			return output.deserialize(node);
 		}
 

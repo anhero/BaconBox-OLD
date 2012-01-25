@@ -11,6 +11,8 @@
 #include "StaticAssert.h"
 #include "IsNumber.h"
 #include "MathHelper.h"
+#include "DefaultSerializer.h"
+#include "Serializer.h"
 
 namespace RedBox {
 #pragma pack(1)
@@ -32,9 +34,9 @@ namespace RedBox {
 
 		/// Default value.
 		static const ValueType DEFAULT_VALUE;
-		
+
 		/**
-		 * 
+		 *
 		 */
 		static const Vector2T<ValueType> scalarMultiplication(const Vector2T<ValueType> &first, const Vector2T<ValueType> &second) {
 			return Vector2T<ValueType>(first.x * second.x, first.y * second.y);
@@ -516,13 +518,13 @@ namespace RedBox {
 		ValueType getAngle() const {
 			return (x < DEFAULT_VALUE) ? (getAngleBetween(UP)) : (-getAngleBetween(UP));
 		}
-        
-        /**
-         * Set the angle of the vector without affecting it's lenght.
-         */
-        void setAngle(ValueType angle){
-            rotate(angle-getAngle());
-        }
+
+		/**
+		 * Set the angle of the vector without affecting it's lenght.
+		 */
+		void setAngle(ValueType angle) {
+			rotate(angle - getAngle());
+		}
 
 		/**
 		 * Rotates the instance.
@@ -584,9 +586,64 @@ namespace RedBox {
 	};
 #pragma pack()
 
+	template <>
+	void DefaultSerializer::serialize<Vector2T<float> >(const Vector2T<float> &input, Value &node) {
+		node["x"].setDouble(static_cast<double>(input.getX()));
+		node["y"].setDouble(static_cast<double>(input.getY()));
+	}
+
+	template <>
+	bool DefaultSerializer::deserialize<Vector2T<float> >(const Value &node,
+	                                                      Vector2T<float> &output) {
+		bool result = true;
+		Object::const_iterator itX = node.getObject().find("x");
+		Object::const_iterator itY = node.getObject().find("y");
+
+		if (itX != node.getObject().end() &&
+		    itY != node.getObject().end()) {
+			if (itX->second.isDouble()) {
+
+				if (itY->second.isDouble()) {
+					output.setX(static_cast<float>(itX->second.getDouble()));
+					output.setY(static_cast<float>(itY->second.getDouble()));
+
+				} else if (itY->second.isInteger()) {
+					output.setX(static_cast<float>(itX->second.getDouble()));
+					output.setY(static_cast<float>(itY->second.getInt()));
+
+				} else {
+					result = false;
+				}
+
+			} else if (itX->second.isInteger()) {
+				if (itY->second.isDouble()) {
+					output.setX(static_cast<float>(itX->second.getInt()));
+					output.setY(static_cast<float>(itY->second.getDouble()));
+
+				} else if (itY->second.isInteger()) {
+					output.setX(static_cast<float>(itX->second.getInt()));
+					output.setY(static_cast<float>(itY->second.getInt()));
+
+				} else {
+					result = false;
+				}
+
+			} else {
+				result = false;
+			}
+
+		} else {
+			result = false;
+		}
+
+		return result;
+	}
+
 	template <typename T>
 	std::ostream &operator<<(std::ostream &output, const Vector2T<T>& v) {
-		output << "{\"x\": " << v.x << ", \"y\": " << v.y << "}";
+		Value tmpValue;
+		DefaultSerializer::serialize(v, tmpValue);
+		DefaultSerializer::getDefaultSerializer().writeToStream(output, tmpValue);
 		return output;
 	}
 
