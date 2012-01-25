@@ -19,6 +19,7 @@ if(iphone)
 endif(iphone)
 
 include(${Helper_dir}/Tween/Sources.cmake)
+include(${Helper_dir}/Serialization/Sources.cmake)
 
 list(APPEND Private_RedBox_Headers ${RedBox_RedBox_Helper_Headers})
 

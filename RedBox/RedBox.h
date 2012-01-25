@@ -27,6 +27,12 @@
  */
 
 /**
+ * @defgroup Serialization Serialization
+ * @ingroup Helper
+ * @brief Classes related to the serializatiof objects.
+ */
+
+/**
  * @defgroup Physics Physics
  * @brief Classes used in the physics engine.
  */
