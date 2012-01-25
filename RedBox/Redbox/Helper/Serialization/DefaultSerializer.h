@@ -5,6 +5,8 @@
 #ifndef RB_DEFAULT_SERIALIZER_H
 #define RB_DEFAULT_SERIALIZER_H
 
+#include "Value.h"
+
 namespace RedBox {
 	class Serializer;
 
@@ -30,6 +32,36 @@ namespace RedBox {
 		 * DefaultSerializer::setDefaultSerializer(new JsonSerializer());
 		 */
 		static void setDefaultSerializer(Serializer *newDefaultSerializer);
+
+		/**
+		 * Serializes a custom type to a Value. By default, it assumes the
+		 * class is derived from Serializable. It can be specialized if the
+		 * custom type is not derived from Serializable.
+		 * @param input Instance of custom type to serialize.
+		 * @param node Value to serialize to.
+		 * @tparam T Type of the instance to be serialized.
+		 * @see RedBox::Serializable
+		 */
+		template <typename T>
+		void serialize(const T &input, Value &node) {
+			input.serialize(node);
+		}
+
+		/**
+		 * Deserializes a custom type from a Value. By default, it assumes the
+		 * class is derived from Serializable. It can be specialized if the
+		 * custom type is not derived from Serializable.
+		 * @param node Value to deserialize from.
+		 * @param output Instance of the type to serialize to.
+		 * @return True if the deserialization was successful, false if not.
+		 * the output parameter is not modified if the deserialization failed.
+		 * @tparam T Type of the instance to be deserialized.
+		 */
+		template <typename T>
+		bool deserialize(const Value &node, T &output) {
+			return output.deserialize(node);
+		}
+
 	private:
 		/**
 		 * Gets the singleton instance.
