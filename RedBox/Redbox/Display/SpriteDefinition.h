@@ -12,6 +12,7 @@
 #include "AnimationDefinition.h"
 
 namespace RedBox {
+	class Value;
 	/**
 	 * Contains information about the frames and animations to load for a
 	 * sprite. Sprite definitions are mainly managed by texture atlases.
