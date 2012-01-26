@@ -23,3 +23,5 @@ function build() {
 	mkdir -p "${libs_builddir}/include/"
 	mv include/* "${libs_builddir}/include/" || exit 1
 }
+
+# vim: ft=sh

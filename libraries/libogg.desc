@@ -23,3 +23,5 @@ fi
 
 load_base http.fetch
 load_base configuremakemake.build
+
+# vim: ft=sh
