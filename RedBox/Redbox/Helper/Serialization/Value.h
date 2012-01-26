@@ -177,6 +177,14 @@ namespace RedBox {
 		const std::string &getString() const;
 
 		/**
+		 * Gets the value's string value or converts its numeric value to a
+		 * string.
+		 * @return Value's string value. If the value contains an integer or a
+		 * double, converts it to a string and returns the result.
+		 */
+		const std::string getToString() const;
+
+		/**
 		 * Sets the value as a string.
 		 * @param newString New string value that the Value will contain. If the
 		 * value's type is changed if necessary to contain the integer.
@@ -185,8 +193,9 @@ namespace RedBox {
 
 		/**
 		 * Gets the value's integer value.
-		 * @return Value's integer value, or 0 if the value doesn't contain an
-		 * integer.
+		 * @return Value's integer value, or the double value casted to an
+		 * integer if the value contains a double. 0 if the value doesn't
+		 * contain a numeric value.
 		 */
 		int getInt() const;
 
@@ -199,8 +208,9 @@ namespace RedBox {
 
 		/**
 		 * Gets the value's double value.
-		 * @return Value's double value, or 0.0 if the value doesn't contain a
-		 * double.
+		 * @return Value's double value, or the integer value casted to a double
+		 * if the value contains an integer. 0.0 if the value doesn't contain a
+		 * numeric value.
 		 */
 		double getDouble() const;
 

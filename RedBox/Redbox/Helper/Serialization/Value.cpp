@@ -1,5 +1,7 @@
 #include "Value.h"
 
+#include <strstream>
+
 #include "Serializer.h"
 
 namespace RedBox {
@@ -168,6 +170,25 @@ namespace RedBox {
 		return (type == STRING) ? (*data.stringValue) : (EMPTY_STRING);
 	}
 
+	const std::string Value::getToString() const {
+		if (type == STRING) {
+			return *data.stringValue;
+
+		} else if (type == INTEGER) {
+			std::stringstream ss;
+			ss << *data.intValue;
+			return ss.str();
+
+		} else if (type == DOUBLE) {
+			std::stringstream ss;
+			ss << *data.doubleValue;
+			return ss.str();
+
+		} else {
+			return EMPTY_STRING;
+		}
+	}
+
 	void Value::setString(std::string const &newString) {
 		if (type == STRING) {
 			*data.stringValue = newString;
@@ -180,7 +201,7 @@ namespace RedBox {
 	}
 
 	int Value::getInt() const {
-		return (type == INTEGER) ? (*data.intValue) : (EMPTY_INT);
+		return (type == INTEGER) ? (*data.intValue) : ((type == DOUBLE) ? (static_cast<int>(*data.doubleValue)) : (EMPTY_INT));
 	}
 
 	void Value::setInt(int newInt) {
@@ -195,7 +216,7 @@ namespace RedBox {
 	}
 
 	double Value::getDouble() const {
-		return (type == DOUBLE) ? (*data.doubleValue) : (EMPTY_DOUBLE);
+		return (type == DOUBLE) ? (*data.doubleValue) : ((type == INTEGER) ? (static_cast<double>(*data.intValue)) : (EMPTY_DOUBLE));
 	}
 
 	void Value::setDouble(double newDouble) {
