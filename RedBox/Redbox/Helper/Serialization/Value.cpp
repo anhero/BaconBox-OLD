@@ -1,6 +1,6 @@
 #include "Value.h"
 
-#include <strstream>
+#include <sstream>
 
 #include "Serializer.h"
 
