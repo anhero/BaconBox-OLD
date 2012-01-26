@@ -607,6 +607,22 @@ namespace RedBox {
 
 			return result;
 		}
+
+		/**
+		 * Checks whether or not the Value contains the necessary information
+		 * to deserialize a Vector2T.
+		 * @param node Value to check.
+		 * @return True if the value contains the necessary information, false
+		 * if not.
+		 */
+		bool isValidValue(const Value &node) const {
+			Object::const_iterator itX = node.getObject().find("x");
+			Object::const_iterator itY = node.getObject().find("y");
+
+			return itX != node.getObject().end() && itY != node.getObject().end() &&
+			       itX->second.isNumeric() && itY->second.isNumeric();
+
+		}
 	private:
 		/**
 		 * X coordinate. Positive values increase towards the right, while
