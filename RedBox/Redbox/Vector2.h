@@ -59,38 +59,11 @@ namespace RedBox {
 
 			// We make sure the value contains the "x" and "y" values.
 			if (itX != node.getObject().end() &&
-			    itY != node.getObject().end()) {
-				// We make sure the x and y values are numerics.
-				if (itX->second.isDouble()) {
+			    itY != node.getObject().end() &&
+			    itX->second.isNumeric() && itY->second.isNumeric()) {
 
-					if (itY->second.isDouble()) {
-						output.setX(static_cast<ValueType>(itX->second.getDouble()));
-						output.setY(static_cast<ValueType>(itY->second.getDouble()));
-
-					} else if (itY->second.isInteger()) {
-						output.setX(static_cast<ValueType>(itX->second.getDouble()));
-						output.setY(static_cast<ValueType>(itY->second.getInt()));
-
-					} else {
-						result = false;
-					}
-
-				} else if (itX->second.isInteger()) {
-					if (itY->second.isDouble()) {
-						output.setX(static_cast<ValueType>(itX->second.getInt()));
-						output.setY(static_cast<ValueType>(itY->second.getDouble()));
-
-					} else if (itY->second.isInteger()) {
-						output.setX(static_cast<ValueType>(itX->second.getInt()));
-						output.setY(static_cast<ValueType>(itY->second.getInt()));
-
-					} else {
-						result = false;
-					}
-
-				} else {
-					result = false;
-				}
+				output.setXY(static_cast<ValueType>(itX->second.getDouble()),
+				             static_cast<ValueType>(itY->second.getDouble()));
 
 			} else {
 				result = false;
