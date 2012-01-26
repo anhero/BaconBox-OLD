@@ -33,6 +33,15 @@ namespace RedBox {
 		typedef ContainerType::const_pointer ConstPointer;
 
 		/**
+		 * Checks whether or not the Value contains the necessary information
+		 * to deserialize the type.
+		 * @param node Value to check.
+		 * @return True if the value contains the necessary information, false
+		 * if not.
+		 */
+		static bool isValidValueStatic(const Value &node);
+
+		/**
 		 * Destructor.
 		 */
 		virtual ~VertexArray();

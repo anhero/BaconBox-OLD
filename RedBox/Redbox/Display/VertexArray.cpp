@@ -5,6 +5,24 @@
 #include "Serializer.h"
 
 namespace RedBox {
+	bool VertexArray::isValidValueStatic(const Value &node) {
+		bool result = true;
+
+		const Array &tmpArray = node.getArray();
+		Array::const_iterator i = tmpArray.begin();
+
+		while (result && i != tmpArray.end()) {
+			if (Vector2::isValidValue(*i)) {
+				++i;
+
+			} else {
+				result = false;
+			}
+		}
+
+		return result;
+	}
+
 	VertexArray::~VertexArray() {
 	}
 
@@ -449,21 +467,7 @@ namespace RedBox {
 	}
 
 	bool VertexArray::isValidValue(const Value &node) const {
-		bool result = true;
-
-		const Array &tmpArray = node.getArray();
-		Array::const_iterator i = tmpArray.begin();
-
-		while (result && i != tmpArray.end()) {
-			if (Vector2::isValidValue(*i)) {
-				++i;
-
-			} else {
-				result = false;
-			}
-		}
-
-		return result;
+		return VertexArray::isValidValueStatic(node);
 	}
 
 	std::ostream &operator<<(std::ostream &output, const VertexArray &v) {

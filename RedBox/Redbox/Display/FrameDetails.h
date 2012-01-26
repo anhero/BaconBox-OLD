@@ -41,6 +41,15 @@ namespace RedBox {
 		Orientation orientation;
 
 		/**
+		 * Checks whether or not the Value contains the necessary information
+		 * to deserialize the type.
+		 * @param node Value to check.
+		 * @return True if the value contains the necessary information, false
+		 * if not.
+		 */
+		static bool isValidValue(const Value &node);
+
+		/**
 		 * Default constructor.
 		 */
 		FrameDetails();

@@ -29,6 +29,15 @@ namespace RedBox {
 		AnimationMap animations;
 
 		/**
+		 * Checks whether or not the Value contains the necessary information
+		 * to deserialize the type.
+		 * @param node Value to check.
+		 * @return True if the value contains the necessary information, false
+		 * if not.
+		 */
+		static bool isValidValue(const Value &node);
+
+		/**
 		 * Default constructor.
 		 */
 		SpriteDefinition();
@@ -45,6 +54,20 @@ namespace RedBox {
 		 * @return Reference to the modified sprite definition.
 		 */
 		SpriteDefinition &operator=(const SpriteDefinition &src);
+
+		/**
+		 * Serializes the instance to a Value.
+		 * @param node Node to serialize the instance into.
+		 */
+		void serialize(Value &node) const;
+
+		/**
+		 * Deserializes the instance from a Value.
+		 * @param node Value to read the data from.
+		 * @return True on success, false on failure to read all the
+		 * necessary data. Does not modify the instance when there is a failure.
+		 */
+		bool deserialize(const Value &node);
 	};
 
 	std::ostream &operator<<(std::ostream &output, const SpriteDefinition &sd);

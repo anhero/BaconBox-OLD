@@ -10,14 +10,22 @@
 #include <string>
 #include <iostream>
 
-#include "Value.h"
-
 namespace RedBox {
+	class Value;
 	/**
 	 * Represents the details of an animation in a RenderStep.
 	 * @ingroup Display
 	 */
 	struct AnimationDefinition {
+		/**
+		 * Checks whether or not the Value contains the necessary information
+		 * to deserialize the type.
+		 * @param node Value to check.
+		 * @return True if the value contains the necessary information, false
+		 * if not.
+		 */
+		static bool isValidValue(const Value &node);
+
 		/**
 		 * Default constructor. By default, an animation will loop indefinetely.
 		 */

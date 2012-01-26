@@ -1,9 +1,39 @@
 #include "AnimationDefinition.h"
 
+#include "Value.h"
 #include "DefaultSerializer.h"
 #include "Serializer.h"
 
 namespace RedBox {
+	bool AnimationDefinition::isValidValue(const Value &node) {
+		const Object &tmpObject = node.getObject();
+		Object::const_iterator itFrames = tmpObject.find("frames");
+		Object::const_iterator itTimePerFrame = tmpObject.find("timePerFrame");
+		Object::const_iterator itNbLoops = tmpObject.find("nbLoops");
+
+		bool result = true;
+
+		if (itFrames != tmpObject.end() &&
+		    itTimePerFrame != tmpObject.end() &&
+		    itNbLoops != tmpObject.end() &&
+		    itTimePerFrame->second.isNumeric() &&
+		    itNbLoops->second.isNumeric()) {
+
+			const Array &tmpFrames = itFrames->second.getArray();
+			Array::const_iterator i = tmpFrames.begin();
+
+			while (result && i != tmpFrames.end()) {
+				if (i->isNumeric()) {
+					++i;
+
+				} else {
+					result = false;
+				}
+			}
+		}
+
+		return result;
+	}
 
 	AnimationDefinition::AnimationDefinition(): frames(), timePerFrame(0.0),
 		nbLoops(-1) {

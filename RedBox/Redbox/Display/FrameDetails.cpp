@@ -4,6 +4,30 @@
 #include "Serializer.h"
 
 namespace RedBox {
+	bool FrameDetails::isValidValue(const Value &node) {
+		bool result = true;
+		Object::const_iterator itPosition = node.getObject().find("position");
+		Object::const_iterator itOrientation = node.getObject().find("orientation");
+
+		if (itPosition != node.getObject().end() &&
+		    itOrientation != node.getObject().end()) {
+			if (Vector2::isValidValue(itPosition->second) &&
+			    itOrientation->second.isString()) {
+				if (itOrientation->second.getString() != std::string("NORTH") &&
+				    itOrientation->second.getString() != std::string("EAST") &&
+				    itOrientation->second.getString() != std::string("WEST") &&
+				    itOrientation->second.getString() != std::string("SOUTH")) {
+					result = false;
+				}
+			}
+
+		} else {
+			result = false;
+		}
+
+		return result;
+	}
+
 	FrameDetails::FrameDetails() : position(), orientation(Orientation::NORTH) {
 	}
 
