@@ -133,6 +133,7 @@ namespace RedBox {
 						}
 
 						if (result) {
+							animations.clear();
 							i2 = tmpAnimations.begin();
 
 							while (result && i2 != tmpAnimations.end()) {

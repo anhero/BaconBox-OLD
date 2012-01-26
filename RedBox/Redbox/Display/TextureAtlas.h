@@ -5,14 +5,16 @@
 #ifndef RB_TEXTURE_ATLAS_H
 #define RB_TEXTURE_ATLAS_H
 
+#include <iostream>
 #include <string>
 #include <map>
 
 #include "TexturePointer.h"
 #include "SpriteDefinition.h"
+#include "TextureDefinition.h"
 
 namespace RedBox {
-	struct TextureInformation;
+	class Value;
 	/**
 	 * Contains texture atlas information. It contains details about a large
 	 * texture containing sub-textures that can be related or not. It can be
@@ -21,10 +23,18 @@ namespace RedBox {
 	 * @see RedBox::FrameDetails
 	 * @ingroup Display
 	 */
-	class TextureAtlas {
-	public:
+	struct TextureAtlas {
 		/// Type used to map frame lists to a name.
 		typedef std::map<std::string, SpriteDefinition> SpriteMap;
+
+		/**
+		 * Checks whether or not the Value contains the necessary information
+		 * to deserialize the type.
+		 * @param node Value to check.
+		 * @return True if the value contains the necessary information, false
+		 * if not.
+		 */
+		static bool isValidValue(const Value &node);
 
 		/**
 		 * Default constructor.
@@ -33,10 +43,10 @@ namespace RedBox {
 
 		/**
 		 * Parameterized constructor.
-		 * @param newTexture Texture pointer to use.
-		 * @see RedBox::TextureAtlas::texture
+		 * @param newTextureDefinition Texture pointer to use.
+		 * @see RedBox::TextureAtlas::textureDefinition
 		 */
-		explicit TextureAtlas(TexturePointer newTexture);
+		explicit TextureAtlas(const TextureDefinition &newTextureDefinition);
 
 		/**
 		 * Copy constructor.
@@ -60,40 +70,27 @@ namespace RedBox {
 		SpriteMap::mapped_type &operator[](const SpriteMap::key_type &name);
 
 		/**
-		 * Gets the frame lists.
-		 * @return Reference to the frame lists mapped to their name.
-		 * @see RedBox::TextureAtlas::frameLists
+		 * Serializes the instance to a Value.
+		 * @param node Node to serialize the instance into.
 		 */
-		SpriteMap &getSpriteDefinitions();
+		void serialize(Value &node) const;
 
 		/**
-		 * Gets the frame lists.
-		 * @return Reference to the frame lists mapped to their name.
-		 * @see RedBox::TextureAtlas::frameLists
+		 * Deserializes the instance from a Value.
+		 * @param node Value to read the data from.
+		 * @return True on success, false on failure to read all the
+		 * necessary data. Does not modify the instance when there is a failure.
 		 */
-		const SpriteMap &getSpriteDefinitions() const;
+		bool deserialize(const Value &node);
 
-		/**
-		 * Gets the atlas's texture information.
-		 * @return Pointer to the texture information concerned by the texture
-		 * atlas.
-		 * @see RedBox::TextureAtlas::textureInformation
-		 */
-		TextureInformation *getTextureInformation() const;
-
-		/**
-		 * Sets the atlas's texture.
-		 * @param newTexture Pointer to the new texture to use.
-		 * @see RedBox::TextureAtlas::textureInformation
-		 */
-		void setTextureInformation(TexturePointer newTexture);
-	private:
 		/// Pointer to the texture.
-		TextureInformation *textureInformation;
+		TextureDefinition textureDefinition;
 
 		/// Sprite definitions and their associated unique key.
 		SpriteMap spriteDefinitions;
 	};
+
+	std::ostream &operator<<(std::ostream &output, const TextureAtlas &ta);
 }
 
 #endif
