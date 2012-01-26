@@ -36,18 +36,31 @@ namespace RedBox {
 		/// Default value.
 		static const ValueType DEFAULT_VALUE;
 
+		/**
+		 * Serializes a Vector2T instance to a Value.
+		 * @param input Vector2T to be serialized.
+		 * @param node Value to serialize the Vector2T to.
+		 * @see RedBox::DefaultSerializer
+		 */
 		static void serialize(const Vector2T<ValueType> &input, Value &node) {
+			// We set the value's attributes correctly.
 			node["x"].setDouble(static_cast<double>(input.getX()));
 			node["y"].setDouble(static_cast<double>(input.getY()));
 		}
 
+		/**
+		 * Deserializes a Vector2T from a Value.
+		 * @param node
+		 */
 		static bool deserialize(const Value &node, Vector2T<ValueType> &output) {
 			bool result = true;
 			Object::const_iterator itX = node.getObject().find("x");
 			Object::const_iterator itY = node.getObject().find("y");
 
+			// We make sure the value contains the "x" and "y" values.
 			if (itX != node.getObject().end() &&
-				itY != node.getObject().end()) {
+			    itY != node.getObject().end()) {
+				// We make sure the x and y values are numerics.
 				if (itX->second.isDouble()) {
 
 					if (itY->second.isDouble()) {

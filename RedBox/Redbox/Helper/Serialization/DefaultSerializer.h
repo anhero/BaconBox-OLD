@@ -37,12 +37,15 @@ namespace RedBox {
 
 		/**
 		 * Serializes a custom type to a Value. By default, it assumes the
-		 * class is derived from Serializable. It can be specialized if the
-		 * custom type is not derived from Serializable.
+		 * class is derived from Serializable. If the class to be serialized
+		 * cannot be derived from Serializable, you can write static functions
+		 * that will take care of the serialization, see RedBox::Vector2T for
+		 * an example.
 		 * @param input Instance of custom type to serialize.
 		 * @param node Value to serialize to.
 		 * @tparam T Type of the instance to be serialized.
 		 * @see RedBox::Serializable
+		 * @see RedBox::Vector2T<T>
 		 */
 		template <typename T>
 		static void serialize(const T &input, Value &node) {
@@ -55,8 +58,10 @@ namespace RedBox {
 
 		/**
 		 * Deserializes a custom type from a Value. By default, it assumes the
-		 * class is derived from Serializable. It can be specialized if the
-		 * custom type is not derived from Serializable.
+		 * class is derived from Serializable. If the class to be deserialized
+		 * cannot be derived from Serializable, you can write static functions
+		 * that will take care of the serialization, see RedBox::Vector2T for an
+		 * example.
 		 * @param node Value to deserialize from.
 		 * @param output Instance of the type to serialize to.
 		 * @return True if the deserialization was successful, false if not.
