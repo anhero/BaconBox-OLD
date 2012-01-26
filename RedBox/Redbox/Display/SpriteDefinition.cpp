@@ -1,18 +1,22 @@
 #include "SpriteDefinition.h"
 
+#include "ShapeFactory.h"
+
 namespace RedBox {
 	bool SpriteDefinition::isValidValue(const Value &node) {
 		bool result = true;
 
 		const Object &tmpObject = node.getObject();
 		Object::const_iterator itVertices = tmpObject.find("vertices");
+		Object::const_iterator itFrameSize = tmpObject.find("frameSize");
 		Object::const_iterator itFrames = tmpObject.find("frames");
 		Object::const_iterator itAnimations = tmpObject.find("animations");
 
-		if (itVertices != tmpObject.end() &&
-		    itFrames != tmpObject.end() &&
-		    itAnimations != tmpObject.end() &&
-		    StandardVertexArray::isValidValueStatic(node)) {
+		// We make sure the vertices are valid and that we found the frame
+		// and animations attributes.
+		if (itFrames != tmpObject.end() && itAnimations != tmpObject.end() &&
+		    ((itVertices != tmpObject.end() && StandardVertexArray::isValidValueStatic(itVertices->second)) ||
+			 (itFrameSize != tmpObject.end() && Vector2::isValidValue(itFrameSize->second)))) {
 
 			const Array &tmpArray = itFrames->second.getArray();
 			Array::const_iterator i1 = tmpArray.begin();
@@ -86,10 +90,11 @@ namespace RedBox {
 
 		const Object &tmpObject = node.getObject();
 		Object::const_iterator itVertices = tmpObject.find("vertices");
+		Object::const_iterator itFrameSize = tmpObject.find("frameSize");
 		Object::const_iterator itFrames = tmpObject.find("frames");
 		Object::const_iterator itAnimations = tmpObject.find("animations");
 
-		if (itVertices != tmpObject.end() &&
+		if ((itVertices != tmpObject.end() || itFrameSize != tmpObject.end()) &&
 		    itFrames != tmpObject.end() &&
 		    itAnimations != tmpObject.end()) {
 
@@ -119,7 +124,33 @@ namespace RedBox {
 				}
 
 				if (result) {
-					if (DefaultSerializer::deserialize(itVertices->second, vertices)) {
+
+					// We check if the value contains an array of vertices or a
+					// frame size.
+					if (itVertices != tmpObject.end()) {
+						// If it's an array of vertices, we read them.
+						result = DefaultSerializer::deserialize(itVertices->second, vertices);
+
+					} else if (itFrameSize != tmpObject.end()) {
+						// If it's a frame size, we generate the vertices to
+						// shape a rectangle of the specified size.
+						Vector2 tmpFrameSize;
+
+						if (DefaultSerializer::deserialize(itFrameSize->second, tmpFrameSize)) {
+							vertices.resize(4, Vector2());
+							ShapeFactory::createRectangle(tmpFrameSize, Vector2(), &vertices);
+
+						} else {
+							result = false;
+						}
+
+					} else {
+						result = false;
+					}
+
+					// If the vertices are valid and loaded correctly.
+					if (result) {
+						// We load the frames.
 						frames.resize(tmpArray.size());
 						FrameArray::size_type i3 = 0;
 
@@ -146,8 +177,6 @@ namespace RedBox {
 							}
 						}
 
-					} else {
-						result = false;
 					}
 				}
 			}
