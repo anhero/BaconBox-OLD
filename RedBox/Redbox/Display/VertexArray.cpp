@@ -1,5 +1,9 @@
 #include "VertexArray.h"
 
+#include "Value.h"
+#include "DefaultSerializer.h"
+#include "Serializer.h"
+
 namespace RedBox {
 	VertexArray::~VertexArray() {
 	}
@@ -279,7 +283,7 @@ namespace RedBox {
 	}
 
 	void VertexArray::scaleFromPoint(float xScaling, float yScaling,
-	                                   const Vector2 &fromPoint) {
+	                                 const Vector2 &fromPoint) {
 		for (Iterator i = getBegin(); i != getEnd(); ++i) {
 			i->subtractFromXY(fromPoint);
 			i->scalarMultiplication(xScaling, yScaling);
@@ -288,7 +292,7 @@ namespace RedBox {
 	}
 
 	void VertexArray::rotateFromPoint(float rotationAngle,
-	                                    const Vector2 &rotationPoint) {
+	                                  const Vector2 &rotationPoint) {
 		for (Iterator i = getBegin(); i != getEnd(); ++i) {
 			i->subtractFromXY(rotationPoint);
 			i->rotate(rotationAngle);
@@ -301,8 +305,8 @@ namespace RedBox {
 
 		for (VertexArray::ConstIterator i = this->getBegin(), j = --this->getEnd(); i != this->getEnd(); ++i) {
 			if ((i->getY() < point.getY() && j->getY() >= point.getY()) ||
-				 ((j->getY() < point.getY() && i->getY() >= point.getY()) &&
-				(i->getX() <= point.getX() || j->getX() <= point.getX()))) {
+			    ((j->getY() < point.getY() && i->getY() >= point.getY()) &&
+			     (i->getX() <= point.getX() || j->getX() <= point.getX()))) {
 				if (i->getX() + (point.getY() - i->getY()) / (j->getY() - i->getY()) * (j->getX() - i->getX()) < point.getX()) {
 					result = !result;
 				}
@@ -376,13 +380,17 @@ namespace RedBox {
 					j = getBegin();
 					min1 = max1 = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
 					++j;
+
 					while (j != getEnd()) {
 						proj = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
+
 						if (proj < min1) {
 							min1 = proj;
+
 						} else if (proj > max1) {
 							max1 = proj;
 						}
+
 						++j;
 					}
 
@@ -391,19 +399,23 @@ namespace RedBox {
 					j = other.getBegin();
 					min2 = max2 = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
 					++j;
+
 					while (j != other.getEnd()) {
 						proj = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
+
 						if (proj < min2) {
 							min2 = proj;
+
 						} else if (proj > max2) {
 							max2 = proj;
 						}
+
 						++j;
 					}
 
 					// If the projections don't overlap, it means there are no
 					// collisions.
-					if(!(max1 >= min2 && min1 <= max2)) {
+					if (!(max1 >= min2 && min1 <= max2)) {
 						result = false;
 					}
 
@@ -414,5 +426,50 @@ namespace RedBox {
 		}
 
 		return result;
+	}
+
+	void VertexArray::serialize(Value &node) const {
+		node.setArray(Array(this->getNbVertices()));
+
+		for (SizeType i = 0; i < this->getNbVertices(); ++i) {
+			DefaultSerializer::serialize(this->operator[](i), node[i]);
+		}
+	}
+
+	bool VertexArray::deserialize(const Value &node) {
+		bool result = this->isValidValue(node);
+
+		if (result) {
+			for (SizeType i = 0; i < this->getNbVertices(); ++i) {
+				DefaultSerializer::deserialize(node.getArray()[i], this->operator[](i));
+			}
+		}
+
+		return result;
+	}
+
+	bool VertexArray::isValidValue(const Value &node) const {
+		bool result = true;
+
+		const Array &tmpArray = node.getArray();
+		Array::const_iterator i = tmpArray.begin();
+
+		while (result && i != tmpArray.end()) {
+			if (Vector2::isValidValue(*i)) {
+				++i;
+
+			} else {
+				result = false;
+			}
+		}
+
+		return result;
+	}
+
+	std::ostream &operator<<(std::ostream &output, const VertexArray &v) {
+		Value tmpValue;
+		DefaultSerializer::serialize(v, tmpValue);
+		DefaultSerializer::getDefaultSerializer().writeToStream(output, tmpValue);
+		return output;
 	}
 }

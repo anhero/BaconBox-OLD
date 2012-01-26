@@ -615,7 +615,7 @@ namespace RedBox {
 		 * @return True if the value contains the necessary information, false
 		 * if not.
 		 */
-		bool isValidValue(const Value &node) const {
+		static bool isValidValue(const Value &node) {
 			Object::const_iterator itX = node.getObject().find("x");
 			Object::const_iterator itY = node.getObject().find("y");
 

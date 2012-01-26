@@ -5,10 +5,12 @@
 #ifndef RB_VERTICES_ARRAY_H
 #define RB_VERTICES_ARRAY_H
 
+#include <iostream>
 #include <vector>
 
 #include "Vector2.h"
 #include "AxisAlignedBoundingBox.h"
+#include "Serializable.h"
 
 namespace RedBox {
 	/**
@@ -16,7 +18,7 @@ namespace RedBox {
 	 * not.
 	 * @ingroup Display
 	 */
-	class VertexArray {
+	class VertexArray : public Serializable {
 	public:
 		typedef std::vector<Vector2> ContainerType;
 		typedef ContainerType::value_type ValueType;
@@ -330,6 +332,31 @@ namespace RedBox {
 		 * @return True if the polygons are intersecting, false if not.
 		 */
 		bool intersects(const VertexArray &other) const;
+
+		/**
+		 * Serializes the instance to a Value.
+		 * @param node Node to serialize the instance into.
+		 */
+		virtual void serialize(Value &node) const;
+
+		/**
+		 * Deserializes the instance from a Value.
+		 * @param node Value to read the data from.
+		 * @return True on success, false on failure to read all the
+		 * necessary data. Does not modify the instance when there is a failure.
+		 */
+		virtual bool deserialize(const Value &node);
+
+		/**
+		 * Checks whether or not the Value contains the necessary information
+		 * to deserialize the instance.
+		 * @param node Value to check.
+		 * @return True if the value contains the necessary information, false
+		 * if not.
+		 */
+		bool isValidValue(const Value &node) const;
 	};
+
+	std::ostream &operator<<(std::ostream &output, const VertexArray &v);
 }
 #endif
