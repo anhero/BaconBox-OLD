@@ -6,6 +6,8 @@
 #define RB_DEFAULT_SERIALIZER_H
 
 #include "Value.h"
+#include "IsBaseOf.h"
+#include "Serializable.h"
 
 namespace RedBox {
 	class Serializer;
@@ -44,7 +46,11 @@ namespace RedBox {
 		 */
 		template <typename T>
 		static void serialize(const T &input, Value &node) {
-			input.serialize(node);
+			// Will call serialize on the input item if it is derived from
+			// Serializable or call the static function serialize on the
+			// templated type.
+			SerializeTemplate<T, IsBaseOf<Serializable, T>::RESULT> st;
+			st(input, node);
 		}
 
 		/**
@@ -59,10 +65,43 @@ namespace RedBox {
 		 */
 		template <typename T>
 		static bool deserialize(const Value &node, T &output) {
-			return output.deserialize(node);
+			DeserializeTemplate<T, IsBaseOf<Serializable, T>::RESULT> dt;
+			return dt(node, output);
 		}
-
 	private:
+
+		template <typename T, bool INHERITS>
+		class SerializeTemplate {
+		public:
+			void operator()(const T &input, Value &node) {
+				input.serialize(node);
+			}
+		};
+
+		template <typename T>
+		class SerializeTemplate<T, false> {
+		public:
+			void operator()(const T &input, Value &node) {
+				T::serialize(input, node);
+			}
+		};
+
+		template <typename T, bool INHERITS>
+		class DeserializeTemplate {
+		public:
+			bool operator()(const Value &node, T &output) {
+				return output.deserialize(node);
+			}
+		};
+
+		template <typename T>
+		class DeserializeTemplate<T, false> {
+		public:
+			bool operator()(const Value &node, T &output) {
+				return T::deserialize(node, output);
+			}
+		};
+
 		/**
 		 * Gets the singleton instance.
 		 * @return Reference to the singleton instance.

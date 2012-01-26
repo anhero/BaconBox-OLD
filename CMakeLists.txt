@@ -156,7 +156,7 @@ endforeach(privateHeader ${Private_RedBox_Headers})
 link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 		
 
-list(APPEND RedBox_libraries_list jsonbox)
+list(APPEND RedBox_libraries_list JsonBox)
 
 	add_library(RedBox STATIC ${RedBoxSources} ${RedBoxHeaders})
 	target_link_libraries(

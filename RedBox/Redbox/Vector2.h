@@ -11,6 +11,7 @@
 #include "StaticAssert.h"
 #include "IsNumber.h"
 #include "MathHelper.h"
+#include "Value.h"
 #include "DefaultSerializer.h"
 #include "Serializer.h"
 
@@ -35,8 +36,61 @@ namespace RedBox {
 		/// Default value.
 		static const ValueType DEFAULT_VALUE;
 
+		static void serialize(const Vector2T<ValueType> &input, Value &node) {
+			node["x"].setDouble(static_cast<double>(input.getX()));
+			node["y"].setDouble(static_cast<double>(input.getY()));
+		}
+
+		static bool deserialize(const Value &node, Vector2T<ValueType> &output) {
+			bool result = true;
+			Object::const_iterator itX = node.getObject().find("x");
+			Object::const_iterator itY = node.getObject().find("y");
+
+			if (itX != node.getObject().end() &&
+				itY != node.getObject().end()) {
+				if (itX->second.isDouble()) {
+
+					if (itY->second.isDouble()) {
+						output.setX(static_cast<ValueType>(itX->second.getDouble()));
+						output.setY(static_cast<ValueType>(itY->second.getDouble()));
+
+					} else if (itY->second.isInteger()) {
+						output.setX(static_cast<ValueType>(itX->second.getDouble()));
+						output.setY(static_cast<ValueType>(itY->second.getInt()));
+
+					} else {
+						result = false;
+					}
+
+				} else if (itX->second.isInteger()) {
+					if (itY->second.isDouble()) {
+						output.setX(static_cast<ValueType>(itX->second.getInt()));
+						output.setY(static_cast<ValueType>(itY->second.getDouble()));
+
+					} else if (itY->second.isInteger()) {
+						output.setX(static_cast<ValueType>(itX->second.getInt()));
+						output.setY(static_cast<ValueType>(itY->second.getInt()));
+
+					} else {
+						result = false;
+					}
+
+				} else {
+					result = false;
+				}
+
+			} else {
+				result = false;
+			}
+
+			return result;
+		}
+
 		/**
-		 *
+		 * Calculates a scalar multiplication between two vectors.
+		 * @param first First factor.
+		 * @param second Second factor.
+		 * @return Product of the multiplication.
 		 */
 		static const Vector2T<ValueType> scalarMultiplication(const Vector2T<ValueType> &first, const Vector2T<ValueType> &second) {
 			return Vector2T<ValueType>(first.x * second.x, first.y * second.y);
@@ -585,59 +639,6 @@ namespace RedBox {
 		typedef typename StaticAssert<IsFloatingPointNumber<ValueType>::RESULT>::Result Test;
 	};
 #pragma pack()
-
-	template <>
-	void DefaultSerializer::serialize<Vector2T<float> >(const Vector2T<float> &input, Value &node) {
-		node["x"].setDouble(static_cast<double>(input.getX()));
-		node["y"].setDouble(static_cast<double>(input.getY()));
-	}
-
-	template <>
-	bool DefaultSerializer::deserialize<Vector2T<float> >(const Value &node,
-	                                                      Vector2T<float> &output) {
-		bool result = true;
-		Object::const_iterator itX = node.getObject().find("x");
-		Object::const_iterator itY = node.getObject().find("y");
-
-		if (itX != node.getObject().end() &&
-		    itY != node.getObject().end()) {
-			if (itX->second.isDouble()) {
-
-				if (itY->second.isDouble()) {
-					output.setX(static_cast<float>(itX->second.getDouble()));
-					output.setY(static_cast<float>(itY->second.getDouble()));
-
-				} else if (itY->second.isInteger()) {
-					output.setX(static_cast<float>(itX->second.getDouble()));
-					output.setY(static_cast<float>(itY->second.getInt()));
-
-				} else {
-					result = false;
-				}
-
-			} else if (itX->second.isInteger()) {
-				if (itY->second.isDouble()) {
-					output.setX(static_cast<float>(itX->second.getInt()));
-					output.setY(static_cast<float>(itY->second.getDouble()));
-
-				} else if (itY->second.isInteger()) {
-					output.setX(static_cast<float>(itX->second.getInt()));
-					output.setY(static_cast<float>(itY->second.getInt()));
-
-				} else {
-					result = false;
-				}
-
-			} else {
-				result = false;
-			}
-
-		} else {
-			result = false;
-		}
-
-		return result;
-	}
 
 	template <typename T>
 	std::ostream &operator<<(std::ostream &output, const Vector2T<T>& v) {
