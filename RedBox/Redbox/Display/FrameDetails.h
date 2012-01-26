@@ -86,7 +86,8 @@ namespace RedBox {
 
 		/**
 		 * Deserializes the frame details from a Value.
-		 * @param node Node to read the frame details from.
+		 * @param node Node to read the frame details from. If it doesn't have
+		 * an orientation attribute, it assumes it has a NORTH orientation.
 		 * @return True if the deserialization was successful, false if not. If
 		 * the deserialization failed, the output frame details are not
 		 * modified.

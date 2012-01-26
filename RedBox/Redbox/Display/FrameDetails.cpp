@@ -11,14 +11,8 @@ namespace RedBox {
 
 		if (itPosition != node.getObject().end() &&
 		    itOrientation != node.getObject().end()) {
-			if (Vector2::isValidValue(itPosition->second) &&
-			    itOrientation->second.isString()) {
-				if (itOrientation->second.getString() != std::string("NORTH") &&
-				    itOrientation->second.getString() != std::string("EAST") &&
-				    itOrientation->second.getString() != std::string("WEST") &&
-				    itOrientation->second.getString() != std::string("SOUTH")) {
-					result = false;
-				}
+			if (!Vector2::isValidValue(itPosition->second)) {
+				result = false;
 			}
 
 		} else {
@@ -80,33 +74,28 @@ namespace RedBox {
 		Object::const_iterator itOrientation = node.getObject().find("orientation");
 
 		if (itPosition != node.getObject().end() &&
-		    itPosition->second.isObject() &&
-		    itOrientation != node.getObject().end() &&
-		    itOrientation->second.isString()) {
+			itPosition->second.isObject()) {
 
-			Vector2 tmpPosition;
+			if (DefaultSerializer::deserialize(itPosition->second, position)) {
+				if (itOrientation != node.getObject().end()) {
+					if (itOrientation->second.getString() == std::string("NORTH")) {
+						orientation = Orientation::NORTH;
 
-			if (DefaultSerializer::deserialize(itPosition->second, tmpPosition)) {
-				if (itOrientation->second.getString() == std::string("NORTH")) {
-					position = tmpPosition;
-					orientation = Orientation::NORTH;
+					} else if (itOrientation->second.getString() == std::string("EAST")) {
+						orientation = Orientation::EAST;
 
-				} else if (itOrientation->second.getString() == std::string("EAST")) {
-					position = tmpPosition;
-					orientation = Orientation::EAST;
+					} else if (itOrientation->second.getString() == std::string("WEST")) {
+						orientation = Orientation::WEST;
 
-				} else if (itOrientation->second.getString() == std::string("WEST")) {
-					position = tmpPosition;
-					orientation = Orientation::WEST;
+					} else if (itOrientation->second.getString() == std::string("SOUTH")) {
+						orientation = Orientation::SOUTH;
 
-				} else if (itOrientation->second.getString() == std::string("SOUTH")) {
-					position = tmpPosition;
-					orientation = Orientation::SOUTH;
-
+					} else {
+						orientation = Orientation::NORTH;
+					}
 				} else {
-					result = false;
+					orientation = Orientation::NORTH;
 				}
-
 			} else {
 				result = false;
 			}
