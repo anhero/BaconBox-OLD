@@ -133,6 +133,13 @@ namespace RedBox {
 		 * @return True if the value contains a string, false if not.
 		 */
 		bool isString() const;
+
+		/**
+		 * Checks if the value can be a string.
+		 * @return True if the value is either a string, an integer or a double.
+		 */
+		bool isStringable() const;
+
 		/**
 		 * Checks if the value is an integer.
 		 * @return True if the value contains an integer, false if not.
@@ -144,6 +151,13 @@ namespace RedBox {
 		 * @return True if the value contains a double, false if not.
 		 */
 		bool isDouble() const;
+
+		/**
+		 * Checks if the value is either an integer or a double.
+		 * @return True if the value contains a double or an integer, false if
+		 * not.
+		 */
+		bool isNumeric() const;
 
 		/**
 		 * Checks if the value is an object.

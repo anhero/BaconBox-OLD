@@ -142,12 +142,20 @@ namespace RedBox {
 		return type == STRING;
 	}
 
+	bool Value::isStringable() const {
+		return type == STRING || type == INTEGER || type == DOUBLE;
+	}
+
 	bool Value::isInteger() const {
 		return type == INTEGER;
 	}
 
 	bool Value::isDouble() const {
 		return type == DOUBLE;
+	}
+
+	bool Value::isNumeric() const {
+		return type == INTEGER || type == DOUBLE;
 	}
 
 	bool Value::isObject() const {
