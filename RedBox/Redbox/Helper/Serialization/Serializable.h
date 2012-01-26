@@ -32,6 +32,15 @@ namespace RedBox {
 		 * necessary data. Does not modify the instance when there is a failure.
 		 */
 		virtual bool deserialize(const Value &node) = 0;
+
+		/**
+		 * Checks whether or not the Value contains the necessary information
+		 * to deserialize the instance.
+		 * @param node Value to check.
+		 * @return True if the value contains the necessary information, false
+		 * if not.
+		 */
+		virtual bool isValidValue(const Value &node) const = 0;
 	};
 }
 
