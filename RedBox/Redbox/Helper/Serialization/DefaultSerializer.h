@@ -49,11 +49,7 @@ namespace RedBox {
 		 */
 		template <typename T>
 		static void serialize(const T &input, Value &node) {
-			// Will call serialize on the input item if it is derived from
-			// Serializable or call the static function serialize on the
-			// templated type.
-			SerializeTemplate<T, IsBaseOf<Serializable, T>::RESULT> st;
-			st(input, node);
+			input.serialize(node);
 		}
 
 		/**
@@ -70,43 +66,9 @@ namespace RedBox {
 		 */
 		template <typename T>
 		static bool deserialize(const Value &node, T &output) {
-			DeserializeTemplate<T, IsBaseOf<Serializable, T>::RESULT> dt;
-			return dt(node, output);
+			return output.deserialize(node);
 		}
 	private:
-
-		template <typename T, bool INHERITS>
-		class SerializeTemplate {
-		public:
-			void operator()(const T &input, Value &node) {
-				input.serialize(node);
-			}
-		};
-
-		template <typename T>
-		class SerializeTemplate<T, false> {
-		public:
-			void operator()(const T &input, Value &node) {
-				T::serialize(input, node);
-			}
-		};
-
-		template <typename T, bool INHERITS>
-		class DeserializeTemplate {
-		public:
-			bool operator()(const Value &node, T &output) {
-				return output.deserialize(node);
-			}
-		};
-
-		template <typename T>
-		class DeserializeTemplate<T, false> {
-		public:
-			bool operator()(const Value &node, T &output) {
-				return T::deserialize(node, output);
-			}
-		};
-
 		/**
 		 * Gets the singleton instance.
 		 * @return Reference to the singleton instance.

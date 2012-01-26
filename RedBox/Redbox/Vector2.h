@@ -37,42 +37,6 @@ namespace RedBox {
 		static const ValueType DEFAULT_VALUE;
 
 		/**
-		 * Serializes a Vector2T instance to a Value.
-		 * @param input Vector2T to be serialized.
-		 * @param node Value to serialize the Vector2T to.
-		 * @see RedBox::DefaultSerializer
-		 */
-		static void serialize(const Vector2T<ValueType> &input, Value &node) {
-			// We set the value's attributes correctly.
-			node["x"].setDouble(static_cast<double>(input.getX()));
-			node["y"].setDouble(static_cast<double>(input.getY()));
-		}
-
-		/**
-		 * Deserializes a Vector2T from a Value.
-		 * @param node
-		 */
-		static bool deserialize(const Value &node, Vector2T<ValueType> &output) {
-			bool result = true;
-			Object::const_iterator itX = node.getObject().find("x");
-			Object::const_iterator itY = node.getObject().find("y");
-
-			// We make sure the value contains the "x" and "y" values.
-			if (itX != node.getObject().end() &&
-			    itY != node.getObject().end() &&
-			    itX->second.isNumeric() && itY->second.isNumeric()) {
-
-				output.setXY(static_cast<ValueType>(itX->second.getDouble()),
-				             static_cast<ValueType>(itY->second.getDouble()));
-
-			} else {
-				result = false;
-			}
-
-			return result;
-		}
-
-		/**
 		 * Calculates a scalar multiplication between two vectors.
 		 * @param first First factor.
 		 * @param second Second factor.
@@ -606,6 +570,42 @@ namespace RedBox {
 			Vector2T<ValueType> original(*this);
 			project(other);
 			*this += *this - original;
+		}
+
+		/**
+		 * Serializes the instance to a Value.
+		 * @param node Value to serialize the Vector2T to.
+		 * @see RedBox::DefaultSerializer
+		 */
+		void serialize(Value &node) const {
+			// We set the value's attributes correctly.
+			node["x"].setDouble(static_cast<double>(getX()));
+			node["y"].setDouble(static_cast<double>(getY()));
+		}
+
+		/**
+		 * Deserializes the instance from a Value.
+		 * @param node Value to deserialize the value from.
+		 * @see RedBox::DefaultSerializer
+		 */
+		bool deserialize(const Value &node) {
+			bool result = true;
+			Object::const_iterator itX = node.getObject().find("x");
+			Object::const_iterator itY = node.getObject().find("y");
+
+			// We make sure the value contains the "x" and "y" values.
+			if (itX != node.getObject().end() &&
+			    itY != node.getObject().end() &&
+			    itX->second.isNumeric() && itY->second.isNumeric()) {
+
+				setXY(static_cast<ValueType>(itX->second.getDouble()),
+				      static_cast<ValueType>(itY->second.getDouble()));
+
+			} else {
+				result = false;
+			}
+
+			return result;
 		}
 	private:
 		/**

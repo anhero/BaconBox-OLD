@@ -28,23 +28,6 @@ namespace RedBox {
 			};
 		};
 
-		/**
-		 * Serializes the frame details to a Value.
-		 * @param input Frame details to serialize.
-		 * @param node Value to serialize the frame details to.
-		 */
-		static void serialize(const FrameDetails &input, Value &node);
-
-		/**
-		 * Deserializes the frame details from a Value.
-		 * @param node Node to read the frame details from.
-		 * @param output Frame details instance to write the Value to.
-		 * @return True if the deserialization was successful, false if not. If
-		 * the deserialization failed, the output frame details are not
-		 * modified.
-		 */
-		static bool deserialize(const Value &node, FrameDetails &output);
-
 		/// Used to specify the frame's orientation in the image.
 		typedef SafeEnum<OrientationDef> Orientation;
 
@@ -85,6 +68,21 @@ namespace RedBox {
 		 * @return Reference to the modified FrameDetails.
 		 */
 		FrameDetails &operator=(const FrameDetails &src);
+
+		/**
+		 * Serializes the frame details to a Value.
+		 * @param node Value to serialize the frame details to.
+		 */
+		void serialize(Value &node) const;
+
+		/**
+		 * Deserializes the frame details from a Value.
+		 * @param node Node to read the frame details from.
+		 * @return True if the deserialization was successful, false if not. If
+		 * the deserialization failed, the output frame details are not
+		 * modified.
+		 */
+		bool deserialize(const Value &node);
 	};
 
 	std::ostream &operator<<(std::ostream &output, const FrameDetails &fd);

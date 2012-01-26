@@ -4,10 +4,31 @@
 #include "Serializer.h"
 
 namespace RedBox {
-	void FrameDetails::serialize(const FrameDetails &input, Value &node) {
-		DefaultSerializer::serialize(input.position, node["position"]);
+	FrameDetails::FrameDetails() : position(), orientation(Orientation::NORTH) {
+	}
 
-		switch (input.orientation.underlying()) {
+	FrameDetails::FrameDetails(const Vector2 &newPosition,
+	                           Orientation newOrientation) :
+		position(newPosition), orientation(newOrientation) {
+	}
+
+	FrameDetails::FrameDetails(const FrameDetails &src) :
+		position(src.position), orientation(src.orientation) {
+	}
+
+	FrameDetails &FrameDetails::operator=(const FrameDetails &src) {
+		if (this != &src) {
+			position = src.position;
+			orientation = src.orientation;
+		}
+
+		return *this;
+	}
+
+	void FrameDetails::serialize(Value &node) const {
+		DefaultSerializer::serialize(position, node["position"]);
+
+		switch (orientation.underlying()) {
 		case Orientation::NORTH:
 			node["orientation"] = "NORTH";
 			break;
@@ -29,7 +50,7 @@ namespace RedBox {
 		}
 	}
 
-	bool FrameDetails::deserialize(const Value &node, FrameDetails &output) {
+	bool FrameDetails::deserialize(const Value &node) {
 		bool result = true;
 		Object::const_iterator itPosition = node.getObject().find("position");
 		Object::const_iterator itOrientation = node.getObject().find("orientation");
@@ -43,20 +64,20 @@ namespace RedBox {
 
 			if (DefaultSerializer::deserialize(itPosition->second, tmpPosition)) {
 				if (itOrientation->second.getString() == std::string("NORTH")) {
-					output.position = tmpPosition;
-					output.orientation = Orientation::NORTH;
+					position = tmpPosition;
+					orientation = Orientation::NORTH;
 
 				} else if (itOrientation->second.getString() == std::string("EAST")) {
-					output.position = tmpPosition;
-					output.orientation = Orientation::EAST;
+					position = tmpPosition;
+					orientation = Orientation::EAST;
 
 				} else if (itOrientation->second.getString() == std::string("WEST")) {
-					output.position = tmpPosition;
-					output.orientation = Orientation::WEST;
+					position = tmpPosition;
+					orientation = Orientation::WEST;
 
 				} else if (itOrientation->second.getString() == std::string("SOUTH")) {
-					output.position = tmpPosition;
-					output.orientation = Orientation::SOUTH;
+					position = tmpPosition;
+					orientation = Orientation::SOUTH;
 
 				} else {
 					result = false;
@@ -71,27 +92,6 @@ namespace RedBox {
 		}
 
 		return result;
-	}
-
-	FrameDetails::FrameDetails() : position(), orientation(Orientation::NORTH) {
-	}
-
-	FrameDetails::FrameDetails(const Vector2 &newPosition,
-	                           Orientation newOrientation) :
-		position(newPosition), orientation(newOrientation) {
-	}
-
-	FrameDetails::FrameDetails(const FrameDetails &src) :
-		position(src.position), orientation(src.orientation) {
-	}
-
-	FrameDetails &FrameDetails::operator=(const FrameDetails &src) {
-		if (this != &src) {
-			position = src.position;
-			orientation = src.orientation;
-		}
-
-		return *this;
 	}
 
 	std::ostream &operator<<(std::ostream &output, const FrameDetails &fd) {

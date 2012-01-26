@@ -19,23 +19,6 @@ namespace RedBox {
 	 */
 	struct AnimationDefinition {
 		/**
-		 * Serializes the animation definition to a Value.
-		 * @param input Animation definition to serialize.
-		 * @param node Value to serialize the animation definition to.
-		 */
-		static void serialize(const AnimationDefinition &input, Value &node);
-
-		/**
-		 * Deserializes the animation definition from a Value.
-		 * @param node Node to read the animation definition from.
-		 * @param output Animation definition instance to write the Value to.
-		 * @return True if the deserialization was successful, false if not. If
-		 * the deserialization failed, the output animation definition is not
-		 * modified.
-		 */
-		static bool deserialize(const Value &node, AnimationDefinition &output);
-
-		/**
 		 * Default constructor. By default, an animation will loop indefinetely.
 		 */
 		AnimationDefinition();
@@ -64,6 +47,21 @@ namespace RedBox {
 		 * @return Reference to the modified animation definition.
 		 */
 		AnimationDefinition &operator=(const AnimationDefinition &src);
+
+		/**
+		 * Serializes the animation definition to a Value.
+		 * @param node Value to serialize the animation definition to.
+		 */
+		void serialize(Value &node) const;
+
+		/**
+		 * Deserializes the animation definition from a Value.
+		 * @param node Node to read the animation definition from.
+		 * @return True if the deserialization was successful, false if not. If
+		 * the deserialization failed, the output animation definition is not
+		 * modified.
+		 */
+		bool deserialize(const Value &node);
 
 		/// The suit of frames composing the animation
 		std::vector<unsigned int> frames;

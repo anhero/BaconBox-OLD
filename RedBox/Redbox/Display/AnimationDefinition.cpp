@@ -5,20 +5,42 @@
 
 namespace RedBox {
 
-	void AnimationDefinition::serialize(const AnimationDefinition &input,
-	                                    Value &node) {
-		node["nbLoops"].setInt(input.nbLoops);
-		node["timePerFrame"].setDouble(input.timePerFrame);
-		Value &tmpValue = node["frames"];
-		tmpValue.setArray(Array(input.frames.size()));
+	AnimationDefinition::AnimationDefinition(): frames(), timePerFrame(0.0),
+		nbLoops(-1) {
+	}
 
-		for (std::vector<unsigned int>::size_type i = 0; i < input.frames.size(); ++i) {
-			tmpValue[i].setInt(static_cast<int>(input.frames[i]));
+	AnimationDefinition::AnimationDefinition(const std::vector<unsigned int>& newFrames,
+	                                         double newTimePerFrame,
+	                                         int newNbLoops): frames(newFrames),
+		timePerFrame(newTimePerFrame), nbLoops(newNbLoops) {
+	}
+
+	AnimationDefinition::AnimationDefinition(const AnimationDefinition &src) :
+		frames(src.frames), timePerFrame(src.timePerFrame), nbLoops(src.nbLoops) {
+	}
+
+	AnimationDefinition &AnimationDefinition::operator=(const AnimationDefinition &src) {
+		if (this != &src) {
+			frames = src.frames;
+			timePerFrame = src.timePerFrame;
+			nbLoops = src.nbLoops;
+		}
+
+		return *this;
+	}
+
+	void AnimationDefinition::serialize(Value &node) const {
+		node["nbLoops"].setInt(nbLoops);
+		node["timePerFrame"].setDouble(timePerFrame);
+		Value &tmpValue = node["frames"];
+		tmpValue.setArray(Array(frames.size()));
+
+		for (std::vector<unsigned int>::size_type i = 0; i < frames.size(); ++i) {
+			tmpValue[i].setInt(static_cast<int>(frames[i]));
 		}
 	}
 
-	bool AnimationDefinition::deserialize(const Value &node,
-	                                      AnimationDefinition &output) {
+	bool AnimationDefinition::deserialize(const Value &node) {
 		bool result = true;
 		const Object &tmpObject = node.getObject();
 		Object::const_iterator itNbLoops = tmpObject.find("nbLoops");
@@ -49,13 +71,13 @@ namespace RedBox {
 					// of correct type.
 					if (itNbLoops->second.isNumeric() && itTimePerFrame->second.isNumeric()) {
 
-						output.nbLoops = itNbLoops->second.getInt();
-						output.timePerFrame = itTimePerFrame->second.getDouble();
+						nbLoops = itNbLoops->second.getInt();
+						timePerFrame = itTimePerFrame->second.getDouble();
 
-						output.frames.resize(tmpArray.size());
+						frames.resize(tmpArray.size());
 
 						for (Array::size_type i2 = 0; i2 < tmpArray.size(); ++i2) {
-							output.frames[i2] = static_cast<unsigned int>(tmpArray[i2].getInt());
+							frames[i2] = static_cast<unsigned int>(tmpArray[i2].getInt());
 						}
 
 					} else {
@@ -72,30 +94,6 @@ namespace RedBox {
 		}
 
 		return result;
-	}
-
-	AnimationDefinition::AnimationDefinition(): frames(), timePerFrame(0.0),
-		nbLoops(-1) {
-	}
-
-	AnimationDefinition::AnimationDefinition(const std::vector<unsigned int>& newFrames,
-	                                         double newTimePerFrame,
-	                                         int newNbLoops): frames(newFrames),
-		timePerFrame(newTimePerFrame), nbLoops(newNbLoops) {
-	}
-
-	AnimationDefinition::AnimationDefinition(const AnimationDefinition &src) :
-		frames(src.frames), timePerFrame(src.timePerFrame), nbLoops(src.nbLoops) {
-	}
-
-	AnimationDefinition &AnimationDefinition::operator=(const AnimationDefinition &src) {
-		if (this != &src) {
-			frames = src.frames;
-			timePerFrame = src.timePerFrame;
-			nbLoops = src.nbLoops;
-		}
-
-		return *this;
 	}
 
 	std::ostream &operator<<(std::ostream &output,
