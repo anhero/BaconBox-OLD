@@ -5,11 +5,23 @@
 #include "TextureCoordinates.h"
 #include "VertexArray.h"
 #include "TextureInformation.h"
+#include "FrameDetails.h"
 
 namespace RedBox {
 	void TextureMappable::loadTextureCoordinates(TexturePointer texture,
 	                                             const VertexArray &vertices,
 	                                             const Vector2 &offset,
+	                                             TextureCoordinates *textureCoordinates) {
+		loadTextureCoordinates(texture,
+		                       vertices,
+		                       FrameDetails(offset,
+		                                    FrameDetails::Orientation::NORTH),
+		                       textureCoordinates);
+	}
+
+	void TextureMappable::loadTextureCoordinates(TexturePointer texture,
+	                                             const VertexArray &vertices,
+	                                             const FrameDetails &details,
 	                                             TextureCoordinates *textureCoordinates) {
 		// We make sure the texture coordinates container is valid.
 		if (textureCoordinates) {
@@ -21,13 +33,13 @@ namespace RedBox {
 				    texture.pointer->poweredWidth > 0u &&
 				    texture.pointer->poweredHeight > 0u) {
 					// We make sure the offset is valid.
-					if (offset.getX() >= 0.0f && offset.getY() >= 0.0f) {
+					if (details.position.getX() >= 0.0f && details.position.getY() >= 0.0f) {
 						// We resize the texture coordinates container so it can
 						// contain all the coordinates.
 						textureCoordinates->resize(vertices.getNbVertices());
 						// We calculate the real offset to use to map the
 						// vertices on the texture.
-						Vector2 realOffset = offset - vertices.getMinimumXY();
+						Vector2 realOffset = details.position - vertices.getMinimumXY();
 
 						// We get the powered size of the texture
 						Vector2 poweredSize(static_cast<float>(texture.pointer->poweredWidth),
@@ -36,11 +48,54 @@ namespace RedBox {
 						VertexArray::ConstIterator i = vertices.getBegin();
 						TextureCoordinates::iterator i2 = textureCoordinates->begin();
 
-						// We load all texture coordinates from the vertices.
-						while (i != vertices.getEnd() && i2 != textureCoordinates->end()) {
-							*i2 = (*i + realOffset) / poweredSize;
-							++i;
-							++i2;
+						float angle = 0.0f;
+
+						Vector2 orientationOffset;
+
+						switch (details.orientation.underlying()) {
+						case FrameDetails::Orientation::NORTH:
+							break;
+
+						case FrameDetails::Orientation::EAST:
+							angle = 90.0f;
+							orientationOffset.setY(vertices.getWidth());
+							break;
+
+						case FrameDetails::Orientation::WEST:
+							angle = -90.0f;
+							orientationOffset.setX(vertices.getHeight());
+							break;
+
+						case FrameDetails::Orientation::SOUTH:
+							angle = 180.0f;
+							orientationOffset = vertices.getSize();
+							break;
+
+						default:
+							break;
+						}
+
+						// Next, we load all texture coordinates from the
+						// vertices.
+
+						// If the orientation is north, no special
+						// transformation is needed.
+						if (details.orientation == FrameDetails::Orientation::NORTH) {
+							while (i != vertices.getEnd() && i2 != textureCoordinates->end()) {
+								*i2 = (*i + realOffset) / poweredSize;
+								++i;
+								++i2;
+							}
+
+						} else {
+
+							// We apply the needed transformations to take into
+							// account the orientation.
+							while (i != vertices.getEnd() && i2 != textureCoordinates->end()) {
+								*i2 = ((*i + realOffset).getRotated(angle) + orientationOffset) / poweredSize;
+								++i;
+								++i2;
+							}
 						}
 
 					} else {

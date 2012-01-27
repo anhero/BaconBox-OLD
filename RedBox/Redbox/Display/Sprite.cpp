@@ -2,6 +2,8 @@
 
 #include "ShapeFactory.h"
 #include "TextureInformation.h"
+#include "SpriteDefinition.h"
+#include "Console.h"
 
 namespace RedBox {
 	Sprite::Sprite() : Graphic<Animatable>(), Collidable(), Layerable() {
@@ -20,10 +22,26 @@ namespace RedBox {
 				construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth),
 				                  static_cast<float>(this->getTextureInformation()->imageHeight)),
 				          startingPosition);
+			} else {
+				Console::println("Failed to load the sprite because the texture is NULL.");
 			}
 
 		} else {
 			construct(newSize, startingPosition, newTextureOffset, nbFrames);
+		}
+	}
+
+	Sprite::Sprite(TexturePointer newTexture,
+	               const SpriteDefinition &definition,
+	               const Vector2 &startingPosition) :
+		Graphic<Animatable>(newTexture), Collidable(startingPosition),
+		Layerable() {
+		// We make sure the texture information is valid.
+		if (this->getTextureInformation()) {
+			construct(definition);
+			this->getVertices().move(startingPosition.getX(), startingPosition.getY());
+		} else {
+			Console::println("Failed to load the sprite because the texture is NULL.");
 		}
 	}
 
@@ -88,12 +106,12 @@ namespace RedBox {
 	void Sprite::construct(const Vector2 &newSize, const Vector2 &newPosition,
 	                       const Vector2 &newTextureOffset,
 	                       unsigned int nbFrames) {
-        
+
 		// We initialize the vertices.
 		this->getVertices().resize(4);
 		ShapeFactory::createRectangle(newSize, newPosition,
 		                              &this->getVertices());
-		// We specify the render mode.
+		// We specify the render modes.
 		addRenderMode(RenderMode::SHAPE);
 		addRenderMode(RenderMode::COLOR);
 
@@ -109,6 +127,30 @@ namespace RedBox {
 
 		} else {
 			removeRenderMode(RenderMode::TEXTURE);
+		}
+	}
+
+	void Sprite::construct(const SpriteDefinition &definition) {
+		// We initialize the vertices.
+		this->getVertices() = definition.vertices;
+
+		// We specify the render modes.
+		addRenderMode(RenderMode::SHAPE);
+		addRenderMode(RenderMode::COLOR);
+
+		// We check if we have to initialize the texture coordinates.
+		if (getTextureInformation()) {
+			loadTextureCoordinates(this->getVertices(), definition.frames);
+
+			// We add the animations to the sprite.
+			this->clearAnimations();
+
+			for (AnimationMap::const_iterator i = definition.animations.begin();
+			     i != definition.animations.end(); ++i) {
+				this->addAnimation(i->first, i->second);
+			}
+
+			addRenderMode(RenderMode::TEXTURE);
 		}
 	}
 }

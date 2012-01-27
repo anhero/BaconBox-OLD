@@ -4,6 +4,8 @@
 #include "Value.h"
 #include "DefaultSerializer.h"
 #include "Serializer.h"
+#include "TextureInformation.h"
+#include "ResourceManager.h"
 
 namespace RedBox {
 	bool TextureAtlas::isValidValue(const Value &node) {
@@ -61,6 +63,10 @@ namespace RedBox {
 
 	TextureAtlas::SpriteMap::mapped_type &TextureAtlas::operator[](const TextureAtlas::SpriteMap::key_type &name) {
 		return spriteDefinitions[name];
+	}
+
+	TextureInformation *TextureAtlas::getTextureInformation() const {
+		return ResourceManager::loadTextureRelativePath(textureDefinition.key, textureDefinition.filePath);
 	}
 
 	void TextureAtlas::serialize(Value &node) const {

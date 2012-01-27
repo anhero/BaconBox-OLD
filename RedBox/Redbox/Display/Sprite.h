@@ -12,6 +12,7 @@
 #include "TexturePointer.h"
 
 namespace RedBox {
+	struct SpriteDefinition;
 	/**
 	 * Represents a sprite. A is used to display animated or non-animated
 	 * images or display colored shapes. To use a sprite, initialize it and
@@ -40,8 +41,8 @@ namespace RedBox {
 		 * sprite.
 		 * @param newSize Size of the sprite.
 		 * @param newTextureOffset Texture coordinates' offset if needed.
-		 * @param nbFrames Number of frames to load. If set to 0, it will use the maximum frame number 
-         * for the texture and size of the Animatable object.
+		 * @param nbFrames Number of frames to load. If set to 0, it will use the maximum frame number
+		 * for the texture and size of the Animatable object.
 		 * @see RedBox::Texturable::textureInformation
 		 */
 		explicit Sprite(TexturePointer newTexture,
@@ -49,6 +50,18 @@ namespace RedBox {
 		                const Vector2 &newSize = Vector2(),
 		                const Vector2 &newTextureOffset = Vector2(),
 		                unsigned int nbFrames = 1);
+
+		/**
+		 * Parameterized constructor. Loads the sprite from a sprite definition.
+		 * @param newTexture Texture pointer to use as the texture.
+		 * @param startingPosition Starting position at which to place the
+		 * sprite.
+		 * @param definition Information about the sprite's shape, its frames
+		 * and its animations.
+		 */
+		Sprite(TexturePointer newTexture,
+		       const SpriteDefinition &definition,
+			   const Vector2 &startingPosition = Vector2());
 
 		/**
 		* Copy constructor.
@@ -149,6 +162,13 @@ namespace RedBox {
 		               const Vector2 &newPosition,
 		               const Vector2 &newTextureOffset = Vector2(),
 		               unsigned int nbFrames = 1);
+
+		/**
+		 * Generates teh vertices and the texture coordinates from a sprite
+		 * definition.
+		 * @param definition Sprite definition containing the necessary details.
+		 */
+		void construct(const SpriteDefinition &definition);
 	};
 
 }

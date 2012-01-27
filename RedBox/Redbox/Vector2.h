@@ -548,7 +548,7 @@ namespace RedBox {
 		 * make the instance rotate counter clockwise, while negative values
 		 * make the instance rotate clockwise.
 		 */
-		const Vector2T<ValueType> getRotated(ValueType angle) {
+		const Vector2T<ValueType> getRotated(ValueType angle) const {
 			Vector2T<ValueType> result(*this);
 			result.rotate(angle);
 			return result;

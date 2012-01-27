@@ -9,11 +9,11 @@
 #include <string>
 #include <map>
 
-#include "TexturePointer.h"
 #include "SpriteDefinition.h"
 #include "TextureDefinition.h"
 
 namespace RedBox {
+	struct TextureInformation;
 	class Value;
 	/**
 	 * Contains texture atlas information. It contains details about a large
@@ -68,6 +68,14 @@ namespace RedBox {
 		 * @see RedBox::TextureAtlas::frameLists
 		 */
 		SpriteMap::mapped_type &operator[](const SpriteMap::key_type &name);
+
+		/**
+		 * Gets the texture information associated with the texture definition.
+		 * If the texture isn't loaded, it loads it.
+		 * @return Pointer to the texture information, NULL if the texture
+		 * cannot be loaded correctly.
+		 */
+		TextureInformation *getTextureInformation() const;
 
 		/**
 		 * Serializes the instance to a Value.

@@ -14,6 +14,7 @@
 #include "TextureCoordinates.h"
 #include "AnimationDefinition.h"
 #include "TexturePointer.h"
+#include "FrameArray.h"
 
 namespace RedBox {
 	/**
@@ -222,6 +223,11 @@ namespace RedBox {
 		void removeAnimation(const std::string &name);
 
 		/**
+		 * Stops the animation and deletes all the animations.
+		 */
+		void clearAnimations();
+
+		/**
 		 * Gets the name of the animation currently playing.
 		 * @return Name of the animation currently playing. Empty string if no
 		 * animation is playing.
@@ -271,6 +277,26 @@ namespace RedBox {
 		                            const VertexArray &vertices,
 		                            const Vector2 &offset,
 		                            unsigned int nbFrames = 1);
+
+		/**
+		 * Loads the texture coordinates. Uses the information of the frames in
+		 * the frames array to load the texture coordinates.
+		 * @param vertices Vertices to use to load the texture coordinates.
+		 * @param frameDetails Array of details about the frames to load.
+		 */
+		void loadTextureCoordinates(const VertexArray &vertices,
+									const FrameArray &frameDetails);
+
+		/**
+		 * Loads the texture coordinates. Uses the information of the frames in
+		 * the frames array to load the texture coordinates.
+		 * @param newTexture Texture pointer to use as the new texture.
+		 * @param vertices Vertices to use to load the texture coordinates.
+		 * @param frameDetails Array of details about the frames to load.
+		 */
+		void loadTextureCoordinates(TexturePointer newTexture,
+									const VertexArray &vertices,
+									const FrameArray &frameDetails);
 	protected:
 		/**
 		 * Method called internally when the current frame is changed.

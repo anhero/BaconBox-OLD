@@ -143,6 +143,7 @@ namespace RedBox {
 					currentFrame = definition->second.frames.size() - 1;
 				}
 			}
+
 			this->currentFrameChange();
 		}
 	}
@@ -225,6 +226,7 @@ namespace RedBox {
 						startAnimation(newName);
 					}
 				}
+
 			} else {
 				Console::print("Failed to add the animation named \"");
 				Console::print(newName);
@@ -294,6 +296,11 @@ namespace RedBox {
 		}
 	}
 
+	void Animatable::clearAnimations() {
+		this->stopAnimation();
+		animations.clear();
+	}
+
 	const std::string &Animatable::getCurrentAnimation() const {
 		return currentAnimation;
 	}
@@ -334,13 +341,13 @@ namespace RedBox {
 	                                        unsigned int nbFrames) {
 		Vector2 delta(vertices.getSize());
 		Vector2 tmpOffset(offset);
-        
-        if (nbFrames == 0) {
-            unsigned int nbOfXframe = this->getTextureInformation()->imageWidth/vertices.getWidth();
-            unsigned int nbOfYframe = this->getTextureInformation()->imageHeight/vertices.getHeight();
-            nbFrames = nbOfXframe * nbOfYframe;
-        }
-        
+
+		if (nbFrames == 0) {
+			unsigned int nbOfXframe = this->getTextureInformation()->imageWidth / vertices.getWidth();
+			unsigned int nbOfYframe = this->getTextureInformation()->imageHeight / vertices.getHeight();
+			nbFrames = nbOfXframe * nbOfYframe;
+		}
+
 		frames.resize(nbFrames);
 
 		for (std::vector<TextureCoordinates>::iterator i = frames.begin();
@@ -365,6 +372,31 @@ namespace RedBox {
 	                                        unsigned int nbFrames) {
 		this->setTextureInformation(newTexture);
 		this->loadTextureCoordinates(vertices, offset, nbFrames);
+	}
+
+	void Animatable::loadTextureCoordinates(const VertexArray &vertices,
+	                                        const FrameArray &frameDetails) {
+		// We load as many frames as there are in the array of frame details.
+		frames.resize(frameDetails.size());
+		FrameArray::const_iterator itFrameDetails = frameDetails.begin();
+		std::vector<TextureCoordinates>::iterator itFrame = frames.begin();
+
+		while (itFrameDetails != frameDetails.end() &&
+		       itFrame != frames.end()) {
+			TextureMappable::loadTextureCoordinates(this->getTextureInformation(),
+			                                        vertices,
+			                                        *itFrameDetails,
+			                                        &(*itFrame));
+			++itFrameDetails;
+			++itFrame;
+		}
+	}
+
+	void Animatable::loadTextureCoordinates(TexturePointer newTexture,
+	                                        const VertexArray &vertices,
+	                                        const FrameArray &frameDetails) {
+		this->setTextureInformation(newTexture);
+		this->loadTextureCoordinates(vertices, frameDetails);
 	}
 
 	void Animatable::currentFrameChange() {

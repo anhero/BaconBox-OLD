@@ -14,9 +14,9 @@ namespace RedBox {
 
 		// We make sure the vertices are valid and that we found the frame
 		// and animations attributes.
-		if (itFrames != tmpObject.end() && itAnimations != tmpObject.end() &&
+		if (itFrames != tmpObject.end() &&
 		    ((itVertices != tmpObject.end() && StandardVertexArray::isValidValueStatic(itVertices->second)) ||
-			 (itFrameSize != tmpObject.end() && Vector2::isValidValue(itFrameSize->second)))) {
+		     (itFrameSize != tmpObject.end() && Vector2::isValidValue(itFrameSize->second)))) {
 
 			const Array &tmpArray = itFrames->second.getArray();
 			Array::const_iterator i1 = tmpArray.begin();
@@ -30,7 +30,7 @@ namespace RedBox {
 				}
 			}
 
-			if (result) {
+			if (result && itAnimations != tmpObject.end()) {
 				const Object &tmpAnimations = itAnimations->second.getObject();
 				Object::const_iterator i2 = tmpAnimations.begin();
 
@@ -77,11 +77,13 @@ namespace RedBox {
 			DefaultSerializer::serialize(frames[i], tmpFrames[i]);
 		}
 
-		Value &tmpAnimations = node["animations"];
+		if (!animations.empty()) {
+			Value &tmpAnimations = node["animations"];
 
-		for (AnimationMap::const_iterator i = animations.begin();
-		     i != animations.end(); ++i) {
-			DefaultSerializer::serialize(i->second, tmpAnimations[i->first]);
+			for (AnimationMap::const_iterator i = animations.begin();
+			     i != animations.end(); ++i) {
+				DefaultSerializer::serialize(i->second, tmpAnimations[i->first]);
+			}
 		}
 	}
 
@@ -95,8 +97,7 @@ namespace RedBox {
 		Object::const_iterator itAnimations = tmpObject.find("animations");
 
 		if ((itVertices != tmpObject.end() || itFrameSize != tmpObject.end()) &&
-		    itFrames != tmpObject.end() &&
-		    itAnimations != tmpObject.end()) {
+		    itFrames != tmpObject.end()) {
 
 			const Array &tmpArray = itFrames->second.getArray();
 			Array::const_iterator i1 = tmpArray.begin();
@@ -111,15 +112,18 @@ namespace RedBox {
 			}
 
 			if (result) {
-				const Object &tmpAnimations = itAnimations->second.getObject();
-				Object::const_iterator i2 = tmpAnimations.begin();
 
-				while (result && i2 != tmpAnimations.end()) {
-					if (AnimationDefinition::isValidValue(i2->second)) {
-						++i2;
+				if (itAnimations != tmpObject.end()) {
+					const Object &tmpAnimations = itAnimations->second.getObject();
+					Object::const_iterator i2 = tmpAnimations.begin();
 
-					} else {
-						result = false;
+					while (result && i2 != tmpAnimations.end()) {
+						if (AnimationDefinition::isValidValue(i2->second)) {
+							++i2;
+
+						} else {
+							result = false;
+						}
 					}
 				}
 
@@ -163,9 +167,10 @@ namespace RedBox {
 							}
 						}
 
-						if (result) {
+						if (result && itAnimations != tmpObject.end()) {
 							animations.clear();
-							i2 = tmpAnimations.begin();
+							const Object &tmpAnimations = itAnimations->second.getObject();
+							Object::const_iterator i2 = tmpAnimations.begin();
 
 							while (result && i2 != tmpAnimations.end()) {
 								if (DefaultSerializer::deserialize(i2->second, animations[i2->first])) {

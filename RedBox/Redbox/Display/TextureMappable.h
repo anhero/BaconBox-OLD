@@ -10,6 +10,7 @@
 #include "TexturePointer.h"
 
 namespace RedBox {
+	struct FrameDetails;
 	class VertexArray;
 	/**
 	 * All bodies that have texture coordinates are derived from this class.
@@ -23,7 +24,7 @@ namespace RedBox {
 		 * @param vertices Vertices to use to load the texture coordinates.
 		 * @param offset Offset from the upper left corner of the texture (in
 		 * pixels).
-		 * @param textureCoordinates  Pointer to the container for the loaded
+		 * @param textureCoordinates Pointer to the container for the loaded
 		 * texture coordinates. Loads as many texture coordinates as there are
 		 * vertices.
 		 */
@@ -31,6 +32,20 @@ namespace RedBox {
 		                                   const VertexArray &vertices,
 		                                   const Vector2 &offset,
 		                                   TextureCoordinates *textureCoordinates);
+
+		/**
+		 * Loads texture coordinates.
+		 * @param texture Texture pointer to use as the texture.
+		 * @param vertices Vertices to use to load the texture coordinates.
+		 * @param details Details about the frame's offset and orientation.
+		 * @param textureCoordinates Pointer to the container for the loaded
+		 * texture coordinates. Loads as many texture coordinates as there are
+		 * vertices.
+		 */
+		static void loadTextureCoordinates(TexturePointer texture,
+										   const VertexArray &vertices,
+										   const FrameDetails &details,
+										   TextureCoordinates *textureCoordinates);
 
 		/**
 		 * Default constructor.
