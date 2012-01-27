@@ -194,6 +194,9 @@ namespace RedBox {
 	}
 
 	std::ostream &operator<<(std::ostream &output, SpriteDefinition &sd) {
+		Value tmpValue;
+		DefaultSerializer::serialize(sd, tmpValue);
+		DefaultSerializer::getDefaultSerializer().writeToStream(output, tmpValue);
 
 		return output;
 	}
