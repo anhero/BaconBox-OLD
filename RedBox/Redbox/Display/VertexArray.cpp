@@ -458,7 +458,8 @@ namespace RedBox {
 		bool result = this->isValidValue(node);
 
 		if (result) {
-			for (SizeType i = 0; i < this->getNbVertices(); ++i) {
+			this->resize(node.getArray().size());
+			for (Array::size_type i = 0; i < node.getArray().size(); ++i) {
 				DefaultSerializer::deserialize(node.getArray()[i], this->operator[](i));
 			}
 		}

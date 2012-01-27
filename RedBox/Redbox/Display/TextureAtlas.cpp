@@ -71,10 +71,11 @@ namespace RedBox {
 
 	void TextureAtlas::serialize(Value &node) const {
 		DefaultSerializer::serialize(textureDefinition, node["textureDefinition"]);
+		Value &tmpSpriteDefinitions = node["spriteDefinitions"];
 
 		for (SpriteMap::const_iterator i = spriteDefinitions.begin();
 		     i != spriteDefinitions.end(); ++i) {
-			DefaultSerializer::serialize(i->second, node[i->first]);
+			DefaultSerializer::serialize(i->second, tmpSpriteDefinitions[i->first]);
 		}
 	}
 
