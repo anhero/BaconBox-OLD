@@ -1,22 +1,27 @@
 #!/bin/bash
 #Libraries to build
 
-
 libraries+=( 'zlib' )
 libraries+=( 'freetype' )
 libraries+=( 'libpng' )
 
-if [ ${libs_target-} != "ios" ]; then
+# For ports which aren't using OGG/Vorbis
+if [[ ${libs_target-} != "ios" ]]; then
 	libraries+=( 'libogg' )
 	libraries+=( 'libvorbis' )
-	#libraries+=( 'libvorbis-tremor' )
 fi
 
-if [ ${libs_target-} != "ios" -a ${libs_target-} != "android" ]; then
+# For ports which aren't using SDL
+if [[ ${libs_target-} != "ios"     ]] &&
+   [[ ${libs_target-} != "android" ]]; then
 	libraries+=( 'sdl' )
 	libraries+=( 'sdl_mixer' )
 fi
 
-libraries+=( 'sigly' )
+# Serialization libraries
 libraries+=( 'jsonbox' )
+libraries+=( 'tinyxml' )
 
+libraries+=( 'sigly' )
+
+# vim: ft=sh

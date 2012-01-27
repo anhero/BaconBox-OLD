@@ -1,0 +1,109 @@
+#!/bin/bash
+
+_name="tinyxml"
+_license="zlib/libpng License" 
+
+_version="2.6.2"
+_archive="${_name}_${_version//./_}.tar.gz"
+_archive_url="http://downloads.sourceforge.net/sourceforge/$_name/${_archive}"
+
+_hash="c1b864c96804a10526540c664ade67f0" # 2.6.2
+
+
+build() {
+	cd "${lib_workdir}"
+	cd tinyxml
+
+	#Patch for building as a library
+	#from: http://sourceforge.net/projects/tinyxml/forums/forum/172103/topic/1669956
+	patch -p1 <<'EOF'
+--- old/Makefile	2011-05-14 22:24:57.000000000 -0400
++++ new/Makefile	2012-01-26 18:27:54.676998460 -0500
+@@ -17,6 +17,11 @@
+ # will not be used. YES will include the STL files.
+ TINYXML_USE_STL := NO
+ 
++# TINYXML_CREATE_LIB can be used to create a basic static library for tinyxml
++# YES will create libtinyxml.a and static link to xmltrest
++# NO will not create the library and link all as .o files
++TINYXML_CREATE_LIB := NO
++
+ #****************************************************************************
+ 
+ CC     := gcc
+@@ -83,26 +88,46 @@
+ 
+ OUTPUT := xmltest
+ 
+-all: ${OUTPUT}
++ifeq (YES, ${TINYXML_CREATE_LIB})
++  XMLLIB := libtinyxml.a
++  LIBS := -L. -ltinyxml
++else
++  XMLLIB := 
++endif
++
++all: ${XMLLIB} ${OUTPUT}
++ 
+ 
+ 
+ #****************************************************************************
+ # Source files
+ #****************************************************************************
+ 
+-SRCS := tinyxml.cpp tinyxmlparser.cpp xmltest.cpp tinyxmlerror.cpp tinystr.cpp
++ifeq (YES, ${TINYXML_CREATE_LIB})
++  SRCS := xmltest.o
++  LIB_SRCS := tinyxml.cpp tinyxmlparser.cpp tinyxmlerror.cpp tinystr.cpp
++else
++  SRCS := tinyxml.cpp tinyxmlparser.cpp tinyxmlerror.cpp tinystr.cpp xmltest.o
++endif
+ 
+ # Add on the sources for libraries
+ SRCS := ${SRCS}
+ 
+ OBJS := $(addsuffix .o,$(basename ${SRCS}))
++LIB_OBJS := $(addsuffix .o,$(basename ${LIB_SRCS}))
+ 
+ #****************************************************************************
+ # Output
+ #****************************************************************************
+ 
+-${OUTPUT}: ${OBJS}
++${OUTPUT}: ${OBJS} ${LIB_OBJS}
+ 	${LD} -o $@ ${LDFLAGS} ${OBJS} ${LIBS} ${EXTRA_LIBS}
++ 
++ifeq (YES, ${TINYXML_CREATE_LIB})
++${XMLLIB}: ${LIB_OBJS}
++	${AR} ${XMLLIB} ${LIB_OBJS}
++endif
++
+ 
+ #****************************************************************************
+ # common rules
+@@ -119,7 +144,7 @@
+ 	bash makedistlinux
+ 
+ clean:
+-	-rm -f core ${OBJS} ${OUTPUT}
++	-rm -f core ${OBJS} ${LIB_OBJS} ${OUTPUT} ${XMLLIB}
+ 
+ depend:
+ 	#makedepend ${INCS} ${SRCS}
+EOF
+	
+	make TINYXML_CREATE_LIB=YES TINYXML_USE_STL=YES libtinyxml.a
+
+	echo "Manually installing files."
+
+	mkdir -p "${libs_builddir}/lib"
+	mkdir -p "${libs_builddir}/include/"
+
+	cp -prf libtinyxml.a "${libs_builddir}/lib/"
+	cp -prf tinyxml.h "${libs_builddir}/include/"
+}
+
+
+load_base http.fetch
+
+# vim: ft=sh

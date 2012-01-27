@@ -127,3 +127,5 @@ EOPATCH
 	#Then build
 	__build
 }
+
+# vim: ft=sh

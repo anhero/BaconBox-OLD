@@ -50,3 +50,5 @@ function build() {
 	fi
 
 }
+
+# vim: ft=sh

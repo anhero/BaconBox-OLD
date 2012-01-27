@@ -20,3 +20,5 @@ function build() {
 	mv sigly.h "${libs_builddir}/include/" || exit 1
 	echo done.
 }
+
+# vim: ft=sh

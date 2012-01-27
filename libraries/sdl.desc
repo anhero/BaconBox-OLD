@@ -47,3 +47,5 @@ EOF
 
 	__build
 }
+
+# vim: ft=sh
