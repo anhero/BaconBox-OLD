@@ -10,35 +10,39 @@ namespace RedBox {
 	const Object Value::EMPTY_OBJECT = Object();
 	const Array Value::EMPTY_ARRAY = Array();
 
-	Value::Value() : type(NULL_VALUE), data() {
+	Value::Value() : type(NULL_VALUE), data(), attribute(false) {
 	}
 
 	Value::Value(const std::string &newString) : type(STRING),
-		data(new std::string(newString)) {
+		data(new std::string(newString)), attribute(false) {
 	}
 
 	Value::Value(const char *newCString) : type(STRING),
-		data(new std::string(newCString)) {
+		data(new std::string(newCString)), attribute(false) {
 	}
 
-	Value::Value(int newInt) : type(INTEGER), data(new int(newInt)) {
+	Value::Value(int newInt) : type(INTEGER), data(new int(newInt)),
+		attribute(false) {
 	}
 
-	Value::Value(double newDouble) : type(DOUBLE), data(new double(newDouble)) {
+	Value::Value(double newDouble) : type(DOUBLE), data(new double(newDouble)),
+		attribute(false) {
 	}
 
 	Value::Value(const Object &newObject) : type(OBJECT),
-		data(new Object(newObject)) {
+		data(new Object(newObject)), attribute(false) {
 	}
 
 	Value::Value(const Array &newArray) : type(ARRAY),
-		data(new Array(newArray)) {
+		data(new Array(newArray)), attribute(false) {
 	}
 
-	Value::Value(bool newBool) : type(BOOLEAN), data(new bool(newBool)) {
+	Value::Value(bool newBool) : type(BOOLEAN), data(new bool(newBool)),
+		attribute(false) {
 	}
 
-	Value::Value(const Value &src) : type(src.type), data() {
+	Value::Value(const Value &src) : type(src.type), data(),
+		attribute(src.attribute) {
 		switch (type) {
 		case STRING:
 			data.stringValue = new std::string(*src.data.stringValue);
@@ -109,6 +113,8 @@ namespace RedBox {
 				data.stringValue = NULL;
 				break;
 			}
+
+			attribute = src.attribute;
 		}
 
 		return *this;
@@ -287,6 +293,21 @@ namespace RedBox {
 		clear();
 		type = NULL_VALUE;
 		data.stringValue = NULL;
+	}
+
+	bool Value::isAttribute() const {
+		return attribute;
+	}
+
+	void Value::setAttribute(bool newAttribute) {
+		if (newAttribute) {
+			if (type != ARRAY && type != OBJECT && type != NULL_VALUE) {
+				attribute = newAttribute;
+			}
+
+		} else {
+			attribute = false;
+		}
 	}
 
 	Value::ValueDataPointer::ValueDataPointer(): stringValue(NULL) {

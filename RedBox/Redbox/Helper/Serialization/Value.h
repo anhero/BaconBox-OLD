@@ -281,6 +281,24 @@ namespace RedBox {
 		 * Sets the value as a null value.
 		 */
 		void setNull();
+
+		/**
+		 * Checks wether or not the value is an attribute. Used mainly by XML
+		 * serializers. Ignored by the JSON serializers.
+		 * @return True if the value is an attribute.
+		 * @see RedBox::Value::attribute
+		 */
+		bool isAttribute() const;
+
+		/**
+		 * Sets wether or not the value is an attribute. Useful mainly for the
+		 * XML serializers.
+		 * @param newAttribute Set this parameter to true to make the value an
+		 * attribute. Will only be set correctly if the value is neither an
+		 * array, a null value nor an object.
+		 * @see RedBox::Value::attribute
+		 */
+		void setAttribute(bool newAttribute);
 	private:
 		/**
 		 * Union used to contain the pointer to the value's data.
@@ -388,6 +406,13 @@ namespace RedBox {
 
 		/// Pointer to the Value's data.
 		ValueDataPointer data;
+
+		/**
+		 * True if the value is an attribute (used by XML serialiers). The value
+		 * cannot be an array or an object if this member is set to true. False
+		 * by default.
+		 */
+		bool attribute;
 	};
 }
 
