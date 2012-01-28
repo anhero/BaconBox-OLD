@@ -7,7 +7,5 @@ list(APPEND Private_RedBox_Headers ${RedBox_RedBox_Helper_Serialization_TinyXML_
 list(APPEND RedBoxHeaders ${RedBox_RedBox_Helper_Serialization_TinyXML_Headers})
 list(APPEND RedBoxSources ${RedBox_RedBox_Helper_Serialization_TinyXML_Sources})
 
-ADD_DEFINITIONS("-DTIXML_USE_STL")
-
 source_group(RedBox\\Helper\\Serialization\\TinyXML  FILES ${RedBox_RedBox_Helper_Serialization_TinyXML_Sources} ${RedBox_RedBox_Helper_Serialization_TinyXML_Headers})
 

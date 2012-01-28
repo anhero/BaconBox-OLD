@@ -157,6 +157,8 @@ link_directories( ${RedBox_BINARY_DIR}/Dependencies/lib/)
 		
 
 list(APPEND RedBox_libraries_list JsonBox)
+list(APPEND RedBox_libraries_list tinyxml)
+ADD_DEFINITIONS("-DTIXML_USE_STL")
 
 	add_library(RedBox STATIC ${RedBoxSources} ${RedBoxHeaders})
 	target_link_libraries(
