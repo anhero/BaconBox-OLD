@@ -43,13 +43,14 @@ namespace RedBox {
 		 * an example.
 		 * @param input Instance of custom type to serialize.
 		 * @param node Value to serialize to.
+		 * @param setName Wether or not we need to set the name.
 		 * @tparam T Type of the instance to be serialized.
 		 * @see RedBox::Serializable
 		 * @see RedBox::Vector2T<T>
 		 */
 		template <typename T>
-		static void serialize(const T &input, Value &node) {
-			input.serialize(node);
+		static void serialize(const T &input, Value &node, bool setName = true) {
+			input.serialize(node, setName);
 		}
 
 		/**

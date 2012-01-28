@@ -68,13 +68,17 @@ namespace RedBox {
 		return *this;
 	}
 
-	void SpriteDefinition::serialize(Value &node) const {
-		DefaultSerializer::serialize(vertices, node["vertices"]);
+	void SpriteDefinition::serialize(Value &node, bool setName) const {
+		if (setName) {
+			node.setName("SpriteDefinition");
+		}
+
+		DefaultSerializer::serialize(vertices, node["vertices"], false);
 		Value &tmpFrames = node["frames"];
 		tmpFrames.setArray(Array(frames.size()));
 
 		for (FrameArray::size_type i = 0; i < frames.size(); ++i) {
-			DefaultSerializer::serialize(frames[i], tmpFrames[i]);
+			DefaultSerializer::serialize(frames[i], tmpFrames[i], false);
 		}
 
 		if (!animations.empty()) {
@@ -82,7 +86,7 @@ namespace RedBox {
 
 			for (AnimationMap::const_iterator i = animations.begin();
 			     i != animations.end(); ++i) {
-				DefaultSerializer::serialize(i->second, tmpAnimations[i->first]);
+				DefaultSerializer::serialize(i->second, tmpAnimations[i->first], false);
 			}
 		}
 	}

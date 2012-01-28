@@ -299,6 +299,21 @@ namespace RedBox {
 		 * @see RedBox::Value::attribute
 		 */
 		void setAttribute(bool newAttribute);
+
+		/**
+		 * Gets the name of the value.
+		 * @return Name of the value. If it doesn't have one, the string will be
+		 * empty.
+		 * @see RedBox::Value::name
+		 */
+		const std::string &getName() const;
+
+		/**
+		 * Sets the name of the value.
+		 * @param newName New name of the value.
+		 * @see RedBox::Value::name
+		 */
+		void setName(const std::string &newName);
 	private:
 		/**
 		 * Union used to contain the pointer to the value's data.
@@ -413,6 +428,13 @@ namespace RedBox {
 		 * by default.
 		 */
 		bool attribute;
+
+		/**
+		 * Name of the value. Usually the name of the type. Used by some
+		 * serialization formats (like XML) for the root value. Values that are
+		 * never a root node do not need to set this.
+		 */
+		std::string name;
 	};
 }
 

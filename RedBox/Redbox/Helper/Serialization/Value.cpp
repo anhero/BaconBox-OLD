@@ -10,39 +10,39 @@ namespace RedBox {
 	const Object Value::EMPTY_OBJECT = Object();
 	const Array Value::EMPTY_ARRAY = Array();
 
-	Value::Value() : type(NULL_VALUE), data(), attribute(false) {
+	Value::Value() : type(NULL_VALUE), data(), attribute(false), name() {
 	}
 
 	Value::Value(const std::string &newString) : type(STRING),
-		data(new std::string(newString)), attribute(false) {
+		data(new std::string(newString)), attribute(false), name() {
 	}
 
 	Value::Value(const char *newCString) : type(STRING),
-		data(new std::string(newCString)), attribute(false) {
+		data(new std::string(newCString)), attribute(false), name() {
 	}
 
 	Value::Value(int newInt) : type(INTEGER), data(new int(newInt)),
-		attribute(false) {
+		attribute(false), name() {
 	}
 
 	Value::Value(double newDouble) : type(DOUBLE), data(new double(newDouble)),
-		attribute(false) {
+		attribute(false), name() {
 	}
 
 	Value::Value(const Object &newObject) : type(OBJECT),
-		data(new Object(newObject)), attribute(false) {
+		data(new Object(newObject)), attribute(false), name() {
 	}
 
 	Value::Value(const Array &newArray) : type(ARRAY),
-		data(new Array(newArray)), attribute(false) {
+		data(new Array(newArray)), attribute(false), name() {
 	}
 
 	Value::Value(bool newBool) : type(BOOLEAN), data(new bool(newBool)),
-		attribute(false) {
+		attribute(false), name() {
 	}
 
 	Value::Value(const Value &src) : type(src.type), data(),
-		attribute(src.attribute) {
+		attribute(src.attribute), name(src.name) {
 		switch (type) {
 		case STRING:
 			data.stringValue = new std::string(*src.data.stringValue);
@@ -115,6 +115,7 @@ namespace RedBox {
 			}
 
 			attribute = src.attribute;
+			name = src.name;
 		}
 
 		return *this;
@@ -308,6 +309,14 @@ namespace RedBox {
 		} else {
 			attribute = false;
 		}
+	}
+
+	const std::string &Value::getName() const {
+		return name;
+	}
+
+	void Value::setName(const std::string &newName) {
+		name = newName;
 	}
 
 	Value::ValueDataPointer::ValueDataPointer(): stringValue(NULL) {

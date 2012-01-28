@@ -446,11 +446,14 @@ namespace RedBox {
 		return result;
 	}
 
-	void VertexArray::serialize(Value &node) const {
+	void VertexArray::serialize(Value &node, bool setName) const {
+		if (setName) {
+			node.setName("VertexArray");
+		}
 		node.setArray(Array(this->getNbVertices()));
 
 		for (SizeType i = 0; i < this->getNbVertices(); ++i) {
-			DefaultSerializer::serialize(this->operator[](i), node[i]);
+			DefaultSerializer::serialize(this->operator[](i), node[i], false);
 		}
 	}
 

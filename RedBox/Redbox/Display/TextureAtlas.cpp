@@ -69,13 +69,16 @@ namespace RedBox {
 		return ResourceManager::loadTextureRelativePath(textureDefinition.key, textureDefinition.filePath);
 	}
 
-	void TextureAtlas::serialize(Value &node) const {
-		DefaultSerializer::serialize(textureDefinition, node["textureDefinition"]);
+	void TextureAtlas::serialize(Value &node, bool setName) const {
+		if (setName) {
+			node.setName("TextureAtlas");
+		}
+		DefaultSerializer::serialize(textureDefinition, node["textureDefinition"], false);
 		Value &tmpSpriteDefinitions = node["spriteDefinitions"];
 
 		for (SpriteMap::const_iterator i = spriteDefinitions.begin();
 		     i != spriteDefinitions.end(); ++i) {
-			DefaultSerializer::serialize(i->second, tmpSpriteDefinitions[i->first]);
+			DefaultSerializer::serialize(i->second, tmpSpriteDefinitions[i->first], false);
 		}
 	}
 

@@ -575,9 +575,13 @@ namespace RedBox {
 		/**
 		 * Serializes the instance to a Value.
 		 * @param node Value to serialize the Vector2T to.
+		 * @param setName Wether or not we need to set the name.
 		 * @see RedBox::DefaultSerializer
 		 */
-		void serialize(Value &node) const {
+		void serialize(Value &node, bool setName = true) const {
+			if (setName) {
+				node.setName("Vector2T");
+			}
 			// We set the value's attributes correctly.
 			node["x"].setDouble(static_cast<double>(getX()));
 			node["y"].setDouble(static_cast<double>(getY()));

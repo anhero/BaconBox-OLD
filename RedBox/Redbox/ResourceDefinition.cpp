@@ -36,7 +36,10 @@ namespace RedBox {
 		return *this;
 	}
 
-	void ResourceDefinition::serialize(Value &node) const {
+	void ResourceDefinition::serialize(Value &node, bool setName) const {
+		if (setName) {
+			node.setName("ResourceDefinition");
+		}
 		node["key"] = key;
 		node["filePath"] = filePath;
 	}

@@ -81,8 +81,9 @@ namespace RedBox {
 		/**
 		 * Serializes the frame details to a Value.
 		 * @param node Value to serialize the frame details to.
+		 * @param setName Wether or not we need to set the name.
 		 */
-		void serialize(Value &node) const;
+		void serialize(Value &node, bool setName = true) const;
 
 		/**
 		 * Deserializes the frame details from a Value.

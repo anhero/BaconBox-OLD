@@ -59,8 +59,9 @@ namespace RedBox {
 		/**
 		 * Serializes the animation definition to a Value.
 		 * @param node Value to serialize the animation definition to.
+		 * @param setName Wether or not we need to set the name.
 		 */
-		void serialize(Value &node) const;
+		void serialize(Value &node, bool setName = true) const;
 
 		/**
 		 * Deserializes the animation definition from a Value.

@@ -345,8 +345,9 @@ namespace RedBox {
 		/**
 		 * Serializes the instance to a Value.
 		 * @param node Node to serialize the instance into.
+		 * @param setName Wether or not we need to set the name.
 		 */
-		virtual void serialize(Value &node) const;
+		virtual void serialize(Value &node, bool setName = true) const;
 
 		/**
 		 * Deserializes the instance from a Value.

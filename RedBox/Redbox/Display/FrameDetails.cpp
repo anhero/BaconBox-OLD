@@ -43,8 +43,12 @@ namespace RedBox {
 		return *this;
 	}
 
-	void FrameDetails::serialize(Value &node) const {
-		DefaultSerializer::serialize(position, node["position"]);
+	void FrameDetails::serialize(Value &node, bool setName) const {
+		if (setName) {
+			node.setName("FrameDetails");
+		}
+
+		DefaultSerializer::serialize(position, node["position"], false);
 
 		switch (orientation.underlying()) {
 		case Orientation::NORTH:

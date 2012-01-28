@@ -59,7 +59,11 @@ namespace RedBox {
 		return *this;
 	}
 
-	void AnimationDefinition::serialize(Value &node) const {
+	void AnimationDefinition::serialize(Value &node, bool setName) const {
+		if (setName) {
+			node.setName("AnimationDefinition");
+		}
+
 		node["nbLoops"].setInt(nbLoops);
 		node["timePerFrame"].setDouble(timePerFrame);
 		Value &tmpValue = node["frames"];
