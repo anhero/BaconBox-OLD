@@ -5,9 +5,13 @@
 #include "Console.h"
 
 namespace RedBox {
-	void xmlToValue(const TiXmlNode &element, Value &value);
+	void elementToValue(const TiXmlElement &element, Value &value);
 
-	void valueToXml(const Value &value, TiXmlNode &element);
+	void valueToElement(const Value &value, TiXmlElement &element);
+
+	void attributeToValue(const TiXmlAttribute &attribute, Value &value);
+
+	void valueToAttribute(const Value &value, TiXmlAttribute &attribute);
 
 	TinyXMLSerializer::TinyXMLSerializer() : Serializer() {
 	}
@@ -69,9 +73,29 @@ namespace RedBox {
 		return result;
 	}
 
-	void xmlToValue(const TiXmlNode &element, Value &value) {
+	void elementToValue(const TiXmlElement &element, Value &value) {
+		// We make sure to set that the value is not an attribute.
+		value.setAttribute(false);
+
+		// We first check if we have to make the value an array or an object.
+		bool isArray = element.FirstAttribute() != NULL && element.FirstChild() != NULL;
+
+		// We start by converting the attributes.
+		const TiXmlAttribute *attribute = element.FirstAttribute();
+
+		while (attribute) {
+			attributeToValue(*attribute, value[attribute->Name()]);
+			attribute = attribute->Next();
+		}
 	}
 
-	void valueToXml(const Value &value, TiXmlNode &element) {
+	void valueToElement(const Value &value, TiXmlElement &element) {
+	}
+
+	void attributeToValue(const TiXmlAttribute &attribute, Value &value) {
+		value.setAttribute(true);
+	}
+
+	void valueToAttribute(const Value &value, TiXmlAttribute &attribute) {
 	}
 }
