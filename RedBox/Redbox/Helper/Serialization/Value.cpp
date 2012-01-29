@@ -2,6 +2,7 @@
 
 #include <sstream>
 
+#include "DefaultSerializer.h"
 #include "Serializer.h"
 
 namespace RedBox {
@@ -275,6 +276,29 @@ namespace RedBox {
 		}
 	}
 
+	void Value::resizeArray(Array::size_type newSize,
+	                        const Value defaultValue) {
+		if (type == ARRAY) {
+			data.arrayValue->resize(newSize, defaultValue);
+
+		} else {
+			clear();
+			type = ARRAY;
+			data.arrayValue = new Array(newSize, defaultValue);
+		}
+	}
+
+	void Value::pushBackArray(const Value &newValue) {
+		if (type == ARRAY) {
+			data.arrayValue->push_back(newValue);
+
+		} else {
+			clear();
+			type = ARRAY;
+			data.arrayValue = new Array(1, newValue);
+		}
+	}
+
 	bool Value::getBool() const {
 		return (type == BOOLEAN) ? (*data.boolValue) : (EMPTY_BOOL);
 	}
@@ -375,5 +399,10 @@ namespace RedBox {
 		default:
 			break;
 		}
+	}
+
+	std::ostream &operator<<(std::ostream &output, const Value &value) {
+		DefaultSerializer::getDefaultSerializer().writeToStream(output, value);
+		return output;
 	}
 }

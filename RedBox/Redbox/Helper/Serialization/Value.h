@@ -5,6 +5,8 @@
 #ifndef RB_VALUE_H
 #define RB_VALUE_H
 
+#include <iostream>
+
 #include "Object.h"
 #include "Array.h"
 
@@ -264,6 +266,23 @@ namespace RedBox {
 		void setArray(const Array &newArray);
 
 		/**
+		 * Resizes the array. If it isn't an array, it will change the value to
+		 * be an array.
+		 * @param newSize New size of the array.
+		 * @param defaultValue If the new size is bigger, this value will be
+		 * used as the value to insert.
+		 */
+		void resizeArray(Array::size_type newSize,
+						 const Value defaultValue = Value());
+
+		/**
+		 * Adds a value to the end of the array. If the value is not an array,
+		 * it will change to value to an array that will contain one value.
+		 * @param newValue New value to insert.
+		 */
+		void pushBackArray(const Value &newValue = Value());
+
+		/**
 		 * Gets the value's boolean value.
 		 * @return Value's boolean value, or false if the value doesn't contain
 		 * a boolean.
@@ -436,6 +455,8 @@ namespace RedBox {
 		 */
 		std::string name;
 	};
+
+	std::ostream &operator<<(std::ostream &output, const Value &value);
 }
 
 #endif
