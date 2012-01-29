@@ -11,39 +11,45 @@ namespace RedBox {
 	const Object Value::EMPTY_OBJECT = Object();
 	const Array Value::EMPTY_ARRAY = Array();
 
-	Value::Value() : type(NULL_VALUE), data(), attribute(false), name() {
+	Value::Value() : type(NULL_VALUE), data(), attribute(false), name(),
+		arrayOfSameTypes(false) {
 	}
 
 	Value::Value(const std::string &newString) : type(STRING),
-		data(new std::string(newString)), attribute(false), name() {
+		data(new std::string(newString)), attribute(false), name(),
+		arrayOfSameTypes(false) {
 	}
 
 	Value::Value(const char *newCString) : type(STRING),
-		data(new std::string(newCString)), attribute(false), name() {
+		data(new std::string(newCString)), attribute(false), name(),
+		arrayOfSameTypes(false) {
 	}
 
 	Value::Value(int newInt) : type(INTEGER), data(new int(newInt)),
-		attribute(false), name() {
+		attribute(false), name(), arrayOfSameTypes(false) {
 	}
 
 	Value::Value(double newDouble) : type(DOUBLE), data(new double(newDouble)),
-		attribute(false), name() {
+		attribute(false), name(), arrayOfSameTypes(false) {
 	}
 
 	Value::Value(const Object &newObject) : type(OBJECT),
-		data(new Object(newObject)), attribute(false), name() {
+		data(new Object(newObject)), attribute(false), name(),
+		arrayOfSameTypes(false) {
 	}
 
 	Value::Value(const Array &newArray) : type(ARRAY),
-		data(new Array(newArray)), attribute(false), name() {
+		data(new Array(newArray)), attribute(false), name(),
+		arrayOfSameTypes(false) {
 	}
 
 	Value::Value(bool newBool) : type(BOOLEAN), data(new bool(newBool)),
-		attribute(false), name() {
+		attribute(false), name(), arrayOfSameTypes(false) {
 	}
 
 	Value::Value(const Value &src) : type(src.type), data(),
-		attribute(src.attribute), name(src.name) {
+		attribute(src.attribute), name(src.name),
+		arrayOfSameTypes(src.arrayOfSameTypes) {
 		switch (type) {
 		case STRING:
 			data.stringValue = new std::string(*src.data.stringValue);
@@ -76,12 +82,12 @@ namespace RedBox {
 	}
 
 	Value::~Value() {
-		clear();
+		free();
 	}
 
 	Value &Value::operator=(const Value &src) {
 		if (this != &src) {
-			clear();
+			free();
 			type = src.type;
 
 			switch (type) {
@@ -117,6 +123,7 @@ namespace RedBox {
 
 			attribute = src.attribute;
 			name = src.name;
+			arrayOfSameTypes = src.arrayOfSameTypes;
 		}
 
 		return *this;
@@ -151,7 +158,7 @@ namespace RedBox {
 	}
 
 	bool Value::isStringable() const {
-		return type == STRING || type == INTEGER || type == DOUBLE;
+		return type != ARRAY && type != OBJECT;
 	}
 
 	bool Value::isInteger() const {
@@ -187,21 +194,35 @@ namespace RedBox {
 	}
 
 	const std::string Value::getToString() const {
+
 		if (type == STRING) {
 			return *data.stringValue;
 
-		} else if (type == INTEGER) {
-			std::stringstream ss;
-			ss << *data.intValue;
-			return ss.str();
-
-		} else if (type == DOUBLE) {
-			std::stringstream ss;
-			ss << *data.doubleValue;
-			return ss.str();
-
 		} else {
-			return EMPTY_STRING;
+			std::stringstream ss;
+
+			switch (type) {
+			case INTEGER:
+				ss << *data.intValue;
+				break;
+
+			case DOUBLE:
+				ss << *data.doubleValue;
+				break;
+
+			case BOOLEAN:
+				ss << ((*data.boolValue) ? ("true") : ("false"));
+				break;
+
+			case NULL_VALUE:
+				ss << "null";
+				break;
+
+			default:
+				break;
+			}
+
+			return ss.str();
 		}
 	}
 
@@ -270,7 +291,7 @@ namespace RedBox {
 			*data.arrayValue = newArray;
 
 		} else {
-			clear();
+			free();
 			type = ARRAY;
 			data.arrayValue = new Array(newArray);
 		}
@@ -325,14 +346,7 @@ namespace RedBox {
 	}
 
 	void Value::setAttribute(bool newAttribute) {
-		if (newAttribute) {
-			if (type != ARRAY && type != OBJECT && type != NULL_VALUE) {
-				attribute = newAttribute;
-			}
-
-		} else {
-			attribute = false;
-		}
+		attribute = isStringable() && newAttribute;
 	}
 
 	const std::string &Value::getName() const {
@@ -341,6 +355,14 @@ namespace RedBox {
 
 	void Value::setName(const std::string &newName) {
 		name = newName;
+	}
+
+	bool Value::isArrayOfSameTypes() const {
+		return arrayOfSameTypes;
+	}
+
+	void Value::setArrayOfSameTypes(bool newArrayOfSameTypes) {
+		arrayOfSameTypes = (type == ARRAY) && newArrayOfSameTypes;
 	}
 
 	Value::ValueDataPointer::ValueDataPointer(): stringValue(NULL) {
@@ -371,6 +393,11 @@ namespace RedBox {
 	}
 
 	void Value::clear() {
+		arrayOfSameTypes = false;
+		free();
+	}
+
+	void Value::free() {
 		switch (type) {
 		case STRING:
 			delete data.stringValue;

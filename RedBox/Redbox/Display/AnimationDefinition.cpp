@@ -68,6 +68,7 @@ namespace RedBox {
 		node["timePerFrame"].setDouble(timePerFrame);
 		Value &tmpValue = node["frames"];
 		tmpValue.setArray(Array(frames.size()));
+		tmpValue.setArrayOfSameTypes(true);
 
 		for (std::vector<unsigned int>::size_type i = 0; i < frames.size(); ++i) {
 			tmpValue[i].setInt(static_cast<int>(frames[i]));

@@ -451,6 +451,7 @@ namespace RedBox {
 			node.setName("VertexArray");
 		}
 		node.setArray(Array(this->getNbVertices()));
+		node.setArrayOfSameTypes(true);
 
 		for (SizeType i = 0; i < this->getNbVertices(); ++i) {
 			DefaultSerializer::serialize(this->operator[](i), node[i], false);

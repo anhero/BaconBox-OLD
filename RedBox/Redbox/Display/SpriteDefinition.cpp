@@ -76,6 +76,7 @@ namespace RedBox {
 		DefaultSerializer::serialize(vertices, node["vertices"], false);
 		Value &tmpFrames = node["frames"];
 		tmpFrames.setArray(Array(frames.size()));
+		tmpFrames.setArrayOfSameTypes(true);
 
 		for (FrameArray::size_type i = 0; i < frames.size(); ++i) {
 			DefaultSerializer::serialize(frames[i], tmpFrames[i], false);

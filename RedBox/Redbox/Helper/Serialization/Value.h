@@ -333,6 +333,21 @@ namespace RedBox {
 		 * @see RedBox::Value::name
 		 */
 		void setName(const std::string &newName);
+
+		/**
+		 * Checks if the value is an array that contains all values of the same
+		 * type.
+		 * @return True if the array contains elements of the same type.
+		 */
+		bool isArrayOfSameTypes() const;
+
+		/**
+		 * Sets wether or not the value is an array that contains all values of
+		 * the same type.
+		 * @param newArrayOfSameTypes New boolean value. Ignored if the value is
+		 * not an array.
+		 */
+		void setArrayOfSameTypes(bool newArrayOfSameTypes);
 	private:
 		/**
 		 * Union used to contain the pointer to the value's data.
@@ -431,9 +446,14 @@ namespace RedBox {
 		static const bool EMPTY_BOOL = false;
 
 		/**
-		 * Frees up the dynamic memory allocated by the value.
+		 * Resets the value.
 		 */
 		void clear();
+
+		/**
+		 * Frees up the dynamic memory allocated by the value.
+		 */
+		void free();
 
 		/// Type of data the value contains.
 		Type type;
@@ -447,6 +467,9 @@ namespace RedBox {
 		 * by default.
 		 */
 		bool attribute;
+
+		/// Set to true if the value contains an array of all the same types.
+		bool arrayOfSameTypes;
 
 		/**
 		 * Name of the value. Usually the name of the type. Used by some

@@ -25,6 +25,10 @@ namespace RedBox {
 
 	void textToValue(const std::string &text, Value &value);
 
+	void arrayToElement(const Array &array, TiXmlElement &element);
+
+	void objectToElement(const Object &object, TiXmlElement &element);
+
 	TinyXMLSerializer::TinyXMLSerializer() : Serializer() {
 	}
 
@@ -74,6 +78,7 @@ namespace RedBox {
 
 		// We make sure the document has a root element.
 		if (root) {
+			value.setName(root->Value());
 			// We convert the root element into a value.
 			elementToValue(*root, value);
 
@@ -149,6 +154,7 @@ namespace RedBox {
 						if (!found.isArray()) {
 							Value tmp(found);
 							found.setArray(Array(1, tmp));
+							found.setArrayOfSameTypes(true);
 						}
 
 						found.pushBackArray();
@@ -164,6 +170,86 @@ namespace RedBox {
 	}
 
 	void valueToElement(const Value &value, TiXmlElement &element) {
+		// If the value to convert is an array.
+		if (value.isArray()) {
+			arrayToElement(value.getArray(), element);
+
+			// If the value to convert is an object.
+
+		} else if (value.isObject()) {
+			objectToElement(value.getObject(), element);
+
+			// If it's a numeric, a string, a boolean or a null value.
+
+		} else {
+			TiXmlText *newChildText = new TiXmlText(value.getToString());
+			element.LinkEndChild(newChildText);
+		}
+	}
+
+	void arrayToElement(const Array &array, TiXmlElement &element) {
+		TiXmlText *newChildText;
+		TiXmlElement *newChildElement;
+
+		// We check each element of the array.
+		for (Array::const_iterator i = array.begin();
+		     i != array.end(); ++i) {
+			// If the element in the array is an object.
+			if (i->isObject()) {
+				objectToElement(i->getObject(), element);
+
+			} else if (i->isArray()) {
+				arrayToElement(i->getArray(), element);
+
+			} else if (i->isStringable()) {
+				newChildText = new TiXmlText(i->getToString());
+				element.LinkEndChild(newChildText);
+			}
+		}
+	}
+
+	void objectToElement(const Object &object, TiXmlElement &element) {
+		TiXmlElement *newChild;
+
+		// We check each values in the object.
+		for (Object::const_iterator i = object.begin();
+		     i != object.end(); ++i) {
+			// If the value is an attribute.
+			if (i->second.isAttribute()) {
+				// We check if it can be converted to a string, if
+				// not, we'll make it a normal element.
+				if (i->second.isStringable()) {
+					// We set the attribute.
+					element.SetAttribute(i->first, i->second.getToString());
+
+				} else {
+					// We create a new element and add it to the
+					// current element.
+					newChild = new TiXmlElement(i->first);
+					valueToElement(i->second, *newChild);
+					element.LinkEndChild(newChild);
+				}
+
+			} else {
+				if (i->second.isArrayOfSameTypes()) {
+					const Array &tmpArray = i->second.getArray();
+
+					for (Array::const_iterator j = tmpArray.begin();
+					     j != tmpArray.end(); ++j) {
+						newChild = new TiXmlElement(i->first);
+						valueToElement(*j, *newChild);
+						element.LinkEndChild(newChild);
+					}
+
+				} else {
+					// We create a new element and add it to the current
+					// element.
+					newChild = new TiXmlElement(i->first);
+					valueToElement(i->second, *newChild);
+					element.LinkEndChild(newChild);
+				}
+			}
+		}
 	}
 
 	void attributeToValue(const TiXmlAttribute &attribute, Value &value) {
@@ -172,6 +258,9 @@ namespace RedBox {
 	}
 
 	void valueToAttribute(const Value &value, TiXmlAttribute &attribute) {
+		if (value.isStringable()) {
+			attribute.SetValue(value.getToString());
+		}
 	}
 
 	void textToValue(const std::string &text, Value &value) {
