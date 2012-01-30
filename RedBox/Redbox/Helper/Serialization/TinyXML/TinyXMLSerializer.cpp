@@ -1,5 +1,7 @@
 #include "TinyXMLSerializer.h"
 
+#include <cstring>
+
 #include <set>
 #include <sstream>
 #include <algorithm>
@@ -189,7 +191,6 @@ namespace RedBox {
 
 	void arrayToElement(const Array &array, TiXmlElement &element) {
 		TiXmlText *newChildText;
-		TiXmlElement *newChildElement;
 
 		// We check each element of the array.
 		for (Array::const_iterator i = array.begin();
@@ -287,7 +288,7 @@ namespace RedBox {
 					std::transform(tmpString.begin(),
 					               tmpString.end(),
 					               tmpString.begin(),
-					               std::bind2nd(std::ptr_fun(&std::tolower<char>), std::locale("")));
+					               ::tolower);
 					bool isBoolean = true;
 					std::string::const_iterator i = tmpString.begin();
 					std::locale loc;
