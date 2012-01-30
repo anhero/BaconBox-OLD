@@ -65,7 +65,9 @@ namespace RedBox {
 		}
 
 		node["nbLoops"].setInt(nbLoops);
+		node["nbLoops"].setAttribute(true);
 		node["timePerFrame"].setDouble(timePerFrame);
+		node["timePerFrame"].setAttribute(true);
 		Value &tmpValue = node["frames"];
 		tmpValue.setArray(Array(frames.size()));
 		tmpValue.setArrayOfSameTypes(true);

@@ -70,6 +70,8 @@ namespace RedBox {
 		default:
 			break;
 		}
+
+		node["orientation"].setAttribute(true);
 	}
 
 	bool FrameDetails::deserialize(const Value &node) {

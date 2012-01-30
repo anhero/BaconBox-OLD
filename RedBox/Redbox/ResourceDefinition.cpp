@@ -41,7 +41,9 @@ namespace RedBox {
 			node.setName("ResourceDefinition");
 		}
 		node["key"] = key;
+		node["key"].setAttribute(true);
 		node["filePath"] = filePath;
+		node["filePath"].setAttribute(true);
 	}
 
 	bool ResourceDefinition::deserialize(const Value &node) {

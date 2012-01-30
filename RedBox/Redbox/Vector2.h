@@ -584,7 +584,9 @@ namespace RedBox {
 			}
 			// We set the value's attributes correctly.
 			node["x"].setDouble(static_cast<double>(getX()));
+			node["x"].setAttribute(true);
 			node["y"].setDouble(static_cast<double>(getY()));
+			node["y"].setAttribute(true);
 		}
 
 		/**
