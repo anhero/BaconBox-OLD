@@ -20,13 +20,20 @@ void SDLMixerBackgroundMusic::stoppedCurrentMusic() {
 }
 
 void SDLMixerBackgroundMusic::setSDLMusicVolume(int newRedBoxVolume) {
-	Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(static_cast<int>(static_cast<float>(newRedBoxVolume) * static_cast<float>(AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(Sound::MAX_VOLUME))));
+	if (AudioEngine::getMusicEngine().isMuted()) {
+		Mix_VolumeMusic(0);
+	} else {
+		Mix_VolumeMusic(SDLMixerEngine::redBoxToSdlVolume(static_cast<int>(static_cast<float>(newRedBoxVolume) * static_cast<float>(AudioEngine::getMusicEngine().getMusicVolume()) / static_cast<float>(Sound::MAX_VOLUME))));
+	}
 }
 
 void SDLMixerBackgroundMusic::setSDLMusicVolumeNoConvert(int newSDLVolume) {
-	Mix_VolumeMusic(static_cast<int>(static_cast<float>(newSDLVolume) * static_cast<float>(SDLMixerEngine::redBoxToSdlVolume(AudioEngine::getMusicEngine().getMusicVolume())) / static_cast<float>(SDLMixerEngine::redBoxToSdlVolume(Sound::MAX_VOLUME))));
+	if (AudioEngine::getMusicEngine().isMuted()) {
+		Mix_VolumeMusic(0);
+	} else {
+		Mix_VolumeMusic(static_cast<int>(static_cast<float>(newSDLVolume) * static_cast<float>(SDLMixerEngine::redBoxToSdlVolume(AudioEngine::getMusicEngine().getMusicVolume())) / static_cast<float>(SDLMixerEngine::redBoxToSdlVolume(Sound::MAX_VOLUME))));
+	}
 }
-
 
 SDLMixerBackgroundMusic::~SDLMixerBackgroundMusic() {
 }
