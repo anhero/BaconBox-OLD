@@ -6,6 +6,7 @@
 #include <list>
 
 #include "VertexArray.h"
+#include "Algorithms.h"
 
 namespace RedBox {
 	void ShapeFactory::createRegularPolygon(unsigned int nbSides, float sideLength,
@@ -57,7 +58,8 @@ namespace RedBox {
 			}
 
 			// We now put the vertices in the right order.
-			{
+			riffleShuffle(vertices->getBegin(), vertices->getEnd());
+			/*{
 				VertexArray::SizeType i = 2;
 				VertexArray::SizeType highest = vertices->getNbVertices() - 1;
 				std::list<VertexArray::SizeType> smallests;
@@ -93,7 +95,7 @@ namespace RedBox {
 					}
 
 				}
-			}
+			}*/
 		}
 	}
 
