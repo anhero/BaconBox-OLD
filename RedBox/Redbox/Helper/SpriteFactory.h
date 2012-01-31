@@ -6,8 +6,10 @@
 #ifndef RB_SPRITE_FACTORY_H
 #define RB_SPRITE_FACTORY_H
 
+#include "LayeredGraphic.h"
+#include "Sprite.h"
+
 namespace RedBox {
-	class Sprite;
 	class InanimateSprite;
 	class Color;
 	/**
@@ -16,6 +18,32 @@ namespace RedBox {
 	 */
 	class SpriteFactory {
 	public:
+		/**
+		 * Constructs a polygon. The polygon will be constructed using the
+		 * number of sides and side length received in the parameters. The
+		 * polygons constructed are always regular.
+		 * @param nbSides Number of sides the polygon will have.
+		 * @param sideLength Length the polygon will have (in points).
+		 * @param color Polygon's color when rendered.
+		 * @return Pointer to the sprite constructed.
+		 */
+		template <typename T>
+		static T *makeSpecificPolygon(unsigned int nbSides, float sideLength,
+		                              const Color &color) {
+			T *result = NULL;
+
+			if (nbSides >= 3 && sideLength > 0.0f) {
+				result = new T();
+				result->getVertices().resize(nbSides);
+				ShapeFactory::createRegularPolygon(nbSides, sideLength, Vector2(), &(result->getVertices()));
+				result->setColor(color);
+				result->setRenderModes(FlagSet<RenderMode>(RenderMode::SHAPE) |
+				                       FlagSet<RenderMode>(RenderMode::COLOR));
+			}
+
+			return result;
+		}
+
 		/**
 		 * Constructs a polygon. The polygon will be constructed using the
 		 * number of sides and side length received in the parameters. The
