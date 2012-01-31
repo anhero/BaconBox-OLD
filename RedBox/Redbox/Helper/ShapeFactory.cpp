@@ -59,43 +59,6 @@ namespace RedBox {
 
 			// We now put the vertices in the right order.
 			riffleShuffle(vertices->getBegin(), vertices->getEnd());
-			/*{
-				VertexArray::SizeType i = 2;
-				VertexArray::SizeType highest = vertices->getNbVertices() - 1;
-				std::list<VertexArray::SizeType> smallests;
-
-				while (i < vertices->getNbVertices() - 1) {
-					if (i % 2 == 1) {
-						std::swap((*vertices)[i], (*vertices)[smallests.front()]);
-
-						if (i == highest) {
-							highest = smallests.front();
-							smallests.pop_front();
-						} else {
-							smallests.push_back(smallests.front());
-							smallests.pop_front();
-						}
-
-						++i;
-
-					} else {
-						std::swap((*vertices)[i], (*vertices)[highest]);
-						++i;
-						if (highest == i) {
-							//highest = smallests.back();
-							//smallests.pop_back();
-						} else if (highest < i) {
-							highest = smallests.back();
-							smallests.pop_back();
-						} else {
-							smallests.push_back(highest);
-							--highest;
-						}
-
-					}
-
-				}
-			}*/
 		}
 	}
 
