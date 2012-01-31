@@ -17,6 +17,12 @@
  */
 
 /**
+ * @defgroup TileMap TileMap
+ * @ingroup Display
+ * @brief Tile map system.
+ */
+
+/**
  * @defgroup Math Math
  * @brief Classes that have mathematical purposes.
  */
