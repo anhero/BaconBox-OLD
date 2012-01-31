@@ -17,48 +17,44 @@ namespace RedBox {
 		    sideLength > 0.0f) {
 			// We calculate the polygon's radius.
 			float radius = sideLength / (2.0f * sinf(MathHelper::PI<float>() / nbSides));
-
 			// Angle from the polygon's center.
 			float incrementer = 360.0f / nbSides;
-			float angle = incrementer / 2.0f;
-			VertexArray::Iterator i = vertices->getBegin();
-			Vector2 tmpPosition(radius * sinf(MathHelper::degreesToRadians(angle)),
-			                    radius * cosf(MathHelper::degreesToRadians(angle)));
-			*i = tmpPosition;
+			float angle = incrementer * 0.5f ;
+			VertexArray::SizeType adjustment = nbSides % 2;
+			VertexArray::SizeType i = 0, half = nbSides / 2 + adjustment, lastIndex = nbSides - 1;
+			VertexArray::Pointer tmp;
+			VertexArray::ValueType minPosition(radius * sinf(MathHelper::degreesToRadians(angle)),
+			                                   radius * cosf(MathHelper::degreesToRadians(angle)));
+
+			tmp = &((*vertices)[(i < half) ? (i * 2) : (lastIndex - (i - half) * 2 - adjustment)]);
+
+			*tmp = minPosition;
 			angle += incrementer;
-			++i;
 
-			while (i != vertices->getEnd()) {
-				i->setXY(radius * sinf(MathHelper::degreesToRadians(angle)),
-				         radius * cosf(MathHelper::degreesToRadians(angle)));
+			while (++i < nbSides) {
+				tmp = &((*vertices)[(i < half) ? (i * 2) : (lastIndex - (i - half) * 2 - adjustment)]);
+				tmp->setXY(radius * sinf(MathHelper::degreesToRadians(angle)),
+				           radius * cosf(MathHelper::degreesToRadians(angle)));
 
-				if (i->getX() < tmpPosition.getX()) {
-					tmpPosition.setX(i->getX());
+				if (tmp->getX() < minPosition.getX()) {
+					minPosition.setX(tmp->getX());
 				}
 
-				if (i->getY() < tmpPosition.getY()) {
-					tmpPosition.setY(i->getY());
+				if (tmp->getY() < minPosition.getY()) {
+					minPosition.setY(tmp->getY());
 				}
 
 				angle += incrementer;
-
-				++i;
 			}
 
 			// We calculate the delta to apply to the vertices to put it at the
 			// asked position.
-			Vector2 tmpDelta(position - tmpPosition);
+			Vector2 tmpDelta(position - minPosition);
 
 			// We position the polygon as asked.
-			i = vertices->getBegin();
-
-			while (i != vertices->getEnd()) {
+			for (VertexArray::Iterator i = vertices->getBegin(); i != vertices->getEnd(); ++i) {
 				i->addToXY(tmpDelta);
-				++i;
 			}
-
-			// We now put the vertices in the right order.
-			riffleShuffle(vertices->getBegin(), vertices->getEnd());
 		}
 	}
 
