@@ -6,12 +6,12 @@
 #ifndef RB_SPRITE_FACTORY_H
 #define RB_SPRITE_FACTORY_H
 
-#include "LayeredGraphic.h"
 #include "Sprite.h"
+#include "InanimateSprite.h"
+#include "ShapeFactory.h"
+#include "Color.h"
 
 namespace RedBox {
-	class InanimateSprite;
-	class Color;
 	/**
 	 * Factory that constructs sprites.
 	 * @ingroup Helper
@@ -26,6 +26,8 @@ namespace RedBox {
 		 * @param sideLength Length the polygon will have (in points).
 		 * @param color Polygon's color when rendered.
 		 * @return Pointer to the sprite constructed.
+		 * @tparam A type that is derived from Shapable, Colorable and
+		 * RenderModable.
 		 */
 		template <typename T>
 		static T *makeSpecificPolygon(unsigned int nbSides, float sideLength,
@@ -69,20 +71,12 @@ namespace RedBox {
 		                                             float sideLength,
 		                                             const Color &color);
 	private:
-
-
-		/**
-		 * Converts degrees to radians.
-		 * @param degree Angle in degrees to convert to radians.
-		 * @return Angle in radians converted from the degrees received.
-		 */
-		static inline float degreeToRadian(float degree);
-
 		/**
 		 * Default unaccessible constructor. Made private so the class cannot
 		 * be instantiated.
 		 */
 		SpriteFactory();
+
 		/**
 		 * Destructor.
 		 */
