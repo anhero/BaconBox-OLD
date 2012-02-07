@@ -15,7 +15,7 @@ namespace RedBox {
 	 * Represents a layer of a tile map.
 	 * @ingroup TileMap
 	 */
-	class MapLayer {
+	class TileLayer {
 	public:
 		/// Type used to contain the data about the tile indexes.
 		typedef std::vector<unsigned int> DataVector;
@@ -24,20 +24,20 @@ namespace RedBox {
 		 * Default constructor. Constructs an empty layer with a size of (0, 0)
 		 * and no name.
 		 */
-		MapLayer();
+		TileLayer();
 
 		/**
 		 * Copy constructor.
 		 * @param src Map layer to make a copy of.
 		 */
-		MapLayer(const MapLayer &src);
+		TileLayer(const TileLayer &src);
 
 		/**
 		 * Assignment operator overload.
 		 * @param src Map layer to copy.
 		 * @return Reference to the modified map layer.
 		 */
-		MapLayer &operator=(const MapLayer &src);
+		TileLayer &operator=(const TileLayer &src);
 
 		/**
 		 * Gets the name of the map layer.

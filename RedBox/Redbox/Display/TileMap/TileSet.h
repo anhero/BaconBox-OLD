@@ -5,22 +5,20 @@
 #ifndef RB_TILE_SET_H
 #define RB_TILE_SET_H
 
-#include <string>
-
 #include "Vector2.h"
 #include "TexturePointer.h"
-#include "Texturable.h"
+#include "PropertyMap.h"
+#include "Color.h"
 
 namespace RedBox {
+	struct TextureInformation;
+
 	/**
 	 * Represents a tile set for a tile map.
 	 * @ingroup TileMap
 	 */
-	class TileSet : public Texturable {
+	struct TileSet {
 	public:
-		/// Name given to tile sets by default ("TileSet").
-		static const std::string DEFAULT_NAME;
-
 		/// Tile size given to tile sets by default (32x32).
 		static const Vector2 DEFAULT_TILE_SIZE;
 
@@ -32,25 +30,34 @@ namespace RedBox {
 		/**
 		 * Parameterized constructor.
 		 * @param newTexture Texture to use for the tile set.
-		 * @param newName Name to give to the tile set. Set to "TileSet" by
-		 * default.
 		 * @param newTileSize Size of the tiles (in pixels). 32x32 by default.
+		 * @param newTileSpacing Spacing between the tiles in the tileset image.
+		 * @param newMargin Margin around the tiles in the tileset image.
+		 * @param tileOffset Offset that is applied when drawing the tiles in
+		 * this tileset.
 		 */
-		explicit TileSet(TexturePointer &newTexture,
-		                 const std::string &newName = DEFAULT_NAME,
-		                 const Vector2 &newTileSize = DEFAULT_TILE_SIZE);
+		explicit TileSet(TexturePointer newTexture,
+		                 const Vector2 &newTileSize = DEFAULT_TILE_SIZE,
+		                 float newTileSpacing = 0.0f,
+		                 float newMargin = 0.0f,
+		                 const Vector2 &newTileOffset = Vector2());
 
 		/**
 		 * Default and parameterized constructor.
 		 * @param newTexture Texture to use for the tile set.
-		 * @param newName Name to give to the tile set.
 		 * @param newTileWidth Width of the tiles.
 		 * @param newTileHeight Height of the tiles.
+		 * @param newTileSpacing Spacing between the tiles in the tileset image.
+		 * @param newMargin Margin around the tiles in the tileset image.
+		 * @param tileOffset Offset that is applied when drawing the tiles in
+		 * this tileset.
 		 */
-		TileSet(TexturePointer &newTexture,
-		        const std::string &newName,
+		TileSet(TexturePointer newTexture,
 		        float newTileWidth,
-		        float newTileHeight);
+		        float newTileHeight,
+		        float newTileSpacing = 0.0f,
+                float newMargin = 0.0f,
+                const Vector2 &newTileOffset = Vector2());
 
 		/**
 		 * Copy constructor.
@@ -65,78 +72,40 @@ namespace RedBox {
 		 */
 		TileSet &operator=(const TileSet &src);
 
-		/**
-		 * Gets the name of the tile set.
-		 * @return Name of the tile set.
-		 * @see RedBox::TileSet::name
-		 */
-		const std::string getName() const;
-
-		/**
-		 * Sets the name of the tile set.
-		 * @param newName new name of the tile set.
-		 * @see RedBox::TileSet::name
-		 */
-		void setName(const std::string &newName);
-
-		/**
-		 * Gets the size of the tiles (in pixels).
-		 * @return Size of the tiles.
-		 * @see RedBox::TileSet::tileSize
-		 */
-		const Vector2 &getTileSize() const;
-
-		/**
-		 * Sets the tiles' size.
-		 * @param newTileSize New tiles' size.
-		 * @see RedBox::TileSet::tileSize
-		 */
-		void setTileSize(const Vector2 &newTileSize);
-
-		/**
-		 * Sets the tiles' width and height.
-		 * @param newTileWidth New tiles' width.
-		 * @param newTileHeight New tiles' height.
-		 * @see RedBox::TileSet::tileSize
-		 */
-		void setTileSize(float newTileWidth, float newTileHeight);
-
-		/**
-		 * Gets the tiles' width.
-		 * @return Tiles' width (in pixels).
-		 * @see RedBox::TileSet::tileSize
-		 */
-		float getTileWidth() const;
-
-		/**
-		 * Sets the tiles' width.
-		 * @param newTileWidth New tile's width.
-		 * @see RedBox::TileSet::tileSize
-		 */
-		void setTileWidth(float newTileWidth);
-
-		/**
-		 * Gets the tiles' height.
-		 * @return Tiles' height (in pixels).
-		 * @see RedBox::TileSet::tileSize
-		 */
-		float getTileHeight() const;
-
-		/**
-		 * Sets the tiles' height.
-		 * @param newTileHeight New tile's width.
-		 * @see RedBox::TileSet::tileSize
-		 */
-		void setTileHeight(float newTileHeight);
-	private:
-		/// Name given to the tile set.
-		std::string name;
+		/// Texture to use as the tile set.
+		TextureInformation *textureInformation;
 
 		/**
 		 * Size of the tiles. If the size is not the same as the tile map that
 		 * uses the tile set, the tile graphics will overlap.
 		 */
 		Vector2 tileSize;
+
+		/**
+		 * Spacing between the tiles in the tileset image.
+		 */
+		float tileSpacing;
+
+		/**
+		 * Margin around the tiles in the tileset image.
+		 */
+		float margin;
+
+		/**
+		 * Offset that is applied when drawing the tiles in this tileset.
+		 */
+		Vector2 tileOffset;
+
+		/**
+		 * Color that is applied on each tile when rendering them (white by
+		 * default).
+		 */
+		Color tileColor;
+
+		/**
+		 * Map of properties.
+		 */
+		PropertyMap properties;
 	};
 }
 
