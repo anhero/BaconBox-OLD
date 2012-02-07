@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "PropertyMap.h"
+#include "Color.h"
 
 namespace RedBox {
 	/**
@@ -119,6 +120,34 @@ namespace RedBox {
 		void setVisible(bool newVisible);
 
 		/**
+		 * Gets the tile layer's color.
+		 * @return Color applied to the layer's tiles.
+		 * @see RedBox::TileLayer::color
+		 */
+		const Color &getColor() const;
+
+		/**
+		 * Sets the tile layer's color.
+		 * @param newColor New color to set to the layer's tiles.
+		 * @see RedBox::TileLayer::color
+		 */
+		void setColor(const Color &newColor);
+
+		/**
+		 * Gets the alpha value of the layer's tiles.
+		 * @return Alpha value of the layer's tiles.
+		 * @see RedBox::TileLayer::color
+		 */
+		uint8_t getAlpha() const;
+
+		/**
+		 * Sets the alpha value of the layer's tiles.
+		 * @param newAlpha New alpha value to set to the layer's tiles.
+		 * @see RedBox::TileLayer::color
+		 */
+		void setAlpha(int32_t newAlpha);
+
+		/**
 		 * Gets the map of properties.
 		 * @return Map layer's properties.
 		 */
@@ -180,6 +209,9 @@ namespace RedBox {
 
 		/// Set to true to make the layer invisible.
 		bool visible;
+
+		/// Color applied to all of the tiles in the layer.
+		Color color;
 
 		/// Contains the layer's properties.
 		PropertyMap properties;

@@ -75,6 +75,22 @@ namespace RedBox {
 		visible = newVisible;
 	}
 
+	const Color &TileLayer::getColor() const {
+		return color;
+	}
+
+	void TileLayer::setColor(const Color &newColor) {
+		color = newColor;
+	}
+
+	uint8_t TileLayer::getAlpha() const {
+		return color.getAlpha();
+	}
+
+	void TileLayer::setAlpha(int32_t newAlpha) {
+		color.setAlpha(newAlpha);
+	}
+
 	const PropertyMap &TileLayer::getProperties() const {
 		return properties;
 	}
