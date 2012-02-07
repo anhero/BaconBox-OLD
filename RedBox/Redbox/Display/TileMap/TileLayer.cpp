@@ -2,12 +2,12 @@
 
 namespace RedBox {
 	TileLayer::TileLayer() : name(), width(0u), height(0u), visible(true),
-		properties(), data() {
+		color(Color::WHITE), properties(), data() {
 	}
 
 	TileLayer::TileLayer(const TileLayer &src) : name(src.name), width(src.width),
-		height(src.height), visible(src.visible), properties(src.properties),
-		data(src.data) {
+	    height(src.height), visible(src.visible), color(src.color),
+	    properties(src.properties), data(src.data) {
 	}
 
 	TileLayer &TileLayer::operator=(const TileLayer &src) {
@@ -18,6 +18,7 @@ namespace RedBox {
 			visible = src.visible;
 			properties = src.properties;
 			data = src.data;
+			color = src.color;
 		}
 
 		return *this;
