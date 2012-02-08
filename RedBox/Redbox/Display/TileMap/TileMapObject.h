@@ -15,7 +15,7 @@ namespace RedBox {
 	 * Base class for objects in an object layer for a tile map.
 	 * @ingroup TileMap
 	 */
-	struct TileMapObject {
+	class TileMapObject {
 	public:
 		/**
 		 * Default and parameterized constructor.

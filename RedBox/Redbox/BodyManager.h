@@ -169,6 +169,10 @@ namespace RedBox {
 			}
 		}
 
+		/**
+		 * Gets the number of bodies the manager contains.
+		 * @return Number of bodies the manager manages.
+		 */
 		unsigned int getNbBodies() const {
 			return bodies.size() + toAdd.size() + keyChange.size();
 		}

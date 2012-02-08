@@ -12,8 +12,11 @@
 
 #include "TileLayer.h"
 #include "TileSet.h"
+#include "ObjectLayer.h"
 
 namespace RedBox {
+	template <typename Key, typename Compare> class BodyManager;
+
 	class TileMap {
 	public:
 		/**
@@ -24,6 +27,14 @@ namespace RedBox {
 
 		/// Vector of map layers.
 		typedef std::vector<TileLayer> TileLayerVector;
+
+		/// Vector of object layers.
+		typedef std::vector<ObjectLayer> ObjectLayerVector;
+
+		template <typename Key, typename Compare>
+		void addLayersToState(BodyManager<Key, Compare> *state) {
+		}
+
 	private:
 		/// Map's tile sets.
 		TileSetMap tileSets;
