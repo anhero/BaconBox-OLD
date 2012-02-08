@@ -140,7 +140,7 @@ namespace RedBox {
 
 		uint8_t getAlpha() const;
 
-		setAlpha(int32_t newAlpha);
+		void setAlpha(int32_t newAlpha);
 	private:
 		/**
 		 * Refreshes the name map of a list of objects.
