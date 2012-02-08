@@ -12,6 +12,7 @@
 #include "LineObject.h"
 #include "PolygonObject.h"
 #include "RectangleObject.h"
+#include "Color.h"
 
 namespace RedBox {
 	/**
@@ -128,6 +129,18 @@ namespace RedBox {
 		void refreshPolygonNames();
 
 		void refreshTileNames();
+
+		bool isVisible() const;
+
+		void setVisible(bool newVisible);
+
+		const Color &getColor() const;
+
+		void setColor(const Color &newColor);
+
+		uint8_t getAlpha() const;
+
+		setAlpha(int32_t newAlpha);
 	private:
 		/**
 		 * Refreshes the name map of a list of objects.
@@ -202,6 +215,12 @@ namespace RedBox {
 		 * @see RedBox::ObjectLayer::refreshTileNames()
 		 */
 		TileNameMap tileNames;
+
+		/// Indicates whether or not the object layer is rendered.
+		bool visible;
+
+		/// Color of the layer's objects.
+		Color color;
 	};
 
 }

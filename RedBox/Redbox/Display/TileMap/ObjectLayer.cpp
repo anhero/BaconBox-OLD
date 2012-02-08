@@ -2,11 +2,13 @@
 
 namespace RedBox {
 	ObjectLayer::ObjectLayer() : lines(), polygons(), rectangles(), tiles(),
-		lineNames(), polygonNames(), rectangleNames(), tileNames() {
+		lineNames(), polygonNames(), rectangleNames(), tileNames(),
+		visible(true), color(Color::WHITE) {
 	}
 
 	ObjectLayer::ObjectLayer(const ObjectLayer &src) : lines(src.lines),
-		polygons(src.polygons), rectangles(src.rectangles), tiles(src.tiles) {
+		polygons(src.polygons), rectangles(src.rectangles), tiles(src.tiles),
+		visible(src.visible), color(src.color) {
 		refreshAllNames();
 	}
 
@@ -17,6 +19,8 @@ namespace RedBox {
 			polygons = src.polygons;
 			rectangles = src.rectangles;
 			tiles = src.tiles;
+			visible = src.visible;
+			color = src.color;
 			refreshAllNames();
 		}
 
@@ -116,5 +120,29 @@ namespace RedBox {
 
 	void ObjectLayer::refreshTileNames() {
 		refreshNames(tiles, tileNames);
+	}
+
+	bool ObjectLayer::isVisible() const {
+		return visible;
+	}
+
+	void ObjectLayer::setVisible(bool newVisible) {
+		visible = newVisible;
+	}
+
+	const Color &ObjectLayer::getColor() const {
+		return color;
+	}
+
+	void ObjectLayer::setColor(const Color &newColor) {
+		color = newColor;
+	}
+
+	uint8_t ObjectLayer::getAlpha() const {
+		return color.getAlpha();
+	}
+
+	void ObjectLayer::setAlpha(int32_t newAlpha) {
+		color.setAlpha(newAlpha);
 	}
 }
