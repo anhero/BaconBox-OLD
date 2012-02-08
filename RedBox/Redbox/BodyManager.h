@@ -4,10 +4,12 @@
 #ifndef RB_BODY_MANAGER_H
 #define RB_BODY_MANAGER_H
 
+#include <cassert>
+
 #include <set>
 #include <list>
-#include <cassert>
 #include <algorithm>
+#include <utility>
 
 #include "DeleteHelper.h"
 #include "Manageable.h"
@@ -119,7 +121,7 @@ namespace RedBox {
 
 			// We delete all the bodies from the list of GraphicBodys that need
 			// to be deleted.
-			std::for_each(toDelete.begin(), toDelete.end(), DeletePointer());
+			clearContainer(toDelete);
 			// We clear the list.
 			toDelete.clear();
 
@@ -142,14 +144,21 @@ namespace RedBox {
 		 * Adds a body to the manager. The manager will take care of memory
 		 * freeing.
 		 * @param newBody Pointer to the body to add to the manager.
+		 * @param manageMemory Set this parameter to false if you want to manage
+		 * the body's memory yourself (the manager will thus not call delete on
+		 * the body when the manager is destroyed).
 		 * @see RedBox::BodyManager::toAdd
 		 * @see RedBox::BodyManager::bodies
 		 */
-		void add(KeyType *newBody) {
+		void add(KeyType *newBody, bool manageMemory = true) {
 			if (newBody) {
 				if (!newBody->isManaged()) {
 					newBody->setManaged(true);
 					toAdd.push_front(newBody);
+
+					if (!manageMemory) {
+						toIgnore.insert(newBody);
+					}
 
 				} else {
 					Console::println("Tried to add a body that is already in a body manager.");
@@ -180,6 +189,9 @@ namespace RedBox {
 		/// Represents the container's type to temporarily store bodies in a list.
 		typedef std::list<KeyType *> BodyList;
 
+		/// Represents a set of pointers to bodies.
+		typedef std::set<KeyType *> BodySet;
+
 		/// Temporarily stores the bodies to be deleted.
 		BodyList toDelete;
 
@@ -188,6 +200,12 @@ namespace RedBox {
 
 		/// Temporarily stores the bodies that have had their key changed.
 		BodyList keyChange;
+
+		/**
+		 * Set of pointers to bodies that must not be deleted by the body
+		 * manager.
+		 */
+		BodySet toIgnore;
 
 		/**
 		 * Directly adds a body in the BodyMap. It will then be able to be
@@ -202,21 +220,30 @@ namespace RedBox {
 		}
 
 		/**
+		 * Frees all memory used by a container of the body manager.
+		 */
+		template <typename Container>
+		void clearContainer(Container &container) {
+			// We loop through the bodies in the container.
+			for (typename Container::iterator i = container.begin(); i != container.end(); ++i) {
+				// We make sure the pointer is valid and that we must not ignore
+				// it.
+				assert(*i);
+
+				if (!toIgnore.erase(*i)) {
+					delete *i;
+				}
+			}
+		}
+
+		/**
 		 * Frees all memory used by the body manager.
 		 */
 		void clearBodies() {
-			// We delete all the bodies from the list of bodies that need to be
-			// deleted.
-			std::for_each(toDelete.begin(), toDelete.end(), DeletePointer());
-
-			// We delete the bodies that were waiting to be added.
-			std::for_each(toAdd.begin(), toAdd.end(), DeletePointer());
-
-			// We delete the bodies that had their key changed.
-			std::for_each(keyChange.begin(), keyChange.end(), DeletePointer());
-
-			// We delete the bodies.
-			std::for_each(bodies.begin(), bodies.end(), DeletePointer());
+			clearContainer(toDelete);
+			clearContainer(toAdd);
+			clearContainer(keyChange);
+			clearContainer(bodies);
 		}
 
 		/**
@@ -227,25 +254,43 @@ namespace RedBox {
 			for (typename BodyList::const_iterator i = src.toDelete.begin();
 			     i != src.toDelete.end(); ++i) {
 				assert(*i);
-				toDelete.insert(new KeyType(**i));
+				toDelete.push_back(new KeyType(**i));
+
+				if (src.toIgnore.find(*i) != src.toIgnore.end()) {
+					toIgnore.insert(toDelete.back());
+				}
 			}
 
 			for (typename BodyList::const_iterator i = src.toAdd.begin();
 			     i != src.toAdd.end(); ++i) {
 				assert(*i);
-				toAdd.insert(new KeyType(**i));
+				toAdd.push_back(new KeyType(**i));
+
+				if (src.toIgnore.find(*i) != src.toIgnore.end()) {
+					toIgnore.insert(toAdd.back());
+				}
 			}
 
 			for (typename BodyList::const_iterator i = src.keyChange.begin();
 			     i != src.keyChange.end(); ++i) {
 				assert(*i);
-				keyChange.insert(new KeyType(**i));
+				keyChange.push_back(new KeyType(**i));
+
+				if (src.toIgnore.find(*i) != src.toIgnore.end()) {
+					toIgnore.insert(keyChange.back());
+				}
 			}
+
+			std::pair<typename BodyMap::iterator, bool> tmpInsertionResult;
 
 			for (typename BodyMap::const_iterator i = src.bodies.begin();
 			     i != src.bodies.end(); ++i) {
 				assert(*i);
-				bodies.insert(new KeyType(**i));
+				tmpInsertionResult = bodies.insert(new KeyType(**i));
+
+				if (tmpInsertionResult.second && src.toIgnore.find(*i) != src.toIgnore.end()) {
+					toIgnore.insert(*tmpInsertionResult.first);
+				}
 			}
 		}
 	};
