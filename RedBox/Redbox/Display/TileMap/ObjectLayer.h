@@ -1,5 +1,6 @@
 /**
  * @file
+ * @ingroup TileMap
  */
 #ifndef RB_OBJECT_LAYER_H
 #define RB_OBJECT_LAYER_H
@@ -13,6 +14,13 @@
 #include "RectangleObject.h"
 
 namespace RedBox {
+	/**
+	 * Represents a layer of objects in a tile map. Can contain lines, polygons,
+	 * rectangles and tiles. The only object type to have a graphic is the tile.
+	 * But, you could determine a custom system to recognize the objects and
+	 * put graphics yourself in your game.
+	 * @ingroup TileMap
+	 */
 	class ObjectLayer {
 	public:
 		typedef std::list<LineObject> LineContainer;
@@ -43,16 +51,60 @@ namespace RedBox {
 		 */
 		ObjectLayer &operator=(const ObjectLayer &src);
 
+		/**
+		 * Gets the line objects.
+		 * @return Reference to the list of line objects.
+		 * @see RedBox::ObjectLayer::lines
+		 */
 		LineContainer &getLines();
+
+		/**
+		 * Gets the line objects.
+		 * @return Const reference to the list of line objects.
+		 * @see RedBox::ObjectLayer::lines
+		 */
 		const LineContainer &getLines() const;
 
+		/**
+		 * Gets the polygon objects.
+		 * @return Reference to the list of polygon objects.
+		 * @see RedBox::ObjectLayer::objects
+		 */
 		PolygonContainer &getPolygons();
+
+		/**
+		 * Gets the polygon objects.
+		 * @return Const reference to the list of polygon objects.
+		 * @see RedBox::ObjectLayer::objects
+		 */
 		const PolygonContainer &getPolygons() const;
 
+		/**
+		 * Gets the rectangle objects.
+		 * @return Reference to the list of rectangle objects.
+		 * @see RedBox::ObjectLayer::rectangles
+		 */
 		RectangleContainer &getRectangles();
+
+		/**
+		 * Gets the rectangle objects.
+		 * @return Const reference to the list of rectangle objects.
+		 * @see RedBox::ObjectLayer::rectangles
+		 */
 		const RectangleContainer &getRectangles() const;
 
+		/**
+		 * Gets the tile objects.
+		 * @return Reference to the list of tile objects.
+		 * @see RedBox::ObjectLayer::tiles
+		 */
 		TileContainer &getTiles();
+
+		/**
+		 * Gets the tile objects.
+		 * @return Const reference to the list of tile objects.
+		 * @see RedBox::ObjectLayer::tiles
+		 */
 		const TileContainer &getTiles() const;
 
 		LineNameMap::mapped_type getLine(const LineNameMap::key_type &lineName);
@@ -101,14 +153,54 @@ namespace RedBox {
 			}
 		}
 
+		/// List of line objects in the layer.
 		LineContainer lines;
+
+		/// List of polygon objects in the layer.
 		PolygonContainer polygons;
+
+		/// List of rectangle objects in the layer.
 		RectangleContainer rectangles;
+
+		/// List of tile objects in the layer.
 		TileContainer tiles;
 
+		/**
+		 * Line names mapped to their respective line. Must be manually
+		 * refreshed by calling the corresponding name refreshing function.
+		 * Lines that have an empty string as a name will not be mapped.
+		 * @see RedBox::ObjectLayer::refreshAllNames()
+		 * @see RedBox::ObjectLayer::refreshLineNames()
+		 */
 		LineNameMap lineNames;
+
+		/**
+		 * Polygon names mapped to their respective polygon. Must be
+		 * manually refreshed by calling the corresponding name refreshing
+		 * function. Polygons that have an empty string as a name will not be
+		 * mapped.
+		 * @see RedBox::ObjectLayer::refreshAllNames()
+		 * @see RedBox::ObjectLayer::refreshPolygonNames()
+		 */
 		PolygonNameMap polygonNames;
+
+		/**
+		 * Rectangle names mapped to their respective rectangle. Must be
+		 * manually refreshed by calling the corresponding name refreshing
+		 * functions. Rectangles that have an empty string as a name will not be
+		 * mapped.
+		 * @see RedBox::ObjectLayer::refreshAllNames()
+		 * @see RedBox::ObjectLayer::refreshRectangleNames()
+		 */
 		RectangleNameMap rectangleNames;
+
+		/**
+		 * Tile names mapped to their respective tile object. Must be manually
+		 * refreshed by calling the corresponding name refreshing functions.
+		 * Tile objects that have an empty string as a name will not be mapped.
+		 * @see RedBox::ObjectLayer::refreshAllNames()
+		 * @see RedBox::ObjectLayer::refreshTileNames()
+		 */
 		TileNameMap tileNames;
 	};
 
