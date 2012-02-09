@@ -217,7 +217,7 @@ namespace RedBox {
 		 * Clones the current batched sprite.
 		 * @return Pointer to the new allocated batched sprite.
 		 */
-		BatchedInanimateGraphicElement<Parent> *clone() const {
+		virtual BatchedInanimateGraphicElement<Parent> *clone() const {
 			return new BatchedInanimateGraphicElement<Parent>(*this);
 		}
 	private:
