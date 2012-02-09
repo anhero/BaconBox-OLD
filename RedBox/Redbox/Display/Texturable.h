@@ -55,7 +55,7 @@ namespace RedBox {
 		 * @see RedBox::Texturable::textureInformation
 		 * @see RedBox::ResourceManager::getTexture(const std::string &key)
 		 */
-		void setTextureInformation(TexturePointer newTexture);
+		virtual void setTextureInformation(TexturePointer newTexture);
 	private:
 		/// Pointer to the texture information.
 		TextureInformation *textureInformation;

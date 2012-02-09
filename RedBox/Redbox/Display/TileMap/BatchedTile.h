@@ -57,8 +57,6 @@ namespace RedBox {
 		void setTileId(unsigned int tileId);
 
 		const TileSet *getTileSet() const;
-
-		void setTileSet(const TileSet *newTileSet);
 	private:
 		const TileSet *tileSet;
 
