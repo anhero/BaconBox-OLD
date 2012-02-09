@@ -17,12 +17,12 @@ namespace RedBox {
 	struct TextureInformation;
 
 	/**
-	 * Represents a tile set for a tile map.
+	 * Represents a tileset for a tile map.
 	 * @ingroup TileMap
 	 */
 	struct Tileset : public Texturable, public TileMapEntity {
 	public:
-		/// Tile size given to tile sets by default (32x32).
+		/// Tile size given to tilesets by default (32x32).
 		static const Vector2 DEFAULT_TILE_SIZE;
 
 		/**
@@ -32,8 +32,8 @@ namespace RedBox {
 
 		/**
 		 * Parameterized constructor.
-		 * @param newTexture Texture to use for the tile set.
-		 * @param newName Name of the tile set.
+		 * @param newTexture Texture to use for the tileset.
+		 * @param newName Name of the tileset.
 		 * @param newTileSize Size of the tiles (in pixels). 32x32 by default.
 		 * @param newTileSpacing Spacing between the tiles in the tileset image.
 		 * @param newMargin Margin around the tiles in the tileset image.
@@ -49,7 +49,7 @@ namespace RedBox {
 
 		/**
 		 * Copy constructor.
-		 * @param src Tile set to make a copy of.
+		 * @param src tileset to make a copy of.
 		 */
 		Tileset(const Tileset &src);
 
@@ -60,14 +60,14 @@ namespace RedBox {
 
 		/**
 		 * Assignment operator overload.
-		 * @param src Tile set to copy.
-		 * @return Reference to the modified tile set.
+		 * @param src tileset to copy.
+		 * @return Reference to the modified tileset.
 		 */
 		Tileset &operator=(const Tileset &src);
 
 		/**
-		 * Sets the tile set's texture information.
-		 * @param newTexture New texture to use for the tile set.
+		 * Sets the tileset's texture information.
+		 * @param newTexture New texture to use for the tileset.
 		 */
 		void setTextureInformation(TexturePointer newTexture);
 
@@ -124,7 +124,7 @@ namespace RedBox {
 		/**
 		 * Gets the tile spacing. The horizontal and vertical space found
 		 * between tiles in the texture.
-		 * @return Spacing between the tiles in the tile set's texture.
+		 * @return Spacing between the tiles in the tileset's texture.
 		 * @see RedBox::Tileset::tileSpacing
 		 */
 		float getTileSpacing() const;
@@ -132,7 +132,7 @@ namespace RedBox {
 		/**
 		 * Gets the tile spacing. The horizontal and vertical space found
 		 * between tiles in the texture.
-		 * @param newTileSpacing New spacing between the tiles in the tile set's
+		 * @param newTileSpacing New spacing between the tiles in the tileset's
 		 * texture.
 		 * @see RedBox::Tileset::tileSpacing
 		 */
@@ -145,31 +145,79 @@ namespace RedBox {
 		 */
 		float getMargin() const;
 
+		/**
+		 * Sets the tileset's margin.
+		 * @param newMargin New margin around the tiles in the tileset's
+		 * texture.
+		 * @see RedBox::Tileset::margin
+		 */
 		void setMargin(float newMargin);
 
+		/**
+		 * Gets the tiles' offset.
+		 * @return Offset that is applied when drawing the tiles from this
+		 * tileset.
+		 * @return RedBox::Tileset::tileOffset
+		 */
 		const Vector2 &getTileOffset() const;
 
+		/**
+		 * Sets the tiles' offset.
+		 * @param newTileOffset New offset that to be applied when drawing the
+		 * tiles from this tileset.
+		 * @return RedBox::Tileset::tileOffset
+		 */
 		void setTileOffset(const Vector2 &newTileOffset);
 
+		/**
+		 * Sets the tiles' offset.
+		 * @param newTileOffset New offset that to be applied when drawing the
+		 * tiles from this tileset.
+		 * @return RedBox::Tileset::tileOffset
+		 */
 		void setTileOffset(float newXTileOffset, float newYTileOffset);
 
+		/**
+		 * Gets the tiles' horizontal offset.
+		 * @return Horizontal offset that is applied when drawing the tiles from
+		 * this tileset.
+		 * @see RedBox::Tileset::tileOffset
+		 */
 		float getXTileOffset() const;
 
+		/**
+		 * Sets the tiles' horizontal offset.
+		 * @param newXTileOffset New horizontal offset that is applied when
+		 * drawing the tiles from this tileset.
+		 * @see RedBox::Tileset::tileOffset
+		 */
 		void setXTileOffset(float newXTileOffst);
 
+		/**
+		 * Gets the tiles' vertical offset.
+		 * @return Vertical offset that is applied when drawing the tiles from
+		 * this tileset.
+		 * @see RedBox::Tileset::tileOffset
+		 */
 		float getYTileOffset() const;
 
+		/**
+		 * Sets the tiles' horizontal offset.
+		 * @param newXTileOffset New horizontal offset that is applied when
+		 * drawing the tiles from this tileset.
+		 * @see RedBox::Tileset::tileOffset
+		 */
 		void setYTileOffset(float newYTileOffset);
 
 		/**
 		 * Loads the texture coordinates of a tile from a tile id.
 		 * @param tileId Id of the tile to get its texture coordinates. Must be
-		 * higher than the tile set's first tile id.
+		 * higher than the tileset's first tile id.
 		 * @param textureCoordinates Array of Vector2 to write the texture
 		 * coordinates to.
 		 * @return True if the tile's texture coordinates were copied
 		 * successfully, false if not. Loads the tileset's tiles' texture
-		 * coordinates if the tile set's tiles' texture coordinates are not
+		 * coordinates if the tileset's tiles' texture coordinates are not
 		 * ready to be copied.
 		 */
 		bool loadTextureCoordinates(unsigned int tileId,
@@ -178,7 +226,7 @@ namespace RedBox {
 		/**
 		 * Loads the texture coordinates of a tile from a tile id.
 		 * @param tileId Id of the tile to get its texture coordinates. Must be
-		 * higher than the tile set's first tile id.
+		 * higher than the tileset's first tile id.
 		 * @param textureCoordinates Array of Vector2 to write the texture
 		 * coordinates to.
 		 * @return True if the texture coordinates were loaded successfully,
@@ -199,7 +247,7 @@ namespace RedBox {
 
 		/**
 		 * Size of the tiles. If the size is not the same as the tile map that
-		 * uses the tile set, the tile graphics will overlap.
+		 * uses the tileset, the tile graphics will overlap.
 		 */
 		Vector2 tileSize;
 
