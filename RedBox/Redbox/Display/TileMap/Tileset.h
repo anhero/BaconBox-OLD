@@ -22,6 +22,9 @@ namespace RedBox {
 	 */
 	struct Tileset : public Texturable, public TileMapEntity {
 	public:
+		/// Container used to contain the tiles' texture coordinates.
+		typedef std::deque<TextureCoordinates> TileCoordinates;
+
 		/// Tile size given to tilesets by default (32x32).
 		static const Vector2 DEFAULT_TILE_SIZE;
 
@@ -235,10 +238,28 @@ namespace RedBox {
 		 */
 		bool loadTextureCoordinates(unsigned int tileId,
 		                            TextureCoordinates &textureCoordinates) const;
-	private:
-		/// Container used to contain the tiles' texture coordinates.
-		typedef std::deque<TextureCoordinates> TileCoordinates;
 
+		/**
+		 * Gets the number of tiles the tileset contains.
+		 * @return Number of tiles the tileset contains.
+		 */
+		TileCoordinates::size_type getNbTiles();
+
+		/**
+		 * Checks whether or not the tile id fits in the tileset.
+		 * @param tileId Tile id to check.
+		 * @return Tile id received in parameter if it fits, 0 if it doesn't.
+		 */
+		unsigned int validateTileId(unsigned int tileId);
+
+		/**
+		 * Checks whether or not the tile id fits in the tileset.
+		 * @param tileId Tile id to check.
+		 * @return True if the tile id fits, false if not.
+		 */
+		bool isIdInTileset(unsigned int tileId);
+
+	private:
 		/**
 		 * Calculates the texture coordinates of all the tiles so they are ready
 		 * to be used to load textureCoordinates.

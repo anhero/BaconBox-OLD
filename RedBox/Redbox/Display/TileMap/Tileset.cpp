@@ -147,9 +147,7 @@ namespace RedBox {
 
 	bool Tileset::loadTextureCoordinates(unsigned int tileId,
 	                                     TextureCoordinates &textureCoordinates) {
-		if (dirty) {
-			prepareTextureCoordinates();
-		}
+		prepareTextureCoordinates();
 
 		return loadTextureCoordinates(tileId, textureCoordinates);
 	}
@@ -173,48 +171,66 @@ namespace RedBox {
 	}
 
 	void Tileset::prepareTextureCoordinates() {
-		// We make sure we have a valid texture information.
-		if (getTextureInformation()) {
-			// We clear the current texture coordinates.
-			tileTextureCoordinates.clear();
+		if (dirty) {
+			// We make sure we have a valid texture information.
+			if (getTextureInformation()) {
+				// We clear the current texture coordinates.
+				tileTextureCoordinates.clear();
 
-			// We calculate the upper left corner and lower right corner
-			// to take into account the margin.
-			Vector2 upperLeftCorner(margin / static_cast<float>(getTextureInformation()->poweredWidth),
-			                        margin / static_cast<float>(getTextureInformation()->poweredHeight));
-			Vector2 lowerRightCorner((static_cast<float>(getTextureInformation()->imageWidth) - margin) / static_cast<float>(getTextureInformation()->poweredWidth),
-			                         (static_cast<float>(getTextureInformation()->imageHeight) - margin) / static_cast<float>(getTextureInformation()->poweredHeight));
+				// We calculate the upper left corner and lower right corner
+				// to take into account the margin.
+				Vector2 upperLeftCorner(margin / static_cast<float>(getTextureInformation()->poweredWidth),
+				                        margin / static_cast<float>(getTextureInformation()->poweredHeight));
+				Vector2 lowerRightCorner((static_cast<float>(getTextureInformation()->imageWidth) - margin) / static_cast<float>(getTextureInformation()->poweredWidth),
+				                         (static_cast<float>(getTextureInformation()->imageHeight) - margin) / static_cast<float>(getTextureInformation()->poweredHeight));
 
-			// We make sure the corners make sense.
-			if (upperLeftCorner.getX() < lowerRightCorner.getX() &&
-			    upperLeftCorner.getY() < lowerRightCorner.getY()) {
+				// We make sure the corners make sense.
+				if (upperLeftCorner.getX() < lowerRightCorner.getX() &&
+				    upperLeftCorner.getY() < lowerRightCorner.getY()) {
 
-				float realTileSpacing = tileSpacing / static_cast<float>(getTextureInformation()->poweredWidth);
+					float realTileSpacing = tileSpacing / static_cast<float>(getTextureInformation()->poweredWidth);
 
-				Vector2 realOffset = upperLeftCorner;
-				Vector2 realTileSize = tileSize / Vector2(static_cast<float>(getTextureInformation()->poweredWidth), static_cast<float>(getTextureInformation()->poweredHeight));
+					Vector2 realOffset = upperLeftCorner;
+					Vector2 realTileSize = tileSize / Vector2(static_cast<float>(getTextureInformation()->poweredWidth), static_cast<float>(getTextureInformation()->poweredHeight));
 
-				// We make sure there is enough room for at least one tile...
-				if (realOffset.getX() + realTileSize.getX() < lowerRightCorner.getX()) {
-					while (realOffset.getY() + realTileSize.getY() < lowerRightCorner.getY()) {
+					// We make sure there is enough room for at least one tile...
+					if (realOffset.getX() + realTileSize.getX() < lowerRightCorner.getX()) {
+						while (realOffset.getY() + realTileSize.getY() < lowerRightCorner.getY()) {
 
-						// We load the texture coordinates.
-						tileTextureCoordinates.push_back(TextureCoordinates(4, realOffset));
-						tileTextureCoordinates.back()[1].addToX(realTileSize.getX());
-						tileTextureCoordinates.back()[2].addToY(realTileSize.getY());
-						tileTextureCoordinates.back()[3].addToXY(realTileSize);
+							// We load the texture coordinates.
+							tileTextureCoordinates.push_back(TextureCoordinates(4, realOffset));
+							tileTextureCoordinates.back()[1].addToX(realTileSize.getX());
+							tileTextureCoordinates.back()[2].addToY(realTileSize.getY());
+							tileTextureCoordinates.back()[3].addToXY(realTileSize);
 
-						// We increase the offset to the next tile's upper left
-						// corner.
-						realOffset.addToX(realTileSize.getX() + realTileSpacing);
+							// We increase the offset to the next tile's upper left
+							// corner.
+							realOffset.addToX(realTileSize.getX() + realTileSpacing);
 
-						if (realOffset.getX() + realTileSize.getX() > lowerRightCorner.getX()) {
-							realOffset.setX(upperLeftCorner.getX());
-							realOffset.addToY(realTileSize.getY() + realTileSpacing);
+							if (realOffset.getX() + realTileSize.getX() > lowerRightCorner.getX()) {
+								realOffset.setX(upperLeftCorner.getX());
+								realOffset.addToY(realTileSize.getY() + realTileSpacing);
+							}
 						}
 					}
 				}
 			}
+
+			dirty = false;
 		}
+	}
+
+	Tileset::TileCoordinates::size_type Tileset::getNbTiles() {
+		prepareTextureCoordinates();
+		return tileTextureCoordinates.size();
+	}
+
+	unsigned int Tileset::validateTileId(unsigned int tileId) {
+		return (isIdInTileset(tileId)) ? (tileId) : (0u);
+	}
+
+	bool Tileset::isIdInTileset(unsigned int tileId) {
+		prepareTextureCoordinates();
+		return tileId - firstTileId < tileTextureCoordinates.size();
 	}
 }

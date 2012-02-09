@@ -8,7 +8,7 @@
 #include "BatchedInanimateSprite.h"
 
 namespace RedBox {
-	struct TileSet;
+	struct Tileset;
 
 	class BatchedTile : public BatchedInanimateSprite {
 		/**
@@ -17,20 +17,11 @@ namespace RedBox {
 		BatchedTile();
 
 		/**
-		 * Parameterized constructor. Loads the vertices and the texture
-		 * coordinates. If the specified size has a coordinate equal to 0 or
-		 * lower, it loads the full texture as the size and image.
-		 * @param newTexture Texture pointer to use as the texture.
-		 * @param startingPosition Starting position at which to place the
-		 * sprite.
-		 * @param newSize Size of the sprite.
-		 * @param newTextureOffset Texture coordinates' offset if needed.
-		 * @see RedBox::Texturable::textureInformation
+		 * Parameterized constructor.
 		 */
-		explicit BatchedTile(TexturePointer newTexture,
-		                     const Vector2 &startingPosition = Vector2(),
-		                     const Vector2 &newSize = Vector2(),
-		                     const Vector2 &newTextureOffset = Vector2());
+		BatchedTile(Tileset *newTileset,
+		            unsigned int newTileId,
+		            const Vector2 &startingPosition = Vector2());
 
 		/**
 		 * Copy constructor.
@@ -50,15 +41,60 @@ namespace RedBox {
 		 */
 		BatchedTile &operator=(const BatchedTile &src);
 
+		/**
+		 * Clones the instance of the batched tile.
+		 * @return Duplicate of this batched tile. The caller is responsible
+		 * for the ownership of this newly created batched tile.
+		 */
 		BatchedTile *clone() const;
 
+		/**
+		 * Gets the batched tile's id.
+		 * @return Tile's id.
+		 * @see RedBox::BatchedTile::tileId;
+		 */
 		unsigned int getTileId() const;
 
-		void setTileId(unsigned int tileId);
+		/**
+		 * Sets the batched tile's id. Changes the tile's graphic and loads
+		 * the correct texture coordinates. If the tile id given is not in the
+		 * tile's tileset, nothing happens.
+		 * @param newTileId New tile id.
+		 */
+		void setTileId(unsigned int newTileId);
 
-		const TileSet *getTileSet() const;
+		/**
+		 * Gets the tileset the tile is from.
+		 * @return Pointer to the batched tile's tileset.
+		 * @see RedBox::BatchedTile::tileset
+		 */
+		Tileset *getTileset() const;
+
+		/**
+		 * Sets the batched tile's tileset. Use this very carefully, it could
+		 * break the tile's graphics if the tileset is too different than the
+		 * old one.
+		 * @param newTileset Pointer to the batched tile's new tileset.
+		 */
+		void setTileset(Tileset *newTileset);
+
+		/**
+		 * Reconstructs the tile's vertices and texture coordinates using the
+		 * current tileset and tile id.
+		 */
+		void reconstruct();
+
+		/**
+		 * Sets the tile's tileset and tile id and reconstructs the tile's
+		 * vertices and tile id.
+		 * @param newTileset Pointer to the batched tile's new tileset.
+		 * @param newTileId New tile id. If it doesn't fit in the tileset,
+		 * the tile will not have any graphics.
+		 * @see RedBox::BatchedTile::reconstruct()
+		 */
+		void construct(Tileset *newTileset, unsigned int newTileId);
 	private:
-		const TileSet *tileSet;
+		Tileset *tileset;
 
 		unsigned int tileId;
 	};
