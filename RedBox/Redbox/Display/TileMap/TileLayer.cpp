@@ -1,6 +1,10 @@
 #include "TileLayer.h"
 
 namespace RedBox {
+
+	TileLayer::~TileLayer() {
+	}
+
 	TileLayer *TileLayer::asTileLayer() {
 		return this;
 	}

@@ -8,6 +8,8 @@
 #include "BatchedInanimateSprite.h"
 
 namespace RedBox {
+	struct TileSet;
+
 	class BatchedTile : public BatchedInanimateSprite {
 		/**
 		 * Default constructor.
@@ -49,6 +51,18 @@ namespace RedBox {
 		BatchedTile &operator=(const BatchedTile &src);
 
 		BatchedTile *clone() const;
+
+		unsigned int getTileId() const;
+
+		void setTileId(unsigned int tileId);
+
+		const TileSet *getTileSet() const;
+
+		void setTileSet(const TileSet *newTileSet);
+	private:
+		const TileSet *tileSet;
+
+		unsigned int tileId;
 	};
 }
 #endif
