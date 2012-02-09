@@ -20,11 +20,19 @@ namespace RedBox {
 		return *this;
 	}
 
-	ObjectLayer *TileMapLayer::getObjectLayer() {
+	ObjectLayer *TileMapLayer::asObjectLayer() {
 		return NULL;
 	}
 
-	TileLayer *TileMapLayer::getTileLayer() {
+	const ObjectLayer *TileMapLayer::asObjectLayer() const {
+		return NULL;
+	}
+
+	TileLayer *TileMapLayer::asTileLayer() {
+		return NULL;
+	}
+
+	const TileLayer *TileMapLayer::asTileLayer() const {
 		return NULL;
 	}
 }

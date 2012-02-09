@@ -8,7 +8,7 @@ namespace RedBox {
 
 	LineObject::LineObject(float newXPosition, float newYPosition,
 	                       const std::string &newName) :
-		TileMapObject(newXPosition, newYPosition), vertices() {
+		TileMapObject(newXPosition, newYPosition, newName), vertices() {
 	}
 
 	LineObject::LineObject(const LineObject &src) : TileMapObject(src),
