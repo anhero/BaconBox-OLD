@@ -38,6 +38,33 @@ namespace RedBox {
 		return new BatchedTile(*this);
 	}
 
+	unsigned int BatchedTile::getTileId() const {
+		return tileId;
+	}
+
+	void BatchedTile::setTileId(unsigned int newTileId) {
+		// We check if the current tileset is valid.
+		if (tileset) {
+			// If so, we check if the tile id fits into the tileset.
+			if (tileset->isIdInTileset(newTileId)) {
+				// We set the new tile id.
+				tileId = newTileId;
+
+				// We refresh the tile's texture coordinates.
+				this->reconstruct();
+			}
+
+		} else {
+			// We don't have a tileset assigned, so we don't care what tile id
+			// we have yet.
+			tileId = newTileId;
+		}
+	}
+
+	Tileset *BatchedTile::getTileset() const {
+		return tileset;
+	}
+
 	void BatchedTile::reconstruct() {
 		// We make sure the tile id is valid.
 		if (tileset && tileId &&

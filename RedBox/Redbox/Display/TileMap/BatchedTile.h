@@ -8,9 +8,10 @@
 #include "BatchedInanimateSprite.h"
 
 namespace RedBox {
-	struct Tileset;
+	class Tileset;
 
 	class BatchedTile : public BatchedInanimateSprite {
+	public:
 		/**
 		 * Default constructor.
 		 */
@@ -71,14 +72,6 @@ namespace RedBox {
 		Tileset *getTileset() const;
 
 		/**
-		 * Sets the batched tile's tileset. Use this very carefully, it could
-		 * break the tile's graphics if the tileset is too different than the
-		 * old one.
-		 * @param newTileset Pointer to the batched tile's new tileset.
-		 */
-		void setTileset(Tileset *newTileset);
-
-		/**
 		 * Reconstructs the tile's vertices and texture coordinates using the
 		 * current tileset and tile id.
 		 */
@@ -94,8 +87,10 @@ namespace RedBox {
 		 */
 		void construct(Tileset *newTileset, unsigned int newTileId);
 	private:
+		/// Pointer to the tileset the tile is part of.
 		Tileset *tileset;
 
+		/// Id of the tile in the tileset.
 		unsigned int tileId;
 	};
 }

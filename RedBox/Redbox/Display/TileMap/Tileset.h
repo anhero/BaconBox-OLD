@@ -20,7 +20,7 @@ namespace RedBox {
 	 * Represents a tileset for a tile map.
 	 * @ingroup TileMap
 	 */
-	struct Tileset : public Texturable, public TileMapEntity {
+	class Tileset : public Texturable, public TileMapEntity {
 	public:
 		/// Container used to contain the tiles' texture coordinates.
 		typedef std::deque<TextureCoordinates> TileCoordinates;
