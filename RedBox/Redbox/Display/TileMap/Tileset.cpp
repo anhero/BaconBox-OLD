@@ -170,6 +170,31 @@ namespace RedBox {
 		return result;
 	}
 
+	Tileset::TileCoordinates::size_type Tileset::getNbTiles() {
+		prepareTextureCoordinates();
+		return tileTextureCoordinates.size();
+	}
+
+	unsigned int Tileset::getFirstTileId() const {
+		return firstTileId;
+	}
+
+	void Tileset::setFirstTileId(unsigned int newFirstTileId) {
+		if (newFirstTileId > 0) {
+			firstTileId = newFirstTileId;
+			dirty = true;
+		}
+	}
+
+	unsigned int Tileset::validateTileId(unsigned int tileId) {
+		return (isIdInTileset(tileId)) ? (tileId) : (0u);
+	}
+
+	bool Tileset::isIdInTileset(unsigned int tileId) {
+		prepareTextureCoordinates();
+		return tileId - firstTileId < tileTextureCoordinates.size();
+	}
+
 	void Tileset::prepareTextureCoordinates() {
 		if (dirty) {
 			// We make sure we have a valid texture information.
@@ -218,19 +243,5 @@ namespace RedBox {
 
 			dirty = false;
 		}
-	}
-
-	Tileset::TileCoordinates::size_type Tileset::getNbTiles() {
-		prepareTextureCoordinates();
-		return tileTextureCoordinates.size();
-	}
-
-	unsigned int Tileset::validateTileId(unsigned int tileId) {
-		return (isIdInTileset(tileId)) ? (tileId) : (0u);
-	}
-
-	bool Tileset::isIdInTileset(unsigned int tileId) {
-		prepareTextureCoordinates();
-		return tileId - firstTileId < tileTextureCoordinates.size();
 	}
 }

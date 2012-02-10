@@ -5,7 +5,7 @@
 #ifndef RB_TILE_LAYER_H
 #define RB_TILE_LAYER_H
 
-#include <map>
+#include <vector>
 
 #include "TileMapLayer.h"
 #include "TileCoordinate.h"
@@ -13,6 +13,8 @@
 namespace RedBox {
 	class TileLayer : public TileMapLayer {
 	public:
+		typedef std::vector<unsigned int> DataContainer;
+
 		explicit TileLayer(const std::string &newName = std::string());
 
 		TileLayer(const TileLayer &src);
@@ -56,8 +58,18 @@ namespace RedBox {
 		const TileLayer *asTileLayer() const;
 
 		TileLayer *clone() const;
+
+		unsigned int getTileId(const TileCoordinate &tileCoordinate) const;
+
+		unsigned int getTileId(int xTileCoordinate, int yTileCoordinate) const;
+
+		void setTileId(const TileCoordinate &tileCoordinate, unsigned int newTileId);
+
+		void setTileId(int xTileCoordinate, int yTileCoordinate, unsigned int newTileId);
 	private:
 		TileCoordinate sizeInTiles;
+
+		DataContainer data;
 	};
 }
 

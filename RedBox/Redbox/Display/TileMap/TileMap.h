@@ -6,41 +6,47 @@
 #define RB_TILE_MAP_H
 
 #include <map>
-#include <utility>
-#include <string>
 #include <vector>
 
-#include "TileLayer.h"
-#include "TileSet.h"
-#include "ObjectLayer.h"
-
 namespace RedBox {
-	template <typename Key, typename Compare> class BodyManager;
+	class Tileset;
 
 	class TileMap {
 	public:
-		/**
-		 * Contains the tile set informations mapped by their name. The first
-		 * element of the pair is the first grid ID of the tile set.
-		 */
-		typedef std::map<std::string, std::pair<unsigned int, TileSet> > TileSetMap;
 
-		/// Vector of map layers.
-		typedef std::vector<TileLayer> TileLayerVector;
+		void refreshTilesetsByTileId();
 
-		/// Vector of object layers.
-		typedef std::vector<ObjectLayer> ObjectLayerVector;
+		Tileset *getTileset(unsigned int tileId);
 
-		template <typename Key, typename Compare>
-		void addLayersToState(BodyManager<Key, Compare> *state) {
-		}
+		void refreshTilesetsByName();
 
+		Tileset *getTileset(const std::string &name);
 	private:
-		/// Map's tile sets.
-		TileSetMap tileSets;
+		typedef std::vector<Tileset> TilesetVector;
+		typedef std::map<TileIdRange, Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
+		typedef std::map<std::string, Tileset *> TilesetMapByName;
 
-		/// Map's layers.
-		TileLayerVector layers;
+		struct TileIdRange {
+			struct Comparator {
+				bool operator()(const TileIdRange &first, const TileIdRange &second);
+			};
+
+			TileIdRange();
+			TileIdRange(unsigned int tileId);
+			TileIdRange(unsigned int newBegin, unsigned int newEnd);
+			TileIdRange(const TileIdRange &src);
+
+			TileIdRange &operator=(const TileIdRange &src);
+
+			unsigned int begin;
+			unsigned int end;
+		};
+
+		TilesetVector tilesets;
+
+		TilesetMapByTileId tilesetsByTileId;
+
+		TilesetMapByName tilesetsByName;
 	};
 }
 

@@ -246,6 +246,20 @@ namespace RedBox {
 		TileCoordinates::size_type getNbTiles();
 
 		/**
+		 * Gets the tile id of the first tile contained by this tileset.
+		 * @return Tile id of the first tile.
+		 * @see RedBox::Tileset::firstTileId
+		 */
+		unsigned int getFirstTileId() const;
+
+		/**
+		 * Sets the tile id of the first tile contained by this tileset.
+		 * @return newFirstTileId New tile id of the first tile.
+		 * @see RedBox::Tileset::firstTileId
+		 */
+		void setFirstTileId(unsigned int newFirstTileId);
+
+		/**
 		 * Checks whether or not the tile id fits in the tileset.
 		 * @param tileId Tile id to check.
 		 * @return Tile id received in parameter if it fits, 0 if it doesn't.
