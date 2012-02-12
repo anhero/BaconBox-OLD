@@ -179,13 +179,6 @@ namespace RedBox {
 		return firstTileId;
 	}
 
-	void Tileset::setFirstTileId(unsigned int newFirstTileId) {
-		if (newFirstTileId > 0) {
-			firstTileId = newFirstTileId;
-			dirty = true;
-		}
-	}
-
 	unsigned int Tileset::validateTileId(unsigned int tileId) {
 		return (isIdInTileset(tileId)) ? (tileId) : (0u);
 	}
@@ -193,6 +186,12 @@ namespace RedBox {
 	bool Tileset::isIdInTileset(unsigned int tileId) {
 		prepareTextureCoordinates();
 		return tileId - firstTileId < tileTextureCoordinates.size();
+	}
+
+	void Tileset::setFirstTileId(unsigned int newFirstTileId) {
+		if (newFirstTileId > 0) {
+			firstTileId = newFirstTileId;
+		}
 	}
 
 	void Tileset::prepareTextureCoordinates() {

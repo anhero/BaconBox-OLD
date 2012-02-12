@@ -73,13 +73,15 @@ namespace RedBox {
 
 		/**
 		 * Reconstructs the tile's vertices and texture coordinates using the
-		 * current tileset and tile id.
+		 * current tileset and tile id. If the tile id doesn't fit in the
+		 * tileset, this function will not do anything.
 		 */
 		void reconstruct();
 
 		/**
 		 * Sets the tile's tileset and tile id and reconstructs the tile's
-		 * vertices and tile id.
+		 * vertices and tile id. If the new tile id does not fit in the tileset,
+		 * nothing will happen.
 		 * @param newTileset Pointer to the batched tile's new tileset.
 		 * @param newTileId New tile id. If it doesn't fit in the tileset,
 		 * the tile will not have any graphics.

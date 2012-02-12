@@ -21,6 +21,7 @@ namespace RedBox {
 	 * @ingroup TileMap
 	 */
 	class Tileset : public Texturable, public TileMapEntity {
+		friend class TileMap;
 	public:
 		/// Container used to contain the tiles' texture coordinates.
 		typedef std::deque<TextureCoordinates> TileCoordinates;
@@ -253,13 +254,6 @@ namespace RedBox {
 		unsigned int getFirstTileId() const;
 
 		/**
-		 * Sets the tile id of the first tile contained by this tileset.
-		 * @return newFirstTileId New tile id of the first tile.
-		 * @see RedBox::Tileset::firstTileId
-		 */
-		void setFirstTileId(unsigned int newFirstTileId);
-
-		/**
 		 * Checks whether or not the tile id fits in the tileset.
 		 * @param tileId Tile id to check.
 		 * @return Tile id received in parameter if it fits, 0 if it doesn't.
@@ -274,6 +268,14 @@ namespace RedBox {
 		bool isIdInTileset(unsigned int tileId);
 
 	private:
+
+		/**
+		 * Sets the tile id of the first tile contained by this tileset.
+		 * @return newFirstTileId New tile id of the first tile.
+		 * @see RedBox::Tileset::firstTileId
+		 */
+		void setFirstTileId(unsigned int newFirstTileId);
+
 		/**
 		 * Calculates the texture coordinates of all the tiles so they are ready
 		 * to be used to load textureCoordinates.

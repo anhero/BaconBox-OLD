@@ -14,6 +14,12 @@ namespace RedBox {
 	class TileMap {
 	public:
 
+		TileMap();
+
+		TileMap(const TileMap &src);
+
+		TileMap &operator=(const TileMap &src);
+
 		void refreshTilesetsByTileId();
 
 		Tileset *getTileset(unsigned int tileId);
@@ -22,9 +28,6 @@ namespace RedBox {
 
 		Tileset *getTileset(const std::string &name);
 	private:
-		typedef std::vector<Tileset> TilesetVector;
-		typedef std::map<TileIdRange, Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
-		typedef std::map<std::string, Tileset *> TilesetMapByName;
 
 		struct TileIdRange {
 			struct Comparator {
@@ -41,6 +44,10 @@ namespace RedBox {
 			unsigned int begin;
 			unsigned int end;
 		};
+
+		typedef std::vector<Tileset> TilesetVector;
+		typedef std::map<TileIdRange, Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
+		typedef std::map<std::string, Tileset *> TilesetMapByName;
 
 		TilesetVector tilesets;
 
