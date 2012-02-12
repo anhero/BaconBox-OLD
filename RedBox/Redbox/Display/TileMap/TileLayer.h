@@ -5,6 +5,8 @@
 #ifndef RB_TILE_LAYER_H
 #define RB_TILE_LAYER_H
 
+#include <stdint.h>
+
 #include <vector>
 
 #include "TileMapLayer.h"
@@ -70,6 +72,10 @@ namespace RedBox {
 		TileCoordinate sizeInTiles;
 
 		DataContainer data;
+
+		int32_t opacity;
+
+		bool visible;
 	};
 }
 

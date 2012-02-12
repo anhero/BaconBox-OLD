@@ -51,4 +51,29 @@ namespace RedBox {
 			return NULL;
 		}
 	}
+
+	TileMap::TileIdRange::TileIdRange() : begin(0u), end(0u) {
+	}
+
+	TileMap::TileIdRange::TileIdRange(unsigned int tileId) : begin(tileId),
+		end(tileId) {
+	}
+
+	TileMap::TileIdRange::TileIdRange(unsigned int newBegin,
+	                                  unsigned int newEnd) : begin(newBegin),
+		end(newEnd) {
+	}
+
+	TileMap::TileIdRange::TileIdRange(const TileIdRange &src) :
+	    begin(src.begin), end(src.end) {
+	}
+
+	TileMap::TileIdRange &TileMap::TileIdRange::operator=(const TileIdRange &src) {
+		if (this != &src) {
+			begin = src.begin;
+			end = src.end;
+		}
+
+		return *this;
+	}
 }
