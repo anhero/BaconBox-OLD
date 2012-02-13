@@ -11,6 +11,7 @@
 
 #include "TileMapLayer.h"
 #include "TileCoordinate.h"
+#include "TileIdRange.h"
 
 namespace RedBox {
 	class TileLayer : public TileMapLayer {
@@ -44,6 +45,8 @@ namespace RedBox {
 		void setSizeInTiles(const TileCoordinate &newSizeInTiles);
 		void setWidthInTiles(int newWidth);
 		void setHeightInTiles(int newHeight);
+
+		void applyTilesetDestruction(const TileIdRange &toDestroy);
 
 		DataContainer data;
 

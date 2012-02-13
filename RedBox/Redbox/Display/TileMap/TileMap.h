@@ -10,7 +10,7 @@
 #include <list>
 
 #include "TileCoordinate.h"
-#include "Range.h"
+#include "TileIdRange.h"
 
 namespace RedBox {
 	class Tileset;
@@ -44,12 +44,10 @@ namespace RedBox {
 		Tileset *getTileset(const std::string &name);
 	private:
 
-		typedef Range<unsigned int> TileIdRange;
 		typedef std::list<Tileset *> TilesetContainer;
 		typedef std::map<TileIdRange, Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
 		typedef std::map<std::string, Tileset *> TilesetMapByName;
 		typedef std::list<TileMapLayer *> LayerContainer;
-
 
 		void refreshTilesetsByTileId();
 
