@@ -52,6 +52,11 @@ namespace RedBox {
 		}
 	}
 
+	bool TileMap::TileIdRange::Comparator::operator()(const TileMap::TileIdRange &first,
+	                                                  const TileMap::TileIdRange &second) {
+		return first.begin < second.begin && first.end <= second.end;
+	}
+
 	TileMap::TileIdRange::TileIdRange() : begin(0u), end(0u) {
 	}
 
@@ -65,7 +70,7 @@ namespace RedBox {
 	}
 
 	TileMap::TileIdRange::TileIdRange(const TileIdRange &src) :
-	    begin(src.begin), end(src.end) {
+		begin(src.begin), end(src.end) {
 	}
 
 	TileMap::TileIdRange &TileMap::TileIdRange::operator=(const TileIdRange &src) {
