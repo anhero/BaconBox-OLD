@@ -12,4 +12,12 @@ namespace RedBox {
 
 	TileLayer::~TileLayer() {
 	}
+
+	void TileLayer::applyTilesetDestruction(const TileIdRange &toDestroy) {
+		for (DataContainer::iterator i = data.begin(); i != data.end(); ++i) {
+			if (toDestroy.isWithinRange(*i)) {
+				*i = 0;
+			}
+		}
+	}
 }

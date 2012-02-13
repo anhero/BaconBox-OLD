@@ -146,6 +146,7 @@ namespace RedBox {
 		 * @param newMargin Margin around the tiles in the tileset image.
 		 * @param tileOffset Offset that is applied when drawing the tiles in
 		 * this tileset.
+		 * @param newFirstTileId Tile id of the first tile in the tileset.
 		 */
 		Tileset(const std::string &newName,
 		        const TileMap *newParentMap,
