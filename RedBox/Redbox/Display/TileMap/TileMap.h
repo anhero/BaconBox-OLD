@@ -10,6 +10,7 @@
 #include <list>
 
 #include "TileCoordinate.h"
+#include "Range.h"
 
 namespace RedBox {
 	class Tileset;
@@ -43,24 +44,7 @@ namespace RedBox {
 		Tileset *getTileset(const std::string &name);
 	private:
 
-		struct TileIdRange {
-			struct Comparator {
-				bool operator()(const TileIdRange &first, const TileIdRange &second);
-			};
-
-			TileIdRange();
-			TileIdRange(unsigned int tileId);
-			TileIdRange(unsigned int newBegin, unsigned int newEnd);
-			TileIdRange(const TileIdRange &src);
-
-			TileIdRange &operator=(const TileIdRange &src);
-
-			bool isWithin(unsigned int value) const;
-
-			unsigned int begin;
-			unsigned int end;
-		};
-
+		typedef Range<unsigned int> TileIdRange;
 		typedef std::list<Tileset *> TilesetContainer;
 		typedef std::map<TileIdRange, Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
 		typedef std::map<std::string, Tileset *> TilesetMapByName;

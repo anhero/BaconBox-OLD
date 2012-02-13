@@ -40,40 +40,6 @@ namespace RedBox {
 		}
 	}
 
-	bool TileMap::TileIdRange::Comparator::operator()(const TileMap::TileIdRange &first,
-	                                                  const TileMap::TileIdRange &second) {
-		return first.begin < second.begin && first.end <= second.end;
-	}
-
-	TileMap::TileIdRange::TileIdRange() : begin(0u), end(0u) {
-	}
-
-	TileMap::TileIdRange::TileIdRange(unsigned int tileId) : begin(tileId),
-		end(tileId) {
-	}
-
-	TileMap::TileIdRange::TileIdRange(unsigned int newBegin,
-	                                  unsigned int newEnd) : begin(newBegin),
-		end(newEnd) {
-	}
-
-	TileMap::TileIdRange::TileIdRange(const TileIdRange &src) :
-		begin(src.begin), end(src.end) {
-	}
-
-	TileMap::TileIdRange &TileMap::TileIdRange::operator=(const TileIdRange &src) {
-		if (this != &src) {
-			begin = src.begin;
-			end = src.end;
-		}
-
-		return *this;
-	}
-
-	bool TileMap::TileIdRange::isWithin(unsigned int value) const {
-		return value >= begin && value < end;
-	}
-
 	void TileMap::refreshTilesetsByTileId() {
 		tilesetsByTileId.clear();
 		TileIdRange tmpRange;
@@ -84,10 +50,10 @@ namespace RedBox {
 			assert(*i);
 			// We make sure the tileset is ready.
 			(*i)->prepareTextureCoordinates();
-			(*i)->setFirstTileId(tmpRange.begin);
-			tmpRange.end += (*i)->getNbTiles();
+			(*i)->setFirstTileId(tmpRange.min);
+			tmpRange.max += (*i)->getNbTiles();
 			tilesetsByTileId.insert(std::make_pair(tmpRange, *i));
-			tmpRange.begin = tmpRange.end;
+			tmpRange.min = tmpRange.max;
 		}
 	}
 
