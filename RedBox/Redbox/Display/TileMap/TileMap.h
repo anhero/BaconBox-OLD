@@ -42,6 +42,18 @@ namespace RedBox {
 
 		void setHeightInTiles(int newHeightInTiles);
 
+		const Vector2 &getTileSize() const;
+
+		void setTileSize(const Vector2 &newTileSize);
+
+		float getTileWidth() const;
+
+		void setTileWidth(float newTileWidth);
+
+		float getTileHeight() const;
+
+		void setTileHeight(float newTileHeight);
+
 		/**
 		 * Finds the tileset that has a specific tile id in its range.
 		 * @param tileId Id of the tile in the tileset to find.
@@ -122,6 +134,8 @@ namespace RedBox {
 		void deleteTilesets();
 
 		TileCoordinate sizeInTiles;
+
+		Vector2 tileSize;
 
 		TilesetContainer tilesets;
 
