@@ -17,6 +17,7 @@ namespace RedBox {
 	class TileMapLayer;
 
 	class TileMap {
+		friend class Tileset;
 	public:
 
 		TileMap();
@@ -66,7 +67,7 @@ namespace RedBox {
 
 		TilesetMapByName tilesetsByName;
 
-		mutable bool dirtyByName;
+		mutable bool dirtyTilesetsByName;
 
 		LayerContainer layers;
 	};

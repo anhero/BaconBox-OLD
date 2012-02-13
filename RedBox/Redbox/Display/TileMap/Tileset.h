@@ -9,12 +9,12 @@
 #include <deque>
 
 #include "Vector2.h"
-#include "Texturable.h"
 #include "TileMapEntity.h"
 #include "TextureCoordinates.h"
 
 namespace RedBox {
 	struct TextureInformation;
+	class TileMap;
 
 	/**
 	 * Represents a tileset for a tile map.
@@ -26,48 +26,13 @@ namespace RedBox {
 		/// Container used to contain the tiles' texture coordinates.
 		typedef std::deque<TextureCoordinates> TileCoordinates;
 
-		/// Tile size given to tilesets by default (32x32).
-		static const Vector2 DEFAULT_TILE_SIZE;
+		void setName(const std::string &newName);
 
 		/**
-		 * Default constructor.
+		 * Gets the texture information for the tileset.
+		 * @return Pointer to the texture information for the tileset.
 		 */
-		Tileset();
-
-		/**
-		 * Parameterized constructor.
-		 * @param newTexture Texture to use for the tileset.
-		 * @param newName Name of the tileset.
-		 * @param newTileSize Size of the tiles (in pixels). 32x32 by default.
-		 * @param newTileSpacing Spacing between the tiles in the tileset image.
-		 * @param newMargin Margin around the tiles in the tileset image.
-		 * @param tileOffset Offset that is applied when drawing the tiles in
-		 * this tileset.
-		 */
-		explicit Tileset(TexturePointer newTexture,
-		                 const std::string newName = std::string(),
-		                 const Vector2 &newTileSize = DEFAULT_TILE_SIZE,
-		                 float newTileSpacing = 0.0f,
-		                 float newMargin = 0.0f,
-		                 const Vector2 &newTileOffset = Vector2());
-
-		/**
-		 * Copy constructor.
-		 * @param src tileset to make a copy of.
-		 */
-		Tileset(const Tileset &src);
-
-		/**
-		 * Destructor
-		 */
-		~Tileset();
-
-		/**
-		 * Assignment operator overload.
-		 * @param src tileset to copy.
-		 * @return Reference to the modified tileset.
-		 */
-		Tileset &operator=(const Tileset &src);
+		TextureInformation *getTextureInformation() const;
 
 		/**
 		 * Gets the tiles' size.
@@ -132,26 +97,11 @@ namespace RedBox {
 		/**
 		 * Loads the texture coordinates of a tile from a tile id.
 		 * @param tileId Id of the tile to get its texture coordinates. Must be
-		 * higher than the tileset's first tile id.
-		 * @param textureCoordinates Array of Vector2 to write the texture
-		 * coordinates to.
-		 * @return True if the tile's texture coordinates were copied
-		 * successfully, false if not. Loads the tileset's tiles' texture
-		 * coordinates if the tileset's tiles' texture coordinates are not
-		 * ready to be copied.
-		 */
-		bool loadTextureCoordinates(unsigned int tileId,
-		                            TextureCoordinates &textureCoordinates);
-
-		/**
-		 * Loads the texture coordinates of a tile from a tile id.
-		 * @param tileId Id of the tile to get its texture coordinates. Must be
-		 * higher than the tileset's first tile id.
+		 * within range of the tileset's tiles id's.
 		 * @param textureCoordinates Array of Vector2 to write the texture
 		 * coordinates to.
 		 * @return True if the texture coordinates were loaded successfully,
-		 * false if not. Does not load the texture coordinates if the tile
-		 * set's tiles' texture coordinates are not ready.
+		 * false if not.
 		 */
 		bool loadTextureCoordinates(unsigned int tileId,
 		                            TextureCoordinates &textureCoordinates) const;
@@ -160,7 +110,7 @@ namespace RedBox {
 		 * Gets the number of tiles the tileset contains.
 		 * @return Number of tiles the tileset contains.
 		 */
-		TileCoordinates::size_type getNbTiles();
+		TileCoordinates::size_type getNbTiles() const;
 
 		/**
 		 * Gets the tile id of the first tile contained by this tileset.
@@ -174,16 +124,41 @@ namespace RedBox {
 		 * @param tileId Tile id to check.
 		 * @return Tile id received in parameter if it fits, 0 if it doesn't.
 		 */
-		unsigned int validateTileId(unsigned int tileId);
+		unsigned int validateTileId(unsigned int tileId) const;
 
 		/**
 		 * Checks whether or not the tile id fits in the tileset.
 		 * @param tileId Tile id to check.
 		 * @return True if the tile id fits, false if not.
 		 */
-		bool isIdInTileset(unsigned int tileId);
+		bool isIdInTileset(unsigned int tileId) const;
 
 	private:
+
+		/**
+		 * Parameterized constructor.
+		 * @param newName Name of the tileset.
+		 * @param newParentMap Pointer to the tile map that owns the tileset.
+		 * @param newTextureInformation Pointer to the texture information to
+		 * use for the tileset.
+		 * @param newTileSize Size of the tiles (in pixels). 32x32 by default.
+		 * @param newTileSpacing Spacing between the tiles in the tileset image.
+		 * @param newMargin Margin around the tiles in the tileset image.
+		 * @param tileOffset Offset that is applied when drawing the tiles in
+		 * this tileset.
+		 */
+		Tileset(const std::string newName,
+		        const TileMap *newParentMap,
+		        TextureInformation *newTextureInformation,
+		        const Vector2 &newTileSize,
+		        float newTileSpacing,
+		        float newMargin,
+		        const Vector2 &newTileOffset);
+
+		/**
+		 * Destructor
+		 */
+		~Tileset();
 
 		/**
 		 * Sets the tile id of the first tile contained by this tileset.
@@ -196,7 +171,13 @@ namespace RedBox {
 		 * Calculates the texture coordinates of all the tiles so they are ready
 		 * to be used to load textureCoordinates.
 		 */
-		void prepareTextureCoordinates();
+		void initializeTextureCoordinates();
+
+		/// Pointer to the tile map that owns the tileset.
+		const TileMap *parentMap;
+
+		/// Pointer to the information on the tileset's texture.
+		TextureInformation *textureInformation;
 
 		/**
 		 * Size of the tiles. If the size is not the same as the tile map that
@@ -221,9 +202,6 @@ namespace RedBox {
 
 		/// Tile id of the first tile.
 		unsigned int firstTileId;
-
-		/// Set to true when the texture coordinates needs to be rebuilt.
-		bool dirty;
 
 		/// Vector containing the texture coordinates for each tile.
 		TileCoordinates tileTextureCoordinates;

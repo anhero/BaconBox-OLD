@@ -5,6 +5,8 @@
 #ifndef RB_RANGE_H
 #define RB_RANGE_H
 
+#include <algorithm>
+
 namespace RedBox {
 
 	template <typename ValueType>
@@ -34,20 +36,24 @@ namespace RedBox {
 		 * @param newMin Minimum value of the range.
 		 * @param newMax Maximum value of the range (not included).
 		 */
-		Range(ValueType newMin, ValueType newMax);
+		Range(ValueType newMin, ValueType newMax) : min(newMin), max(newMax) {
+		}
 
 		/**
 		 * Copy constructor.
 		 * @param src Range to copy.
 		 */
-		Range(const Range &src);
+		Range(const Range &src) : min(src.min), max(src.max) {
+		}
 
 		/**
 		 * Checks whether or not the received value fits within the range.
 		 * @param value Value to check.
 		 * @return True if the value fits within the range, false if not.
 		 */
-		bool isWithinRange(ValueType value);
+		bool isWithinRange(ValueType value) const {
+			return value >= min && value < max;
+		}
 
 		/// Minimum value in the range (included).
 		ValueType min;
