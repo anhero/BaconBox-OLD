@@ -147,13 +147,14 @@ namespace RedBox {
 		 * @param tileOffset Offset that is applied when drawing the tiles in
 		 * this tileset.
 		 */
-		Tileset(const std::string newName,
+		Tileset(const std::string &newName,
 		        const TileMap *newParentMap,
 		        TextureInformation *newTextureInformation,
 		        const Vector2 &newTileSize,
 		        float newTileSpacing,
 		        float newMargin,
-		        const Vector2 &newTileOffset);
+		        const Vector2 &newTileOffset,
+		        unsigned int newFirstTileId);
 
 		/**
 		 * Destructor

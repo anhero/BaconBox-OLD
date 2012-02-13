@@ -42,6 +42,40 @@ namespace RedBox {
 		}
 	}
 
+	const Tileset *TileMap::addTileset(const std::string &newName,
+	                                   TextureInformation *newTextureInformation,
+	                                   const Vector2 &newTileSize,
+	                                   float newTileSpacing,
+	                                   float newMargin,
+	                                   const Vector2 &newTileOffset,
+	                                   bool overwrite) {
+		const Tileset *result = getTileset(newName);
+		if (result) {
+			if (overwrite) {
+				removeTileset(result);
+				addTileset(newName,
+				           newTextureInformation,
+				           newTileSize,
+				           newTileSpacing,
+				           newMargin,
+				           newTileOffset,
+				           false);
+			} else {
+				result = NULL;
+			}
+		} else {
+			unsigned int firstTileId = (tilesets.empty()) ? (1) : (tilesets.back()->getFirstTileId() + tilesets.back()->getNbTiles());
+			tilesets.push_back(new Tileset(newName, this, newTextureInformation, newTileSize, newTileSpacing, newMargin, newTileOffset, firstTileId));
+			tilesetsByTileId.insert(std::make_pair(TileIdRange(tilesets.back()->getFirstTileId(), tilesets.back()->getFirstTileId() + tilesets.back()->getNbTiles()),
+			                                       tilesets.back()));
+		}
+		return result;
+	}
+
+	void TileMap::removeTileset(const std::string &tilesetName) {
+		removeTileset(getTileset(tilesetName));
+	}
+
 	void TileMap::refreshTilesetsByTileId() {
 		tilesetsByTileId.clear();
 		// The tile id 0 is for empty tiles, so we start counting the id's at 1.
@@ -67,7 +101,27 @@ namespace RedBox {
 		}
 	}
 
+	void TileMap::removeTileset(const Tileset *tileset) {
+		if (tileset) {
+			TilesetContainer::iterator found = std::find(tilesets.begin(), tilesets.end(), tileset);
+
+			if (found != tilesets.end()) {
+				applyTilesetDestruction(TileIdRange((*found)->getFirstTileId(), (*found)->getFirstTileId() + (*found)->getNbTiles()));
+				delete *found;
+				tilesets.erase(found);
+				refreshTilesetsByTileId();
+				dirtyTilesetsByName = true;
+			}
+		}
+	}
+
 	void TileMap::applyTilesetDestruction(const TileIdRange &toDestroy) {
+		for (LayerContainer::iterator i = layers.begin(); i != layers.end();
+		     ++i) {
+			if ((*i)->asTileLayer()) {
+				(*i)->asTileLayer()->applyTilesetDestruction(toDestroy);
+			}
+		}
 	}
 
 	void TileMap::deleteLayers() {

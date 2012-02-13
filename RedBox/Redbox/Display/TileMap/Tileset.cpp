@@ -77,16 +77,18 @@ namespace RedBox {
 		return TileIdRange(firstTileId, firstTileId + tileTextureCoordinates.size()).isWithinRange(tileId);
 	}
 
-	Tileset::Tileset(const std::string newName,
+	Tileset::Tileset(const std::string &newName,
 	                 const TileMap *newParentMap,
 	                 TextureInformation *newTextureInformation,
 	                 const Vector2 &newTileSize,
 	                 float newTileSpacing,
 	                 float newMargin,
-	                 const Vector2 &newTileOffset) : TileMapEntity(newName),
+	                 const Vector2 &newTileOffset,
+	                 unsigned int newFirstTileId) : TileMapEntity(newName),
 		parentMap(newParentMap), textureInformation(newTextureInformation),
 		tileSize(newTileSize), tileSpacing(newTileSpacing), margin(newMargin),
-		tileOffset(newTileOffset), tileTextureCoordinates() {
+		tileOffset(newTileOffset), firstTileId(newFirstTileId),
+		tileTextureCoordinates() {
 		initializeTextureCoordinates();
 	}
 
