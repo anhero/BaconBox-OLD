@@ -13,7 +13,7 @@ namespace RedBox {
 	struct Range {
 		struct Comparator {
 			bool operator() (const Range<ValueType> &first,
-			                 const Range<ValueType> &second) {
+			                 const Range<ValueType> &second) const {
 				return first.min < second.min && first.max <= second.max;
 			}
 		};

@@ -40,19 +40,19 @@ namespace RedBox {
 
 		void setHeightInTiles(int newHeightInTiles);
 
-		Tileset *getTileset(unsigned int tileId);
+		const Tileset *getTileset(unsigned int tileId) const;
 
-		Tileset *getTileset(const std::string &name);
+		const Tileset *getTileset(const std::string &name) const;
 	private:
 
 		typedef std::list<Tileset *> TilesetContainer;
-		typedef std::map<TileIdRange, Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
-		typedef std::map<std::string, Tileset *> TilesetMapByName;
+		typedef std::map<TileIdRange, const Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
+		typedef std::map<std::string, const Tileset *> TilesetMapByName;
 		typedef std::list<TileMapLayer *> LayerContainer;
 
 		void refreshTilesetsByTileId();
 
-		void refreshTilesetsByName();
+		void refreshTilesetsByName() const;
 
 		void applyTilesetDestruction(const TileIdRange &toDestroy);
 
@@ -65,7 +65,7 @@ namespace RedBox {
 
 		TilesetMapByTileId tilesetsByTileId;
 
-		TilesetMapByName tilesetsByName;
+		mutable TilesetMapByName tilesetsByName;
 
 		mutable bool dirtyTilesetsByName;
 

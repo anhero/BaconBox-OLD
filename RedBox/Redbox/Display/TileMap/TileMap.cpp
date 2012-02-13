@@ -16,8 +16,8 @@ namespace RedBox {
 		deleteTilesets();
 	}
 
-	Tileset *TileMap::getTileset(unsigned int tileId) {
-		TilesetMapByTileId::iterator found = tilesetsByTileId.find(tileId);
+	const Tileset *TileMap::getTileset(unsigned int tileId) const {
+		TilesetMapByTileId::const_iterator found = tilesetsByTileId.find(tileId);
 
 		if (found != tilesetsByTileId.end()) {
 			return found->second;
@@ -27,12 +27,12 @@ namespace RedBox {
 		}
 	}
 
-	Tileset *TileMap::getTileset(const std::string &name) {
+	const Tileset *TileMap::getTileset(const std::string &name) const {
 		if (dirtyTilesetsByName) {
 			refreshTilesetsByName();
 		}
 
-		TilesetMapByName::iterator found = tilesetsByName.find(name);
+		TilesetMapByName::const_iterator found = tilesetsByName.find(name);
 
 		if (found != tilesetsByName.end()) {
 			return found->second;
@@ -58,10 +58,10 @@ namespace RedBox {
 		}
 	}
 
-	void TileMap::refreshTilesetsByName() {
+	void TileMap::refreshTilesetsByName() const {
 		tilesetsByName.clear();
 
-		for (TilesetContainer::iterator i = tilesets.begin();
+		for (TilesetContainer::const_iterator i = tilesets.begin();
 		     i != tilesets.end(); ++i) {
 			tilesetsByName.insert(std::make_pair((*i)->getName(), *i));
 		}
