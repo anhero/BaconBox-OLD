@@ -7,9 +7,13 @@
 
 #include <map>
 #include <vector>
+#include <list>
+
+#include "TileCoordinate.h"
 
 namespace RedBox {
 	class Tileset;
+	class TileMapLayer;
 
 	class TileMap {
 	public:
@@ -18,13 +22,23 @@ namespace RedBox {
 
 		TileMap(const TileMap &src);
 
+		~TileMap();
+
 		TileMap &operator=(const TileMap &src);
 
-		void refreshTilesetsByTileId();
+		const TileCoordinate &getSizeInTiles() const;
+
+		void setSizeInTiles(const TileCoordinate &newSizeInTiles);
+
+		int getWidthInTiles() const;
+
+		void setWidthInTiles(int newWidthInTiles);
+
+		int getHeightInTiles() const;
+
+		void setHeightInTiles(int newHeightInTiles);
 
 		Tileset *getTileset(unsigned int tileId);
-
-		void refreshTilesetsByName();
 
 		Tileset *getTileset(const std::string &name);
 	private:
@@ -41,19 +55,38 @@ namespace RedBox {
 
 			TileIdRange &operator=(const TileIdRange &src);
 
+			bool isWithin(unsigned int value) const;
+
 			unsigned int begin;
 			unsigned int end;
 		};
 
-		typedef std::vector<Tileset> TilesetVector;
+		typedef std::list<Tileset *> TilesetContainer;
 		typedef std::map<TileIdRange, Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
 		typedef std::map<std::string, Tileset *> TilesetMapByName;
+		typedef std::list<TileMapLayer *> LayerContainer;
 
-		TilesetVector tilesets;
+
+		void refreshTilesetsByTileId();
+
+		void refreshTilesetsByName();
+
+		void applyTilesetDestruction(const TileIdRange &toDestroy);
+
+		void deleteLayers();
+		void deleteTilesets();
+
+		TileCoordinate sizeInTiles;
+
+		TilesetContainer tilesets;
 
 		TilesetMapByTileId tilesetsByTileId;
 
 		TilesetMapByName tilesetsByName;
+
+		mutable bool dirtyByName;
+
+		LayerContainer layers;
 	};
 }
 

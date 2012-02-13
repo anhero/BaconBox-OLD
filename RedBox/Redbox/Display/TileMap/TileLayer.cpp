@@ -2,9 +2,6 @@
 
 namespace RedBox {
 
-	TileLayer::~TileLayer() {
-	}
-
 	TileLayer *TileLayer::asTileLayer() {
 		return this;
 	}
@@ -13,7 +10,6 @@ namespace RedBox {
 		return this;
 	}
 
-	TileLayer *TileLayer::clone() const {
-		return new TileLayer(*this);
+	TileLayer::~TileLayer() {
 	}
 }

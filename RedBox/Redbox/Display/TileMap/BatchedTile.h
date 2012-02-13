@@ -1,3 +1,4 @@
+#if 0
 /**
  * @file
  * @ingroup TileMap
@@ -96,4 +97,6 @@ namespace RedBox {
 		unsigned int tileId;
 	};
 }
+#endif
+
 #endif

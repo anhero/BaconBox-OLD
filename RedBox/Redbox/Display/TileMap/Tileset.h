@@ -20,7 +20,7 @@ namespace RedBox {
 	 * Represents a tileset for a tile map.
 	 * @ingroup TileMap
 	 */
-	class Tileset : public Texturable, public TileMapEntity {
+	class Tileset : public TileMapEntity {
 		friend class TileMap;
 	public:
 		/// Container used to contain the tiles' texture coordinates.
@@ -70,32 +70,11 @@ namespace RedBox {
 		Tileset &operator=(const Tileset &src);
 
 		/**
-		 * Sets the tileset's texture information.
-		 * @param newTexture New texture to use for the tileset.
-		 */
-		void setTextureInformation(TexturePointer newTexture);
-
-		/**
 		 * Gets the tiles' size.
 		 * @return Tile size (in pixels).
 		 * @see RedBox::Tileset::tileSize
 		 */
 		const Vector2 &getTileSize() const;
-
-		/**
-		 * Sets the tiles' size.
-		 * @param newTileSize New tile size (in pixels).
-		 * @see RedBox::Tileset::tileSize
-		 */
-		void setTileSize(const Vector2 &newTileSize);
-
-		/**
-		 * Sets the tiles' size.
-		 * @param newTileWidth New tile width (in pixels).
-		 * @param newTileHeight New tile height (in pixels).
-		 * @see RedBox::Tileset::tileSize
-		 */
-		void setTileSize(float newTileWidth, float newTileHeight);
 
 		/**
 		 * Gets the tile's width.
@@ -105,25 +84,11 @@ namespace RedBox {
 		float getTileWidth() const;
 
 		/**
-		 * Sets the tile's width.
-		 * @param newTileWidth New tile width (in pixels).
-		 * @see RedBox::Tileset::tileSize
-		 */
-		void setTileWidth(float newTileWidth);
-
-		/**
 		 * Gets the tile's height.
 		 * @return Tile height (in pixels).
 		 * @see RedBox::Tileset::tileSize
 		 */
 		float getTileHeight() const;
-
-		/**
-		 * Sets the tile's height.
-		 * @param newTileHeight New tile height (in pixels).
-		 * @see RedBox::Tileset::tileSize
-		 */
-		void setTileHeight(float newTileHeight);
 
 		/**
 		 * Gets the tile spacing. The horizontal and vertical space found
@@ -134,28 +99,11 @@ namespace RedBox {
 		float getTileSpacing() const;
 
 		/**
-		 * Gets the tile spacing. The horizontal and vertical space found
-		 * between tiles in the texture.
-		 * @param newTileSpacing New spacing between the tiles in the tileset's
-		 * texture.
-		 * @see RedBox::Tileset::tileSpacing
-		 */
-		void setTileSpacing(float newTileSpacing);
-
-		/**
 		 * Gets the tileset's margin.
 		 * @return Margin around the tiles in the tileset's texture.
 		 * @see RedBox::Tileset::margin
 		 */
 		float getMargin() const;
-
-		/**
-		 * Sets the tileset's margin.
-		 * @param newMargin New margin around the tiles in the tileset's
-		 * texture.
-		 * @see RedBox::Tileset::margin
-		 */
-		void setMargin(float newMargin);
 
 		/**
 		 * Gets the tiles' offset.
@@ -166,22 +114,6 @@ namespace RedBox {
 		const Vector2 &getTileOffset() const;
 
 		/**
-		 * Sets the tiles' offset.
-		 * @param newTileOffset New offset that to be applied when drawing the
-		 * tiles from this tileset.
-		 * @return RedBox::Tileset::tileOffset
-		 */
-		void setTileOffset(const Vector2 &newTileOffset);
-
-		/**
-		 * Sets the tiles' offset.
-		 * @param newTileOffset New offset that to be applied when drawing the
-		 * tiles from this tileset.
-		 * @return RedBox::Tileset::tileOffset
-		 */
-		void setTileOffset(float newXTileOffset, float newYTileOffset);
-
-		/**
 		 * Gets the tiles' horizontal offset.
 		 * @return Horizontal offset that is applied when drawing the tiles from
 		 * this tileset.
@@ -190,28 +122,12 @@ namespace RedBox {
 		float getXTileOffset() const;
 
 		/**
-		 * Sets the tiles' horizontal offset.
-		 * @param newXTileOffset New horizontal offset that is applied when
-		 * drawing the tiles from this tileset.
-		 * @see RedBox::Tileset::tileOffset
-		 */
-		void setXTileOffset(float newXTileOffst);
-
-		/**
 		 * Gets the tiles' vertical offset.
 		 * @return Vertical offset that is applied when drawing the tiles from
 		 * this tileset.
 		 * @see RedBox::Tileset::tileOffset
 		 */
 		float getYTileOffset() const;
-
-		/**
-		 * Sets the tiles' horizontal offset.
-		 * @param newXTileOffset New horizontal offset that is applied when
-		 * drawing the tiles from this tileset.
-		 * @see RedBox::Tileset::tileOffset
-		 */
-		void setYTileOffset(float newYTileOffset);
 
 		/**
 		 * Loads the texture coordinates of a tile from a tile id.

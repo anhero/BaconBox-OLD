@@ -5,9 +5,9 @@
 namespace RedBox {
 	const Vector2 Tileset::DEFAULT_TILE_SIZE = Vector2(32.0f, 32.0f);
 
-	Tileset::Tileset() : Texturable(), TileMapEntity(),
-		tileSize(DEFAULT_TILE_SIZE), tileSpacing(0.0f), margin(0.0f),
-		tileOffset(), dirty(true), tileTextureCoordinates() {
+	Tileset::Tileset() : TileMapEntity(), tileSize(DEFAULT_TILE_SIZE),
+	    tileSpacing(0.0f), margin(0.0f), tileOffset(), dirty(true),
+	    tileTextureCoordinates() {
 	}
 
 	Tileset::Tileset(TexturePointer newTexture,
@@ -15,13 +15,12 @@ namespace RedBox {
 	                 const Vector2 &newTileSize,
 	                 float newTileSpacing,
 	                 float newMargin,
-	                 const Vector2 &newTileOffset) : Texturable(newTexture),
-		TileMapEntity(newName), tileSize(newTileSize),
-		tileSpacing(newTileSpacing), margin(newMargin),
+	                 const Vector2 &newTileOffset) : TileMapEntity(newName),
+	    tileSize(newTileSize), tileSpacing(newTileSpacing), margin(newMargin),
 		tileOffset(newTileOffset), dirty(true), tileTextureCoordinates() {
 	}
 
-	Tileset::Tileset(const Tileset &src) : Texturable(src), TileMapEntity(src),
+	Tileset::Tileset(const Tileset &src) : TileMapEntity(src),
 		tileSize(src.tileSize), tileSpacing(src.tileSpacing),
 		margin(src.margin), tileOffset(src.tileOffset), dirty(false),
 		tileTextureCoordinates() {
@@ -37,7 +36,6 @@ namespace RedBox {
 	}
 
 	Tileset &Tileset::operator=(const Tileset &src) {
-		this->Texturable::operator=(src);
 		this->TileMapEntity::operator=(src);
 
 		if (this != &src) {
@@ -58,91 +56,36 @@ namespace RedBox {
 		return *this;
 	}
 
-	void Tileset::setTextureInformation(TexturePointer newTexture) {
-		this->Texturable::setTextureInformation(newTexture);
-		dirty = true;
-	}
-
 	const Vector2 &Tileset::getTileSize() const {
 		return tileSize;
-	}
-
-	void Tileset::setTileSize(const Vector2 &newTileSize) {
-		tileSize = newTileSize;
-		dirty = true;
-	}
-
-	void Tileset::setTileSize(float newTileWidth, float newTileHeight) {
-		tileSize.setXY(newTileWidth, newTileHeight);
-		dirty = true;
 	}
 
 	float Tileset::getTileWidth() const {
 		return tileSize.getX();
 	}
 
-	void Tileset::setTileWidth(float newTileWidth) {
-		tileSize.setX(newTileWidth);
-		dirty = true;
-	}
-
 	float Tileset::getTileHeight() const {
 		return tileSize.getY();
-	}
-
-	void Tileset::setTileHeight(float newTileHeight) {
-		tileSize.setY(newTileHeight);
-		dirty = true;
 	}
 
 	float Tileset::getTileSpacing() const {
 		return tileSpacing;
 	}
 
-	void Tileset::setTileSpacing(float newTileSpacing) {
-		tileSpacing = newTileSpacing;
-		dirty = true;
-	}
-
 	float Tileset::getMargin() const {
 		return margin;
-	}
-
-	void Tileset::setMargin(float newMargin) {
-		margin = newMargin;
-		dirty = true;
 	}
 
 	const Vector2 &Tileset::getTileOffset() const {
 		return tileOffset;
 	}
 
-	void Tileset::setTileOffset(const Vector2 &newTileOffset) {
-		tileOffset = newTileOffset;
-		dirty = true;
-	}
-
-	void Tileset::setTileOffset(float newXTileOffset, float newYTileOffset) {
-		tileOffset.setXY(newXTileOffset, newYTileOffset);
-		dirty = true;
-	}
-
 	float Tileset::getXTileOffset() const {
 		return tileOffset.getX();
 	}
 
-	void Tileset::setXTileOffset(float newXTileOffset) {
-		tileOffset.setX(newXTileOffset);
-		dirty = true;
-	}
-
 	float Tileset::getYTileOffset() const {
 		return tileOffset.getY();
-	}
-
-	void Tileset::setYTileOffset(float newYTileOffset) {
-		tileOffset.setY(newYTileOffset);
-		dirty = true;
 	}
 
 	bool Tileset::loadTextureCoordinates(unsigned int tileId,
@@ -195,6 +138,7 @@ namespace RedBox {
 	}
 
 	void Tileset::prepareTextureCoordinates() {
+		/*
 		if (dirty) {
 			// We make sure we have a valid texture information.
 			if (getTextureInformation()) {
@@ -242,5 +186,6 @@ namespace RedBox {
 
 			dirty = false;
 		}
+		*/
 	}
 }

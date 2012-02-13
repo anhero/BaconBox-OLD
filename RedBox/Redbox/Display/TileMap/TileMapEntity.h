@@ -62,7 +62,7 @@ namespace RedBox {
 		 * @param newName New name to give to the entity.
 		 * @see RedBox::TileMapEntity::name
 		 */
-		void setName(const std::string &newName);
+		virtual void setName(const std::string &newName);
 	private:
 		/// Name of the entity. Empty if the entity doesn't have a name.
 		std::string name;
