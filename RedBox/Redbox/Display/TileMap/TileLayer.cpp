@@ -16,9 +16,14 @@ namespace RedBox {
 	}
 
 	void TileLayer::applyTilesetDestruction(const TileIdRange &toDestroy) {
+		unsigned int tmpLength = toDestroy.max - toDestroy.min;
+
 		for (DataContainer::iterator i = data.begin(); i != data.end(); ++i) {
 			if (toDestroy.isWithinRange(*i)) {
 				*i = 0;
+
+			} else if (*i >= toDestroy.max) {
+				*i -= tmpLength;
 			}
 		}
 	}
