@@ -42,9 +42,9 @@ namespace RedBox {
 
 		~TileLayer();
 
-		void setSizeInTiles(const TileCoordinate &newSizeInTiles);
-		void setWidthInTiles(int newWidth);
-		void setHeightInTiles(int newHeight);
+		void setSizeInTiles(const TileCoordinate &newSizeInTiles, const TileCoordinate &offset);
+		void setWidthInTiles(int newWidth, int offset);
+		void setHeightInTiles(int newHeight, int offset);
 
 		void applyTilesetDestruction(const TileIdRange &toDestroy);
 

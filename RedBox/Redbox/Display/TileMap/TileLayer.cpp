@@ -1,5 +1,7 @@
 #include "TileLayer.h"
 
+#include "TileMap.h"
+
 namespace RedBox {
 
 	TileLayer *TileLayer::asTileLayer() {
@@ -19,5 +21,9 @@ namespace RedBox {
 				*i = 0;
 			}
 		}
+	}
+
+	void TileLayer::setWidthInTiles(int newWidth, int offset) {
+		DataContainer tmpData(data);
 	}
 }
