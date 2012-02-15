@@ -16,6 +16,82 @@ namespace RedBox {
 		deleteTilesets();
 	}
 
+	const TileCoordinate &TileMap::getSizeInTiles() const {
+		return sizeInTiles;
+	}
+
+	void TileMap::setSizeInTiles(const TileCoordinate &newSizeInTiles,
+	                             const TileCoordinate &offset) {
+		if (newSizeInTiles.getX() >= 0 && newSizeInTiles.getY() >= 0) {
+			for (LayerContainer::iterator i = layers.begin(); i != layers.end();
+			     ++i) {
+				if ((*i)->asTileLayer()) {
+					(*i)->asTileLayer()->setSizeInTiles(newSizeInTiles, offset);
+				}
+			}
+
+			sizeInTiles = newSizeInTiles;
+		}
+	}
+
+	int TileMap::getWidthInTiles() const {
+		return sizeInTiles.getX();
+	}
+
+	void TileMap::setWidthInTiles(int newWidthInTiles, int offset) {
+		if (newWidthInTiles >= 0) {
+			for (LayerContainer::iterator i = layers.begin(); i != layers.end();
+			     ++i) {
+				if ((*i)->asTileLayer()) {
+					(*i)->asTileLayer()->setWidthInTiles(newWidthInTiles, offset);
+				}
+			}
+
+			sizeInTiles.setX(newWidthInTiles);
+		}
+	}
+
+	int TileMap::getHeightInTiles() const {
+		return sizeInTiles.getY();
+	}
+
+	void TileMap::setHeightInTile(int newHeightInTiles, int offset) {
+		if (newHeightInTiles >= 0) {
+			for (LayerContainer::iterator i = layers.begin(); i != layers.end();
+			     ++i) {
+				if ((*i)->asTileLayer()) {
+					(*i)->asTileLayer()->setHeightInTiles(newHeightInTiles, offset);
+				}
+			}
+
+			sizeInTiles.setY(newHeightInTiles);
+		}
+	}
+
+	const Vector2 &TileMap::getTileSize() const {
+		return tileSize;
+	}
+
+	void TileMap::setTileSize(const Vector2 &newTileSize) {
+		tileSize = newTileSize;
+	}
+
+	float TileMap::getTileWidth() const {
+		return tileSize.getX();
+	}
+
+	void TileMap::setTileWidth(float newTileWidth) {
+		tileSize.setX(newTileWidth);
+	}
+
+	float TileMap::getTileHeight() const {
+		return tileSize.getY();
+	}
+
+	void TileMap::setTileHeight(float newTileHeight) {
+		tileSize.setY(newTileHeight);
+	}
+
 	const Tileset *TileMap::getTileset(unsigned int tileId) const {
 		TilesetMapByTileId::const_iterator found = tilesetsByTileId.find(tileId);
 
@@ -50,6 +126,7 @@ namespace RedBox {
 	                                   const Vector2 &newTileOffset,
 	                                   bool overwrite) {
 		const Tileset *result = getTileset(newName);
+
 		if (result) {
 			if (overwrite) {
 				removeTileset(result);
@@ -60,15 +137,18 @@ namespace RedBox {
 				           newMargin,
 				           newTileOffset,
 				           false);
+
 			} else {
 				result = NULL;
 			}
+
 		} else {
 			unsigned int firstTileId = (tilesets.empty()) ? (1) : (tilesets.back()->getFirstTileId() + tilesets.back()->getNbTiles());
 			tilesets.push_back(new Tileset(newName, this, newTextureInformation, newTileSize, newTileSpacing, newMargin, newTileOffset, firstTileId));
 			tilesetsByTileId.insert(std::make_pair(TileIdRange(tilesets.back()->getFirstTileId(), tilesets.back()->getFirstTileId() + tilesets.back()->getNbTiles()),
 			                                       tilesets.back()));
 		}
+
 		return result;
 	}
 

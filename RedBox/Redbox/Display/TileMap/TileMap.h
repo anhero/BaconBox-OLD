@@ -32,15 +32,16 @@ namespace RedBox {
 
 		const TileCoordinate &getSizeInTiles() const;
 
-		void setSizeInTiles(const TileCoordinate &newSizeInTiles);
+		void setSizeInTiles(const TileCoordinate &newSizeInTiles,
+		                    const TileCoordinate &offset = TileCoordinate());
 
 		int getWidthInTiles() const;
 
-		void setWidthInTiles(int newWidthInTiles);
+		void setWidthInTiles(int newWidthInTiles, int offset = 0);
 
 		int getHeightInTiles() const;
 
-		void setHeightInTiles(int newHeightInTiles);
+		void setHeightInTiles(int newHeightInTiles, int offset = 0);
 
 		const Vector2 &getTileSize() const;
 
