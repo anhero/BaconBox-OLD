@@ -17,10 +17,12 @@ namespace RedBox {
 	class Tileset;
 	class TileMapLayer;
 	struct TextureInformation;
+	class TileLayer;
 
 	class TileMap {
 		friend class Tileset;
 	public:
+		typedef std::list<TileMapLayer *> LayerContainer;
 
 		TileMap();
 
@@ -64,12 +66,28 @@ namespace RedBox {
 		const Tileset *getTileset(unsigned int tileId) const;
 
 		/**
+		 * Finds the tileset that has a specific tile id in its range.
+		 * @param tileId Id of the tile in the tileset to find.
+		 * @return Pointer to the tileset found. NULL if the tile id is too
+		 * high.
+		 */
+		Tileset *getTileset(unsigned int tileId);
+
+		/**
 		 * Finds a tileset by its name.
 		 * @param name Name of the tileset to find.
 		 * @return Pointer to the tileset found. NULL if no tileset was found
 		 * with the given name.
 		 */
 		const Tileset *getTileset(const std::string &name) const;
+
+		/**
+		 * Finds a tileset by its name.
+		 * @param name Name of the tileset to find.
+		 * @return Pointer to the tileset found. NULL if no tileset was found
+		 * with the given name.
+		 */
+		Tileset *getTileset(const std::string &name);
 
 		/**
 		 * Adds a tileset to the tile map.
@@ -83,6 +101,8 @@ namespace RedBox {
 		 * this tileset.
 		 * @param overwrite Set this to true if you want to overwrite the
 		 * existing tileset if there is already a tileset with the same name.
+		 * @return Pointer to the added tileset. If a tileset already exists
+		 * with the name of the new tileset, the existing tileset is returned.
 		 */
 		const Tileset *addTileset(const std::string &newName,
 		                          TextureInformation *newTextureInformation,
@@ -106,12 +126,30 @@ namespace RedBox {
 		 * @param tileset Pointer to the tileset to remove.
 		 */
 		void removeTileset(const Tileset *tileset);
+
+		const LayerContainer &getLayers() const;
+
+		const TileMapLayer *getLayer(const std::string &layerName) const;
+
+		TileMapLayer *getLayer(const std::string &layerName);
+
+		const TileLayer *getTileLayer(const std::string &layerName) const;
+
+		TileLayer *getTileLayer(const std::string &layerName);
+
+
+		TileLayer *pushBackTileLayer(const std::string &layerName, bool overwrite = false);
+		TileLayer *pushFrontTileLayer(const std::string &layerName, bool overwrite = false);
+
+		void removeLayer(const std::string &layerName);
+
+		void removeLayer(const TileMapLayer *layer);
 	private:
 
 		typedef std::list<Tileset *> TilesetContainer;
-		typedef std::map<TileIdRange, const Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
-		typedef std::map<std::string, const Tileset *> TilesetMapByName;
-		typedef std::list<TileMapLayer *> LayerContainer;
+		typedef std::map<TileIdRange, Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
+		typedef std::map<std::string, Tileset *> TilesetMapByName;
+		typedef std::map<std::string, TileMapLayer *> LayerMapByName;
 
 		/**
 		 * Refreshes the map of tilesets by their id.
@@ -122,6 +160,11 @@ namespace RedBox {
 		 * Refreshes the map of tilesets by their name.
 		 */
 		void refreshTilesetsByName() const;
+
+		/**
+		 * Refreshes the map of layers by their name.
+		 */
+		void refreshLayersByName() const;
 
 		/**
 		 * Applies the tile id changes to all of the layers for the tile id's
@@ -147,6 +190,10 @@ namespace RedBox {
 		mutable bool dirtyTilesetsByName;
 
 		LayerContainer layers;
+
+		mutable LayerMapByName layersByName;
+
+		mutable bool dirtyLayersByName;
 	};
 }
 

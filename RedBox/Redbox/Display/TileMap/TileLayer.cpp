@@ -17,19 +17,6 @@ namespace RedBox {
 	TileLayer::~TileLayer() {
 	}
 
-	void TileLayer::applyTilesetDestruction(const TileIdRange &toDestroy) {
-		unsigned int tmpLength = toDestroy.max - toDestroy.min;
-
-		for (DataContainer::iterator i = data.begin(); i != data.end(); ++i) {
-			if (toDestroy.isWithinRange(*i)) {
-				*i = 0;
-
-			} else if (*i >= toDestroy.max) {
-				*i -= tmpLength;
-			}
-		}
-	}
-
 	void TileLayer::setSizeInTiles(const TileCoordinate &newSizeInTiles,
 	                               const TileCoordinate &offset) {
 		// If only one of the sizes is changed, we call the correct function.
@@ -306,6 +293,19 @@ namespace RedBox {
 
 		} else if (newHeight < parentMap->getHeightInTiles()) {
 			data.resize(parentMap->getWidthInTiles() * newHeight);
+		}
+	}
+
+	void TileLayer::applyTilesetDestruction(const TileIdRange &toDestroy) {
+		unsigned int tmpLength = toDestroy.max - toDestroy.min;
+
+		for (DataContainer::iterator i = data.begin(); i != data.end(); ++i) {
+			if (toDestroy.isWithinRange(*i)) {
+				*i = 0;
+
+			} else if (*i >= toDestroy.max) {
+				*i -= tmpLength;
+			}
 		}
 	}
 }

@@ -7,6 +7,7 @@
 
 #include "Tileset.h"
 #include "DeleteHelper.h"
+#include "TileMapLayer.h"
 #include "TileLayer.h"
 
 namespace RedBox {
@@ -103,12 +104,38 @@ namespace RedBox {
 		}
 	}
 
+	Tileset *TileMap::getTileset(unsigned int tileId) {
+		TilesetMapByTileId::iterator found = tilesetsByTileId.find(tileId);
+
+		if (found != tilesetsByTileId.end()) {
+			return found->second;
+
+		} else {
+			return NULL;
+		}
+	}
+
 	const Tileset *TileMap::getTileset(const std::string &name) const {
 		if (dirtyTilesetsByName) {
 			refreshTilesetsByName();
 		}
 
 		TilesetMapByName::const_iterator found = tilesetsByName.find(name);
+
+		if (found != tilesetsByName.end()) {
+			return found->second;
+
+		} else {
+			return NULL;
+		}
+	}
+
+	Tileset *TileMap::getTileset(const std::string &name) {
+		if (dirtyTilesetsByName) {
+			refreshTilesetsByName();
+		}
+
+		TilesetMapByName::iterator found = tilesetsByName.find(name);
 
 		if (found != tilesetsByName.end()) {
 			return found->second;
@@ -138,8 +165,6 @@ namespace RedBox {
 				           newTileOffset,
 				           false);
 
-			} else {
-				result = NULL;
 			}
 
 		} else {
@@ -147,6 +172,10 @@ namespace RedBox {
 			tilesets.push_back(new Tileset(newName, this, newTextureInformation, newTileSize, newTileSpacing, newMargin, newTileOffset, firstTileId));
 			tilesetsByTileId.insert(std::make_pair(TileIdRange(tilesets.back()->getFirstTileId(), tilesets.back()->getFirstTileId() + tilesets.back()->getNbTiles()),
 			                                       tilesets.back()));
+
+			if (!newName.empty()) {
+				dirtyTilesetsByName = true;
+			}
 		}
 
 		return result;
@@ -154,6 +183,144 @@ namespace RedBox {
 
 	void TileMap::removeTileset(const std::string &tilesetName) {
 		removeTileset(getTileset(tilesetName));
+	}
+
+	void TileMap::removeTileset(const Tileset *tileset) {
+		if (tileset) {
+			TilesetContainer::iterator found = std::find(tilesets.begin(), tilesets.end(), tileset);
+
+			if (found != tilesets.end()) {
+				applyTilesetDestruction(TileIdRange((*found)->getFirstTileId(), (*found)->getFirstTileId() + (*found)->getNbTiles()));
+				delete *found;
+				tilesets.erase(found);
+				refreshTilesetsByTileId();
+				dirtyTilesetsByName = true;
+			}
+		}
+	}
+
+	const TileMap::LayerContainer &TileMap::getLayers() const {
+		return layers;
+	}
+
+	const TileMapLayer *TileMap::getLayer(const std::string &layerName) const {
+		if (dirtyLayersByName) {
+			refreshLayersByName();
+		}
+
+		LayerMapByName::const_iterator found = layersByName.find(layerName);
+
+		if (found != layersByName.end()) {
+			return found->second;
+
+		} else {
+			return NULL;
+		}
+	}
+
+	TileMapLayer *TileMap::getLayer(const std::string &layerName) {
+		if (dirtyTilesetsByName) {
+			refreshLayersByName();
+		}
+
+		LayerMapByName::iterator found = layersByName.find(layerName);
+
+		if (found != layersByName.end()) {
+			return found->second;
+
+		} else {
+			return NULL;
+		}
+	}
+
+	const TileLayer *TileMap::getTileLayer(const std::string &layerName) const {
+		if (dirtyLayersByName) {
+			refreshLayersByName();
+		}
+
+		LayerMapByName::const_iterator found = layersByName.find(layerName);
+
+		if (found != layersByName.end() && found->second->asTileLayer()) {
+			return found->second->asTileLayer();
+
+		} else {
+			return NULL;
+		}
+	}
+
+	TileLayer *TileMap::getTileLayer(const std::string &layerName) {
+		if (dirtyLayersByName) {
+			refreshLayersByName();
+		}
+
+		LayerMapByName::iterator found = layersByName.find(layerName);
+
+		if (found != layersByName.end() && found->second->asTileLayer()) {
+			return found->second->asTileLayer();
+
+		} else {
+			return NULL;
+		}
+	}
+
+	TileLayer *TileMap::pushBackTileLayer(const std::string &newLayerName,
+	                                      bool overwrite) {
+		TileMapLayer *result = getLayer(newLayerName);
+
+		if (result) {
+			if (overwrite) {
+				removeLayer(result);
+				pushBackTileLayer(newLayerName, overwrite);
+			}
+
+		} else {
+			layers.push_back(new TileLayer(this, newLayerName));
+
+			result = layers.back();
+
+			if (!newLayerName.empty()) {
+				dirtyLayersByName = true;
+			}
+		}
+
+		return result->asTileLayer();
+	}
+
+	TileLayer *TileMap::pushFrontTileLayer(const std::string &newLayerName,
+	                                       bool overwrite) {
+		TileMapLayer *result = getLayer(newLayerName);
+
+		if (result) {
+			if (overwrite) {
+				removeLayer(result);
+				pushFrontTileLayer(newLayerName, overwrite);
+			}
+
+		} else {
+			layers.push_front(new TileLayer(this, newLayerName));
+
+			if (!newLayerName.empty()) {
+				dirtyLayersByName = true;
+			}
+		}
+
+		return result->asTileLayer();
+	}
+
+	void TileMap::removeLayer(const std::string &layerName) {
+		removeLayer(getLayer(layerName));
+	}
+
+	void TileMap::removeLayer(const TileMapLayer *layer) {
+		if (layer) {
+			LayerContainer::iterator found = std::find(layers.begin(), layers.end(), layer);
+
+			if (found != layers.end()) {
+				delete *found;
+				layers.erase(found);
+				dirtyLayersByName = true;
+			}
+		}
 	}
 
 	void TileMap::refreshTilesetsByTileId() {
@@ -177,20 +344,19 @@ namespace RedBox {
 
 		for (TilesetContainer::const_iterator i = tilesets.begin();
 		     i != tilesets.end(); ++i) {
-			tilesetsByName.insert(std::make_pair((*i)->getName(), *i));
+			if (!(*i)->getName().empty()) {
+				tilesetsByName.insert(std::make_pair((*i)->getName(), *i));
+			}
 		}
 	}
 
-	void TileMap::removeTileset(const Tileset *tileset) {
-		if (tileset) {
-			TilesetContainer::iterator found = std::find(tilesets.begin(), tilesets.end(), tileset);
+	void TileMap::refreshLayersByName() const {
+		layersByName.clear();
 
-			if (found != tilesets.end()) {
-				applyTilesetDestruction(TileIdRange((*found)->getFirstTileId(), (*found)->getFirstTileId() + (*found)->getNbTiles()));
-				delete *found;
-				tilesets.erase(found);
-				refreshTilesetsByTileId();
-				dirtyTilesetsByName = true;
+		for (LayerContainer::const_iterator i = layers.begin();
+		     i != layers.end(); ++i) {
+			if (!(*i)->getName().empty()) {
+				layersByName.insert(std::make_pair((*i)->getName(), *i));
 			}
 		}
 	}
