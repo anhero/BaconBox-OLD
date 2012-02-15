@@ -32,6 +32,11 @@ namespace RedBox {
 		parentMap(newParentMap) {
 	}
 
+	TileMapLayer::TileMapLayer(const TileMapLayer &src,
+	                           const TileMap &newParentMap) :
+		TileMapEntity(src), parentMap(newParentMap) {
+	}
+
 	TileMapLayer::~TileMapLayer() {
 	}
 }

@@ -29,13 +29,26 @@ namespace RedBox {
 
 		/**
 		 * Default constructor.
+		 * @param newName Name of the tile map. Can be empty.
 		 */
-		TileMap();
+		TileMap(const std::string &newName = std::string());
 
+		/**
+		 * Copy constructor.
+		 * @param src Tile map to make a copy of.
+		 */
 		TileMap(const TileMap &src);
 
+		/**
+		 * Destructor.
+		 */
 		~TileMap();
 
+		/**
+		 * Assignment operator overload.
+		 * @param src Tile map to copy.
+		 * @return Reference to the modified tile map.
+		 */
 		TileMap &operator=(const TileMap &src);
 
 		const TileCoordinate &getSizeInTiles() const;

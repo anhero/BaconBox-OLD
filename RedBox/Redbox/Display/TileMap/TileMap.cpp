@@ -12,9 +12,73 @@
 
 namespace RedBox {
 
+	TileMap::TileMap(const std::string &newName) : TileMapEntity(newName),
+		sizeInTiles(), tileSize(), tilesets(), tilesetsByTileId(),
+		tilesetsByName(), dirtyTilesetsByName(false), layers(), layersByName(),
+		dirtyLayersByName(false) {
+	}
+
+	TileMap::TileMap(const TileMap &src) : TileMapEntity(src),
+		sizeInTiles(src.sizeInTiles), tileSize(src.tileSize), tilesets(),
+		tilesetsByTileId(), tilesetsByName(), dirtyTilesetsByName(true),
+		layers(), layersByName(), dirtyLayersByName(true) {
+		// We copy the tilesets.
+		for (TilesetContainer::const_iterator i = src.tilesets.begin();
+		     i != src.tilesets.end(); ++i) {
+			tilesets.push_back(new Tileset(*(*i), *this));
+		}
+
+		// We refresh the map of tilesets by tile id's.
+		refreshTilesetsByTileId();
+
+		// We copy the layers.
+		for (LayerContainer::const_iterator i = src.layers.begin();
+		     i != src.layers.end(); ++i) {
+			layers.push_back((*i)->clone(*this));
+		}
+	}
+
 	TileMap::~TileMap() {
 		deleteLayers();
 		deleteTilesets();
+	}
+
+	TileMap &TileMap::operator=(const TileMap &src) {
+		this->TileMapEntity::operator=(src);
+
+		if (this != &src) {
+			// We clear the layers and the tilesets.
+			deleteLayers();
+			deleteTilesets();
+			tilesets.clear();
+			layers.clear();
+			// We copy the size in tiles and the tile size.
+			sizeInTiles = src.sizeInTiles;
+			tileSize = src.tileSize;
+
+			// We copy the tilesets.
+			for (TilesetContainer::const_iterator i = src.tilesets.begin();
+			     i != src.tilesets.end(); ++i) {
+				tilesets.push_back(new Tileset(*(*i), *this));
+			}
+
+			// We refresh the map of tilesets by tile id's.
+			refreshTilesetsByTileId();
+
+			// We copy the layers.
+			for (LayerContainer::const_iterator i = src.layers.begin();
+			     i != src.layers.end(); ++i) {
+				layers.push_back((*i)->clone(*this));
+			}
+
+			// We flag the map of tilesets by their name as dirty.
+			dirtyTilesetsByName = true;
+
+			// We do the same for the map of layers by their name.
+			dirtyLayersByName = true;
+		}
+
+		return *this;
 	}
 
 	const TileCoordinate &TileMap::getSizeInTiles() const {

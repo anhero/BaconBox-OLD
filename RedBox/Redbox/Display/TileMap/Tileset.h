@@ -163,6 +163,14 @@ namespace RedBox {
 		        unsigned int newFirstTileId);
 
 		/**
+		 * Copy constructor.
+		 * @param src Tileset to make a copy of.
+		 * @param newParentMap Parent tile map to use as the owner of the new
+		 * tileset.
+		 */
+		Tileset(const Tileset &src, const TileMap &newParentMap);
+
+		/**
 		 * Destructor
 		 */
 		~Tileset();

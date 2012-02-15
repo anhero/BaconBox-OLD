@@ -73,11 +73,12 @@ namespace RedBox {
 		virtual ~TileMapLayer();
 
 		/**
-		 * Gets a duplicate of the tile layer.
-		 * @return Pointer to a duplicate of the tile layer. The caller is
+		 * Gets a duplicate of the tile map layer.
+		 * @param newParentMap Reference to the map that contains the clone.
+		 * @return Pointer to a duplicate of the tile map layer. The caller is
 		 * responsible for deleting this instance.
 		 */
-		TileMapLayer *clone(const TileMap &newParentMap) const;
+		virtual TileMapLayer *clone(const TileMap &newParentMap) const = 0;
 
 		/// Const reference to the parent map that contains this layer.
 		const TileMap &parentMap;

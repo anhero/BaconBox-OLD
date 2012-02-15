@@ -144,6 +144,13 @@ namespace RedBox {
 		                   bool newVisible = true);
 
 		/**
+		 * Copy constructor.
+		 * @param src Tile layer to make a copy of.
+		 * @param newParentMap Parent map of the tile layer.
+		 */
+		TileLayer(const TileLayer &src, const TileMap &newParentMap);
+
+		/**
 		 * Destructor.
 		 */
 		~TileLayer();
@@ -191,6 +198,14 @@ namespace RedBox {
 		 * the range's length.
 		 */
 		void applyTilesetDestruction(const TileIdRange &toDestroy);
+
+		/**
+		 * Gets a duplicate of the tile layer.
+		 * @param newParentMap Reference to the map that contains the clone.
+		 * @return Pointer to a duplicate of the tile layer. The caller is
+		 * responsible for deleting this instance.
+		 */
+		TileLayer *clone(const TileMap &newParentMap) const;
 
 		/// Contains the tile id's of each tile in the tile layer.
 		DataContainer data;

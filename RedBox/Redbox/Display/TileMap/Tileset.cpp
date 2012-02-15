@@ -91,6 +91,14 @@ namespace RedBox {
 		initializeTextureCoordinates();
 	}
 
+	Tileset::Tileset(const Tileset &src, const TileMap &newParentMap) :
+		TileMapEntity(src), parentMap(newParentMap),
+		textureInformation(src.textureInformation), tileSize(src.tileSize),
+		tileSpacing(src.tileSpacing), margin(src.margin),
+		tileOffset(src.tileOffset), firstTileId(src.firstTileId),
+		tileTextureCoordinates(src.tileTextureCoordinates) {
+	}
+
 	Tileset::~Tileset() {
 	}
 
