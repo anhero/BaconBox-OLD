@@ -169,7 +169,7 @@ namespace RedBox {
 
 		} else {
 			unsigned int firstTileId = (tilesets.empty()) ? (1) : (tilesets.back()->getFirstTileId() + tilesets.back()->getNbTiles());
-			tilesets.push_back(new Tileset(newName, this, newTextureInformation, newTileSize, newTileSpacing, newMargin, newTileOffset, firstTileId));
+			tilesets.push_back(new Tileset(newName, *this, newTextureInformation, newTileSize, newTileSpacing, newMargin, newTileOffset, firstTileId));
 			tilesetsByTileId.insert(std::make_pair(TileIdRange(tilesets.back()->getFirstTileId(), tilesets.back()->getFirstTileId() + tilesets.back()->getNbTiles()),
 			                                       tilesets.back()));
 
@@ -276,7 +276,7 @@ namespace RedBox {
 			}
 
 		} else {
-			layers.push_back(new TileLayer(this, newLayerName, newOpacity, newVisible));
+			layers.push_back(new TileLayer(*this, newLayerName, newOpacity, newVisible));
 
 			result = layers.back();
 
@@ -301,7 +301,7 @@ namespace RedBox {
 			}
 
 		} else {
-			layers.push_front(new TileLayer(this, newLayerName, newOpacity, newVisible));
+			layers.push_front(new TileLayer(*this, newLayerName, newOpacity, newVisible));
 
 			if (!newLayerName.empty()) {
 				dirtyLayersByName = true;

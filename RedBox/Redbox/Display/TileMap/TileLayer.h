@@ -46,7 +46,7 @@ namespace RedBox {
 
 		void setVisible(bool newVisible);
 	private:
-		explicit TileLayer(const TileMap *newParentMap,
+		explicit TileLayer(const TileMap &newParentMap,
 		                   const std::string &newName = std::string(),
 		                   int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
 		                   bool newVisible = true);

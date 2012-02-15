@@ -8,8 +8,7 @@ namespace RedBox {
 
 	void TileMapLayer::setName(const std::string &newName) {
 		this->TileMapEntity::setName(newName);
-		assert(parentMap);
-		parentMap->dirtyLayersByName = true;
+		parentMap.dirtyLayersByName = true;
 	}
 
 	ObjectLayer *TileMapLayer::asObjectLayer() {
@@ -28,7 +27,7 @@ namespace RedBox {
 		return NULL;
 	}
 
-	TileMapLayer::TileMapLayer(const TileMap *newParentMap, const std::string &newName) :
+	TileMapLayer::TileMapLayer(const TileMap &newParentMap, const std::string &newName) :
 		TileMapEntity(newName),
 		parentMap(newParentMap) {
 	}

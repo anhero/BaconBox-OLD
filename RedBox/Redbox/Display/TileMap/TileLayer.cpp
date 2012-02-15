@@ -30,12 +30,12 @@ namespace RedBox {
 		visible = newVisible;
 	}
 
-	TileLayer::TileLayer(const TileMap *newParentMap,
+	TileLayer::TileLayer(const TileMap &newParentMap,
 	                     const std::string &newName,
 	                     int32_t newOpacity,
 	                     bool newVisible) :
 		TileMapLayer(newParentMap, newName),
-		data(parentMap->getWidthInTiles() * parentMap->getHeightInTiles(), 0u),
+		data(parentMap.getWidthInTiles() * parentMap.getHeightInTiles(), 0u),
 		opacity(0), visible(newVisible) {
 		setOpacity(newOpacity);
 	}
@@ -46,21 +46,21 @@ namespace RedBox {
 	void TileLayer::setSizeInTiles(const TileCoordinate &newSizeInTiles,
 	                               const TileCoordinate &offset) {
 		// If only one of the sizes is changed, we call the correct function.
-		if (newSizeInTiles.getX() == parentMap->getWidthInTiles()) {
+		if (newSizeInTiles.getX() == parentMap.getWidthInTiles()) {
 			setHeightInTiles(newSizeInTiles.getY(), offset.getY());
 
-		} else if (newSizeInTiles.getY() == parentMap->getHeightInTiles()) {
+		} else if (newSizeInTiles.getY() == parentMap.getHeightInTiles()) {
 			setWidthInTiles(newSizeInTiles.getX(), offset.getX());
 
 		} else {
 			// If there is data to take into account when resizing.
 			if (!data.empty()) {
-				if (newSizeInTiles.getX() < parentMap->getWidthInTiles()) {
-					if (newSizeInTiles.getY() < parentMap->getHeightInTiles()) {
+				if (newSizeInTiles.getX() < parentMap.getWidthInTiles()) {
+					if (newSizeInTiles.getY() < parentMap.getHeightInTiles()) {
 						// New width and new height are lower.
 						// We calculate the number of tile data's to skip
 						// at the end of each row.
-						const DataContainer::size_type offsetIncrement = parentMap->getWidthInTiles() - newSizeInTiles.getX();
+						const DataContainer::size_type offsetIncrement = parentMap.getWidthInTiles() - newSizeInTiles.getX();
 						// We calculate the new size of the tile data vector.
 						const DataContainer::size_type newSize = newSizeInTiles.getX() * newSizeInTiles.getY();
 						// We initialize our index iterators.
@@ -87,20 +87,20 @@ namespace RedBox {
 					}
 
 				} else {
-					if (newSizeInTiles.getY() < parentMap->getHeightInTiles()) {
+					if (newSizeInTiles.getY() < parentMap.getHeightInTiles()) {
 						// New width is higher and new height is lower.
 
 						// We calculate the position of the first column after
 						// the left margin caused by the horizontal offset.
 						const unsigned int leftMargin = std::min(std::max(offset.getX(), 0),
-						                                         newSizeInTiles.getX() - parentMap->getWidthInTiles());
+						                                         newSizeInTiles.getX() - parentMap.getWidthInTiles());
 						// We calculate the position of the first column of the
 						// right margin caused by the horizontal offset.
-						const unsigned int rightMargin = leftMargin + parentMap->getWidthInTiles();
+						const unsigned int rightMargin = leftMargin + parentMap.getWidthInTiles();
 
 						// We calculate the index of first the tile data that
 						// we'll use to loop backwards.
-						DataContainer::size_type oldIndex = data.size() - (parentMap->getHeightInTiles() - newSizeInTiles.getY()) * parentMap->getWidthInTiles();
+						DataContainer::size_type oldIndex = data.size() - (parentMap.getHeightInTiles() - newSizeInTiles.getY()) * parentMap.getWidthInTiles();
 
 						// we calculate the new size of the tile data vector.
 						const DataContainer::size_type newSize = newSizeInTiles.getX() * newSizeInTiles.getY();
@@ -142,10 +142,10 @@ namespace RedBox {
 					} else {
 						// New width and new height are higher.
 						// We calculate ALL the margins.
-						const unsigned int leftMargin = std::min(std::max(offset.getX(), 0), newSizeInTiles.getX() - parentMap->getWidthInTiles());
-						const unsigned int rightMargin = leftMargin + parentMap->getWidthInTiles();
-						const unsigned int topMargin = std::min(std::max(offset.getY(), 0), newSizeInTiles.getY() - parentMap->getHeightInTiles());
-						const unsigned int bottomMargin = topMargin + parentMap->getHeightInTiles();
+						const unsigned int leftMargin = std::min(std::max(offset.getX(), 0), newSizeInTiles.getX() - parentMap.getWidthInTiles());
+						const unsigned int rightMargin = leftMargin + parentMap.getWidthInTiles();
+						const unsigned int topMargin = std::min(std::max(offset.getY(), 0), newSizeInTiles.getY() - parentMap.getHeightInTiles());
+						const unsigned int bottomMargin = topMargin + parentMap.getHeightInTiles();
 
 						// We get the first index of the original data that
 						// we'll use to loop backwards.
@@ -197,25 +197,25 @@ namespace RedBox {
 
 	void TileLayer::setWidthInTiles(int newWidth, int offset) {
 		// If we're making the map bigger.
-		if (newWidth > parentMap->getWidthInTiles()) {
+		if (newWidth > parentMap.getWidthInTiles()) {
 			// If the map already contained data (which means the width AND the
 			// height are greater than 0.
 			if (!data.empty()) {
 				// We get the index of the first column after the left margin.
 				const unsigned int leftMargin = std::min(std::max(offset, 0),
-				                                         newWidth - parentMap->getHeightInTiles());
+				                                         newWidth - parentMap.getHeightInTiles());
 				// We get the first index that's in the right margin.
-				const unsigned int rightMargin = leftMargin + parentMap->getWidthInTiles();
+				const unsigned int rightMargin = leftMargin + parentMap.getWidthInTiles();
 
 				// We take note of the size before resizing, we'll use that to
 				// get the index of the last element and loop backwards.
 				DataContainer::size_type oldIndex = data.size();
 
 				// We resize the tile data to the new size.
-				data.resize(newWidth * parentMap->getHeightInTiles());
+				data.resize(newWidth * parentMap.getHeightInTiles());
 
 				// We initialize our row and column indexes.
-				unsigned int row = parentMap->getHeightInTiles();
+				unsigned int row = parentMap.getHeightInTiles();
 				unsigned int column;
 
 				// We loop in the tile data to apply the offset.
@@ -240,15 +240,15 @@ namespace RedBox {
 				// There was no data yet, so we simply fill the data with 0's.
 				// If the height is still equal to 0, this call to resize
 				// will not do anything...
-				data.resize(newWidth * parentMap->getHeightInTiles());
+				data.resize(newWidth * parentMap.getHeightInTiles());
 			}
 
-		} else if (newWidth < parentMap->getWidthInTiles()) {
+		} else if (newWidth < parentMap.getWidthInTiles()) {
 			// We calculate the number of columns to remove and skip on each
 			// row.
-			const DataContainer::size_type offsetIncrement = parentMap->getWidthInTiles() - newWidth;
+			const DataContainer::size_type offsetIncrement = parentMap.getWidthInTiles() - newWidth;
 			// We calculate the new size of the tile data vector.
-			const DataContainer::size_type newSize = newWidth * parentMap->getHeightInTiles();
+			const DataContainer::size_type newSize = newWidth * parentMap.getHeightInTiles();
 			// We initialize our current offset and our index iterator to 0.
 			DataContainer::size_type currentOffset = 0;
 			DataContainer::size_type i = 0;
@@ -270,18 +270,18 @@ namespace RedBox {
 
 	void TileLayer::setHeightInTiles(int newHeight, int offset) {
 		// If we are making the map bigger.
-		if (newHeight > parentMap->getHeightInTiles()) {
+		if (newHeight > parentMap.getHeightInTiles()) {
 			// If there is no offset or if the height was already 0.
-			if (offset <= 0 || parentMap->getHeightInTiles() <= 0) {
+			if (offset <= 0 || parentMap.getHeightInTiles() <= 0) {
 				// We simply resize it and fill the new tiles with 0.
-				data.resize(parentMap->getWidthInTiles() * newHeight, 0u);
+				data.resize(parentMap.getWidthInTiles() * newHeight, 0u);
 
 			} else {
-				const unsigned int width = static_cast<unsigned int>(parentMap->getWidthInTiles());
+				const unsigned int width = static_cast<unsigned int>(parentMap.getWidthInTiles());
 				// We calculate the position of the top and the bottom margins.
 				const unsigned int topMargin = std::min(std::max(offset, 0),
-				                                        newHeight - parentMap->getHeightInTiles());
-				const unsigned int bottomMargin = topMargin + parentMap->getHeightInTiles();
+				                                        newHeight - parentMap.getHeightInTiles());
+				const unsigned int bottomMargin = topMargin + parentMap.getHeightInTiles();
 
 				// We take note of the size before resizing, we'll use that
 				// to get the index of the last element and loop backwards.
@@ -317,8 +317,8 @@ namespace RedBox {
 				} while (row > 0u);
 			}
 
-		} else if (newHeight < parentMap->getHeightInTiles()) {
-			data.resize(parentMap->getWidthInTiles() * newHeight);
+		} else if (newHeight < parentMap.getHeightInTiles()) {
+			data.resize(parentMap.getWidthInTiles() * newHeight);
 		}
 	}
 

@@ -9,8 +9,7 @@
 namespace RedBox {
 	void Tileset::setName(const std::string &newName) {
 		this->TileMapEntity::setName(newName);
-		assert(parentMap);
-		parentMap->dirtyTilesetsByName = true;
+		parentMap.dirtyTilesetsByName = true;
 	}
 
 	TextureInformation *Tileset::getTextureInformation() const {
@@ -78,7 +77,7 @@ namespace RedBox {
 	}
 
 	Tileset::Tileset(const std::string &newName,
-	                 const TileMap *newParentMap,
+	                 const TileMap &newParentMap,
 	                 TextureInformation *newTextureInformation,
 	                 const Vector2 &newTileSize,
 	                 float newTileSpacing,

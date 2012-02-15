@@ -26,6 +26,11 @@ namespace RedBox {
 		/// Container used to contain the tiles' texture coordinates.
 		typedef std::deque<TextureCoordinates> TileCoordinates;
 
+		/**
+		 * Sets the name of the tileset.
+		 * @param newName New name to give to the tileset.
+		 * @see RedBox::TileMapEntity::name
+		 */
 		void setName(const std::string &newName);
 
 		/**
@@ -149,7 +154,7 @@ namespace RedBox {
 		 * @param newFirstTileId Tile id of the first tile in the tileset.
 		 */
 		Tileset(const std::string &newName,
-		        const TileMap *newParentMap,
+		        const TileMap &newParentMap,
 		        TextureInformation *newTextureInformation,
 		        const Vector2 &newTileSize,
 		        float newTileSpacing,
@@ -176,7 +181,7 @@ namespace RedBox {
 		void initializeTextureCoordinates();
 
 		/// Pointer to the tile map that owns the tileset.
-		const TileMap *parentMap;
+		const TileMap &parentMap;
 
 		/// Pointer to the information on the tileset's texture.
 		TextureInformation *textureInformation;
