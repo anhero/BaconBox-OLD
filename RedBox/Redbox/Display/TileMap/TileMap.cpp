@@ -209,20 +209,20 @@ namespace RedBox {
 		}
 	}
 
-	const Tileset *TileMap::addTileset(const std::string &newName,
-	                                   TextureInformation *newTextureInformation,
-	                                   const Vector2 &newTileSize,
-	                                   float newTileSpacing,
-	                                   float newMargin,
-	                                   const Vector2 &newTileOffset,
-	                                   bool overwrite) {
-		const Tileset *result = getTileset(newName);
+	Tileset *TileMap::addTileset(const std::string &newName,
+	                             TexturePointer newTextureInformation,
+	                             const Vector2 &newTileSize,
+	                             float newTileSpacing,
+	                             float newMargin,
+	                             const Vector2 &newTileOffset,
+	                             bool overwrite) {
+		Tileset *result = getTileset(newName);
 
 		if (result) {
 			if (overwrite) {
 				removeTileset(result);
 				addTileset(newName,
-				           newTextureInformation,
+				           newTextureInformation.pointer,
 				           newTileSize,
 				           newTileSpacing,
 				           newMargin,
@@ -233,9 +233,11 @@ namespace RedBox {
 
 		} else {
 			unsigned int firstTileId = (tilesets.empty()) ? (1) : (tilesets.back()->getFirstTileId() + tilesets.back()->getNbTiles());
-			tilesets.push_back(new Tileset(newName, *this, newTextureInformation, newTileSize, newTileSpacing, newMargin, newTileOffset, firstTileId));
+			tilesets.push_back(new Tileset(newName, *this, newTextureInformation.pointer, newTileSize, newTileSpacing, newMargin, newTileOffset, firstTileId));
 			tilesetsByTileId.insert(std::make_pair(TileIdRange(tilesets.back()->getFirstTileId(), tilesets.back()->getFirstTileId() + tilesets.back()->getNbTiles()),
 			                                       tilesets.back()));
+
+			result = tilesets.back();
 
 			if (!newName.empty()) {
 				dirtyTilesetsByName = true;

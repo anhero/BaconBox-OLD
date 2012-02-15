@@ -14,6 +14,7 @@
 #include "TileIdRange.h"
 #include "Vector2.h"
 #include "Color.h"
+#include "TexturePointer.h"
 
 namespace RedBox {
 	class Tileset;
@@ -127,13 +128,13 @@ namespace RedBox {
 		 * @return Pointer to the added tileset. If a tileset already exists
 		 * with the name of the new tileset, the existing tileset is returned.
 		 */
-		const Tileset *addTileset(const std::string &newName,
-		                          TextureInformation *newTextureInformation,
-		                          const Vector2 &newTileSize,
-		                          float newTileSpacing = 0.0f,
-		                          float newMargin = 0.0f,
-		                          const Vector2 &newTileOffset = Vector2(),
-		                          bool overwrite = false);
+		Tileset *addTileset(const std::string &newName,
+		                    TexturePointer newTextureInformation,
+		                    const Vector2 &newTileSize,
+		                    float newTileSpacing = 0.0f,
+		                    float newMargin = 0.0f,
+		                    const Vector2 &newTileOffset = Vector2(),
+		                    bool overwrite = false);
 
 		/**
 		 * Finds the tileset by its name and removes it, does nothing if no

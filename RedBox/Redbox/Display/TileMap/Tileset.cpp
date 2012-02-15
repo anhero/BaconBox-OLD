@@ -132,7 +132,7 @@ namespace RedBox {
 
 				// We make sure there is enough room for at least one tile...
 				if (realOffset.getX() + realTileSize.getX() < lowerRightCorner.getX()) {
-					while (realOffset.getY() + realTileSize.getY() < lowerRightCorner.getY()) {
+					while (realOffset.getY() + realTileSize.getY() <= lowerRightCorner.getY()) {
 
 						// We load the texture coordinates.
 						tileTextureCoordinates.push_back(TextureCoordinates(4, realOffset));
