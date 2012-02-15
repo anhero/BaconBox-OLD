@@ -12,6 +12,7 @@
 #include "TileCoordinate.h"
 #include "TileIdRange.h"
 #include "Vector2.h"
+#include "Color.h"
 
 namespace RedBox {
 	class Tileset;
@@ -21,9 +22,13 @@ namespace RedBox {
 
 	class TileMap {
 		friend class Tileset;
+		friend class TileMapLayer;
 	public:
 		typedef std::list<TileMapLayer *> LayerContainer;
 
+		/**
+		 * Default constructor.
+		 */
 		TileMap();
 
 		TileMap(const TileMap &src);
@@ -127,6 +132,11 @@ namespace RedBox {
 		 */
 		void removeTileset(const Tileset *tileset);
 
+		/**
+		 * Gets the layers.
+		 * @return List of pointers to the layers.
+		 * @see RedBox::TileMap::layers
+		 */
 		const LayerContainer &getLayers() const;
 
 		const TileMapLayer *getLayer(const std::string &layerName) const;
@@ -138,8 +148,14 @@ namespace RedBox {
 		TileLayer *getTileLayer(const std::string &layerName);
 
 
-		TileLayer *pushBackTileLayer(const std::string &layerName, bool overwrite = false);
-		TileLayer *pushFrontTileLayer(const std::string &layerName, bool overwrite = false);
+		TileLayer *pushBackTileLayer(const std::string &newLayerName,
+		                             int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
+		                             bool newVisible = true,
+		                             bool overwrite = false);
+		TileLayer *pushFrontTileLayer(const std::string &newLayerName,
+		                              int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
+		                              bool newVisible = true,
+		                              bool overwrite = false);
 
 		void removeLayer(const std::string &layerName);
 

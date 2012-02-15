@@ -61,6 +61,13 @@ namespace RedBox {
 		};
 
 		/**
+		 * Makes a given component within the required range (0 to 255).
+		 * @param component Component value to put within range.
+		 * @return The clamped value.
+		 */
+		static uint8_t getWithinRange(int32_t component);
+
+		/**
 		 * Default constructor. Initializes the color to BLACK.
 		 */
 		Color();
@@ -258,13 +265,6 @@ namespace RedBox {
 	private:
 		/// Color components.
 		uint8_t colors[NB_COMPONENTS];
-
-		/**
-		 * Makes a given component within the required range (0 to 255).
-		 * @param component Component value to put within range.
-		 * @return The clamped value.
-		 */
-		static uint8_t getWithinRange(int32_t component);
 	};
 #pragma pack()
 }

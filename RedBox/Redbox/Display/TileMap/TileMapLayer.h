@@ -26,6 +26,9 @@ namespace RedBox {
 	class TileMapLayer : public TileMapEntity {
 		friend class TileMap;
 	public:
+
+		void setName(const std::string &newName);
+
 		virtual ObjectLayer *asObjectLayer();
 		virtual const ObjectLayer *asObjectLayer() const;
 

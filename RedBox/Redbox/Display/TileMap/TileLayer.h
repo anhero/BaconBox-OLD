@@ -12,6 +12,7 @@
 #include "TileMapLayer.h"
 #include "TileCoordinate.h"
 #include "TileIdRange.h"
+#include "Color.h"
 
 namespace RedBox {
 	class TileLayer : public TileMapLayer {
@@ -36,9 +37,19 @@ namespace RedBox {
 		void setTileId(const TileCoordinate &tileCoordinate, unsigned int newTileId);
 
 		void setTileId(int xTileCoordinate, int yTileCoordinate, unsigned int newTileId);
+
+		uint8_t getOpacity() const;
+
+		void setOpacity(int32_t newOpacity);
+
+		bool isVisible() const;
+
+		void setVisible(bool newVisible);
 	private:
 		explicit TileLayer(const TileMap *newParentMap,
-		                   const std::string &newName = std::string());
+		                   const std::string &newName = std::string(),
+		                   int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
+		                   bool newVisible = true);
 
 		~TileLayer();
 
@@ -50,7 +61,7 @@ namespace RedBox {
 
 		DataContainer data;
 
-		int32_t opacity;
+		uint8_t opacity;
 
 		bool visible;
 	};

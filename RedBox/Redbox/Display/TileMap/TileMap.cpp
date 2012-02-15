@@ -264,6 +264,8 @@ namespace RedBox {
 	}
 
 	TileLayer *TileMap::pushBackTileLayer(const std::string &newLayerName,
+	                                      int32_t newOpacity,
+	                                      bool newVisible,
 	                                      bool overwrite) {
 		TileMapLayer *result = getLayer(newLayerName);
 
@@ -274,7 +276,7 @@ namespace RedBox {
 			}
 
 		} else {
-			layers.push_back(new TileLayer(this, newLayerName));
+			layers.push_back(new TileLayer(this, newLayerName, newOpacity, newVisible));
 
 			result = layers.back();
 
@@ -287,6 +289,8 @@ namespace RedBox {
 	}
 
 	TileLayer *TileMap::pushFrontTileLayer(const std::string &newLayerName,
+	                                       int32_t newOpacity,
+	                                       bool newVisible,
 	                                       bool overwrite) {
 		TileMapLayer *result = getLayer(newLayerName);
 
@@ -297,7 +301,7 @@ namespace RedBox {
 			}
 
 		} else {
-			layers.push_front(new TileLayer(this, newLayerName));
+			layers.push_front(new TileLayer(this, newLayerName, newOpacity, newVisible));
 
 			if (!newLayerName.empty()) {
 				dirtyLayersByName = true;

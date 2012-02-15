@@ -1,6 +1,17 @@
 #include "TileMapLayer.h"
 
+#include <cassert>
+
+#include "TileMap.h"
+
 namespace RedBox {
+
+	void TileMapLayer::setName(const std::string &newName) {
+		this->TileMapEntity::setName(newName);
+		assert(parentMap);
+		parentMap->dirtyLayersByName = true;
+	}
+
 	ObjectLayer *TileMapLayer::asObjectLayer() {
 		return NULL;
 	}
