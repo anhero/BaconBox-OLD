@@ -25,6 +25,10 @@ namespace RedBox {
 		friend class Tileset;
 		friend class TileMapLayer;
 	public:
+		/**
+		 * Represents the type that contains the pointers to the tile map's
+		 * layers.
+		 */
 		typedef std::list<TileMapLayer *> LayerContainer;
 
 		/**

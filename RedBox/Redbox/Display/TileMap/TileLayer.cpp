@@ -5,6 +5,17 @@
 #include "TileMap.h"
 
 namespace RedBox {
+	const TileCoordinate &TileLayer::getSizeInTiles() const {
+		return parentMap.getSizeInTiles();
+	}
+
+	int TileLayer::getWidthInTiles() const {
+		return parentMap.getWidthInTiles();
+	}
+
+	int TileLayer::getHeightInTiles() const {
+		return parentMap.getHeightInTiles();
+	}
 
 	TileLayer *TileLayer::asTileLayer() {
 		return this;
