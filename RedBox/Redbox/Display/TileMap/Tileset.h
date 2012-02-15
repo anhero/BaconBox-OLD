@@ -143,7 +143,7 @@ namespace RedBox {
 		/**
 		 * Parameterized constructor.
 		 * @param newName Name of the tileset.
-		 * @param newParentMap Pointer to the tile map that owns the tileset.
+		 * @param newParentMap Parent tile map that owns the tileset.
 		 * @param newTextureInformation Pointer to the texture information to
 		 * use for the tileset.
 		 * @param newTileSize Size of the tiles (in pixels). 32x32 by default.

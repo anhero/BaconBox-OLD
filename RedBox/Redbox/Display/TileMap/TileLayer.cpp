@@ -14,6 +14,34 @@ namespace RedBox {
 		return this;
 	}
 
+	unsigned int TileLayer::getTileId(const TileCoordinate &tileCoordinate) const {
+		return getTileId(tileCoordinate.getX(), tileCoordinate.getY());
+	}
+
+	unsigned int TileLayer::getTileId(int xTileCoordinate, int yTileCoordinate) const {
+		if (xTileCoordinate >= 0 && xTileCoordinate < parentMap.getWidthInTiles() &&
+		    yTileCoordinate >= 0 && yTileCoordinate < parentMap.getHeightInTiles()) {
+			return data[yTileCoordinate * parentMap.getWidthInTiles() + xTileCoordinate];
+
+		} else {
+			return 0;
+		}
+	}
+
+	void TileLayer::setTileId(const TileCoordinate &tileCoordinate, unsigned int newTileId) {
+		setTileId(tileCoordinate.getX(), tileCoordinate.getY(), newTileId);
+	}
+
+	void TileLayer::setTileId(int xTileCoordinate, int yTileCoordinate, unsigned int newTileId) {
+		// We make sure the tile coordinates are within range and that the tile
+		// id is valid.
+		if (xTileCoordinate >= 0 && xTileCoordinate < parentMap.getWidthInTiles() &&
+		    yTileCoordinate >= 0 && yTileCoordinate < parentMap.getHeightInTiles() &&
+		    parentMap.getTileset(newTileId)) {
+			data[yTileCoordinate * parentMap.getWidthInTiles() + xTileCoordinate] = newTileId;
+		}
+	}
+
 	uint8_t TileLayer::getOpacity() const {
 		return opacity;
 	}
