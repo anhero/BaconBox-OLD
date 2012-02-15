@@ -55,7 +55,7 @@ namespace RedBox {
 		return sizeInTiles.getY();
 	}
 
-	void TileMap::setHeightInTile(int newHeightInTiles, int offset) {
+	void TileMap::setHeightInTiles(int newHeightInTiles, int offset) {
 		if (newHeightInTiles >= 0) {
 			for (LayerContainer::iterator i = layers.begin(); i != layers.end();
 			     ++i) {
