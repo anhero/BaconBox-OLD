@@ -10,6 +10,7 @@
 #include <list>
 
 #include "TileCoordinate.h"
+#include "TileMapEntity.h"
 #include "TileIdRange.h"
 #include "Vector2.h"
 #include "Color.h"
@@ -20,7 +21,7 @@ namespace RedBox {
 	struct TextureInformation;
 	class TileLayer;
 
-	class TileMap {
+	class TileMap : public TileMapEntity {
 		friend class Tileset;
 		friend class TileMapLayer;
 	public:

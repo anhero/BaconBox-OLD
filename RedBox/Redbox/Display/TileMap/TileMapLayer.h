@@ -54,16 +54,30 @@ namespace RedBox {
 		/**
 		 * Paremeterized constructor.
 		 * @param newParentMap Reference to the map that contains this layer.
-		 * @param newName Namve of the layer, can be empty.
+		 * @param newName Name of the layer, can be empty.
 		 * @see RedBox::TileMapEntity::name
 		 */
 		explicit TileMapLayer(const TileMap &newParentMap,
 		                      const std::string &newName = std::string());
 
 		/**
+		 * Copy constructor.
+		 * @param src Tile map layer to make a copy of.
+		 * @param newParentMap Parent map of the tile map layer.
+		 */
+		TileMapLayer(const TileMapLayer &src, const TileMap &newParentMap);
+
+		/**
 		 * Destructor.
 		 */
 		virtual ~TileMapLayer();
+
+		/**
+		 * Gets a duplicate of the tile layer.
+		 * @return Pointer to a duplicate of the tile layer. The caller is
+		 * responsible for deleting this instance.
+		 */
+		TileMapLayer *clone(const TileMap &newParentMap) const;
 
 		/// Const reference to the parent map that contains this layer.
 		const TileMap &parentMap;

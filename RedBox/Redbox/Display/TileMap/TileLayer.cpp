@@ -58,6 +58,8 @@ namespace RedBox {
 		visible = newVisible;
 	}
 
+
+
 	TileLayer::TileLayer(const TileMap &newParentMap,
 	                     const std::string &newName,
 	                     int32_t newOpacity,

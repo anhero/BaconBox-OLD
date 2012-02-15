@@ -85,6 +85,9 @@
 #include <RedBox/InanimateSpriteBatch.h>
 #include <RedBox/CollisionGroup.h>
 #include <RedBox/TextureAtlas.h>
+#include <RedBox/TileMap.h>
+#include <RedBox/TileLayer.h>
+#include <RedBox/Tileset.h>
 #include <RedBox/Stopwatch.h>
 #include <RedBox/Font.h>
 #include <RedBox/Text.h>
