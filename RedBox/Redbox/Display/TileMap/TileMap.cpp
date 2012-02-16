@@ -302,86 +302,34 @@ namespace RedBox {
 		}
 	}
 
-	const TileLayer *TileMap::getTileLayer(const std::string &layerName) const {
-		if (dirtyLayersByName) {
-			refreshLayersByName();
-		}
-
-		LayerMapByName::const_iterator found = layersByName.find(layerName);
-
-		if (found != layersByName.end() && found->second->asTileLayer()) {
-			return found->second->asTileLayer();
-
-		} else {
-			return NULL;
-		}
+	TileLayer *TileMap::getTileLayer(const std::string &layerName) {
+		return getLayer(layerName)->asTileLayer();
 	}
 
-	TileLayer *TileMap::getTileLayer(const std::string &layerName) {
-		if (dirtyLayersByName) {
-			refreshLayersByName();
-		}
-
-		LayerMapByName::iterator found = layersByName.find(layerName);
-
-		if (found != layersByName.end() && found->second->asTileLayer()) {
-			return found->second->asTileLayer();
-
-		} else {
-			return NULL;
-		}
+	const TileLayer *TileMap::getTileLayer(const std::string &layerName) const {
+		return getLayer(layerName)->asTileLayer();
 	}
 
 	TileLayer *TileMap::pushBackTileLayer(const std::string &newLayerName,
 	                                      int32_t newOpacity,
 	                                      bool newVisible,
 	                                      bool overwrite) {
-		TileMapLayer *result = getLayer(newLayerName);
-
-		if (result) {
-			if (overwrite) {
-				removeLayer(result);
-				pushBackTileLayer(newLayerName, overwrite);
-			}
-
-		} else {
-			layers.push_back(new TileLayer(newLayerName, *this, newOpacity, newVisible));
-
-			result = layers.back();
-
-			if (!newLayerName.empty()) {
-				dirtyLayersByName = true;
-			}
-
-			result = layers.back();
-		}
-
-		return result->asTileLayer();
+		return insertLayer<TileLayer>(layers.end(),
+		                              newLayerName,
+		                              newOpacity,
+		                              newVisible,
+		                              overwrite)->asTileLayer();
 	}
 
 	TileLayer *TileMap::pushFrontTileLayer(const std::string &newLayerName,
 	                                       int32_t newOpacity,
 	                                       bool newVisible,
 	                                       bool overwrite) {
-		TileMapLayer *result = getLayer(newLayerName);
-
-		if (result) {
-			if (overwrite) {
-				removeLayer(result);
-				pushFrontTileLayer(newLayerName, overwrite);
-			}
-
-		} else {
-			layers.push_front(new TileLayer(newLayerName, *this, newOpacity, newVisible));
-
-			if (!newLayerName.empty()) {
-				dirtyLayersByName = true;
-			}
-
-			result = layers.front();
-		}
-
-		return result->asTileLayer();
+		return insertLayer<TileLayer>(layers.begin(),
+		                              newLayerName,
+		                              newOpacity,
+		                              newVisible,
+		                              overwrite)->asTileLayer();
 	}
 
 	void TileMap::removeLayer(const std::string &layerName) {
@@ -401,6 +349,36 @@ namespace RedBox {
 				layers.erase(found);
 			}
 		}
+	}
+
+	ObjectLayer *TileMap::getObjectLayer(const std::string &layerName) {
+		return getLayer(layerName)->asObjectLayer();
+	}
+
+	const ObjectLayer *TileMap::getObjectLayer(const std::string &layerName) const {
+		return getLayer(layerName)->asObjectLayer();
+	}
+
+	ObjectLayer *TileMap::pushBackObjectLayer(const std::string &newLayerName,
+	                                          int32_t newOpacity,
+	                                          bool newVisible,
+	                                          bool overwrite) {
+		return insertLayer<ObjectLayer>(layers.end(),
+		                                newLayerName,
+		                                newOpacity,
+		                                newVisible,
+		                                overwrite)->asObjectLayer();
+	}
+
+	ObjectLayer *TileMap::pushFrontObjectLayer(const std::string &newLayerName,
+	                                           int32_t newOpacity,
+	                                           bool newVisible,
+	                                           bool overwrite) {
+		return insertLayer<ObjectLayer>(layers.begin(),
+		                                newLayerName,
+		                                newOpacity,
+		                                newVisible,
+		                                overwrite)->asObjectLayer();
 	}
 
 	void TileMap::refreshTilesetsByTileId() {

@@ -33,7 +33,18 @@ namespace RedBox {
 		 */
 		void setName(const std::string &newName);
 
+		/**
+		 * Gets the instance as an object layer, if it is one.
+		 * @return Pointer to the instance as an object layer, NULL if it's not
+		 * an object layer.
+		 */
 		virtual ObjectLayer *asObjectLayer();
+
+		/**
+		 * Gets the instance as an object layer, if it is one.
+		 * @return Pointer to the instance as an object layer, NULL if it's not
+		 * an object layer.
+		 */
 		virtual const ObjectLayer *asObjectLayer() const;
 
 		/**

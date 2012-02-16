@@ -9,6 +9,14 @@
 #include "RectangleObject.h"
 
 namespace RedBox {
+	ObjectLayer *ObjectLayer::asObjectLayer() {
+		return this;
+	}
+
+	const ObjectLayer *ObjectLayer::asObjectLayer() const {
+		return this;
+	}
+
 	const ObjectLayer::LineContainer &ObjectLayer::getLines() const {
 		return lines;
 	}

@@ -87,7 +87,12 @@
 #include <RedBox/TextureAtlas.h>
 #include <RedBox/TileMap.h>
 #include <RedBox/TileLayer.h>
+#include <RedBox/ObjectLayer.h>
 #include <RedBox/Tileset.h>
+#include <RedBox/LineObject.h>
+#include <RedBox/PolygonObject.h>
+#include <RedBox/RectangleObject.h>
+#include <RedBox/TileObject.h>
 #include <RedBox/Stopwatch.h>
 #include <RedBox/Font.h>
 #include <RedBox/Text.h>

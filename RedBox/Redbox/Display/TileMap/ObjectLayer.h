@@ -43,6 +43,20 @@ namespace RedBox {
 		typedef std::list<TileObject *> TileContainer;
 
 		/**
+		 * Gets the instance as an object layer, if it is one.
+		 * @return Pointer to the instance as an object layer, NULL if it's not
+		 * an object layer.
+		 */
+		ObjectLayer *asObjectLayer();
+
+		/**
+		 * Gets the instance as an object layer, if it is one.
+		 * @return Pointer to the instance as an object layer, NULL if it's not
+		 * an object layer.
+		 */
+		const ObjectLayer *asObjectLayer() const;
+
+		/**
 		 * Gets the line objects.
 		 * @return Const reference to the list of pointers to line objects.
 		 * @see RedBox::ObjectLayer::lines

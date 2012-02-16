@@ -15,12 +15,14 @@
 #include "Vector2.h"
 #include "Color.h"
 #include "TexturePointer.h"
+#include "TileMapLayer.h"
 
 namespace RedBox {
 	class Tileset;
 	class TileMapLayer;
 	struct TextureInformation;
 	class TileLayer;
+	class ObjectLayer;
 
 	class TileMap : public TileMapEntity {
 		friend class Tileset;
@@ -162,10 +164,9 @@ namespace RedBox {
 
 		TileMapLayer *getLayer(const std::string &layerName);
 
-		const TileLayer *getTileLayer(const std::string &layerName) const;
-
 		TileLayer *getTileLayer(const std::string &layerName);
 
+		const TileLayer *getTileLayer(const std::string &layerName) const;
 
 		TileLayer *pushBackTileLayer(const std::string &newLayerName,
 		                             int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
@@ -180,8 +181,21 @@ namespace RedBox {
 		void removeLayer(const std::string &layerName);
 
 		void removeLayer(const TileMapLayer *layer);
-	private:
 
+		ObjectLayer *getObjectLayer(const std::string &layerName);
+
+		const ObjectLayer *getObjectLayer(const std::string &layerName) const;
+
+		ObjectLayer *pushBackObjectLayer(const std::string &newLayerName,
+		                                 int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
+		                                 bool newVisible = true,
+		                                 bool overwrite = false);
+
+		ObjectLayer *pushFrontObjectLayer(const std::string &newLayerName,
+		                                  int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
+		                                  bool newVisible = true,
+		                                  bool overwrite = false);
+	private:
 		typedef std::list<Tileset *> TilesetContainer;
 		typedef std::map<TileIdRange, Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
 		typedef std::map<std::string, Tileset *> TilesetMapByName;
@@ -212,6 +226,47 @@ namespace RedBox {
 
 		void deleteLayers();
 		void deleteTilesets();
+
+		/**
+		 * Inserts a layer in the tile map.
+		 * @param position Position in the list to insert the new layer.
+		 * @param newLayerName Name of the new layer.
+		 * @param newOpacity Opacity of the new layer.
+		 * @param newVisible Wether or not the new layer should be visible.
+		 * @param overwrite Wether or not to overwrite the existing layer if
+		 * there is already a layer with the same name.
+		 */
+		template <typename T>
+		TileMapLayer *insertLayer(LayerContainer::iterator position,
+		                          const std::string &newLayerName,
+		                          int32_t newOpacity,
+		                          bool newVisible,
+		                          bool overwrite) {
+			TileMapLayer *result = getLayer(newLayerName);
+
+			if (result) {
+				if (overwrite) {
+					removeLayer(result);
+					insertLayer<T>(position,
+					               newLayerName,
+					               newOpacity,
+					               newVisible,
+					               false);
+				}
+
+			} else {
+				layers.insert(position, new T(newLayerName, *this, newOpacity, newVisible));
+				--position;
+
+				if (!newLayerName.empty()) {
+					dirtyLayersByName = true;
+				}
+
+				result = *position;
+			}
+
+			return result;
+		}
 
 		TileCoordinate sizeInTiles;
 
