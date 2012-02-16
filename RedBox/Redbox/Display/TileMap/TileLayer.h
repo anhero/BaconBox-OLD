@@ -11,7 +11,6 @@
 
 #include "TileMapLayer.h"
 #include "TileCoordinate.h"
-#include "TileIdRange.h"
 #include "Color.h"
 
 namespace RedBox {

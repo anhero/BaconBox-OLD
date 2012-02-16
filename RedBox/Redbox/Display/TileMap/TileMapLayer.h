@@ -9,6 +9,7 @@
 #include "Colorable.h"
 #include "Positionable.h"
 #include "TileMapEntity.h"
+#include "TileIdRange.h"
 
 namespace RedBox {
 	class ObjectLayer;
@@ -71,6 +72,14 @@ namespace RedBox {
 		 * Destructor.
 		 */
 		virtual ~TileMapLayer();
+
+		/**
+		 * Applies the destructiof id's of a tileset.
+		 * @param toDestroy Range of tile id's to destroy. All tile id's in this
+		 * range are reset to 0. All tile id's above the range are reduced by
+		 * the range's length.
+		 */
+		virtual void applyTilesetDestruction(const TileIdRange &toDestroy) = 0;
 
 		/**
 		 * Gets a duplicate of the tile map layer.

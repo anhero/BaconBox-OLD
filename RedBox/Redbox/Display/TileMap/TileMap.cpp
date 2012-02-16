@@ -434,9 +434,7 @@ namespace RedBox {
 	void TileMap::applyTilesetDestruction(const TileIdRange &toDestroy) {
 		for (LayerContainer::iterator i = layers.begin(); i != layers.end();
 		     ++i) {
-			if ((*i)->asTileLayer()) {
-				(*i)->asTileLayer()->applyTilesetDestruction(toDestroy);
-			}
+			(*i)->applyTilesetDestruction(toDestroy);
 		}
 	}
 
