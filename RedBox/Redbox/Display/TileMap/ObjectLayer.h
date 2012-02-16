@@ -234,31 +234,6 @@ namespace RedBox {
 		typedef std::map<std::string, TileObject *> TileNameMap;
 
 		/**
-		 * Paremeterized constructor.
-		 * @param newName Name of the layer, can be empty.
-		 * @param newParentMap Reference to the map that contains this layer.
-		 * @param newOpacity Opacity of the layer.
-		 * @param newVisible Wether or not the layer is visible.
-		 * @see RedBox::TileMapEntity::name
-		 */
-		ObjectLayer(const std::string &newName,
-		            const TileMap &newParentMap,
-		            int32_t newOpacity,
-		            bool newVisible);
-
-		/**
-		 * Copy constructor.
-		 * @param src ObjectLayer to make a copy of.
-		 * @param newParentMap Parent map of the tile layer.
-		 */
-		ObjectLayer(const ObjectLayer &src, const TileMap &newParentMap);
-
-		/**
-		 * Destructor.
-		 */
-		~ObjectLayer();
-
-		/**
 		 * Refreshes the name map of a list of objects.
 		 * @param objects List of objects to have their name mapped.
 		 * @param nameMap Names mapped to their respective object.
@@ -301,6 +276,47 @@ namespace RedBox {
 				return NULL;
 			}
 		}
+
+		/**
+		 * Paremeterized constructor.
+		 * @param newName Name of the layer, can be empty.
+		 * @param newParentMap Reference to the map that contains this layer.
+		 * @param newOpacity Opacity of the layer.
+		 * @param newVisible Wether or not the layer is visible.
+		 * @see RedBox::TileMapEntity::name
+		 */
+		ObjectLayer(const std::string &newName,
+		            const TileMap &newParentMap,
+		            int32_t newOpacity,
+		            bool newVisible);
+
+		/**
+		 * Copy constructor.
+		 * @param src ObjectLayer to make a copy of.
+		 * @param newParentMap Parent map of the tile layer.
+		 */
+		ObjectLayer(const ObjectLayer &src, const TileMap &newParentMap);
+
+		/**
+		 * Destructor.
+		 */
+		~ObjectLayer();
+
+		/**
+		 * Applies the destruction id's of a tileset.
+		 * @param toDestroy Range of tile id's to destroy. All tile id's in this
+		 * range are reset to 0. All tile id's above the range are reduced by
+		 * the range's length. Affects all the tile objects.
+		 */
+		void applyTilesetDestruction(const TileIdRange &toDestroy);
+
+		/**
+		 * Gets a duplicate of the object layer.
+		 * @param newParentMap Reference to the map that contains the clone.
+		 * @return Pointer to a duplicate of the object layer. The caller is
+		 * responsible for deleting this instance.
+		 */
+		ObjectLayer *clone(const TileMap &newParentMap) const;
 
 		/// List of line objects in the layer.
 		LineContainer lines;

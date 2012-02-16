@@ -1,5 +1,6 @@
 #include "ObjectLayer.h"
 
+#include <cassert>
 #include <algorithm>
 
 #include "TileObject.h"
@@ -260,5 +261,31 @@ namespace RedBox {
 	}
 
 	ObjectLayer::~ObjectLayer() {
+		for (LineContainer::iterator i = lines.begin(); i != lines.end(); ++i) {
+			assert(*i);
+			delete *i;
+		}
+		for (PolygonContainer::iterator i = polygons.begin(); i != polygons.end(); ++i) {
+			assert(*i);
+			delete *i;
+		}
+		for (RectangleContainer::iterator i = rectangles.begin(); i != rectangles.end(); ++i) {
+			assert(*i);
+			delete *i;
+		}
+		for (TileContainer::iterator i = tiles.begin(); i != tiles.end(); ++i) {
+			assert(*i);
+			delete *i;
+		}
+	}
+
+	void ObjectLayer::applyTilesetDestruction(const TileIdRange &toDestroy) {
+		for (TileContainer::iterator i = tiles.begin(); i != tiles.end(); ++i) {
+			(*i)->applyTilesetDestruction(toDestroy);
+		}
+	}
+
+	ObjectLayer *ObjectLayer::clone(const TileMap &newParentMap) const {
+		return new ObjectLayer(*this, newParentMap);
 	}
 }

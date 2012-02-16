@@ -159,7 +159,7 @@ namespace RedBox {
 		void setHeightInTiles(int newHeight, int offset);
 
 		/**
-		 * Applies the destructiof id's of a tileset.
+		 * Applies the destruction id's of a tileset.
 		 * @param toDestroy Range of tile id's to destroy. All tile id's in this
 		 * range are reset to 0. All tile id's above the range are reduced by
 		 * the range's length.
