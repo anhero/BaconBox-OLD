@@ -1,4 +1,3 @@
-#if 0
 /**
  * @file
  * @ingroup TileMap
@@ -6,60 +5,10 @@
 #ifndef RB_LINE_OBJECT_H
 #define RB_LINE_OBJECT_H
 
-#include "TileMapObject.h"
-#include "StandardVertexArray.h"
+#include "TileMapVertexArray.h"
 
 namespace RedBox {
-	/**
-	 * Represents a polygon object in an object layer.
-	 * @ingroup TileMap
-	 */
-	class LineObject : public TileMapObject {
-	public:
-		/**
-		 * Default and parameterized constructor.
-		 * @param newPosition Position of the polygon object in the layer (in
-		 * pixels).
-		 * @param newName Name of the polygon object, if it has one.
-		 */
-		explicit LineObject(const Vector2 &newPosition = Vector2(),
-		                    const std::string &newName = std::string());
-
-		/**
-		 * Parameterized constructor.
-		 * @param newXPosition Horizontal position of the polygon object on the
-		 * object layer (in pixels).
-		 * @param newYPosition Vertical position of the polygon object on the
-		 * object layer (in pixels).
-		 * @param newName Name of the polygon object, if it has one.
-		 */
-		LineObject(float newXPosition,
-		           float newYPosition,
-		           const std::string &newName = std::string());
-
-		/**
-		 * Copy constructor.
-		 * @param src PolygonObject to make a copy of.
-		 */
-		LineObject(const LineObject &src);
-
-		/**
-		 * Destructor.
-		 */
-		~LineObject();
-
-		/**
-		 * Assignment operator.
-		 * @param src PolygonObject to copy.
-		 * @return Reference to the modified PolygonObject.
-		 */
-		LineObject &operator=(const LineObject &src);
-
-		/// Vertices that make up the polygon.
-		StandardVertexArray vertices;
-	};
-
+	typedef TileMapVertexArray LineObject;
 }
 
 #endif // RB_POLYGON_OBJECT_H
-#endif
