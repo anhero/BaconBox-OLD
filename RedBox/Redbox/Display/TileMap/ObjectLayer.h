@@ -62,16 +62,76 @@ namespace RedBox {
 		 */
 		const TileContainer &getTiles() const;
 
+		/**
+		 * Gets a line object from its name. Only lines with a name can be
+		 * found using this function.
+		 * @param lineName Name of the line object to find.
+		 * @return Pointer to the line object found, NULL if no line object was
+		 * found with the given name.
+		 */
 		LineObject *getLine(const std::string &lineName);
+
+		/**
+		 * Gets a line object from its name. Only lines with a name can be
+		 * found using this function.
+		 * @param lineName Name of the line object to find.
+		 * @return Pointer to the line object found, NULL if no line object was
+		 * found with the given name.
+		 */
 		const LineObject *getLine(const std::string &lineName) const;
 
+		/**
+		 * Gets a polygon object from its name. Only polygons with a name can be
+		 * found using this function.
+		 * @param polygonName Name of the polygon object to find.
+		 * @return Pointer to the polygon object found, NULL if no polygon
+		 * object was found with the given name.
+		 */
 		PolygonObject *getPolygon(const std::string &polygonName);
+
+		/**
+		 * Gets a polygon object from its name. Only polygons with a name can be
+		 * found using this function.
+		 * @param polygonName Name of the polygon object to find.
+		 * @return Pointer to the polygon object found, NULL if no polygon
+		 * object was found with the given name.
+		 */
 		const PolygonObject *getPolygon(const std::string &polygonName) const;
 
+		/**
+		 * Gets a rectangle object from its name. Only rectangles with a name
+		 * can be found using this function.
+		 * @param rectangleName Name of the rectangle object to find.
+		 * @return Pointer to the rectangle object found, NULL if no rectangle
+		 * object was found with the given name.
+		 */
 		RectangleObject *getRectangle(const std::string &rectangleName);
+
+		/**
+		 * Gets a rectangle object from its name. Only rectangles with a name
+		 * can be found using this function.
+		 * @param rectangleName Name of the rectangle object to find.
+		 * @return Pointer to the rectangle object found, NULL if no rectangle
+		 * object was found with the given name.
+		 */
 		const RectangleObject *getRectangle(const std::string &rectangleName) const;
 
+		/**
+		 * Gets a tile object from its name. Only tiles with a name can be
+		 * found using this function.
+		 * @param tileName Name of the tile object to find.
+		 * @return Pointer to the tile object found, NULL if no tile object was
+		 * found with the given name.
+		 */
 		TileObject *getTile(const std::string &tileName);
+
+		/**
+		 * Gets a tile object from its name. Only tiles with a name can be
+		 * found using this function.
+		 * @param tileName Name of the tile object to find.
+		 * @return Pointer to the tile object found, NULL if no tile object was
+		 * found with the given name.
+		 */
 		const TileObject *getTile(const std::string &tileName) const;
 	private:
 		typedef std::map<std::string, LineObject *> LineNameMap;
