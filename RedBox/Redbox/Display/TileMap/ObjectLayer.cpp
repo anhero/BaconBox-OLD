@@ -219,6 +219,50 @@ namespace RedBox {
 		return getObject(tileNames, tileName);
 	}
 
+	TileObject *ObjectLayer::addTile(const std::string &newTileName,
+	                                 const Vector2 &newPosition,
+	                                 unsigned int newTileId,
+	                                 bool overwrite) {
+		TileObject *result = getTile(newTileName);
+
+		if (result) {
+			if (overwrite) {
+				removeTile(result);
+				addTile(newTileName, newPosition, newTileId, false);
+			}
+
+		} else {
+			tiles.push_back(new TileObject(newTileName, newPosition, *this, newTileId));
+
+			if (!newTileName.empty()) {
+				dirtyTileNames = true;
+			}
+
+			result = tiles.back();
+		}
+
+		return result;
+	}
+
+	void ObjectLayer::removeTile(const std::string &tileName) {
+		removeTile(getTile(tileName));
+	}
+
+	void ObjectLayer::removeTile(const TileObject *toRemove) {
+		if (toRemove) {
+			TileContainer::iterator found = std::find(tiles.begin(), tiles.end(), toRemove);
+
+			if (found != tiles.end()) {
+				if (!toRemove->getName().empty()) {
+					dirtyTileNames = true;
+				}
+
+				delete *found;
+				tiles.erase(found);
+			}
+		}
+	}
+
 	ObjectLayer::ObjectLayer(const std::string &newName,
 	                         const TileMap &newParentMap,
 	                         int32_t newOpacity,
@@ -265,14 +309,17 @@ namespace RedBox {
 			assert(*i);
 			delete *i;
 		}
+
 		for (PolygonContainer::iterator i = polygons.begin(); i != polygons.end(); ++i) {
 			assert(*i);
 			delete *i;
 		}
+
 		for (RectangleContainer::iterator i = rectangles.begin(); i != rectangles.end(); ++i) {
 			assert(*i);
 			delete *i;
 		}
+
 		for (TileContainer::iterator i = tiles.begin(); i != tiles.end(); ++i) {
 			assert(*i);
 			delete *i;

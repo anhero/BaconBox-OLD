@@ -44,7 +44,7 @@ namespace RedBox {
 	}
 
 	void TileObject::setTileId(unsigned int newTileId) {
-		if (parentLayer.parentMap.getTileset(newTileId) || newTileId == 0) {
+		if (parentLayer.parentMap.getTileset(newTileId) || newTileId == 0u) {
 			tileId = newTileId;
 		}
 	}
@@ -54,7 +54,7 @@ namespace RedBox {
 	                       const ObjectLayer &newParentLayer,
 	                       unsigned int newTileId) :
 		TileMapObject(newName, newPosition, newParentLayer),
-		tileId((parentLayer.parentMap.getTileset(newTileId)) ? (newTileId) : (0)) {
+		tileId((parentLayer.parentMap.getTileset(newTileId)) ? (newTileId) : (0u)) {
 	}
 
 	TileObject::TileObject(const TileObject &src,

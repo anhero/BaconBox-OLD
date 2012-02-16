@@ -30,9 +30,16 @@ namespace RedBox {
 		friend class RectangleObject;
 		friend class TileMap;
 	public:
+		/// Type that contains the pointers to the line objects.
 		typedef std::list<LineObject *> LineContainer;
+
+		/// Type that contains the pointers to the polygon objects.
 		typedef std::list<PolygonObject *> PolygonContainer;
+
+		/// Type that contains the pointers to the rectangle objects.
 		typedef std::list<RectangleObject *> RectangleContainer;
+
+		/// Type that contains the pointers to the tile objects.
 		typedef std::list<TileObject *> TileContainer;
 
 		/**
@@ -227,10 +234,49 @@ namespace RedBox {
 		 * found with the given name.
 		 */
 		const TileObject *getTile(const std::string &tileName) const;
+
+		/**
+		 * Adds a tile to the object layer.
+		 * @param newTileName Name of the new tile object to create.
+		 * @param newPosition Starting position of the new tile object to
+		 * create.
+		 * @param newTileId Tile id of the new tile object. If the id doesn't
+		 * fit within the tile map's tilesets, it is set to 0.
+		 * @param overwrite Determines wether or or not the existing tile should
+		 * be overwritten if there is already a tile object with the same name
+		 * as the new tile object.
+		 * @return Pointer to the tile created, never NULL. If it was asked
+		 * not to overwrite and a tile with the same name already existed, a
+		 * pointer to the existing one is returned.
+		 */
+		TileObject *addTile(const std::string &newTileName = std::string(),
+		                    const Vector2 &newPosition = Vector2(),
+		                    unsigned int newTileId = 0u,
+		                    bool overwrite = false);
+
+		/**
+		 * Removes a tile by its name. Does nothing if no tile has that name.
+		 * @param tileName Name of the tile object to remove.
+		 */
+		void removeTile(const std::string &tileName);
+
+		/**
+		 * Removes a tile. If the tile object is not in this object layer, this
+		 * function does nothing.
+		 * @param toRemove Pointer to the tile object to remove from the layer.
+		 */
+		void removeTile(const TileObject *toRemove);
 	private:
+		/// Type that maps the line objects by their name.
 		typedef std::map<std::string, LineObject *> LineNameMap;
+
+		/// Type that maps the polygon objects by their name.
 		typedef std::map<std::string, PolygonObject *> PolygonNameMap;
+
+		/// Type that maps the polygon objects by their name.
 		typedef std::map<std::string, RectangleObject *> RectangleNameMap;
+
+		/// Type that maps the tile objects by their name.
 		typedef std::map<std::string, TileObject *> TileNameMap;
 
 		/**
@@ -339,6 +385,10 @@ namespace RedBox {
 		 */
 		mutable LineNameMap lineNames;
 
+		/**
+		 * Boolean used internally to determine if the map of lines by their
+		 * name is correctly synchronized.
+		 */
 		mutable bool dirtyLineNames;
 
 		/**
@@ -351,6 +401,10 @@ namespace RedBox {
 		 */
 		mutable PolygonNameMap polygonNames;
 
+		/**
+		 * Boolean used internally to determine if the map of polygons by their
+		 * name is correctly synchronized.
+		 */
 		mutable bool dirtyPolygonNames;
 
 		/**
@@ -363,6 +417,10 @@ namespace RedBox {
 		 */
 		mutable RectangleNameMap rectangleNames;
 
+		/**
+		 * Boolean used internally to determine if the map of rectangles by
+		 * their name is correctly synchronized.
+		 */
 		mutable bool dirtyRectangleNames;
 
 		/**
@@ -374,6 +432,10 @@ namespace RedBox {
 		 */
 		mutable TileNameMap tileNames;
 
+		/**
+		 * Boolean used internally to determine if the map of tiles by their
+		 * name is correctly synchronized.
+		 */
 		mutable bool dirtyTileNames;
 	};
 
