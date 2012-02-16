@@ -144,9 +144,32 @@ namespace RedBox {
 	ObjectLayer::ObjectLayer(const ObjectLayer &src,
 	                         const TileMap &newParentMap) :
 		TileMapLayer(src, newParentMap), lines(), polygons(), rectangles(),
-		tiles(), lineNames(), dirtyLineNames(false), polygonNames(),
-		dirtyPolygonNames(false), rectangleNames(), dirtyRectangleNames(false),
-		tileNames(), dirtyTileNames(false) {
+		tiles(), lineNames(), dirtyLineNames(true), polygonNames(),
+		dirtyPolygonNames(true), rectangleNames(), dirtyRectangleNames(true),
+		tileNames(), dirtyTileNames(true) {
+		// We copy the line objects.
+		for (LineContainer::const_iterator i = src.lines.begin();
+		     i != src.lines.end(); ++i) {
+			lines.push_back(new LineObject(*(*i), *this));
+		}
+
+		// We copy the polygon objects.
+		for (PolygonContainer::const_iterator i = src.polygons.begin();
+		     i != src.polygons.end(); ++i) {
+			polygons.push_back(new PolygonObject(*(*i), *this));
+		}
+
+		// We copy the rectangle objects.
+		for (RectangleContainer::const_iterator i = src.rectangles.begin();
+		     i != src.rectangles.end(); ++i) {
+			rectangles.push_back(new RectangleObject(*(*i), *this));
+		}
+
+		// We copy the tile objects.
+		for (TileContainer::const_iterator i = src.tiles.begin();
+		     i != src.tiles.end(); ++i) {
+			tiles.push_back(new TileObject(*(*i), *this));
+		}
 	}
 
 	ObjectLayer::~ObjectLayer() {

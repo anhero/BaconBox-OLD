@@ -27,7 +27,8 @@ namespace RedBox {
 		typedef std::deque<TextureCoordinates> TileCoordinates;
 
 		/**
-		 * Sets the name of the tileset.
+		 * Sets the name of the tileset. Does nothing if parent tile map already
+		 * has a tileset with that name.
 		 * @param newName New name to give to the tileset.
 		 * @see RedBox::TileMapEntity::name
 		 */

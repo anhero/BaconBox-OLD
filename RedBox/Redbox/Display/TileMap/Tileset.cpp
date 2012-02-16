@@ -8,8 +8,10 @@
 
 namespace RedBox {
 	void Tileset::setName(const std::string &newName) {
-		this->TileMapEntity::setName(newName);
-		parentMap.dirtyTilesetsByName = true;
+		if (!parentMap.getTileset(newName)) {
+			this->TileMapEntity::setName(newName);
+			parentMap.dirtyTilesetsByName = true;
+		}
 	}
 
 	TextureInformation *Tileset::getTextureInformation() const {

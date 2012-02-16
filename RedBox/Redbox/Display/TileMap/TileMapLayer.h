@@ -26,7 +26,8 @@ namespace RedBox {
 	public:
 
 		/**
-		 * Sets the name of the tile map layer.
+		 * Sets the name of the tile map layer. Does nothing if there is already
+		 * a layer with the same name in the parent tile map.
 		 * @param newName New name to give to the tile map layer.
 		 * @see RedBox::TileMapEntity::name
 		 */

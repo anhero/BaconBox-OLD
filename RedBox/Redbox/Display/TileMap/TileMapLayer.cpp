@@ -8,8 +8,10 @@
 namespace RedBox {
 
 	void TileMapLayer::setName(const std::string &newName) {
-		this->TileMapEntity::setName(newName);
-		parentMap.dirtyLayersByName = true;
+		if (!parentMap.getLayer(newName)) {
+			this->TileMapEntity::setName(newName);
+			parentMap.dirtyLayersByName = true;
+		}
 	}
 
 	ObjectLayer *TileMapLayer::asObjectLayer() {
@@ -47,16 +49,16 @@ namespace RedBox {
 	TileMapLayer::TileMapLayer(const std::string &newName,
 	                           const TileMap &newParentMap,
 	                           int32_t newOpacity,
-		                       bool newVisible) :
+	                           bool newVisible) :
 		TileMapEntity(newName), parentMap(newParentMap), opacity(0),
-	    visible(newVisible) {
+		visible(newVisible) {
 		setOpacity(newOpacity);
 	}
 
 	TileMapLayer::TileMapLayer(const TileMapLayer &src,
 	                           const TileMap &newParentMap) :
-	    TileMapEntity(src), parentMap(newParentMap), opacity(src.opacity),
-	    visible(src.visible) {
+		TileMapEntity(src), parentMap(newParentMap), opacity(src.opacity),
+		visible(src.visible) {
 	}
 
 	TileMapLayer::~TileMapLayer() {
