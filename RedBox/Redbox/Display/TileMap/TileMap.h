@@ -24,6 +24,10 @@ namespace RedBox {
 	class TileLayer;
 	class ObjectLayer;
 
+	/**
+	 * Contains data about a tile map. Structure is compatible with Tiled.
+	 * @ingroup TileMap
+	 */
 	class TileMap : public TileMapEntity {
 		friend class Tileset;
 		friend class TileMapLayer;

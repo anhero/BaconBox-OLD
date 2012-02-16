@@ -288,7 +288,7 @@ namespace RedBox {
 	}
 
 	TileMapLayer *TileMap::getLayer(const std::string &layerName) {
-		if (dirtyTilesetsByName) {
+		if (dirtyLayersByName) {
 			refreshLayersByName();
 		}
 
@@ -303,11 +303,21 @@ namespace RedBox {
 	}
 
 	TileLayer *TileMap::getTileLayer(const std::string &layerName) {
-		return getLayer(layerName)->asTileLayer();
+		TileMapLayer *result = getLayer(layerName);
+		if (result) {
+			return result->asTileLayer();
+		} else {
+			return NULL;
+		}
 	}
 
 	const TileLayer *TileMap::getTileLayer(const std::string &layerName) const {
-		return getLayer(layerName)->asTileLayer();
+		const TileMapLayer *result = getLayer(layerName);
+		if (result) {
+			return result->asTileLayer();
+		} else {
+			return NULL;
+		}
 	}
 
 	TileLayer *TileMap::pushBackTileLayer(const std::string &newLayerName,
@@ -352,11 +362,21 @@ namespace RedBox {
 	}
 
 	ObjectLayer *TileMap::getObjectLayer(const std::string &layerName) {
-		return getLayer(layerName)->asObjectLayer();
+		TileMapLayer *result = getLayer(layerName);
+		if (result) {
+			return result->asObjectLayer();
+		} else {
+			return NULL;
+		}
 	}
 
 	const ObjectLayer *TileMap::getObjectLayer(const std::string &layerName) const {
-		return getLayer(layerName)->asObjectLayer();
+		const TileMapLayer *result = getLayer(layerName);
+		if (result) {
+			return result->asObjectLayer();
+		} else {
+			return NULL;
+		}
 	}
 
 	ObjectLayer *TileMap::pushBackObjectLayer(const std::string &newLayerName,
