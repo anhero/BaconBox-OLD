@@ -9,6 +9,7 @@
 #include "DeleteHelper.h"
 #include "TileMapLayer.h"
 #include "TileLayer.h"
+#include "ObjectLayer.h"
 
 namespace RedBox {
 

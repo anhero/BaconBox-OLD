@@ -123,8 +123,28 @@ namespace RedBox {
 				// We make sure it has a name before trying to insert it in the
 				// name map.
 				if (!(*i)->getName().empty()) {
-					nameMap.insert(std::make_pair((*i)->name, *i));
+					nameMap.insert(std::make_pair((*i)->getName(), *i));
 				}
+			}
+		}
+
+		/**
+		 * Finds an object by its name in a name map.
+		 * @param nameMap Map of objects by their name in which to search.
+		 * @param objectName Name of the object to find.
+		 * @tparam Type of the container that maps the object names to the
+		 * object.
+		 */
+		template <typename T>
+		static typename T::mapped_type getObject(T &nameMap,
+		                                         const typename T::key_type &objectName) {
+			typename T::iterator found = nameMap.find(objectName);
+
+			if (found != nameMap.end()) {
+				return found->second;
+
+			} else {
+				return NULL;
 			}
 		}
 
