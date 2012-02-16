@@ -9,12 +9,12 @@
 #include <list>
 
 #include "TileMapLayer.h"
-#include "TileObject.h"
-#include "LineObject.h"
-#include "PolygonObject.h"
-#include "RectangleObject.h"
 
 namespace RedBox {
+	class TileObject;
+	class LineObject;
+	class PolygonObject;
+	class RectangleObject;
 	/**
 	 * Represents a layer of objects in a tile map. Can contain lines, polygons,
 	 * rectangles and tiles. The only object type to have a graphic is the tile.
@@ -34,35 +34,30 @@ namespace RedBox {
 		typedef std::list<RectangleObject *> RectangleContainer;
 		typedef std::list<TileObject *> TileContainer;
 
-		typedef std::map<std::string, LineObject *> LineNameMap;
-		typedef std::map<std::string, PolygonObject *> PolygonNameMap;
-		typedef std::map<std::string, RectangleObject *> RectangleNameMap;
-		typedef std::map<std::string, TileObject *> TileNameMap;
-
 		/**
 		 * Gets the line objects.
-		 * @return Const reference to the list of line objects.
+		 * @return Const reference to the list of pointers to line objects.
 		 * @see RedBox::ObjectLayer::lines
 		 */
 		const LineContainer &getLines() const;
 
 		/**
 		 * Gets the polygon objects.
-		 * @return Const reference to the list of polygon objects.
+		 * @return Const reference to the list of pointers to polygon objects.
 		 * @see RedBox::ObjectLayer::objects
 		 */
 		const PolygonContainer &getPolygons() const;
 
 		/**
 		 * Gets the rectangle objects.
-		 * @return Const reference to the list of rectangle objects.
+		 * @return Const reference to the list of pointers to rectangle objects.
 		 * @see RedBox::ObjectLayer::rectangles
 		 */
 		const RectangleContainer &getRectangles() const;
 
 		/**
 		 * Gets the tile objects.
-		 * @return Const reference to the list of tile objects.
+		 * @return Const reference to the list of pointers to tile objects.
 		 * @see RedBox::ObjectLayer::tiles
 		 */
 		const TileContainer &getTiles() const;
@@ -73,12 +68,17 @@ namespace RedBox {
 		PolygonObject *getPolygon(const std::string &polygonName);
 		const PolygonObject *getPolygon(const std::string &polygonName) const;
 
-		RectangleObject *getRectangle(const RectangleNameMap::key_type &rectangleName);
-		const RectangleNameMap::mapped_type getRectangle(const RectangleNameMap::key_type &rectangleName) const;
+		RectangleObject *getRectangle(const std::string &rectangleName);
+		const RectangleObject *getRectangle(const std::string &rectangleName) const;
 
-		TileNameMap::mapped_type getTile(const TileNameMap::key_type &tileName);
-		const TileNameMap::mapped_type getTile(const TileNameMap::key_type &tileName) const;
+		TileObject *getTile(const std::string &tileName);
+		const TileObject *getTile(const std::string &tileName) const;
 	private:
+		typedef std::map<std::string, LineObject *> LineNameMap;
+		typedef std::map<std::string, PolygonObject *> PolygonNameMap;
+		typedef std::map<std::string, RectangleObject *> RectangleNameMap;
+		typedef std::map<std::string, TileObject *> TileNameMap;
+
 		/**
 		 * Paremeterized constructor.
 		 * @param newName Name of the layer, can be empty.
@@ -87,10 +87,10 @@ namespace RedBox {
 		 * @param newVisible Wether or not the layer is visible.
 		 * @see RedBox::TileMapEntity::name
 		 */
-		explicit ObjectLayer(const std::string &newName,
-		                     const TileMap &newParentMap,
-		                     int32_t newOpacity,
-		                     bool newVisible);
+		ObjectLayer(const std::string &newName,
+		            const TileMap &newParentMap,
+		            int32_t newOpacity,
+		            bool newVisible);
 
 		/**
 		 * Copy constructor.
@@ -111,13 +111,13 @@ namespace RedBox {
 		 * @tparam Type of object.
 		 */
 		template <typename T>
-		static void refreshNames(std::list<T *> &objects,
+		static void refreshNames(const std::list<T *> &objects,
 		                         std::map<std::string, T *> &nameMap) {
 			// We makesure to clear out the existing name map.
 			nameMap.clear();
 
 			// We try to map the name of every objects.
-			for (typename std::list<T *>::iterator i = objects.begin();
+			for (typename std::list<T *>::const_iterator i = objects.begin();
 			     i != objects.end(); ++i) {
 
 				// We make sure it has a name before trying to insert it in the
@@ -127,16 +127,6 @@ namespace RedBox {
 				}
 			}
 		}
-
-		void refreshAllNames() const;
-
-		void refreshLineNames() const;
-
-		void refreshRectangleNames() const;
-
-		void refreshPolygonNames() const;
-
-		void refreshTileNames() const;
 
 		/// List of line objects in the layer.
 		LineContainer lines;
