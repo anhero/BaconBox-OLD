@@ -1,5 +1,7 @@
 #include "ObjectLayer.h"
 
+#include <algorithm>
+
 #include "TileObject.h"
 #include "LineObject.h"
 #include "PolygonObject.h"
@@ -36,6 +38,49 @@ namespace RedBox {
 		}
 
 		return getObject(lineNames, lineName);
+	}
+
+	LineObject *ObjectLayer::addLine(const std::string &newLineName,
+	                                 const Vector2 &newPosition,
+	                                 bool overwrite) {
+		LineObject *result = getLine(newLineName);
+
+		if (result) {
+			if (overwrite) {
+				removeLine(result);
+				addLine(newLineName, newPosition, false);
+			}
+
+		} else {
+			lines.push_back(new LineObject(newLineName, newPosition, *this));
+
+			if (!newLineName.empty()) {
+				dirtyLineNames = true;
+			}
+
+			result = lines.back();
+		}
+
+		return result;
+	}
+
+	void ObjectLayer::removeLine(const std::string &lineName) {
+		removeLine(getLine(lineName));
+	}
+
+	void ObjectLayer::removeLine(const LineObject *toRemove) {
+		if (toRemove) {
+			LineContainer::iterator found = std::find(lines.begin(), lines.end(), toRemove);
+
+			if (found != lines.end()) {
+				if (!toRemove->getName().empty()) {
+					dirtyLineNames = true;
+				}
+
+				delete *found;
+				lines.erase(found);
+			}
+		}
 	}
 
 	PolygonObject *ObjectLayer::getPolygon(const std::string &polygonName) {

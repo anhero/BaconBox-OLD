@@ -257,11 +257,14 @@ namespace RedBox {
 			TilesetContainer::iterator found = std::find(tilesets.begin(), tilesets.end(), tileset);
 
 			if (found != tilesets.end()) {
+				if (!tileset->getName().empty()) {
+					dirtyTilesetsByName = true;
+				}
+
 				applyTilesetDestruction(TileIdRange((*found)->getFirstTileId(), (*found)->getFirstTileId() + (*found)->getNbTiles()));
 				delete *found;
 				tilesets.erase(found);
 				refreshTilesetsByTileId();
-				dirtyTilesetsByName = true;
 			}
 		}
 	}
@@ -350,6 +353,8 @@ namespace RedBox {
 			if (!newLayerName.empty()) {
 				dirtyLayersByName = true;
 			}
+
+			result = layers.back();
 		}
 
 		return result->asTileLayer();
@@ -373,6 +378,8 @@ namespace RedBox {
 			if (!newLayerName.empty()) {
 				dirtyLayersByName = true;
 			}
+
+			result = layers.front();
 		}
 
 		return result->asTileLayer();
@@ -387,9 +394,12 @@ namespace RedBox {
 			LayerContainer::iterator found = std::find(layers.begin(), layers.end(), layer);
 
 			if (found != layers.end()) {
+				if (!layer->getName().empty()) {
+					dirtyLayersByName = true;
+				}
+
 				delete *found;
 				layers.erase(found);
-				dirtyLayersByName = true;
 			}
 		}
 	}

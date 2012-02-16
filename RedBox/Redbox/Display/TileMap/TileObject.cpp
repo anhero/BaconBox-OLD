@@ -5,6 +5,13 @@
 #include "Tileset.h"
 
 namespace RedBox {
+	void TileObject::setName(const std::string &newName) {
+		if (!parentLayer.getTile(newName)) {
+			this->TileMapObject::setName(newName);
+			parentLayer.dirtyTileNames = true;
+		}
+	}
+
 	const Vector2 TileObject::getSize() const {
 		if (tileId > 0) {
 			return parentLayer.parentMap.getTileset(tileId)->getTileSize();

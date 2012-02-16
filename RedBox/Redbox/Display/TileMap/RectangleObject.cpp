@@ -1,6 +1,15 @@
 #include "RectangleObject.h"
 
+#include "ObjectLayer.h"
+
 namespace RedBox {
+	void RectangleObject::setName(const std::string &newName) {
+		if (!parentLayer.getRectangle(newName)) {
+			this->TileMapObject::setName(newName);
+			parentLayer.dirtyRectangleNames = true;
+		}
+	}
+
 	const Vector2 RectangleObject::getSize() const {
 		return size;
 	}

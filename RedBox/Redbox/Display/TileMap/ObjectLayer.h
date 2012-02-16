@@ -9,6 +9,7 @@
 #include <list>
 
 #include "TileMapLayer.h"
+#include "Vector2.h"
 
 namespace RedBox {
 	class TileObject;
@@ -79,6 +80,35 @@ namespace RedBox {
 		 * found with the given name.
 		 */
 		const LineObject *getLine(const std::string &lineName) const;
+
+		/**
+		 * Adds a line to the object layer.
+		 * @param newLineName Name of the new line object to create.
+		 * @param newPosition Starting position of the new line object to
+		 * create.
+		 * @param overwrite Determines wether or or not the existing line
+		 * should be overwritten if there is already a line object with the
+		 * same name as the new line object.
+		 * @return Pointer to the line created, never NULL. If it was asked not
+		 * to overwrite and a line with the same name already existed, a pointer
+		 * to the existing one is returned.
+		 */
+		LineObject *addLine(const std::string &newLineName = std::string(),
+		                    const Vector2 &newPosition = Vector2(),
+		                    bool overwrite = false);
+
+		/**
+		 * Removes a line by its name. Does nothing if no line has that name.
+		 * @param lineName Name of the line object to remove.
+		 */
+		void removeLine(const std::string &lineName);
+
+		/**
+		 * Remove a line. If the line object is not in this object layer, this
+		 * function does nothing.
+		 * @param toRemove Pointer to the line object to remove from the layer.
+		 */
+		void removeLine(const LineObject *toRemove);
 
 		/**
 		 * Gets a polygon object from its name. Only polygons with a name can be

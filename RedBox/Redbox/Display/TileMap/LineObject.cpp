@@ -4,8 +4,10 @@
 
 namespace RedBox {
 	void LineObject::setName(const std::string &newName) {
-		this->TileMapVertexArray::setName(newName);
-		getParentLayer().dirtyLineNames = true;
+		if (!getParentLayer().getLine(newName)) {
+			this->TileMapVertexArray::setName(newName);
+			getParentLayer().dirtyLineNames = true;
+		}
 	}
 
 	LineObject::LineObject(const std::string &newName,

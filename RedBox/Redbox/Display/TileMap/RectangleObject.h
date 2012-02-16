@@ -18,6 +18,14 @@ namespace RedBox {
 		friend class ObjectLayer;
 	public:
 		/**
+		 * Sets the name of the rectangle object. Does nothing if another
+		 * rectangle object with the same name exists in the parent layer.
+		 * @param newName New name to give to the entity.
+		 * @see RedBox::TileMapEntity::name
+		 */
+		void setName(const std::string &newName);
+
+		/**
 		 * Gets the body's size. Can be overloaded for performance.
 		 * @return Vector2 containing the width and height of the body.
 		 */

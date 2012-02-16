@@ -4,8 +4,10 @@
 
 namespace RedBox {
 	void PolygonObject::setName(const std::string &newName) {
-		this->TileMapVertexArray::setName(newName);
-		getParentLayer().dirtyPolygonNames = true;
+		if (!getParentLayer().getPolygon(newName)) {
+			this->TileMapVertexArray::setName(newName);
+			getParentLayer().dirtyPolygonNames = true;
+		}
 	}
 
 	PolygonObject::PolygonObject(const std::string &newName,

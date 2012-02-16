@@ -12,7 +12,8 @@ namespace RedBox {
 		friend class ObjectLayer;
 	public:
 		/**
-		 * Sets the name of the polygon object.
+		 * Sets the name of the line object. Does nothing if another line object
+		 * with the same name exists in the parent layer.
 		 * @param newName New name to give to the entity.
 		 * @see RedBox::TileMapEntity::name
 		 */
