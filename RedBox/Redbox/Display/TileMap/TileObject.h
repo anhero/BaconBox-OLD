@@ -8,17 +8,15 @@
 #include <string>
 
 #include "TileMapObject.h"
-#include "Vector2.h"
 #include "TileIdRange.h"
 
 namespace RedBox {
-	class TileMap;
 	/**
 	 * Represents a tile object in an object layer in a tile map.
 	 * @ingroup TileMap
 	 */
 	class TileObject : public TileMapObject {
-		friend class TileMap;
+		friend class ObjectLayer;
 	public:
 		/**
 		 * Gets the tile's size. Can be overloaded for performance.
@@ -57,20 +55,22 @@ namespace RedBox {
 		 * @param newName Name of the tile object, if it has one.
 		 * @param newPosition Position of the tile object in the layer (in
 		 * pixels).
-		 * @param newParentMap Reference to the map that contains this tile
-		 * object.
+		 * @param newParentLayer Reference to the object layer that contains
+		 * this tile object.
 		 * @param newTileIndex Id of the tile to display the object.
 		 */
-		explicit TileObject(const std::string &newName,
-		                    const Vector2 &newPosition,
-		                    const TileMap &newParentMap,
-		                    unsigned int newTileId);
+		TileObject(const std::string &newName,
+		           const Vector2 &newPosition,
+		           const ObjectLayer &newParentLayer,
+		           unsigned int newTileId);
 
 		/**
 		 * Copy constructor.
 		 * @param src TileObject to make a copy of.
+		 * @param newParentLayer Reference to the object layer that contains
+		 * this tile object.
 		 */
-		TileObject(const TileObject &src, const TileMap &newParentMap);
+		TileObject(const TileObject &src, const ObjectLayer &newParentLayer);
 
 		/**
 		 * Destructor.
@@ -84,12 +84,6 @@ namespace RedBox {
 		 * @see RedBox::TileObject::tileId
 		 */
 		void applyTilesetDestruction(const TileIdRange &toDestroy);
-
-		/**
-		 * Const reference to the tile map that owns the object layer that
-		 * contains this tile.
-		 */
-		const TileMap &parentMap;
 
 		/// Id of the tile to display.
 		unsigned int tileId;

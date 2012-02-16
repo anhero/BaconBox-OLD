@@ -1,29 +1,6 @@
 #include "RectangleObject.h"
 
 namespace RedBox {
-	RectangleObject::RectangleObject(const std::string &newName,
-	                                 const Vector2 &newPosition,
-	                                 const Vector2 &newSize) :
-		TileMapObject(newName, newPosition), size(newSize) {
-	}
-
-	RectangleObject::RectangleObject(const RectangleObject &src) :
-		TileMapObject(src), size(src.size) {
-	}
-
-	RectangleObject::~RectangleObject() {
-	}
-
-	RectangleObject &RectangleObject::operator=(const RectangleObject &src) {
-		this->TileMapObject::operator=(src);
-
-		if (this != &src) {
-			size = src.size;
-		}
-
-		return *this;
-	}
-
 	const Vector2 RectangleObject::getSize() const {
 		return size;
 	}
@@ -50,5 +27,20 @@ namespace RedBox {
 
 	void RectangleObject::setHeight(float newHeight) {
 		size.setY(newHeight);
+	}
+
+	RectangleObject::RectangleObject(const std::string &newName,
+	                                 const Vector2 &newPosition,
+	                                 const ObjectLayer &newParentLayer,
+	                                 const Vector2 &newSize) :
+		TileMapObject(newName, newPosition, newParentLayer), size(newSize) {
+	}
+
+	RectangleObject::RectangleObject(const RectangleObject &src,
+	                                 const ObjectLayer &newParentLayer) :
+		TileMapObject(src, newParentLayer), size(src.size) {
+	}
+
+	RectangleObject::~RectangleObject() {
 	}
 }

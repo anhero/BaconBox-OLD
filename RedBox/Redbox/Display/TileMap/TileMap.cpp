@@ -342,7 +342,7 @@ namespace RedBox {
 			}
 
 		} else {
-			layers.push_back(new TileLayer(*this, newLayerName, newOpacity, newVisible));
+			layers.push_back(new TileLayer(newLayerName, *this, newOpacity, newVisible));
 
 			result = layers.back();
 
@@ -367,7 +367,7 @@ namespace RedBox {
 			}
 
 		} else {
-			layers.push_front(new TileLayer(*this, newLayerName, newOpacity, newVisible));
+			layers.push_front(new TileLayer(newLayerName, *this, newOpacity, newVisible));
 
 			if (!newLayerName.empty()) {
 				dirtyLayersByName = true;

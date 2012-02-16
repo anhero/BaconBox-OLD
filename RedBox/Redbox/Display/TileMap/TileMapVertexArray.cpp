@@ -1,25 +1,8 @@
 #include "TileMapVertexArray.h"
 
+#include "ObjectLayer.h"
+
 namespace RedBox {
-	TileMapVertexArray::TileMapVertexArray(const std::string &newName,
-	                                       const Vector2 &newPosition) :
-		TileMapObject(newName, newPosition), Shapable<StandardVertexArray>() {
-	}
-
-	TileMapVertexArray::TileMapVertexArray(const TileMapVertexArray &src) :
-		TileMapObject(src), Shapable<StandardVertexArray>(src) {
-	}
-
-	TileMapVertexArray::~TileMapVertexArray() {
-	}
-
-	TileMapVertexArray &TileMapVertexArray::operator=(const TileMapVertexArray &src) {
-		this->TileMapObject::operator=(src);
-		this->Shapable<StandardVertexArray>::operator=(src);
-
-		return *this;
-	}
-
 	void TileMapVertexArray::move(float xDelta, float yDelta) {
 		this->TileMapObject::move(xDelta, yDelta);
 		getVertices().move(xDelta, yDelta);
@@ -39,5 +22,23 @@ namespace RedBox {
 
 	float TileMapVertexArray::getHeight() const {
 		return getVertices().getHeight();
+	}
+
+	TileMapVertexArray::TileMapVertexArray(const std::string &newName,
+	                                       const Vector2 &newPosition,
+	                                       const ObjectLayer &newParentLayer) :
+		TileMapObject(newName, newPosition, newParentLayer), Shapable<StandardVertexArray>() {
+	}
+
+	TileMapVertexArray::TileMapVertexArray(const TileMapVertexArray &src,
+	                                       const ObjectLayer &newParentLayer) :
+		TileMapObject(src, newParentLayer), Shapable<StandardVertexArray>(src) {
+	}
+
+	TileMapVertexArray::~TileMapVertexArray() {
+	}
+
+	const ObjectLayer &TileMapVertexArray::getParentLayer() const {
+		return parentLayer;
 	}
 }

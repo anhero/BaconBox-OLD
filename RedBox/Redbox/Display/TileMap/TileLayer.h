@@ -96,18 +96,19 @@ namespace RedBox {
 	private:
 		/// Type of container used to store the tile data.
 		typedef std::vector<unsigned int> DataContainer;
+
 		/**
 		 * Constructor.
+		 * @param newName Name of the tile layer. Can be empty.
 		 * @param newParentMap Reference to the parent map that owns the tile
 		 * layer.
-		 * @param newName Name of the tile layer. Can be empty.
 		 * @param newOpacity Opacity of the layer.
 		 * @param newVisible Wether or not the layer is visible.
 		 */
-		explicit TileLayer(const TileMap &newParentMap,
-		                   const std::string &newName = std::string(),
-		                   int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
-		                   bool newVisible = true);
+		TileLayer(const std::string &newName,
+		          const TileMap &newParentMap,
+		          int32_t newOpacity,
+		          bool newVisible);
 
 		/**
 		 * Copy constructor.

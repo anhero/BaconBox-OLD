@@ -15,35 +15,8 @@ namespace RedBox {
 	 * @see RedBox::ObjectLayer
 	 */
 	class RectangleObject : public TileMapObject {
+		friend class ObjectLayer;
 	public:
-		/**
-		 * Default and parameterized constructor.
-		 * @param newName Name of the rectangle object, if it has one.
-		 * @param newPosition Position of the rectangle object in the layer (in
-		 * pixels).
-		 * @param newSize New size of the rectangle object (in pixels).
-		 */
-		explicit RectangleObject(const std::string &newName = std::string(),
-		                         const Vector2 &newPosition = Vector2(),
-		                         const Vector2 &newSize = Vector2());
-		/**
-		 * Copy constructor.
-		 * @param src RectangleObject to make a copy of.
-		 */
-		RectangleObject(const RectangleObject &src);
-
-		/**
-		 * Destructor.
-		 */
-		~RectangleObject();
-
-		/**
-		 * Assignment operator.
-		 * @param src RectangleObject to copy.
-		 * @return Reference to the modified RectangleObject.
-		 */
-		RectangleObject &operator=(const RectangleObject &src);
-
 		/**
 		 * Gets the body's size. Can be overloaded for performance.
 		 * @return Vector2 containing the width and height of the body.
@@ -91,6 +64,31 @@ namespace RedBox {
 		 */
 		void setHeight(float newHeight);
 	private:
+		/**
+		 * Default and parameterized constructor.
+		 * @param newName Name of the rectangle object, if it has one.
+		 * @param newPosition Position of the rectangle object in the layer (in
+		 * pixels).
+		 * @param newParentLayer Object layer that owns the tile map object.
+		 * @param newSize New size of the rectangle object (in pixels).
+		 */
+		RectangleObject(const std::string &newName,
+		                const Vector2 &newPosition,
+		                const ObjectLayer &newParentLayer,
+		                const Vector2 &newSize);
+		/**
+		 * Copy constructor.
+		 * @param newParentLayer Object layer that owns the tile map object.
+		 * @param src RectangleObject to make a copy of.
+		 */
+		RectangleObject(const RectangleObject &src,
+		                const ObjectLayer &newParentLayer);
+
+		/**
+		 * Destructor.
+		 */
+		~RectangleObject();
+
 		/// Width and height of the rectangle object.
 		Vector2 size;
 	};

@@ -18,32 +18,6 @@ namespace RedBox {
 	class TileMapVertexArray : public TileMapObject,
 		public Shapable<StandardVertexArray> {
 	public:
-		/**
-		 * Default and parameterized constructor.
-		 * @param newName Name of the polygon/line.
-		 * @param newPosition
-		 */
-		explicit TileMapVertexArray(const std::string &newName = std::string(),
-									const Vector2 &newPosition = Vector2());
-
-		/**
-		 * Copy constructor
-		 * @param src Tile map vertex array to make a copy of.
-		 */
-		TileMapVertexArray(const TileMapVertexArray &src);
-
-		/**
-		 * Destructor.
-		 */
-		~TileMapVertexArray();
-
-		/**
-		 * Assignement operator overload.
-		 * @param src Tile map vertex array to copy.
-		 * @return Reference to the modified tile map vertex array.
-		 */
-		TileMapVertexArray &operator=(const TileMapVertexArray &src);
-
 		using TileMapObject::move;
 
 		/**
@@ -84,6 +58,35 @@ namespace RedBox {
 		 * @return Height in pixels (by default).
 		 */
 		float getHeight() const;
+	protected:
+		/**
+		 * Default and parameterized constructor.
+		 * @param newName Name of the polygon/line.
+		 * @param newPosition Starting position of the tile map vertex array.
+		 * @param newParentLayer Object layer that owns the tile map object.
+		 */
+		TileMapVertexArray(const std::string &newName,
+		                   const Vector2 &newPosition,
+		                   const ObjectLayer &newParentLayer);
+
+		/**
+		 * Copy constructor
+		 * @param src Tile map vertex array to make a copy of.
+		 * @param newParentLayer Object layer that owns the tile map object.
+		 */
+		TileMapVertexArray(const TileMapVertexArray &src,
+		                   const ObjectLayer &newParentLayer);
+
+		/**
+		 * Destructor.
+		 */
+		virtual ~TileMapVertexArray();
+
+		/**
+		 * Gets the parent object layer.
+		 * @return Const reference to the parent object layer.
+		 */
+		const ObjectLayer &getParentLayer() const;
 	};
 }
 

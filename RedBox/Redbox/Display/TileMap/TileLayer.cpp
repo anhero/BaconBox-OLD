@@ -53,11 +53,11 @@ namespace RedBox {
 		}
 	}
 
-	TileLayer::TileLayer(const TileMap &newParentMap,
-	                     const std::string &newName,
+	TileLayer::TileLayer(const std::string &newName,
+	                     const TileMap &newParentMap,
 	                     int32_t newOpacity,
 	                     bool newVisible) :
-		TileMapLayer(newParentMap, newName, newOpacity, newVisible),
+		TileMapLayer(newName, newParentMap, newOpacity, newVisible),
 		data(parentMap.getWidthInTiles() * parentMap.getHeightInTiles(), 0u) {
 	}
 

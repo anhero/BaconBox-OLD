@@ -10,6 +10,7 @@
 #include "Positionable.h"
 
 namespace RedBox {
+	class ObjectLayer;
 	/**
 	 * Base class for objects in an object layer for a tile map.
 	 * @ingroup TileMap
@@ -21,28 +22,27 @@ namespace RedBox {
 		 * @param newName Name of the tile map object, if it has one.
 		 * @param newPosition Position of the tile map object in the layer (in
 		 * pixels).
-		 * @see RedBox::TileMapObject::position
+		 * @param newParentLayer Object layer that owns the tile map object.
 		 */
-		explicit TileMapObject(const std::string &newName = std::string(),
-							   const Vector2 &newPosition = Vector2());
+		explicit TileMapObject(const std::string &newName,
+							   const Vector2 &newPosition,
+		                       const ObjectLayer &newParentLayer);
 
 		/**
 		 * Copy constructor.
 		 * @param src Tile map object to make a copy of.
+		 * @param newParentLayer Object layer that owns the tile map object.
 		 */
-		TileMapObject(const TileMapObject &src);
+		TileMapObject(const TileMapObject &src,
+		              const ObjectLayer &newParentLayer);
 
 		/**
 		 * Destructor.
 		 */
 		virtual ~TileMapObject();
 
-		/**
-		 * Assignment operator.
-		 * @param src Tile map object to copy.
-		 * @return Reference to the modified tile map object.
-		 */
-		TileMapObject &operator=(const TileMapObject &src);
+		/// Object layer that owns the tile map object.
+		const ObjectLayer &parentLayer;
 	};
 
 }

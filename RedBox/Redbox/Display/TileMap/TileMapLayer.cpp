@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include "TileMap.h"
+#include "Color.h"
 
 namespace RedBox {
 
@@ -43,8 +44,8 @@ namespace RedBox {
 		visible = newVisible;
 	}
 
-	TileMapLayer::TileMapLayer(const TileMap &newParentMap,
-	                           const std::string &newName,
+	TileMapLayer::TileMapLayer(const std::string &newName,
+	                           const TileMap &newParentMap,
 	                           int32_t newOpacity,
 		                       bool newVisible) :
 		TileMapEntity(newName), parentMap(newParentMap), opacity(0),

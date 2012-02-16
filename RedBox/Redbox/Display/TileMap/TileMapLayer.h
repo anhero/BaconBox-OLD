@@ -7,7 +7,6 @@
 
 #include "TileMapEntity.h"
 #include "TileIdRange.h"
-#include "Color.h"
 
 namespace RedBox {
 	class ObjectLayer;
@@ -82,14 +81,16 @@ namespace RedBox {
 	protected:
 		/**
 		 * Paremeterized constructor.
-		 * @param newParentMap Reference to the map that contains this layer.
 		 * @param newName Name of the layer, can be empty.
+		 * @param newParentMap Reference to the map that contains this layer.
+		 * @param newOpacity Opacity of the layer.
+		 * @param newVisible Wether or not the layer is visible.
 		 * @see RedBox::TileMapEntity::name
 		 */
-		explicit TileMapLayer(const TileMap &newParentMap,
-		                      const std::string &newName = std::string(),
-		                      int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
-		                      bool newVisible = true);
+		TileMapLayer(const std::string &newName,
+		             const TileMap &newParentMap,
+		             int32_t newOpacity,
+		             bool newVisible);
 
 		/**
 		 * Copy constructor.

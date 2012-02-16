@@ -171,6 +171,7 @@ namespace RedBox {
 		                             int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
 		                             bool newVisible = true,
 		                             bool overwrite = false);
+
 		TileLayer *pushFrontTileLayer(const std::string &newLayerName,
 		                              int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
 		                              bool newVisible = true,

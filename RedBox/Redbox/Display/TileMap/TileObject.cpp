@@ -1,12 +1,13 @@
 #include "TileObject.h"
 
+#include "ObjectLayer.h"
 #include "TileMap.h"
 #include "Tileset.h"
 
 namespace RedBox {
 	const Vector2 TileObject::getSize() const {
 		if (tileId > 0) {
-			return parentMap.getTileset(tileId)->getTileSize();
+			return parentLayer.parentMap.getTileset(tileId)->getTileSize();
 
 		} else {
 			return Vector2();
@@ -15,7 +16,7 @@ namespace RedBox {
 
 	float TileObject::getWidth() const {
 		if (tileId > 0) {
-			return parentMap.getTileset(tileId)->getTileWidth();
+			return parentLayer.parentMap.getTileset(tileId)->getTileWidth();
 
 		} else {
 			return 0.0f;
@@ -24,7 +25,7 @@ namespace RedBox {
 
 	float TileObject::getHeight() const {
 		if (tileId > 0) {
-			return parentMap.getTileset(tileId)->getTileHeight();
+			return parentLayer.parentMap.getTileset(tileId)->getTileHeight();
 
 		} else {
 			return 0.0f;
@@ -36,21 +37,22 @@ namespace RedBox {
 	}
 
 	void TileObject::setTileId(unsigned int newTileId) {
-		if (parentMap.getTileset(newTileId) || newTileId == 0) {
+		if (parentLayer.parentMap.getTileset(newTileId) || newTileId == 0) {
 			tileId = newTileId;
 		}
 	}
 
 	TileObject::TileObject(const std::string &newName,
 	                       const Vector2 &newPosition,
-	                       const TileMap &newParentMap,
-	                       unsigned int newTileId) : TileMapObject(newName, newPosition),
-		parentMap(newParentMap),
-		tileId((parentMap.getTileset(newTileId)) ? (newTileId) : (0)) {
+	                       const ObjectLayer &newParentLayer,
+	                       unsigned int newTileId) :
+		TileMapObject(newName, newPosition, newParentLayer),
+		tileId((parentLayer.parentMap.getTileset(newTileId)) ? (newTileId) : (0)) {
 	}
 
-	TileObject::TileObject(const TileObject &src, const TileMap &newParentMap) :
-		TileMapObject(src), parentMap(newParentMap), tileId(src.tileId) {
+	TileObject::TileObject(const TileObject &src,
+	                       const ObjectLayer &newObjectLayer) :
+		TileMapObject(src, newObjectLayer), tileId(src.tileId) {
 	}
 
 	TileObject::~TileObject() {
