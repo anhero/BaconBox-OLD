@@ -1,30 +1,10 @@
-#if 0
 #include "RectangleObject.h"
 
 namespace RedBox {
-	RectangleObject::RectangleObject(const Vector2 &newSize,
+	RectangleObject::RectangleObject(const std::string &newName,
 	                                 const Vector2 &newPosition,
-	                                 const std::string &newName) :
-		TileMapObject(newPosition, newName), size(newSize) {
-	}
-
-	RectangleObject::RectangleObject(float newWidth, float newHeight,
-	                                 const Vector2 &newPosition,
-	                                 const std::string &newName) :
-		TileMapObject(newPosition, newName), size(newWidth, newHeight) {
-	}
-
-	RectangleObject::RectangleObject(const Vector2 &newSize,
-	                                 float newXPosition, float newYPosition,
-	                                 const std::string &newName) :
-		TileMapObject(newXPosition, newYPosition, newName), size(newSize) {
-	}
-
-	RectangleObject::RectangleObject(float newWidth, float newHeight,
-	                                 float newXPosition, float newYPosition,
-	                                 const std::string &newName) :
-		TileMapObject(newXPosition, newYPosition, newName),
-		size(newWidth, newHeight) {
+	                                 const Vector2 &newSize) :
+		TileMapObject(newName, newPosition), size(newSize) {
 	}
 
 	RectangleObject::RectangleObject(const RectangleObject &src) :
@@ -43,5 +23,32 @@ namespace RedBox {
 
 		return *this;
 	}
+
+	const Vector2 RectangleObject::getSize() const {
+		return size;
+	}
+
+	void RectangleObject::setSize(const Vector2 &newSize) {
+		size = newSize;
+	}
+
+	void RectangleObject::setSize(float newWidth, float newHeight) {
+		size.setXY(newWidth, newHeight);
+	}
+
+	float RectangleObject::getWidth() const {
+		return size.getX();
+	}
+
+	void RectangleObject::setWidth(float newWidth) {
+		size.setX(newWidth);
+	}
+
+	float RectangleObject::getHeight() const {
+		return size.getY();
+	}
+
+	void RectangleObject::setHeight(float newHeight) {
+		size.setY(newHeight);
+	}
 }
-#endif
