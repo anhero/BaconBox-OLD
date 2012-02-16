@@ -5,11 +5,9 @@
 #ifndef RB_TILE_MAP_LAYER_H
 #define RB_TILE_MAP_LAYER_H
 
-#include "Layerable.h"
-#include "Colorable.h"
-#include "Positionable.h"
 #include "TileMapEntity.h"
 #include "TileIdRange.h"
+#include "Color.h"
 
 namespace RedBox {
 	class ObjectLayer;
@@ -51,6 +49,36 @@ namespace RedBox {
 		 * tile layer.
 		 */
 		virtual const TileLayer *asTileLayer() const;
+
+		/**
+		 * Gets the opacity of the tile layer.
+		 * @return Opacity of the tile layer, can be from 0 to 255.
+		 */
+		uint8_t getOpacity() const;
+
+		/**
+		 * Sets the opacity of the tile layer.
+		 * @param newOpacity New opacity of the tile layer, can be from 0 to
+		 * 255. If the given value is out of those bounds, it is set to the
+		 * closer bound (to 0 if it's a negative value, to 255 if it's higher
+		 * than 255).
+		 */
+		void setOpacity(int32_t newOpacity);
+
+		/**
+		 * Checks wether or not the tile layer is visible.
+		 * @return True if the tile layer is visible, false if not.
+		 * @see RedBox::TileLayer::visible
+		 */
+		bool isVisible() const;
+
+		/**
+		 * Sets wether or not the tile layer is visible.
+		 * @param newVisible New boolean value to set if the tile layer is
+		 * visible or not.
+		 * @see RedBox::TileLayer::visible
+		 */
+		void setVisible(bool newVisible);
 	protected:
 		/**
 		 * Paremeterized constructor.
@@ -59,7 +87,9 @@ namespace RedBox {
 		 * @see RedBox::TileMapEntity::name
 		 */
 		explicit TileMapLayer(const TileMap &newParentMap,
-		                      const std::string &newName = std::string());
+		                      const std::string &newName = std::string(),
+		                      int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
+		                      bool newVisible = true);
 
 		/**
 		 * Copy constructor.
@@ -94,6 +124,12 @@ namespace RedBox {
 	private:
 		TileMapLayer(const TileMapLayer &src);
 		TileMapLayer &operator=(const TileMapLayer &src);
+
+		/// Opacity of the tile layer.
+		uint8_t opacity;
+
+		/// Used to determine wether or not the tile layer is visible.
+		bool visible;
 	};
 }
 

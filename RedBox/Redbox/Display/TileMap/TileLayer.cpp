@@ -53,35 +53,16 @@ namespace RedBox {
 		}
 	}
 
-	uint8_t TileLayer::getOpacity() const {
-		return opacity;
-	}
-
-	void TileLayer::setOpacity(int32_t newOpacity) {
-		opacity = Color::getWithinRange(newOpacity);
-	}
-
-	bool TileLayer::isVisible() const {
-		return visible;
-	}
-
-	void TileLayer::setVisible(bool newVisible) {
-		visible = newVisible;
-	}
-
 	TileLayer::TileLayer(const TileMap &newParentMap,
 	                     const std::string &newName,
 	                     int32_t newOpacity,
 	                     bool newVisible) :
-		TileMapLayer(newParentMap, newName),
-		data(parentMap.getWidthInTiles() * parentMap.getHeightInTiles(), 0u),
-		opacity(0), visible(newVisible) {
-		setOpacity(newOpacity);
+		TileMapLayer(newParentMap, newName, newOpacity, newVisible),
+		data(parentMap.getWidthInTiles() * parentMap.getHeightInTiles(), 0u) {
 	}
 
 	TileLayer::TileLayer(const TileLayer &src, const TileMap &newParentMap) :
-		TileMapLayer(src, newParentMap), data(src.data), opacity(src.opacity),
-		visible(src.visible) {
+		TileMapLayer(src, newParentMap), data(src.data) {
 	}
 
 	TileLayer::~TileLayer() {

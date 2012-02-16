@@ -27,14 +27,35 @@ namespace RedBox {
 		return NULL;
 	}
 
-	TileMapLayer::TileMapLayer(const TileMap &newParentMap, const std::string &newName) :
-		TileMapEntity(newName),
-		parentMap(newParentMap) {
+	uint8_t TileMapLayer::getOpacity() const {
+		return opacity;
+	}
+
+	void TileMapLayer::setOpacity(int32_t newOpacity) {
+		opacity = Color::getWithinRange(newOpacity);
+	}
+
+	bool TileMapLayer::isVisible() const {
+		return visible;
+	}
+
+	void TileMapLayer::setVisible(bool newVisible) {
+		visible = newVisible;
+	}
+
+	TileMapLayer::TileMapLayer(const TileMap &newParentMap,
+	                           const std::string &newName,
+	                           int32_t newOpacity,
+		                       bool newVisible) :
+		TileMapEntity(newName), parentMap(newParentMap), opacity(0),
+	    visible(newVisible) {
+		setOpacity(newOpacity);
 	}
 
 	TileMapLayer::TileMapLayer(const TileMapLayer &src,
 	                           const TileMap &newParentMap) :
-		TileMapEntity(src), parentMap(newParentMap) {
+	    TileMapEntity(src), parentMap(newParentMap), opacity(src.opacity),
+	    visible(src.visible) {
 	}
 
 	TileMapLayer::~TileMapLayer() {

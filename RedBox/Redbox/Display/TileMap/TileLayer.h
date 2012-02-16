@@ -5,13 +5,10 @@
 #ifndef RB_TILE_LAYER_H
 #define RB_TILE_LAYER_H
 
-#include <stdint.h>
-
 #include <vector>
 
 #include "TileMapLayer.h"
 #include "TileCoordinate.h"
-#include "Color.h"
 
 namespace RedBox {
 	/**
@@ -96,36 +93,6 @@ namespace RedBox {
 		 */
 		void setTileId(int xTileCoordinate, int yTileCoordinate,
 		               unsigned int newTileId);
-
-		/**
-		 * Gets the opacity of the tile layer.
-		 * @return Opacity of the tile layer, can be from 0 to 255.
-		 */
-		uint8_t getOpacity() const;
-
-		/**
-		 * Sets the opacity of the tile layer.
-		 * @param newOpacity New opacity of the tile layer, can be from 0 to
-		 * 255. If the given value is out of those bounds, it is set to the
-		 * closer bound (to 0 if it's a negative value, to 255 if it's higher
-		 * than 255).
-		 */
-		void setOpacity(int32_t newOpacity);
-
-		/**
-		 * Checks wether or not the tile layer is visible.
-		 * @return True if the tile layer is visible, false if not.
-		 * @see RedBox::TileLayer::visible
-		 */
-		bool isVisible() const;
-
-		/**
-		 * Sets wether or not the tile layer is visible.
-		 * @param newVisible New boolean value to set if the tile layer is
-		 * visible or not.
-		 * @see RedBox::TileLayer::visible
-		 */
-		void setVisible(bool newVisible);
 	private:
 		/// Type of container used to store the tile data.
 		typedef std::vector<unsigned int> DataContainer;
@@ -208,12 +175,6 @@ namespace RedBox {
 
 		/// Contains the tile id's of each tile in the tile layer.
 		DataContainer data;
-
-		/// Opacity of the tile layer.
-		uint8_t opacity;
-
-		/// Used to determine wether or not the tile layer is visible.
-		bool visible;
 	};
 }
 
