@@ -39,10 +39,22 @@ namespace RedBox {
 		typedef std::list<TileMapLayer *> LayerContainer;
 
 		/**
-		 * Default constructor.
-		 * @param newName Name of the tile map. Can be empty.
+		 * Represents the type that contains the pointers to the tile map's
+		 * tilesets.
 		 */
-		TileMap(const std::string &newName = std::string());
+		typedef std::list<Tileset *> TilesetContainer;
+
+		/**
+		 * Default and parameterized constructor.
+		 * @param newName Name of the tile map. Can be empty.
+		 * @param newSizeInTiles Starting size of the tile map.
+		 * @param newTileSize Starting tile size.
+		 * @see RedBox::TileMap::sizeInTiles
+		 * @see RedBox::TileMap::tileSize
+		 */
+		explicit TileMap(const std::string &newName = std::string(),
+		                 const TileCoordinate &newSizeInTiles = TileCoordinate(),
+		                 const Vector2 &newTileSize = Vector2());
 
 		/**
 		 * Copy constructor.
@@ -62,8 +74,18 @@ namespace RedBox {
 		 */
 		TileMap &operator=(const TileMap &src);
 
+		/**
+		 * Gets the tile map's size in tiles.
+		 * @return Size of the map in tiles.
+		 * @see RedBox::TileMap::sizeInTiles
+		 */
 		const TileCoordinate &getSizeInTiles() const;
 
+		/**
+		 * Sets the tile map's size in tiles.
+		 * @param newSizeInTiles New size in tiles.
+		 * @param offset Offset to apply if the new size is bigger.
+		 */
 		void setSizeInTiles(const TileCoordinate &newSizeInTiles,
 		                    const TileCoordinate &offset = TileCoordinate());
 
@@ -86,6 +108,13 @@ namespace RedBox {
 		float getTileHeight() const;
 
 		void setTileHeight(float newTileHeight);
+
+		/**
+		 * Gets the tilesets.
+		 * @return List containing the pointers to the tilesets.
+		 * @see RedBox::TileMap::tilesets
+		 */
+		const TilesetContainer &getTilesets() const;
 
 		/**
 		 * Finds the tileset that has a specific tile id in its range.
@@ -164,45 +193,133 @@ namespace RedBox {
 		 */
 		const LayerContainer &getLayers() const;
 
+		/**
+		 * Gets a layer.
+		 * @param layerName Name of the layer to find.
+		 * @return Pointer to the layer found, NULL if none was found with the
+		 * specified name.
+		 * @see RedBox::TileMap::layersByName
+		 */
 		const TileMapLayer *getLayer(const std::string &layerName) const;
 
+		/**
+		 * Gets a layer.
+		 * @param layerName Name of the layer to find.
+		 * @return Pointer to the layer found, NULL if none was found with the
+		 * specified name.
+		 * @see RedBox::TileMap::layersByName
+		 */
 		TileMapLayer *getLayer(const std::string &layerName);
 
+		/**
+		 * Gets a tile layer.
+		 * @param layerName Name of the tile layer to find.
+		 * @return Pointer to the tile layer found, NULL if none was found with
+		 * the specified name.
+		 */
 		TileLayer *getTileLayer(const std::string &layerName);
 
+		/**
+		 * Gets a tile layer.
+		 * @param layerName Name of the tile layer to find.
+		 * @return Pointer to the tile layer found, NULL if none was found with
+		 * the specified name.
+		 */
 		const TileLayer *getTileLayer(const std::string &layerName) const;
 
+		/**
+		 * Adds a tile layer to the back of the tile map.
+		 * @param newLayerName Name of the new layer.
+		 * @param newOpacity Opacity of the new Layer.
+		 * @param newVisible Wether or not the new layer is to be visible.
+		 * @param overwrite Wether or not to overwrite the existing layer if
+		 * a layer already exists with the same name.
+		 * @return Pointer to the created layer.
+		 */
 		TileLayer *pushBackTileLayer(const std::string &newLayerName,
 		                             int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
 		                             bool newVisible = true,
 		                             bool overwrite = false);
 
+		/**
+		 * Adds a tile layer to the front of the tile map.
+		 * @param newLayerName Name of the new layer.
+		 * @param newOpacity Opacity of the new Layer.
+		 * @param newVisible Wether or not the new layer is to be visible.
+		 * @param overwrite Wether or not to overwrite the existing layer if
+		 * a layer already exists with the same name.
+		 * @return Pointer to the created layer.
+		 */
 		TileLayer *pushFrontTileLayer(const std::string &newLayerName,
 		                              int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
 		                              bool newVisible = true,
 		                              bool overwrite = false);
 
-		void removeLayer(const std::string &layerName);
-
-		void removeLayer(const TileMapLayer *layer);
-
+		/**
+		 * Gets an object layer.
+		 * @param layerName Name of the object layer to find.
+		 * @return Pointer to the object layer found, NULL if none was found
+		 * with the specified name.
+		 */
 		ObjectLayer *getObjectLayer(const std::string &layerName);
 
+		/**
+		 * Gets an object layer.
+		 * @param layerName Name of the object layer to find.
+		 * @return Pointer to the object layer found, NULL if none was found
+		 * with the specified name.
+		 */
 		const ObjectLayer *getObjectLayer(const std::string &layerName) const;
 
+		/**
+		 * Adds an object layer to the back of the tile map.
+		 * @param newLayerName Name of the new layer.
+		 * @param newOpacity Opacity of the new Layer.
+		 * @param newVisible Wether or not the new layer is to be visible.
+		 * @param overwrite Wether or not to overwrite the existing layer if
+		 * a layer already exists with the same name.
+		 * @return Pointer to the created layer.
+		 */
 		ObjectLayer *pushBackObjectLayer(const std::string &newLayerName,
 		                                 int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
 		                                 bool newVisible = true,
 		                                 bool overwrite = false);
 
+		/**
+		 * Adds an object layer to the front of the tile map.
+		 * @param newLayerName Name of the new layer.
+		 * @param newOpacity Opacity of the new Layer.
+		 * @param newVisible Wether or not the new layer is to be visible.
+		 * @param overwrite Wether or not to overwrite the existing layer if
+		 * a layer already exists with the same name.
+		 * @return Pointer to the created layer.
+		 */
 		ObjectLayer *pushFrontObjectLayer(const std::string &newLayerName,
 		                                  int32_t newOpacity = Color::MAX_COMPONENT_VALUE_32,
 		                                  bool newVisible = true,
 		                                  bool overwrite = false);
+
+		/**
+		 * Removes a layer. If the specified layer is not found, nothing is
+		 * removed.
+		 * @param layerName Name of the layer to remove.
+		 */
+		void removeLayer(const std::string &layerName);
+
+		/**
+		 * Removes a layer. If the specified layer is not found, nothing is
+		 * removed.
+		 * @param layer Pointer to the layer to remove.
+		 */
+		void removeLayer(const TileMapLayer *layer);
 	private:
-		typedef std::list<Tileset *> TilesetContainer;
+		/// Map of tilesets by their tile id ranges.
 		typedef std::map<TileIdRange, Tileset *, TileIdRange::Comparator> TilesetMapByTileId;
+
+		/// Map of tilesets by their name.
 		typedef std::map<std::string, Tileset *> TilesetMapByName;
+
+		/// Map of layers by their name.
 		typedef std::map<std::string, TileMapLayer *> LayerMapByName;
 
 		/**
@@ -228,7 +345,14 @@ namespace RedBox {
 		 */
 		void applyTilesetDestruction(const TileIdRange &toDestroy);
 
+		/**
+		 * Frees up all memory used by the layers.
+		 */
 		void deleteLayers();
+
+		/**
+		 * Frees up all memory used by the tilesets.
+		 */
 		void deleteTilesets();
 
 		/**
@@ -239,6 +363,8 @@ namespace RedBox {
 		 * @param newVisible Wether or not the new layer should be visible.
 		 * @param overwrite Wether or not to overwrite the existing layer if
 		 * there is already a layer with the same name.
+		 * @tparam Either TileLayer or ObjectLayer. Must be explicitly
+		 * specified.
 		 */
 		template <typename T>
 		TileMapLayer *insertLayer(LayerContainer::iterator position,
@@ -272,22 +398,41 @@ namespace RedBox {
 			return result;
 		}
 
+		/// Size of the map in tiles.
 		TileCoordinate sizeInTiles;
 
+		/**
+		 * Size of a tile. Determines the general grid size of the map. The
+		 * individual tiles may have different sizes. Larger tiles will expand
+		 * at the top and right (anchored to the bottom left).
+		 */
 		Vector2 tileSize;
 
+		/// List of tilesets.
 		TilesetContainer tilesets;
 
+		/// Tilesets sorted by their tile id ranges.
 		TilesetMapByTileId tilesetsByTileId;
 
+		/// Tilesets sorted by their name.
 		mutable TilesetMapByName tilesetsByName;
 
+		/**
+		 * Boolean used internally to determine if the map of tilesets by their
+		 * name is synchronized correctly.
+		 */
 		mutable bool dirtyTilesetsByName;
 
+		/// List of layers (object and tile layers).
 		LayerContainer layers;
 
+		/// Layers sorted by their name.
 		mutable LayerMapByName layersByName;
 
+		/**
+		 * Boolean used internally to determine if the map of layers by their
+		 * name is synchronized correctly.
+		 */
 		mutable bool dirtyLayersByName;
 	};
 }

@@ -12,10 +12,14 @@
 
 namespace RedBox {
 
-	TileMap::TileMap(const std::string &newName) : TileMapEntity(newName),
-		sizeInTiles(), tileSize(), tilesets(), tilesetsByTileId(),
-		tilesetsByName(), dirtyTilesetsByName(false), layers(), layersByName(),
-		dirtyLayersByName(false) {
+	TileMap::TileMap(const std::string &newName,
+	                 const TileCoordinate &newSizeInTiles,
+	                 const Vector2 &newTileSize) : TileMapEntity(newName),
+		sizeInTiles(), tileSize(), tilesets(),
+	    tilesetsByTileId(), tilesetsByName(), dirtyTilesetsByName(false),
+	    layers(), layersByName(), dirtyLayersByName(false) {
+		setSizeInTiles(newSizeInTiles);
+		setTileSize(newTileSize);
 	}
 
 	TileMap::TileMap(const TileMap &src) : TileMapEntity(src),
@@ -304,8 +308,10 @@ namespace RedBox {
 
 	TileLayer *TileMap::getTileLayer(const std::string &layerName) {
 		TileMapLayer *result = getLayer(layerName);
+
 		if (result) {
 			return result->asTileLayer();
+
 		} else {
 			return NULL;
 		}
@@ -313,8 +319,10 @@ namespace RedBox {
 
 	const TileLayer *TileMap::getTileLayer(const std::string &layerName) const {
 		const TileMapLayer *result = getLayer(layerName);
+
 		if (result) {
 			return result->asTileLayer();
+
 		} else {
 			return NULL;
 		}
@@ -342,29 +350,12 @@ namespace RedBox {
 		                              overwrite)->asTileLayer();
 	}
 
-	void TileMap::removeLayer(const std::string &layerName) {
-		removeLayer(getLayer(layerName));
-	}
-
-	void TileMap::removeLayer(const TileMapLayer *layer) {
-		if (layer) {
-			LayerContainer::iterator found = std::find(layers.begin(), layers.end(), layer);
-
-			if (found != layers.end()) {
-				if (!layer->getName().empty()) {
-					dirtyLayersByName = true;
-				}
-
-				delete *found;
-				layers.erase(found);
-			}
-		}
-	}
-
 	ObjectLayer *TileMap::getObjectLayer(const std::string &layerName) {
 		TileMapLayer *result = getLayer(layerName);
+
 		if (result) {
 			return result->asObjectLayer();
+
 		} else {
 			return NULL;
 		}
@@ -372,8 +363,10 @@ namespace RedBox {
 
 	const ObjectLayer *TileMap::getObjectLayer(const std::string &layerName) const {
 		const TileMapLayer *result = getLayer(layerName);
+
 		if (result) {
 			return result->asObjectLayer();
+
 		} else {
 			return NULL;
 		}
@@ -399,6 +392,25 @@ namespace RedBox {
 		                                newOpacity,
 		                                newVisible,
 		                                overwrite)->asObjectLayer();
+	}
+
+	void TileMap::removeLayer(const std::string &layerName) {
+		removeLayer(getLayer(layerName));
+	}
+
+	void TileMap::removeLayer(const TileMapLayer *layer) {
+		if (layer) {
+			LayerContainer::iterator found = std::find(layers.begin(), layers.end(), layer);
+
+			if (found != layers.end()) {
+				if (!layer->getName().empty()) {
+					dirtyLayersByName = true;
+				}
+
+				delete *found;
+				layers.erase(found);
+			}
+		}
 	}
 
 	void TileMap::refreshTilesetsByTileId() {
