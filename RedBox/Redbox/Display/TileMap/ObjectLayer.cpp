@@ -99,6 +99,49 @@ namespace RedBox {
 		return getObject(polygonNames, polygonName);
 	}
 
+	PolygonObject *ObjectLayer::addPolygon(const std::string &newPolygonName,
+	                                       const Vector2 &newPosition,
+	                                       bool overwrite) {
+		PolygonObject *result = getPolygon(newPolygonName);
+
+		if (result) {
+			if (overwrite) {
+				removePolygon(result);
+				addPolygon(newPolygonName, newPosition, false);
+			}
+
+		} else {
+			polygons.push_back(new PolygonObject(newPolygonName, newPosition, *this));
+
+			if (!newPolygonName.empty()) {
+				dirtyPolygonNames = true;
+			}
+
+			result = polygons.back();
+		}
+
+		return result;
+	}
+
+	void ObjectLayer::removePolygon(const std::string &polygonName) {
+		removePolygon(getPolygon(polygonName));
+	}
+
+	void ObjectLayer::removePolygon(const PolygonObject *toRemove) {
+		if (toRemove) {
+			PolygonContainer::iterator found = std::find(polygons.begin(), polygons.end(), toRemove);
+
+			if (found != polygons.end()) {
+				if (!toRemove->getName().empty()) {
+					dirtyPolygonNames = true;
+				}
+
+				delete *found;
+				polygons.erase(found);
+			}
+		}
+	}
+
 	RectangleObject *ObjectLayer::getRectangle(const std::string &rectangleName) {
 		if (dirtyRectangleNames) {
 			refreshNames(rectangles, rectangleNames);

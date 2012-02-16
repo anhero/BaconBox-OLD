@@ -104,7 +104,7 @@ namespace RedBox {
 		void removeLine(const std::string &lineName);
 
 		/**
-		 * Remove a line. If the line object is not in this object layer, this
+		 * Removes a line. If the line object is not in this object layer, this
 		 * function does nothing.
 		 * @param toRemove Pointer to the line object to remove from the layer.
 		 */
@@ -127,6 +127,37 @@ namespace RedBox {
 		 * object was found with the given name.
 		 */
 		const PolygonObject *getPolygon(const std::string &polygonName) const;
+
+		/**
+		 * Adds a polygon to the object layer.
+		 * @param newLineName Name of the new polygon object to create.
+		 * @param newPosition Starting position of the new polygon object to
+		 * create.
+		 * @param overwrite Determines wether or or not the existing polygon
+		 * should be overwritten if there is already a polygon object with the
+		 * same name as the new polygon object.
+		 * @return Pointer to the polygon created, never NULL. If it was asked
+		 * not to overwrite and a polygon with the same name already existed, a
+		 * pointer to the existing one is returned.
+		 */
+		PolygonObject *addPolygon(const std::string &newPolygonName = std::string(),
+		                          const Vector2 &newPosition = Vector2(),
+		                          bool overwrite = false);
+
+		/**
+		 * Removes a polygon by its name. Does nothing if no polygon has that
+		 * name.
+		 * @param polygonName Name of the line object to remove.
+		 */
+		void removePolygon(const std::string &polygonName);
+
+		/**
+		 * Removes a polygon. If the polygon object is not in this object layer,
+		 * this function does nothing.
+		 * @param toRemove Pointer to the polygon object to remove from the
+		 * layer.
+		 */
+		void removePolygon(const PolygonObject *toRemove);
 
 		/**
 		 * Gets a rectangle object from its name. Only rectangles with a name
