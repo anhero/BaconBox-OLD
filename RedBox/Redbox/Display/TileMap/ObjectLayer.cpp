@@ -158,6 +158,50 @@ namespace RedBox {
 		return getObject(rectangleNames, rectangleName);
 	}
 
+	RectangleObject *ObjectLayer::addRectangle(const std::string &newRectangleName,
+	                                           const Vector2 &newPosition,
+	                                           const Vector2 &newSize,
+	                                           bool overwrite) {
+		RectangleObject *result = getRectangle(newRectangleName);
+
+		if (result) {
+			if (overwrite) {
+				removeRectangle(result);
+				addRectangle(newRectangleName, newPosition, newSize, false);
+			}
+
+		} else {
+			rectangles.push_back(new RectangleObject(newRectangleName, newPosition, *this, newSize));
+
+			if (!newRectangleName.empty()) {
+				dirtyRectangleNames = true;
+			}
+
+			result = rectangles.back();
+		}
+
+		return result;
+	}
+
+	void ObjectLayer::removeRectangle(const std::string &rectangleName) {
+		removeRectangle(getRectangle(rectangleName));
+	}
+
+	void ObjectLayer::removeRectangle(const RectangleObject *toRemove) {
+		if (toRemove) {
+			RectangleContainer::iterator found = std::find(rectangles.begin(), rectangles.end(), toRemove);
+
+			if (found != rectangles.end()) {
+				if (!toRemove->getName().empty()) {
+					dirtyRectangleNames = true;
+				}
+
+				delete *found;
+				rectangles.erase(found);
+			}
+		}
+	}
+
 	TileObject *ObjectLayer::getTile(const std::string &tileName) {
 		if (dirtyTileNames) {
 			refreshNames(tiles, tileNames);
