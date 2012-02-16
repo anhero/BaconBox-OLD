@@ -5,42 +5,42 @@
 #ifndef RB_TILE_MAP_OBJECT_H
 #define RB_TILE_MAP_OBJECT_H
 
-#include <string>
-
-#include "PropertyMap.h"
 #include "Vector2.h"
+#include "TileMapEntity.h"
 
 namespace RedBox {
 	/**
 	 * Base class for objects in an object layer for a tile map.
 	 * @ingroup TileMap
 	 */
-	class TileMapObject {
+	class TileMapObject : public TileMapEntity {
 	public:
 		/**
 		 * Default and parameterized constructor.
+		 * @param newName Name of the tile map object, if it has one.
 		 * @param newPosition Position of the tile map object in the layer (in
 		 * pixels).
-		 * @param newName Name of the tile map object, if it has one.
+		 * @see RedBox::TileMapObject::position
 		 */
-		explicit TileMapObject(const Vector2 &newPosition = Vector2(),
-		                       const std::string &newName = std::string());
+		explicit TileMapObject(const std::string &newName = std::string(),
+							   const Vector2 &newPosition = Vector2());
 
 		/**
 		 * Parameterized constructor.
+		 * @param newName Name of the tile map object, if it has one.
 		 * @param newXPosition Horizontal position of the tile map object on the
 		 * object layer (in pixels).
 		 * @param newYPosition Vertical position of the tile map object on the
 		 * object layer (in pixels).
-		 * @param newName Name of the tile map object, if it has one.
+		 * @see RedBox::TileMapObject::position
 		 */
-		TileMapObject(float newXPosition,
-		              float newYPosition,
-		              const std::string &newName = std::string());
+		TileMapObject(const std::string &newName,
+					  float newXPosition,
+					  float newYPosition);
 
 		/**
 		 * Copy constructor.
-		 * @param src TileMapObject to make a copy of.
+		 * @param src Tile map object to make a copy of.
 		 */
 		TileMapObject(const TileMapObject &src);
 
@@ -51,19 +51,69 @@ namespace RedBox {
 
 		/**
 		 * Assignment operator.
-		 * @param src TileMapObject to copy.
-		 * @return Reference to the modified TileMapObject.
+		 * @param src Tile map object to copy.
+		 * @return Reference to the modified tile map object.
 		 */
 		TileMapObject &operator=(const TileMapObject &src);
 
-		/// Position of the tile object in the object layer.
+		/**
+		 * Gets the object's position
+		 * @return Position of the object relative to the tile map.
+		 * @see RedBox::TileMapObject::position
+		 */
+		const Vector2 &getPosition() const;
+
+		/**
+		 * Sets the object's position.
+		 * @param newPosition New position of the object relative to the tile
+		 * map.
+		 * @see RedBox::TileMapObject::position
+		 */
+		void setPosition(const Vector2 &newPosition);
+
+		/**
+		 * Sets the object's position.
+		 * @param newXPosition New horizontal position of the object relative to
+		 * the tile map.
+		 * @param nweYPosition New vertical position of the object relative to
+		 * the tile map.
+		 * @see RedBox::TileMapObject::position
+		 */
+		void setPosition(float newXPosition, float newYPosition);
+
+		/**
+		 * Gets the object's horizontal position.
+		 * @return Horizontal position of the object relative to the tile map.
+		 * @see RedBox::TileMapObject::position
+		 */
+		float getXPosition() const;
+
+		/**
+		 * Sets the object's horizontal position.
+		 * @param newXPosition New horizontal position of the object relative to
+		 * the tile map.
+		 * @see RedBox::TileMapObject::position
+		 */
+		void setXPosition(float newXPosition);
+
+		/**
+		 * Gets the object's vertical position.
+		 * @return Vertical position of the object relative to the tile map.
+		 * @see RedBox::TileMapObject::position
+		 */
+		float getYPosition() const;
+
+
+		/**
+		 * Sets the object's vertical position.
+		 * @param newYPosition New vertical position of the object relative to
+		 * the tile map.
+		 * @see RedBox::TileMapObject::position
+		 */
+		void setYPosition(float newYPosition);
+	private:
+		/// Position of the object relative to the tile map.
 		Vector2 position;
-
-		/// Name of the tile map object.
-		std::string name;
-
-		/// Properties of the tile map object.
-		PropertyMap properties;
 	};
 
 }

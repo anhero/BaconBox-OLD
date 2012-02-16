@@ -1,3 +1,4 @@
+#if 0
 #include "PolygonObject.h"
 
 namespace RedBox {
@@ -28,3 +29,4 @@ namespace RedBox {
 		return *this;
 	}
 }
+#endif

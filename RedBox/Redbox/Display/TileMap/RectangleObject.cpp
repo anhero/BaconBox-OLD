@@ -1,3 +1,4 @@
+#if 0
 #include "RectangleObject.h"
 
 namespace RedBox {
@@ -43,3 +44,4 @@ namespace RedBox {
 		return *this;
 	}
 }
+#endif

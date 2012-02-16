@@ -1,3 +1,4 @@
+#if 0
 /**
  * @file
  * @ingroup TileMap
@@ -67,3 +68,4 @@ namespace RedBox {
 }
 
 #endif // RB_TILE_OBJECT_H
+#endif

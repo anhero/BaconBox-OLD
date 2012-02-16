@@ -1,3 +1,4 @@
+#if 0
 #include "ObjectLayer.h"
 
 namespace RedBox {
@@ -146,3 +147,4 @@ namespace RedBox {
 		color.setAlpha(newAlpha);
 	}
 }
+#endif

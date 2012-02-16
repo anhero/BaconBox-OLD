@@ -1,3 +1,4 @@
+#if 0
 /**
  * @file
  */
@@ -85,3 +86,4 @@ namespace RedBox {
 }
 
 #endif // RB_RECTANGLE_OBJECT_H
+#endif

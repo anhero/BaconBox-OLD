@@ -1,3 +1,4 @@
+#if 0
 #include "TileObject.h"
 
 namespace RedBox {
@@ -32,3 +33,4 @@ namespace RedBox {
 		return *this;
 	}
 }
+#endif
