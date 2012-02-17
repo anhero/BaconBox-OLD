@@ -89,24 +89,82 @@ namespace RedBox {
 		void setSizeInTiles(const TileCoordinate &newSizeInTiles,
 		                    const TileCoordinate &offset = TileCoordinate());
 
+		/**
+		 * Gets the map width in tiles.
+		 * @return Map width in tiles.
+		 * @see RedBox::TileMap::sizeInTiles
+		 */
 		int getWidthInTiles() const;
 
+		/**
+		 * Sets the width of the map in tiles.
+		 * @param newWidthInTiles New width in tiles.
+		 * @param offset Horizontal offset to apply if the new width is bigger.
+		 */
 		void setWidthInTiles(int newWidthInTiles, int offset = 0);
 
+		/**
+		 * Gets the map height in tiles.
+		 * @return Map height in tiles.
+		 * @see RedBox::TileMap::sizeInTiles
+		 */
 		int getHeightInTiles() const;
 
+		/**
+		 * Sets the height of the map in tiles.
+		 * @param newHeightInTiles New height in tiles.
+		 * @param offset Vertical offset to apply if the new height is bigger.
+		 */
 		void setHeightInTiles(int newHeightInTiles, int offset = 0);
 
+		/**
+		 * Gets the size of the tiles.
+		 * @return Size of the tiles.
+		 * @see RedBox::TileMap::tileSize
+		 */
 		const Vector2 &getTileSize() const;
 
+		/**
+		 * Sets the size of the tiles.
+		 * @param newTileSize New tile size.
+		 * @see RedBox::TileMap::tileSize
+		 */
 		void setTileSize(const Vector2 &newTileSize);
 
+		/**
+		 * Sets the size of the tiles.
+		 * @param newTileWidth New tile width.
+		 * @param newTileHeight New tile height.
+		 * @see RedBox::TileMap::tileSize
+		 */
+		void setTileSize(float newTileWidth, float newTileHeight);
+
+		/**
+		 * Gets the width of the tiles.
+		 * @return Width of the tiles.
+		 * @see RedBox::TileMap::tileSize
+		 */
 		float getTileWidth() const;
 
+		/**
+		 * Sets the width of the tiles.
+		 * @param newTileWidth New tile width.
+		 * @see RedBox::TileMap::tileSize
+		 */
 		void setTileWidth(float newTileWidth);
 
+		/**
+		 * Gets the height of the tiles.
+		 * @return Height of the tiles.
+		 * @see RedBox::TileMap::tileSize
+		 */
 		float getTileHeight() const;
 
+		/**
+		 * Sets the height of the tiles.
+		 * @param newTileHeight New tile height.
+		 * @see RedBox::TileMap::tileSize
+		 */
 		void setTileHeight(float newTileHeight);
 
 		/**
