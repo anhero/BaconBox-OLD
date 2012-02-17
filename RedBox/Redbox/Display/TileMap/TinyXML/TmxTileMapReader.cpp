@@ -46,7 +46,16 @@ namespace RedBox {
 	}
 
 	TileMap *elementToTileMap(TiXmlDocument &document, std::string &errorMessage) {
-		return NULL;
+		TileMap *result = NULL;
+
+		// We get the root element.
+		TiXmlElement *root = document.RootElement();
+
+		// We make sure the document has a root element.
+		if (root) {
+		}
+
+		return result;
 	}
 
 	bool TmxTileMapReader::supportsFile(const std::string &fileName) const {
