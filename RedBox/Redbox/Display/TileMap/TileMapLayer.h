@@ -5,6 +5,8 @@
 #ifndef RB_TILE_MAP_LAYER_H
 #define RB_TILE_MAP_LAYER_H
 
+#include <stdint.h>
+
 #include "TileMapEntity.h"
 #include "TileIdRange.h"
 

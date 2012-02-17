@@ -2,25 +2,23 @@
  * @file
  * @ingroup TileMap
  */
-#ifndef RB_TILE_MAP_READER_H
-#define RB_TILE_MAP_READER_H
+#ifndef RB_TMX_TILE_MAP_READER_H
+#define RB_TMX_TILE_MAP_READER_H
 
-#include <string>
+#include "TileMapReader.h"
 
 namespace RedBox {
-	class TileMap;
-
-	/**
-	 * Abstract base class of tile map readers. Different tile map readers must
-	 * be implemented for each tile map file formats.
-	 * @ingroup TileMap
-	 */
-	class TileMapReader {
+	class TmxTileMapReader : public TileMapReader {
 	public:
+		/**
+		 * Default constructor.
+		 */
+		TmxTileMapReader();
+
 		/**
 		 * Destructor.
 		 */
-		virtual ~TileMapReader();
+		~TmxTileMapReader();
 
 		/**
 		 * Reads a tile map from a file.
@@ -29,23 +27,26 @@ namespace RedBox {
 		 * to take care to delete it when he's done with it. Returns NULL if
 		 * the reading has failed.
 		 */
-		virtual TileMap *read(const std::string &fileName) = 0;
+		TileMap *read(const std::string &fileName);
 
 		/**
 		 * Checks wether or not the file given is supported by the reader.
-		 * Usually, would check the file extension.
+		 * Checks if the file name ends with ".tmx".
 		 * @param fileName Path to the file to check.
 		 * @return True if the reader supports the file format, false if not.
 		 */
-		virtual bool supportsFile(const std::string &fileName) const = 0;
+		bool supportsFile(const std::string &fileName) const;
 
 		/**
 		 * Gets a string containing the error message.
 		 * @return String containing the error message if an error occured while
 		 * trying to read a tile map.
 		 */
-		virtual const std::string getErrorMessage() const = 0;
+		const std::string getErrorMessage() const;
+	private:
+		/// String containing the error message.
+		std::string errorMessage;
 	};
 }
 
-#endif // RB_TILE_MAP_READER_H
+#endif
