@@ -8,6 +8,12 @@
 #include "TileMapReader.h"
 
 namespace RedBox {
+	/**
+	 * Reads tile maps from TMX files.
+	 * @see RedBox::TileMap
+	 * @see RedBox::TileMapReader
+	 * @ingroup TileMap
+	 */
 	class TmxTileMapReader : public TileMapReader {
 	public:
 		/**
@@ -43,6 +49,12 @@ namespace RedBox {
 		 * trying to read a tile map.
 		 */
 		const std::string getErrorMessage() const;
+
+		/**
+		 * Clears the error message.
+		 * @see RedBox::TmxTileMapReader::errorMessage
+		 */
+		void clearErrorMessage();
 	private:
 		/// String containing the error message.
 		std::string errorMessage;
