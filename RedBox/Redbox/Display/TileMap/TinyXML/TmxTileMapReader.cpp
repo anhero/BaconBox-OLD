@@ -28,6 +28,8 @@ namespace RedBox {
 
 	void addObjectLayerFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage);
 
+	const std::string readNameFromElement(const TiXmlElement &element, TileMapEntity &entity);
+
 	TileMap *TmxTileMapReader::read(const std::string &fileName) {
 		TileMap *result = NULL;
 
@@ -218,6 +220,12 @@ namespace RedBox {
 	void addObjectLayerFromElement(const TiXmlElement &element,
 	                               TileMap *&map,
 	                               std::string &errorMessage) {
+	}
+
+	const std::string readNameFromElement(const TiXmlElement &element, TileMapEntity &entity) {
+
+		const char *tmpName = element.Attribute(NAME_ATTRIBUTE);
+		return (tmpName) ? (std::string(tmpName)) : (std::string());
 	}
 
 	bool TmxTileMapReader::supportsFile(const std::string &fileName) const {
