@@ -93,6 +93,7 @@
 #include <RedBox/PolygonObject.h>
 #include <RedBox/RectangleObject.h>
 #include <RedBox/TileObject.h>
+#include <RedBox/TmxTileMapReader.h>
 #include <RedBox/Stopwatch.h>
 #include <RedBox/Font.h>
 #include <RedBox/Text.h>
