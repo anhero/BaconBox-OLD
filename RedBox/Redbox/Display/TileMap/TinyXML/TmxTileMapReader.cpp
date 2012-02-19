@@ -7,6 +7,8 @@
 #include "TileMap.h"
 
 namespace RedBox {
+	const char *NAME_ATTRIBUTE = "name";
+
 	TmxTileMapReader::TmxTileMapReader() : TileMapReader(), errorMessage() {
 	}
 
@@ -15,7 +17,16 @@ namespace RedBox {
 
 	TileMap *elementToTileMap(TiXmlDocument &document, std::string &errorMessage);
 
-	void readProperties(const TiXmlElement &element, TileMapEntity &entity);
+	void elementToMapChild(const TiXmlElement &element, TileMap *&map, std::string &errorMessage);
+
+	template <typename T>
+	void addPropertyFromElement(const TiXmlElement &element, T *&entity, std::string &errorMessage);
+
+	void addTilesetFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage);
+
+	void addTileLayerFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage);
+
+	void addObjectLayerFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage);
 
 	TileMap *TmxTileMapReader::read(const std::string &fileName) {
 		TileMap *result = NULL;
@@ -54,7 +65,6 @@ namespace RedBox {
 		static const std::string ROOT_VALUE("map");
 		static const char *ORIENTATION_ATTRIBUTE_NAME = "orientation";
 		static const std::string MAP_ORIENTATION("orthogonal");
-		static const char *NAME_ATTRIBUTE = "name";
 		static const char *WIDTH_NAME = "width";
 		static const char *HEIGHT_NAME = "height";
 		static const char *TILE_WIDTH_NAME = "tilewidth";
@@ -101,6 +111,15 @@ namespace RedBox {
 									result->setTileHeight(static_cast<float>(tmpDouble));
 									tmpDouble = 0.0;
 
+									// We read the map's children.
+									const TiXmlNode *i = NULL;
+
+									while (result && (i = root->IterateChildren(i))) {
+										if (i->ToElement()) {
+											elementToMapChild(*i->ToElement(), result, errorMessage);
+										}
+									}
+
 								} else {
 									errorMessage = "TmxTileMapReader: the map must have a tileheight attribute.";
 									delete result;
@@ -140,32 +159,33 @@ namespace RedBox {
 		return result;
 	}
 
-	void readProperties(const TiXmlElement &element, TileMapEntity &entity)	{
-		static const char *NAME_ATTRIBUTE = "name";
+	void elementToMapChild(const TiXmlElement &element, TileMap *&map, std::string &errorMessage) {
 		static const std::string PROPERTY_VALUE("property");
+
+		if (element.Value() == PROPERTY_VALUE) {
+			addPropertyFromElement(element, map, errorMessage);
+		}
+	}
+	template <typename T>
+	void addPropertyFromElement(const TiXmlElement &element, T *&entity, std::string &errorMessage) {
 		static const char *VALUE_NAME = "value";
 
-		// We set the name of the entity if it has one.
-		const char *tmpAttribute = element.Attribute(NAME_ATTRIBUTE);
+		const char *tmpName = element.Attribute(NAME_ATTRIBUTE);
 
-		if (tmpAttribute) {
-			entity.setName(std::string(tmpAttribute));
-		}
+		// We make sure the property has a name.
+		if (tmpName) {
+			const char *tmpValue = element.Attribute(VALUE_NAME);
 
-		// We loop through the entity's children to read the properties.
-		const TiXmlNode *i = NULL;
-		const TiXmlElement *child = NULL;
-		const char *tmpValue = NULL;
-
-		while ((i = element.IterateChildren(i))) {
-			// A property must be an element, it must have "property" as its
-			// value and must have two attributes: "name" and "value".
-			if ((child = i->ToElement()) && child->Value() == PROPERTY_VALUE &&
-			    (tmpAttribute = child->Attribute(NAME_ATTRIBUTE)) &&
-			    (tmpValue = child->Attribute(VALUE_NAME))) {
-				// We set the property to the entity.
-				entity.getProperties()[std::string(tmpAttribute)] = std::string(tmpValue);
+			// We make sure the property has a value.
+			if (tmpValue) {
+				// We add the property to the entity.
+				entity->getProperties()[std::string(tmpName)] = std::string(tmpValue);
 			}
+
+		} else {
+			errorMessage = "TmxTileMapReader: Property does not have a name attribute. Make sure every property has a name attribute.";
+			delete entity;
+			entity = NULL;
 		}
 	}
 
