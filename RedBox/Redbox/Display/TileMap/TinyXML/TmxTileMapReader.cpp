@@ -161,15 +161,29 @@ namespace RedBox {
 
 	void elementToMapChild(const TiXmlElement &element, TileMap *&map, std::string &errorMessage) {
 		static const std::string PROPERTY_VALUE("property");
+		static const std::string TILESET_VALUE("tileset");
+		static const std::string TILE_LAYER_VALUE("layer");
+		static const std::string OBJECT_LAYER_VALUE("objectgroup");
 
 		if (element.Value() == PROPERTY_VALUE) {
 			addPropertyFromElement(element, map, errorMessage);
+
+		} else if (element.Value() == TILESET_VALUE) {
+			addTilesetFromElement(element, map, errorMessage);
+
+		} else if (element.Value() == TILE_LAYER_VALUE) {
+			addTileLayerFromElement(element, map, errorMessage);
+
+		} else if (element.Value() == OBJECT_LAYER_VALUE) {
+			addObjectLayerFromElement(element, map, errorMessage);
 		}
 	}
+
 	template <typename T>
 	void addPropertyFromElement(const TiXmlElement &element, T *&entity, std::string &errorMessage) {
 		static const char *VALUE_NAME = "value";
 
+		// We get the name attribute of the property.
 		const char *tmpName = element.Attribute(NAME_ATTRIBUTE);
 
 		// We make sure the property has a name.
@@ -187,6 +201,15 @@ namespace RedBox {
 			delete entity;
 			entity = NULL;
 		}
+	}
+
+	void addTilesetFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage) {
+	}
+
+	void addTileLayerFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage) {
+	}
+
+	void addObjectLayerFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage) {
 	}
 
 	bool TmxTileMapReader::supportsFile(const std::string &fileName) const {
