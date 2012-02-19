@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "Console.h"
+#include "Color.h"
 
 namespace RedBox {
 	PixMap::PixMap() : width(0), height(0),
@@ -102,6 +103,31 @@ namespace RedBox {
 		}
 	}
 
+	void PixMap::makeColorTransparent(const Color &transparentColor) {
+		// We make sure the pix map has the right color format.
+		if (buffer && colorFormat == ColorFormat::RGBA) {
+			unsigned int i = 0;
+			unsigned int j;
+			size_t index = 0;
+
+			// For each texel.
+			while (i < width) {
+				j = 0;
+
+				while (j < height) {
+					// We check if the color is to be transparent.
+					if (std::equal(&buffer[index], &buffer[index] + 3, transparentColor.getComponents())) {
+						// We make it completely transparent.
+						std::fill(&buffer[index], &buffer[index] + 4, uint8_t(0));
+					}
+
+					index += 4;
+					++j;
+				}
+				++i;
+			}
+		}
+	}
 
 	unsigned int PixMap::getWidth() const {
 		return width;

@@ -12,6 +12,7 @@
 #include "MusicEngine.h"
 #include "GraphicDriver.h"
 #include "ResourcePathHandler.h"
+#include "Color.h"
 
 #ifndef RB_ANDROID
 #include "Font.h"
@@ -70,12 +71,28 @@ namespace RedBox {
 	                                                 const std::string &filePath,
 	                                                 ColorFormat colorFormat,
 	                                                 bool overwrite) {
-		PixMap *aPixMap = loadPixMap(filePath, colorFormat);
+		PixMap *pixMap = loadPixMap(filePath, colorFormat);
 
-		if (aPixMap) {
-			TextureInformation *texInfo = addTexture(key, aPixMap, overwrite);
-			delete aPixMap;
-			return texInfo;
+		if (pixMap) {
+			TextureInformation *result = addTexture(key, pixMap, overwrite);
+			delete pixMap;
+			return result;
+
+		} else {
+			return NULL;
+		}
+	}
+
+	TextureInformation *ResourceManager::loadTextureWithColorKey(const std::string &key,
+	                                                             const std::string &filePath,
+	                                                             const Color &transparentColor,
+	                                                             bool overwrite) {
+		PixMap *pixMap = loadPixMap(filePath, transparentColor);
+
+		if (pixMap) {
+			TextureInformation *result = addTexture(key, pixMap, overwrite);
+			delete pixMap;
+			return result;
 
 		} else {
 			return NULL;
@@ -89,6 +106,15 @@ namespace RedBox {
 		return loadTexture(key,
 		                   ResourcePathHandler::getResourcePathFor(relativePath),
 		                   colorFormat, overwrite);
+	}
+
+	TextureInformation *ResourceManager::loadTextureRelativePathWithColorKey(const std::string &key,
+	                                                                         const std::string &relativePath,
+	                                                                         const Color &transparentColor,
+	                                                                         bool overwrite) {
+		return loadTextureWithColorKey(key,
+		                               ResourcePathHandler::getResourcePathFor(relativePath),
+		                               transparentColor, overwrite);
 	}
 
 	TextureInformation *ResourceManager::getTexture(const std::string &key) {
@@ -421,11 +447,22 @@ namespace RedBox {
 	PixMap *ResourceManager::loadPixMap(const std::string &filePath, ColorFormat colorFormat) {
 		PixMap *pixmap = loadPixMapFromPNG(filePath);
 
-		if (colorFormat == ColorFormat::ALPHA) {
+		if (pixmap && colorFormat == ColorFormat::ALPHA) {
 			pixmap->convertTo(ColorFormat::ALPHA);
 		}
 
 		return pixmap;
+	}
+
+	PixMap *ResourceManager::loadPixMap(const std::string &filePath,
+	                                    const Color &transparentColor) {
+		PixMap *result = loadPixMap(filePath, ColorFormat(ColorFormat::RGBA));
+
+		if (result) {
+			result->makeColorTransparent(transparentColor);
+		}
+
+		return result;
 	}
 
 	PixMap *ResourceManager::loadPixMapFromPNG(const std::string &filePath) {

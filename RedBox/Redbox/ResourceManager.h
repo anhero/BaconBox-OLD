@@ -19,6 +19,7 @@ namespace RedBox {
 	struct SoundInfo;
 	struct MusicInfo;
 	struct TextureInformation;
+	class Color;
 #ifndef RB_ANDROID
 	class Font;
 #endif
@@ -63,6 +64,23 @@ namespace RedBox {
 
 		/**
 		 * Loads a texture from a file and assigns a representative key to it.
+		 * Color format is automatically RGBA.
+		 * @param key Key used to identify this new texture.
+		 * @param filePath Path to the file containing the texture.
+		 * @param transparentColor Color to be read as transparent.
+		 * @param overwrite When set to true, it will delete any existing
+		 * texture at the specified key. (False (default) will print an error if
+		 * the key is occupied).
+		 * @return Pointer to the loaded texture, NULL if the texture failed to
+		 * load.
+		 */
+		static TextureInformation *loadTextureWithColorKey(const std::string &key,
+		                                                   const std::string &filePath,
+		                                                   const Color &transparentColor,
+		                                                   bool overwrite = false);
+
+		/**
+		 * Loads a texture from a file and assigns a representative key to it.
 		 * This version of the loadTexture function needs a relative path from
 		 * the resource folder, you cannot use an absolute path or pass your
 		 * filename through ResourcePathHandler::getResourcePathFor.
@@ -82,6 +100,26 @@ namespace RedBox {
 		                                                   const std::string &relativePath,
 		                                                   ColorFormat colorFormat = ColorFormat::RGBA,
 		                                                   bool overwrite = false);
+
+		/**
+		 * Loads a texture from a file and assigns a representative key to it.
+		 * This version of the loadTexture function needs a relative path from
+		 * the resource folder, you cannot use an absolute path or pass your
+		 * filename through ResourcePathHandler::getResourcePathFor.
+		 * @param key Key used to identify this new texture.
+		 * @param relativePath Relative path (relative to the resources folder)
+		 * to the file containing the texture.
+		 * @param transparentColor Color to be read as transparent.
+		 * @param overwrite When set to true, it will delete any existing
+		 * texture at the specified key. (False (default) will print an error if
+		 * the key is occupied).
+		 * @return Pointer to the loaded texture, NULL if the texture failed to
+		 * load.
+		 */
+		static TextureInformation *loadTextureRelativePathWithColorKey(const std::string &key,
+		                                                               const std::string &relativePath,
+		                                                               const Color &transparentColor,
+		                                                               bool overwrite = false);
 
 		/**
 		 * Gets the information about the asked texture. Uses the texture's key
@@ -253,6 +291,14 @@ namespace RedBox {
 
 		///Create a PixMap from an image file at the given path.
 		static PixMap *loadPixMap(const std::string &filePath, ColorFormat colorFormat);
+
+		/**
+		 * Loads a pixmap from a file and sets a specific color as transparent.
+		 * @param filePath Path to the file to read.
+		 * @param transparentColor Color to be made transparent.
+		 */
+		static PixMap *loadPixMap(const std::string &filePath,
+		                          const Color &transparentColor);
 
 		///Create a PixMap from a PNG file at the given path.
 		static PixMap *loadPixMapFromPNG(const std::string &filePath);

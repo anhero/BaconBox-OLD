@@ -10,6 +10,7 @@
 #include "ColorFormat.h"
 
 namespace RedBox {
+	class Color;
 	/**
 	 * A PixMap (pixel map) is a buffer (C array) representing a 2D graphic
 	 * texture. It is not necessarily formated as RGBA. It can be only alpha
@@ -28,7 +29,7 @@ namespace RedBox {
 		 * Copy constructor.
 		 * @param src PixMap to make a copy of.
 		 */
-		PixMap(const PixMap& src);
+		PixMap(const PixMap &src);
 
 		/**
 		 * Parameterized constructor.
@@ -41,7 +42,7 @@ namespace RedBox {
 		 * @see RedBox::ColorFormat::Enum
 		 */
 		PixMap(unsigned int newWidth, unsigned int newHeight,
-			   ColorFormat newColorFormat = ColorFormat::RGBA);
+		       ColorFormat newColorFormat = ColorFormat::RGBA);
 
 		/**
 		 * Constructor. Creates the PixMap with an existing buffer. It does not
@@ -54,9 +55,9 @@ namespace RedBox {
 		 * @param newColorFormat Color format of the buffer, it default to RGBA.
 		 * (See the ColorFormat enum)
 		 */
-		PixMap(uint8_t* newBuffer, unsigned int newWidth,
-			   unsigned int newHeight,
-			   ColorFormat newColorFormat = ColorFormat::RGBA);
+		PixMap(uint8_t *newBuffer, unsigned int newWidth,
+		       unsigned int newHeight,
+		       ColorFormat newColorFormat = ColorFormat::RGBA);
 
 		/**
 		 * Destructor.
@@ -67,7 +68,7 @@ namespace RedBox {
 		 * Assignation operator overload.
 		 * @param src PixMap to make a copy of.
 		 */
-		PixMap& operator=(const PixMap& src);
+		PixMap &operator=(const PixMap &src);
 
 		/**
 		 * Gets the PixMap's width.
@@ -96,7 +97,7 @@ namespace RedBox {
 		 * @return Pointer to the buffer's first element.
 		 * @see RedBox::PixMap::buffer
 		 */
-		uint8_t* getBuffer();
+		uint8_t *getBuffer();
 
 		/**
 		 * Insert a sub pixmap into the current pixmap.
@@ -113,12 +114,21 @@ namespace RedBox {
 		 * pixmap. (0 correspond to the top
 		 * side of the current pixmap.)
 		 */
-		void insertSubPixMap(PixMap* subPixMap, unsigned int xOffset = 0,
+		void insertSubPixMap(PixMap *subPixMap, unsigned int xOffset = 0,
 		                     unsigned int yOffset = 0);
-        
-        
-        ///Convert the current PixMap to the given format.
-        void convertTo(ColorFormat colorFormat);
+
+
+		///Convert the current PixMap to the given format.
+		void convertTo(ColorFormat colorFormat);
+
+		/**
+		 * Makes the specified color transparent. Does nothing if the PixMap
+		 * has a color format of ALPHA.
+		 * @param transparentColor Color to make transparent. All texels that
+		 * have the same RGB value as this color will be set to black with an
+		 * alpha value of 0.
+		 */
+		void makeColorTransparent(const Color &transparentColor);
 	private:
 		/// Width of the PixMap
 		unsigned int width;
@@ -130,7 +140,7 @@ namespace RedBox {
 		ColorFormat colorFormat;
 
 		/// Pointer to the first pixel of the PixMap
-		uint8_t* buffer;
+		uint8_t *buffer;
 
 		/**
 		 * Insert a sub pixmap into the current pixmap.
@@ -148,7 +158,7 @@ namespace RedBox {
 		 * @param yOffset The vertical position were we want to insert the sub
 		 * pixmap. (0 correspond to the top side of the current pixmap.)
 		 */
-		void insertSubPixMap(uint8_t* subBuffer, unsigned int subWidth,
+		void insertSubPixMap(uint8_t *subBuffer, unsigned int subWidth,
 		                     unsigned int subHeight, unsigned int xOffset,
 		                     unsigned int yOffset);
 	};

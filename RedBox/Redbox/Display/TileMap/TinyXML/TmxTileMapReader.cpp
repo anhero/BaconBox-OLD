@@ -180,7 +180,9 @@ namespace RedBox {
 	}
 
 	template <typename T>
-	void addPropertyFromElement(const TiXmlElement &element, T *&entity, std::string &errorMessage) {
+	void addPropertyFromElement(const TiXmlElement &element,
+	                            T *&entity,
+	                            std::string &errorMessage) {
 		static const char *VALUE_NAME = "value";
 
 		// We get the name attribute of the property.
@@ -203,13 +205,19 @@ namespace RedBox {
 		}
 	}
 
-	void addTilesetFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage) {
+	void addTilesetFromElement(const TiXmlElement &element,
+	                           TileMap *&map,
+	                           std::string &errorMessage) {
 	}
 
-	void addTileLayerFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage) {
+	void addTileLayerFromElement(const TiXmlElement &element,
+	                             TileMap *&map,
+	                             std::string &errorMessage) {
 	}
 
-	void addObjectLayerFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage) {
+	void addObjectLayerFromElement(const TiXmlElement &element,
+	                               TileMap *&map,
+	                               std::string &errorMessage) {
 	}
 
 	bool TmxTileMapReader::supportsFile(const std::string &fileName) const {
