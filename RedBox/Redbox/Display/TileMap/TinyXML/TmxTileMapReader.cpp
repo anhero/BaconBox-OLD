@@ -278,7 +278,7 @@ namespace RedBox {
 					// We fill it with its properties.
 					i = NULL;
 
-					while (map && (i = element.IterateChildren(i))) {
+					while ((i = element.IterateChildren(i))) {
 						if (i->ToElement() && i->ToElement()->Value() == PROPERTIES_VALUE) {
 							addPropertiesFromElement(*(i->ToElement()), *newTileset);
 						}
