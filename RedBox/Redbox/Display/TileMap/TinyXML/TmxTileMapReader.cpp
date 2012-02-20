@@ -1,10 +1,13 @@
 #include "TmxTileMapReader.h"
 
 #include <fstream>
+#include <sstream>
 
 #include <tinyxml.h>
 
 #include "TileMap.h"
+#include "ResourceManager.h"
+#include "Color.h"
 
 namespace RedBox {
 	const char *NAME_ATTRIBUTE = "name";
@@ -15,20 +18,33 @@ namespace RedBox {
 	TmxTileMapReader::~TmxTileMapReader() {
 	}
 
-	TileMap *elementToTileMap(TiXmlDocument &document, std::string &errorMessage);
+	TileMap *elementToTileMap(const std::string &currentFolder,
+	                          TiXmlDocument &document,
+	                          std::string &errorMessage);
 
-	void elementToMapChild(const TiXmlElement &element, TileMap *&map, std::string &errorMessage);
+	void elementToMapChild(const std::string &currentFolder,
+	                       const TiXmlElement &element,
+	                       TileMap *&map, std::string &errorMessage);
 
 	template <typename T>
-	void addPropertyFromElement(const TiXmlElement &element, T *&entity, std::string &errorMessage);
+	void addPropertyFromElement(const TiXmlElement &element,
+	                            T *&entity, std::string &errorMessage);
 
-	void addTilesetFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage);
+	void addTilesetFromElement(const std::string &currentFolder,
+	                           const TiXmlElement &element,
+	                           TileMap *&map, std::string &errorMessage);
 
-	void addTileLayerFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage);
+	void addTileLayerFromElement(const TiXmlElement &element,
+	                             TileMap *&map, std::string &errorMessage);
 
-	void addObjectLayerFromElement(const TiXmlElement &element, TileMap *&map, std::string &errorMessage);
+	void addObjectLayerFromElement(const TiXmlElement &element,
+	                               TileMap *&map, std::string &errorMessage);
 
-	const std::string readNameFromElement(const TiXmlElement &element, TileMapEntity &entity);
+	const std::string readNameFromElement(const TiXmlElement &element,
+	                                      TileMapEntity &entity);
+
+	TextureInformation *loadTextureFromElement(const std::string &currentFolder,
+	                                           const TiXmlElement &element);
 
 	TileMap *TmxTileMapReader::read(const std::string &fileName) {
 		TileMap *result = NULL;
@@ -48,9 +64,9 @@ namespace RedBox {
 
 				// We close the file.
 				tmxFile.close();
-
+				//fileName.substr(fileName.find_last_of('.') + 1) == FILE_EXTENSION;
 				// We convert the tmx document into a tile map.
-				result = elementToTileMap(document, errorMessage);
+				result = elementToTileMap(fileName.substr(0, fileName.find_last_of('/') + 1), document, errorMessage);
 
 			} else {
 				errorMessage = "TmxTileMapReader: failed to to open the tmx file. Is the file path correct?";
@@ -63,7 +79,9 @@ namespace RedBox {
 		return result;
 	}
 
-	TileMap *elementToTileMap(TiXmlDocument &document, std::string &errorMessage) {
+	TileMap *elementToTileMap(const std::string &currentFolder,
+	                          TiXmlDocument &document,
+	                          std::string &errorMessage) {
 		static const std::string ROOT_VALUE("map");
 		static const char *ORIENTATION_ATTRIBUTE_NAME = "orientation";
 		static const std::string MAP_ORIENTATION("orthogonal");
@@ -118,7 +136,7 @@ namespace RedBox {
 
 									while (result && (i = root->IterateChildren(i))) {
 										if (i->ToElement()) {
-											elementToMapChild(*i->ToElement(), result, errorMessage);
+											elementToMapChild(currentFolder, *i->ToElement(), result, errorMessage);
 										}
 									}
 
@@ -161,7 +179,9 @@ namespace RedBox {
 		return result;
 	}
 
-	void elementToMapChild(const TiXmlElement &element, TileMap *&map, std::string &errorMessage) {
+	void elementToMapChild(const std::string &currentFolder,
+	                       const TiXmlElement &element,
+	                       TileMap *&map, std::string &errorMessage) {
 		static const std::string PROPERTY_VALUE("property");
 		static const std::string TILESET_VALUE("tileset");
 		static const std::string TILE_LAYER_VALUE("layer");
@@ -171,7 +191,7 @@ namespace RedBox {
 			addPropertyFromElement(element, map, errorMessage);
 
 		} else if (element.Value() == TILESET_VALUE) {
-			addTilesetFromElement(element, map, errorMessage);
+			addTilesetFromElement(currentFolder, element, map, errorMessage);
 
 		} else if (element.Value() == TILE_LAYER_VALUE) {
 			addTileLayerFromElement(element, map, errorMessage);
@@ -207,7 +227,8 @@ namespace RedBox {
 		}
 	}
 
-	void addTilesetFromElement(const TiXmlElement &element,
+	void addTilesetFromElement(const std::string &currentFolder,
+	                           const TiXmlElement &element,
 	                           TileMap *&map,
 	                           std::string &errorMessage) {
 	}
@@ -220,6 +241,44 @@ namespace RedBox {
 	void addObjectLayerFromElement(const TiXmlElement &element,
 	                               TileMap *&map,
 	                               std::string &errorMessage) {
+	}
+
+	TextureInformation *loadTextureFromElement(const std::string &currentFolder,
+	                                           const TiXmlElement &element) {
+		static const char *SOURCE_NAME = "source";
+		static const char *TRANSPARENT_COLOR_NAME = "trans";
+		TextureInformation *result = NULL;
+
+		// We check if there is a path for the texture.
+		const char *tmpString = element.Attribute(SOURCE_NAME);
+
+		if (tmpString) {
+			std::string texturePath(currentFolder);
+			std::string textureKey(tmpString);
+			texturePath.append(tmpString);
+
+			// We check if there is a transparent color to use.
+			tmpString = element.Attribute(TRANSPARENT_COLOR_NAME);
+
+			if (tmpString) {
+				// We convert the hexadecimal color to an unsigned int.
+				std::stringstream ss;
+				ss << std::hex << std::string(tmpString).append("ff");
+				unsigned int tmpColor;
+				ss >> tmpColor;
+				Color transparentColor(tmpColor);
+
+				result = ResourceManager::loadTextureWithColorKey(textureKey,
+				                                                  texturePath,
+				                                                  transparentColor);
+
+			} else {
+				// No transparent color.
+				result = ResourceManager::loadTexture(textureKey, texturePath);
+			}
+		}
+
+		return result;
 	}
 
 	const std::string readNameFromElement(const TiXmlElement &element, TileMapEntity &entity) {
