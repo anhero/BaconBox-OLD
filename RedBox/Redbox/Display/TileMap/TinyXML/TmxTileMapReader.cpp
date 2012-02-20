@@ -4,16 +4,20 @@
 #include <sstream>
 
 #include <tinyxml.h>
+#include <zlib.h>
 
 #include "TileMap.h"
 #include "ResourceManager.h"
 #include "Color.h"
 #include "Tileset.h"
+#include "TileLayer.h"
 
 namespace RedBox {
 	const char *NAME_ATTRIBUTE = "name";
 	const char *TILE_WIDTH_NAME = "tilewidth";
 	const char *TILE_HEIGHT_NAME = "tileheight";
+	const char *OPACITY_NAME = "opacity";
+	const char *VISIBLE_NAME = "visible";
 	const std::string IMAGE_VALUE("image");
 	const std::string PROPERTIES_VALUE("properties");
 
@@ -306,6 +310,37 @@ namespace RedBox {
 	void addTileLayerFromElement(const TiXmlElement &element,
 	                             TileMap *&map,
 	                             std::string &errorMessage) {
+		static const std::string DATA_VALUE("data");
+		TileLayer *newTileLayer = map->pushBackTileLayer(readNameFromElement(element));
+
+		// We get the tile layer's opacity.
+		double tmpOpacity = 0.0;
+
+		if (element.Attribute(OPACITY_NAME, &tmpOpacity)) {
+			newTileLayer->setOpacity(static_cast<int32_t>(tmpOpacity * static_cast<double>(Color::MAX_COMPONENT_VALUE)));
+		}
+
+		// We check if the layer is visible.
+		int tmpVisible = 1;
+
+		if (element.Attribute(VISIBLE_NAME, &tmpVisible)) {
+			newTileLayer->setVisible(static_cast<bool>(tmpVisible));
+		}
+
+		const TiXmlNode *i = NULL;
+
+		// We read the properties and the data.
+		while ((i = element.IterateChildren(i))) {
+			if (i->ToElement()) {
+				// We read the properties.
+				if (i->ToElement()->Value() == PROPERTIES_VALUE) {
+					addPropertiesFromElement(*(i->ToElement()), *newTileLayer);
+
+				} else if (i->ToElement()->Value() == DATA_VALUE) {
+					// TODO: Read the tile layer's data.
+				}
+			}
+		}
 	}
 
 	void addObjectLayerFromElement(const TiXmlElement &element,
