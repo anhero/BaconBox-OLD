@@ -8,9 +8,14 @@
 #include "TileMap.h"
 #include "ResourceManager.h"
 #include "Color.h"
+#include "Tileset.h"
 
 namespace RedBox {
 	const char *NAME_ATTRIBUTE = "name";
+	const char *TILE_WIDTH_NAME = "tilewidth";
+	const char *TILE_HEIGHT_NAME = "tileheight";
+	const std::string IMAGE_VALUE("image");
+	const std::string PROPERTIES_VALUE("properties");
 
 	TmxTileMapReader::TmxTileMapReader() : TileMapReader(), errorMessage() {
 	}
@@ -26,9 +31,8 @@ namespace RedBox {
 	                       const TiXmlElement &element,
 	                       TileMap *&map, std::string &errorMessage);
 
-	template <typename T>
-	void addPropertyFromElement(const TiXmlElement &element,
-	                            T *&entity, std::string &errorMessage);
+	void addPropertiesFromElement(const TiXmlElement &element,
+	                              TileMapEntity &entity);
 
 	void addTilesetFromElement(const std::string &currentFolder,
 	                           const TiXmlElement &element,
@@ -40,8 +44,7 @@ namespace RedBox {
 	void addObjectLayerFromElement(const TiXmlElement &element,
 	                               TileMap *&map, std::string &errorMessage);
 
-	const std::string readNameFromElement(const TiXmlElement &element,
-	                                      TileMapEntity &entity);
+	const std::string readNameFromElement(const TiXmlElement &element);
 
 	TextureInformation *loadTextureFromElement(const std::string &currentFolder,
 	                                           const TiXmlElement &element);
@@ -87,8 +90,6 @@ namespace RedBox {
 		static const std::string MAP_ORIENTATION("orthogonal");
 		static const char *WIDTH_NAME = "width";
 		static const char *HEIGHT_NAME = "height";
-		static const char *TILE_WIDTH_NAME = "tilewidth";
-		static const char *TILE_HEIGHT_NAME = "tileheight";
 
 		TileMap *result = NULL;
 
@@ -182,13 +183,12 @@ namespace RedBox {
 	void elementToMapChild(const std::string &currentFolder,
 	                       const TiXmlElement &element,
 	                       TileMap *&map, std::string &errorMessage) {
-		static const std::string PROPERTY_VALUE("property");
 		static const std::string TILESET_VALUE("tileset");
 		static const std::string TILE_LAYER_VALUE("layer");
 		static const std::string OBJECT_LAYER_VALUE("objectgroup");
 
-		if (element.Value() == PROPERTY_VALUE) {
-			addPropertyFromElement(element, map, errorMessage);
+		if (element.Value() == PROPERTIES_VALUE) {
+			addPropertiesFromElement(element, *map);
 
 		} else if (element.Value() == TILESET_VALUE) {
 			addTilesetFromElement(currentFolder, element, map, errorMessage);
@@ -201,29 +201,33 @@ namespace RedBox {
 		}
 	}
 
-	template <typename T>
-	void addPropertyFromElement(const TiXmlElement &element,
-	                            T *&entity,
-	                            std::string &errorMessage) {
+	void addPropertiesFromElement(const TiXmlElement &element,
+	                              TileMapEntity &entity) {
+		const std::string PROPERTY_VALUE("property");
 		static const char *VALUE_NAME = "value";
 
-		// We get the name attribute of the property.
-		const char *tmpName = element.Attribute(NAME_ATTRIBUTE);
+		const char *tmpName = NULL;
 
-		// We make sure the property has a name.
-		if (tmpName) {
-			const char *tmpValue = element.Attribute(VALUE_NAME);
+		const TiXmlNode *i = NULL;
 
-			// We make sure the property has a value.
-			if (tmpValue) {
-				// We add the property to the entity.
-				entity->getProperties()[std::string(tmpName)] = std::string(tmpValue);
+		while ((i = element.IterateChildren(i))) {
+			if (i->ToElement()) {
+
+				// We get the name attribute of the property.
+				tmpName = i->ToElement()->Attribute(NAME_ATTRIBUTE);
+
+				// We make sure the property has a name.
+				if (tmpName) {
+					const char *tmpValue = i->ToElement()->Attribute(VALUE_NAME);
+
+					// We make sure the property has a value.
+					if (tmpValue) {
+						// We add the property to the entity.
+						entity.getProperties()[std::string(tmpName)] = std::string(tmpValue);
+					}
+
+				}
 			}
-
-		} else {
-			errorMessage = "TmxTileMapReader: Property does not have a name attribute. Make sure every property has a name attribute.";
-			delete entity;
-			entity = NULL;
 		}
 	}
 
@@ -231,6 +235,72 @@ namespace RedBox {
 	                           const TiXmlElement &element,
 	                           TileMap *&map,
 	                           std::string &errorMessage) {
+		static const char *TILE_SPACING_NAME = "spacing";
+		static const char *MARGIN_NAME = "margin";
+		// We make sure the tile width is specified.
+		double tmpTileWidth = 0.0;
+
+		if (element.Attribute(TILE_WIDTH_NAME, &tmpTileWidth)) {
+			double tmpTileHeight = 0.0;
+
+			// We make sure the tile height is specified.
+			if (element.Attribute(TILE_HEIGHT_NAME, &tmpTileHeight)) {
+				// We get the tile spacing, if it has one.
+				double tmpTileSpacing = 0.0;
+				element.Attribute(TILE_SPACING_NAME, &tmpTileSpacing);
+
+				// We get the margin, if it has one.
+				double tmpMargin = 0.0;
+				element.Attribute(MARGIN_NAME, &tmpMargin);
+
+				// We load the tileset's texture.
+				const TiXmlNode *i = NULL;
+				bool notFound = true;
+				TextureInformation *tmpTextureInformation = NULL;
+
+				while (notFound && (i = element.IterateChildren(i))) {
+					if (i->ToElement() && i->ToElement()->Value() == IMAGE_VALUE) {
+						tmpTextureInformation = loadTextureFromElement(currentFolder, *i->ToElement());
+
+						if (tmpTextureInformation) {
+							notFound = false;
+						}
+					}
+				}
+
+				if (tmpTextureInformation) {
+					// We add the tileset to the tile map.
+					Tileset *newTileset = map->addTileset(readNameFromElement(element),
+					                                      tmpTextureInformation,
+					                                      Vector2(static_cast<float>(tmpTileWidth), static_cast<float>(tmpTileHeight)),
+					                                      static_cast<float>(tmpTileSpacing),
+					                                      static_cast<float>(tmpMargin));
+					// We fill it with its properties.
+					i = NULL;
+
+					while (map && (i = element.IterateChildren(i))) {
+						if (i->ToElement() && i->ToElement()->Value() == PROPERTIES_VALUE) {
+							addPropertiesFromElement(*(i->ToElement()), *newTileset);
+						}
+					}
+
+				} else {
+					errorMessage = "TmxTileMapReader: Could not find any valid texture for the tileset. Make sure all tilesets have a valid <image>.";
+					delete map;
+					map = NULL;
+				}
+
+			} else {
+				errorMessage = "TmxTileMapReader: Tileset does not have a tileheight defined. Make sure it does.";
+				delete map;
+				map = NULL;
+			}
+
+		} else {
+			errorMessage = "TmxTileMapReader: Tileset does not have a tilewidth defined. Make sure it does.";
+			delete map;
+			map = NULL;
+		}
 	}
 
 	void addTileLayerFromElement(const TiXmlElement &element,
@@ -281,7 +351,7 @@ namespace RedBox {
 		return result;
 	}
 
-	const std::string readNameFromElement(const TiXmlElement &element, TileMapEntity &entity) {
+	const std::string readNameFromElement(const TiXmlElement &element) {
 
 		const char *tmpName = element.Attribute(NAME_ATTRIBUTE);
 		return (tmpName) ? (std::string(tmpName)) : (std::string());
