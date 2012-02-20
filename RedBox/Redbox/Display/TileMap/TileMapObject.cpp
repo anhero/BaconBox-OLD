@@ -5,9 +5,10 @@
 namespace RedBox {
 	TileMapObject::TileMapObject(const std::string &newName,
 	                             const Vector2 &newPosition,
-	                             const ObjectLayer &newParentLayer) :
+	                             const ObjectLayer &newParentLayer,
+								 const std::string &newType) :
 		TileMapEntity(newName), Positionable(newPosition),
-		parentLayer(newParentLayer) {
+		parentLayer(newParentLayer), type(newType) {
 	}
 
 	TileMapObject::TileMapObject(const TileMapObject &src,
@@ -16,5 +17,13 @@ namespace RedBox {
 	}
 
 	TileMapObject::~TileMapObject() {
+	}
+	
+	const std::string &TileMapObject::getType() const {
+		return type;
+	}
+	
+	void TileMapObject::setType(const std::string &newType) {
+		type = newType;
 	}
 }

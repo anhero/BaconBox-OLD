@@ -5,6 +5,8 @@
 #ifndef RB_TILE_MAP_OBJECT_H
 #define RB_TILE_MAP_OBJECT_H
 
+#include <string>
+
 #include "Vector2.h"
 #include "TileMapEntity.h"
 #include "Positionable.h"
@@ -24,9 +26,10 @@ namespace RedBox {
 		 * pixels).
 		 * @param newParentLayer Object layer that owns the tile map object.
 		 */
-		explicit TileMapObject(const std::string &newName,
+		TileMapObject(const std::string &newName,
 							   const Vector2 &newPosition,
-		                       const ObjectLayer &newParentLayer);
+		                       const ObjectLayer &newParentLayer,
+							   const std::string &newType = std::string());
 
 		/**
 		 * Copy constructor.
@@ -40,9 +43,27 @@ namespace RedBox {
 		 * Destructor.
 		 */
 		virtual ~TileMapObject();
+		
+		/**
+		 * Gets the object's custom type name.
+		 * @return Name of the custom type. Can be empty.
+		 * @see RedBox::TileMapObject::type
+		 */
+		const std::string &getType() const;
+		
+		/**
+		 * Sets the object's custom type name.
+		 * @param newType New name of the custom type.
+		 * @see RedBox::TileMapObject::type
+		 */
+		void setType(const std::string &newType);
 
 		/// Object layer that owns the tile map object.
 		const ObjectLayer &parentLayer;
+		
+	private:
+		/// Name of the custom type (optional).
+		std::string type;
 	};
 
 }
