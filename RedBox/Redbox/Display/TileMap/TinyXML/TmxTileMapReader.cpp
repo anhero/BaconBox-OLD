@@ -1,7 +1,11 @@
 #include "TmxTileMapReader.h"
 
+#include <cstring>
+
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <list>
 
 #include <tinyxml.h>
 #include <zlib.h>
@@ -11,6 +15,9 @@
 #include "Color.h"
 #include "Tileset.h"
 #include "TileLayer.h"
+#include "Base64.h"
+#include "Compression.h"
+#include "StringHelper.h"
 
 namespace RedBox {
 	const char *NAME_ATTRIBUTE = "name";
@@ -52,6 +59,14 @@ namespace RedBox {
 
 	TextureInformation *loadTextureFromElement(const std::string &currentFolder,
 	                                           const TiXmlElement &element);
+
+	bool decodeCSV(const std::string &data, std::string result,
+	               const TileCoordinate &expectedSize,
+	               std::string &errorMessage);
+	
+	void readTileLayerData(const TiXmlElement &element, std::string &result,
+						   const TileCoordinate &expectedSize,
+						   std::string &errorMessage);
 
 	TileMap *TmxTileMapReader::read(const std::string &fileName) {
 		TileMap *result = NULL;
@@ -312,6 +327,11 @@ namespace RedBox {
 	                             std::string &errorMessage) {
 		static const std::string DATA_VALUE("data");
 		static const char *ENCODING_NAME = "encoding";
+		static const char *CSV_ENCODING = "csv";
+		static const char *BASE_64_ENCODING = "base64";
+		static const char *COMPRESSION_NAME = "compression";
+		static const char *GZIP_COMPRESSION = "gzip";
+		static const char *ZLIB_COMPRESSION = "zlib";
 		TileLayer *newTileLayer = map->pushBackTileLayer(readNameFromElement(element));
 
 		// We get the tile layer's opacity.
@@ -331,7 +351,7 @@ namespace RedBox {
 		const TiXmlNode *i = NULL;
 
 		// We read the properties and the data.
-		while ((i = element.IterateChildren(i))) {
+		while (map && (i = element.IterateChildren(i))) {
 			if (i->ToElement()) {
 				// We read the properties.
 				if (i->ToElement()->Value() == PROPERTIES_VALUE) {
@@ -339,8 +359,51 @@ namespace RedBox {
 
 				} else if (i->ToElement()->Value() == DATA_VALUE) {
 					const TiXmlElement *dataElement = i->ToElement();
-					// We check if the data is encoded.
-					//const char *tmpEncoding = dataElement->Attribute(ENCODING_NAME);
+					// We get the data.
+					const char *tmpData = dataElement->GetText();
+
+					if (tmpData) {
+						std::string data(tmpData);
+						// We make sure to remove the white spaces at the
+						// beginning and at the end if necessary.
+						StringHelper::trim(data);
+						// We check if the data is encoded.
+						const char *tmpEncoding = dataElement->Attribute(ENCODING_NAME);
+
+						if (tmpEncoding) {
+							// We check the type of encoding.
+							if (!strcmp(CSV_ENCODING, tmpEncoding)) {
+								// Decode CSV
+								std::string encoded(data);
+								decodeCSV(encoded, data, map->getSizeInTiles(),
+								          errorMessage);
+
+							} else if (!strcmp(BASE_64_ENCODING, tmpEncoding)) {
+								// Decode Base 64.
+								std::string encoded(data);
+								Base64::decode(encoded, data);
+								
+								// We check if the data is compressed.
+								const char *tmpCompression = dataElement->Attribute(COMPRESSION_NAME);
+								
+								if (tmpCompression) {
+									// We make sure the compression format is
+									// valid.
+									if (!strcmp(GZIP_COMPRESSION, tmpCompression) ||
+										!strcmp(ZLIB_COMPRESSION, tmpCompression)) {
+										encoded = data;
+										Compression::decompress(encoded, data);
+									} else {
+										errorMessage = "TmxTileMapReader: Tile layer data compressed in an unknown format.";
+										delete map;
+										map = NULL;
+									}
+								}
+							}
+						} else {
+							// We read the data from XML tags.
+						}
+					}
 				}
 			}
 		}
@@ -387,6 +450,35 @@ namespace RedBox {
 		}
 
 		return result;
+	}
+
+	bool decodeCSV(const std::string &data, std::string result,
+	               const TileCoordinate &expectedSize,
+	               std::string &errorMessage) {
+		typedef std::list<std::string> TokenList;
+		TokenList tiles;
+		StringHelper::tokenize(data, tiles, std::string(","), true);
+		bool success = true;
+
+		if (tiles.size() == static_cast<TokenList::size_type>(expectedSize.getX()) *
+		    static_cast<TokenList::size_type>(expectedSize.getY())) {
+			result.resize(tiles.size() * 4);
+			unsigned int *tile = reinterpret_cast<unsigned int *>(&result[0]);
+			std::stringstream ss;
+
+			for (TokenList::const_iterator i = tiles.begin(); i != tiles.end();
+			     ++i) {
+				ss.str(*i);
+				ss >> *tile;
+				++tile;
+			}
+
+		} else {
+			success = false;
+			errorMessage = "CSV layer not of the right size.";
+		}
+
+		return success;
 	}
 
 	const std::string readNameFromElement(const TiXmlElement &element) {
