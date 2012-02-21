@@ -36,7 +36,6 @@ namespace RedBox {
 			if (i == 4) {
 				for (i = 0; i < 4; ++i) {
 					charArray4[i] = BASE_64_INDEXES[charArray4[i] - '+'];
-					//charArray4[i] = BASE_64_CHARS.find(charArray4[i]);
 				}
 
 				charArray3[0] = (charArray4[0] << 2) + ((charArray4[1] & 0x30) >> 4);
@@ -58,7 +57,6 @@ namespace RedBox {
 
 			for (unsigned int j = 0; j < 4; ++j) {
 				charArray4[j] = (charArray4[j] == 0) ? (-1) : (BASE_64_INDEXES[charArray4[j] - '+']);
-				//charArray4[j] = BASE_64_CHARS.find(charArray4[j]);
 			}
 
 			charArray3[0] = (charArray4[0] << 2) + ((charArray4[1] & 0x30) >> 4);
@@ -71,7 +69,52 @@ namespace RedBox {
 		}
 	}
 
+	void Base64::encode(const std::string &data, std::string &result) {
+		if (!data.empty()) {
+			result.clear();
+			unsigned int i = 0;
+			unsigned char charArray3[3];
+			unsigned char charArray4[4];
+			std::string::size_type inputSize = data.size();
+			std::string::const_pointer bytes = &(data[0]);
+
+			while (inputSize--) {
+				charArray3[i++] = *(bytes++);
+
+				if (i == 3) {
+					charArray4[0] = (charArray3[0] & 0xfc) >> 2;
+					charArray4[1] = ((charArray3[0] & 0x03) << 4) + ((charArray3[1] & 0xf0) >> 4);
+					charArray4[2] = ((charArray3[1] & 0x0f) << 2) + ((charArray3[2] & 0xc0) >> 6);
+					charArray4[3] = charArray3[2] & 0x3f;
+
+					for (i = 0; i < 4; ++i) {
+						result.append(1, BASE_64_CHARS[charArray4[i]]);
+					}
+
+					i = 0;
+				}
+			}
+
+			if (i) {
+				for (unsigned int j = i; j < 3; ++j) {
+					charArray3[j] = '\0';
+				}
+
+				charArray4[0] = (charArray3[0] & 0xfc) >> 2;
+				charArray4[1] = ((charArray3[0] & 0x03) << 4) + ((charArray3[1] & 0xf0) >> 4);
+				charArray4[2] = ((charArray3[1] & 0x0f) << 2) + ((charArray3[2] & 0xc0) >> 6);
+				charArray4[3] = charArray3[2] & 0x3f;
+
+				for (unsigned int j = 0; j < i + 1; ++j) {
+					result.append(1, BASE_64_CHARS[charArray4[j]]);
+				}
+
+				result.append(3 - i, '=');
+			}
+		}
+	}
+
 	bool isBase64(std::string::value_type c) {
-		return isalnum(c) || c == '+' || c == '/';
+		return c >= '+' && c <= 'z' && (BASE_64_INDEXES[c - '+'] != static_cast<unsigned char>(-1));
 	}
 }

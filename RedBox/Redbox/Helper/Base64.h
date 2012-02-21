@@ -22,7 +22,6 @@ namespace RedBox {
 		 * Decodes data from base 64.
 		 * @param data String containing the data to decode.
 		 * @param result String that will contain the decoded data.
-		 * @return True if the encoding succeeded, false if not.
 		 */
 		static void decode(const std::string &data, std::string &result);
 
@@ -30,9 +29,8 @@ namespace RedBox {
 		 * Encodes the data to base 64.
 		 * @param data String containing the data to encode.
 		 * @param result String that will contain the encoded data.
-		 * @return True if the encoding succeded, false if not.
 		 */
-		static bool encode(const std::string &data, std::string &result);
+		static void encode(const std::string &data, std::string &result);
 	private:
 		Base64();
 		Base64(const Base64 &src);
