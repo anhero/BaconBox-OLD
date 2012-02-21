@@ -30,6 +30,36 @@ namespace RedBox {
 		/// Fundamental floating point number type the vector contains.
 		typedef T ValueType;
 
+		/**
+		 * Comparator used to compare two vector's horizontal coordinate.
+		 */
+		struct XComparator {
+			bool operator()(const Vector2T<ValueType> &first,
+			                const Vector2T<ValueType> &second) const {
+				return first.x < second.x;
+			}
+		};
+
+		/**
+		 * Comparator used to compare two vector's vertical coordinate.
+		 */
+		struct YComparator {
+			bool operator()(const Vector2T<ValueType> &first,
+			                const Vector2T<ValueType> &second) const {
+				return first.y < second.y;
+			}
+		};
+		
+		/**
+		 * Comparator used to compare two vector's coordinates.
+		 */
+		struct XYComparator {
+			bool operator()(const Vector2T<ValueType> &first,
+			                const Vector2T<ValueType> &second) const {
+				return first.x + first.y < second.x + second.y;
+			}
+		};
+
 		/// Normalized vector that points up.
 		static const Vector2T<ValueType> UP;
 
@@ -582,6 +612,7 @@ namespace RedBox {
 			if (setName) {
 				node.setName("Vector2T");
 			}
+
 			// We set the value's attributes correctly.
 			node["x"].setDouble(static_cast<double>(getX()));
 			node["x"].setAttribute(true);

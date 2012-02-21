@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include <algorithm>
+
 #include "TileMap.h"
 #include "TextureInformation.h"
 #include "TileIdRange.h"
@@ -54,7 +56,42 @@ namespace RedBox {
 	                                     TextureCoordinates &textureCoordinates) const {
 		// We make sure the tile id is valid.
 		if (isIdInTileset(tileId)) {
-			textureCoordinates = tileTextureCoordinates[tileId - firstTileId];
+			textureCoordinates = tileTextureCoordinates[TileIdRange::withoutFlipFlags(tileId) - firstTileId];
+
+			assert(!textureCoordinates.empty());
+
+			if (TileIdRange::isFlippedHorizontally(tileId)) {
+				// We flip the texture coordinates to flip the tile
+				// horizontally.
+				float xMax = std::max_element(textureCoordinates.begin(), textureCoordinates.end(), Vector2::XComparator())->getX();
+
+				for (TextureCoordinates::iterator i = textureCoordinates.begin();
+				     i != textureCoordinates.end(); ++i) {
+					i->setX(xMax - i->getX());
+				}
+			}
+
+			if (TileIdRange::isFlippedVertically(tileId)) {
+				// We flip the texture coordinates to flip the tile vertically.
+				float yMax = std::max_element(textureCoordinates.begin(), textureCoordinates.end(), Vector2::YComparator())->getY();
+
+				for (TextureCoordinates::iterator i = textureCoordinates.begin();
+				     i != textureCoordinates.end(); ++i) {
+					i->setY(yMax - i->getY());
+				}
+			}
+
+			if (TileIdRange::isFlippedDiagonally(tileId)) {
+				// We flip the texture coordinates to flip the tile
+				// diagonally.
+				Vector2 xyMax(*std::max_element(textureCoordinates.begin(), textureCoordinates.end(), Vector2::XYComparator()));
+
+				for (TextureCoordinates::iterator i = textureCoordinates.begin();
+				     i != textureCoordinates.end(); ++i) {
+					*i = xyMax - *i;
+				}
+			}
+
 			return true;
 
 		} else {

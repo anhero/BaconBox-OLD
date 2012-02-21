@@ -8,7 +8,13 @@
 #include <algorithm>
 
 namespace RedBox {
-
+	/**
+	 * Represents a range. A range has a minimum value and a maximum value. The
+	 * maximum value is excluded from the range.
+	 * @tparam ValueType Type of the value that represent the limits of the
+	 * range.
+	 * @ingroup Helper
+	 */
 	template <typename ValueType>
 	struct Range {
 		struct Comparator {

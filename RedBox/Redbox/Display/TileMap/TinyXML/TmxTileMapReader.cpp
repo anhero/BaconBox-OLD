@@ -311,6 +311,7 @@ namespace RedBox {
 	                             TileMap *&map,
 	                             std::string &errorMessage) {
 		static const std::string DATA_VALUE("data");
+		static const char *ENCODING_NAME = "encoding";
 		TileLayer *newTileLayer = map->pushBackTileLayer(readNameFromElement(element));
 
 		// We get the tile layer's opacity.
@@ -337,7 +338,9 @@ namespace RedBox {
 					addPropertiesFromElement(*(i->ToElement()), *newTileLayer);
 
 				} else if (i->ToElement()->Value() == DATA_VALUE) {
-					// TODO: Read the tile layer's data.
+					const TiXmlElement *dataElement = i->ToElement();
+					// We check if the data is encoded.
+					//const char *tmpEncoding = dataElement->Attribute(ENCODING_NAME);
 				}
 			}
 		}
