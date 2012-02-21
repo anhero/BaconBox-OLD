@@ -7,8 +7,8 @@
 namespace RedBox {
 	void logZlibError(int error);
 
-	bool Compression::decompress(const ByteVector &data, ByteVector &result) {
-		static const ByteVector::size_type DEFAULT_RESULT_SIZE = 1024;
+	bool Compression::decompress(const std::string &data, std::string &result) {
+		static const std::string::size_type DEFAULT_RESULT_SIZE = 1024;
 		bool success = true;
 
 		// We make sure there is data to decompress.
@@ -23,7 +23,7 @@ namespace RedBox {
 			zStream.zalloc = Z_NULL;
 			zStream.zfree = Z_NULL;
 			zStream.opaque = Z_NULL;
-			zStream.next_in = reinterpret_cast<Bytef *>(const_cast<ByteVector::pointer>(&data[0]));
+			zStream.next_in = reinterpret_cast<Bytef *>(const_cast<std::string::pointer>(&data[0]));
 			zStream.avail_in = data.size();
 			zStream.next_out = reinterpret_cast<Bytef *>(&result[0]);
 			zStream.avail_out = result.size();
@@ -33,7 +33,7 @@ namespace RedBox {
 
 			// We need this variable in case the result byte vector is too
 			// small.
-			ByteVector::size_type oldSize;
+			std::string::size_type oldSize;
 
 			// We make sure the zlib stream is ok.
 			if (ret == Z_OK) {
@@ -74,7 +74,7 @@ namespace RedBox {
 				if (success && zStream.avail_in == 0) {
 					// If the result byte vector is too big, we make it smaller
 					// to fit with the decompressed data.
-					const ByteVector::size_type outSize = result.size() - zStream.avail_out;
+					const std::string::size_type outSize = result.size() - zStream.avail_out;
 					inflateEnd(&zStream);
 
 					result.resize(outSize);

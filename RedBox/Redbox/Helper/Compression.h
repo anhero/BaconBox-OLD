@@ -5,7 +5,7 @@
 #ifndef RB_COMPRESSION_H
 #define RB_COMPRESSION_H
 
-#include <vector>
+#include <string>
 
 #include "CompressionMethod.h"
 
@@ -16,9 +16,6 @@ namespace RedBox {
 	 */
 	class Compression {
 	public:
-		/// Vector of bytes.
-		typedef std::vector<char> ByteVector;
-
 		/**
 		 * Decompresses either gzip or zlib data from a byte vector into another
 		 * byte vector.
@@ -28,7 +25,7 @@ namespace RedBox {
 		 * @return True on success, false otherwise. If the result byte vector
 		 * is too small, the decompression fails.
 		 */
-		static bool decompress(const ByteVector &data, ByteVector &result);
+		static bool decompress(const std::string &data, std::string &result);
 
 		/**
 		 * Compresses data from a byte vector into another byte vector.
@@ -38,9 +35,9 @@ namespace RedBox {
 		 * @param result Compressed data goes into this byte vector.
 		 * @return True on success, false otherwise.
 		 */
-		static bool compress(const ByteVector &data,
+		static bool compress(const std::string &data,
 		                     CompressionMethod compressionMethod,
-		                     ByteVector &result);
+							 std::string &result);
 	private:
 		Compression();
 		Compression(const Compression &src);
