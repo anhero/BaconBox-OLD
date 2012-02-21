@@ -39,8 +39,7 @@ namespace RedBox {
 	                          TiXmlDocument &document,
 	                          std::string &errorMessage);
 
-	void elementToMapChild(const std::string &currentFolder,
-	                       const TiXmlElement &element,
+	void elementToMapChild(const TiXmlElement &element,
 	                       TileMap *&map, std::string &errorMessage);
 
 	void addPropertiesFromElement(const TiXmlElement &element,
@@ -110,6 +109,7 @@ namespace RedBox {
 		static const std::string MAP_ORIENTATION("orthogonal");
 		static const char *WIDTH_NAME = "width";
 		static const char *HEIGHT_NAME = "height";
+		static const std::string TILESET_VALUE("tileset");
 
 		TileMap *result = NULL;
 
@@ -155,9 +155,20 @@ namespace RedBox {
 									// We read the map's children.
 									const TiXmlNode *i = NULL;
 
+									// We read the map's tileset first.
 									while (result && (i = root->IterateChildren(i))) {
 										if (i->ToElement()) {
-											elementToMapChild(currentFolder, *i->ToElement(), result, errorMessage);
+											if (i->ToElement()->Value() == TILESET_VALUE) {
+												addTilesetFromElement(currentFolder, *i->ToElement(), result, errorMessage);
+												
+											}
+										}
+									}
+									// We then read the map's layers and
+									// properties.
+									while (result && (i = root->IterateChildren(i))) {
+										if (i->ToElement()) {
+											elementToMapChild(*i->ToElement(), result, errorMessage);
 										}
 									}
 
@@ -200,18 +211,13 @@ namespace RedBox {
 		return result;
 	}
 
-	void elementToMapChild(const std::string &currentFolder,
-	                       const TiXmlElement &element,
+	void elementToMapChild(const TiXmlElement &element,
 	                       TileMap *&map, std::string &errorMessage) {
-		static const std::string TILESET_VALUE("tileset");
 		static const std::string TILE_LAYER_VALUE("layer");
 		static const std::string OBJECT_LAYER_VALUE("objectgroup");
 
 		if (element.Value() == PROPERTIES_VALUE) {
 			addPropertiesFromElement(element, *map);
-
-		} else if (element.Value() == TILESET_VALUE) {
-			addTilesetFromElement(currentFolder, element, map, errorMessage);
 
 		} else if (element.Value() == TILE_LAYER_VALUE) {
 			addTileLayerFromElement(element, map, errorMessage);
