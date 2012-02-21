@@ -1,14 +1,16 @@
 #include "Compression.h"
 
+#include <cassert>
+
 #include <zlib.h>
 
 #include "Console.h"
 
 namespace RedBox {
+	const std::string::size_type DEFAULT_RESULT_SIZE = 1024;
 	void logZlibError(int error);
 
 	bool Compression::decompress(const std::string &data, std::string &result) {
-		static const std::string::size_type DEFAULT_RESULT_SIZE = 1024;
 		bool success = true;
 
 		// We make sure there is data to decompress.
@@ -24,9 +26,9 @@ namespace RedBox {
 			zStream.zfree = Z_NULL;
 			zStream.opaque = Z_NULL;
 			zStream.next_in = reinterpret_cast<Bytef *>(const_cast<std::string::pointer>(&data[0]));
-			zStream.avail_in = data.size();
+			zStream.avail_in = static_cast<uInt>(data.size());
 			zStream.next_out = reinterpret_cast<Bytef *>(&result[0]);
-			zStream.avail_out = result.size();
+			zStream.avail_out = static_cast<uInt>(result.size());
 
 			// We initialize the decompression.
 			int ret = inflateInit2(&zStream, 15 + 32);
@@ -90,6 +92,73 @@ namespace RedBox {
 
 		} else {
 			success = false;
+		}
+
+		return success;
+	}
+
+	bool Compression::compress(const std::string &data,
+	                           CompressionMethod compressionMethod,
+	                           std::string &result) {
+		bool success = true;
+
+		if (!data.empty()) {
+			result.resize(DEFAULT_RESULT_SIZE);
+			int error;
+			z_stream zStream;
+			zStream.zalloc = Z_NULL;
+			zStream.zfree = Z_NULL;
+			zStream.opaque = Z_NULL;
+			zStream.next_in = reinterpret_cast<Bytef *>(const_cast<std::string::pointer>(&data[0]));
+			zStream.avail_in = data.size();
+			zStream.next_out = reinterpret_cast<Bytef *>(&result[0]);
+			zStream.avail_out = result.size();
+
+			const int windowBits = (compressionMethod == CompressionMethod::GZIP) ? (31) : (15);
+
+			error = deflateInit2(&zStream,
+			                     Z_DEFAULT_COMPRESSION,
+			                     Z_DEFLATED,
+			                     windowBits,
+			                     8,
+			                     Z_DEFAULT_STRATEGY);
+			std::string::size_type oldSize;
+
+			if (error == Z_OK) {
+				do {
+					error = deflate(&zStream, Z_FINISH);
+
+					assert(error != Z_STREAM_ERROR);
+
+					if (error == Z_OK) {
+						// We need more space in the result string.
+						oldSize = result.size();
+						result.resize(result.size() * 2);
+
+						zStream.next_out = reinterpret_cast<Bytef *>(&result[0] + oldSize);
+						zStream.avail_out = static_cast<uInt>(oldSize);
+					}
+
+				} while (error == Z_OK);
+
+				if (error == Z_STREAM_END) {
+					const std::string::size_type outSize = result.size() - zStream.avail_out;
+					deflateEnd(&zStream);
+
+					result.resize(outSize);
+
+				} else {
+					logZlibError(error);
+					deflateEnd(&zStream);
+					result.clear();
+					success = false;
+				}
+
+			} else {
+				logZlibError(error);
+				result.clear();
+				success = false;
+			}
 		}
 
 		return success;
