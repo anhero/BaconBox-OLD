@@ -1,6 +1,7 @@
 #include "TmxTileMapReader.h"
 
 #include <cstring>
+#include <cstdlib>
 
 #include <fstream>
 #include <sstream>
@@ -60,13 +61,13 @@ namespace RedBox {
 	TextureInformation *loadTextureFromElement(const std::string &currentFolder,
 	                                           const TiXmlElement &element);
 
-	bool decodeCSV(const std::string &data, std::string result,
+	bool decodeCSV(const std::string &data, std::string &result,
 	               const TileCoordinate &expectedSize,
 	               std::string &errorMessage);
-	
-	void readTileLayerData(const TiXmlElement &element, std::string &result,
-						   const TileCoordinate &expectedSize,
-						   std::string &errorMessage);
+
+	bool readDataFromElement(const TiXmlElement &element, std::string &result,
+	                         const TileCoordinate &expectedSize,
+	                         std::string &errorMessage);
 
 	TileMap *TmxTileMapReader::read(const std::string &fileName) {
 		TileMap *result = NULL;
@@ -362,8 +363,11 @@ namespace RedBox {
 					// We get the data.
 					const char *tmpData = dataElement->GetText();
 
+					std::string data;
+					
+					// If we have text data.
 					if (tmpData) {
-						std::string data(tmpData);
+						data.append(tmpData);
 						// We make sure to remove the white spaces at the
 						// beginning and at the end if necessary.
 						StringHelper::trim(data);
@@ -375,33 +379,78 @@ namespace RedBox {
 							if (!strcmp(CSV_ENCODING, tmpEncoding)) {
 								// Decode CSV
 								std::string encoded(data);
-								decodeCSV(encoded, data, map->getSizeInTiles(),
-								          errorMessage);
+
+								if (!decodeCSV(encoded, data, map->getSizeInTiles(),
+								               errorMessage)) {
+									delete map;
+									map = NULL;
+								}
 
 							} else if (!strcmp(BASE_64_ENCODING, tmpEncoding)) {
 								// Decode Base 64.
 								std::string encoded(data);
 								Base64::decode(encoded, data);
-								
+
 								// We check if the data is compressed.
 								const char *tmpCompression = dataElement->Attribute(COMPRESSION_NAME);
-								
+
 								if (tmpCompression) {
 									// We make sure the compression format is
 									// valid.
 									if (!strcmp(GZIP_COMPRESSION, tmpCompression) ||
-										!strcmp(ZLIB_COMPRESSION, tmpCompression)) {
+									    !strcmp(ZLIB_COMPRESSION, tmpCompression)) {
 										encoded = data;
 										Compression::decompress(encoded, data);
+
 									} else {
 										errorMessage = "TmxTileMapReader: Tile layer data compressed in an unknown format.";
 										delete map;
 										map = NULL;
 									}
 								}
+
+								// We make sure there is enough data.
+								if (data.size() / 4 != static_cast<std::string::size_type>(map->getWidthInTiles()) * static_cast<std::string::size_type>(map->getHeightInTiles())) {
+									errorMessage = "TmxTileMapReader: Tile layer data is not of the right size.";
+									delete map;
+									map = NULL;
+								}
 							}
-						} else {
-							// We read the data from XML tags.
+
+						}
+
+					} else {
+						// We read the data from XML tags.
+						if (!readDataFromElement(*dataElement, data,
+												 map->getSizeInTiles(),
+												 errorMessage)) {
+							delete map;
+							map = NULL;
+						}
+					}
+					// We make sure the data was read successfully.
+					if (map) {
+						// We read the data and put it in the tile layer.
+						std::string::size_type index = 0;
+						int y = 0, x = 0;
+						
+						while (map && y < map->getHeightInTiles()) {
+							x = 0;
+							
+							while (map && x < map->getWidthInTiles()) {
+								if (index < data.size()) {
+									newTileLayer->setTileId(x, y, *reinterpret_cast<unsigned int *>(&data[index]));
+									index += 4;
+									++x;
+									
+								} else {
+									errorMessage = "TmxTileMapReader: Too much tile layer data.";
+									delete map;
+									map = NULL;
+								}
+							}
+							
+							++y;
 						}
 					}
 				}
@@ -452,7 +501,7 @@ namespace RedBox {
 		return result;
 	}
 
-	bool decodeCSV(const std::string &data, std::string result,
+	bool decodeCSV(const std::string &data, std::string &result,
 	               const TileCoordinate &expectedSize,
 	               std::string &errorMessage) {
 		typedef std::list<std::string> TokenList;
@@ -463,19 +512,55 @@ namespace RedBox {
 		if (tiles.size() == static_cast<TokenList::size_type>(expectedSize.getX()) *
 		    static_cast<TokenList::size_type>(expectedSize.getY())) {
 			result.resize(tiles.size() * 4);
-			unsigned int *tile = reinterpret_cast<unsigned int *>(&result[0]);
-			std::stringstream ss;
+			std::string::size_type index = 0;
 
 			for (TokenList::const_iterator i = tiles.begin(); i != tiles.end();
 			     ++i) {
-				ss.str(*i);
-				ss >> *tile;
-				++tile;
+				*reinterpret_cast<unsigned int *>(&result[index]) = static_cast<unsigned int>(strtoul(i->c_str(), NULL, 10));
+				index += 4;
 			}
 
 		} else {
 			success = false;
-			errorMessage = "CSV layer not of the right size.";
+			errorMessage = "TmxTileMapReader: CSV layer not of the right size.";
+		}
+
+		return success;
+	}
+
+	bool readDataFromElement(const TiXmlElement &element, std::string &result,
+	                         const TileCoordinate &expectedSize,
+	                         std::string &errorMessage) {
+		static const char *TILE_ID_NAME = "gid";
+		static const std::string TILE_VALUE("tile");
+		bool success = true;
+
+		std::string::size_type tmpSize = 4 * static_cast<std::string::size_type>(expectedSize.getX()) * static_cast<std::string::size_type>(expectedSize.getY());
+
+		result.resize(tmpSize);
+
+		// We read all the child tile nodes.
+		const TiXmlNode *i = NULL;
+		std::string::size_type index = 0;
+
+		const char *tmpTileId;
+
+		while (success && (i = element.IterateChildren(i))) {
+			if (i->ToElement() && i->ToElement()->ValueStr() == TILE_VALUE) {
+				// We make sure the tile data has a tile id.
+				tmpTileId = i->ToElement()->Attribute(TILE_ID_NAME);
+
+				if (tmpTileId) {
+					if (index < tmpSize) {
+						*reinterpret_cast<unsigned int *>(&result[index]) = static_cast<unsigned int>(strtoul(tmpTileId, NULL, 10));
+						index += 4;
+
+					} else {
+						success = false;
+						errorMessage = "TmxTileMapReader: Too many tile tags for the tile data for the tile layer.";
+					}
+				}
+			}
 		}
 
 		return success;
