@@ -20,6 +20,11 @@
 #include "Base64.h"
 #include "Compression.h"
 #include "StringHelper.h"
+#include "TileMapObject.h"
+#include "LineObject.h"
+#include "PolygonObject.h"
+#include "RectangleObject.h"
+#include "TileObject.h"
 
 namespace RedBox {
 	const char *NAME_ATTRIBUTE = "name";
@@ -29,6 +34,8 @@ namespace RedBox {
 	const char *VISIBLE_NAME = "visible";
 	const std::string IMAGE_VALUE("image");
 	const std::string PROPERTIES_VALUE("properties");
+	const char *TILE_ID_NAME = "gid";
+	typedef std::list<std::string> TokenList;
 
 	TmxTileMapReader::TmxTileMapReader() : TileMapReader(), errorMessage() {
 	}
@@ -76,6 +83,14 @@ namespace RedBox {
 
 	void addObjectFromElement(const TiXmlElement &element,
 	                          ObjectLayer &objectLayer);
+
+	const std::string readTypeFromElement(const TiXmlElement &element);
+
+	void readObjectFromElement(const TiXmlElement &element,
+							   TileMapObject &object);
+	
+	void readVerticesFromString(const std::string &str,
+	                            StandardVertexArray &vertices);
 
 	TileMap *TmxTileMapReader::read(const std::string &fileName) {
 		TileMap *result = NULL;
@@ -534,6 +549,12 @@ namespace RedBox {
 		}
 	}
 
+	const std::string readNameFromElement(const TiXmlElement &element) {
+
+		const char *tmpName = element.Attribute(NAME_ATTRIBUTE);
+		return (tmpName) ? (std::string(tmpName)) : (std::string());
+	}
+
 	TextureInformation *loadTextureFromElement(const std::string &currentFolder,
 	                                           const TiXmlElement &element) {
 		static const char *SOURCE_NAME = "source";
@@ -577,7 +598,6 @@ namespace RedBox {
 	bool decodeCSV(const std::string &data, std::string &result,
 	               const TileCoordinate &expectedSize,
 	               std::string &errorMessage) {
-		typedef std::list<std::string> TokenList;
 		TokenList tiles;
 		StringHelper::tokenize(data, tiles, std::string(","), true);
 		bool success = true;
@@ -604,7 +624,6 @@ namespace RedBox {
 	bool readDataFromElement(const TiXmlElement &element, std::string &result,
 	                         const TileCoordinate &expectedSize,
 	                         std::string &errorMessage) {
-		static const char *TILE_ID_NAME = "gid";
 		static const std::string TILE_VALUE("tile");
 		bool success = true;
 
@@ -657,12 +676,68 @@ namespace RedBox {
 
 	void addObjectFromElement(const TiXmlElement &element,
 	                          ObjectLayer &objectLayer) {
+		// We need to determine the type of the object.
+
+		// First, we check if it's a tile object.
+		const char *tmpTileId = element.Attribute(TILE_ID_NAME);
+
+		if (tmpTileId) {
+			// If there is a gid attribute, it means it's a tile object.
+		}
 	}
 
-	const std::string readNameFromElement(const TiXmlElement &element) {
+	const std::string readTypeFromElement(const TiXmlElement &element) {
+		static const char *TYPE_ATTRIBUTE = "type";
+		const char *tmpType = element.Attribute(TYPE_ATTRIBUTE);
+		return (tmpType) ? (std::string(tmpType)) : (std::string());
+	}
+	
+	void readObjectFromElement(const TiXmlElement &element,
+							   TileMapObject &object) {
+		static const char *X_ATTRIBUTE = "x";
+		static const char *Y_ATTRIBUTE = "y";
+		// We get the name, the type and the position of the object.
+		object.setName(readNameFromElement(element));
+		
+		object.setType(readTypeFromElement(element));
+		
+		double tmpX = 0.0, tmpY = 0.0;
+		element.Attribute(X_ATTRIBUTE, &tmpX);
+		element.Attribute(Y_ATTRIBUTE, &tmpY);
+		object.setPosition(static_cast<float>(tmpX),
+							static_cast<float>(tmpY));
+	}
 
-		const char *tmpName = element.Attribute(NAME_ATTRIBUTE);
-		return (tmpName) ? (std::string(tmpName)) : (std::string());
+	void readVerticesFromString(const std::string &str,
+	                            StandardVertexArray &vertices) {
+		TokenList vertexList;
+		// We separate the string into a string for each vertex.
+		StringHelper::tokenize(str, vertexList, std::string(" "), true);
+
+		// We reserve the memory for the vertices to be added.
+		vertices.reserve(vertexList.size());
+
+		TokenList coordinates;
+		TokenList::const_iterator j;
+
+		// We add the vertices to the vertex array.
+		for (TokenList::const_iterator i = vertexList.begin();
+		     i != vertexList.end(); ++i) {
+			coordinates.clear();
+			// We separate the two coordinates.
+			StringHelper::tokenize(*i, coordinates, ",", true);
+			// We read the coordinates into a new vector 2.
+			j = coordinates.begin();
+
+			if (j != coordinates.end()) {
+				vertices.pushBack(Vector2(static_cast<float>(atof(j->c_str())), 0.0f));
+				++j;
+
+				if (j != coordinates.end()) {
+					vertices[vertices.getNbVertices() - 1].setY(static_cast<float>(atof(j->c_str())));
+				}
+			}
+		}
 	}
 
 	bool TmxTileMapReader::supportsFile(const std::string &fileName) const {
