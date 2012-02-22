@@ -10,6 +10,7 @@
 
 #include "TileMapLayer.h"
 #include "Vector2.h"
+#include "Color.h"
 
 namespace RedBox {
 	class TileObject;
@@ -55,6 +56,20 @@ namespace RedBox {
 		 * an object layer.
 		 */
 		const ObjectLayer *asObjectLayer() const;
+
+		/**
+		 * Gets the color used to display objects.
+		 * @return Color used to display the objects in this layer.
+		 * @see RedBox::ObjectLayer::color
+		 */
+		const Color &getColor() const;
+
+		/**
+		 * Sets the color used to display objects.
+		 * @param newColor New color used to display the objects in this layer.
+		 * @see RedBox::ObjectLayer::color
+		 */
+		void setColor(const Color &newColor);
 
 		/**
 		 * Gets the line objects.
@@ -377,6 +392,12 @@ namespace RedBox {
 		 * responsible for deleting this instance.
 		 */
 		ObjectLayer *clone(const TileMap &newParentMap) const;
+
+		/**
+		 * Color used to display the objects in this group. Mainly used for
+		 * Tiled.
+		 */
+		Color color;
 
 		/// List of line objects in the layer.
 		LineContainer lines;

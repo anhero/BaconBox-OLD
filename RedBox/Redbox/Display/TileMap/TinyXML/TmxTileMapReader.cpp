@@ -16,6 +16,7 @@
 #include "Color.h"
 #include "Tileset.h"
 #include "TileLayer.h"
+#include "ObjectLayer.h"
 #include "Base64.h"
 #include "Compression.h"
 #include "StringHelper.h"
@@ -160,10 +161,11 @@ namespace RedBox {
 										if (i->ToElement()) {
 											if (i->ToElement()->Value() == TILESET_VALUE) {
 												addTilesetFromElement(currentFolder, *i->ToElement(), result, errorMessage);
-												
+
 											}
 										}
 									}
+
 									// We then read the map's layers and
 									// properties.
 									while (result && (i = root->IterateChildren(i))) {
@@ -370,7 +372,7 @@ namespace RedBox {
 					const char *tmpData = dataElement->GetText();
 
 					std::string data;
-					
+
 					// If we have text data.
 					if (tmpData) {
 						data.append(tmpData);
@@ -428,34 +430,35 @@ namespace RedBox {
 					} else {
 						// We read the data from XML tags.
 						if (!readDataFromElement(*dataElement, data,
-												 map->getSizeInTiles(),
-												 errorMessage)) {
+						                         map->getSizeInTiles(),
+						                         errorMessage)) {
 							delete map;
 							map = NULL;
 						}
 					}
+
 					// We make sure the data was read successfully.
 					if (map) {
 						// We read the data and put it in the tile layer.
 						std::string::size_type index = 0;
 						int y = 0, x = 0;
-						
+
 						while (map && y < map->getHeightInTiles()) {
 							x = 0;
-							
+
 							while (map && x < map->getWidthInTiles()) {
 								if (index < data.size()) {
 									newTileLayer->setTileId(x, y, *reinterpret_cast<unsigned int *>(&data[index]));
 									index += 4;
 									++x;
-									
+
 								} else {
 									errorMessage = "TmxTileMapReader: Too much tile layer data.";
 									delete map;
 									map = NULL;
 								}
 							}
-							
+
 							++y;
 						}
 					}
@@ -467,6 +470,8 @@ namespace RedBox {
 	void addObjectLayerFromElement(const TiXmlElement &element,
 	                               TileMap *&map,
 	                               std::string &errorMessage) {
+		// We add a new object layer.
+		ObjectLayer *newObjectLayer = map->pushBackObjectLayer(readNameFromElement(element));
 	}
 
 	TextureInformation *loadTextureFromElement(const std::string &currentFolder,

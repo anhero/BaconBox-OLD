@@ -17,6 +17,14 @@ namespace RedBox {
 		return this;
 	}
 
+	const Color &ObjectLayer::getColor() const {
+		return color;
+	}
+
+	void ObjectLayer::setColor(const Color &newColor) {
+		color = newColor;
+	}
+
 	const ObjectLayer::LineContainer &ObjectLayer::getLines() const {
 		return lines;
 	}
@@ -275,18 +283,19 @@ namespace RedBox {
 	                         const TileMap &newParentMap,
 	                         int32_t newOpacity,
 	                         bool newVisible) :
-		TileMapLayer(newName, newParentMap, newOpacity, newVisible), lines(),
-		polygons(), rectangles(), tiles(), lineNames(), dirtyLineNames(false),
-		polygonNames(), dirtyPolygonNames(false), rectangleNames(),
-		dirtyRectangleNames(false), tileNames(), dirtyTileNames(false) {
+		TileMapLayer(newName, newParentMap, newOpacity, newVisible),
+		color(160, 160, 164, 255), lines(), polygons(), rectangles(), tiles(),
+		lineNames(), dirtyLineNames(false), polygonNames(),
+		dirtyPolygonNames(false), rectangleNames(), dirtyRectangleNames(false),
+		tileNames(), dirtyTileNames(false) {
 	}
 
 	ObjectLayer::ObjectLayer(const ObjectLayer &src,
 	                         const TileMap &newParentMap) :
-		TileMapLayer(src, newParentMap), lines(), polygons(), rectangles(),
-		tiles(), lineNames(), dirtyLineNames(true), polygonNames(),
-		dirtyPolygonNames(true), rectangleNames(), dirtyRectangleNames(true),
-		tileNames(), dirtyTileNames(true) {
+		TileMapLayer(src, newParentMap), color(src.color), lines(), polygons(),
+		rectangles(), tiles(), lineNames(), dirtyLineNames(true),
+		polygonNames(), dirtyPolygonNames(true), rectangleNames(),
+		dirtyRectangleNames(true), tileNames(), dirtyTileNames(true) {
 		// We copy the line objects.
 		for (LineContainer::const_iterator i = src.lines.begin();
 		     i != src.lines.end(); ++i) {
