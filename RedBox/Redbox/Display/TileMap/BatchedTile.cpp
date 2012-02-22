@@ -1,4 +1,3 @@
-#if 0
 #include "BatchedTile.h"
 
 #include "Tileset.h"
@@ -92,5 +91,3 @@ namespace RedBox {
 		}
 	}
 }
-
-#endif

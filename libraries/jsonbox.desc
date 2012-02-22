@@ -2,10 +2,10 @@
 
 _name="jsonbox"
 _license="MIT"
-_version="0.3.1"
+_version="0.3.3"
 _archive="${_name}-${_version}-src.tar.gz"
 _archive_url="https://bitbucket.org/madbranch/${_name}/downloads/${_archive}"
-_hash="8ef85cb19788e459b3bf09260e30aa61" #tar.gz
+_hash="330dbe1798168c7ba1d13fe068d31336" #tar.gz
 
 WGET_FLAGS="--no-check-certificate"
 
@@ -13,15 +13,11 @@ load_base http.fetch
 
 function build() {
 	cd "${lib_workdir}/${_pkgdir}-src" || exit 1
-	mkdir build
-	cd build
-	cmake ../
 	make
 	mkdir -p "${libs_builddir}/lib/"
-	mv lib/* "${libs_builddir}/lib/"
-	cd ..
+	cp build/*.a "${libs_builddir}/lib/"
 	mkdir -p "${libs_builddir}/include/"
-	mv include/* "${libs_builddir}/include/" || exit 1
+	cp -prf include/* "${libs_builddir}/include/" || exit 1
 }
 
 # vim: ft=sh

@@ -91,7 +91,34 @@ build() {
  depend:
  	#makedepend ${INCS} ${SRCS}
 EOF
-	
+
+	# Patch to use system tools.
+	patch -p1 <<'EOF'
+--- a/Makefile	2012-02-22 16:04:59.069602886 -0500
++++ b/Makefile	2012-02-22 16:05:16.966172831 -0500
+@@ -24,12 +24,6 @@
+ 
+ #****************************************************************************
+ 
+-CC     := gcc
+-CXX    := g++
+-LD     := g++
+-AR     := ar rc
+-RANLIB := ranlib
+-
+ DEBUG_CFLAGS     := -Wall -Wno-format -g -DDEBUG
+ RELEASE_CFLAGS   := -Wall -Wno-unknown-pragmas -Wno-format -O3
+ 
+@@ -125,7 +119,7 @@
+  
+ ifeq (YES, ${TINYXML_CREATE_LIB})
+ ${XMLLIB}: ${LIB_OBJS}
+-	${AR} ${XMLLIB} ${LIB_OBJS}
++	${AR} rc ${XMLLIB} ${LIB_OBJS}
+ endif
+ 
+ 
+EOF
 	make TINYXML_CREATE_LIB=YES TINYXML_USE_STL=YES libtinyxml.a
 
 	echo "Manually installing files."
