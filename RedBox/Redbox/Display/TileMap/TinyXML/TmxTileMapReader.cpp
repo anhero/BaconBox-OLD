@@ -71,6 +71,12 @@ namespace RedBox {
 	                         const TileCoordinate &expectedSize,
 	                         std::string &errorMessage);
 
+	void readLayerFromElement(const TiXmlElement &element,
+	                          TileMapLayer &layer);
+
+	void addObjectFromElement(const TiXmlElement &element,
+	                          ObjectLayer &objectLayer);
+
 	TileMap *TmxTileMapReader::read(const std::string &fileName) {
 		TileMap *result = NULL;
 
@@ -313,6 +319,7 @@ namespace RedBox {
 						if (i->ToElement()) {
 							if (i->ToElement()->ValueStr() == PROPERTIES_VALUE) {
 								addPropertiesFromElement(*(i->ToElement()), newTileset->getProperties());
+
 							} else if (i->ToElement()->ValueStr() == TILE_VALUE) {
 								readTileFromElement(*i->ToElement(), *newTileset);
 							}
@@ -362,6 +369,7 @@ namespace RedBox {
 			}
 		}
 	}
+
 	void addTileLayerFromElement(const TiXmlElement &element,
 	                             TileMap *&map,
 	                             std::string &errorMessage) {
@@ -374,19 +382,7 @@ namespace RedBox {
 		static const char *ZLIB_COMPRESSION = "zlib";
 		TileLayer *newTileLayer = map->pushBackTileLayer(readNameFromElement(element));
 
-		// We get the tile layer's opacity.
-		double tmpOpacity = 0.0;
-
-		if (element.Attribute(OPACITY_NAME, &tmpOpacity)) {
-			newTileLayer->setOpacity(static_cast<int32_t>(tmpOpacity * static_cast<double>(Color::MAX_COMPONENT_VALUE)));
-		}
-
-		// We check if the layer is visible.
-		int tmpVisible = 1;
-
-		if (element.Attribute(VISIBLE_NAME, &tmpVisible)) {
-			newTileLayer->setVisible(static_cast<bool>(tmpVisible));
-		}
+		readLayerFromElement(element, *newTileLayer);
 
 		const TiXmlNode *i = NULL;
 
@@ -501,8 +497,41 @@ namespace RedBox {
 	void addObjectLayerFromElement(const TiXmlElement &element,
 	                               TileMap *&map,
 	                               std::string &errorMessage) {
+		static const char *COLOR_NAME = "color";
+		static const std::string OBJECT_VALUE("object");
 		// We add a new object layer.
 		ObjectLayer *newObjectLayer = map->pushBackObjectLayer(readNameFromElement(element));
+
+		// We read the color of the object layer.
+		const char *tmpString = element.Attribute(COLOR_NAME);
+
+		if (tmpString) {
+			// We convert the hexadecimal color to an unsigned int.
+			std::stringstream ss;
+			std::string strColor(tmpString);
+			StringHelper::removeAll('#', strColor);
+			ss << std::hex << strColor.append("ff");
+			unsigned int tmpColor;
+			ss >> tmpColor;
+			newObjectLayer->setColor(Color(tmpColor));
+		}
+
+		// We read the and the visibility of the object layer.
+		readLayerFromElement(element, *newObjectLayer);
+
+		// We read the properties and the objects.
+		const TiXmlNode *i = NULL;
+
+		while ((i = element.IterateChildren(i))) {
+			if (i->ToElement()) {
+				if (i->ToElement()->ValueStr() == PROPERTIES_VALUE) {
+					addPropertiesFromElement(*i->ToElement(), newObjectLayer->getProperties());
+
+				} else if (i->ToElement()->ValueStr() == OBJECT_VALUE) {
+					addObjectFromElement(*i->ToElement(), *newObjectLayer);
+				}
+			}
+		}
 	}
 
 	TextureInformation *loadTextureFromElement(const std::string &currentFolder,
@@ -525,7 +554,9 @@ namespace RedBox {
 			if (tmpString) {
 				// We convert the hexadecimal color to an unsigned int.
 				std::stringstream ss;
-				ss << std::hex << std::string(tmpString).append("ff");
+				std::string strColor(tmpString);
+				StringHelper::removeAll('#', strColor);
+				ss << std::hex << strColor.append("ff");
 				unsigned int tmpColor;
 				ss >> tmpColor;
 				Color transparentColor(tmpColor);
@@ -606,6 +637,26 @@ namespace RedBox {
 		}
 
 		return success;
+	}
+
+	void readLayerFromElement(const TiXmlElement &element, TileMapLayer &layer) {
+		// We get the layer's opacity.
+		double tmpOpacity = 0.0;
+
+		if (element.Attribute(OPACITY_NAME, &tmpOpacity)) {
+			layer.setOpacity(static_cast<int32_t>(tmpOpacity * static_cast<double>(Color::MAX_COMPONENT_VALUE)));
+		}
+
+		// We check if the layer is visible.
+		int tmpVisible = 1;
+
+		if (element.Attribute(VISIBLE_NAME, &tmpVisible)) {
+			layer.setVisible(static_cast<bool>(tmpVisible));
+		}
+	}
+
+	void addObjectFromElement(const TiXmlElement &element,
+	                          ObjectLayer &objectLayer) {
 	}
 
 	const std::string readNameFromElement(const TiXmlElement &element) {

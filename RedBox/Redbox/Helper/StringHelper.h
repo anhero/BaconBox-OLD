@@ -4,6 +4,8 @@
  */
 #ifndef RB_STRINGHELPER_H
 #define RB_STRINGHELPER_H
+
+#include <algorithm>
 #include <string>
 
 #define MINIMUM_CHARCODE 32
@@ -14,14 +16,27 @@ namespace RedBox {
 	 * @ingroup Helper
 	 */
 	class StringHelper {
+	private:
+		template <typename ValueType>
+		struct IsChar {
+			IsChar(ValueType newCharValue) : charValue(newCharValue) {}
+			bool operator()(ValueType toCheck) const {
+				return charValue == toCheck;
+			}
+			ValueType charValue;
+		};
 	public:
 		/**
-		 * Removes all occurrences of a character.
-		 * @param oldChar Character to remove from the string.
-		 * @param str String in which all occurrences of the received character
-		 * will be deleted.
+		 * Removes all occurences of a character.
+		 * @param toRemove Character to remove from the string.
+		 * @param str String to have the specified character removed.
+		 * @tparam ValueType Type of the
 		 */
-		static std::wstring removeAll(wchar_t oldChar, const std::wstring &str);
+		template <typename ValueType>
+		static void removeAll(ValueType toRemove,
+		                      std::basic_string<ValueType> &str) {
+			str.erase(std::remove_if(str.begin(), str.end(), IsChar<ValueType>(toRemove)));
+		}
 
 		/**
 		 * Trims white spaces at the beginning and the end of a string.
