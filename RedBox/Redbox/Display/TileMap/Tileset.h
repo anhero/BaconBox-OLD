@@ -7,10 +7,12 @@
 
 #include <string>
 #include <deque>
+#include <map>
 
 #include "Vector2.h"
 #include "TileMapEntity.h"
 #include "TextureCoordinates.h"
+#include "PropertyMap.h"
 
 namespace RedBox {
 	struct TextureInformation;
@@ -25,6 +27,8 @@ namespace RedBox {
 	public:
 		/// Container used to contain the tiles' texture coordinates.
 		typedef std::deque<TextureCoordinates> TileCoordinates;
+		
+		typedef std::map<unsigned int, PropertyMap> TileProperties;
 
 		/**
 		 * Sets the name of the tileset. Does nothing if parent tile map already
@@ -139,6 +143,24 @@ namespace RedBox {
 		 */
 		bool isIdInTileset(unsigned int tileId) const;
 
+		/**
+		 * Gets the properties of a tile.
+		 * @param tileId Id of the tile to find its properties.
+		 * @return Pointer to the map of properties. NULL if the tile id does
+		 * not fit in the tileset.
+		 * @see RedBox::Tileset::tileProperties
+		 */
+		PropertyMap *getTileProperties(unsigned int tileId);
+		
+		/**
+		 * Gets the properties of a tile.
+		 * @param tileId Id of the tile to find its properties.
+		 * @return Pointer to the map of properties. NULL if the tile id does
+		 * not fit in the tileset or if the tile doesn't have any properties.
+		 * @see RedBox::Tileset::tileProperties
+		 */
+		const PropertyMap *getTileProperties(unsigned int tileId) const;
+		
 	private:
 
 		/**
@@ -221,6 +243,9 @@ namespace RedBox {
 
 		/// Vector containing the texture coordinates for each tile.
 		TileCoordinates tileTextureCoordinates;
+		
+		/// Map containing the properties of the tiles.
+		TileProperties tileProperties;
 	};
 }
 

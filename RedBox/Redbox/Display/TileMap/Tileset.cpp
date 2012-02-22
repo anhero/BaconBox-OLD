@@ -115,6 +115,31 @@ namespace RedBox {
 		return TileIdRange(firstTileId, firstTileId + tileTextureCoordinates.size()).isWithinRange(tileId);
 	}
 
+	PropertyMap *Tileset::getTileProperties(unsigned int tileId) {
+		if (TileIdRange(firstTileId, firstTileId + tileTextureCoordinates.size()).isWithinRange(tileId)) {
+			return &tileProperties[TileIdRange::withoutFlipFlags(tileId)];
+
+		} else {
+			return NULL;
+		}
+	}
+
+	const PropertyMap *Tileset::getTileProperties(unsigned int tileId) const {
+		if (TileIdRange(firstTileId, firstTileId + tileTextureCoordinates.size()).isWithinRange(tileId)) {
+			TileProperties::const_iterator found = tileProperties.find(TileIdRange::withoutFlipFlags(tileId));
+
+			if (found != tileProperties.end()) {
+				return &found->second;
+
+			} else {
+				return NULL;
+			}
+
+		} else {
+			return NULL;
+		}
+	}
+
 	Tileset::Tileset(const std::string &newName,
 	                 const TileMap &newParentMap,
 	                 TextureInformation *newTextureInformation,
@@ -126,7 +151,7 @@ namespace RedBox {
 		parentMap(newParentMap), textureInformation(newTextureInformation),
 		tileSize(newTileSize), tileSpacing(newTileSpacing), margin(newMargin),
 		tileOffset(newTileOffset), firstTileId(newFirstTileId),
-		tileTextureCoordinates() {
+		tileTextureCoordinates(), tileProperties() {
 		initializeTextureCoordinates();
 	}
 
@@ -135,7 +160,8 @@ namespace RedBox {
 		textureInformation(src.textureInformation), tileSize(src.tileSize),
 		tileSpacing(src.tileSpacing), margin(src.margin),
 		tileOffset(src.tileOffset), firstTileId(src.firstTileId),
-		tileTextureCoordinates(src.tileTextureCoordinates) {
+		tileTextureCoordinates(src.tileTextureCoordinates),
+		tileProperties(src.tileProperties) {
 	}
 
 	Tileset::~Tileset() {
@@ -143,6 +169,26 @@ namespace RedBox {
 
 	void Tileset::setFirstTileId(unsigned int newFirstTileId) {
 		if (newFirstTileId > 0) {
+			TileProperties tmpBackup(tileProperties);
+			tileProperties.clear();
+
+			if (newFirstTileId < firstTileId) {
+				unsigned int toRemove = firstTileId - newFirstTileId;
+
+				for (TileProperties::iterator i = tmpBackup.begin();
+				     i != tmpBackup.end(); ++i) {
+					tileProperties.insert(std::make_pair(i->first - toRemove, i->second));
+				}
+
+			} else if (newFirstTileId > firstTileId) {
+				unsigned int toAdd = newFirstTileId - firstTileId;
+
+				for (TileProperties::iterator i = tmpBackup.begin();
+				     i != tmpBackup.end(); ++i) {
+					tileProperties.insert(std::make_pair(i->first + toAdd, i->second));
+				}
+			}
+
 			firstTileId = newFirstTileId;
 		}
 	}

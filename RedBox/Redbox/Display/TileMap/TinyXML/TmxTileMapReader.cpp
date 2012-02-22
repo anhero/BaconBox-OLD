@@ -44,11 +44,13 @@ namespace RedBox {
 	                       TileMap *&map, std::string &errorMessage);
 
 	void addPropertiesFromElement(const TiXmlElement &element,
-	                              TileMapEntity &entity);
+	                              PropertyMap &properties);
 
 	void addTilesetFromElement(const std::string &currentFolder,
 	                           const TiXmlElement &element,
 	                           TileMap *&map, std::string &errorMessage);
+
+	void readTileFromElement(const TiXmlElement &element, Tileset &tileset);
 
 	void addTileLayerFromElement(const TiXmlElement &element,
 	                             TileMap *&map, std::string &errorMessage);
@@ -219,7 +221,7 @@ namespace RedBox {
 		static const std::string OBJECT_LAYER_VALUE("objectgroup");
 
 		if (element.Value() == PROPERTIES_VALUE) {
-			addPropertiesFromElement(element, *map);
+			addPropertiesFromElement(element, map->getProperties());
 
 		} else if (element.Value() == TILE_LAYER_VALUE) {
 			addTileLayerFromElement(element, map, errorMessage);
@@ -230,7 +232,7 @@ namespace RedBox {
 	}
 
 	void addPropertiesFromElement(const TiXmlElement &element,
-	                              TileMapEntity &entity) {
+	                              PropertyMap &properties) {
 		const std::string PROPERTY_VALUE("property");
 		static const char *VALUE_NAME = "value";
 
@@ -251,7 +253,7 @@ namespace RedBox {
 					// We make sure the property has a value.
 					if (tmpValue) {
 						// We add the property to the entity.
-						entity.getProperties()[std::string(tmpName)] = std::string(tmpValue);
+						properties[std::string(tmpName)] = std::string(tmpValue);
 					}
 
 				}
@@ -265,6 +267,7 @@ namespace RedBox {
 	                           std::string &errorMessage) {
 		static const char *TILE_SPACING_NAME = "spacing";
 		static const char *MARGIN_NAME = "margin";
+		static const std::string TILE_VALUE("tile");
 		// We make sure the tile width is specified.
 		double tmpTileWidth = 0.0;
 
@@ -303,12 +306,16 @@ namespace RedBox {
 					                                      Vector2(static_cast<float>(tmpTileWidth), static_cast<float>(tmpTileHeight)),
 					                                      static_cast<float>(tmpTileSpacing),
 					                                      static_cast<float>(tmpMargin));
-					// We fill it with its properties.
+					// We fill it with its properties and its tile properties.
 					i = NULL;
 
 					while ((i = element.IterateChildren(i))) {
-						if (i->ToElement() && i->ToElement()->Value() == PROPERTIES_VALUE) {
-							addPropertiesFromElement(*(i->ToElement()), *newTileset);
+						if (i->ToElement()) {
+							if (i->ToElement()->ValueStr() == PROPERTIES_VALUE) {
+								addPropertiesFromElement(*(i->ToElement()), newTileset->getProperties());
+							} else if (i->ToElement()->ValueStr() == TILE_VALUE) {
+								readTileFromElement(*i->ToElement(), *newTileset);
+							}
 						}
 					}
 
@@ -331,6 +338,30 @@ namespace RedBox {
 		}
 	}
 
+	void readTileFromElement(const TiXmlElement &element, Tileset &tileset) {
+		static const char *TILE_ID_NAME = "id";
+		int tmpTileId = 0;
+
+		// We get the tile id. The tile id can't be flipped, so it's fine to
+		// use an integer.
+		if (element.Attribute(TILE_ID_NAME, &tmpTileId)) {
+			PropertyMap *tileProperties = tileset.getTileProperties(static_cast<unsigned int>(tmpTileId));
+
+			// We make sure the tile id was in the tileset's range.
+			if (tileProperties) {
+				// We read the properties.
+				const TiXmlNode *i = NULL;
+
+				while ((i = element.IterateChildren(i))) {
+					if (i->ToElement()) {
+						if (i->ToElement()->ValueStr() == PROPERTIES_VALUE) {
+							addPropertiesFromElement(*i->ToElement(), *tileProperties);
+						}
+					}
+				}
+			}
+		}
+	}
 	void addTileLayerFromElement(const TiXmlElement &element,
 	                             TileMap *&map,
 	                             std::string &errorMessage) {
@@ -364,7 +395,7 @@ namespace RedBox {
 			if (i->ToElement()) {
 				// We read the properties.
 				if (i->ToElement()->Value() == PROPERTIES_VALUE) {
-					addPropertiesFromElement(*(i->ToElement()), *newTileLayer);
+					addPropertiesFromElement(*(i->ToElement()), newTileLayer->getProperties());
 
 				} else if (i->ToElement()->Value() == DATA_VALUE) {
 					const TiXmlElement *dataElement = i->ToElement();
