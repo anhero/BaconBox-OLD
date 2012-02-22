@@ -2,6 +2,10 @@
 
 #include <cmath>
 
+#include "Value.h"
+#include "DefaultSerializer.h"
+#include "Serializer.h"
+
 namespace RedBox {
 	const Color Color::BLACK = Color(0, 0, 0, Color::MAX_COMPONENT_VALUE);
 	const Color Color::WHITE = Color(Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE);
@@ -294,10 +298,67 @@ namespace RedBox {
 		setHSV(color);
 	}
 
+	void Color::serialize(Value &node, bool setName) const {
+		if (setName) {
+			node.setName("Color");
+		}
+
+		// We set the value's attributes.
+		node["red"].setInt(getRed());
+		node["red"].setAttribute(true);
+		node["green"].setInt(getGreen());
+		node["green"].setAttribute(true);
+		node["blue"].setInt(getBlue());
+		node["blue"].setAttribute(true);
+		node["alpha"].setInt(getAlpha());
+		node["alpha"].setAttribute(true);
+	}
+
+	bool Color::deserialize(const Value &node) {
+		bool result = true;
+		Object::const_iterator itRed = node.getObject().find("red");
+		Object::const_iterator itGreen = node.getObject().find("green");
+		Object::const_iterator itBlue = node.getObject().find("blue");
+		Object::const_iterator itAlpha = node.getObject().find("alpha");
+
+		if (itRed != node.getObject().end() &&
+		    itGreen != node.getObject().end() &&
+		    itBlue != node.getObject().end() &&
+		    itAlpha != node.getObject().end() &&
+		    itRed->second.isNumeric() &&
+		    itGreen->second.isNumeric() &&
+		    itBlue->second.isNumeric() &&
+		    itAlpha->second.isNumeric()) {
+
+			setRGBA(itRed->second.getInt(), itGreen->second.getInt(),
+			        itBlue->second.getInt(), itAlpha->second.getInt());
+
+		} else {
+			result = false;
+		}
+
+		return result;
+	}
+
+	bool Color::isValidValue(const Value &node) {
+		Object::const_iterator itRed = node.getObject().find("red");
+		Object::const_iterator itGreen = node.getObject().find("green");
+		Object::const_iterator itBlue = node.getObject().find("blue");
+		Object::const_iterator itAlpha = node.getObject().find("alpha");
+		return itRed != node.getObject().end() &&
+		       itGreen != node.getObject().end() &&
+		       itBlue != node.getObject().end() &&
+		       itAlpha != node.getObject().end() &&
+		       itRed->second.isNumeric() &&
+		       itGreen->second.isNumeric() &&
+		       itBlue->second.isNumeric() &&
+		       itAlpha->second.isNumeric();
+	}
+
 	std::ostream &operator<<(std::ostream &output, const Color &color) {
-		output << "{colors: [" << static_cast<int>(color.colors[Color::R]) << ", " <<
-		       static_cast<int>(color.colors[Color::G]) << ", " << static_cast<int>(color.colors[Color::B]) <<
-		       ", " << static_cast<int>(color.colors[Color::A]) << "]}";
+		Value tmpValue;
+		DefaultSerializer::serialize(color, tmpValue);
+		DefaultSerializer::getDefaultSerializer().writeToStream(output, tmpValue);
 		return output;
 	}
 }

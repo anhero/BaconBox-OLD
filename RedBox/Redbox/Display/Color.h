@@ -10,6 +10,8 @@
 #include <iostream>
 
 namespace RedBox {
+	class Value;
+
 #pragma pack(1)
 	/**
 	 * Simple class that represents a color in an RGBA format. Each component
@@ -17,7 +19,6 @@ namespace RedBox {
 	 * @ingroup Display
 	 */
 	class Color {
-		friend std::ostream &operator<<(std::ostream &output, const Color &color);
 	public:
 		/// Number of components each color has.
 		static const unsigned int NB_COMPONENTS = 4;
@@ -262,11 +263,36 @@ namespace RedBox {
 		 */
 		void setValue(float value);
 
+		/**
+		 * Serializes the instance to a Value.
+		 * @param node Value to serialize the Vector2T to.
+		 * @param setName Wether or not we need to set the name.
+		 * @see RedBox::DefaultSerializer
+		 */
+		void serialize(Value &node, bool setName = true) const;
+
+		/**
+		 * Deserializes the instance from a Value.
+		 * @param node Value to deserialize the value from.
+		 * @see RedBox::DefaultSerializer
+		 */
+		bool deserialize(const Value &node);
+
+		/**
+		 * Checks whether or not the Value contains the necessary information
+		 * to deserialize a Color.
+		 * @param node Value to check.
+		 * @return True if the value contains the necessary information, false
+		 * if not.
+		 */
+		static bool isValidValue(const Value &node);
 	private:
 		/// Color components.
 		uint8_t colors[NB_COMPONENTS];
 	};
 #pragma pack()
+	std::ostream &operator<<(std::ostream &output,
+	                         const Color &color);
 }
 
 #endif

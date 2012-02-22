@@ -49,7 +49,7 @@ namespace RedBox {
 				return first.y < second.y;
 			}
 		};
-		
+
 		/**
 		 * Comparator used to compare two vector's coordinates.
 		 */
