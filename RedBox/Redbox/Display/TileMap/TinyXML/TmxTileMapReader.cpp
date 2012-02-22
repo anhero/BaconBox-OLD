@@ -87,7 +87,10 @@ namespace RedBox {
 	const std::string readTypeFromElement(const TiXmlElement &element);
 
 	void readObjectFromElement(const TiXmlElement &element,
-							   TileMapObject &object);
+	                           TileMapObject &object);
+
+	void readVerticesFromElement(const TiXmlElement &element,
+								 TileMapVertexArray &object);
 	
 	void readVerticesFromString(const std::string &str,
 	                            StandardVertexArray &vertices);
@@ -676,13 +679,78 @@ namespace RedBox {
 
 	void addObjectFromElement(const TiXmlElement &element,
 	                          ObjectLayer &objectLayer) {
+		static const std::string POLYGON_VALUE("polygon");
+		static const std::string LINE_VALUE("polyline");
+		static const char *WIDTH_NAME = "width";
+		static const char *HEIGHT_NAME = "height";
 		// We need to determine the type of the object.
 
 		// First, we check if it's a tile object.
 		const char *tmpTileId = element.Attribute(TILE_ID_NAME);
 
+		TileMapObject *object = NULL;
+
 		if (tmpTileId) {
 			// If there is a gid attribute, it means it's a tile object.
+			TileObject *tileObject = objectLayer.addTile();
+			tileObject->setTileId(static_cast<unsigned int>(strtoul(tmpTileId,
+																	NULL, 10)));
+			object = tileObject;
+		} else {
+			// We check its children, if it has a <polygon>, it means it's a
+			// polygon, if it has a <polyline>, it means it's a line and it has
+			// neither one, it means it's a rectangle object.
+			TileMapVertexArray *vertexObject = NULL;
+
+			const TiXmlNode *i = NULL;
+
+			while (!vertexObject && (i = element.IterateChildren(i))) {
+				if (i->ToElement()) {
+					if (i->ToElement()->ValueStr() == POLYGON_VALUE) {
+						vertexObject = objectLayer.addPolygon();
+
+					} else if (i->ToElement()->ValueStr() == LINE_VALUE) {
+						vertexObject = objectLayer.addLine();
+					}
+				}
+			}
+
+			if (i && vertexObject) {
+				readVerticesFromElement(*i->ToElement(), *vertexObject);
+				readObjectFromElement(element, *vertexObject);
+				
+				// We position the vertices at the right position.
+				Vector2 delta(vertexObject->getPosition() - vertexObject->getVertices().getMinimumXY());
+				
+				vertexObject->getVertices().move(delta.getX(), delta.getY());
+				
+				object = vertexObject;
+			} else {
+				RectangleObject *rectangleObject = objectLayer.addRectangle();
+				readObjectFromElement(element, *rectangleObject);
+				
+				// We get the rectangle's width and height.
+				double tmpDouble = 0.0;
+				
+				element.Attribute(WIDTH_NAME, &tmpDouble);
+				rectangleObject->setWidth(static_cast<float>(tmpDouble));
+				tmpDouble = 0.0;
+				element.Attribute(HEIGHT_NAME, &tmpDouble);
+				rectangleObject->setHeight(static_cast<float>(tmpDouble));
+				
+				object = rectangleObject;
+			}
+		}
+
+		// We read the object's properties.
+		if (object) {
+			const TiXmlNode *i = NULL;
+
+			while ((i = element.IterateChildren(i))) {
+				if (i->ToElement() && i->ToElement()->ValueStr() == PROPERTIES_VALUE) {
+					addPropertiesFromElement(*i->ToElement(), object->getProperties());
+				}
+			}
 		}
 	}
 
@@ -691,23 +759,31 @@ namespace RedBox {
 		const char *tmpType = element.Attribute(TYPE_ATTRIBUTE);
 		return (tmpType) ? (std::string(tmpType)) : (std::string());
 	}
-	
+
 	void readObjectFromElement(const TiXmlElement &element,
-							   TileMapObject &object) {
+	                           TileMapObject &object) {
 		static const char *X_ATTRIBUTE = "x";
 		static const char *Y_ATTRIBUTE = "y";
 		// We get the name, the type and the position of the object.
 		object.setName(readNameFromElement(element));
-		
+
 		object.setType(readTypeFromElement(element));
-		
+
 		double tmpX = 0.0, tmpY = 0.0;
 		element.Attribute(X_ATTRIBUTE, &tmpX);
 		element.Attribute(Y_ATTRIBUTE, &tmpY);
 		object.setPosition(static_cast<float>(tmpX),
-							static_cast<float>(tmpY));
+		                   static_cast<float>(tmpY));
 	}
 
+	void readVerticesFromElement(const TiXmlElement &element,
+								 TileMapVertexArray &object) {
+		static const char *POINT_NAME = "points";
+		const char *tmpPoint = element.Attribute(POINT_NAME);
+		if (tmpPoint) {
+			readVerticesFromString(std::string(tmpPoint), object.getVertices());
+		}
+	}
 	void readVerticesFromString(const std::string &str,
 	                            StandardVertexArray &vertices) {
 		TokenList vertexList;

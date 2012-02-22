@@ -295,9 +295,9 @@ namespace RedBox {
 	}
 
 	std::ostream &operator<<(std::ostream &output, const Color &color) {
-		output << "{colors: [" << color.colors[Color::R] << ", " <<
-		       color.colors[Color::G] << ", " << color.colors[Color::B] <<
-		       ", " << color.colors[Color::A] << "]}";
+		output << "{colors: [" << static_cast<int>(color.colors[Color::R]) << ", " <<
+		       static_cast<int>(color.colors[Color::G]) << ", " << static_cast<int>(color.colors[Color::B]) <<
+		       ", " << static_cast<int>(color.colors[Color::A]) << "]}";
 		return output;
 	}
 }
