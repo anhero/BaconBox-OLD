@@ -37,8 +37,4 @@ namespace RedBox {
 
 	TileMapVertexArray::~TileMapVertexArray() {
 	}
-
-	const ObjectLayer &TileMapVertexArray::getParentLayer() const {
-		return parentLayer;
-	}
 }

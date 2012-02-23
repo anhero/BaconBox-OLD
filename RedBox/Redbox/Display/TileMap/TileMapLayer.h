@@ -92,6 +92,9 @@ namespace RedBox {
 		 * @see RedBox::TileLayer::visible
 		 */
 		void setVisible(bool newVisible);
+		
+		/// Const reference to the parent map that contains this layer.
+		const TileMap &parentMap;
 	protected:
 		/**
 		 * Paremeterized constructor.
@@ -133,9 +136,6 @@ namespace RedBox {
 		 * responsible for deleting this instance.
 		 */
 		virtual TileMapLayer *clone(const TileMap &newParentMap) const = 0;
-
-		/// Const reference to the parent map that contains this layer.
-		const TileMap &parentMap;
 	private:
 		TileMapLayer(const TileMapLayer &src);
 		TileMapLayer &operator=(const TileMapLayer &src);

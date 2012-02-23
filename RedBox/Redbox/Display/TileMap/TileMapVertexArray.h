@@ -81,12 +81,6 @@ namespace RedBox {
 		 * Destructor.
 		 */
 		virtual ~TileMapVertexArray();
-
-		/**
-		 * Gets the parent object layer.
-		 * @return Const reference to the parent object layer.
-		 */
-		const ObjectLayer &getParentLayer() const;
 	};
 }
 
