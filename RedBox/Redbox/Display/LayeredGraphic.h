@@ -79,10 +79,10 @@ namespace RedBox {
 		/**
 		 * Parameterized constructor. Loads the sprite from a sprite definition.
 		 * @param newTexture Texture pointer to use as the texture.
-		 * @param startingPosition Starting position at which to place the
-		 * sprite.
 		 * @param definition Information about the sprite's shape, its frames
 		 * and its animations.
+		 * @param startingPosition Starting position at which to place the
+		 * sprite.
 		 */
 		LayeredGraphic(TexturePointer newTexture,
 		               const SpriteDefinition &definition,
