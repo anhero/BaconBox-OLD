@@ -2,8 +2,8 @@
  * @file
  * @ingroup Display
  */
-#ifndef RB_LAYERED_BODY_H
-#define RB_LAYERED_BODY_H
+#ifndef RB_LAYERABLE_H
+#define RB_LAYERABLE_H
 
 #include "Disableable.h"
 #include "Manageable.h"
