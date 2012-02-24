@@ -79,7 +79,7 @@ namespace RedBox {
 		double timePerFrame;
 
 		/**
-		 * Number of loops before the animation finishes. -1 for infinite
+		 * Number of loops before the animation stops/finishes. -1 for infinite
 		 * looping.
 		 */
 		int nbLoops;

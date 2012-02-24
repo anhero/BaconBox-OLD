@@ -616,7 +616,7 @@ namespace RedBox {
 
 		/**
 		 * Deceleration applied when there is neither a horizontal nor a
-		 * vertical accleration until velocity reaches 0.
+		 * vertical acceleration until velocity reaches 0.
 		 */
 		float globalDrag;
 
@@ -635,8 +635,9 @@ namespace RedBox {
 		float verticalDrag;
 
 		/**
-		 * Contain "Side" flag (see Side.h). It tells which side can collide. A
-		 * side that can't collide will let a collidable pass through.
+		 * Contains "Side" flags. It tells which side can collide. A side that
+		 * can't collide will let a collidable pass through.
+		 * @see RedBox::Side
 		 */
 		FlagSet<Side> collidableSides;
 
@@ -644,16 +645,18 @@ namespace RedBox {
 		 * Elasticity factor of the collidable, will determine how it should
 		 * bounce in a collision. Default value is 0 (Solid object). 0.0f means
 		 * the collidable will not rebound at all when a collision is detected
-		 * with another static body. The body must be non-static for its
-		 * elasticity to be applied. 1.0f would mean perfect rebound. So if you
-		 * set an elasticity of 1.0f to an object falling to the ground, it will
-		 * rebound at the same height infinitely.
+		 * with another body. The body must be non-static for its elasticity to
+		 * be applied. 1.0f would mean "perfect" rebound. So if you set an
+		 * elasticity of 1.0f to an object falling to the ground, it will
+		 * rebound at the same height infinitely. But, in reality, the
+		 * elasticity calculation is not precise enough and it the height
+		 * changes a bit each time.
 		 */
 		float elasticity;
 
 		/**
 		 * This body won't react to collision if this boolean is set to true.
-		 * It will collide, but it won't be moved or affected by the collision.
+		 * It will collide, but it won't be moved or affected by the collisions.
 		 */
 		bool staticBody;
 
