@@ -24,7 +24,7 @@ namespace RedBox {
 	 */
 	template <typename ManufacturedType, typename ClassIDKey = std::string>
 	class GenericFactory {
-		template template <typename T, typename U, typename C = std::string> friend class RegisterInFactory;
+		template <typename T, typename U, typename C> friend class RegisterInFactory;
 	private:
 		/// Pointer to a function that allocates an instance of the child.
 		typedef ManufacturedType *(*BaseCreateFn)();
@@ -45,7 +45,7 @@ namespace RedBox {
 		 * @param className Name of the class to instantiate.
 		 */
 		ManufacturedType *create(const ClassIDKey &className) {
-			FnRegistry::iterator found = registry.find(className);
+			typename FnRegistry::iterator found = registry.find(className);
 
 			if (found != registry.end()) {
 				return (*found->second);
