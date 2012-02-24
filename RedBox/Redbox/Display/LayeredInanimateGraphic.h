@@ -13,6 +13,13 @@
 #include "TextureInformation.h"
 #include "CallHelper.h"
 #include "IsBaseOf.h"
+#include "TileObject.h"
+#include "RectangleObject.h"
+#include "PolygonObject.h"
+#include "TileMap.h"
+#include "ObjectLayer.h"
+#include "Tileset.h"
+#include "TileMapUtility.h"
 
 namespace RedBox {
 	/**
@@ -224,6 +231,34 @@ namespace RedBox {
 		 */
 		virtual LayeredInanimateGraphic<Parent> *clone() const {
 			return new LayeredInanimateGraphic<Parent>(*this);
+		}
+
+		/**
+		 * Constructs the layered inanimate graphic from a tile object.
+		 * @param tile Pointer to the tile object to construct the layered
+		 * inanimate graphic from.
+		 */
+		virtual void construct(const TileObject *tile) {
+			if (tile) {
+				// We initialize the vertices.
+				this->getVertices().resize(4);
+				ShapeFactory::createRectangle(tile->getSize(), tile->getPosition() - tile->getHeight(), &this->getVertices());
+				// We specify the render mode.
+				this->addRenderMode(RenderMode::SHAPE);
+				this->addRenderMode(RenderMode::COLOR);
+
+				// We get the texture and the texture coordinates.
+				const Tileset *tileset = tile->parentLayer.parentMap.getTileset(tile->getTileId());
+
+				if (tileset) {
+					if (tileset->loadTextureCoordinates(tile->getTileId(),
+					                                    this->getTextureCoordinates()) &&
+					    this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
+						this->setTextureInformation(tileset->getTextureInformation());
+						this->addRenderMode(RenderMode::TEXTURE);
+					}
+				}
+			}
 		}
 	};
 }

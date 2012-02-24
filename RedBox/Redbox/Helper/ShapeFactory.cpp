@@ -6,7 +6,6 @@
 #include <list>
 
 #include "VertexArray.h"
-#include "Algorithms.h"
 
 namespace RedBox {
 	void ShapeFactory::createRegularPolygon(unsigned int nbSides, float sideLength,

@@ -1,6 +1,6 @@
 # Tiled type properties
 
-In Tiled, you can set a type and properties to objects in object layers. Case does not matter for porperty names and values defined in this document. Default values written here are used if the property is not explicitly defined.
+In Tiled, you can set a type and properties to objects in object layers. Case matters for porperty names and values defined in this document. Default values written here are used if the property is not explicitly defined.
 
 ## Map properties
 
@@ -183,7 +183,7 @@ For animation definitions, it uses a similar idea as the frame definitions. You 
 </tr>
 <tr>
 <td>frame[i].orientation</td>
-<td>Orientation of the frame in the texture, used when the frame is rotated (for example, to save space in a texture atlas). The orientation represents the direction the top of the wanted frame image is pointing. For example, if the frame image is rotated 90 degrees clockwise, the orientation would be "EAST".</td>
+<td>Orientation of the frame in the texture, used when the frame is rotated (for example, to save space in a texture atlas). The different possible values are "NORTH", "SOUTH", "EAST" and "WEST". The orientation represents the direction the top of the wanted frame image is pointing. For example, if the frame image is rotated 90 degrees clockwise, the orientation would be "EAST"</td>
 <td>NORTH</td>
 </tr>
 <tr>

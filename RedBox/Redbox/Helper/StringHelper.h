@@ -7,6 +7,10 @@
 
 #include <algorithm>
 #include <string>
+#include <sstream>
+#include <ios>
+#include <functional>
+#include <locale>
 
 #define MINIMUM_CHARCODE 32
 
@@ -36,6 +40,44 @@ namespace RedBox {
 		static void removeAll(ValueType toRemove,
 		                      std::basic_string<ValueType> &str) {
 			str.erase(std::remove_if(str.begin(), str.end(), IsChar<ValueType>(toRemove)));
+		}
+		
+		/**
+		 * Converts a string to a numeric.
+		 * @param str String to read the number from.
+		 * @param value Value in which to put the output.
+		 * @param numericBase Numeric base to use to convert the string to the
+		 * numeric.
+		 */
+		template <typename ValueType, typename CharType>
+		static bool fromString(const std::basic_string<CharType> &str,
+							   ValueType &value,
+							   std::ios_base &(*numericBase)(std::ios_base&) = std::dec) {
+			return !(std::istringstream(str) >> numericBase >> value).fail();
+		}
+		
+		/**
+		 * Converts a string to lower case.
+		 * @param str String to have its case lowered.
+		 * @return String in all lower case.
+		 */
+		template <typename CharType>
+		std::basic_string<CharType> toLower(const std::basic_string<CharType> &str) {
+			std::basic_string<CharType> result(str.size(), ' ');
+			std::transform(str.begin(), str.end(), result.begin(), std::bind2nd(std::ptr_fun(&std::tolower<CharType>), std::locale("")));
+			return result;
+		}
+		
+		/**
+		 * Converts a string to upper case.
+		 * @param str String to have its case upped.
+		 * @return String in all upper case.
+		 */
+		template <typename CharType>
+		std::basic_string<CharType> toUpper(const std::basic_string<CharType> &str) {
+			std::basic_string<CharType> result(str.size(), ' ');
+			std::transform(str.begin(), str.end(), result.begin(), std::bind2nd(std::ptr_fun(&std::toupper<CharType>), std::locale("")));
+			return result;
 		}
 
 		/**
