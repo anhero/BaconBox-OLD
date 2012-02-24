@@ -284,6 +284,15 @@ namespace RedBox {
 				addRenderMode(RenderMode::TEXTURE);
 			}
 		}
+
+		/**
+		 * Gets a duplicate of the layered graphic.
+		 * @return Pointer to a duplicate of the layered graphic. The caller is
+		 * responsible for deleting this instance.
+		 */
+		virtual LayeredGraphic<Parent> *clone() const {
+			return new LayeredGraphic<Parent>(*this);
+		}
 	};
 }
 
