@@ -224,17 +224,17 @@ A "RedBox::InanimateSprite" cannot be animated. It can only have one frame. Read
 </tr>
 <tr>
 <td>frame.position.x</td>
-<td>Horizontal position of the frame in the texture. Is only used for rectangle objects and polygon objects.</td>
+<td>Horizontal position of the frame in the texture. Only used for rectangle objects and polygon objects.</td>
 <td>0</td>
 </tr>
 <tr>
 <td>frame.position.y</td>
-<td>Horizontal position of the frame in the texture. Is only used for rectangle objects and polygon objects.</td>
+<td>Horizontal position of the frame in the texture. Only used for rectangle objects and polygon objects.</td>
 <td>0</td>
 </tr>
 <tr>
 <td>frame.orientation</td>
-<td>Orientation of the frame in the texture, used when the frame is rotated (for example, to save space in a texture atlas). The orientation represents the direction the top of the wanted frame image is pointing. For example, if the frame image is rotated 90 degrees clockwise, the orientation would be "EAST".</td>
+<td>Orientation of the frame in the texture, used when the frame is rotated (for example, to save space in a texture atlas). The different possible values are "NORTH", "SOUTH", "EAST" and "WEST". The orientation represents the direction the top of the wanted frame image is pointing. For example, if the frame image is rotated 90 degrees clockwise, the orientation would be "EAST".</td>
 <td>NORTH</td>
 </tr>
 </table>

@@ -8,7 +8,7 @@
 #include <string>
 #include <map>
 
-#define RBRegisterClass(ancestor, child) RedBox::RegisterInFactory<ancestor, child>::registerInFactory(#child)	
+#define RBRegisterClass(ancestor, child) RedBox::RegisterInFactory<ancestor, child>::registerInFactory(#child)
 
 namespace RedBox {
 	/**
@@ -22,11 +22,12 @@ namespace RedBox {
 	 * by game developers using the RedBox engine.
 	 * @ingroup Helper
 	 */
-	template <class ManufacturedType, typename ClassIDKey=std::string>
+	template <typename ManufacturedType, typename ClassIDKey = std::string>
 	class GenericFactory {
+		template template <typename T, typename U, typename C = std::string> friend class RegisterInFactory;
 	private:
 		/// Pointer to a function that allocates an instance of the child.
-		typedef ManufacturedType* (*BaseCreateFn)();
+		typedef ManufacturedType *(*BaseCreateFn)();
 		/// Type that will contain the information the factory needs.
 		typedef std::map<ClassIDKey, BaseCreateFn> FnRegistry;
 	public:
@@ -34,9 +35,30 @@ namespace RedBox {
 		 * Gets the factory's instance.
 		 * @return Reference to the factory's instance.
 		 */
-		static GenericFactory& instance() {
+		static GenericFactory &getInstance() {
 			static GenericFactory instance;
 			return instance;
+		}
+
+		/**
+		 * Creates an instance of the child class asked for.
+		 * @param className Name of the class to instantiate.
+		 */
+		ManufacturedType *create(const ClassIDKey &className) {
+			FnRegistry::iterator found = registry.find(className);
+
+			if (found != registry.end()) {
+				return (*found->second);
+
+			} else {
+				return NULL;
+			}
+		}
+	private:
+		/**
+		 * Private default constructor.
+		 */
+		GenericFactory() : registry() {
 		}
 		
 		/**
@@ -47,29 +69,14 @@ namespace RedBox {
 		 * the generic factory's base type. Though that function should create
 		 * instance of a class that inherits the base type for it to be useful.
 		 */
-		void regCreateFn(const ClassIDKey& className, BaseCreateFn functionPtr) {
+		void regCreateFn(const ClassIDKey &className, BaseCreateFn functionPtr) {
 			registry[className] = functionPtr;
 		}
-
-		/**
-		 * Creates an instance of the child class asked for.
-		 * @param className Name of the class to instantiate.
-		 */
-		ManufacturedType* create(const ClassIDKey& className) {
-			BaseCreateFn test = registry[className];
-			return (*test)();
-		}
-	private:
+		
 		/// Associates an identifier to a function that allocates a child.
 		FnRegistry registry;
-		
-		/**
-		 * Private default constructor.
-		 */
-		GenericFactory() {
-		}
 	};
-	
+
 	/**
 	 * Used to register a class. If you want to register a class so it can be
 	 * used in its parent's factory, you call the registerInFactory(...). For
@@ -77,7 +84,7 @@ namespace RedBox {
 	 * inherit from AncestorType.
 	 * @ingroup Helper
 	 */
-	template <class AncestorType, class ManufacturedType, typename ClassIDKey=std::string>
+	template <typename AncestorType, typename ManufacturedType, typename ClassIDKey = std::string>
 	class RegisterInFactory {
 		friend class GenericFactory<AncestorType, ClassIDKey>;
 	public:
@@ -85,8 +92,8 @@ namespace RedBox {
 		 * Registers a class using the specified identifier.
 		 * @param id Identifier to associate the manufactured type with.
 		 */
-		static void registerInFactory(const ClassIDKey& id) {
-			GenericFactory<AncestorType, ClassIDKey>::instance().regCreateFn(id, createInstance);
+		static void registerInFactory(const ClassIDKey &id) {
+			GenericFactory<AncestorType, ClassIDKey>::getInstance().regCreateFn(id, createInstance);
 		}
 	private:
 		/**
@@ -94,10 +101,11 @@ namespace RedBox {
 		 * @return New instance of the manufactured type as a pointer to its
 		 * ancestor.
 		 */
-		static AncestorType* createInstance() {
+		static AncestorType *createInstance() {
 			return new ManufacturedType;
 		}
 	};
 }
 
 #endif
+
