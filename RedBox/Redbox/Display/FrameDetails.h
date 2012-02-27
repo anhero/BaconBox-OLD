@@ -6,6 +6,7 @@
 #define RB_FRAME_DETAILS_H
 
 #include <iostream>
+#include <string>
 
 #include "Vector2.h"
 #include "SafeEnum.h"
@@ -27,18 +28,9 @@ namespace RedBox {
 			    WEST
 			};
 		};
-
+		
 		/// Used to specify the frame's orientation in the image.
 		typedef SafeEnum<OrientationDef> Orientation;
-
-		/// Position in the image (in pixels).
-		Vector2 position;
-
-		/**
-		 * Orientation the image, used when the frame is rotated to save space
-		 * when maximizing space in the texture. NORTH by default.
-		 */
-		Orientation orientation;
 
 		/**
 		 * Checks whether or not the Value contains the necessary information
@@ -72,6 +64,13 @@ namespace RedBox {
 		FrameDetails(const FrameDetails &src);
 
 		/**
+		 * Reads the orientation from a string. "NORTH" corresponds to
+		 * Orientation::NORTH, "SOUTH" corresponds to Orientation::SOUTH, etc.
+		 * @param orientationString String containing the orientation.
+		 */
+		static Orientation stringToOrientation(const std::string &orientationString);
+		
+		/**
 		 * Assignment operator overload.
 		 * @param src FrameDetails to copy.
 		 * @return Reference to the modified FrameDetails.
@@ -94,6 +93,15 @@ namespace RedBox {
 		 * modified.
 		 */
 		bool deserialize(const Value &node);
+		
+		/// Position in the image (in pixels).
+		Vector2 position;
+		
+		/**
+		 * Orientation the image, used when the frame is rotated to save space
+		 * when maximizing space in the texture. NORTH by default.
+		 */
+		Orientation orientation;
 	};
 
 	std::ostream &operator<<(std::ostream &output, const FrameDetails &fd);

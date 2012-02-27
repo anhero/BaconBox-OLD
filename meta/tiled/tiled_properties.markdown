@@ -147,6 +147,11 @@ the ground, it would rebound at the same height infinitely. But, in reality, the
 <td>Wether or not the offset is a proportion of the body's size. False makes it so the offset is interpreted in pixels.</td>
 <td>0</td>
 </tr>
+<tr>
+<td>textureKey</td>
+<td>Key of the texture to use. Only used for rectangle objects and polygon objects. If not specified, the rectangle or polygon will be rendered as a shape which its color will be the same as the object's layer's.</td>
+<td></td>
+</tr>
 </table>
 
 ### Specific properties

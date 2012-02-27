@@ -86,6 +86,14 @@ namespace RedBox {
 		 */
 		void loadTextureCoordinates(const VertexArray &vertices,
 		                            const Vector2 &offset);
+		
+		/**
+		 * Loads the texture coordinates.
+		 * @param vertices Vertices to use to load the texture coordinates.
+		 * @param details Details about the frame's offset and orientation.
+		 */
+		void loadTextureCoordinates(const VertexArray &vertices,
+									const FrameDetails &details);
 
 		/**
 		 * Loads the texture coordinates.

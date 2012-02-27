@@ -20,6 +20,7 @@
 #include "ObjectLayer.h"
 #include "Tileset.h"
 #include "TileMapUtility.h"
+#include "FrameDetails.h"
 
 namespace RedBox {
 	/**
@@ -203,6 +204,20 @@ namespace RedBox {
 		void construct(const Vector2 &newSize,
 		               const Vector2 &newPosition,
 		               const Vector2 &newTextureOffset = Vector2()) {
+			this->construct(newSize, newPosition, FrameDetails(newTextureOffset, FrameDetails::Orientation::NORTH));
+		}
+
+
+		/**
+		 * Generates the vertices and the texture coordinates for the
+		 * sprite.
+		 * @param newSize Size of the sprite.
+		 * @param newPosition Position of the sprite in the world.
+		 * @param newTextureOffset Texture coordinates' offset if needed.
+		 */
+		void construct(const Vector2 &newSize,
+		               const Vector2 &newPosition,
+		               const FrameDetails &frameDetails) {
 			// We initialize the vertices.
 			this->getVertices().resize(4);
 			ShapeFactory::createRectangle(newSize, newPosition, &this->getVertices());
@@ -212,7 +227,7 @@ namespace RedBox {
 
 			// We check if we have to initialize the texture coordinates.
 			if (this->getTextureInformation()) {
-				loadTextureCoordinates(this->getVertices(), newTextureOffset);
+				loadTextureCoordinates(this->getVertices(), frameDetails);
 
 				// We make sure the texture coordinates were loaded correctly.
 				if (this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
@@ -235,30 +250,94 @@ namespace RedBox {
 
 		/**
 		 * Constructs the layered inanimate graphic from a tile object.
-		 * @param tile Pointer to the tile object to construct the layered
-		 * inanimate graphic from.
+		 * @param tile Tile object to construct the layered inanimate graphic
+		 * from.
 		 */
-		virtual void construct(const TileObject *tile) {
-			if (tile) {
-				// We initialize the vertices.
-				this->getVertices().resize(4);
-				ShapeFactory::createRectangle(tile->getSize(), tile->getPosition() - tile->getHeight(), &this->getVertices());
-				// We specify the render mode.
-				this->addRenderMode(RenderMode::SHAPE);
-				this->addRenderMode(RenderMode::COLOR);
+		virtual void construct(const TileObject &tile) {
+			// We initialize the vertices.
+			this->getVertices().resize(4);
+			ShapeFactory::createRectangle(tile.getSize(), tile.getPosition() - tile.getHeight(), &this->getVertices());
+			// We specify the render mode.
+			this->addRenderMode(RenderMode::SHAPE);
+			this->addRenderMode(RenderMode::COLOR);
 
-				// We get the texture and the texture coordinates.
-				const Tileset *tileset = tile->parentLayer.parentMap.getTileset(tile->getTileId());
+			// We get the texture and the texture coordinates.
+			const Tileset *tileset = tile.parentLayer.parentMap.getTileset(tile.getTileId());
 
-				if (tileset) {
-					if (tileset->loadTextureCoordinates(tile->getTileId(),
-					                                    this->getTextureCoordinates()) &&
-					    this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
-						this->setTextureInformation(tileset->getTextureInformation());
-						this->addRenderMode(RenderMode::TEXTURE);
-					}
+			if (tileset) {
+				if (tileset->loadTextureCoordinates(tile.getTileId(),
+				                                    this->getTextureCoordinates()) &&
+				    this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
+					this->setTextureInformation(tileset->getTextureInformation());
+					this->addRenderMode(RenderMode::TEXTURE);
 				}
+
+			} else {
+				this->removeRenderMode(RenderMode::TEXTURE);
 			}
+
+			loadCollidableProperties(tile.getProperties());
+		}
+
+		/**
+		 * Constructs the layered inanimate graphic from a tile object.
+		 * @param rectangle Rectangle object to construct the layered inanimate
+		 * graphic from.
+		 */
+		virtual void construct(const RectangleObject &rectangle) {
+			this->setTextureInformation(TileMapUtility::readTextureKey(rectangle.getProperties()));
+			this->Collidable::move(rectangle.getXPosition() - this->getXPosition(),
+			                       rectangle.getYPosition() - this->getYPosition());
+			this->construct(rectangle.getSize(), this->getPosition(),
+			                TileMapUtility::readFramePosition(rectangle.getProperties()));
+
+			// If we don't have a texture.
+			if (!this->getTextureInformation()) {
+				// We set the shape's color.
+				this->setColor(rectangle.parentLayer.getColor());
+
+			} else {
+				this->setColor(Color::WHITE);
+			}
+
+			loadCollidableProperties(rectangle.getProperties());
+		}
+
+		virtual void construct(const PolygonObject &polygon) {
+			this->setTextureInformation(TileMapUtility::readTextureKey(polygon.getProperties()));
+			this->Collidable::move(polygon.getXPosition() - this->getXPosition(),
+			                       polygon.getYPosition() - this->getYPosition());
+			this->getVertices() = polygon.getVertices();
+
+			// We specify the render mode.
+			this->addRenderMode(RenderMode::SHAPE);
+			this->addRenderMode(RenderMode::COLOR);
+
+			// We check if we have to initialize the texture coordinates.
+			if (this->getTextureInformation()) {
+				this->loadTextureCoordinates(this->getVertices(), TileMapUtility::readFrame(polygon.getProperties()));
+
+				// We make sure the texture coordinates were loaded correctly.
+				if (this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
+					this->addRenderMode(RenderMode::TEXTURE);
+				}
+
+				this->setColor(Color::WHITE);
+
+			} else {
+				this->removeRenderMode(RenderMode::TEXTURE);
+				this->setColor(polygon.parentLayer.getColor());
+			}
+
+			loadCollidableProperties(polygon.getProperties());
+		}
+	private:
+		/**
+		 * Loads the properties of a collidable if we are derived from
+		 * Collidable.
+		 */
+		void loadCollidableProperties(const PropertyMap &properties) {
+			CallLoadCollidable<LayeredInanimateGraphic<Parent>, Parent, IsBaseOf<Collidable, Parent>::RESULT>()(properties, *this);
 		}
 	};
 }

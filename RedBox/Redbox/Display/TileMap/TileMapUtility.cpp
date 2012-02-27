@@ -262,4 +262,57 @@ namespace RedBox {
 			collidable.setOffsetRatio(OFFSET_RATIO_DEFAULT_VALUE);
 		}
 	}
+
+	const Vector2 TileMapUtility::readFramePosition(const PropertyMap &properties) {
+		static const PropertyMap::key_type FRAME_POSITION_X("frame.position.x");
+		static const PropertyMap::key_type FRAME_POSITION_Y("frame.position.y");
+
+		Vector2 result;
+
+		// We read the frame's horizontal position.
+		PropertyMap::const_iterator found = properties.find(FRAME_POSITION_X);
+
+		float tmpFloat;
+
+		if (found != properties.end() &&
+		    StringHelper::fromString(found->second, tmpFloat)) {
+			result.setX(tmpFloat);
+		}
+
+		// We read the frame's vertical position.
+		found = properties.find(FRAME_POSITION_Y);
+
+		if (found != properties.end() &&
+		    StringHelper::fromString(found->second, tmpFloat)) {
+			result.setY(tmpFloat);
+		}
+
+		return result;
+	}
+
+	const std::string TileMapUtility::readTextureKey(const PropertyMap &properties) {
+		static const PropertyMap::key_type TEXTURE_KEY("textureKey");
+
+		PropertyMap::const_iterator found = properties.find(TEXTURE_KEY);
+
+		return (found != properties.end()) ? (found->second) : (std::string());
+	}
+
+	FrameDetails::Orientation TileMapUtility::readFrameOrientation(const PropertyMap &properties) {
+		static const PropertyMap::key_type FRAME_ORIENTATION("frame.orientation");
+
+		PropertyMap::const_iterator found = properties.find(FRAME_ORIENTATION);
+
+		if (found != properties.end()) {
+			return FrameDetails::stringToOrientation(found->second);
+
+		} else {
+			return FrameDetails::Orientation::NORTH;
+		}
+	}
+
+	const FrameDetails TileMapUtility::readFrame(const PropertyMap &properties) {
+		return FrameDetails(TileMapUtility::readFramePosition(properties),
+		                    TileMapUtility::readFrameOrientation(properties));
+	}
 }
