@@ -5,8 +5,13 @@
 #include "Collidable.h"
 
 namespace RedBox {
+	const std::string TileMapUtility::DEFAULT_ANIMATION_NAME("defaultAnimation");
+	const std::string TileMapUtility::DEFAULT_FRAME_NAME("defaultFrame");
+
 	static const PropertyMap::key_type::value_type TRUE_CHAR = '1';
 	static const PropertyMap::key_type::value_type FALSE_CHAR = '0';
+	static const PropertyMap::key_type FRAME_START("frame[");
+	static const PropertyMap::key_type ANIMATION_START("animation[");
 
 	struct BoolCharPredicate {
 		bool operator()(const PropertyMap::key_type::value_type &a) const {
@@ -290,6 +295,35 @@ namespace RedBox {
 		return result;
 	}
 
+	const Vector2 TileMapUtility::readFramePosition(const PropertyMap &properties,
+	                                                unsigned int index) {
+		static const std::string FRAME_POSITION_END("].position.");
+		std::stringstream ss;
+		ss << FRAME_START << index << FRAME_POSITION_END;
+
+		// We read the frame's horizontal position.
+		PropertyMap::const_iterator found = properties.find(ss.str() + "x");
+
+		Vector2 result;
+
+		float tmpFloat;
+
+		if (found != properties.end() &&
+		    StringHelper::fromString(found->second, tmpFloat)) {
+			result.setX(tmpFloat);
+		}
+
+		// We read the frame's vertical position.
+		found = properties.find(ss.str() + "y");
+
+		if (found != properties.end() &&
+		    StringHelper::fromString(found->second, tmpFloat)) {
+			result.setY(tmpFloat);
+		}
+
+		return result;
+	}
+
 	const std::string TileMapUtility::readTextureKey(const PropertyMap &properties) {
 		static const PropertyMap::key_type TEXTURE_KEY("textureKey");
 
@@ -299,9 +333,25 @@ namespace RedBox {
 	}
 
 	FrameDetails::Orientation TileMapUtility::readFrameOrientation(const PropertyMap &properties) {
-		static const PropertyMap::key_type FRAME_ORIENTATION("frame.orientation");
+		static const PropertyMap::key_type FRAME_ORIENTATION("frame.orientation.");
 
 		PropertyMap::const_iterator found = properties.find(FRAME_ORIENTATION);
+
+		if (found != properties.end()) {
+			return FrameDetails::stringToOrientation(found->second);
+
+		} else {
+			return FrameDetails::Orientation::NORTH;
+		}
+	}
+
+	FrameDetails::Orientation TileMapUtility::readFrameOrientation(const PropertyMap &properties,
+	                                                               unsigned int index) {
+		static const PropertyMap::key_type FRAME_ORIENTATION_END("].orientation");
+		std::stringstream ss;
+		ss << FRAME_START << index << FRAME_ORIENTATION_END;
+
+		PropertyMap::const_iterator found = properties.find(ss.str());
 
 		if (found != properties.end()) {
 			return FrameDetails::stringToOrientation(found->second);
@@ -314,5 +364,78 @@ namespace RedBox {
 	const FrameDetails TileMapUtility::readFrame(const PropertyMap &properties) {
 		return FrameDetails(TileMapUtility::readFramePosition(properties),
 		                    TileMapUtility::readFrameOrientation(properties));
+	}
+
+	int TileMapUtility::readAnimationNbLoops(const PropertyMap &properties,
+	                                         const std::string &animationName) {
+		static const PropertyMap::key_type ANIMATION_NB_LOOPS_END("].nbLoops");
+
+		int result = -1;
+
+		PropertyMap::const_iterator found = properties.find(ANIMATION_START + animationName + ANIMATION_NB_LOOPS_END);
+
+		if (found != properties.end()) {
+			StringHelper::fromString(found->second, result);
+		}
+
+		return result;
+	}
+
+	double TileMapUtility::readAnimationTimePerFrame(const PropertyMap &properties,
+	                                                 const std::string &animationName) {
+		static const PropertyMap::key_type ANIMATION_TIME_PER_FRAME_END("].timePerFrame");
+
+		double result = 0.3;
+
+		PropertyMap::const_iterator found = properties.find(ANIMATION_START + animationName + ANIMATION_TIME_PER_FRAME_END);
+
+		if (found != properties.end()) {
+			StringHelper::fromString(found->second, result);
+		}
+
+		return result;
+	}
+
+	const std::vector<unsigned int> TileMapUtility::readAnimationFrames(const PropertyMap &properties,
+	                                                                    const std::string &animationName) {
+		static const PropertyMap::key_type ANIMATION_FRAMES_END("].frames");
+
+		std::vector<unsigned int> result(1, 0u);
+
+		PropertyMap::const_iterator found = properties.find(ANIMATION_START + animationName + ANIMATION_FRAMES_END);
+
+		if (found != properties.end()) {
+			std::string tmp(found->second);
+			StringHelper::trim(tmp);
+
+			if (tmp.size() >= 2 &&
+			    *tmp.begin() == '[' &&
+			    *tmp.rbegin() == ']') {
+				tmp.erase(tmp.begin());
+				tmp.erase(tmp.end() - 1);
+				std::list<std::string> indexes;
+				StringHelper::tokenize(tmp, indexes, ",");
+
+				result.resize(indexes.size(), 0u);
+
+				std::list<std::string>::const_iterator i = indexes.begin();
+				std::vector<unsigned int>::size_type i2 = 0;
+
+				while (i != indexes.end()) {
+					StringHelper::fromString(*i, result[i2]);
+					++i;
+					++i2;
+				}
+			}
+		}
+
+		return result;
+	}
+
+	const AnimationDefinition TileMapUtility::readAnimation(const PropertyMap &properties,
+	                                                        const std::string &animation) {
+		return AnimationDefinition(TileMapUtility::readAnimationFrames(properties, animation),
+		                           TileMapUtility::readAnimationTimePerFrame(properties, animation),
+		                           TileMapUtility::readAnimationNbLoops(properties, animation));
 	}
 }

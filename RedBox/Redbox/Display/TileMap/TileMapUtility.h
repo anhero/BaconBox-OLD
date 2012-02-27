@@ -6,10 +6,12 @@
 #define RB_TILE_MAP_UTILITY_H
 
 #include <string>
+#include <vector>
 
 #include "PropertyMap.h"
 #include "Vector2.h"
 #include "FrameDetails.h"
+#include "AnimationDefinition.h"
 
 namespace RedBox {
 	class Collidable;
@@ -20,6 +22,20 @@ namespace RedBox {
 	 */
 	class TileMapUtility {
 	public:
+		/**
+		 * Name of the property that contains the name about the default
+		 * animation.
+		 */
+		static const std::string DEFAULT_ANIMATION_NAME;
+
+		/**
+		 * Name of the property that contains the index of the default frame.
+		 */
+		static const std::string DEFAULT_FRAME_NAME;
+
+		/// Value to use by default if the default frame is not specified.
+		static const unsigned int DEFAULT_FRAME = 0u;
+
 		/**
 		 * Loads a collidable's attributes from properties. See the
 		 * tiled_properties.pdf for more information about the properties read.
@@ -39,6 +55,16 @@ namespace RedBox {
 		static const Vector2 readFramePosition(const PropertyMap &properties);
 
 		/**
+		 * Reads the frame's position in a texture from the property map.
+		 * @param properties Properties to use to read the frame position.
+		 * @param index Index of the frame to read.
+		 * @return Position of the frame in the texture. Properties not found
+		 * default to 0.0f.
+		 */
+		static const Vector2 readFramePosition(const PropertyMap &properties,
+		                                       unsigned int index);
+
+		/**
 		 * Reads the texture key from the property map.
 		 * @param properties Properties to use to read the texture key.
 		 * @return String containing the key of the texture.
@@ -51,13 +77,59 @@ namespace RedBox {
 		 * @return Orientation of the frame.
 		 */
 		static FrameDetails::Orientation readFrameOrientation(const PropertyMap &properties);
-		
+
+		/**
+		 * Reads the frame orientation from a property map.
+		 * @param properties Properties to use to read the frame orientation.
+		 * @param index Index of the frame to read.
+		 * @return Orientation of the frame.
+		 */
+		static FrameDetails::Orientation readFrameOrientation(const PropertyMap &properties,
+		                                                      unsigned int index);
+
 		/**
 		 * Reads the frame details from a property map.
 		 * @param properties Properties to use to read the frame details.
 		 * @return Frame details.
 		 */
 		static const FrameDetails readFrame(const PropertyMap &properties);
+
+		/**
+		 * Reads the number of times an animation should loop from a property
+		 * map.
+		 * @param properties Properties to use to read the animation details.
+		 * @param animationName Name of the animation to read.
+		 * @return Number of times the animation should loop.
+		 */
+		static int readAnimationNbLoops(const PropertyMap &properties,
+		                                const std::string &animationName);
+
+		/**
+		 * Reads the time per frame for an animation from a property map.
+		 * @param properties Properties to use to read the animation details.
+		 * @param animationName Name of the animation to read.
+		 * @return Number of the animation should loop.
+		 */
+		static double readAnimationTimePerFrame(const PropertyMap &properties,
+		                                        const std::string &animationName);
+
+		/**
+		 * Reads the frame indexes for an animation from a property map.
+		 * @param properties Properties to use to read the animation details.
+		 * @param animationName Name of the animation to read.
+		 * @return Vector containing the animation's frame indexes.
+		 */
+		static const std::vector<unsigned int> readAnimationFrames(const PropertyMap &properties,
+		                                                           const std::string &animationName);
+
+		/**
+		 * Reads the animation from a property map.
+		 * @param properties Properties to use to read the animation details.
+		 * @param animationName Name of the animation to read.
+		 * @return Animation definition.
+		 */
+		static const AnimationDefinition readAnimation(const PropertyMap &properties,
+		                                               const std::string &animation);
 	private:
 		/**
 		 * Private undefined default constructor.
