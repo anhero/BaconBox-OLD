@@ -152,6 +152,11 @@ the ground, it would rebound at the same height infinitely. But, in reality, the
 <td>Key of the texture to use. Only used for rectangle objects and polygon objects. If not specified, the rectangle or polygon will be rendered as a shape which its color will be the same as the object's layer's.</td>
 <td></td>
 </tr>
+<tr>
+<td>color</td>
+<td>Color of the object. Must be in CSS rgb format. See <a href="http://www.w3.org/TR/css3-color/">http://www.w3.org/TR/css3-color/</a>. Does not support HSL and HSLA.</td>
+<td>rgb(255, 255, 255)</td>
+</tr>
 </table>
 
 ### Specific properties
