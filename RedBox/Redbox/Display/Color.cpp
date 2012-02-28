@@ -2,19 +2,33 @@
 
 #include <cmath>
 
+#include <map>
+#include <vector>
+#include <utility>
+
 #include "Value.h"
 #include "DefaultSerializer.h"
 #include "Serializer.h"
+#include "StringHelper.h"
 
 namespace RedBox {
-	const Color Color::BLACK = Color(0, 0, 0, Color::MAX_COMPONENT_VALUE);
-	const Color Color::WHITE = Color(Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE);
-	const Color Color::RED = Color(Color::MAX_COMPONENT_VALUE, 0, 0, Color::MAX_COMPONENT_VALUE);
-	const Color Color::GREEN = Color(0, Color::MAX_COMPONENT_VALUE, 0, Color::MAX_COMPONENT_VALUE);
-	const Color Color::BLUE = Color(0, 0, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE);
-	const Color Color::YELLOW = Color(Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE, 0, Color::MAX_COMPONENT_VALUE);
-	const Color Color::PINK = Color(Color::MAX_COMPONENT_VALUE, 0, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE);
-	const Color Color::TEAL = Color(0, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE, Color::MAX_COMPONENT_VALUE);
+	const Color Color::BLACK(0, 0, 0);
+	const Color Color::SILVER(192, 192, 192);
+	const Color Color::GRAY(128, 128, 128);
+	const Color Color::WHITE(255, 255, 255);
+	const Color Color::MAROON(128, 0, 0);
+	const Color Color::RED(255, 0, 0);
+	const Color Color::PURPLE(128, 0, 128);
+	const Color Color::FUCHSIA(255, 0, 255);
+	const Color Color::GREEN(0, 128, 0);
+	const Color Color::LIME(0, 255, 0);
+	const Color Color::OLIVE(128, 128, 0);
+	const Color Color::YELLOW(255, 255, 0);
+	const Color Color::NAVY(0, 0, 128);
+	const Color Color::BLUE(0, 0, 255);
+	const Color Color::TEAL(0, 128, 128);
+	const Color Color::AQUA(0, 255, 255);
+	const Color Color::TRANSPARENT(0, 0, 0, 0);
 
 	uint8_t Color::getWithinRange(int32_t component) {
 		return static_cast<uint8_t>((component < 0) ? (0) : ((component > MAX_COMPONENT_VALUE_32) ? (MAX_COMPONENT_VALUE) : (component)));
@@ -30,6 +44,10 @@ namespace RedBox {
 
 	Color::Color(uint32_t rgba) {
 		setRGBA(rgba);
+	}
+
+	Color::Color(const std::string &colorString) {
+		setRGBA(colorString);
 	}
 
 	Color::Color(const Color &src) {
@@ -117,6 +135,196 @@ namespace RedBox {
 		        static_cast<uint8_t>((rgba & 0x00ff0000) >> 16),
 		        static_cast<uint8_t>((rgba & 0x0000ff00) >> 8),
 		        static_cast<uint8_t>(rgba & 0x000000ff));
+	}
+
+	std::map<std::string, Color> createCssColorMap();
+
+	void Color::setRGBA(const std::string &colorString) {
+		static const std::map<std::string, Color> cssColorMap = createCssColorMap();
+		// We remove the whitespaces.
+		std::string tmp(StringHelper::toLower(colorString));
+		StringHelper::trim(tmp);
+
+		// We make sure the string is not empty.
+		if (!tmp.empty()) {
+			// If it's in hexadecimal.
+			if (tmp[0] == '#') {
+				// We remove the '#'.
+				tmp.erase(0, 1);
+				
+				// We make sure it has a valid size.
+				if (tmp.size() == 3) {
+					// We convert it to the 6 char format.
+					tmp.reserve(8);
+					tmp.resize(6, tmp[2]);
+					tmp[3] = tmp[2] = tmp[1];
+					tmp[1] = tmp[0];
+				}
+
+				if (tmp.size() == 6) {
+					// We append the alpha value.
+					tmp.append("ff");
+					
+					// We convert it to an int.
+					uint32_t rgba;
+					
+					if (StringHelper::fromString(tmp, rgba, std::hex)) {
+						setRGBA(rgba);
+					}
+				}
+
+			} else if (tmp[0] == 'r') {
+				// It's either for the color "red", rgb or rgba.
+				if (tmp == std::string("red")) {
+					*this = RED;
+
+				} else {
+					// We check if the color is in rgba format.
+					bool rgba = tmp.size() >= 13 &&
+					            (tmp.substr(0, 5) == std::string("rgba(")) &&
+					            *tmp.rbegin() == ')';
+
+					if (rgba) {
+						tmp.erase(0, 5);
+						tmp.erase(tmp.size() - 1, 1);
+
+					} else if (tmp.size() >= 10 &&
+					           tmp.substr(0, 4) == std::string("rgb(") &&
+					           *tmp.rbegin() == ')') {
+						tmp.erase(0, 4);
+						tmp.erase(tmp.size() - 1, 1);
+					}
+
+					std::vector<std::string> componentList;
+					componentList.reserve(4);
+					StringHelper::tokenize(tmp, componentList, ",");
+
+					if ((rgba && componentList.size() == 4) ||
+					    (!rgba && componentList.size() == 3)) {
+						// We re-use the rgba variable.
+						rgba = true;
+						// We check if the rgb components use percentages.
+						int r, g, b, a;
+
+						// We make sure the rgb components are not empty.
+						if (!componentList[0].empty() &&
+						    !componentList[1].empty() &&
+						    !componentList[2].empty()) {
+							if (*componentList[0].rbegin() == '%' &&
+							    *componentList[1].rbegin() == '%' &&
+							    *componentList[2].rbegin() == '%') {
+								// We remove the percentage signs.
+								componentList[0].erase(componentList[0].size() - 1, 1);
+								componentList[1].erase(componentList[1].size() - 1, 1);
+								componentList[2].erase(componentList[2].size() - 1, 1);
+
+								// We convert the percentages to floats.
+								float fr, fg, fb;
+
+								if (StringHelper::fromString(componentList[0], fr) &&
+								    StringHelper::fromString(componentList[1], fg) &&
+								    StringHelper::fromString(componentList[2], fb)) {
+									r = static_cast<int>(fr * 2.55f);
+									g = static_cast<int>(fg * 2.55f);
+									b = static_cast<int>(fb * 2.55f);
+
+								} else {
+									rgba = false;
+								}
+
+							} else if (*componentList[0].rbegin() != '%' &&
+							           *componentList[1].rbegin() != '%' &&
+							           *componentList[2].rbegin() != '%') {
+								// We read the rgb values.
+								if (!(StringHelper::fromString(componentList[0], r) &&
+								      StringHelper::fromString(componentList[1], g) &&
+								      StringHelper::fromString(componentList[2], b))) {
+									rgba = false;
+								}
+
+							} else {
+								rgba = false;
+							}
+
+						} else {
+							rgba = false;
+						}
+
+						// If the rgb components were valid.
+						if (rgba) {
+							if (componentList.size() == 4) {
+								// We make sure the alpha value is not empty.
+								if (!componentList[3].empty()) {
+									// We check if the alpha value is in percentage.
+									if (*componentList[3].rbegin() == '%') {
+										// We remove the percentage sign.
+										componentList[3].erase(componentList[3].size() - 1, 1);
+										// We convert the percentage.
+										float fa;
+
+										if (StringHelper::fromString(componentList[3], fa)) {
+											a = static_cast<int>(fa * 2.55f);
+
+										} else {
+											rgba = false;
+										}
+
+									} else {
+										float fa;
+
+										if (StringHelper::fromString(componentList[3], fa)) {
+											a = static_cast<int>(fa * 255.0f);
+
+										} else {
+											rgba = false;
+										}
+									}
+
+								} else {
+									rgba = false;
+								}
+
+							} else {
+								a = 255;
+							}
+						}
+
+						if (rgba) {
+							setRGBA(r, g, b, a);
+						}
+					}
+				}
+
+			} else {
+				// It's either for a color keyword or invalid.
+				std::map<std::string, Color>::const_iterator colorFound = cssColorMap.find(tmp);
+
+				if (colorFound != cssColorMap.end()) {
+					*this = colorFound->second;
+				}
+			}
+		}
+	}
+
+	std::map<std::string, Color> createCssColorMap() {
+		std::map<std::string, Color> result;
+		result.insert(std::make_pair(std::string("black"), Color::BLACK));
+		result.insert(std::make_pair(std::string("silver"), Color::SILVER));
+		result.insert(std::make_pair(std::string("gray"), Color::GRAY));
+		result.insert(std::make_pair(std::string("white"), Color::WHITE));
+		result.insert(std::make_pair(std::string("maroon"), Color::MAROON));
+		result.insert(std::make_pair(std::string("purple"), Color::PURPLE));
+		result.insert(std::make_pair(std::string("fuchsia"), Color::FUCHSIA));
+		result.insert(std::make_pair(std::string("green"), Color::GREEN));
+		result.insert(std::make_pair(std::string("lime"), Color::LIME));
+		result.insert(std::make_pair(std::string("olive"), Color::OLIVE));
+		result.insert(std::make_pair(std::string("yellow"), Color::YELLOW));
+		result.insert(std::make_pair(std::string("navy"), Color::NAVY));
+		result.insert(std::make_pair(std::string("blue"), Color::BLUE));
+		result.insert(std::make_pair(std::string("teal"), Color::TEAL));
+		result.insert(std::make_pair(std::string("aqua"), Color::AQUA));
+		result.insert(std::make_pair(std::string("transparent"), Color::TRANSPARENT));
+		return result;
 	}
 
 	const uint8_t *Color::getComponents() const {

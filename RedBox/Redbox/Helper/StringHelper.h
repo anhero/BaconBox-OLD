@@ -62,7 +62,7 @@ namespace RedBox {
 		 * @return String in all lower case.
 		 */
 		template <typename CharType>
-		std::basic_string<CharType> toLower(const std::basic_string<CharType> &str) {
+		static std::basic_string<CharType> toLower(const std::basic_string<CharType> &str) {
 			std::basic_string<CharType> result(str.size(), ' ');
 			std::transform(str.begin(), str.end(), result.begin(), std::bind2nd(std::ptr_fun(&std::tolower<CharType>), std::locale("")));
 			return result;
@@ -74,7 +74,7 @@ namespace RedBox {
 		 * @return String in all upper case.
 		 */
 		template <typename CharType>
-		std::basic_string<CharType> toUpper(const std::basic_string<CharType> &str) {
+		static std::basic_string<CharType> toUpper(const std::basic_string<CharType> &str) {
 			std::basic_string<CharType> result(str.size(), ' ');
 			std::transform(str.begin(), str.end(), result.begin(), std::bind2nd(std::ptr_fun(&std::toupper<CharType>), std::locale("")));
 			return result;

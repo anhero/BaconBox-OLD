@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <iostream>
+#include <string>
 
 namespace RedBox {
 	class Value;
@@ -28,20 +29,38 @@ namespace RedBox {
 		static const uint8_t MAX_COMPONENT_VALUE_32 = 0xff;
 		/// Black color (0, 0, 0, 255).
 		static const Color BLACK;
+		/// Silver color (192, 192, 192, 255).
+		static const Color SILVER;
+		/// Gray color (128, 128, 128, 255).
+		static const Color GRAY;
 		/// White color (255, 255, 255, 255).
 		static const Color WHITE;
+		/// Maroon color (128, 0, 0, 255).
+		static const Color MAROON;
 		/// Red color (255, 0, 0, 255).
 		static const Color RED;
-		/// Green color (0, 255, 0, 255).
+		/// Purple color (128, 0, 128, 255).
+		static const Color PURPLE;
+		/// Fuchsia color (255, 0, 255, 255).
+		static const Color FUCHSIA;
+		/// Green color (0, 128, 0, 255).
 		static const Color GREEN;
-		/// Blue color (0, 0, 255, 255).
-		static const Color BLUE;
+		/// Lime color (0, 255, 0, 255).
+		static const Color LIME;
+		/// Olive color (128, 128, 0, 255).
+		static const Color OLIVE;
 		/// Yellow color (255, 255, 0, 255).
 		static const Color YELLOW;
-		/// Pink color (255, 0, 255, 255).
-		static const Color PINK;
-		/// Teal color (0, 255, 255, 255).
+		/// Navy color (0, 0, 128, 255)
+		static const Color NAVY;
+		/// Blue color (0, 0, 255, 255).
+		static const Color BLUE;
+		/// Teal color (0, 128, 128, 255).
 		static const Color TEAL;
+		/// Aqua color (0, 255, 255, 255).
+		static const Color AQUA;
+		/// Transparent color (0, 0, 0, 0).
+		static const Color TRANSPARENT;
 
 		/// Enumeration for the indexes of the color's array of components.
 		enum Component {
@@ -87,8 +106,18 @@ namespace RedBox {
 		/**
 		 * Parameterized constructor with one parameter.
 		 * @param rgba Color in the format 0x00000000.
+		 * @see RedBox::Color::setRGBA(uint32_t rgba)
 		 */
 		Color(uint32_t rgba);
+		
+		/**
+		 * Initializes the color's values from a string. The string must contain
+		 * the color values like in CSS ( http://www.w3.org/TR/css3-color/ ). If
+		 * the alpha is not specified, it is set to 255.
+		 * @param colorString String containing the CSS color.
+		 * @see RedBox::Color::setRGBA(const std::string &colorString)
+		 */
+		Color(const std::string &colorString);
 
 		/**
 		 * Copy constructor. Simply calls setRGBA() with the given color's
@@ -203,9 +232,19 @@ namespace RedBox {
 
 		/**
 		 * Set the 4 components with one integer.
-		 * @param rgba Color in the format 0x00000000.
+		 * @param rgba Color in the format 0x00000000. The order is R, G, B and
+		 * A (you cannot omit the alpha).
 		 */
 		void setRGBA(uint32_t rgba);
+		
+		/**
+		 * Sets the color's values from a string. The string must contain the
+		 * color values like in CSS ( http://www.w3.org/TR/css3-color/ ). If the
+		 * alpha is not specified, it is set to 255. The color is not modified
+		 * if the given string is invalid.
+		 * @param colorString String containing the CSS color.
+		 */
+		void setRGBA(const std::string &colorString);
 
 		/**
 		 * Directly gets the color's array of components.
