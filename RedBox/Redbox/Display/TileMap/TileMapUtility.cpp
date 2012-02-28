@@ -438,4 +438,15 @@ namespace RedBox {
 		                           TileMapUtility::readAnimationTimePerFrame(properties, animation),
 		                           TileMapUtility::readAnimationNbLoops(properties, animation));
 	}
+
+	const Color TileMapUtility::readColor(const PropertyMap &properties) {
+		PropertyMap::const_iterator found = properties.find("color");
+
+		if (found != properties.end()) {
+			return Color(found->second);
+
+		} else {
+			return Color::WHITE;
+		}
+	}
 }

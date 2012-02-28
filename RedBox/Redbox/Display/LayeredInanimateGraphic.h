@@ -275,6 +275,9 @@ namespace RedBox {
 			} else {
 				this->removeRenderMode(RenderMode::TEXTURE);
 			}
+			
+			// We get the tile's color.
+			this->setColor(TileMapUtility::readColor(tile.getProperties()));
 
 			loadCollidableProperties(tile.getProperties());
 		}
@@ -291,14 +294,8 @@ namespace RedBox {
 			this->construct(rectangle.getSize(), this->getPosition(),
 			                TileMapUtility::readFramePosition(rectangle.getProperties()));
 
-			// If we don't have a texture.
-			if (!this->getTextureInformation()) {
-				// We set the shape's color.
-				this->setColor(rectangle.parentLayer.getColor());
-
-			} else {
-				this->setColor(Color::WHITE);
-			}
+			// We read the rectangle's color.
+			this->setColor(TileMapUtility::readColor(rectangle.getProperties()));
 
 			loadCollidableProperties(rectangle.getProperties());
 		}
@@ -322,12 +319,12 @@ namespace RedBox {
 					this->addRenderMode(RenderMode::TEXTURE);
 				}
 
-				this->setColor(Color::WHITE);
-
 			} else {
 				this->removeRenderMode(RenderMode::TEXTURE);
-				this->setColor(polygon.parentLayer.getColor());
 			}
+			
+			// We read the polygon's color.
+			this->setColor(TileMapUtility::readColor(polygon.getProperties()));
 
 			loadCollidableProperties(polygon.getProperties());
 		}

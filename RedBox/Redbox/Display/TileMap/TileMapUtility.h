@@ -12,6 +12,7 @@
 #include "Vector2.h"
 #include "FrameDetails.h"
 #include "AnimationDefinition.h"
+#include "Color.h"
 
 namespace RedBox {
 	class Collidable;
@@ -130,6 +131,14 @@ namespace RedBox {
 		 */
 		static const AnimationDefinition readAnimation(const PropertyMap &properties,
 		                                               const std::string &animation);
+
+		/**
+		 * Reads the color from a tile map object's properties.
+		 * @param properties Properties to read the color from.
+		 * @return Color found in the properties. White if no color property is
+		 * found or if the color string is invalid.
+		 */
+		static const Color readColor(const PropertyMap &properties);
 	private:
 		/**
 		 * Private undefined default constructor.

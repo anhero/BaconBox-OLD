@@ -35,7 +35,7 @@ namespace RedBox {
 	}
 
 	Color::Color() {
-		operator=(BLACK);
+		operator=(WHITE);
 	}
 
 	Color::Color(int32_t red, int32_t green, int32_t blue, int32_t alpha) {
@@ -47,7 +47,7 @@ namespace RedBox {
 	}
 
 	Color::Color(const std::string &colorString) {
-		operator=(BLACK);
+		operator=(WHITE);
 		setRGBA(colorString);
 	}
 
