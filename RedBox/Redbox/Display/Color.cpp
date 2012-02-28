@@ -47,6 +47,7 @@ namespace RedBox {
 	}
 
 	Color::Color(const std::string &colorString) {
+		operator=(BLACK);
 		setRGBA(colorString);
 	}
 
@@ -176,7 +177,7 @@ namespace RedBox {
 			} else if (tmp[0] == 'r') {
 				// It's either for the color "red", rgb or rgba.
 				if (tmp == std::string("red")) {
-					*this = RED;
+					operator=(RED);
 
 				} else {
 					// We check if the color is in rgba format.
@@ -300,7 +301,7 @@ namespace RedBox {
 				std::map<std::string, Color>::const_iterator colorFound = cssColorMap.find(tmp);
 
 				if (colorFound != cssColorMap.end()) {
-					*this = colorFound->second;
+					operator=(colorFound->second);
 				}
 			}
 		}
