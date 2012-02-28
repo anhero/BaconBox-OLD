@@ -55,6 +55,13 @@ namespace RedBox {
 		static void createSquare(float sideLength,
 		                         const Vector2 &position,
 		                         VertexArray *vertices);
+		
+		/**
+		 * Triangulates a polygon into triangle strips ready for render.
+		 * @param vertices Polygon to be triangulated into triangle strips. Must
+		 * not have self-intersecting edges. Will be modified.
+		 */
+		static void polygonToTriangleStrips(VertexArray &vertices);
 	private:
 		/**
 		 * Private constructor. Declared private so no ShapeFactory can be
