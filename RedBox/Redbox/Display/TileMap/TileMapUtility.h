@@ -14,6 +14,7 @@
 #include "AnimationDefinition.h"
 #include "Color.h"
 #include "FrameArray.h"
+#include "Animatable.h"
 
 namespace RedBox {
 	class Collidable;
@@ -104,14 +105,14 @@ namespace RedBox {
 		 */
 		static const FrameDetails readFrame(const PropertyMap &properties,
 		                                    unsigned int index);
-		
+
 		/**
 		 * Reads the frames from a property map.
 		 * @param properties Properties to use to read the frame details.
 		 * @param outputArray Array of frame details to output to.
 		 */
 		static void readFrames(const PropertyMap &properties,
-							   FrameArray &outputArray);
+		                       FrameArray &outputArray);
 
 		/**
 		 * Reads the number of times an animation should loop from a property
@@ -149,15 +150,17 @@ namespace RedBox {
 		 */
 		static const AnimationDefinition readAnimation(const PropertyMap &properties,
 		                                               const std::string &animation);
-		
+
 		/**
 		 * Reads the animations from a property map.
 		 * @param properties Properties to use to read the animations.
-		 * @param animations Animation map to contain the details about the
-		 * animations found.
+		 * @param animations Animatable bodies to have the animations added to.
+		 * @param overwrite Set this parameter to true to overwrite the
+		 * animations that have the same name as the old animations.
 		 */
-		void readAnimations(const PropertyMap &properties,
-							AnimationMap &animations);
+		static void readAnimations(const PropertyMap &properties,
+		                           Animatable &animations,
+		                           bool overwrite = false);
 
 		/**
 		 * Reads the color from a tile map object's properties.
@@ -166,6 +169,21 @@ namespace RedBox {
 		 * found or if the color string is invalid.
 		 */
 		static const Color readColor(const PropertyMap &properties);
+
+		/**
+		 * Reads the name of the default animation to start.
+		 * @param properties Properties to read the default animation's name
+		 * from.
+		 * @return Name of the default animation.
+		 */
+		static const std::string readDefaultAnimation(const PropertyMap &properties);
+
+		/**
+		 * Reads the index of the default frame to display.
+		 * @param properties Properties to read the default frame index from.
+		 * @return Index of the default frame.
+		 */
+		static unsigned int readDefaultFrame(const PropertyMap &properties);
 	private:
 		/**
 		 * Private undefined default constructor.

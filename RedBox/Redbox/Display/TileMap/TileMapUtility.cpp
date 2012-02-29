@@ -469,7 +469,8 @@ namespace RedBox {
 	}
 
 	void TileMapUtility::readAnimations(const PropertyMap &properties,
-	                                    AnimationMap &animations) {
+	                                    Animatable &animations,
+	                                    bool overwrite) {
 		// We find all the animation names to read.
 		std::set<std::string> names;
 
@@ -492,7 +493,7 @@ namespace RedBox {
 		// We read the animations.
 		for (std::set<std::string>::const_iterator i = names.begin();
 		     i != names.end(); ++i) {
-			animations[*i] = TileMapUtility::readAnimation(properties, *i);
+			animations.addAnimation(*i, TileMapUtility::readAnimation(properties, *i), overwrite);
 		}
 	}
 
@@ -505,5 +506,27 @@ namespace RedBox {
 		} else {
 			return Color::WHITE;
 		}
+	}
+
+	const std::string TileMapUtility::readDefaultAnimation(const PropertyMap &properties) {
+		static const PropertyMap::key_type DEFAULT_ANIMATION("defaultAnimation");
+
+		PropertyMap::const_iterator found = properties.find(DEFAULT_ANIMATION);
+
+		return (found != properties.end()) ? (found->second) : (std::string());
+	}
+
+	unsigned int TileMapUtility::readDefaultFrame(const PropertyMap &properties) {
+		static const PropertyMap::key_type DEFAULT_FRAME("defaultFrame");
+
+		unsigned int result = 0;
+
+		PropertyMap::const_iterator found = properties.find(DEFAULT_FRAME);
+
+		if (found != properties.end()) {
+			StringHelper::fromString(found->second, result);
+		}
+
+		return result;
 	}
 }

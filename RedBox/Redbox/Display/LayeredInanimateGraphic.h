@@ -22,6 +22,7 @@
 #include "TileMapUtility.h"
 #include "FrameDetails.h"
 #include "AlgorithmHelper.h"
+#include "FrameDetails.h"
 
 namespace RedBox {
 	/**
@@ -282,9 +283,9 @@ namespace RedBox {
 		virtual void construct(const RectangleObject &rectangle) {
 			this->setTextureInformation(TileMapUtility::readTextureKey(rectangle.getProperties()));
 			this->Parent::move(rectangle.getXPosition() - this->getXPosition(),
-			                       rectangle.getYPosition() - this->getYPosition());
+			                   rectangle.getYPosition() - this->getYPosition());
 			this->construct(rectangle.getSize(), this->getPosition(),
-			                TileMapUtility::readFramePosition(rectangle.getProperties()));
+			                TileMapUtility::readFrame(rectangle.getProperties()));
 
 			// We read the rectangle's color.
 			this->setColor(TileMapUtility::readColor(rectangle.getProperties()));

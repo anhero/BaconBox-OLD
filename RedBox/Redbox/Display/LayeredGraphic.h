@@ -24,6 +24,7 @@
 #include "TileMapUtility.h"
 #include "FrameDetails.h"
 #include "AlgorithmHelper.h"
+#include "FrameArray.h"
 
 namespace RedBox {
 	/**
@@ -264,6 +265,32 @@ namespace RedBox {
 				removeRenderMode(RenderMode::TEXTURE);
 			}
 		}
+			
+		void construct(const Vector2 &newSize,
+					   const Vector2 &newPosition,
+					   const FrameDetails &frameDetails) {
+			
+			// We initialize the vertices.
+			this->getVertices().resize(4);
+			ShapeFactory::createRectangle(newSize, newPosition,
+			                              &this->getVertices());
+			// We specify the render modes.
+			addRenderMode(RenderMode::SHAPE);
+			addRenderMode(RenderMode::COLOR);
+			
+			// We check if we have to initialize the texture coordinates.
+			if (getTextureInformation()) {
+				loadTextureCoordinates(this->getVertices(), FrameArray(1, frameDetails));
+				
+				// We make sure the texture coordinates were loaded correctly.
+				if (this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
+					addRenderMode(RenderMode::TEXTURE);
+				}
+				
+			} else {
+				removeRenderMode(RenderMode::TEXTURE);
+			}
+		}
 
 		/**
 		 * Generates teh vertices and the texture coordinates from a sprite
@@ -299,6 +326,7 @@ namespace RedBox {
 		 * @param tile Tile object to construct the layered graphic from.
 		 */
 		virtual void construct(const TileObject &tile) {
+			this->clearAnimations();
 			// We initialize the vertices.
 			this->getVertices().resize(4);
 			ShapeFactory::createRectangle(tile.getSize(), tile.getPosition() - tile.getHeight(), &this->getVertices());
@@ -327,6 +355,55 @@ namespace RedBox {
 			this->setColor(TileMapUtility::readColor(tile.getProperties()));
 
 			loadCollidableProperties(tile.getProperties());
+		}
+
+		/**
+		 * Constructs the layered graphic from a tile object.
+		 * @param rectangle Rectangle object to construct the layered graphic
+		 * from.
+		 */
+		virtual void construct(const RectangleObject &rectangle) {
+			this->clearAnimations();
+			this->setTextureInformation(TileMapUtility::readTextureKey(rectangle.getProperties()));
+			this->Parent::move(rectangle.getXPosition() - this->getXPosition(),
+							   rectangle.getYPosition() - this->getYPosition());
+			
+			// We initialize the vertices.
+			this->getVertices().resize(4);
+			ShapeFactory::createRectangle(rectangle.getSize(),
+										  rectangle.getPosition(), &this->getVertices());
+			// We specify the render mode.
+			this->addRenderMode(RenderMode::SHAPE);
+			this->addRenderMode(RenderMode::COLOR);
+
+			// We check if we have to initialize the texture coordinates.
+			if (this->getTextureInformation()) {
+				// We load the texture coordinates.
+				FrameArray newFrames;
+				TileMapUtility::readFrames(rectangle.getProperties(),
+										   newFrames);
+				
+				this->loadTextureCoordinates(this->getVertices(),
+											 newFrames);
+				
+				// We load the animations.
+				TileMapUtility::readAnimations(rectangle.getProperties(),
+											   *this);
+				
+				// We set the default frame.
+				this->setDefaultFrame(TileMapUtility::readDefaultFrame(rectangle.getProperties()));
+				
+				// We start the default animation.
+				this->startAnimation(TileMapUtility::readDefaultAnimation(rectangle.getProperties()));
+			} else {
+				this->removeRenderMode(RenderMode::TEXTURE);
+			}
+			
+			
+			// We read the rectangle's color.
+			this->setColor(TileMapUtility::readColor(rectangle.getProperties()));
+			
+			loadCollidableProperties(rectangle.getProperties());
 		}
 
 		/**
