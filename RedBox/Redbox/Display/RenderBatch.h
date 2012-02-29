@@ -48,9 +48,10 @@ namespace RedBox {
 		/**
 		 * Default constructor.
 		 */
-		RenderBatchParent() : Updateable(), Maskable(), RenderModable(), Texturable(),
-			bodies(), toAdd(), toRemove(), toChange(), indices(), vertices(),
-			textureCoordinates(), colors(), updating(false), currentMask(NULL) {
+		RenderBatchParent() : Updateable(), Maskable(), RenderModable(),
+			Texturable(), bodies(), toAdd(), toRemove(), toChange(), indices(),
+			vertices(), textureCoordinates(), colors(), updating(false),
+			currentMask(NULL) {
 			renderModes.set(RenderMode::TEXTURE);
 		}
 
@@ -60,11 +61,37 @@ namespace RedBox {
 		 * @param newTexture Texture pointer to use as the batch's texture. All
 		 * bodies in the batch will use this texture.
 		 */
-		explicit RenderBatchParent(TexturePointer newTexture) : Updateable(), Maskable(),
-			RenderModable(), Texturable(newTexture), bodies(), toAdd(),
-			toRemove(), toChange(), indices(), vertices(),
+		explicit RenderBatchParent(TexturePointer newTexture) : Updateable(),
+			Maskable(), RenderModable(), Texturable(newTexture), bodies(),
+			toAdd(), toRemove(), toChange(), indices(), vertices(),
 			textureCoordinates(), colors(), updating(false), currentMask(NULL) {
 			renderModes.set(RenderMode::TEXTURE);
+		}
+
+		/**
+		 * Copy constructor.
+		 * @param src Render batch to make a copy of.
+		 */
+		RenderBatchParent(const RenderBatchParent<T> &src) : Updateable(src),
+			Maskable(src), RenderModable(src), Texturable(src), bodies(),
+			toAdd(), toRemove(), toChange(), indices(), vertices(),
+			textureCoordinates(), colors(), updating(false),
+			currentMask(src.currentMask) {
+
+			for (typename BodyMap::const_iterator i = src.bodies.begin();
+			     i != bodies.end(); ++i) {
+				this->add((*i)->clone());
+			}
+
+			for (typename BodyList::const_iterator i = toAdd.begin();
+			     i != toAdd.end(); ++i) {
+				this->add((*i)->clone());
+			}
+
+			for (typename BodyList::const_iterator i = toChange.begin();
+			     i != toAdd.end(); ++i) {
+				this->add((*i)->clone());
+			}
 		}
 
 		/**
@@ -72,6 +99,37 @@ namespace RedBox {
 		 */
 		virtual ~RenderBatchParent() {
 			free();
+		}
+
+		/**
+		 * Assignment operator overload.
+		 * @param src Render batch to copy.
+		 * @return Reference to the modified instance.
+		 */
+		RenderBatchParent<T> &operator=(const RenderBatchParent<T> &src) {
+			this->RenderModable::operator=(src);
+
+			if (this != &src && updating) {
+				free();
+				clear();
+
+				for (typename BodyMap::const_iterator i = src.bodies.begin();
+				     i != bodies.end(); ++i) {
+					this->add((*i)->clone());
+				}
+
+				for (typename BodyList::const_iterator i = toAdd.begin();
+				     i != toAdd.end(); ++i) {
+					this->add((*i)->clone());
+				}
+
+				for (typename BodyList::const_iterator i = toChange.begin();
+				     i != toAdd.end(); ++i) {
+					this->add((*i)->clone());
+				}
+			}
+
+			return *this;
 		}
 
 		/**
@@ -840,9 +898,27 @@ namespace RedBox {
 		}
 
 		/**
+		 * Copy constructor.
+		 * @param src Render batch to make a copy of.
+		 */
+		RenderBatchMiddle(const RenderBatchMiddle<T, ANIMATABLE> &src) :
+			RenderBatchParent<T>(src) {
+		}
+
+		/**
 		 * Destructor.
 		 */
 		virtual ~RenderBatchMiddle() {
+		}
+
+		/**
+		 * Assignment operator overload.
+		 * @param src Render batch to copy.
+		 * @return Reference to the modified instance.
+		 */
+		RenderBatchMiddle<T, ANIMATABLE> &operator=(const RenderBatchMiddle<T, ANIMATABLE> &src) {
+			this->RenderBatchParent<T>::operator=(src);
+			return *this;
 		}
 	};
 
@@ -866,14 +942,33 @@ namespace RedBox {
 		}
 
 		/**
+		 * Copy constructor.
+		 * @param src Render batch to make a copy of.
+		 */
+		RenderBatchMiddle(const RenderBatchMiddle<T, true> &src) :
+			RenderBatchParent<T>(src) {
+		}
+
+		/**
 		 * Destructor.
 		 */
 		virtual ~RenderBatchMiddle() {
 		}
+
+		/**
+		 * Assignment operator overload.
+		 * @param src Render batch to copy.
+		 * @return Reference to the modified instance.
+		 */
+		RenderBatchMiddle<T, true> &operator=(const RenderBatchMiddle<T, true> &src) {
+			this->RenderBatchParent<T>::operator=(src);
+			return *this;
+		}
 	};
 
 	template <typename T>
-	class RenderBatch : public RenderBatchMiddle<T, IsBaseOf<Animatable, T>::RESULT> {
+	class RenderBatch :
+		public RenderBatchMiddle<T, IsBaseOf<Animatable, T>::RESULT> {
 	public:
 		/**
 		 * Default constructor.
@@ -892,9 +987,27 @@ namespace RedBox {
 		}
 
 		/**
+		 * Copy constructor.
+		 * @param src Render batch to make a copy of.
+		 */
+		RenderBatch(const RenderBatch<T> &src) :
+			RenderBatchMiddle<T, IsBaseOf<Animatable, T>::RESULT>(src) {
+		}
+
+		/**
 		 * Destructor.
 		 */
 		virtual ~RenderBatch() {
+		}
+
+		/**
+		 * Assignment operator overload.
+		 * @param src Render batch to copy.
+		 * @return Reference to the modified instance.
+		 */
+		RenderBatch<T> &operator=(const RenderBatch<T> &src) {
+			this->RenderBatchMiddle<T, IsBaseOf<Animatable, T>::RESULT>::operator=(src);
+			return *this;
 		}
 	};
 }

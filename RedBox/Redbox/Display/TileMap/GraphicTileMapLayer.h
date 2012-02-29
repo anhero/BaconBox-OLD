@@ -27,10 +27,23 @@ namespace RedBox {
 		explicit GraphicTileMapLayer(const Vector2 &startingPosition = Vector2());
 
 		/**
+		 * Copy constructor.
+		 * @param src Graphic tile map layer to make a copy of.
+		 */
+		GraphicTileMapLayer(const GraphicTileMapLayer &src);
+		
+		/**
 		 * Destructor.
 		 */
 		virtual ~GraphicTileMapLayer();
 
+		/**
+		 * Assignment operator overload.
+		 * @param src Graphic tile map layer to make a copy of.
+		 * @return Reference to the graphic tile map layer.
+		 */
+		GraphicTileMapLayer &operator=(const GraphicTileMapLayer &src);
+		
 		/**
 		 * Gets the instance as a graphic tile layer, if it is one.
 		 * @return Pointer to the instance as a graphic tile layer if it is one.
@@ -58,6 +71,13 @@ namespace RedBox {
 		 * one. Null if not.
 		 */
 		virtual const GraphicObjectLayer *asObjectLayer() const;
+		
+		/**
+		 * Clones the instance of the graphic tile map layer.
+		 * @return Duplicate of this graphic tile map layer. The caller is
+		 * responsible for the ownership of this newly created batched tile.
+		 */
+		virtual GraphicTileMapLayer *clone() const = 0;
 	};
 }
 

@@ -1,0 +1,277 @@
+#include "GraphicTileLayer.h"
+
+#include "TileLayer.h"
+
+namespace RedBox {
+	GraphicTileLayer::GraphicTileLayer(const Vector2 &startingPosition) :
+		GraphicTileMapLayer(startingPosition), currentMask(NULL), batches() {
+	}
+
+	GraphicTileLayer::GraphicTileLayer(const TileLayer &layer,
+	                                   const Vector2 &startingPosition) :
+		GraphicTileMapLayer(startingPosition), currentMask(NULL), batches() {
+		this->construct(layer);
+	}
+
+	GraphicTileLayer::GraphicTileLayer(const GraphicTileLayer &src) :
+		GraphicTileMapLayer(src), currentMask(src.currentMask),
+		batches(src.batches) {
+	}
+
+	GraphicTileLayer::~GraphicTileLayer() {
+	}
+
+	GraphicTileLayer &GraphicTileLayer::operator=(const GraphicTileLayer &src) {
+		this->GraphicTileMapLayer::operator=(src);
+
+		if (this != &src) {
+			currentMask = src.currentMask;
+			batches = src.batches;
+		}
+
+		return *this;
+	}
+
+	void GraphicTileLayer::move(float xDelta, float yDelta) {
+		this->GraphicTileMapLayer::move(xDelta, yDelta);
+
+		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
+			for (BatchMap::mapped_type::BodyMap::iterator j = i->second.getBegin();
+			     j != i->second.getEnd(); ++j) {
+				(*j)->move(xDelta, yDelta);
+			}
+		}
+	}
+
+	const Vector2 GraphicTileLayer::getSize() const {
+		Vector2 result;
+
+		if (!batches.empty()) {
+			bool notFirst = false;
+			Vector2 min, max;
+			float tmp;
+
+			for (BatchMap::const_iterator i = batches.begin(); i != batches.end(); ++i) {
+				for (BatchMap::mapped_type::BodyMap::const_iterator j = i->second.getBegin();
+				     j != i->second.getEnd(); ++j) {
+					if (notFirst) {
+						if (min.getX() > (*j)->getXPosition()) {
+							min.setX((*j)->getXPosition());
+						}
+
+						if (min.getY() > (*j)->getYPosition()) {
+							min.setY((*j)->getYPosition());
+						}
+
+						tmp = (*j)->getXPosition() + (*j)->getWidth();
+
+						if (max.getX() < tmp) {
+							max.setX(tmp);
+						}
+
+						tmp = (*j)->getYPosition() + (*j)->getHeight();
+
+						if (max.getY() < tmp) {
+							max.setY(tmp);
+						}
+
+					} else {
+						min = (*j)->getPosition();
+						max = (*j)->getPosition() + (*j)->getSize();
+						notFirst = true;
+					}
+				}
+			}
+
+			result = max - min;
+		}
+
+		return result;
+	}
+
+	float GraphicTileLayer::getWidth() const {
+		float result = 0.0f;
+
+		if (!batches.empty()) {
+			bool notFirst = false;
+			float min, max;
+			float tmp;
+
+			for (BatchMap::const_iterator i = batches.begin(); i != batches.end(); ++i) {
+				for (BatchMap::mapped_type::BodyMap::const_iterator j = i->second.getBegin();
+				     j != i->second.getEnd(); ++j) {
+					if (notFirst) {
+						if (min > (*j)->getXPosition()) {
+							min = (*j)->getXPosition();
+						}
+
+						tmp = (*j)->getXPosition() + (*j)->getWidth();
+
+						if (max < tmp) {
+							max = tmp;
+						}
+
+					} else {
+						min = (*j)->getXPosition();
+						max = (*j)->getXPosition() + (*j)->getWidth();
+						notFirst = true;
+					}
+				}
+			}
+
+			result = max - min;
+		}
+
+		return result;
+	}
+
+	float GraphicTileLayer::getHeight() const {
+		float result = 0.0f;
+
+		if (!batches.empty()) {
+			bool notFirst = false;
+			float min, max;
+			float tmp;
+
+			for (BatchMap::const_iterator i = batches.begin(); i != batches.end(); ++i) {
+				for (BatchMap::mapped_type::BodyMap::const_iterator j = i->second.getBegin();
+				     j != i->second.getEnd(); ++j) {
+					if (notFirst) {
+						if (min > (*j)->getYPosition()) {
+							min = (*j)->getYPosition();
+						}
+
+						tmp = (*j)->getYPosition() + (*j)->getHeight();
+
+						if (max < tmp) {
+							max = tmp;
+						}
+
+					} else {
+						min = (*j)->getYPosition();
+						max = (*j)->getYPosition() + (*j)->getHeight();
+						notFirst = true;
+					}
+				}
+			}
+
+			result = max - min;
+		}
+
+		return result;
+	}
+
+	void GraphicTileLayer::scaleFromPoint(float xScaling, float yScaling,
+	                                      const Vector2 &fromPoint) {
+		this->GraphicTileMapLayer::scaleFromPoint(xScaling, yScaling, fromPoint);
+
+		bool notFirst = false;
+		Vector2 newPosition;
+
+		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
+			for (BatchMap::mapped_type::BodyMap::iterator j = i->second.getBegin();
+			     j != i->second.getEnd(); ++j) {
+				(*j)->scaleFromPoint(xScaling, yScaling, fromPoint);
+
+				if (notFirst) {
+					if (newPosition.getX() > (*j)->getXPosition()) {
+						newPosition.setX((*j)->getXPosition());
+					}
+
+					if (newPosition.getY() > (*j)->getYPosition()) {
+						newPosition.setY((*j)->getYPosition());
+					}
+
+				} else {
+					newPosition = (*j)->getPosition();
+					notFirst = true;
+				}
+			}
+		}
+
+		this->GraphicTileMapLayer::move(newPosition.getX() - this->getXPosition(),
+		                                newPosition.getY() - this->getYPosition());
+	}
+
+	void GraphicTileLayer::rotateFromPoint(float rotationAngle,
+	                                       const Vector2 &rotationPoint) {
+		this->GraphicTileMapLayer::rotateFromPoint(rotationAngle, rotationPoint);
+
+		bool notFirst = false;
+		Vector2 newPosition;
+
+		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
+			for (BatchMap::mapped_type::BodyMap::iterator j = i->second.getBegin();
+			     j != i->second.getEnd(); ++j) {
+				(*j)->rotateFromPoint(rotationAngle, rotationPoint);
+
+				if (notFirst) {
+					if (newPosition.getX() > (*j)->getXPosition()) {
+						newPosition.setX((*j)->getXPosition());
+					}
+
+					if (newPosition.getY() > (*j)->getYPosition()) {
+						newPosition.setY((*j)->getYPosition());
+					}
+
+				} else {
+					newPosition = (*j)->getPosition();
+					notFirst = true;
+				}
+			}
+		}
+
+		this->GraphicTileMapLayer::move(newPosition.getX() - this->getXPosition(),
+		                                newPosition.getY() - this->getYPosition());
+	}
+	
+	void GraphicTileLayer::update() {
+		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
+			i->second.update();
+		}
+	}
+	
+	void GraphicTileLayer::render() {
+		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
+			i->second.render();
+		}
+	}
+	
+	void GraphicTileLayer::mask() {
+		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
+			i->second.mask();
+		}
+	}
+	
+	void GraphicTileLayer::unmask() {
+		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
+			i->second.unmask();
+		}
+	}
+	
+	Maskable *GraphicTileLayer::getMask() const {
+		return currentMask;
+	}
+	
+	void GraphicTileLayer::setMask(Maskable *newMask, bool inverted) {
+		currentMask = newMask;
+		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
+			i->second.setMask(newMask, inverted);
+		}
+	}
+
+	GraphicTileLayer *GraphicTileLayer::asTileLayer() {
+		return this;
+	}
+
+	const GraphicTileLayer *GraphicTileLayer::asTileLayer() const {
+		return this;
+	}
+
+	GraphicTileLayer *GraphicTileLayer::clone() const {
+		return new GraphicTileLayer(*this);
+	}
+	
+	void GraphicTileLayer::construct(const TileLayer &layer) {
+	}
+}
