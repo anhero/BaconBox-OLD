@@ -1,5 +1,8 @@
 #include "TileMapUtility.h"
 
+#include <set>
+#include <algorithm>
+
 #include "StringHelper.h"
 #include "AlgorithmHelper.h"
 #include "Collidable.h"
@@ -463,6 +466,34 @@ namespace RedBox {
 		return AnimationDefinition(TileMapUtility::readAnimationFrames(properties, animation),
 		                           TileMapUtility::readAnimationTimePerFrame(properties, animation),
 		                           TileMapUtility::readAnimationNbLoops(properties, animation));
+	}
+
+	void TileMapUtility::readAnimations(const PropertyMap &properties,
+	                                    AnimationMap &animations) {
+		// We find all the animation names to read.
+		std::set<std::string> names;
+
+		std::string::size_type closeBracketIndex;
+
+		for (PropertyMap::const_iterator i = properties.begin();
+		     i != properties.end(); ++i) {
+			// We check if the property's name starts with "animation[".
+			if (std::equal(ANIMATION_START.begin(), ANIMATION_START.end(), i->first.begin())) {
+				// We make sure it has a closing bracket for it to be valid.
+				closeBracketIndex = i->first.find_last_of(']');
+
+				if (closeBracketIndex != std::string::npos) {
+					// We take note of the animation's name.
+					names.insert(i->first.substr(ANIMATION_START.size(), closeBracketIndex - ANIMATION_START.size()));
+				}
+			}
+		}
+
+		// We read the animations.
+		for (std::set<std::string>::const_iterator i = names.begin();
+		     i != names.end(); ++i) {
+			animations[*i] = TileMapUtility::readAnimation(properties, *i);
+		}
 	}
 
 	const Color TileMapUtility::readColor(const PropertyMap &properties) {

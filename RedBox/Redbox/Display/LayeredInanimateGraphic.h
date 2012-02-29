@@ -301,11 +301,19 @@ namespace RedBox {
 			loadCollidableProperties(rectangle.getProperties());
 		}
 
+		/**
+		 * Construcs the layered inanimate graphic from a tile object.
+		 * @param polygon Polygon object to construct the layered inanimate
+		 * graphic from. We assume that the polygon is convex, else it might
+		 * display incorrectly.
+		 */
 		virtual void construct(const PolygonObject &polygon) {
 			this->setTextureInformation(TileMapUtility::readTextureKey(polygon.getProperties()));
 			this->Collidable::move(polygon.getXPosition() - this->getXPosition(),
 			                       polygon.getYPosition() - this->getYPosition());
 			this->getVertices() = polygon.getVertices();
+			// We sort the vertices to be in the right order for triangle
+			// strips. We assume the shape is convex.
 			AlgorithmHelper::riffleShuffle(this->getVertices().getBegin(),
 			                               this->getVertices().getEnd());
 

@@ -149,6 +149,15 @@ namespace RedBox {
 		 */
 		static const AnimationDefinition readAnimation(const PropertyMap &properties,
 		                                               const std::string &animation);
+		
+		/**
+		 * Reads the animations from a property map.
+		 * @param properties Properties to use to read the animations.
+		 * @param animations Animation map to contain the details about the
+		 * animations found.
+		 */
+		void readAnimations(const PropertyMap &properties,
+							AnimationMap &animations);
 
 		/**
 		 * Reads the color from a tile map object's properties.
