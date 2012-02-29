@@ -366,6 +366,32 @@ namespace RedBox {
 		                    TileMapUtility::readFrameOrientation(properties));
 	}
 
+	const FrameDetails TileMapUtility::readFrame(const PropertyMap &properties,
+	                                             unsigned int index) {
+		return FrameDetails(TileMapUtility::readFramePosition(properties, index),
+		                    TileMapUtility::readFrameOrientation(properties, index));
+	}
+
+	void TileMapUtility::readFrames(const PropertyMap &properties,
+	                                FrameArray &outputArray) {
+		static const PropertyMap::key_type NB_FRAMES("nbFrames");
+		PropertyMap::const_iterator found = properties.find(NB_FRAMES);
+
+		unsigned int nbFrames = 1;
+
+		if (found != properties.end()) {
+			StringHelper::fromString(found->second, nbFrames);
+		}
+
+		outputArray.clear();
+		outputArray.reserve(nbFrames);
+
+		for (unsigned int i = 0; i < nbFrames; ++i) {
+			outputArray.push_back(FrameDetails(TileMapUtility::readFramePosition(properties, i),
+			                                   TileMapUtility::readFrameOrientation(properties, i)));
+		}
+	}
+
 	int TileMapUtility::readAnimationNbLoops(const PropertyMap &properties,
 	                                         const std::string &animationName) {
 		static const PropertyMap::key_type ANIMATION_NB_LOOPS_END("].nbLoops");

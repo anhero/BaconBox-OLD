@@ -13,6 +13,7 @@
 #include "FrameDetails.h"
 #include "AnimationDefinition.h"
 #include "Color.h"
+#include "FrameArray.h"
 
 namespace RedBox {
 	class Collidable;
@@ -94,6 +95,23 @@ namespace RedBox {
 		 * @return Frame details.
 		 */
 		static const FrameDetails readFrame(const PropertyMap &properties);
+
+		/**
+		 * Reads the frame details from a property map.
+		 * @param properties Properties to use to read the frame details.
+		 * @param index Index of the frame to read.
+		 * @return Frame details.
+		 */
+		static const FrameDetails readFrame(const PropertyMap &properties,
+		                                    unsigned int index);
+		
+		/**
+		 * Reads the frames from a property map.
+		 * @param properties Properties to use to read the frame details.
+		 * @param outputArray Array of frame details to output to.
+		 */
+		static void readFrames(const PropertyMap &properties,
+							   FrameArray &outputArray);
 
 		/**
 		 * Reads the number of times an animation should loop from a property

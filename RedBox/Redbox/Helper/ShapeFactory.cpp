@@ -81,47 +81,4 @@ namespace RedBox {
 	                                VertexArray *vertices) {
 		createRectangle(Vector2(sideLength, sideLength), position, vertices);
 	}
-
-	struct VertexArrayInfo {
-		VertexArrayInfo(const VertexArray &newVertices,
-		                const std::vector<VertexArray::SizeType> &newWorkingSet) :
-			vertices(newVertices), workingSet(newWorkingSet) {
-		}
-		const VertexArray &vertices;
-		const std::vector<VertexArray::SizeType> &workingSet;
-	};
-
-	bool compareVector2Y(const VertexArrayInfo &info,
-	                     VertexArray::SizeType first,
-	                     VertexArray::SizeType second);
-
-	void ShapeFactory::polygonToTriangleStrips(VertexArray &vertices) {
-		std::vector<VertexArray::SizeType> workingSet;
-		std::vector<VertexArray::SizeType> sortedList;
-		workingSet.reserve(vertices.getNbVertices());
-
-		for (VertexArray::SizeType i = 0; i < vertices.getNbVertices(); ++i) {
-			workingSet.push_back(i);
-		}
-
-		bool stillWorking = true;
-
-		while (stillWorking) {
-			sortedList.clear();
-			sortedList.reserve(workingSet.size());
-
-			for (VertexArray::SizeType i = 0; i < workingSet.size(); ++i) {
-				sortedList.push_back(i);
-			}
-
-			//std::sort(sortedList.begin(), sortedList.end(),
-			//          std::bind1st(std::ptr_fun(&compareVector2Y), VertexArrayInfo(vertices, workingSet)));
-		}
-	}
-
-	bool compareVector2Y(const VertexArrayInfo &info,
-	                     VertexArray::SizeType first,
-	                     VertexArray::SizeType second) {
-		return true;
-	}
 }

@@ -21,6 +21,7 @@
 #include "Tileset.h"
 #include "TileMapUtility.h"
 #include "FrameDetails.h"
+#include "AlgorithmHelper.h"
 
 namespace RedBox {
 	/**
@@ -275,7 +276,7 @@ namespace RedBox {
 			} else {
 				this->removeRenderMode(RenderMode::TEXTURE);
 			}
-			
+
 			// We get the tile's color.
 			this->setColor(TileMapUtility::readColor(tile.getProperties()));
 
@@ -305,6 +306,8 @@ namespace RedBox {
 			this->Collidable::move(polygon.getXPosition() - this->getXPosition(),
 			                       polygon.getYPosition() - this->getYPosition());
 			this->getVertices() = polygon.getVertices();
+			AlgorithmHelper::riffleShuffle(this->getVertices().getBegin(),
+			                               this->getVertices().getEnd());
 
 			// We specify the render mode.
 			this->addRenderMode(RenderMode::SHAPE);
@@ -322,7 +325,7 @@ namespace RedBox {
 			} else {
 				this->removeRenderMode(RenderMode::TEXTURE);
 			}
-			
+
 			// We read the polygon's color.
 			this->setColor(TileMapUtility::readColor(polygon.getProperties()));
 
