@@ -63,33 +63,21 @@ namespace RedBox {
 			if (TileIdRange::isFlippedHorizontally(tileId)) {
 				// We flip the texture coordinates to flip the tile
 				// horizontally.
-				float xMax = std::max_element(textureCoordinates.begin(), textureCoordinates.end(), Vector2::XComparator())->getX();
-
-				for (TextureCoordinates::iterator i = textureCoordinates.begin();
-				     i != textureCoordinates.end(); ++i) {
-					i->setX(xMax - i->getX());
-				}
+				std::swap(textureCoordinates[0], textureCoordinates[1]);
+				std::swap(textureCoordinates[2], textureCoordinates[3]);
 			}
 
 			if (TileIdRange::isFlippedVertically(tileId)) {
 				// We flip the texture coordinates to flip the tile vertically.
-				float yMax = std::max_element(textureCoordinates.begin(), textureCoordinates.end(), Vector2::YComparator())->getY();
-
-				for (TextureCoordinates::iterator i = textureCoordinates.begin();
-				     i != textureCoordinates.end(); ++i) {
-					i->setY(yMax - i->getY());
-				}
+				std::swap(textureCoordinates[0], textureCoordinates[2]);
+				std::swap(textureCoordinates[1], textureCoordinates[3]);
 			}
 
 			if (TileIdRange::isFlippedDiagonally(tileId)) {
 				// We flip the texture coordinates to flip the tile
 				// diagonally.
-				Vector2 xyMax(*std::max_element(textureCoordinates.begin(), textureCoordinates.end(), Vector2::XYComparator()));
-
-				for (TextureCoordinates::iterator i = textureCoordinates.begin();
-				     i != textureCoordinates.end(); ++i) {
-					*i = xyMax - *i;
-				}
+				std::swap(textureCoordinates[0], textureCoordinates[3]);
+				std::swap(textureCoordinates[1], textureCoordinates[2]);
 			}
 
 			return true;
