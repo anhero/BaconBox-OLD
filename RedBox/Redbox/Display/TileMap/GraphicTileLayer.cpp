@@ -1,6 +1,11 @@
 #include "GraphicTileLayer.h"
 
 #include "TileLayer.h"
+#include "Tileset.h"
+#include "TileMap.h"
+#include "ShapeFactory.h"
+#include "TextureInformation.h"
+#include "TexturePointer.h"
 
 namespace RedBox {
 	GraphicTileLayer::GraphicTileLayer(const Vector2 &startingPosition) :
@@ -14,8 +19,11 @@ namespace RedBox {
 	}
 
 	GraphicTileLayer::GraphicTileLayer(const GraphicTileLayer &src) :
-		GraphicTileMapLayer(src), currentMask(src.currentMask),
-		batches(src.batches) {
+		GraphicTileMapLayer(src), currentMask(src.currentMask), batches() {
+		for (BatchMap::const_iterator i = src.batches.begin();
+		     i != src.batches.end(); ++i) {
+			batches.insert(std::make_pair(i->first, new RenderBatch<BatchedInanimateGraphicElement<Collidable> >(*i->second)));
+		}
 	}
 
 	GraphicTileLayer::~GraphicTileLayer() {
@@ -26,7 +34,13 @@ namespace RedBox {
 
 		if (this != &src) {
 			currentMask = src.currentMask;
-			batches = src.batches;
+			free();
+			batches.clear();
+
+			for (BatchMap::const_iterator i = src.batches.begin();
+			     i != src.batches.end(); ++i) {
+				batches.insert(std::make_pair(i->first, new RenderBatch<BatchedInanimateGraphicElement<Collidable> >(*i->second)));
+			}
 		}
 
 		return *this;
@@ -36,8 +50,8 @@ namespace RedBox {
 		this->GraphicTileMapLayer::move(xDelta, yDelta);
 
 		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
-			for (BatchMap::mapped_type::BodyMap::iterator j = i->second.getBegin();
-			     j != i->second.getEnd(); ++j) {
+			for (RenderBatch<BatchedInanimateGraphicElement<Collidable> >::BodyMap::iterator j = i->second->getBegin();
+			     j != i->second->getEnd(); ++j) {
 				(*j)->move(xDelta, yDelta);
 			}
 		}
@@ -52,8 +66,8 @@ namespace RedBox {
 			float tmp;
 
 			for (BatchMap::const_iterator i = batches.begin(); i != batches.end(); ++i) {
-				for (BatchMap::mapped_type::BodyMap::const_iterator j = i->second.getBegin();
-				     j != i->second.getEnd(); ++j) {
+				for (RenderBatch<BatchedInanimateGraphicElement<Collidable> >::BodyMap::const_iterator j = i->second->getBegin();
+				     j != i->second->getEnd(); ++j) {
 					if (notFirst) {
 						if (min.getX() > (*j)->getXPosition()) {
 							min.setX((*j)->getXPosition());
@@ -98,8 +112,8 @@ namespace RedBox {
 			float tmp;
 
 			for (BatchMap::const_iterator i = batches.begin(); i != batches.end(); ++i) {
-				for (BatchMap::mapped_type::BodyMap::const_iterator j = i->second.getBegin();
-				     j != i->second.getEnd(); ++j) {
+				for (RenderBatch<BatchedInanimateGraphicElement<Collidable> >::BodyMap::const_iterator j = i->second->getBegin();
+				     j != i->second->getEnd(); ++j) {
 					if (notFirst) {
 						if (min > (*j)->getXPosition()) {
 							min = (*j)->getXPosition();
@@ -134,8 +148,8 @@ namespace RedBox {
 			float tmp;
 
 			for (BatchMap::const_iterator i = batches.begin(); i != batches.end(); ++i) {
-				for (BatchMap::mapped_type::BodyMap::const_iterator j = i->second.getBegin();
-				     j != i->second.getEnd(); ++j) {
+				for (RenderBatch<BatchedInanimateGraphicElement<Collidable> >::BodyMap::const_iterator j = i->second->getBegin();
+				     j != i->second->getEnd(); ++j) {
 					if (notFirst) {
 						if (min > (*j)->getYPosition()) {
 							min = (*j)->getYPosition();
@@ -169,8 +183,8 @@ namespace RedBox {
 		Vector2 newPosition;
 
 		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
-			for (BatchMap::mapped_type::BodyMap::iterator j = i->second.getBegin();
-			     j != i->second.getEnd(); ++j) {
+			for (RenderBatch<BatchedInanimateGraphicElement<Collidable> >::BodyMap::iterator j = i->second->getBegin();
+			     j != i->second->getEnd(); ++j) {
 				(*j)->scaleFromPoint(xScaling, yScaling, fromPoint);
 
 				if (notFirst) {
@@ -201,8 +215,8 @@ namespace RedBox {
 		Vector2 newPosition;
 
 		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
-			for (BatchMap::mapped_type::BodyMap::iterator j = i->second.getBegin();
-			     j != i->second.getEnd(); ++j) {
+			for (RenderBatch<BatchedInanimateGraphicElement<Collidable> >::BodyMap::iterator j = i->second->getBegin();
+			     j != i->second->getEnd(); ++j) {
 				(*j)->rotateFromPoint(rotationAngle, rotationPoint);
 
 				if (notFirst) {
@@ -224,39 +238,40 @@ namespace RedBox {
 		this->GraphicTileMapLayer::move(newPosition.getX() - this->getXPosition(),
 		                                newPosition.getY() - this->getYPosition());
 	}
-	
+
 	void GraphicTileLayer::update() {
 		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
-			i->second.update();
+			i->second->update();
 		}
 	}
-	
+
 	void GraphicTileLayer::render() {
 		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
-			i->second.render();
+			i->second->render();
 		}
 	}
-	
+
 	void GraphicTileLayer::mask() {
 		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
-			i->second.mask();
+			i->second->mask();
 		}
 	}
-	
+
 	void GraphicTileLayer::unmask() {
 		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
-			i->second.unmask();
+			i->second->unmask();
 		}
 	}
-	
+
 	Maskable *GraphicTileLayer::getMask() const {
 		return currentMask;
 	}
-	
+
 	void GraphicTileLayer::setMask(Maskable *newMask, bool inverted) {
 		currentMask = newMask;
+
 		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
-			i->second.setMask(newMask, inverted);
+			i->second->setMask(newMask, inverted);
 		}
 	}
 
@@ -271,7 +286,57 @@ namespace RedBox {
 	GraphicTileLayer *GraphicTileLayer::clone() const {
 		return new GraphicTileLayer(*this);
 	}
-	
+
 	void GraphicTileLayer::construct(const TileLayer &layer) {
+		// Variables used within the "for" loop.
+		RenderBatch<BatchedInanimateGraphicElement<Collidable> >::ValueType *tmpTile = NULL;
+		const Tileset *tileset;
+		TileLayer::DataContainer::const_iterator::difference_type tileIndex;
+
+		// We add all the tiles.
+		for (TileLayer::DataContainer::const_iterator i = layer.getTiles().begin();
+		     i != layer.getTiles().end(); ++i) {
+			// We find the tileset the tile id belongs to.
+			tileset = layer.parentMap.getTileset(*i);
+
+			// If the tile id is valid, we should have a valid tileset.
+			if (tileset && tileset->getTextureInformation()) {
+				// We initialize the new tile.
+				tmpTile = new BatchedInanimateGraphicElement<Collidable>();
+
+				// We set the tile's texture information (optional).
+				tmpTile->setTextureInformation(tileset->getTextureInformation());
+
+				// We calculate the tile's position.
+				tileIndex = i - layer.getTiles().begin();
+				tmpTile->setPosition(Vector2::scalarMultiplication(layer.parentMap.getTileSize(), Vector2(static_cast<float>(tileIndex % layer.getWidthInTiles()), static_cast<float>(tileIndex / layer.getWidthInTiles()))) + this->getPosition() + (layer.parentMap.getTileHeight() - tileset->getTileHeight()));
+
+				// We initialize the vertices.
+				tmpTile->getVertices().resize(4);
+				ShapeFactory::createRectangle(tileset->getTileSize(), tmpTile->getPosition(), &tmpTile->getVertices());
+
+				// We load the texture coordinates.
+				tileset->loadTextureCoordinates(*i, tmpTile->getTextureCoordinates());
+
+				// We add the new tile to the right batch.
+				getBatch(tmpTile->getTextureInformation())->add(tmpTile);
+			}
+		}
+	}
+
+	void GraphicTileLayer::free() {
+		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
+			delete i->second;
+		}
+	}
+	
+	GraphicTileLayer::BatchMap::mapped_type GraphicTileLayer::getBatch(TextureInformation *textureInformation) {
+		std::pair<BatchMap::iterator, bool> inserted = batches.insert(BatchMap::value_type(textureInformation, NULL));
+		
+		if (inserted.second) {
+			inserted.first->second = new RenderBatch<BatchedInanimateGraphicElement<Collidable> >(textureInformation);
+		}
+		
+		return inserted.first->second;
 	}
 }

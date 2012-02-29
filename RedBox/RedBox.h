@@ -94,6 +94,7 @@
 #include <RedBox/RectangleObject.h>
 #include <RedBox/TileObject.h>
 #include <RedBox/TmxTileMapReader.h>
+#include <RedBox/GraphicTileLayer.h>
 #include <RedBox/Base64.h>
 #include <RedBox/Compression.h>
 #include <RedBox/Stopwatch.h>

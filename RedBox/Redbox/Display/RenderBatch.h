@@ -41,6 +41,8 @@ namespace RedBox {
 		template <typename U, typename V> friend class BatchedGraphic;
 		template <typename U> friend class BatchedVertexArray;
 	public:
+		typedef T ValueType;
+			
 		typedef std::multiset<T *, Orderable::LessCompare> BodyMap;
 
 		typedef std::list<typename BodyMap::value_type> BodyList;
@@ -79,17 +81,17 @@ namespace RedBox {
 			currentMask(src.currentMask) {
 
 			for (typename BodyMap::const_iterator i = src.bodies.begin();
-			     i != bodies.end(); ++i) {
+			     i != src.bodies.end(); ++i) {
 				this->add((*i)->clone());
 			}
 
 			for (typename BodyList::const_iterator i = toAdd.begin();
-			     i != toAdd.end(); ++i) {
+			     i != src.toAdd.end(); ++i) {
 				this->add((*i)->clone());
 			}
 
 			for (typename BodyList::const_iterator i = toChange.begin();
-			     i != toAdd.end(); ++i) {
+			     i != src.toAdd.end(); ++i) {
 				this->add((*i)->clone());
 			}
 		}

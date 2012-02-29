@@ -24,6 +24,10 @@ namespace RedBox {
 	const TileLayer *TileLayer::asTileLayer() const {
 		return this;
 	}
+	
+	const TileLayer::DataContainer &TileLayer::getTiles() const {
+		return data;
+	}
 
 	unsigned int TileLayer::getTileId(const TileCoordinate &tileCoordinate) const {
 		return getTileId(tileCoordinate.getX(), tileCoordinate.getY());

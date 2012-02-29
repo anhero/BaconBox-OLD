@@ -173,13 +173,17 @@ namespace RedBox {
 		void construct(const TileLayer &layer);
 	private:
 		/// Map of batches by their tileset's texture.
-		typedef std::map<TextureInformation *, RenderBatch<BatchedInanimateGraphicElement<Collidable> > > BatchMap;
+		typedef std::map<TextureInformation *, RenderBatch<BatchedInanimateGraphicElement<Collidable> > *> BatchMap;
 
 		/// Pointer to the current mask.
 		Maskable *currentMask;
 
 		/// Batches making up the graphic tile layer.
 		BatchMap batches;
+		
+		void free();
+		
+		BatchMap::mapped_type getBatch(TextureInformation *textureInformation);
 	};
 }
 

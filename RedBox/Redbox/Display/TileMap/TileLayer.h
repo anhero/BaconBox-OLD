@@ -20,6 +20,9 @@ namespace RedBox {
 	class TileLayer : public TileMapLayer {
 		friend class TileMap;
 	public:
+		/// Type of container used to store the tile data.
+		typedef std::vector<unsigned int> DataContainer;
+		
 		/**
 		 * Gets the size of the layer in tiles.
 		 * @return Size of the layer in tiles. Always the same as the tile map
@@ -55,6 +58,12 @@ namespace RedBox {
 		 */
 		const TileLayer *asTileLayer() const;
 
+		/**
+		 * Gets the tile id's.
+		 * @return Vector of tile id's for the layer.
+		 */
+		const DataContainer &getTiles() const;
+		
 		/**
 		 * Gets the tile id of a position in the tile map.
 		 * @param tileCoordinate Coordinates of the tile to check.
@@ -94,9 +103,6 @@ namespace RedBox {
 		void setTileId(int xTileCoordinate, int yTileCoordinate,
 		               unsigned int newTileId);
 	private:
-		/// Type of container used to store the tile data.
-		typedef std::vector<unsigned int> DataContainer;
-
 		/**
 		 * Constructor.
 		 * @param newName Name of the tile layer. Can be empty.
