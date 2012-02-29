@@ -241,15 +241,6 @@ namespace RedBox {
 		}
 
 		/**
-		 * Gets a duplicate of the layered graphic.
-		 * @return Pointer to a duplicate of the layered graphic. The caller is
-		 * responsible for deleting this instance.
-		 */
-		virtual LayeredInanimateGraphic<Parent> *clone() const {
-			return new LayeredInanimateGraphic<Parent>(*this);
-		}
-
-		/**
 		 * Constructs the layered inanimate graphic from a tile object.
 		 * @param tile Tile object to construct the layered inanimate graphic
 		 * from.
@@ -290,7 +281,7 @@ namespace RedBox {
 		 */
 		virtual void construct(const RectangleObject &rectangle) {
 			this->setTextureInformation(TileMapUtility::readTextureKey(rectangle.getProperties()));
-			this->Collidable::move(rectangle.getXPosition() - this->getXPosition(),
+			this->Parent::move(rectangle.getXPosition() - this->getXPosition(),
 			                       rectangle.getYPosition() - this->getYPosition());
 			this->construct(rectangle.getSize(), this->getPosition(),
 			                TileMapUtility::readFramePosition(rectangle.getProperties()));
@@ -339,13 +330,22 @@ namespace RedBox {
 
 			loadCollidableProperties(polygon.getProperties());
 		}
+
+		/**
+		 * Gets a duplicate of the layered graphic.
+		 * @return Pointer to a duplicate of the layered graphic. The caller is
+		 * responsible for deleting this instance.
+		 */
+		virtual LayeredInanimateGraphic<Parent> *clone() const {
+			return new LayeredInanimateGraphic<Parent>(*this);
+		}
 	private:
 		/**
 		 * Loads the properties of a collidable if we are derived from
 		 * Collidable.
 		 */
 		void loadCollidableProperties(const PropertyMap &properties) {
-			CallLoadCollidable<LayeredInanimateGraphic<Parent>, Parent, IsBaseOf<Collidable, Parent>::RESULT>()(properties, *this);
+			CallLoadCollidable<LayeredInanimateGraphic<Parent>, IsBaseOf<Collidable, LayeredInanimateGraphic<Parent> >::RESULT>()(properties, *this);
 		}
 	};
 }

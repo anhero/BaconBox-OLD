@@ -173,15 +173,15 @@ namespace RedBox {
 		TileMapUtility();
 	};
 
-	template <typename T, typename U, bool CALL>
+	template <typename T, bool CALL>
 	struct CallLoadCollidable {
-		void operator()(const PropertyMap &, T &) {
+		void operator()(const PropertyMap &, T &) const {
 		}
 	};
 
-	template <typename T, typename U>
-	struct CallLoadCollidable<T, U, true> {
-		void operator()(const PropertyMap &properties, T &collidable) {
+	template <typename T>
+	struct CallLoadCollidable<T, true> {
+		void operator()(const PropertyMap &properties, T &collidable) const {
 			TileMapUtility::loadCollidableFromProperties(properties, collidable);
 		}
 	};

@@ -15,6 +15,15 @@
 #include "Console.h"
 #include "CallHelper.h"
 #include "IsBaseOf.h"
+#include "TileObject.h"
+#include "RectangleObject.h"
+#include "PolygonObject.h"
+#include "TileMap.h"
+#include "ObjectLayer.h"
+#include "Tileset.h"
+#include "TileMapUtility.h"
+#include "FrameDetails.h"
+#include "AlgorithmHelper.h"
 
 namespace RedBox {
 	/**
@@ -286,12 +295,55 @@ namespace RedBox {
 		}
 
 		/**
+		 * Constructs the layered graphic from a tile object.
+		 * @param tile Tile object to construct the layered graphic from.
+		 */
+		virtual void construct(const TileObject &tile) {
+			// We initialize the vertices.
+			this->getVertices().resize(4);
+			ShapeFactory::createRectangle(tile.getSize(), tile.getPosition() - tile.getHeight(), &this->getVertices());
+			// We specify the render mode.
+			this->addRenderMode(RenderMode::SHAPE);
+			this->addRenderMode(RenderMode::COLOR);
+
+			// We get the texture and the texture coordinates.
+			const Tileset *tileset = tile.parentLayer.parentMap.getTileset(tile.getTileId());
+
+			if (tileset) {
+				this->getFrames().resize(1);
+
+				if (tileset->loadTextureCoordinates(tile.getTileId(),
+				                                    this->getFrames()[0]) &&
+				    this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
+					this->setTextureInformation(tileset->getTextureInformation());
+					this->addRenderMode(RenderMode::TEXTURE);
+				}
+
+			} else {
+				this->removeRenderMode(RenderMode::TEXTURE);
+			}
+
+			// We get the tile's color.
+			this->setColor(TileMapUtility::readColor(tile.getProperties()));
+
+			loadCollidableProperties(tile.getProperties());
+		}
+
+		/**
 		 * Gets a duplicate of the layered graphic.
 		 * @return Pointer to a duplicate of the layered graphic. The caller is
 		 * responsible for deleting this instance.
 		 */
 		virtual LayeredGraphic<Parent> *clone() const {
 			return new LayeredGraphic<Parent>(*this);
+		}
+	private:
+		/**
+		 * Loads the properties of a collidable if we are derived from
+		 * Collidable.
+		 */
+		void loadCollidableProperties(const PropertyMap &properties) {
+			CallLoadCollidable<LayeredGraphic<Parent>, IsBaseOf<Collidable, LayeredGraphic<Parent> >::RESULT>()(properties, *this);
 		}
 	};
 }
