@@ -288,6 +288,8 @@ namespace RedBox {
 	}
 
 	void GraphicTileLayer::construct(const TileLayer &layer) {
+		free();
+		batches.clear();
 		// Variables used within the "for" loop.
 		RenderBatch<BatchedInanimateGraphicElement<Collidable> >::ValueType *tmpTile = NULL;
 		const Tileset *tileset;
