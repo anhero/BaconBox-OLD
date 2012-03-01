@@ -13,13 +13,51 @@
 
 namespace RedBox {
 	class ObjectLayer;
+	/**
+	 * Graphically represents an object layer.
+	 * @ingroup TileMap
+	 */
 	class GraphicObjectLayer : public GraphicTileMapLayer {
 	public:
-		GraphicObjectLayer();
-		GraphicObjectLayer(const ObjectLayer &layer);
+		/**
+		 * Default and parameterized constructor.
+		 * @param startingPosition Starting position of the graphic object
+		 * layer.
+		 */
+		explicit GraphicObjectLayer(const Vector2 &startingPosition = Vector2());
+		
+		/**
+		 * Parameterized constructor.
+		 * @param layer Object layer to initialize the graphic object layer 
+		 * from.
+		 * @param startingPosition Starting position of the graphic object
+		 */
+		explicit GraphicObjectLayer(const ObjectLayer &layer,
+									const Vector2 &startingPosition = Vector2());
 		GraphicObjectLayer(const GraphicObjectLayer &src);
 		~GraphicObjectLayer();
 		GraphicObjectLayer &operator=(const GraphicObjectLayer &src);
+
+		/**
+		 * Gets the instance as a graphic object layer, if it is one.
+		 * @return Pointer to the instance as a graphic object layer if it is
+		 * one. Null if not.
+		 */
+		GraphicObjectLayer *asObjectLayer();
+
+		/**
+		 * Gets the instance as a graphic object layer, if it is one.
+		 * @return Pointer to the instance as a graphic object layer if it is
+		 * one. Null if not.
+		 */
+		const GraphicObjectLayer *asObjectLayer() const;
+
+		/**
+		 * Clones the instance of the graphic tile map layer.
+		 * @return Duplicate of this graphic tile map layer. The caller is
+		 * responsible for the ownership of this newly created batched tile.
+		 */
+		GraphicObjectLayer *clone() const;
 
 		void construct(const ObjectLayer &layer);
 	private:
