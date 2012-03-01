@@ -2,10 +2,9 @@
  * @file
  * @ingroup Display
  */
-#ifndef RB_LAYERED_GRAPHIC_H
-#define RB_LAYERED_GRAPHIC_H
+#ifndef RB_MANAGED_GRAPHIC_H
+#define RB_MANAGED_GRAPHIC_H
 
-#include "Layerable.h"
 #include "Graphic.h"
 #include "Animatable.h"
 #include "TexturePointer.h"
@@ -34,21 +33,22 @@ namespace RedBox {
 	 * you have given the pointer to the state, you don't have to worry about
 	 * deleting it, the state takes care of that for you. To remove a sprite
 	 * from a state, simply call setToBeDeleted(true), which is inherited from
-	 * Layerable.
+	 * Manageable.
 	 * @tparam Parent Either Transformable or Collidable.
+	 * @tparam ManageParent Manageable or a class derived from it.
 	 * @ingroup Display
 	 * @see RedBox::State
 	 */
-	template <typename Parent>
-	class LayeredGraphic : public Graphic<Animatable>, public Parent,
-		public Layerable {
+	template <typename Parent, typename ManageParent>
+	class ManagedGraphic : public Graphic<Animatable>, public Parent,
+	public ManageParent {
 	public:
 		/**
 		 * Default constructor.
 		 */
-		LayeredGraphic() : Graphic<Animatable>(), Parent(), Layerable() {
+		ManagedGraphic() : Graphic<Animatable>(), Parent(), ManageParent() {
 		}
-
+		
 		/**
 		 * Parameterized constructor. Loads the vertices and the texture
 		 * coordinates. If the specified size has a coordinate equal to 0 or
@@ -62,13 +62,13 @@ namespace RedBox {
 		 * for the texture and size of the Animatable object.
 		 * @see RedBox::Texturable::textureInformation
 		 */
-		explicit LayeredGraphic(TexturePointer newTexture,
+		explicit ManagedGraphic(TexturePointer newTexture,
 		                        const Vector2 &startingPosition = Vector2(),
 		                        const Vector2 &newSize = Vector2(),
 		                        const Vector2 &newTextureOffset = Vector2(),
 		                        unsigned int nbFrames = 1) :
-			Graphic<Animatable>(newTexture), Parent(startingPosition),
-			Layerable() {
+		Graphic<Animatable>(newTexture), Parent(startingPosition),
+		ManageParent() {
 			// We check if we have to use the texture as the full image.
 			if (newSize.getX() <= 0.0f || newSize.getY() <= 0.0f) {
 				// We make sure the texture information is valid.
@@ -76,16 +76,16 @@ namespace RedBox {
 					construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth),
 					                  static_cast<float>(this->getTextureInformation()->imageHeight)),
 					          startingPosition);
-
+					
 				} else {
 					Console::println("Failed to load the sprite because the texture is NULL.");
 				}
-
+				
 			} else {
 				construct(newSize, startingPosition, newTextureOffset, nbFrames);
 			}
 		}
-
+		
 		/**
 		 * Parameterized constructor. Loads the sprite from a sprite definition.
 		 * @param newTexture Texture pointer to use as the texture.
@@ -94,49 +94,49 @@ namespace RedBox {
 		 * @param startingPosition Starting position at which to place the
 		 * sprite.
 		 */
-		LayeredGraphic(TexturePointer newTexture,
+		ManagedGraphic(TexturePointer newTexture,
 		               const SpriteDefinition &definition,
 		               const Vector2 &startingPosition = Vector2()) :
-			Graphic<Animatable>(newTexture), Parent(startingPosition),
-			Layerable() {
+		Graphic<Animatable>(newTexture), Parent(startingPosition),
+		ManageParent() {
 			// We make sure the texture information is valid.
 			if (this->getTextureInformation()) {
 				construct(definition);
 				this->getVertices().move(startingPosition.getX(), startingPosition.getY());
-
+				
 			} else {
 				Console::println("Failed to load the sprite because the texture is NULL.");
 			}
 		}
-
+		
 		/**
-		* Copy constructor.
-		* @param src Layered graphic to make a copy of.
-		*/
-		LayeredGraphic(const LayeredGraphic<Parent> &src) : Graphic<Animatable>(src),
-			Parent(src), Layerable(src) {
+		 * Copy constructor.
+		 * @param src Managed graphic to make a copy of.
+		 */
+		ManagedGraphic(const ManagedGraphic<Parent, ManageParent> &src) : Graphic<Animatable>(src),
+		Parent(src), ManageParent(src) {
 		}
-
+		
 		/**
-		* Destructor.
-		*/
-		virtual ~LayeredGraphic() {
+		 * Destructor.
+		 */
+		virtual ~ManagedGraphic() {
 		}
-
+		
 		/**
-		* Assignment operator.
-		* @param src Layered graphic to copy.
-		* @return Reference to the modified layered graphic.
-		*/
-		LayeredGraphic<Parent> &operator=(const LayeredGraphic<Parent> &src) {
+		 * Assignment operator.
+		 * @param src Managed graphic to copy.
+		 * @return Reference to the modified managed graphic.
+		 */
+		ManagedGraphic<Parent, ManageParent> &operator=(const ManagedGraphic<Parent, ManageParent> &src) {
 			this->Graphic<Animatable>::operator=(src);
 			this->Parent::operator=(src);
-			this->Layerable::operator=(src);
+			this->ManageParent::operator=(src);
 			return *this;
 		}
-
+		
 		using Parent::move;
-
+		
 		/**
 		 * Moves the Positionable horizontally and vertically.
 		 * @param xDelta Value to add to the Positionable's horizontal position
@@ -152,7 +152,7 @@ namespace RedBox {
 			this->Parent::move(xDelta, yDelta);
 			this->getVertices().move(xDelta, yDelta);
 		}
-
+		
 		/**
 		 * Gets the geometric center of the body. Same as the position center
 		 * in symmetrical polygons, but must be overloaded for classes that
@@ -162,7 +162,7 @@ namespace RedBox {
 		virtual const Vector2 getCentroid() const {
 			return this->getVertices().getCentroid();
 		}
-
+		
 		/**
 		 * Gets the body's size. Can be overloaded for performance.
 		 * @return Vector2 containing the width and height of the body.
@@ -170,7 +170,7 @@ namespace RedBox {
 		virtual const Vector2 getSize() const {
 			return this->getVertices().getSize();
 		}
-
+		
 		/**
 		 * Gets the body's width.
 		 * @return Width in pixels (by default).
@@ -178,7 +178,7 @@ namespace RedBox {
 		virtual float getWidth() const {
 			return this->getVertices().getWidth();
 		}
-
+		
 		/**
 		 * Gets the body's height.
 		 * @return Height in pixels (by default).
@@ -186,9 +186,9 @@ namespace RedBox {
 		virtual float getHeight() const {
 			return this->getVertices().getHeight();
 		}
-
+		
 		using Parent::scaleFromPoint;
-
+		
 		/**
 		 * Scales the body from a specific point.
 		 * @param xScaling Horizontal scaling to apply. For example, if
@@ -206,7 +206,7 @@ namespace RedBox {
 			this->Parent::move(tmpPosition.getX() - this->getXPosition(),
 			                   tmpPosition.getY() - this->getYPosition());
 		}
-
+		
 		/**
 		 * Rotates the graphic body from a point.
 		 * @param rotationAngle Angle to rotate the graphic body.
@@ -221,15 +221,15 @@ namespace RedBox {
 			this->Parent::move(tmpPosition.getX() - this->getXPosition(),
 			                   tmpPosition.getY() - this->getYPosition());
 		}
-
+		
 		/**
 		 * Updates the body.
 		 */
 		virtual void update() {
-			CallUpdate<LayeredGraphic<Parent>, Parent, IsBaseOf<Updateable, Parent>::RESULT>()(this);
+			CallUpdate<ManagedGraphic<Parent, ManageParent>, Parent, IsBaseOf<Updateable, Parent>::RESULT>()(this);
 			this->Graphic<Animatable>::update();
 		}
-
+		
 		/**
 		 * Generates the vertices and the texture coordinates for the
 		 * sprite.
@@ -242,7 +242,7 @@ namespace RedBox {
 		               const Vector2 &newPosition,
 		               const Vector2 &newTextureOffset = Vector2(),
 		               unsigned int nbFrames = 1) {
-
+			
 			// We initialize the vertices.
 			this->getVertices().resize(4);
 			ShapeFactory::createRectangle(newSize, newPosition,
@@ -250,26 +250,26 @@ namespace RedBox {
 			// We specify the render modes.
 			addRenderMode(RenderMode::SHAPE);
 			addRenderMode(RenderMode::COLOR);
-
+			
 			// We check if we have to initialize the texture coordinates.
 			if (getTextureInformation()) {
 				loadTextureCoordinates(this->getVertices(), newTextureOffset,
 				                       nbFrames);
-
+				
 				// We make sure the texture coordinates were loaded correctly.
 				if (this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
 					addRenderMode(RenderMode::TEXTURE);
 				}
-
+				
 			} else {
 				removeRenderMode(RenderMode::TEXTURE);
 			}
 		}
-
+		
 		void construct(const Vector2 &newSize,
 		               const Vector2 &newPosition,
 		               const FrameDetails &frameDetails) {
-
+			
 			// We initialize the vertices.
 			this->getVertices().resize(4);
 			ShapeFactory::createRectangle(newSize, newPosition,
@@ -277,21 +277,21 @@ namespace RedBox {
 			// We specify the render modes.
 			addRenderMode(RenderMode::SHAPE);
 			addRenderMode(RenderMode::COLOR);
-
+			
 			// We check if we have to initialize the texture coordinates.
 			if (getTextureInformation()) {
 				loadTextureCoordinates(this->getVertices(), FrameArray(1, frameDetails));
-
+				
 				// We make sure the texture coordinates were loaded correctly.
 				if (this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
 					addRenderMode(RenderMode::TEXTURE);
 				}
-
+				
 			} else {
 				removeRenderMode(RenderMode::TEXTURE);
 			}
 		}
-
+		
 		/**
 		 * Generates teh vertices and the texture coordinates from a sprite
 		 * definition.
@@ -300,30 +300,30 @@ namespace RedBox {
 		void construct(const SpriteDefinition &definition) {
 			// We initialize the vertices.
 			this->getVertices() = definition.vertices;
-
+			
 			// We specify the render modes.
 			addRenderMode(RenderMode::SHAPE);
 			addRenderMode(RenderMode::COLOR);
-
+			
 			// We check if we have to initialize the texture coordinates.
 			if (getTextureInformation()) {
 				loadTextureCoordinates(this->getVertices(), definition.frames);
-
+				
 				// We add the animations to the sprite.
 				this->clearAnimations();
-
+				
 				for (AnimationMap::const_iterator i = definition.animations.begin();
 				     i != definition.animations.end(); ++i) {
 					this->addAnimation(i->first, i->second);
 				}
-
+				
 				addRenderMode(RenderMode::TEXTURE);
 			}
 		}
-
+		
 		/**
-		 * Constructs the layered graphic from a tile object.
-		 * @param tile Tile object to construct the layered graphic from.
+		 * Constructs the managed graphic from a tile object.
+		 * @param tile Tile object to construct the managed graphic from.
 		 */
 		virtual void construct(const TileObject &tile) {
 			this->clearAnimations();
@@ -333,33 +333,33 @@ namespace RedBox {
 			// We specify the render mode.
 			this->addRenderMode(RenderMode::SHAPE);
 			this->addRenderMode(RenderMode::COLOR);
-
+			
 			// We get the texture and the texture coordinates.
 			const Tileset *tileset = tile.parentLayer.parentMap.getTileset(tile.getTileId());
-
+			
 			if (tileset) {
 				this->getFrames().resize(1);
-
+				
 				if (tileset->loadTextureCoordinates(tile.getTileId(),
 				                                    this->getFrames()[0]) &&
 				    this->getCurrentTextureCoordinates().size() == this->getVertices().getNbVertices()) {
 					this->setTextureInformation(tileset->getTextureInformation());
 					this->addRenderMode(RenderMode::TEXTURE);
 				}
-
+				
 			} else {
 				this->removeRenderMode(RenderMode::TEXTURE);
 			}
-
+			
 			// We get the tile's color.
 			this->setColor(TileMapUtility::readColor(tile.getProperties()));
-
+			
 			loadCollidableProperties(tile.getProperties());
 		}
-
+		
 		/**
-		 * Constructs the layered graphic from a rectangle object.
-		 * @param rectangle Rectangle object to construct the layered graphic
+		 * Constructs the managed graphic from a rectangle object.
+		 * @param rectangle Rectangle object to construct the managed graphic
 		 * from.
 		 */
 		virtual void construct(const RectangleObject &rectangle) {
@@ -367,7 +367,7 @@ namespace RedBox {
 			this->setTextureInformation(TileMapUtility::readTextureKey(rectangle.getProperties()));
 			this->Parent::move(rectangle.getXPosition() - this->getXPosition(),
 			                   rectangle.getYPosition() - this->getYPosition());
-
+			
 			// We initialize the vertices.
 			this->getVertices().resize(4);
 			ShapeFactory::createRectangle(rectangle.getSize(),
@@ -375,101 +375,101 @@ namespace RedBox {
 			// We specify the render mode.
 			this->addRenderMode(RenderMode::SHAPE);
 			this->addRenderMode(RenderMode::COLOR);
-
+			
 			// We check if we have to initialize the texture coordinates.
 			if (this->getTextureInformation()) {
 				// We load the texture coordinates.
 				FrameArray newFrames;
 				TileMapUtility::readFrames(rectangle.getProperties(),
 				                           newFrames);
-
+				
 				this->loadTextureCoordinates(this->getVertices(),
 				                             newFrames);
-
+				
 				this->addRenderMode(RenderMode::TEXTURE);
-
+				
 				// We load the animations.
 				TileMapUtility::readAnimations(rectangle.getProperties(),
 				                               *this);
-
+				
 				// We set the default frame.
 				this->setDefaultFrame(TileMapUtility::readDefaultFrame(rectangle.getProperties()));
-
+				
 				// We start the default animation.
 				this->startAnimation(TileMapUtility::readDefaultAnimation(rectangle.getProperties()));
-
+				
 			} else {
 				this->removeRenderMode(RenderMode::TEXTURE);
 			}
-
-
+			
+			
 			// We read the rectangle's color.
 			this->setColor(TileMapUtility::readColor(rectangle.getProperties()));
-
+			
 			loadCollidableProperties(rectangle.getProperties());
 		}
-
+		
 		/**
-		 * Constructs the layered graphic from a polygon object.
-		 * @param polygon Polygon object to construct the layered graphic from.
+		 * Constructs the managed graphic from a polygon object.
+		 * @param polygon Polygon object to construct the managed graphic from.
 		 */
 		virtual void construct(const PolygonObject &polygon) {
 			this->clearAnimations();
 			this->setTextureInformation(TileMapUtility::readTextureKey(polygon.getProperties()));
 			this->Parent::move(polygon.getXPosition() - this->getXPosition(),
 			                   polygon.getYPosition() - this->getYPosition());
-
+			
 			// We initialize the vertices.
 			this->getVertices() = polygon.getVertices();
 			// We sort the vertices to be in the right order for triangle
 			// strips. We assume the shape is convex.
 			AlgorithmHelper::riffleShuffle(this->getVertices().getBegin(),
 			                               this->getVertices().getEnd());
-
+			
 			// We specify the render mode.
 			this->addRenderMode(RenderMode::SHAPE);
 			this->addRenderMode(RenderMode::COLOR);
-
+			
 			// We check if we have to initialize the texture coordinates.
 			if (this->getTextureInformation()) {
 				// We load the texture coordinates.
 				FrameArray newFrames;
 				TileMapUtility::readFrames(polygon.getProperties(),
 				                           newFrames);
-
+				
 				this->loadTextureCoordinates(this->getVertices(),
 				                             newFrames);
-
+				
 				this->addRenderMode(RenderMode::TEXTURE);
-
+				
 				// We load the animations.
 				TileMapUtility::readAnimations(polygon.getProperties(),
 				                               *this);
-
+				
 				// We set the default frame.
 				this->setDefaultFrame(TileMapUtility::readDefaultFrame(polygon.getProperties()));
-
+				
 				// We start the default animation.
 				this->startAnimation(TileMapUtility::readDefaultAnimation(polygon.getProperties()));
-
+				
 			} else {
 				this->removeRenderMode(RenderMode::TEXTURE);
 			}
-
-
+			
+			
 			// We read the rectangle's color.
 			this->setColor(TileMapUtility::readColor(polygon.getProperties()));
-
+			
 			loadCollidableProperties(polygon.getProperties());
 		}
-
+		
 		/**
-		 * Gets a duplicate of the layered graphic.
-		 * @return Pointer to a duplicate of the layered graphic. The caller is
+		 * Gets a duplicate of the managed graphic.
+		 * @return Pointer to a duplicate of the managed graphic. The caller is
 		 * responsible for deleting this instance.
 		 */
-		virtual LayeredGraphic<Parent> *clone() const {
-			return new LayeredGraphic<Parent>(*this);
+		virtual ManagedGraphic<Parent, ManageParent> *clone() const {
+			return new ManagedGraphic<Parent, ManageParent>(*this);
 		}
 	private:
 		/**
@@ -477,7 +477,7 @@ namespace RedBox {
 		 * Collidable.
 		 */
 		void loadCollidableProperties(const PropertyMap &properties) {
-			CallLoadCollidable<LayeredGraphic<Parent>, IsBaseOf<Collidable, LayeredGraphic<Parent> >::RESULT>()(properties, *this);
+			CallLoadCollidable<ManagedGraphic<Parent, ManageParent>, IsBaseOf<Collidable, ManagedGraphic<Parent, ManageParent> >::RESULT>()(properties, *this);
 		}
 	};
 }

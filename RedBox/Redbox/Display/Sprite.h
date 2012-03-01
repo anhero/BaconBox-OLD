@@ -5,11 +5,12 @@
 #ifndef RB_SPRITE_H
 #define RB_SPRITE_H
 
-#include "LayeredGraphic.h"
+#include "ManagedGraphic.h"
 #include "Collidable.h"
+#include "Layerable.h"
 
 namespace RedBox {
-	typedef LayeredGraphic<Collidable> Sprite;
+	typedef ManagedGraphic<Collidable, Layerable> Sprite;
 }
 
 #endif // RB_SPRITE_H
