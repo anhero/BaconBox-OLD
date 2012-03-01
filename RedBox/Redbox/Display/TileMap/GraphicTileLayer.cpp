@@ -294,7 +294,8 @@ namespace RedBox {
 		RenderBatch<BatchedInanimateGraphicElement<Collidable> >::ValueType *tmpTile = NULL;
 		const Tileset *tileset;
 		TileLayer::DataContainer::const_iterator::difference_type tileIndex;
-
+		Color tmpColor;
+		
 		// We add all the tiles.
 		for (TileLayer::DataContainer::const_iterator i = layer.getTiles().begin();
 		     i != layer.getTiles().end(); ++i) {
@@ -319,6 +320,9 @@ namespace RedBox {
 
 				// We load the texture coordinates.
 				tileset->loadTextureCoordinates(*i, tmpTile->getTextureCoordinates());
+				
+				// We set the tile's opacity.
+				tmpTile->setAlpha(layer.getOpacity());
 
 				// We add the new tile to the right batch.
 				getBatch(tmpTile->getTextureInformation())->add(tmpTile);
