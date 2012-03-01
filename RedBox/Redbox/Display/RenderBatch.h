@@ -120,13 +120,13 @@ namespace RedBox {
 					this->add((*i)->clone());
 				}
 
-				for (typename BodyList::const_iterator i = toAdd.begin();
-				     i != toAdd.end(); ++i) {
+				for (typename BodyList::const_iterator i = src.toAdd.begin();
+					 i != src.toAdd.end(); ++i) {
 					this->add((*i)->clone());
 				}
 
-				for (typename BodyList::const_iterator i = toChange.begin();
-				     i != toAdd.end(); ++i) {
+				for (typename BodyList::const_iterator i = src.toChange.begin();
+					 i != src.toChange.end(); ++i) {
 					this->add((*i)->clone());
 				}
 			}
