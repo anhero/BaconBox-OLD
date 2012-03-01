@@ -169,6 +169,7 @@ namespace RedBox {
 
 		/**
 		 * Constructs the graphic tile layer from a tile layer.
+		 * @param layer Tile layer to load the graphic tile layer from.
 		 */
 		void construct(const TileLayer &layer);
 	private:

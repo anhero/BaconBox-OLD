@@ -328,6 +328,9 @@ namespace RedBox {
 				getBatch(tmpTile->getTextureInformation())->add(tmpTile);
 			}
 		}
+		
+		// We set the layer's visibility.
+		this->setVisible(layer.isVisible());
 	}
 
 	void GraphicTileLayer::free() {

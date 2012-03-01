@@ -34,8 +34,23 @@ namespace RedBox {
 		 */
 		explicit GraphicObjectLayer(const ObjectLayer &layer,
 									const Vector2 &startingPosition = Vector2());
+		
+		/**
+		 * Copy constructor.
+		 * @param src Graphic object layer to make a copy of.
+		 */
 		GraphicObjectLayer(const GraphicObjectLayer &src);
+		
+		/**
+		 * Destructor.
+		 */
 		~GraphicObjectLayer();
+		
+		/**
+		 * Assignment operator overload.
+		 * @param src Graphic object layer to copy.
+		 * @return Reference to the modified instance.
+		 */
 		GraphicObjectLayer &operator=(const GraphicObjectLayer &src);
 
 		/**
@@ -59,6 +74,10 @@ namespace RedBox {
 		 */
 		GraphicObjectLayer *clone() const;
 
+		/**
+		 * Constructs the graphic object layer from an object layer.
+		 * @param layer Object layer to load the graphic object layer from.
+		 */
 		void construct(const ObjectLayer &layer);
 	private:
 	};
