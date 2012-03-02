@@ -5,15 +5,13 @@
 #ifndef RB_MANAGEABLE_H
 #define RB_MANAGEABLE_H
 
-#include "Keyable.h"
-
 namespace RedBox {
 	/**
 	 * Represents a manageable body. All classes that can be managed by a body
 	 * manager will be derived from this class.
 	 * @ingroup Display
 	 */
-	class Manageable : public Keyable {
+	class Manageable {
 		template <typename Key, typename Compare> friend class BodyManager;
 		template <typename T> friend class SimpleBodyManager;
 		template <typename T> friend class RenderBatchParent;
@@ -62,8 +60,6 @@ namespace RedBox {
 		 * @see RedBox::Manageable::toBeDeleted
 		 */
 		void setToBeDeleted(bool newToBeDeleted);
-	protected:
-		using Keyable::keyChange;
 	private:
 		/**
 		 * Used by the body's manager to make sure the body cannot be managed by

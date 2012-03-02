@@ -1,12 +1,11 @@
 #include "Manageable.h"
 
 namespace RedBox {
-	Manageable::Manageable() : Keyable(), managed(false),
-		toBeDeleted(false) {
+	Manageable::Manageable() : managed(false), toBeDeleted(false) {
 	}
 
-	Manageable::Manageable(const Manageable &src) : Keyable(src),
-		managed(false), toBeDeleted(src.toBeDeleted) {
+	Manageable::Manageable(const Manageable &src) : managed(false),
+		toBeDeleted(src.toBeDeleted) {
 	}
 
 	Manageable::~Manageable() {
