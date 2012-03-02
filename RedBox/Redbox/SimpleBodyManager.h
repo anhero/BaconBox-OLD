@@ -10,6 +10,7 @@
 #include "Maskable.h"
 #include "Updateable.h"
 #include "NonManageable.h"
+#include "Iterators.h"
 
 namespace RedBox {
 	/**
@@ -41,120 +42,18 @@ namespace RedBox {
 
 		/// Type used to count the number of bodies.
 		typedef typename Container::size_type SizeType;
+		
+		typedef typename Container::difference_type DifferenceType;
 
 		/**
 		 * Iterator to iterate through the bodies.
 		 */
-		class Iterator {
-			friend class SimpleBodyManager<ValueType, ManageParent>;
-			friend class ConstIterator;
-		public:
-			Iterator() {}
-			Iterator(const Iterator &src) : it(src.it) {}
-
-			Iterator &operator=(const Iterator &src) {
-				it = src.it;
-				return *this;
-			}
-
-			bool operator==(const Iterator &other) const {
-				return it == other.it;
-			}
-
-			bool operator!=(const Iterator &other) const {
-				return it != other.it;
-			}
-
-			Iterator &operator++() {
-				++it;
-				return *this;
-			}
-
-			Iterator operator++(int) {
-				Iterator result(*this);
-				++it;
-				return result;
-			}
-
-			Iterator &operator--() {
-				--it;
-				return *this;
-			}
-
-			Iterator operator--(int) {
-				Iterator result(*this);
-				--it;
-				return result;
-			}
-
-			Reference operator*() const {
-				return *(*it);
-			}
-
-			Pointer operator->() const {
-				return *it;
-			}
-		private:
-			explicit Iterator(typename Container::iterator newIt) : it(newIt) {}
-			typename Container::iterator it;
-		};
-
+		typedef BidirectionalIterator<SimpleBodyManager<T, ManageParent> > Iterator;
+		
 		/**
 		 * Const iterator to iterate through the bodies.
 		 */
-		class ConstIterator {
-			friend class SimpleBodyManager<ValueType, ManageParent>;
-		public:
-			ConstIterator() {}
-			ConstIterator(const ConstIterator &src) : it(src.it) {}
-			ConstIterator(const Iterator &src) : it(src.it) {}
-
-			ConstIterator &operator=(const ConstIterator &src) {
-				it = src.it;
-				return *this;
-			}
-
-			bool operator==(const ConstIterator &other) const {
-				return it == other.it;
-			}
-
-			bool operator!=(const ConstIterator &other) const {
-				return it != other.it;
-			}
-
-			ConstIterator &operator++() {
-				++it;
-				return *this;
-			}
-
-			ConstIterator operator++(int) {
-				ConstIterator result(*this);
-				++it;
-				return result;
-			}
-
-			ConstIterator &operator--() {
-				--it;
-				return *this;
-			}
-
-			ConstIterator operator--(int) {
-				ConstIterator result(*this);
-				--it;
-				return result;
-			}
-
-			ConstReference operator*() const {
-				return *(*it);
-			}
-
-			ConstPointer operator->() const {
-				return *it;
-			}
-		private:
-			explicit ConstIterator(typename Container::const_iterator newIt) : it(newIt) {}
-			typename Container::const_iterator it;
-		};
+		typedef BidirectionalConstIterator<SimpleBodyManager<T, ManageParent> > ConstIterator;
 
 		/// Reverse iterator.
 		typedef std::reverse_iterator<Iterator> ReverseIterator;
