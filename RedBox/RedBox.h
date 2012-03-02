@@ -71,6 +71,7 @@
 #include <RedBox/MainWindow.h>
 #include <RedBox/State.h>
 #include <RedBox/SimpleBodyManager.h>
+#include <RedBox/SimpleManageable.h>
 #include <RedBox/DebugState.h>
 #include <RedBox/ResourceManager.h>
 #include <RedBox/ResourcePathHandler.h>

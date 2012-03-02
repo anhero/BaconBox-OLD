@@ -6,6 +6,12 @@
 #define RB_KEYABLE_H
 
 namespace RedBox {
+	/**
+	 * Represents an object that can be sorted in set/map with a member as its
+	 * key in a body manager.
+	 * @see RedBox::BodyManager
+	 * @see RedBox::Manageable
+	 */
 	class Keyable {
 		template <typename Key, typename Compare> friend class BodyManager;
 		template <typename T> friend class SimpleBodyManager;

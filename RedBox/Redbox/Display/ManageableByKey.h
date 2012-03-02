@@ -9,30 +9,36 @@
 #include "Keyable.h"
 
 namespace RedBox {
-	class ManageableByKey {
+	/**
+	 * Represents an object that is manageable by key in a body manager.
+	 * @see RedBox::BodyManager
+	 */
+	class ManageableByKey : public Keyable, public Manageable {
 	public:
 		/**
-		* Default constructor.
-		*/
+		 * Default constructor.
+		 */
 		ManageableByKey();
 
 		/**
-		* Copy constructor.
-		* @param src ManageableByKey to make a copy of.
-		*/
+		 * Copy constructor.
+		 * @param src ManageableByKey to make a copy of.
+		 */
 		ManageableByKey(const ManageableByKey &src);
 
 		/**
-		* Destructor.
-		*/
+		 * Destructor.
+		 */
 		virtual ~ManageableByKey();
 
 		/**
-		* Assignment operator overload.
-		* @param src ManageableByKey to copy.
-		* @return Reference to the modified instance.
-		*/
+		 * Assignment operator overload.
+		 * @param src ManageableByKey to copy.
+		 * @return Reference to the modified instance.
+		 */
 		ManageableByKey &operator=(const ManageableByKey &src);
+	protected:
+		using Keyable::keyChange;
 	};
 
 }

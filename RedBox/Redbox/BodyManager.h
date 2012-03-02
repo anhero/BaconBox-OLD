@@ -12,7 +12,7 @@
 #include <utility>
 
 #include "DeleteHelper.h"
-#include "Manageable.h"
+#include "ManageableByKey.h"
 #include "Disableable.h"
 #include "StaticAssert.h"
 #include "IsBaseOf.h"
@@ -185,7 +185,7 @@ namespace RedBox {
 		BodyMap bodies;
 	private:
 		/// Makes sure the body type is derived from the Manageable class.
-		typedef typename StaticAssert<IsBaseOf<Manageable, KeyType>::RESULT>::Result IsManageable;
+		typedef typename StaticAssert<IsBaseOf<ManageableByKey, KeyType>::RESULT>::Result IsManageableByKey;
 
 		/// Makes sure the body type is derived from the Disableable class.
 		typedef typename StaticAssert<IsBaseOf<Disableable, KeyType>::RESULT>::Result IsDisableable;

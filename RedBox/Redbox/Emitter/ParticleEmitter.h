@@ -20,7 +20,6 @@
 #include "Animatable.h"
 #include "Colorable.h"
 #include "Collidable.h"
-#include "Manageable.h"
 #include "IsBaseOf.h"
 #include "StaticAssert.h"
 #include "IsSame.h"

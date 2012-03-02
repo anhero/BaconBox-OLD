@@ -6,7 +6,7 @@
 #define RB_LAYERABLE_H
 
 #include "Disableable.h"
-#include "Manageable.h"
+#include "ManageableByKey.h"
 #include "Orderable.h"
 #include "Scrollable.h"
 
@@ -15,8 +15,8 @@ namespace RedBox {
 	 * Represents the class a State contains.
 	 * @ingroup Display
 	 */
-	class Layerable : public Disableable, public Manageable, public Orderable,
-		public Scrollable {
+	class Layerable : public Disableable, public ManageableByKey,
+		public Orderable, public Scrollable {
 	public:
 		/**
 		 * Custom compare class for the layered bodies multiset in the state.
@@ -34,7 +34,7 @@ namespace RedBox {
 			 * @return True if the first Layerable is closer to the camera
 			 * than the second.
 			 */
-			bool operator() (const Layerable *l1, const Layerable *l2);
+			bool operator()(const Layerable *l1, const Layerable *l2);
 		};
 
 		/**

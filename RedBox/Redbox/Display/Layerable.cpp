@@ -11,12 +11,12 @@ namespace RedBox {
 		                      (l1->isHud() && l2->isHud() && l1->getZ() < l2->getZ()));
 	}
 
-	Layerable::Layerable() : Disableable(), Manageable(), Orderable(),
+	Layerable::Layerable() : Disableable(), ManageableByKey(), Orderable(),
 		Scrollable() {
 	}
 
 	Layerable::Layerable(const Layerable &src) : Disableable(src),
-		Manageable(src), Orderable(src), Scrollable(src) {
+		ManageableByKey(src), Orderable(src), Scrollable(src) {
 	}
 
 	Layerable::~Layerable() {
@@ -24,7 +24,7 @@ namespace RedBox {
 
 	Layerable &Layerable::operator=(const Layerable &src) {
 		this->Disableable::operator=(src);
-		this->Manageable::operator=(src);
+		this->ManageableByKey::operator=(src);
 		this->Orderable::operator=(src);
 		this->Scrollable::operator=(src);
 		return *this;

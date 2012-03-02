@@ -5,11 +5,11 @@
 #define RB_BATCHED_BODY_H
 
 #include "Deactivable.h"
-#include "Manageable.h"
+#include "ManageableByKey.h"
 #include "Orderable.h"
 
 namespace RedBox {
-	class BatchedBody : public Deactivable, public Manageable, public Orderable {
+	class BatchedBody : public Deactivable, public ManageableByKey, public Orderable {
 	public:
 		/**
 		 * Default constructor.
