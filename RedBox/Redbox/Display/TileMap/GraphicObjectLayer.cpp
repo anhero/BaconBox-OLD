@@ -215,9 +215,135 @@ namespace RedBox {
 		bool notFirst = false;
 		Vector2 newPosition;
 		
-		for (InanimateSpriteContainer::ConstIterator i = inanimateSprites.getBegin();
-			 i != inanimateSprites.getEnd(); ++i) {
+		for (SpriteContainer::Iterator i = sprites.getBegin();
+			 i != sprites.getEnd(); ++i) {
+			i->scaleFromPoint(xScaling, yScaling, fromPoint);
 			
+			if (notFirst) {
+				if (newPosition.getX() > i->getXPosition()) {
+					newPosition.setX(i->getXPosition());
+				}
+				
+				if (newPosition.getY() > i->getYPosition()) {
+					newPosition.setY(i->getYPosition());
+				}
+			} else {
+				newPosition = i->getPosition();
+				notFirst = true;
+			}
 		}
+		
+		for (InanimateSpriteContainer::Iterator i = inanimateSprites.getBegin();
+			 i != inanimateSprites.getEnd(); ++i) {
+			i->scaleFromPoint(xScaling, yScaling, fromPoint);
+			
+			if (notFirst) {
+				if (newPosition.getX() > i->getXPosition()) {
+					newPosition.setX(i->getXPosition());
+				}
+				
+				if (newPosition.getY() > i->getYPosition()) {
+					newPosition.setY(i->getYPosition());
+				}
+			} else {
+				newPosition = i->getPosition();
+				notFirst = true;
+			}
+		}
+		
+		this->GraphicTileMapLayer::move(newPosition.getX() - this->getXPosition(),
+										newPosition.getY() - this->getYPosition());
+	}
+	
+	void GraphicObjectLayer::rotateFromPoint(float rotationAngle,
+											 const Vector2 &rotationPoint) {
+		this->GraphicTileMapLayer::rotateFromPoint(rotationAngle, rotationPoint);
+		
+		bool notFirst = false;
+		Vector2 newPosition;
+		
+		for (SpriteContainer::Iterator i = sprites.getBegin();
+			 i != sprites.getEnd(); ++i) {
+			i->rotateFromPoint(rotationAngle, rotationPoint);
+			
+			if (notFirst) {
+				if (newPosition.getX() > i->getXPosition()) {
+					newPosition.setX(i->getXPosition());
+				}
+				
+				if (newPosition.getY() > i->getYPosition()) {
+					newPosition.setY(i->getYPosition());
+				}
+			} else {
+				newPosition = i->getPosition();
+				notFirst = true;
+			}
+		}
+		
+		for (InanimateSpriteContainer::Iterator i = inanimateSprites.getBegin();
+			 i != inanimateSprites.getEnd(); ++i) {
+			i->rotateFromPoint(rotationAngle, rotationPoint);
+			
+			if (notFirst) {
+				if (newPosition.getX() > i->getXPosition()) {
+					newPosition.setX(i->getXPosition());
+				}
+				
+				if (newPosition.getY() > i->getYPosition()) {
+					newPosition.setY(i->getYPosition());
+				}
+			} else {
+				newPosition = i->getPosition();
+				notFirst = true;
+			}
+		}
+		
+		this->GraphicTileMapLayer::move(newPosition.getX() - this->getXPosition(),
+										newPosition.getY() - this->getYPosition());
+	}
+	
+	void GraphicObjectLayer::update() {
+		sprites.update();
+		inanimateSprites.update();
+	}
+	
+	void GraphicObjectLayer::render() {
+		sprites.render();
+		inanimateSprites.render();
+	}
+	
+	void GraphicObjectLayer::mask() {
+		sprites.mask();
+		inanimateSprites.mask();
+	}
+	
+	void GraphicObjectLayer::unmask() {
+		sprites.unmask();
+		inanimateSprites.unmask();
+	}
+	
+	Maskable *GraphicObjectLayer::getMask() const {
+		return currentMask;
+	}
+	
+	void GraphicObjectLayer::setMask(Maskable *newMask, bool inverted) {
+		currentMask = newMask;
+		
+		sprites.setMask(newMask, inverted);
+		inanimateSprites.setMask(newMask, inverted);
+	}
+	
+	GraphicObjectLayer *GraphicObjectLayer::asObjectLayer() {
+		return this;
+	}
+	
+	const GraphicObjectLayer *GraphicObjectLayer::asObjectLayer() const {
+		return this;
+	}
+	
+	void GraphicObjectLayer::construct(const ObjectLayer &layer) {
+		sprites.clear();
+		inanimateSprites.clear();
+		this->setVisible(layer.isVisible());
 	}
 }
