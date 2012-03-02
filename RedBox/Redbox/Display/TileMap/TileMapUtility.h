@@ -18,6 +18,7 @@
 
 namespace RedBox {
 	class Collidable;
+	class Orderable;
 
 	/**
 	 * Contains utility functions for the tile map system.
@@ -35,10 +36,16 @@ namespace RedBox {
 		 * Name of the property that contains the index of the default frame.
 		 */
 		static const std::string DEFAULT_FRAME_NAME;
+		
+		/// Used to identify sprites.
+		static const std::string SPRITE_TYPE_NAME;
+		
+		/// Used to identify inanimate sprites.
+		static const std::string INANIMATE_SPRITE_TYPE_NAME;
 
 		/// Value to use by default if the default frame is not specified.
 		static const unsigned int DEFAULT_FRAME = 0u;
-
+		
 		/**
 		 * Loads a collidable's attributes from properties. See the
 		 * tiled_properties.pdf for more information about the properties read.
@@ -184,6 +191,15 @@ namespace RedBox {
 		 * @return Index of the default frame.
 		 */
 		static unsigned int readDefaultFrame(const PropertyMap &properties);
+		
+		/**
+		 * Reads the z.
+		 * @param properties Properties to read the z from.
+		 * @param orderable Reference to the orderable to have its z set.
+		 */
+		static void readZ(const PropertyMap &properties,
+						  Orderable &orderable);
+						  
 	private:
 		/**
 		 * Private undefined default constructor.

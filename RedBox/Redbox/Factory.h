@@ -48,7 +48,7 @@ namespace RedBox {
 			typename FnRegistry::iterator found = registry.find(className);
 
 			if (found != registry.end()) {
-				return (*found->second);
+				return (*found->second)();
 
 			} else {
 				return NULL;
@@ -60,7 +60,7 @@ namespace RedBox {
 		 */
 		GenericFactory() : registry() {
 		}
-		
+
 		/**
 		 * Registers a class.
 		 * @param className Class's identifier that will be used to find and
@@ -72,7 +72,7 @@ namespace RedBox {
 		void regCreateFn(const ClassIDKey &className, BaseCreateFn functionPtr) {
 			registry[className] = functionPtr;
 		}
-		
+
 		/// Associates an identifier to a function that allocates a child.
 		FnRegistry registry;
 	};
@@ -108,4 +108,3 @@ namespace RedBox {
 }
 
 #endif
-

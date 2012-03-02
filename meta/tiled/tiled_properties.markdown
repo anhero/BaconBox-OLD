@@ -45,12 +45,12 @@ Only one property is read and interpreted by RedBox when reading a tile map.
 
 RedBox has some pre-defined types you can set that RedBox will read and initialize. To load the types in Tiled, open the "Preferences" window and select the "Object Types" tab. Then, you can either enter the types manually or import them from the "redbox_types.xml" file available with this documentation.
 
-* RedBox::Sprite
-* RedBox::InanimateSprite
+* Sprite
+* InanimateSprite
 
 ### Common properties
 
-Here's the list of properties that RedBox will read for both "RedBox::Sprite" and "RedBox::InanimateSprite". Boolean values are represented with "0" for false and "1" for true.
+Here's the list of properties that RedBox will read for both "Sprite" and "InanimateSprite". Boolean values are represented with "0" for false and "1" for true.
 
 If a given value is invalid (for example, if you put "bob" as the value for "velocity.x"), the default value will be used when loading the body.
 
@@ -161,9 +161,9 @@ the ground, it would rebound at the same height infinitely. But, in reality, the
 
 ### Specific properties
 
-#### RedBox::Sprite
+#### Sprite
 
-The only difference a "RedBox::Sprite" has with a "RedBox::InanimateSprite" is the possibility to have animations. You can define animations for a sprite and the default animation. By default, a sprite doesn't have any animations and only one frame. 
+The only difference a "Sprite" has with a "InanimateSprite" is the possibility to have animations. You can define animations for a sprite and the default animation. By default, a sprite doesn't have any animations and only one frame. 
 
 For the frame property names "frame[i]", replace "i" with the index of the frame. The index starts at 0. So if you define "nbFrames" with 3, it'll expect definitions for "frame[0]", "frame[1]" and "frame[3]", else it'll use default values. At least one frame must be defined.
 
@@ -223,9 +223,9 @@ For animation definitions, it uses a similar idea as the frame definitions. You 
 </tr>
 </table>
 
-#### RedBox::InanimateSprite
+#### InanimateSprite
 
-A "RedBox::InanimateSprite" cannot be animated. It can only have one frame. Read the properties' description carefully, some of them can only be used for specific types of objects.
+A "InanimateSprite" cannot be animated. It can only have one frame. Read the properties' description carefully, some of them can only be used for specific types of objects.
 <table>
 <tr>
 <th>Name</th>

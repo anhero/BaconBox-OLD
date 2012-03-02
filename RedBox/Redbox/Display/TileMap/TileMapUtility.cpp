@@ -6,10 +6,13 @@
 #include "StringHelper.h"
 #include "AlgorithmHelper.h"
 #include "Collidable.h"
+#include "Orderable.h"
 
 namespace RedBox {
 	const std::string TileMapUtility::DEFAULT_ANIMATION_NAME("defaultAnimation");
 	const std::string TileMapUtility::DEFAULT_FRAME_NAME("defaultFrame");
+	const std::string TileMapUtility::SPRITE_TYPE_NAME("Sprite");
+	const std::string TileMapUtility::INANIMATE_SPRITE_TYPE_NAME("InanimateSprite");
 
 	static const PropertyMap::key_type::value_type TRUE_CHAR = '1';
 	static const PropertyMap::key_type::value_type FALSE_CHAR = '0';
@@ -528,5 +531,17 @@ namespace RedBox {
 		}
 
 		return result;
+	}
+
+	void TileMapUtility::readZ(const PropertyMap &properties,
+	                           Orderable &orderable) {
+		PropertyMap::const_iterator found = properties.find("z");
+
+		int result = 0;
+
+		if (found != properties.end() &&
+		    StringHelper::fromString(found->second, result)) {
+			orderable.setZ(result);
+		}
 	}
 }

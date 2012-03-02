@@ -21,6 +21,8 @@
 #include "TimerManager.h"
 #include "ResourceManager.h"
 #include "Console.h"
+#include "Factory.h"
+#include "GraphicObjectLayer.h"
 #include <libgen.h>
 
 #include RB_MAIN_WINDOW_INCLUDE
@@ -184,8 +186,8 @@ namespace RedBox {
 	                              unsigned int resolutionHeight,
 	                              float contextWidth,
 	                              float contextHeight) {
-
-
+		RegisterInFactory<GraphicObjectLayer::SpriteContainer::ValueType, GraphicObjectLayer::SpriteContainer::ValueType>::registerInFactory("Sprite");
+		RegisterInFactory<GraphicObjectLayer::InanimateSpriteContainer::ValueType, GraphicObjectLayer::InanimateSpriteContainer::ValueType>::registerInFactory("InanimatSprite");
 		TimeHelper::getInstance();
 		InputManager::getInstance();
 		onInitialize.shoot(resolutionWidth, resolutionHeight, contextWidth, contextHeight);

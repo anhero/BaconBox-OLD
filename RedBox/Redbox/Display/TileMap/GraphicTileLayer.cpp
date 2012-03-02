@@ -6,6 +6,7 @@
 #include "ShapeFactory.h"
 #include "TextureInformation.h"
 #include "TexturePointer.h"
+#include "TileMapUtility.h"
 
 namespace RedBox {
 	GraphicTileLayer::GraphicTileLayer(const Vector2 &startingPosition) :
@@ -331,6 +332,9 @@ namespace RedBox {
 		
 		// We set the layer's visibility.
 		this->setVisible(layer.isVisible());
+		
+		// We set the layer's z.
+		TileMapUtility::readZ(layer.getProperties(), *this);
 	}
 
 	void GraphicTileLayer::free() {
