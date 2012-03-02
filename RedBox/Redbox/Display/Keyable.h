@@ -14,7 +14,7 @@ namespace RedBox {
 	 */
 	class Keyable {
 		template <typename Key, typename Compare> friend class BodyManager;
-		template <typename T> friend class SimpleBodyManager;
+		template <typename T, typename U> friend class SimpleBodyManager;
 		template <typename T> friend class RenderBatchParent;
 		template <typename T, bool ANIMATABLE> friend class RenderBatchMiddle;
 	public:
