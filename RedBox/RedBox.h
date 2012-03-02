@@ -70,7 +70,6 @@
 #include <RedBox/Engine.h>
 #include <RedBox/MainWindow.h>
 #include <RedBox/State.h>
-#include <RedBox/SimpleBodyManager.h>
 #include <RedBox/SimpleManageable.h>
 #include <RedBox/DebugState.h>
 #include <RedBox/ResourceManager.h>
@@ -84,7 +83,9 @@
 #include <RedBox/InanimateSprite.h>
 #include <RedBox/Sprite.h>
 #include <RedBox/SpriteBatch.h>
+#include <RedBox/SpriteGroup.h>
 #include <RedBox/InanimateSpriteBatch.h>
+#include <RedBox/InanimateSpriteGroup.h>
 #include <RedBox/CollisionGroup.h>
 #include <RedBox/TextureAtlas.h>
 #include <RedBox/TileMap.h>
