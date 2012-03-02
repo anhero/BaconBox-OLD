@@ -47,6 +47,7 @@ namespace RedBox {
 		 */
 		class Iterator {
 			friend class SimpleBodyManager<ValueType, ManageParent>;
+			friend class ConstIterator;
 		public:
 			Iterator() {}
 			Iterator(const Iterator &src) : it(src.it) {}
@@ -106,6 +107,7 @@ namespace RedBox {
 		public:
 			ConstIterator() {}
 			ConstIterator(const ConstIterator &src) : it(src.it) {}
+			ConstIterator(const Iterator &src) : it(src.it) {}
 
 			ConstIterator &operator=(const ConstIterator &src) {
 				it = src.it;
@@ -478,6 +480,7 @@ namespace RedBox {
 		 */
 		class Iterator {
 			friend class SimpleBodyManager<ValueType, NonManageable>;
+			friend class ConstIterator;
 		public:
 			Iterator() {}
 			Iterator(const Iterator &src) : it(src.it) {}
@@ -537,6 +540,7 @@ namespace RedBox {
 		public:
 			ConstIterator() {}
 			ConstIterator(const ConstIterator &src) : it(src.it) {}
+			ConstIterator(const Iterator &src) : it(src.it) {}
 
 			ConstIterator &operator=(const ConstIterator &src) {
 				it = src.it;
