@@ -13,13 +13,13 @@ RedBox has some properties that will be read and interpreted when loading a tile
 <th>Default value</th>
 </tr>
 <tr>
-<td>zInterval</td>
+<td>zIncrement</td>
 <td>Z interval between each layer. When layers are added to the state after being loaded. This will be the distance in Z between each layer for the render order. This will let you add bodies to the state between layers. If the Z interval is set to 0, the layers will still be rendered in the right order, but you will not be able to add bodies between the layers. If the value is negative, the order of the layers will actually be rendered in the reverse order.</td>
 <td>100</td>
 </tr>
 <tr>
 <td>zStart</td>
-<td>Z of the first layer. The second layer would have a z of zStart + zInterval.</td>
+<td>Z of the first layer. The second layer would have a z of zStart + zIncrement.</td>
 <td>0</td>
 </tr>
 </table>
@@ -36,7 +36,7 @@ Only one property is read and interpreted by RedBox when reading a tile map.
 </tr>
 <tr>
 <td>z</td>
-<td>Z coordinate of the layer. Overrides the Z calculated by the zStart and zInterval specified in the tile map's properties. Optional.</td>
+<td>Z coordinate of the layer. Overrides the Z calculated by the zStart and zIncrement specified in the tile map's properties. Optional.</td>
 <td></td>
 </tr>
 </table>

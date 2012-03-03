@@ -12,6 +12,7 @@
 #include "Iterators.h"
 
 namespace RedBox {
+	class State;
 	class TileMap;
 
 	class GraphicTileMap : public Transformable {
@@ -54,6 +55,18 @@ namespace RedBox {
 		 */
 		explicit GraphicTileMap(const TileMap &map,
 		                        const Vector2 &startingPosition = Vector2());
+
+		/**
+		 * Parameterized constructor.
+		 * @param map Tile map to load the graphic tile map from.
+		 * @param startingPosition Starting position of the graphic tile map.
+		 * @param zIncrement Increment to the z to add to each layer.
+		 * @param zStart Number at which to start the layers' z from.
+		 */
+		GraphicTileMap(const TileMap &map,
+		               int zIncrement,
+		               int zStart = 0,
+		               const Vector2 &startingPosition = Vector2());
 
 		/**
 		 * Copy constructor.
@@ -132,8 +145,25 @@ namespace RedBox {
 		/**
 		 * Constructs the graphic tile map from a tile map.
 		 * @param map Tile map to load the graphic tile map from.
+		 * @param zIncrement Increment to the z to add to each layer.
+		 * @param zStart Number at which to start the layers' z from.
+		 */
+		void construct(const TileMap &map, int zIncrement, int zStart = 0);
+
+		/**
+		 * Constructs the graphic tile map from a tile map. Reads the zIncrement
+		 * and zStart from the tile map's properties (defaults to 100 and 0 if
+		 * the properties are not found).
+		 * @param map Tile map to load the graphic tile map from.
 		 */
 		void construct(const TileMap &map);
+
+		/**
+		 * Adds the layers to the state. Does nothing if the layers are already
+		 * added to a state.
+		 * @param state State to add the layers to.
+		 */
+		void addToState(State &state);
 
 		/**
 		 * Gets the layer from an index. Does not do bound checking.

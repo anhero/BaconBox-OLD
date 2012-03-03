@@ -544,4 +544,32 @@ namespace RedBox {
 			orderable.setZ(result);
 		}
 	}
+
+	int TileMapUtility::readZIncrement(const PropertyMap &properties) {
+		static const PropertyMap::key_type Z_INCREMENT("zIncrement");
+
+		PropertyMap::const_iterator found = properties.find(Z_INCREMENT);
+
+		int result = 100;
+
+		if (found != properties.end()) {
+			StringHelper::fromString(found->second, result);
+		}
+
+		return result;
+	}
+
+	int TileMapUtility::readZStart(const PropertyMap &properties) {
+		static const PropertyMap::key_type Z_START("zStart");
+
+		PropertyMap::const_iterator found = properties.find(Z_START);
+
+		int result = 0;
+
+		if (found != properties.end()) {
+			StringHelper::fromString(found->second, result);
+		}
+
+		return result;
+	}
 }

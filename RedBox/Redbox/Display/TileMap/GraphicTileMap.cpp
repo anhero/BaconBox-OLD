@@ -1,6 +1,12 @@
 #include "GraphicTileMap.h"
 
 #include "TileMap.h"
+#include "TileLayer.h"
+#include "ObjectLayer.h"
+#include "GraphicTileLayer.h"
+#include "GraphicObjectLayer.h"
+#include "State.h"
+#include "TileMapUtility.h"
 
 namespace RedBox {
 	GraphicTileMap::GraphicTileMap(const Vector2 &startingPosition) :
@@ -11,6 +17,13 @@ namespace RedBox {
 	                               const Vector2 &startingPosition) :
 		Transformable(startingPosition) {
 		construct(map);
+	}
+
+	GraphicTileMap::GraphicTileMap(const TileMap &map, int zIncrement,
+	                               int zStart,
+	                               const Vector2 &startingPosition) :
+		Transformable(startingPosition) {
+		construct(map, zIncrement, zStart);
 	}
 
 	GraphicTileMap::GraphicTileMap(const GraphicTileMap &src) :
@@ -211,8 +224,38 @@ namespace RedBox {
 		}
 	}
 
+	void GraphicTileMap::construct(const TileMap &map, int zIncrement,
+	                               int zStart) {
+		free();
+		layers.clear();
+		int z = zStart;
+
+		for (TileMap::LayerContainer::const_iterator i = map.getLayers().begin();
+		     i != map.getLayers().end(); ++i) {
+			if (*i) {
+				if ((*i)->asTileLayer()) {
+					layers.push_back(new GraphicTileLayer(*(*i)->asTileLayer(), getPosition()));
+
+				} else {
+					layers.push_back(new GraphicObjectLayer(*(*i)->asObjectLayer(), getPosition()));
+				}
+
+				layers.back()->setZ(z);
+			}
+
+			z += zIncrement;
+		}
+	}
+
 	void GraphicTileMap::construct(const TileMap &map) {
-		// TODO: loop through the layers to add them.
+		construct(map, TileMapUtility::readZIncrement(map.getProperties()),
+		          TileMapUtility::readZStart(map.getProperties()));
+	}
+
+	void GraphicTileMap::addToState(State &state) {
+		for (Container::iterator i = layers.begin(); i != layers.end(); ++i) {
+			state.add(*i);
+		}
 	}
 
 	GraphicTileMap::Reference GraphicTileMap::operator[](GraphicTileMap::SizeType index) {
@@ -266,7 +309,12 @@ namespace RedBox {
 
 	void GraphicTileMap::free() {
 		for (Container::iterator i = layers.begin(); i != layers.end(); ++i) {
-			delete *i;
+			if ((*i)->isManaged()) {
+				(*i)->setToBeDeleted(true);
+
+			} else {
+				delete *i;
+			}
 		}
 	}
 }
