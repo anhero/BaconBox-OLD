@@ -65,16 +65,16 @@ namespace RedBox {
 		 * Destructor.
 		 */
 		~GraphicTileMap();
-		
+
 		/**
 		 * Assignment operator overload.
 		 * @param src Graphic tile map to copy.
 		 * @return Reference to the modified instance.
 		 */
 		GraphicTileMap &operator=(const GraphicTileMap &src);
-		
+
 		using Transformable::move;
-		
+
 		/**
 		 * Moves the Positionable horizontally and vertically.
 		 * @param xDelta Value to add to the Positionable's horizontal position
@@ -87,27 +87,27 @@ namespace RedBox {
 		 * @see RedBox::Positionable::position
 		 */
 		void move(float xDelta, float yDelta);
-		
+
 		/**
 		 * Gets the body's size. Can be overloaded for performance.
 		 * @return Vector2 containing the width and height of the body.
 		 */
 		const Vector2 getSize() const;
-		
+
 		/**
 		 * Gets the body's width.
 		 * @return Width in pixels (by default).
 		 */
 		float getWidth() const;
-		
+
 		/**
 		 * Gets the body's height.
 		 * @return Height in pixels (by default).
 		 */
 		float getHeight() const;
-		
+
 		using Transformable::scaleFromPoint;
-		
+
 		/**
 		 * Scales the body from a specific point.
 		 * @param xScaling Horizontal scaling to apply. For example, if
@@ -119,7 +119,7 @@ namespace RedBox {
 		 */
 		void scaleFromPoint(float xScaling, float yScaling,
 		                    const Vector2 &fromPoint);
-		
+
 		/**
 		 * Rotates the graphic body from a point.
 		 * @param rotationAngle Angle to rotate the graphic body.
@@ -137,6 +137,11 @@ namespace RedBox {
 	private:
 		/// Contains the map's layers.
 		Container layers;
+
+		/**
+		 * Frees all memory allocated by the layers.
+		 */
+		void free();
 	};
 }
 

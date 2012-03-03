@@ -305,7 +305,7 @@ namespace RedBox {
 		 */
 		virtual void construct(const PolygonObject &polygon) {
 			this->setTextureInformation(TileMapUtility::readTextureKey(polygon.getProperties()));
-			this->Collidable::move(polygon.getXPosition() - this->getXPosition(),
+			this->Parent::move(polygon.getXPosition() - this->getXPosition(),
 			                       polygon.getYPosition() - this->getYPosition());
 			this->getVertices() = polygon.getVertices();
 			// We sort the vertices to be in the right order for triangle
