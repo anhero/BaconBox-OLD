@@ -15,7 +15,7 @@ namespace RedBox {
 		typedef typename Container::DifferenceType difference_type;
 		typedef typename Container::Reference reference;
 		typedef typename Container::Pointer pointer;
-		
+
 		BidirectionalIterator() {}
 		explicit BidirectionalIterator(typename Container::Container::iterator newIt) : it(newIt) {}
 		BidirectionalIterator(const BidirectionalIterator<Container> &src) : it(src.it) {}
@@ -74,7 +74,7 @@ namespace RedBox {
 		typedef typename Container::DifferenceType difference_type;
 		typedef typename Container::ConstReference reference;
 		typedef typename Container::ConstPointer pointer;
-		
+
 		BidirectionalConstIterator() {}
 		BidirectionalConstIterator(const BidirectionalConstIterator<Container> &src) : it(src.it) {}
 		explicit BidirectionalConstIterator(typename Container::Container::const_iterator newIt) : it(newIt) {}
@@ -134,7 +134,7 @@ namespace RedBox {
 		typedef typename Container::DifferenceType difference_type;
 		typedef typename Container::Reference reference;
 		typedef typename Container::Pointer pointer;
-		
+
 		RandomAccessIterator() {}
 		explicit RandomAccessIterator(typename Container::Container::iterator newIt) : it(newIt) {}
 		RandomAccessIterator(const RandomAccessIterator<Container> &src) : it(src.it) {}
@@ -199,8 +199,8 @@ namespace RedBox {
 			return RandomAccessIterator<Container>(*this) += n;
 		}
 
-		friend RandomAccessIterator<Container> operator+(difference_type n,
-		                                                 const RandomAccessIterator<Container> &i);
+		template <typename T> friend RandomAccessIterator<T> operator+(typename RandomAccessIterator<T>::difference_type n,
+		                                                               const RandomAccessIterator<T> &i);
 
 		RandomAccessIterator<Container> &operator-=(difference_type n) {
 			it -= n;
@@ -211,8 +211,8 @@ namespace RedBox {
 			return RandomAccessIterator<Container>(*this) -= n;
 		}
 
-		friend RandomAccessIterator<Container> operator-(difference_type n,
-		                                                 const RandomAccessIterator<Container> &i);
+		template <typename T> friend RandomAccessIterator<T> operator-(typename RandomAccessIterator<T>::difference_type n,
+		                                                               const RandomAccessIterator<T> &i);
 
 		reference operator*() const {
 			return *(*it);
@@ -230,13 +230,13 @@ namespace RedBox {
 	};
 
 	template <typename Container>
-	RandomAccessIterator<Container> operator+(typename Container::DifferenceType n,
+	RandomAccessIterator<Container> operator+(typename RandomAccessIterator<Container>::difference_type n,
 	                                          const RandomAccessIterator<Container> &i) {
 		return RandomAccessIterator<Container>(i) += n;
 	}
 
 	template <typename Container>
-	RandomAccessIterator<Container> operator-(typename Container::DifferenceType n,
+	RandomAccessIterator<Container> operator-(typename RandomAccessIterator<Container>::difference_type n,
 	                                          const RandomAccessIterator<Container> &i) {
 		return RandomAccessIterator<Container>(i) -= n;
 	}
@@ -249,9 +249,9 @@ namespace RedBox {
 		typedef typename Container::DifferenceType difference_type;
 		typedef typename Container::ConstReference reference;
 		typedef typename Container::ConstPointer pointer;
-		
+
 		RandomAccessConstIterator() {}
-		explicit RandomAccessConstIterator(typename Container::Container::iterator newIt) : it(newIt) {}
+		explicit RandomAccessConstIterator(typename Container::Container::const_iterator newIt) : it(newIt) {}
 		RandomAccessConstIterator(const RandomAccessConstIterator<Container> &src) : it(src.it) {}
 
 		RandomAccessConstIterator<Container> &operator=(const RandomAccessConstIterator<Container> &src) {
@@ -314,8 +314,8 @@ namespace RedBox {
 			return RandomAccessConstIterator<Container>(*this) += n;
 		}
 
-		friend RandomAccessConstIterator<Container> operator+(difference_type n,
-		                                                      const RandomAccessConstIterator<Container> &i);
+		template <typename T> friend RandomAccessConstIterator<T> operator+(typename RandomAccessConstIterator<T>::difference_type n,
+		                                                                    const RandomAccessConstIterator<T> &i);
 
 		RandomAccessConstIterator<Container> &operator-=(difference_type n) {
 			it -= n;
@@ -326,8 +326,8 @@ namespace RedBox {
 			return RandomAccessConstIterator<Container>(*this) -= n;
 		}
 
-		friend RandomAccessConstIterator<Container> operator-(difference_type n,
-		                                                      const RandomAccessConstIterator<Container> &i);
+		template <typename T> friend RandomAccessConstIterator<T> operator-(typename RandomAccessConstIterator<T>::difference_type n,
+		                                                                    const RandomAccessConstIterator<T> &i);
 
 		reference operator*() const {
 			return *(*it);
@@ -341,17 +341,17 @@ namespace RedBox {
 			return *(it[0]);
 		}
 	private:
-		typename Container::Container::iterator it;
+		typename Container::Container::const_iterator it;
 	};
 
 	template <typename Container>
-	RandomAccessConstIterator<Container> operator+(typename Container::DifferenceType n,
+	RandomAccessConstIterator<Container> operator+(typename RandomAccessConstIterator<Container>::difference_type n,
 	                                               const RandomAccessConstIterator<Container> &i) {
 		return RandomAccessConstIterator<Container>(i) += n;
 	}
 
 	template <typename Container>
-	RandomAccessConstIterator<Container> operator-(typename Container::DifferenceType n,
+	RandomAccessConstIterator<Container> operator-(typename RandomAccessConstIterator<Container>::difference_type n,
 	                                               const RandomAccessConstIterator<Container> &i) {
 		return RandomAccessConstIterator<Container>(i) -= n;
 	}

@@ -134,6 +134,92 @@ namespace RedBox {
 		 * @param map Tile map to load the graphic tile map from.
 		 */
 		void construct(const TileMap &map);
+
+		/**
+		 * Gets the layer from an index. Does not do bound checking.
+		 * @param index Index of the layer.
+		 * @return Reference to the layer.
+		 */
+		Reference operator[](SizeType index);
+
+		/**
+		 * Gets an iterator to the first body.
+		 * @return Iterator to the first body.
+		 */
+		Iterator getBegin();
+
+		/**
+		 * Gets an iterator to the first body.
+		 * @return Iterator to the first body.
+		 */
+		ConstIterator getBegin() const;
+
+		/**
+		 * Gets an iterator to the body following the last body. Acts as a
+		 * placeholder, attempting to access it results in undefined behavior.
+		 * @return Iterator to the body following the last body.
+		 */
+		Iterator getEnd();
+
+		/**
+		 * Gets an iterator to the body following the last body. Acts as a
+		 * placeholder, attempting to access it results in undefined behavior.
+		 * @return Iterator to the body following the last body.
+		 */
+		ConstIterator getEnd() const;
+
+		/**
+		 * Gets a reverse iterator to the first body of the reversed simple body
+		 * manager. It corresponds to the last element of the non-reversed
+		 * simple body manager.
+		 * @return Reverse iterator to the first body.
+		 */
+		ReverseIterator getReverseBegin();
+
+		/**
+		 * Gets a reverse iterator to the first body of the reversed simple body
+		 * manager. It corresponds to the last element of the non-reversed
+		 * simple body manager.
+		 * @return Reverse iterator to the first body.
+		 */
+		ConstReverseIterator getReverseBegin() const;
+
+		/**
+		 * Gets a reverse iterator to the body following the last body of the
+		 * reversed simple body manager. It corresponds to the body preceding
+		 * the first body of the non-reversed simple body manager. This body
+		 * acts as a placeholder, attempting to access it results in undefined
+		 * behavior.
+		 * @return Reverse iterator to the body following the last body.
+		 */
+		ReverseIterator getReverseEnd();
+
+		/**
+		 * Gets a reverse iterator to the body following the last body of the
+		 * reversed simple body manager. It corresponds to the body preceding
+		 * the first body of the non-reversed simple body manager. This body
+		 * acts as a placeholder, attempting to access it results in undefined
+		 * behavior.
+		 * @return Reverse iterator to the body following the last body.
+		 */
+		ConstReverseIterator getReverseEnd() const;
+
+		/**
+		 * Gets the number of bodies the manager currently manages.
+		 * @return Number of bodies managed.
+		 */
+		SizeType getNbLayers() const;
+
+		/**
+		 * Checks wether or not the manager contains bodies.
+		 * @return True if the manager contains bodies, false if not.
+		 */
+		bool isEmpty() const;
+
+		/**
+		 * Removes all bodies from the body manager.
+		 */
+		void clear();
 	private:
 		/// Contains the map's layers.
 		Container layers;
