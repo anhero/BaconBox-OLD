@@ -14,6 +14,7 @@
 
 namespace RedBox {
 	class TileLayer;
+	class CollisionGroup;
 	/**
 	 * Graphically represents a tile layer.
 	 * @ingroup TileMap
@@ -172,6 +173,8 @@ namespace RedBox {
 		 * @param layer Tile layer to load the graphic tile layer from.
 		 */
 		void construct(const TileLayer &layer);
+
+		void addToCollisionGroup(CollisionGroup &group);
 	private:
 		/// Map of batches by their tileset's texture.
 		typedef std::map<TextureInformation *, RenderBatch<BatchedInanimateGraphicElement<Collidable> > *> BatchMap;

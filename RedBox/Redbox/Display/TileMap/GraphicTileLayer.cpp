@@ -7,6 +7,7 @@
 #include "TextureInformation.h"
 #include "TexturePointer.h"
 #include "TileMapUtility.h"
+#include "CollisionGroup.h"
 
 namespace RedBox {
 	GraphicTileLayer::GraphicTileLayer(const Vector2 &startingPosition) :
@@ -335,6 +336,15 @@ namespace RedBox {
 		
 		// We set the layer's z.
 		TileMapUtility::readZ(layer.getProperties(), *this);
+	}
+
+	void GraphicTileLayer::addToCollisionGroup(CollisionGroup &group) {
+		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
+			for (RenderBatch<BatchedInanimateGraphicElement<Collidable> >::BodyMap::iterator j = i->second->getBegin();
+				 j != i->second->getEnd(); ++j) {
+				group.add(*j);
+			}
+		}
 	}
 
 	void GraphicTileLayer::free() {
