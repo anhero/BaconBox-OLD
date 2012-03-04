@@ -7,15 +7,24 @@
 #include "GraphicObjectLayer.h"
 #include "State.h"
 #include "TileMapUtility.h"
+#include "Factory.h"
+#include "Sprite.h"
+#include "InanimateSprite.h"
+
+#define LOAD_FACTORY if(!loaded) { loaded = true; loadFactory(); }
 
 namespace RedBox {
+	static bool loaded = false;
+	void loadFactory();
 	GraphicTileMap::GraphicTileMap(const Vector2 &startingPosition) :
 		Transformable(startingPosition) {
+		LOAD_FACTORY;
 	}
 
 	GraphicTileMap::GraphicTileMap(const TileMap &map,
 	                               const Vector2 &startingPosition) :
 		Transformable(startingPosition) {
+		LOAD_FACTORY;
 		construct(map);
 	}
 
@@ -23,6 +32,7 @@ namespace RedBox {
 	                               int zStart,
 	                               const Vector2 &startingPosition) :
 		Transformable(startingPosition) {
+		LOAD_FACTORY
 		construct(map, zIncrement, zStart);
 	}
 
@@ -316,5 +326,10 @@ namespace RedBox {
 				delete *i;
 			}
 		}
+	}
+
+	void loadFactory() {
+		RBRegisterClass(Sprite, Sprite);
+		RBRegisterClass(InanimateSprite, InanimateSprite);
 	}
 }
