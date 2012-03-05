@@ -5,6 +5,8 @@
 #ifndef RB_STRINGHELPER_H
 #define RB_STRINGHELPER_H
 
+#include <cctype>
+
 #include <algorithm>
 #include <string>
 #include <sstream>
@@ -64,7 +66,7 @@ namespace RedBox {
 		template <typename CharType>
 		static std::basic_string<CharType> toLower(const std::basic_string<CharType> &str) {
 			std::basic_string<CharType> result(str.size(), ' ');
-			std::transform(str.begin(), str.end(), result.begin(), std::bind2nd(std::ptr_fun(&std::tolower<CharType>), std::locale("")));
+			std::transform(str.begin(), str.end(), result.begin(), tolower);
 			return result;
 		}
 		
@@ -76,7 +78,7 @@ namespace RedBox {
 		template <typename CharType>
 		static std::basic_string<CharType> toUpper(const std::basic_string<CharType> &str) {
 			std::basic_string<CharType> result(str.size(), ' ');
-			std::transform(str.begin(), str.end(), result.begin(), std::bind2nd(std::ptr_fun(&std::toupper<CharType>), std::locale("")));
+			std::transform(str.begin(), str.end(), result.begin(), toupper);
 			return result;
 		}
 
