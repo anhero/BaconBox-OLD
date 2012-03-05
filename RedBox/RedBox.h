@@ -122,6 +122,7 @@
 #include <RedBox/Value.h>
 #include <RedBox/Console.h>
 #include <RedBox/Tween.h>
+#include <RedBox/StepTween.h>
 #include <RedBox/StandardVertexArray.h>
 #include <RedBox/Console.h>
 #include <RedBox/PlatformFlagger.h>
