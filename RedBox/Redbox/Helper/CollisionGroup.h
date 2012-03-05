@@ -189,6 +189,11 @@ namespace RedBox {
 		 * @see RedBox::CollisionGroup::poolDepth
 		 */
 		void setPoolDepth(unsigned int newPoolDepth);
+
+		/**
+		 * Clears the collision group of all bodies.
+		 */
+		void clear();
 	private:
 		/// List of pointers of collidables, contained by the quad nodes.
 		typedef std::list<Collidable *> BodyList;

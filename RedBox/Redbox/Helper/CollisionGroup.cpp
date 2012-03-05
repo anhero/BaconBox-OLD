@@ -198,6 +198,14 @@ namespace RedBox {
 		quadPool.reset(calculatePoolSize(newPoolDepth));
 	}
 
+	void CollisionGroup::clear() {
+		quadPool.reset();
+		clearOverflow();
+		quadOverflow.clear();
+		root = NULL;
+		tmpDepth = depth;
+	}
+
 	StackPool<CollisionGroup::QuadNode>::SizeType CollisionGroup::calculatePoolSize(unsigned int depth) {
 		return static_cast<StackPool<CollisionGroup::QuadNode>::SizeType>(ceil((1.0 - pow(4.0, static_cast<double>(depth))) / -3.0));
 	}

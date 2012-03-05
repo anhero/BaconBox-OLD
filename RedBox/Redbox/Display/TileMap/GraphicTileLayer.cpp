@@ -326,6 +326,9 @@ namespace RedBox {
 				// We set the tile's opacity.
 				tmpTile->setAlpha(layer.getOpacity());
 
+				// We set the tile to be a static body.
+				tmpTile->setStaticBody(true);
+
 				// We add the new tile to the right batch.
 				getBatch(tmpTile->getTextureInformation())->add(tmpTile);
 			}
