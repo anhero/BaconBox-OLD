@@ -385,9 +385,9 @@ namespace RedBox {
 			tmpSprite = GenericFactory<GraphicObjectLayer::SpriteContainer::ValueType>::getInstance().create((*i)->getType());
 
 			if (tmpSprite) {
+				tmpSprite->setAlpha(layer.getOpacity());
 				tmpSprite->construct(*(*i));
 				tmpSprite->move(graphicLayer.getPosition());
-				tmpSprite->setAlpha(layer.getOpacity());
 
 				graphicLayer.getSprites().add(tmpSprite);
 
@@ -396,9 +396,9 @@ namespace RedBox {
 				tmpInanimateSprite = GenericFactory<GraphicObjectLayer::InanimateSpriteContainer::ValueType>::getInstance().create((*i)->getType());
 
 				if (tmpInanimateSprite) {
+					tmpInanimateSprite->setAlpha(layer.getOpacity());
 					tmpInanimateSprite->construct(*(*i));
 					tmpInanimateSprite->move(graphicLayer.getPosition());
-					tmpInanimateSprite->setAlpha(layer.getOpacity());
 
 					graphicLayer.getInanimateSprites().add(tmpInanimateSprite);
 				}
