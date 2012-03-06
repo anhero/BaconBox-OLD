@@ -84,22 +84,22 @@ namespace RedBox {
 			++i;
 
 			while (i != getEnd()) {
-				if (min.getX() > i->getXPosition()) {
-					min.setX(i->getXPosition());
+				if (min.x > i->getXPosition()) {
+					min.x = i->getXPosition();
 				}
 
-				if (min.getY() > i->getYPosition()) {
-					min.setY(i->getYPosition());
+				if (min.y > i->getYPosition()) {
+					min.y = i->getYPosition();
 				}
 
 				tmp = i->getPosition() + i->getSize();
 
-				if (max.getX() < tmp.getX()) {
-					max.setX(tmp.getX());
+				if (max.x < tmp.x) {
+					max.x = tmp.x;
 				}
 
-				if (max.getY() < tmp.getY()) {
-					max.setY(tmp.getY());
+				if (max.y < tmp.y) {
+					max.y = tmp.y;
 				}
 
 				++i;
@@ -182,19 +182,19 @@ namespace RedBox {
 			while (i != getEnd()) {
 				i->scaleFromPoint(xScaling, yScaling, fromPoint);
 
-				if (min.getX() > i->getXPosition()) {
-					min.setX(i->getXPosition());
+				if (min.x > i->getXPosition()) {
+					min.x = i->getXPosition();
 				}
 
-				if (min.getY() > i->getYPosition()) {
-					min.setY(i->getYPosition());
+				if (min.y > i->getYPosition()) {
+					min.y = i->getYPosition();
 				}
 
 				++i;
 			}
 
-			this->Transformable::move(min.getX() - getXPosition(),
-			                          min.getY() - getYPosition());
+			this->Transformable::move(min.x - getXPosition(),
+			                          min.y - getYPosition());
 		}
 	}
 
@@ -212,19 +212,19 @@ namespace RedBox {
 			while (i != getEnd()) {
 				i->rotateFromPoint(rotationAngle, rotationPoint);
 
-				if (min.getX() > i->getXPosition()) {
-					min.setX(i->getXPosition());
+				if (min.x > i->getXPosition()) {
+					min.x = i->getXPosition();
 				}
 
-				if (min.getY() > i->getYPosition()) {
-					min.setY(i->getYPosition());
+				if (min.y > i->getYPosition()) {
+					min.y = i->getYPosition();
 				}
 
 				++i;
 			}
 
-			this->Transformable::move(min.getX() - getXPosition(),
-			                          min.getY() - getYPosition());
+			this->Transformable::move(min.x - getXPosition(),
+			                          min.y - getYPosition());
 		}
 	}
 

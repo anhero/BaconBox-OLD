@@ -287,7 +287,7 @@ namespace RedBox {
 
 		if (found != properties.end() &&
 		    StringHelper::fromString(found->second, tmpFloat)) {
-			result.setX(tmpFloat);
+			result.x = tmpFloat;
 		}
 
 		// We read the frame's vertical position.
@@ -295,7 +295,7 @@ namespace RedBox {
 
 		if (found != properties.end() &&
 		    StringHelper::fromString(found->second, tmpFloat)) {
-			result.setY(tmpFloat);
+			result.y = tmpFloat;
 		}
 
 		return result;
@@ -316,7 +316,7 @@ namespace RedBox {
 
 		if (found != properties.end() &&
 		    StringHelper::fromString(found->second, tmpFloat)) {
-			result.setX(tmpFloat);
+			result.x = tmpFloat;
 		}
 
 		// We read the frame's vertical position.
@@ -324,7 +324,7 @@ namespace RedBox {
 
 		if (found != properties.end() &&
 		    StringHelper::fromString(found->second, tmpFloat)) {
-			result.setY(tmpFloat);
+			result.y = tmpFloat;
 		}
 
 		return result;

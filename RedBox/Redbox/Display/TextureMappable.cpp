@@ -33,7 +33,7 @@ namespace RedBox {
 				    texture.pointer->poweredWidth > 0u &&
 				    texture.pointer->poweredHeight > 0u) {
 					// We make sure the offset is valid.
-					if (details.position.getX() >= 0.0f && details.position.getY() >= 0.0f) {
+					if (details.position.x >= 0.0f && details.position.y >= 0.0f) {
 						// We resize the texture coordinates container so it can
 						// contain all the coordinates.
 						textureCoordinates->resize(vertices.getNbVertices());
@@ -58,12 +58,12 @@ namespace RedBox {
 
 						case FrameDetails::Orientation::EAST:
 							angle = 90.0f;
-							orientationOffset.setY(vertices.getWidth());
+							orientationOffset.y = vertices.getWidth();
 							break;
 
 						case FrameDetails::Orientation::WEST:
 							angle = -90.0f;
-							orientationOffset.setX(vertices.getHeight());
+							orientationOffset.x = vertices.getHeight();
 							break;
 
 						case FrameDetails::Orientation::SOUTH:
@@ -82,7 +82,7 @@ namespace RedBox {
 						// transformation is needed.
 						if (details.orientation == FrameDetails::Orientation::NORTH) {
 							while (i != vertices.getEnd() && i2 != textureCoordinates->end()) {
-								*i2 = (*i + realOffset) / poweredSize;
+								*i2 = (*i + realOffset).getCoordinatesDivision(poweredSize);
 								++i;
 								++i2;
 							}
@@ -92,7 +92,7 @@ namespace RedBox {
 							// We apply the needed transformations to take into
 							// account the orientation.
 							while (i != vertices.getEnd() && i2 != textureCoordinates->end()) {
-								*i2 = ((*i + realOffset).getRotated(angle) + orientationOffset) / poweredSize;
+								*i2 = ((*i + realOffset).getRotated(angle) + orientationOffset).getCoordinatesDivision(poweredSize);
 								++i;
 								++i2;
 							}

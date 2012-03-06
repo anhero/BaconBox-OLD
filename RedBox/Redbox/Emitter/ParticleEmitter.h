@@ -501,7 +501,7 @@ namespace RedBox {
 
 				particle->second.alphaCounter = 0.0;
 				particle->second.alphaPerSecond = particle->first->alphaPerSecond + Random::getRandomFloat(0.0f, particle->first->alphaPerSecondVariance);
-				particle->second.scalingPerSecond = particle->first->scalingPerSecond + Vector2(Random::getRandomFloat(0.0f, particle->first->scalingPerSecondVariance.getX()), Random::getRandomFloat(0.0f, particle->first->scalingPerSecondVariance.getY()));
+				particle->second.scalingPerSecond = particle->first->scalingPerSecond + Vector2(Random::getRandomFloat(0.0f, particle->first->scalingPerSecondVariance.x), Random::getRandomFloat(0.0f, particle->first->scalingPerSecondVariance.y));
 				particle->second.anglePerSecond = particle->first->anglePerSecond + Random::getRandomFloat(0.0f, particle->first->anglePerSecondVariance);
 			}
 		}

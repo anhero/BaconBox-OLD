@@ -59,7 +59,7 @@ namespace RedBox {
 			BatchedGraphic<Animatable, BatchedGraphicElement<Parent> >(newTexture),
 			Parent(startingPosition), BatchedBody() {
 			// We check if we have to use the texture as the full image.
-			if (newSize.getX() <= 0.0f || newSize.getY() <= 0.0f) {
+			if (newSize.x <= 0.0f || newSize.y <= 0.0f) {
 				// We make sure the texture information is valid.
 				if (this->getTextureInformation()) {
 					construct(Vector2(static_cast<float>(this->getTextureInformation()->imageWidth),
@@ -167,8 +167,8 @@ namespace RedBox {
 			this->Parent::scaleFromPoint(xScaling, yScaling, fromPoint);
 			this->getVertices().scaleFromPoint(xScaling, yScaling, fromPoint);
 			Vector2 tmpPosition = this->getVertices().getMinimumXY();
-			this->Parent::move(tmpPosition.getX() - this->getXPosition(),
-			                   tmpPosition.getY() - this->getYPosition());
+			this->Parent::move(tmpPosition.x - this->getXPosition(),
+			                   tmpPosition.y - this->getYPosition());
 		}
 
 		/**
@@ -182,8 +182,8 @@ namespace RedBox {
 			this->Parent::rotateFromPoint(rotationAngle, rotationPoint);
 			this->getVertices().rotateFromPoint(rotationAngle, rotationPoint);
 			Vector2 tmpPosition = this->getVertices().getMinimumXY();
-			this->Parent::move(tmpPosition.getX() - this->getXPosition(),
-			                   tmpPosition.getY() - this->getYPosition());
+			this->Parent::move(tmpPosition.x - this->getXPosition(),
+			                   tmpPosition.y - this->getYPosition());
 		}
 
 		/**

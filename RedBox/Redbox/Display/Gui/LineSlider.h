@@ -173,16 +173,16 @@ namespace RedBox {
 						// position.
 						++i;
 						++i;
-						line.addToXY((*i - line) * 0.5f);
-						line.subtractFromXY(horizontalLine * 0.5f);
+						line += (*i - line) * 0.5f;
+						line -= horizontalLine * 0.5f;
 						// We get the line's sprite's real center left
 						// position.
 						--i;
-						tmpLine.addToXY((*i - tmpLine) * 0.5f);
-						tmpLine.addToXY(horizontalLine * 0.5f);
+						tmpLine += (*i - tmpLine) * 0.5f;
+						tmpLine += horizontalLine * 0.5f;
 						// We get the line that goes from the line's sprite's
 						// left center position to its right center position.
-						line.subtractFromXY(tmpLine);
+						line -= tmpLine;
 						// We get the cursor's position relative to the line's
 						// sprite's left center position.
 						tmpLine = currentState->getCamera().screenToWorld(cur.getPosition()) - tmpLine;
@@ -191,7 +191,7 @@ namespace RedBox {
 						tmpLine.project(line);
 						// We calculate the new current value from the
 						// projected cursor's position's length.
-						this->setCurrentValue(this->getMinimumValue() + static_cast<ValueType>((((MathHelper::sameSign(line.getX(), tmpLine.getX()) && MathHelper::sameSign(line.getY(), tmpLine.getY())) ? (tmpLine.getLength()) : (-tmpLine.getLength())) / line.getLength()) * static_cast<float>(this->getMaximumValue() - this->getMinimumValue())));
+						this->setCurrentValue(this->getMinimumValue() + static_cast<ValueType>((((MathHelper::sameSign(line.x, tmpLine.x) && MathHelper::sameSign(line.y, tmpLine.y)) ? (tmpLine.getLength()) : (-tmpLine.getLength())) / line.getLength()) * static_cast<float>(this->getMaximumValue() - this->getMinimumValue())));
 					}
 				}
 			}
@@ -384,11 +384,11 @@ namespace RedBox {
 			Vector2 lineLength = *i - initialPosition;
 			++i;
 			++i;
-			initialPosition.addToXY((*i - initialPosition) * 0.5f);
+			initialPosition += (*i - initialPosition) * 0.5f;
 			i = buttonSprite.getVertices().getBegin();
 			Vector2 tmpPosition = *i;
 			++i;
-			lineLength.subtractFromXY(*i - tmpPosition);
+			lineLength -= *i - tmpPosition;
 			++i;
 			++i;
 			initialPosition += (tmpPosition - *i) * 0.5f;
@@ -400,7 +400,7 @@ namespace RedBox {
 		 */
 		void refreshPosition() {
 			Vector2 delta = vertices.getMinimumXY() - getPosition();
-			this->Collidable::move(delta.getX(), delta.getY());
+			this->Collidable::move(delta.x, delta.y);
 		}
 
 		/**
@@ -411,11 +411,11 @@ namespace RedBox {
 			++i;
 			Vector2 realSize(std::max(lineSprite.getWidth(), buttonSprite.getWidth()),
 			                 std::max(lineSprite.getHeight(), buttonSprite.getHeight()));
-			i->addToX(realSize.getX());
+			i->x += realSize.x;
 			++i;
-			i->addToXY(realSize);
+			i += realSize;
 			++i;
-			i->addToY(realSize.getY());
+			i->y += realSize.y;
 		}
 	};
 }

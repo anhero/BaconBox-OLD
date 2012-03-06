@@ -16,15 +16,15 @@ namespace RedBox {
 		if (nbSides >= 3 && vertices && vertices->getNbVertices() == nbSides &&
 		    sideLength > 0.0f) {
 			// We calculate the polygon's radius.
-			float radius = sideLength / (2.0f * sinf(MathHelper::PI<float>() / nbSides));
+			float radius = sideLength / (2.0f * std::sin(MathHelper::PI<float>() / nbSides));
 			// Angle from the polygon's center.
 			float incrementer = 360.0f / nbSides;
 			float angle = incrementer * 0.5f ;
 			VertexArray::SizeType adjustment = nbSides % 2;
 			VertexArray::SizeType i = 0, half = nbSides / 2 + adjustment, lastIndex = nbSides - 1;
 			VertexArray::Pointer tmp;
-			VertexArray::ValueType minPosition(radius * sinf(MathHelper::degreesToRadians(angle)),
-			                                   radius * cosf(MathHelper::degreesToRadians(angle)));
+			VertexArray::ValueType minPosition(radius * std::sin(angle * MathHelper::AngleConvert<float>::DEGREES_TO_RADIANS),
+			                                   radius * std::cos(angle * MathHelper::AngleConvert<float>::DEGREES_TO_RADIANS));
 
 			tmp = &((*vertices)[(i < half) ? (i * 2) : (lastIndex - (i - half) * 2 - adjustment)]);
 
@@ -33,15 +33,15 @@ namespace RedBox {
 
 			while (++i < nbSides) {
 				tmp = &((*vertices)[(i < half) ? (i * 2) : (lastIndex - (i - half) * 2 - adjustment)]);
-				tmp->setXY(radius * sinf(MathHelper::degreesToRadians(angle)),
-				           radius * cosf(MathHelper::degreesToRadians(angle)));
+				tmp->x = radius * std::sin(angle * MathHelper::AngleConvert<float>::DEGREES_TO_RADIANS);
+				tmp->y = radius * std::cos(angle * MathHelper::AngleConvert<float>::DEGREES_TO_RADIANS);
 
-				if (tmp->getX() < minPosition.getX()) {
-					minPosition.setX(tmp->getX());
+				if (tmp->x < minPosition.x) {
+					minPosition.x = tmp->x;
 				}
 
-				if (tmp->getY() < minPosition.getY()) {
-					minPosition.setY(tmp->getY());
+				if (tmp->y < minPosition.y) {
+					minPosition.y = tmp->y;
 				}
 
 				angle += incrementer;
@@ -53,7 +53,7 @@ namespace RedBox {
 
 			// We position the polygon as asked.
 			for (VertexArray::Iterator i = vertices->getBegin(); i != vertices->getEnd(); ++i) {
-				i->addToXY(tmpDelta);
+				*i += tmpDelta;
 			}
 		}
 	}
@@ -63,17 +63,19 @@ namespace RedBox {
 	                                   VertexArray *vertices) {
 		// We make sure the size makes sense, that the vertices are valid and
 		// that we have 4 vertices.
-		if (size.getX() > 0.0f && size.getY() > 0.0f && vertices &&
+		if (size.x > 0.0f && size.y > 0.0f && vertices &&
 		    vertices->getNbVertices() == 4) {
 			VertexArray::Iterator i = vertices->getBegin();
 
-			i->setXY(position.getX(), position.getY());
+			*i = position;
 			++i;
-			i->setXY(position.getX() + size.getX(), position.getY());
+			i->x = position.x + size.x;
+			i->y = position.y;
 			++i;
-			i->setXY(position.getX(), position.getY() + size.getY());
+			i->x = position.x;
+			i->y = position.y + size.y;
 			++i;
-			i->setXY(position.getX() + size.getX(), position.getY() + size.getY());
+			*i = position + size;
 		}
 	}
 

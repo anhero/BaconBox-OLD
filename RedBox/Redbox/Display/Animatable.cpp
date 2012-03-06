@@ -354,14 +354,14 @@ namespace RedBox {
 		     i != frames.end(); ++i) {
 			i->resize(vertices.getNbVertices());
 			TextureMappable::loadTextureCoordinates(this->getTextureInformation(), vertices, tmpOffset, &(*i));
-			tmpOffset.addToX(delta.getX());
+			tmpOffset.x += delta.x;
 
 			// We make sure the texture information is valid before checking
 			// its image width.
 			if (this->getTextureInformation() &&
-			    tmpOffset.getX() + delta.getX() > static_cast<float>(this->getTextureInformation()->imageWidth)) {
-				tmpOffset.addToY(delta.getY());
-				tmpOffset.setX(0.0f);
+			    tmpOffset.x + delta.x > static_cast<float>(this->getTextureInformation()->imageWidth)) {
+				tmpOffset.y += delta.y;
+				tmpOffset.x = 0.0f;
 			}
 		}
 	}

@@ -122,7 +122,7 @@ namespace RedBox {
 						// We calculate the position of the first column after
 						// the left margin caused by the horizontal offset.
 						const unsigned int leftMargin = std::min(std::max(offset.getX(), 0),
-						                                         newSizeInTiles.getX() - parentMap.getWidthInTiles());
+																 newSizeInTiles.getX() - parentMap.getWidthInTiles());
 						// We calculate the position of the first column of the
 						// right margin caused by the horizontal offset.
 						const unsigned int rightMargin = leftMargin + parentMap.getWidthInTiles();

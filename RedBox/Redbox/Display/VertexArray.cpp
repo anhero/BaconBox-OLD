@@ -74,12 +74,12 @@ namespace RedBox {
 			++i;
 
 			while (i != getEnd()) {
-				if (i->getX() < result.getX()) {
-					result.setX(i->getX());
+				if (i->x < result.x) {
+					result.x = i->x;
 				}
 
-				if (i->getY() < result.getY()) {
-					result.setY(i->getY());
+				if (i->y < result.y) {
+					result.y = i->y;
 				}
 
 				++i;
@@ -95,12 +95,12 @@ namespace RedBox {
 
 		} else {
 			ConstIterator i = getBegin();
-			float result = i->getX();
+			float result = i->x;
 			++i;
 
 			while (i != getEnd()) {
-				if (i->getX() < result) {
-					result = i->getX();
+				if (i->x < result) {
+					result = i->x;
 				}
 
 				++i;
@@ -116,12 +116,12 @@ namespace RedBox {
 
 		} else {
 			ConstIterator i = getBegin();
-			float result = i->getY();
+			float result = i->y;
 			++i;
 
 			while (i != getEnd()) {
-				if (i->getY() < result) {
-					result = i->getY();
+				if (i->y < result) {
+					result = i->y;
 				}
 
 				++i;
@@ -141,12 +141,12 @@ namespace RedBox {
 			++i;
 
 			while (i != getEnd()) {
-				if (i->getX() > result.getX()) {
-					result.setX(i->getX());
+				if (i->x > result.x) {
+					result.x = i->x;
 				}
 
-				if (i->getY() > result.getY()) {
-					result.setY(i->getY());
+				if (i->y > result.y) {
+					result.y = i->y;
 				}
 
 				++i;
@@ -162,12 +162,12 @@ namespace RedBox {
 
 		} else {
 			ConstIterator i = getBegin();
-			float result = i->getX();
+			float result = i->x;
 			++i;
 
 			while (i != getEnd()) {
-				if (i->getX() > result) {
-					result = i->getX();
+				if (i->x > result) {
+					result = i->x;
 				}
 
 				++i;
@@ -183,12 +183,12 @@ namespace RedBox {
 
 		} else {
 			ConstIterator i = getBegin();
-			float result = i->getY();
+			float result = i->y;
 			++i;
 
 			while (i != getEnd()) {
-				if (i->getY() > result) {
-					result = i->getY();
+				if (i->y > result) {
+					result = i->y;
 				}
 
 				++i;
@@ -209,18 +209,18 @@ namespace RedBox {
 			++i;
 
 			while (i != getEnd()) {
-				if (i->getX() < min.getX()) {
-					min.setX(i->getX());
+				if (i->x < min.x) {
+					min.x = i->x;
 
-				} else if (i->getX() > max.getX()) {
-					max.setX(i->getX());
+				} else if (i->x > max.x) {
+					max.x = i->x;
 				}
 
-				if (i->getY() < min.getY()) {
-					min.setY(i->getY());
+				if (i->y < min.y) {
+					min.y = i->y;
 
-				} else if (i->getY() > max.getY()) {
-					max.setY(i->getY());
+				} else if (i->y > max.y) {
+					max.y = i->y;
 				}
 
 				++i;
@@ -236,16 +236,16 @@ namespace RedBox {
 
 		} else {
 			ConstIterator i = getBegin();
-			float min = i->getX();
-			float max = i->getX();
+			float min = i->x;
+			float max = i->x;
 			++i;
 
 			while (i != getEnd()) {
-				if (i->getX() < min) {
-					min = i->getX();
+				if (i->x < min) {
+					min = i->x;
 
-				} else if (i->getX() > max) {
-					max = i->getX();
+				} else if (i->x > max) {
+					max = i->x;
 				}
 
 				++i;
@@ -261,16 +261,16 @@ namespace RedBox {
 
 		} else {
 			ConstIterator i = getBegin();
-			float min = i->getY();
-			float max = i->getY();
+			float min = i->y;
+			float max = i->y;
 			++i;
 
 			while (i != getEnd()) {
-				if (i->getY() < min) {
-					min = i->getY();
+				if (i->y < min) {
+					min = i->y;
 
-				} else if (i->getY() > max) {
-					max = i->getY();
+				} else if (i->y > max) {
+					max = i->y;
 				}
 
 				++i;
@@ -288,7 +288,7 @@ namespace RedBox {
 		Vector2 result;
 
 		for (ConstIterator i = getBegin(); i != getEnd(); ++i) {
-			result.addToXY(*i);
+			result += *i;
 		}
 
 		return result;
@@ -296,25 +296,27 @@ namespace RedBox {
 
 	void VertexArray::move(float xDelta, float yDelta) {
 		for (Iterator i = getBegin(); i != getEnd(); ++i) {
-			i->addToXY(xDelta, yDelta);
+			i->x += xDelta;
+			i->y += yDelta;
 		}
 	}
 
 	void VertexArray::scaleFromPoint(float xScaling, float yScaling,
 	                                 const Vector2 &fromPoint) {
 		for (Iterator i = getBegin(); i != getEnd(); ++i) {
-			i->subtractFromXY(fromPoint);
-			i->scalarMultiplication(xScaling, yScaling);
-			i->addToXY(fromPoint);
+			*i -= fromPoint;
+			i->x *= xScaling;
+			i->y *= yScaling;
+			*i += fromPoint;
 		}
 	}
 
 	void VertexArray::rotateFromPoint(float rotationAngle,
 	                                  const Vector2 &rotationPoint) {
 		for (Iterator i = getBegin(); i != getEnd(); ++i) {
-			i->subtractFromXY(rotationPoint);
+			*i -= rotationPoint;
 			i->rotate(rotationAngle);
-			i->addToXY(rotationPoint);
+			*i += rotationPoint;
 		}
 	}
 
@@ -322,10 +324,10 @@ namespace RedBox {
 		bool result = false;
 
 		for (VertexArray::ConstIterator i = this->getBegin(), j = --this->getEnd(); i != this->getEnd(); ++i) {
-			if ((i->getY() < point.getY() && j->getY() >= point.getY()) ||
-			    ((j->getY() < point.getY() && i->getY() >= point.getY()) &&
-			     (i->getX() <= point.getX() || j->getX() <= point.getX()))) {
-				if (i->getX() + (point.getY() - i->getY()) / (j->getY() - i->getY()) * (j->getX() - i->getX()) < point.getX()) {
+			if ((i->y < point.y && j->y >= point.y) ||
+			    ((j->y < point.y && i->y >= point.y) &&
+			     (i->x <= point.x || j->x <= point.x))) {
+				if (i->x + (point.y - i->y) / (j->y - i->y) * (j->x - i->x) < point.x) {
 					result = !result;
 				}
 			}
@@ -346,18 +348,18 @@ namespace RedBox {
 			++i;
 
 			while (i != getEnd()) {
-				if (i->getX() < result.getXPosition()) {
-					result.setXPosition(i->getX());
+				if (i->x < result.getXPosition()) {
+					result.setXPosition(i->x);
 
-				} else if (i->getX() > result.getWidth()) {
-					result.setWidth(i->getX());
+				} else if (i->x > result.getWidth()) {
+					result.setWidth(i->x);
 				}
 
-				if (i->getY() < result.getYPosition()) {
-					result.setYPosition(i->getY());
+				if (i->y < result.getYPosition()) {
+					result.setYPosition(i->y);
 
-				} else if (i->getY() > result.getHeight()) {
-					result.setHeight(i->getY());
+				} else if (i->y > result.getHeight()) {
+					result.setHeight(i->y);
 				}
 
 				++i;
@@ -389,18 +391,19 @@ namespace RedBox {
 					// We take the line representing the edge.
 					line = *iNext - *i;
 					// We get the line perendicular to the edge's line.
-					line.setXY(-line.getY(), line.getX());
+					line.x = -line.y;
+					line.y = line.x;
 					// We normalize the axis.
 					line.normalize();
 
 					// Project every vertex in the first polygon on the axis and
 					// store min and max.
 					j = getBegin();
-					min1 = max1 = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
+					min1 = max1 = (line.x * j->x + line.y * j->y) / (line.x * line.x + line.x * line.y);
 					++j;
 
 					while (j != getEnd()) {
-						proj = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
+						proj = (line.x * j->x + line.y * j->y) / (line.x * line.x + line.x * line.y);
 
 						if (proj < min1) {
 							min1 = proj;
@@ -415,11 +418,11 @@ namespace RedBox {
 					// Project every vertex in the second polygon on the axis
 					// and store min and max.
 					j = other.getBegin();
-					min2 = max2 = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
+					min2 = max2 = (line.x * j->x + line.y * j->y) / (line.x * line.x + line.x * line.y);
 					++j;
 
 					while (j != other.getEnd()) {
-						proj = (line.getX() * j->getX() + line.getY() * j->getY()) / (line.getX() * line.getX() + line.getX() * line.getY());
+						proj = (line.x * j->x + line.y * j->y) / (line.x * line.x + line.x * line.y);
 
 						if (proj < min2) {
 							min2 = proj;

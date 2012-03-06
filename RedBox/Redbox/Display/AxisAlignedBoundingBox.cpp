@@ -45,39 +45,41 @@ namespace RedBox {
 	}
 
 	void AxisAlignedBoundingBox::setPosition(float newXPosition, float newYPosition) {
-		position.setXY(newXPosition, newYPosition);
+		position.x = newXPosition;
+		position.y = newYPosition;
 	}
 
 	void AxisAlignedBoundingBox::move(const Vector2 &delta) {
-		position.addToXY(delta);
+		position += delta;
 	}
 
 	void AxisAlignedBoundingBox::move(float xDelta, float yDelta) {
-		position.addToXY(xDelta, yDelta);
+		position.x += xDelta;
+		position.y += yDelta;
 	}
 
 	float AxisAlignedBoundingBox::getXPosition() const {
-		return position.getX();
+		return position.x;
 	}
 
 	void AxisAlignedBoundingBox::setXPosition(float newXPosition) {
-		position.setX(newXPosition);
+		position.x = newXPosition;
 	}
 
 	void AxisAlignedBoundingBox::moveX(float xDelta) {
-		position.addToX(xDelta);
+		position.x += xDelta;
 	}
 
 	float AxisAlignedBoundingBox::getYPosition() const {
-		return position.getY();
+		return position.y;
 	}
 
 	void AxisAlignedBoundingBox::setYPosition(float newYPosition) {
-		position.setY(newYPosition);
+		position.y = newYPosition;
 	}
 
 	void AxisAlignedBoundingBox::moveY(float yDelta) {
-		position.addToY(yDelta);
+		position.y += yDelta;
 	}
 
 	const Vector2 AxisAlignedBoundingBox::getPositionCenter() const {
@@ -85,11 +87,11 @@ namespace RedBox {
 	}
 
 	float AxisAlignedBoundingBox::getXPositionCenter() const {
-		return position.getX() + size.getX() * 0.5f;
+		return position.x + size.x * 0.5f;
 	}
 
 	float AxisAlignedBoundingBox::getYPositionCenter() const {
-		return position.getY() + size.getY() * 0.5f;
+		return position.y + size.y * 0.5f;
 	}
 
 	Vector2 &AxisAlignedBoundingBox::getSize() {
@@ -105,39 +107,40 @@ namespace RedBox {
 	}
 
 	void AxisAlignedBoundingBox::setSize(float newWidth, float newHeight) {
-		size.setXY(newWidth, newHeight);
+		size.x = newWidth;
+		size.y = newHeight;
 	}
 
 	float AxisAlignedBoundingBox::getWidth() const {
-		return size.getX();
+		return size.x;
 	}
 
 	void AxisAlignedBoundingBox::setWidth(float newWidth) {
-		size.setX(newWidth);
+		size.x = newWidth;
 	}
 
 	float AxisAlignedBoundingBox::getHeight() const {
-		return size.getY();
+		return size.y;
 	}
 
 	void AxisAlignedBoundingBox::setHeight(float newHeight) {
-		size.setY(newHeight);
+		size.y = newHeight;
 	}
 
 	float AxisAlignedBoundingBox::getLeft() const {
-		return position.getX();
+		return position.x;
 	}
 
 	float AxisAlignedBoundingBox::getRight() const {
-		return position.getX() + size.getX();
+		return position.x + size.x;
 	}
 
 	float AxisAlignedBoundingBox::getTop() const {
-		return position.getY();
+		return position.y;
 	}
 
 	float AxisAlignedBoundingBox::getBottom() const {
-		return position.getY() + size.getY();
+		return position.y + size.y;
 	}
 
 	bool AxisAlignedBoundingBox::overlaps(const AxisAlignedBoundingBox &other) const {
@@ -146,7 +149,7 @@ namespace RedBox {
 	}
 
 	bool AxisAlignedBoundingBox::overlaps(const Vector2 &point) const {
-		return overlaps(point.getX(), point.getY());
+		return overlaps(point.x, point.y);
 	}
 
 	bool AxisAlignedBoundingBox::overlaps(float xPoint, float yPoint) const {

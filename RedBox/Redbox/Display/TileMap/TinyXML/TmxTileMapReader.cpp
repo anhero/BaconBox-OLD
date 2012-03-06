@@ -90,8 +90,8 @@ namespace RedBox {
 	                           TileMapObject &object);
 
 	void readVerticesFromElement(const TiXmlElement &element,
-								 TileMapVertexArray &object);
-	
+	                             TileMapVertexArray &object);
+
 	void readVerticesFromString(const std::string &str,
 	                            StandardVertexArray &vertices);
 
@@ -694,8 +694,9 @@ namespace RedBox {
 			// If there is a gid attribute, it means it's a tile object.
 			TileObject *tileObject = objectLayer.addTile();
 			tileObject->setTileId(static_cast<unsigned int>(strtoul(tmpTileId,
-																	NULL, 10)));
+			                                                        NULL, 10)));
 			object = tileObject;
+
 		} else {
 			// We check its children, if it has a <polygon>, it means it's a
 			// polygon, if it has a <polyline>, it means it's a line and it has
@@ -718,26 +719,27 @@ namespace RedBox {
 			if (i && vertexObject) {
 				readVerticesFromElement(*i->ToElement(), *vertexObject);
 				readObjectFromElement(element, *vertexObject);
-				
+
 				// We position the vertices at the right position.
 				Vector2 delta(vertexObject->getPosition() - vertexObject->getVertices().getMinimumXY());
-				
-				vertexObject->getVertices().move(delta.getX(), delta.getY());
-				
+
+				vertexObject->getVertices().move(delta.x, delta.y);
+
 				object = vertexObject;
+
 			} else {
 				RectangleObject *rectangleObject = objectLayer.addRectangle();
 				readObjectFromElement(element, *rectangleObject);
-				
+
 				// We get the rectangle's width and height.
 				double tmpDouble = 0.0;
-				
+
 				element.Attribute(WIDTH_NAME, &tmpDouble);
 				rectangleObject->setWidth(static_cast<float>(tmpDouble));
 				tmpDouble = 0.0;
 				element.Attribute(HEIGHT_NAME, &tmpDouble);
 				rectangleObject->setHeight(static_cast<float>(tmpDouble));
-				
+
 				object = rectangleObject;
 			}
 		}
@@ -777,9 +779,10 @@ namespace RedBox {
 	}
 
 	void readVerticesFromElement(const TiXmlElement &element,
-								 TileMapVertexArray &object) {
+	                             TileMapVertexArray &object) {
 		static const char *POINT_NAME = "points";
 		const char *tmpPoint = element.Attribute(POINT_NAME);
+
 		if (tmpPoint) {
 			readVerticesFromString(std::string(tmpPoint), object.getVertices());
 		}
@@ -810,7 +813,7 @@ namespace RedBox {
 				++j;
 
 				if (j != coordinates.end()) {
-					vertices[vertices.getNbVertices() - 1].setY(static_cast<float>(atof(j->c_str())));
+					vertices[vertices.getNbVertices() - 1].y = static_cast<float>(atof(j->c_str()));
 				}
 			}
 		}

@@ -58,24 +58,24 @@ namespace RedBox {
 		for (SpriteContainer::ConstIterator i = sprites.getBegin();
 		     i != sprites.getEnd(); ++i) {
 			if (notFirst) {
-				if (min.getX() > i->getXPosition()) {
-					min.setX(i->getXPosition());
+				if (min.x > i->getXPosition()) {
+					min.x = i->getXPosition();
 				}
 
-				if (min.getY() > i->getYPosition()) {
-					min.setY(i->getYPosition());
+				if (min.y > i->getYPosition()) {
+					min.y = i->getYPosition();
 				}
 
 				tmp = i->getXPosition() + i->getWidth();
 
-				if (max.getX() < tmp) {
-					max.setX(tmp);
+				if (max.x < tmp) {
+					max.x = tmp;
 				}
 
 				tmp = i->getYPosition() + i->getHeight();
 
-				if (max.getY() < tmp) {
-					max.setY(tmp);
+				if (max.y < tmp) {
+					max.y = tmp;
 				}
 
 			} else {
@@ -88,24 +88,24 @@ namespace RedBox {
 		for (InanimateSpriteContainer::ConstIterator i = inanimateSprites.getBegin();
 		     i != inanimateSprites.getEnd(); ++i) {
 			if (notFirst) {
-				if (min.getX() > i->getXPosition()) {
-					min.setX(i->getXPosition());
+				if (min.x > i->getXPosition()) {
+					min.x = i->getXPosition();
 				}
 
-				if (min.getY() > i->getYPosition()) {
-					min.setY(i->getYPosition());
+				if (min.y > i->getYPosition()) {
+					min.y = i->getYPosition();
 				}
 
 				tmp = i->getXPosition() + i->getWidth();
 
-				if (max.getX() < tmp) {
-					max.setX(tmp);
+				if (max.x < tmp) {
+					max.x = tmp;
 				}
 
 				tmp = i->getYPosition() + i->getHeight();
 
-				if (max.getY() < tmp) {
-					max.setY(tmp);
+				if (max.y < tmp) {
+					max.y = tmp;
 				}
 
 			} else {
@@ -224,12 +224,12 @@ namespace RedBox {
 			i->scaleFromPoint(xScaling, yScaling, fromPoint);
 
 			if (notFirst) {
-				if (newPosition.getX() > i->getXPosition()) {
-					newPosition.setX(i->getXPosition());
+				if (newPosition.x > i->getXPosition()) {
+					newPosition.x = i->getXPosition();
 				}
 
-				if (newPosition.getY() > i->getYPosition()) {
-					newPosition.setY(i->getYPosition());
+				if (newPosition.y > i->getYPosition()) {
+					newPosition.y = i->getYPosition();
 				}
 
 			} else {
@@ -243,12 +243,12 @@ namespace RedBox {
 			i->scaleFromPoint(xScaling, yScaling, fromPoint);
 
 			if (notFirst) {
-				if (newPosition.getX() > i->getXPosition()) {
-					newPosition.setX(i->getXPosition());
+				if (newPosition.x > i->getXPosition()) {
+					newPosition.x = i->getXPosition();
 				}
 
-				if (newPosition.getY() > i->getYPosition()) {
-					newPosition.setY(i->getYPosition());
+				if (newPosition.y > i->getYPosition()) {
+					newPosition.y = i->getYPosition();
 				}
 
 			} else {
@@ -257,8 +257,8 @@ namespace RedBox {
 			}
 		}
 
-		this->GraphicTileMapLayer::move(newPosition.getX() - this->getXPosition(),
-		                                newPosition.getY() - this->getYPosition());
+		this->GraphicTileMapLayer::move(newPosition.x - this->getXPosition(),
+		                                newPosition.y - this->getYPosition());
 	}
 
 	void GraphicObjectLayer::rotateFromPoint(float rotationAngle,
@@ -273,12 +273,12 @@ namespace RedBox {
 			i->rotateFromPoint(rotationAngle, rotationPoint);
 
 			if (notFirst) {
-				if (newPosition.getX() > i->getXPosition()) {
-					newPosition.setX(i->getXPosition());
+				if (newPosition.x > i->getXPosition()) {
+					newPosition.x = i->getXPosition();
 				}
 
-				if (newPosition.getY() > i->getYPosition()) {
-					newPosition.setY(i->getYPosition());
+				if (newPosition.y > i->getYPosition()) {
+					newPosition.y = i->getYPosition();
 				}
 
 			} else {
@@ -292,12 +292,12 @@ namespace RedBox {
 			i->rotateFromPoint(rotationAngle, rotationPoint);
 
 			if (notFirst) {
-				if (newPosition.getX() > i->getXPosition()) {
-					newPosition.setX(i->getXPosition());
+				if (newPosition.x > i->getXPosition()) {
+					newPosition.x = i->getXPosition();
 				}
 
-				if (newPosition.getY() > i->getYPosition()) {
-					newPosition.setY(i->getYPosition());
+				if (newPosition.y > i->getYPosition()) {
+					newPosition.y = i->getYPosition();
 				}
 
 			} else {
@@ -306,8 +306,8 @@ namespace RedBox {
 			}
 		}
 
-		this->GraphicTileMapLayer::move(newPosition.getX() - this->getXPosition(),
-		                                newPosition.getY() - this->getYPosition());
+		this->GraphicTileMapLayer::move(newPosition.x - this->getXPosition(),
+		                                newPosition.y - this->getYPosition());
 	}
 
 	void GraphicObjectLayer::update() {

@@ -146,19 +146,19 @@ namespace RedBox {
 	}
 
 	float TileMap::getTileWidth() const {
-		return tileSize.getX();
+		return tileSize.x;
 	}
 
 	void TileMap::setTileWidth(float newTileWidth) {
-		tileSize.setX(newTileWidth);
+		tileSize.x = newTileWidth;
 	}
 
 	float TileMap::getTileHeight() const {
-		return tileSize.getY();
+		return tileSize.y;
 	}
 
 	void TileMap::setTileHeight(float newTileHeight) {
-		tileSize.setY(newTileHeight);
+		tileSize.y = newTileHeight;
 	}
 
 	const Tileset *TileMap::getTileset(unsigned int tileId) const {

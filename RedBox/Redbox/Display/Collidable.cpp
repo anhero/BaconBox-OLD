@@ -82,33 +82,33 @@ namespace RedBox {
 		// Update the motion.
 		float time = static_cast<float>(Engine::getSinceLastUpdate());
 
-		velocity.addToXY(acceleration * time);
+		velocity += acceleration * time;
 
-		if (acceleration.getX() == 0.0f) {
+		if (acceleration.x == 0.0f) {
 			float tmp = horizontalDrag * time;
 
-			if (velocity.getX() - tmp > 0.0f) {
-				velocity.subtractFromX(tmp);
+			if (velocity.x - tmp > 0.0f) {
+				velocity.x -= tmp;
 
-			} else if (velocity.getX() + tmp < 0.0f) {
-				velocity.addToX(tmp);
+			} else if (velocity.x + tmp < 0.0f) {
+				velocity.x += tmp;
 
 			} else {
-				velocity.setX(0.0f);
+				velocity.x = 0.0f;
 			}
 		}
 
-		if (acceleration.getY() == 0.0f) {
+		if (acceleration.y == 0.0f) {
 			float tmp = verticalDrag * time;
 
-			if (velocity.getY() - tmp > 0.0f) {
-				velocity.subtractFromY(tmp);
+			if (velocity.y - tmp > 0.0f) {
+				velocity.y -= tmp;
 
-			} else if (velocity.getY() + tmp < 0.0f) {
-				velocity.addToY(tmp);
+			} else if (velocity.y + tmp < 0.0f) {
+				velocity.y += tmp;
 
 			} else {
-				velocity.setY(0.0f);
+				velocity.y = 0.0f;
 			}
 		}
 
@@ -119,7 +119,8 @@ namespace RedBox {
 				velocity.setLength(tmp);
 
 			} else {
-				velocity.setXY(0.0f, 0.0f);
+				velocity.x = 0.0f;
+				velocity.y = 0.0f;
 			}
 		}
 
@@ -127,7 +128,7 @@ namespace RedBox {
 
 		Vector2 delta = velocity * time;
 
-		if (delta != Vector2(0.0f, 0.0f)) {
+		if (delta != Vector2()) {
 			move(delta);
 		}
 	}
@@ -137,11 +138,11 @@ namespace RedBox {
 	}
 
 	float Collidable::getOldXPosition() const {
-		return oldPosition.getX();
+		return oldPosition.x;
 	}
 
 	float Collidable::getOldYPosition() const {
-		return oldPosition.getY();
+		return oldPosition.y;
 	}
 
 	const Vector2 &Collidable::getVelocity() const {
@@ -149,32 +150,33 @@ namespace RedBox {
 	}
 
 	void Collidable::setVelocity(const Vector2 &newVelocity) {
-		velocity.setXY(checkMaximumVelocity(newVelocity.getX(), maximumVelocity.getX()),
-		               checkMaximumVelocity(newVelocity.getY(), maximumVelocity.getY()));
+		velocity = Vector2(checkMaximumVelocity(newVelocity.x, maximumVelocity.x),
+		                   checkMaximumVelocity(newVelocity.y, maximumVelocity.y));
 	}
 
 	void Collidable::setVelocity(float newXVelocity, float newYVelocity) {
-		checkMaximumVelocity(&newXVelocity, maximumVelocity.getX());
-		checkMaximumVelocity(&newYVelocity, maximumVelocity.getY());
-		velocity.setXY(newXVelocity, newYVelocity);
+		checkMaximumVelocity(&newXVelocity, maximumVelocity.x);
+		checkMaximumVelocity(&newYVelocity, maximumVelocity.y);
+		velocity.x = newXVelocity;
+		velocity.y = newYVelocity;
 	}
 
 	float Collidable::getXVelocity() const {
-		return velocity.getX();
+		return velocity.x;
 	}
 
 	void Collidable::setXVelocity(float newXVelocity) {
-		checkMaximumVelocity(&newXVelocity, maximumVelocity.getX());
-		velocity.setX(newXVelocity);
+		checkMaximumVelocity(&newXVelocity, maximumVelocity.x);
+		velocity.x = newXVelocity;
 	}
 
 	float Collidable::getYVelocity() const {
-		return velocity.getY();
+		return velocity.y;
 	}
 
 	void Collidable::setYVelocity(float newYVelocity) {
-		checkMaximumVelocity(&newYVelocity, maximumVelocity.getY());
-		velocity.setY(newYVelocity);
+		checkMaximumVelocity(&newYVelocity, maximumVelocity.y);
+		velocity.y = newYVelocity;
 	}
 
 	const Vector2 &Collidable::getMaximumVelocity() const {
@@ -187,26 +189,27 @@ namespace RedBox {
 	}
 
 	void Collidable::setMaximumVelocity(float newMaximumXVelocity, float newMaximumYVelocity) {
-		maximumVelocity.setXY(newMaximumXVelocity, newMaximumYVelocity);
+		maximumVelocity.x = newMaximumXVelocity;
+		maximumVelocity.y = newMaximumYVelocity;
 		setVelocity(velocity);
 	}
 
 	float Collidable::getMaximumXVelocity() const {
-		return maximumVelocity.getX();
+		return maximumVelocity.x;
 	}
 
 	void Collidable::setMaximumXVelocity(float newMaximumXVelocity) {
-		maximumVelocity.setX(newMaximumXVelocity);
-		setXVelocity(velocity.getX());
+		maximumVelocity.x = newMaximumXVelocity;
+		setXVelocity(velocity.x);
 	}
 
 	float Collidable::getMaximumYVelocity() const {
-		return maximumVelocity.getY();
+		return maximumVelocity.y;
 	}
 
 	void Collidable::setMaximumYVelocity(float newMaximumYVelocity) {
-		maximumVelocity.setY(newMaximumYVelocity);
-		setYVelocity(velocity.getY());
+		maximumVelocity.y = newMaximumYVelocity;
+		setYVelocity(velocity.y);
 	}
 
 	const Vector2 &Collidable::getAcceleration() const {
@@ -218,23 +221,24 @@ namespace RedBox {
 	}
 
 	void Collidable::setAcceleration(float newXAcceleration, float newYAcceleration) {
-		acceleration.setXY(newXAcceleration, newYAcceleration);
+		acceleration.x = newXAcceleration;
+		acceleration.y = newYAcceleration;
 	}
 
 	float Collidable::getXAcceleration() const {
-		return acceleration.getX();
+		return acceleration.x;
 	}
 
 	void Collidable::setXAcceleration(float newXAcceleration) {
-		acceleration.setX(newXAcceleration);
+		acceleration.x = newXAcceleration;
 	}
 
 	float Collidable::getYAcceleration() const {
-		return acceleration.getY();
+		return acceleration.y;
 	}
 
 	void Collidable::setYAcceleration(float newYAcceleration) {
-		acceleration.setY(newYAcceleration);
+		acceleration.y = newYAcceleration;
 	}
 
 	float Collidable::getGlobalDrag() const {
@@ -290,23 +294,24 @@ namespace RedBox {
 	}
 
 	void Collidable::setOffset(float newXOffset, float newYOffset) {
-		offset.setXY(newXOffset, newYOffset);
+		offset.x = newXOffset;
+		offset.y = newYOffset;
 	}
 
 	float Collidable::getXOffset() const {
-		return offset.getX();
+		return offset.x;
 	}
 
 	void Collidable::setXOffset(float newXOffset) {
-		offset.setX(newXOffset);
+		offset.x = newXOffset;
 	}
 
 	float Collidable::getYOffset() const {
-		return offset.getY();
+		return offset.y;
 	}
 
 	void Collidable::setYOffset(float newYOffset) {
-		offset.setY(newYOffset);
+		offset.y = newYOffset;
 	}
 
 	const Vector2 &Collidable::getCollidingBoxRatio() const {
@@ -318,29 +323,28 @@ namespace RedBox {
 	}
 
 	void Collidable::setCollidingBoxRatio(float newXCollidingBoxRatio, float newYCollidingBoxRatio) {
-		collidingBoxRatio.setXY(newXCollidingBoxRatio, newYCollidingBoxRatio);
+		collidingBoxRatio.x = newXCollidingBoxRatio;
+		collidingBoxRatio.y = newYCollidingBoxRatio;
 	}
 
 	float Collidable::getXCollidingBoxRatio() const {
-		return collidingBoxRatio.getX();
+		return collidingBoxRatio.x;
 	}
 
 	void Collidable::setXCollidingBoxRatio(float newXCollidingBoxRatio) {
-		collidingBoxRatio.setX(newXCollidingBoxRatio);
+		collidingBoxRatio.x = newXCollidingBoxRatio;
 	}
 
 	float Collidable::getYCollidingBoxRatio() const {
-		return collidingBoxRatio.getY();
+		return collidingBoxRatio.y;
 	}
 
 	void Collidable::setYCollidingBoxRatio(float newYCollidingBoxRatio) {
-		collidingBoxRatio.setY(newYCollidingBoxRatio);
+		collidingBoxRatio.y = newYCollidingBoxRatio;
 	}
 
 	const Vector2 Collidable::getCollidingSize() const {
-		Vector2 result(getSize());
-		result.scalarMultiplication(getCollidingBoxRatio());
-		return result;
+		return getSize().getCoordinatesMultiplication(getCollidingBoxRatio());
 	}
 
 	float Collidable::getCollidingWidth() const {
@@ -361,7 +365,7 @@ namespace RedBox {
 
 	const AxisAlignedBoundingBox Collidable::getAxisAlignedBoundingBox() const {
 		if (offsetRatio) {
-			return AxisAlignedBoundingBox(getPosition() + Vector2(getOffset().getX() * getCollidingWidth(), getOffset().getY() * getCollidingHeight()),
+			return AxisAlignedBoundingBox(getPosition() + Vector2(getOffset().x * getCollidingWidth(), getOffset().y * getCollidingHeight()),
 			                              getCollidingSize());
 
 		} else {
@@ -613,8 +617,8 @@ namespace RedBox {
 	}
 
 	void Collidable::checkMaximumVelocity() {
-		velocity.setXY(checkMaximumVelocity(velocity.getX(), maximumVelocity.getX()),
-		               checkMaximumVelocity(velocity.getY(), maximumVelocity.getY()));
+		velocity.x = checkMaximumVelocity(velocity.x, maximumVelocity.x);
+		velocity.y = checkMaximumVelocity(velocity.y, maximumVelocity.y);
 	}
 
 	bool Collidable::solveXCollision(Collidable *other,

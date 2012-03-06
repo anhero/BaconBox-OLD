@@ -92,12 +92,13 @@ namespace RedBox {
 
 			PixMap *glyphPixMap = new PixMap(currentBitmapGlyph->bitmap.buffer, glyphWidth, glyphHeight, ColorFormat::ALPHA);
 			result->textureInformation = ResourceManager::addTexture(key.str(), glyphPixMap);
-			result->advance.setX(static_cast<float>(font->glyph->advance.x >> 6));
+			result->advance.x = static_cast<float>(font->glyph->advance.x >> 6);
 
-			result->size.setXY(static_cast<float>(glyphWidth), static_cast<float>(glyphHeight));
+			result->size.x = static_cast<float>(glyphWidth);
+			result->size.y = static_cast<float>(glyphHeight);
 
-			result->horizontalBearing.setXY(static_cast<float>(font->glyph->bitmap_left),
-			                                static_cast<float>(font->glyph->bitmap_top));
+			result->horizontalBearing.x = static_cast<float>(font->glyph->bitmap_left);
+			result->horizontalBearing.y = static_cast<float>(font->glyph->bitmap_top);
 
 			i = glyphCache.insert(std::make_pair(size, GlyphCache::mapped_type())).first;
 

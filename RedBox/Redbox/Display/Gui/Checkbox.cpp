@@ -10,7 +10,7 @@ namespace RedBox {
 		this->setPosition(startingPosition);
 		this->setTextureInformation(newTexture);
 
-		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
+		if (newSize.x > 0.0f && newSize.y > 0.0f) {
 			this->construct(newSize, startingPosition, newTextureOffset, 8);
 			this->initializeAnimations();
 

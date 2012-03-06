@@ -518,7 +518,7 @@ namespace RedBox {
 					     i != text.end(); ++i) {
 						newGlyph = font->getGlyphInformation(*i);
 
-						if (newGlyph->size.getX() > 0.0f) {
+						if (newGlyph->size.x > 0.0f) {
 							newGraphic = new InanimateGraphicElement<Transformable>(newGlyph->textureInformation, Vector2(0.0f, 0.0f), newGlyph->size);
 							newGraphic->setScaling(this->getScaling());
 							newGraphic->setColor(getColor());
@@ -538,7 +538,7 @@ namespace RedBox {
 					     i != text.rend(); ++i) {
 						newGlyph = font->getGlyphInformation(*i);
 
-						if (newGlyph->size.getX() > 0.0f) {
+						if (newGlyph->size.x > 0.0f) {
 							newGraphic = new InanimateGraphicElement<Transformable>(newGlyph->textureInformation, Vector2(0.0f, 0.0f), newGlyph->size);
 							newGraphic->setScaling(this->getScaling());
 							newGraphic->setColor(getColor());
@@ -562,8 +562,8 @@ namespace RedBox {
 					// We have to check for NULL pointers because spaces
 					// do not have graphics.
 					if (i->second) {
-						i->second->setPosition(tmpX + i->first->horizontalBearing.getX() * this->getXScaling(),
-						                       (lineHeight + (i->first->size.getY() - i->first->horizontalBearing.getY()) - i->first->size.getY() * this->getYScaling()));
+						i->second->setPosition(tmpX + i->first->horizontalBearing.x * this->getXScaling(),
+						                       (lineHeight + (i->first->size.y - i->first->horizontalBearing.y) - i->first->size.y * this->getYScaling()));
 
 						tmpMax = i->second->getVertices().getMaximumXY();
 
@@ -572,29 +572,29 @@ namespace RedBox {
 								xMin = i->second->getXPosition();
 							}
 
-							if (tmpMax.getX() > xMax) {
-								xMax = tmpMax.getX();
+							if (tmpMax.x > xMax) {
+								xMax = tmpMax.x;
 							}
 
 							if (i->second->getYPosition() < yMin) {
 								yMin = i->second->getYPosition();
 							}
 
-							if (tmpMax.getY() > yMax) {
-								yMax = tmpMax.getY();
+							if (tmpMax.y > yMax) {
+								yMax = tmpMax.y;
 							}
 
 						} else {
 							started = true;
 							tmpMax = i->second->getVertices().getMaximumXY();
 							xMin = i->second->getXPosition();
-							xMax = tmpMax.getX();
+							xMax = tmpMax.x;
 							yMin = i->second->getYPosition();
-							yMax = tmpMax.getY();
+							yMax = tmpMax.y;
 						}
 					}
 
-					tmpX += i->first->advance.getX() * this->getXScaling();
+					tmpX += i->first->advance.x * this->getXScaling();
 				}
 
 				if (!started) {
@@ -604,13 +604,17 @@ namespace RedBox {
 
 				// We set the vertices.
 				StandardVertexArray::Iterator it = vertices.getBegin();
-				it->setXY(xMin, yMin);
+				it->x = xMin;
+				it->y = yMin;
 				++it;
-				it->setXY(xMax, yMin);
+				it->x = xMax;
+				it->y = yMin;
 				++it;
-				it->setXY(xMax, yMax);
+				it->x = xMin;
+				it->y = yMax;
 				++it;
-				it->setXY(xMin, yMax);
+				it->x = xMax;
+				it->y = yMax;
 
 				// We check the text alignment.
 
@@ -641,7 +645,7 @@ namespace RedBox {
 
 				// We apply this delta and the rotation to the vertices and
 				// the graphics.
-				vertices.move(delta.getX(), delta.getY());
+				vertices.move(delta.x, delta.y);
 				vertices.rotateFromPoint(this->getAngle(), alignmentPosition);
 
 				for (GlyphList::iterator i = characters.begin();
@@ -664,7 +668,7 @@ namespace RedBox {
 		 */
 		void refreshPosition() {
 			Vector2 delta = vertices.getMinimumXY() - this->getPosition();
-			this->Collidable::move(delta.getX(), delta.getY());
+			this->Collidable::move(delta.x, delta.y);
 		}
 
 		/**

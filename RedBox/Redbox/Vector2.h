@@ -8,8 +8,6 @@
 #include <iostream>
 #include <cmath>
 
-#include "StaticAssert.h"
-#include "IsNumber.h"
 #include "MathHelper.h"
 #include "Value.h"
 #include "DefaultSerializer.h"
@@ -17,6 +15,8 @@
 
 namespace RedBox {
 #pragma pack(1)
+	template <typename T, unsigned int NB_DIMENSIONS = 2u> class Vector;
+
 	/**
 	 * Represents a 2D euclidean vector. Templated so it can only be a vector of
 	 * floats, doubles or long doubles.
@@ -24,481 +24,307 @@ namespace RedBox {
 	 * @tparam T Type of data to use as the Vector2T's coordinates.
 	 */
 	template <typename T>
-	class Vector2T {
-		template <typename U> friend std::ostream &operator<<(std::ostream &output, const Vector2T<U>& v);
+	class Vector<T, 2u> {
 	public:
 		/// Fundamental floating point number type the vector contains.
 		typedef T ValueType;
-
-		/**
-		 * Comparator used to compare two vector's horizontal coordinate.
-		 */
-		struct XComparator {
-			bool operator()(const Vector2T<ValueType> &first,
-			                const Vector2T<ValueType> &second) const {
-				return first.x < second.x;
-			}
-		};
-
-		/**
-		 * Comparator used to compare two vector's vertical coordinate.
-		 */
-		struct YComparator {
-			bool operator()(const Vector2T<ValueType> &first,
-			                const Vector2T<ValueType> &second) const {
-				return first.y < second.y;
-			}
-		};
-
-		/**
-		 * Comparator used to compare two vector's coordinates.
-		 */
-		struct XYComparator {
-			bool operator()(const Vector2T<ValueType> &first,
-			                const Vector2T<ValueType> &second) const {
-				return first.x + first.y < second.x + second.y;
-			}
-		};
-
+		/// Number of dimensions the vector has.
+		static const unsigned int NB_DIMENSIONS = 2u;
+		/// Typedef for easier reading and writing.
+		typedef Vector<ValueType, NB_DIMENSIONS> Vector2;
 		/// Normalized vector that points up.
-		static const Vector2T<ValueType> UP;
+		static const Vector<ValueType, NB_DIMENSIONS> UP;
+		/// Value equal to zero.
+		static const ValueType ZERO;
 
-		/// Default value.
-		static const ValueType DEFAULT_VALUE;
+		/// Type of component, either on the X axis or Y axis.
+		enum ComponentType {
+		    X,
+		    Y
+		};
 
 		/**
-		 * Calculates a scalar multiplication between two vectors.
-		 * @param first First factor.
-		 * @param second Second factor.
-		 * @return Product of the multiplication.
+		 * Represents a component of a Vector2.
+		 * @tparam C Either X or Y.
 		 */
-		static const Vector2T<ValueType> scalarMultiplication(const Vector2T<ValueType> &first, const Vector2T<ValueType> &second) {
-			return Vector2T<ValueType>(first.x * second.x, first.y * second.y);
-		}
+		template <ComponentType C>
+		struct Component {
+			Component() : value(ZERO) {}
+			Component(ValueType newValue) : value(newValue) {}
+			Component(const Component<C> &src) : value(src.value) {}
+			Component<C> &operator=(Component<C> src) {
+				value = src.value;
+				return *this;
+			}
+
+			// Compound assignment operators.
+			Component<C> &operator+=(Component<C> rhs) {
+				value += rhs.value;
+				return *this;
+			}
+			Component<C> &operator-=(Component<C> rhs) {
+				value -= rhs.value;
+				return *this;
+			}
+			Component<C> &operator*=(Component<C> rhs) {
+				value *= rhs.value;
+				return *this;
+			}
+			Component<C> &operator/=(Component<C> rhs) {
+				value /= rhs.value;
+				return *this;
+			}
+			Component<C> &operator%=(Component<C> rhs) {
+				value %= rhs.value;
+				return *this;
+			}
+			Component<C> &operator&=(Component<C> rhs) {
+				value &= rhs.value;
+				return *this;
+			}
+			Component<C> &operator|=(Component<C> rhs) {
+				value |= rhs.value;
+				return *this;
+			}
+			Component<C> &operator^=(Component<C> rhs) {
+				value ^= rhs.value;
+				return *this;
+			}
+			Component<C> &operator<<=(Component<C> rhs) {
+				value <<= rhs.value;
+				return *this;
+			}
+			Component<C> &operator>>=(Component<C> rhs) {
+				value >>= rhs.value;
+				return *this;
+			}
+
+			Component<C> operator+(Component<C> other) {
+				return Component<C>(*this) += other;
+			}
+			Component<C> operator-(Component<C> other) {
+				return Component<C>(*this) -= other;
+			}
+			Component<C> operator*(Component<C> other) {
+				return Component<C>(*this) *= other;
+			}
+			Component<C> operator/(Component<C> other) {
+				return Component<C>(*this) /= other;
+			}
+			Component<C> operator%(Component<C> other) {
+				return Component<C>(*this) %= other;
+			}
+			Component<C> operator&(Component<C> other) {
+				return Component<C>(*this) &= other;
+			}
+			Component<C> operator|(Component<C> other) {
+				return Component<C>(*this) |= other;
+			}
+			Component<C> operator^(Component<C> other) {
+				return Component<C>(*this) ^= other;
+			}
+			Component<C> operator<<(Component<C> other) {
+				return Component<C>(*this) <<= other;
+			}
+			Component<C> operator>>(Component<C> other) {
+				return Component<C>(*this) >>= other;
+			}
+
+			Component<C> operator+() {
+				return Component<C>(+value);
+			}
+			Component<C> operator-() {
+				return Component<C>(-value);
+			}
+
+			Component<C> &operator++() {
+				++value;
+				return *this;
+			}
+			Component<C> operator++(int) {
+				Component<C> result(*this);
+				++value;
+				return result;
+			}
+			Component<C> &operator--() {
+				--value;
+				return *this;
+			}
+			Component<C> operator--(int) {
+				Component<C> result(*this);
+				--value;
+				return result;
+			}
+
+			bool operator==(Component<C> other) const {
+				return value == other.value;
+			}
+			bool operator!=(Component<C> other) const {
+				return value != other.value;
+			}
+			bool operator>(Component<C> other) const {
+				return value > other.value;
+			}
+			bool operator<(Component<C> other) const {
+				return value < other.value;
+			}
+			bool operator>=(Component<C> other) const {
+				return value >= other.value;
+			}
+			bool operator<=(Component<C> other) const {
+				return value <= other.value;
+			}
+			bool operator!() const {
+				return !value;
+			}
+			bool operator&&(Component<C> other) const {
+				return value && other.value;
+			}
+			bool operator||(Component<C> other) const {
+				return value || other.value;
+			}
+
+			/// Value of the component.
+			ValueType value;
+		};
+
+		/// Typedef for easier reading and writing.
+		typedef Component<X> XComponent;
+		/// Typedef for easier reading and writing.
+		typedef Component<Y> YComponent;
 
 		/**
 		 * Default constructor.
 		 */
-		Vector2T() : x(DEFAULT_VALUE), y(DEFAULT_VALUE) {
-		}
+		Vector();
 
 		/**
-		 * Parameterized constructor.
-		 * @param newX Starting x value.
-		 * @param newY Starting y value.
+		 * Initializes the vector with the given x component.
+		 * @param newX X component to use.
 		 */
-		Vector2T(ValueType newX, ValueType newY) : x(newX), y(newY) {
-		}
+		Vector(XComponent newX);
+
+		/**
+		 * Initializes the vector with the given x component.
+		 * @param newX Y component to use.
+		 */
+		Vector(YComponent newY);
+
+		/**
+		 * Initializes the vector with the given x and y components.
+		 * @param newX X component to use.
+		 * @param newX Y component to use.
+		 */
+		Vector(XComponent newX, YComponent newY);
 
 		/**
 		 * Copy constructor.
-		 * @param src Vector2 to make a copy of.
+		 * @param src Vector to make a copy of.
 		 */
-		Vector2T(const Vector2T<ValueType>& src) : x(src.x), y(src.y) {
-		}
+		Vector(const Vector2 &src);
 
 		/**
 		 * Assignment operator overload.
-		 * @param src Vector2 to make a copy of.
+		 * @param src Vector to copy.
 		 * @return Reference to the modified instance.
 		 */
-		Vector2T<ValueType>& operator=(const Vector2T<ValueType>& src) {
-			if (this != &src) {
-				x = src.x;
-				y = src.y;
-			}
-
-			return *this;
-		}
+		Vector2 &operator=(const Vector2 &src);
 
 		/**
-		 * Adds a vector to the instance. Adds the right-hand side vector's
-		 * x and y coordinates to the instance's x and y coordinates
-		 * respectively.
-		 * @param rhs Vector to add to the instance.
-		 * @return Reference to the modified instance.
+		 * Checks wether or not the given vector is equal. Two vectors are said
+		 * to be equal if their coordinates are equal.
+		 * @param other Vector to compare the instance with.
+		 * @return True if the coordinates are equal, false if not.
 		 */
-		Vector2T<ValueType>& operator+=(const Vector2T<ValueType>& rhs) {
-			x += rhs.x;
-			y += rhs.y;
-			return *this;
-		}
-
+		bool operator==(const Vector2 &other) const;
 		/**
-		 * Adds a scalar value to both of the instance's coordinates.
-		 * @param rhs Scalar value to add to the instance's coordinates.
-		 * @return Reference to the modified instance.
+		 * Checks wether or not the given vector is different. Two vectors are
+		 * said to be equal if their coordinates are equal.
+		 * @param other Vector to compare the instance with.
+		 * @return True if at least one coordinate is different, false if not.
 		 */
-		Vector2T<ValueType>& operator+=(ValueType rhs) {
-			x += rhs;
-			y += rhs;
-			return *this;
+		bool operator!=(const Vector2 &other) const;
+
+		Vector2 &operator+=(const Vector2 &other);
+		Vector2 &operator+=(ValueType delta);
+		Vector2 &operator+=(XComponent xDelta);
+		Vector2 &operator+=(YComponent yDelta);
+
+		Vector2 &operator-=(const Vector2 &other);
+		Vector2 &operator-=(ValueType delta);
+		Vector2 &operator-=(XComponent xDelta);
+		Vector2 &operator-=(YComponent yDelta);
+
+		Vector2 &operator*=(ValueType delta);
+		Vector2 &operator*=(XComponent xDelta);
+		Vector2 &operator*=(YComponent yDelta);
+
+		Vector2 &operator/=(ValueType delta);
+		Vector2 &operator/=(XComponent xDelta);
+		Vector2 &operator/=(YComponent yDelta);
+
+		Vector2 operator+(const Vector2 &other) const;
+		Vector2 operator+(ValueType delta) const;
+		friend Vector2 operator+(ValueType delta, const Vector2 &vector) {
+			return Vector2(vector) += delta;
 		}
+		Vector2 operator+(XComponent xDelta) const;
+		friend Vector2 operator+(XComponent xDelta, const Vector2 &vector) {
+			return Vector2(vector) += xDelta;
+		}
+		Vector2 operator+(YComponent yDelta) const;
+		friend Vector2 operator+(YComponent yDelta, const Vector2 &vector) {
+			return Vector2(vector) += yDelta;
+		}
+		Vector2 operator+() const;
+
+		Vector2 operator-(const Vector2 &other) const;
+		Vector2 operator-(ValueType delta) const;
+		friend Vector2 operator-(ValueType delta, const Vector2 &vector) {
+			return Vector2(vector) -= delta;
+		}
+		Vector2 operator-(XComponent xDelta) const;
+		friend Vector2 operator-(XComponent xDelta, const Vector2 &vector) {
+			return Vector2(vector) -= xDelta;
+		}
+		Vector2 operator-(YComponent yDelta) const;
+		friend Vector2 operator-(YComponent yDelta, const Vector2 &vector) {
+			return Vector2(vector) -= yDelta;
+		}
+		Vector2 operator-() const;
 
 		/**
-		 * Subtracts a vector from the instance. Subtracts the right-hand
-		 * side vector's x and y coordinates from the instance's x and y
-		 * coordinates respectively.
-		 * @param rhs Vector to subtract from the instance.
-		 * @return Reference to the modified instance.
-		 */
-		Vector2T<ValueType>& operator-=(const Vector2T<ValueType>& rhs) {
-			x -= rhs.x;
-			y -= rhs.y;
-			return *this;
-		}
-
-		/**
-		 * Subtracts a scalar value from both of the instance's coordinates.
-		 * @param rhs Scalar value to subtract from the instance's coordinates.
-		 * @return Reference to the modified instance.
-		 */
-		Vector2T<ValueType>& operator-=(ValueType rhs) {
-			x -= rhs;
-			y -= rhs;
-			return *this;
-		}
-
-		/**
-		 * Multplies the instance's coordinates by a scalar factor.
-		 * @param rhs Scalar factor to multiply by the instance's coordinates.
-		 * @return Reference to the modified instance.
-		 */
-		Vector2T<ValueType>& operator*=(ValueType rhs) {
-			x *= rhs;
-			y *= rhs;
-			return *this;
-		}
-
-		/**
-		 * Divides the instance's coordinates by the right-hand side divisor.
-		 * @param rhs Scalar divisor to divide the instance's coordinates with.
-		 * @return Reference to the modified instance.
-		 */
-		Vector2T<ValueType>& operator/=(ValueType rhs) {
-			x /= rhs;
-			y /= rhs;
-			return *this;
-		}
-
-		/**
-		 * Does a scalar division to the instance's coordinates by using the
-		 * right-hand side's coordinates as the divisiors.
-		 * @param rhs Vector containing the coordinates to be used as the
-		 * divisors.
-		 * @return Reference to the modified instance.
-		 */
-		Vector2T<ValueType>& operator/=(const Vector2T<ValueType> &rhs) {
-			x /= rhs.x;
-			y /= rhs.y;
-			return *this;
-		}
-
-		/**
-		 * Adds to vectors's coordinates together.
-		 * @param other Vector to add to the instance's copy.
-		 * @return Sum of the instance's copy and the received vector.
-		 */
-		const Vector2T<ValueType> operator+(const Vector2T<ValueType>& other) const {
-			return Vector2T<ValueType>(*this) += other;
-		}
-
-		/**
-		 * Adds a vector and a scalar value together.
-		 * @param other Scalar value to add to the instance's copy.
-		 * @return Sum of the instance's copy and the received scalar value.
-		 */
-		const Vector2T<ValueType> operator+(ValueType other) const {
-			return Vector2T<ValueType>(*this) += other;
-		}
-
-		/**
-		 * Subtracts a vector from another vector.
-		 * @param other Vector representing the subtraction's subtrahend.
-		 * @return Difference between the instance's copy and the received
-		 * vector.
-		 */
-		const Vector2T<ValueType> operator-(const Vector2T<ValueType>& other) const {
-			return Vector2T<ValueType>(*this) -= other;
-		}
-
-		/**
-		 * Subtracts a scalar value from a vector's coordinates.
-		 * @param other Scalar value representing the subtraction's subtrahend.
-		 * @return Difference between the instance's copy and the received
-		 * scalar value.
-		 */
-		const Vector2T<ValueType> operator-(ValueType other) const {
-			return Vector2T<ValueType>(*this) -= other;
-		}
-
-		/**
-		 * Multiplies a vector's coordinates with a scalar value.
-		 * @param other Scalar value to multiply the copy of the instance's
-		 * coordinates with.
-		 * @return Product of the copy of the instance and the received
-		 * scalar value.
-		 */
-		const Vector2T<ValueType> operator*(ValueType other) const {
-			return Vector2T<ValueType>(*this) *= other;
-		}
-
-		/**
-		 * Calculates the dot product between two vectors (V1 ∙ V2).
-		 * @param other Vector to use as the right factor.
-		 * @result Dot product between the instance and the received vector.
-		 */
-		ValueType operator*(const Vector2T<ValueType>& other) const {
-			return getDotProduct(other);
-		}
-
-		/**
-		 * Divides a vector's coordinates by a scalar value.
-		 * @param other Scalar value to divide the copy of the instance's
-		 * coordinates by.
-		 * @return Quotient of the copy of the instance and the received
-		 * scalar value.
-		 */
-		const Vector2T<ValueType> operator/(ValueType other) const {
-			return Vector2T<ValueType>(*this) /= other;
-		}
-
-		/**
-		 * Divides a vector's coordinates by another vector's coordinates.
-		 * @param other Vector containing the coordinates to use as the
-		 * divisors.
-		 * @return Quotient of the copy of the instance and the received
-		 * vector.
-		 */
-		const Vector2T<ValueType> operator/(const Vector2T<ValueType> &other) const {
-			return Vector2T<ValueType>(*this) /= other;
-		}
-
-		/**
-		 * Checks if the instance has the same coordinates as another vector.
-		 * @param other Vector to check equality with.
-		 * @return True if the instance has the same coordinate values as the
-		 * received vector, false if not.
-		 */
-		bool operator==(const Vector2T<ValueType>& other) const {
-			return x == other.x && y == other.y;
-		}
-
-		/**
-		 * Checks if the instance's coordinates are different from another
-		 * vector.
-		 * @param other Vector to check inequality with.
-		 * @return True if the instance's coordinates are different from the
-		 * received vector, false if they are equal.
-		 */
-		bool operator!=(const Vector2T<ValueType>& other) const {
-			return !(*this == other);
-		}
-
-		/**
-		 * Gets the instance's x coordinate.
-		 * @return Instance's x coordinate.
-		 * @see RedBox::Vector2T<T>::x
-		 */
-		ValueType getX() const {
-			return x;
-		}
-
-		/**
-		 * Gets the instance's y coordinate.
-		 * @return Instance's y coordinate.
-		 * @see RedBox::Vector2T<T>::y
-		 */
-		ValueType getY() const {
-			return y;
-		}
-
-		/**
-		 * Sets the instance's x coordinate.
-		 * @param newX New x coordinate's value.
-		 * @see RedBox::Vector2T<T>::x
-		 */
-		void setX(ValueType newX) {
-			x = newX;
-		}
-
-		/**
-		 * Sets the instance's y coordinate.
-		 * @param newY New y coordinate's value.
-		 * @see RedBox::Vector2T<T>::y
-		 */
-		void setY(ValueType newY) {
-			y = newY;
-		}
-
-		/**
-		 * Sets the instance's x and y coordinates.
-		 * @param newX New x coordinate's value.
-		 * @param newY New y coordinate's value.
-		 * @see RedBox::Vector2T<T>::x
-		 * @see RedBox::Vector2T<T>::y
-		 */
-		void setXY(ValueType newX, ValueType newY) {
-			x = newX;
-			y = newY;
-		}
-
-		/**
-		 * Adds a value to the instance's x coordinate.
-		 * @param xDelta Value to add to the instance's x coordinate.
-		 */
-		void addToX(ValueType xDelta) {
-			x += xDelta;
-		}
-
-		/**
-		 * Adds a value to the instance's y coordinate.
-		 * @param yDelta Value to add to the instance's y coordinate.
-		 */
-		void addToY(ValueType yDelta) {
-			y += yDelta;
-		}
-
-		/**
-		 * Adds values to the instance's y and y coordinates.
-		 * @param xDelta Value to add to the instance's x coordinate.
-		 * @param yDelta Value to add to the instance's y coordinate.
-		 */
-		void addToXY(ValueType xDelta, ValueType yDelta) {
-			x += xDelta;
-			y += yDelta;
-		}
-
-		/**
-		 * Adds a vector's x and y coordinates to the instance's x and y
-		 * coordinates respectively.
-		 * @param delta Vector to add to the instance.
-		 */
-		void addToXY(const Vector2T<ValueType>& delta) {
-			x += delta.x;
-			y += delta.y;
-		}
-
-		/**
-		 * Adds a value to both of the instance's coordinates.
-		 * @param delta Value to add to the instance's coordinates.
-		 */
-		void addToXY(ValueType delta) {
-			x += delta;
-			y += delta;
-		}
-
-		/**
-		 * Subtracts a value from the instance's x coordinate.
-		 * @param xDelta Value to subtract from the instance's x coordinate.
-		 */
-		void subtractFromX(ValueType xDelta) {
-			x -= xDelta;
-		}
-
-		/**
-		 * Subtracts a value from the instance's y coordinate.
-		 * @param yDelta Value to subtract from the instance's y coordinate.
-		 */
-		void subtractFromY(ValueType yDelta) {
-			y -= yDelta;
-		}
-
-		/**
-		 * Subtracts values from the instance's x and y coordinates.
-		 * @param xDelta Value to subtract from the instance's x coordinate.
-		 * @param yDelta Value to subtract from the instance's y coordinate.
-		 */
-		void subtractFromXY(ValueType xDelta, ValueType yDelta) {
-			x -= xDelta;
-			y -= yDelta;
-		}
-
-		/**
-		 * Subtracts a vector's x and y coordinates from the instance's x and y
-		 * coordinates respectively.
-		 * @param delta Vector to subtract from the instance.
-		 */
-		void subtractFromXY(const Vector2T<ValueType>& delta) {
-			x -= delta.x;
-			y -= delta.y;
-		}
-
-		/**
-		 * Subtracts a value from both of the instance's coordinates.
-		 * @param delta Value to subtract from the instance's coordinates.
-		 */
-		void subtractFromXY(ValueType delta) {
-			x -= delta;
-			y -= delta;
-		}
-
-		/**
-		 * Multiplies the instance's coordinates by given factors.
-		 * @param xFactor X factor to multiply the instance's x coordinate by.
-		 * @param yFactor Y factor to multiply the instance's x coordinate by.
-		 */
-		void scalarMultiplication(ValueType xFactor, ValueType yFactor) {
-			x *= xFactor;
-			y *= yFactor;
-		}
-
-		/**
-		 * Mulitplies the instance's coordinates by another vector's
-		 * coordinates.
-		 * @param factor Vector containing the coordinates to multiply the
-		 * instance's coordinates by.
-		 */
-		void scalarMultiplication(const Vector2T<ValueType>& factor) {
-			x *= factor.x;
-			y *= factor.y;
-		}
-
-		/**
-		 * Multiplies the instance's coordinates by a given factor.
-		 * @param factor Factor to multiply the instance's coordinates by.
-		 */
-		void scalarMultiplication(ValueType factor) {
-			x *= factor;
-			y *= factor;
-		}
-
-		/**
-		 * Divides the instance's coordinates by given divisors.
-		 * @param xDivisor X divisor to divide the instance's x coordinate by.
-		 * @param yDivisor Y divisor to divide the instance's x coordinate by.
-		 */
-		void scalarDivision(ValueType xDivisor, ValueType yDivisor) {
-			x /= xDivisor;
-			y /= yDivisor;
-		}
-
-		/**
-		 * Divides the instance's coordinates by another vector's coordinates.
-		 * @param divisor Vector containing the coordinates to use as the
-		 * divisors.
-		 */
-		void scalarDivision(const Vector2T<ValueType> &divisor) {
-			x /= divisor.x;
-			y /= divisor.y;
-		}
-
-		/**
-		 * Divides the instance's coordinates by a given divisor.
-		 * @param divisor Divisor to divide the instance's coordinates by.
-		 */
-		void scalarDivision(ValueType divisor) {
-			x /= divisor;
-			y /= divisor;
-		}
-
-		/**
-		 * Calculates the dot product between the instance and another vector.
-		 * @param other Other vector used to calculate the dot product.
+		 * Calculates the dot product.
+		 * @param other Other vector to use to calculate the dot product.
 		 * @return Resulting dot product.
+		 * @see RedBox::Vector::getDotProduct()
 		 */
-		ValueType getDotProduct(const Vector2T<ValueType>& other) const {
-			return x * other.x + y * other.y;
+		ValueType operator*(const Vector2 &other) const;
+
+		Vector2 operator*(ValueType delta) const;
+		friend Vector2 operator*(ValueType delta, const Vector2 &vector) {
+			return Vector2(vector) *= delta;
+		}
+		Vector2 operator*(XComponent xDelta) const;
+		friend Vector2 operator*(XComponent xDelta, const Vector2 &vector) {
+			return Vector2(vector) *= xDelta;
+		}
+		Vector2 operator*(YComponent yDelta) const;
+		friend Vector2 operator*(YComponent yDelta, const Vector2 &vector) {
+			return Vector2(vector) *= yDelta;
+		}
+
+		Vector2 operator/(ValueType delta) const;
+		friend Vector2 operator/(ValueType delta, const Vector2 &vector) {
+			return Vector2(vector) /= delta;
+		}
+		Vector2 operator/(XComponent xDelta) const;
+		friend Vector2 operator/(XComponent xDelta, const Vector2 &vector) {
+			return Vector2(vector) /= xDelta;
+		}
+		Vector2 operator/(YComponent yDelta) const;
+		friend Vector2 operator/(YComponent yDelta, const Vector2 &vector) {
+			return Vector2(vector) /= yDelta;
 		}
 
 		/**
@@ -506,71 +332,94 @@ namespace RedBox {
 		 * norm.
 		 * @return Instance's length.
 		 */
-		ValueType getLength() const {
-			return sqrt(getDotProduct(*this));
-		}
+		ValueType getLength() const;
 
 		/**
 		 * Changes the vector's length.
 		 * @param newLength New length to set to the vector.
 		 */
-		void setLength(ValueType newLength) {
-			normalize();
-			scalarMultiplication(newLength);
-		}
+		void setLength(ValueType newLength);
 
 		/**
-		 * Gets a normalized version of the instance.
+		 * Calculates the instance's squared length.
+		 * @return Instance's length.
+		 */
+		ValueType getSquaredLength() const;
+
+		/**
+		 * Calculates the dot product between the instance and another vector.
+		 * @param other Other vector used to calculate the dot product.
+		 * @return Resulting dot product.
+		 */
+		ValueType getDotProduct(const Vector2 &other) const;
+
+		/**
+		 * Gets a normalized version of the instance. Same as doing
+		 * setLength(1) on a copy of the instance.
 		 * @return Copy of the instance, but normalized.
 		 */
-		const Vector2T<ValueType> getNorm() {
-			return *this / getLength();
-		}
+		Vector2 getNormalized() const;
 
 		/**
-		 * Normalizes the instance. Makes the instance have a length of 1, but
-		 * keeps the same angle.
+		 * Normalizes the instance. Same as calling setLength(1).
 		 */
-		void normalize() {
-			scalarDivision(getLength());
-		}
+		void normalize();
 
 		/**
-		 * Calculates the angle between the instance and another vector.
-		 * @param other Other vector to calculate the angle between.
-		 * @return Angle between the two vectors.
+		 * Multiplies the other vector's coordinates with the instance's.
+		 * First multiplies the other vector's x coordinate with the instance's
+		 * x coordinate then multiplies the other vector's y coordinate with
+		 * the instance's y coordinate.
+		 * @param other Other vector to multiply the instance with.
+		 * @return Referene to the modified instance.
 		 */
-		ValueType getAngleBetween(const Vector2T<ValueType>& other) const {
-			return MathHelper::radiansToDegrees(acos(getDotProduct(other) / (getLength() * other.getLength())));
-		}
+		Vector2 &coordinatesMultiply(const Vector2 &other);
+
+		/**
+		 * Applies coordinatesMultiply(other) on a copy of the instance.
+		 * @param other Other vector to multiply the instance with.
+		 * @return Copy of the instance with coordinatesMultiply(other) applied
+		 * to it.
+		 */
+		Vector2 getCoordinatesMultiplication(const Vector2 &other) const;
+
+		/**
+		 * Divides the instance's coordinates by the other vector's coordinates.
+		 * First dividies the instance's x coordinate by the other vector's x
+		 * coordinate, then divides the instance's y coordinate by the other
+		 * vector's y coordinate.
+		 * @param other Other vector to divide the instance by.
+		 * @return Reference to the modified instance.
+		 */
+		Vector2 &coordinatesDivide(const Vector2 &other);
+
+		/**
+		 * Applies coordinatesDivide(other) on a copy of the instance.
+		 * @param other Other vector to divide the instance by.
+		 * @return Copy of the instance with coordinatesDivide(other) applied to
+		 * it.
+		 */
+		Vector2 getCoordinatesDivision(const Vector2 &other) const;
 
 		/**
 		 * Gets the angle relative to the UP vector (in degrees).
 		 * @return Angle between -180 and 180. Angle increases as it goes
 		 * counter clockwise.
 		 */
-		ValueType getAngle() const {
-			return (x < DEFAULT_VALUE) ? (getAngleBetween(UP)) : (-getAngleBetween(UP));
-		}
+		ValueType getAngle() const;
 
 		/**
-		 * Set the angle of the vector without affecting it's lenght.
+		 * Calculates the angle between the instance and another vector.
+		 * @param other Other vector to calculate the angle between.
+		 * @return Angle between the two vectors.
 		 */
-		void setAngle(ValueType angle) {
-			rotate(angle - getAngle());
-		}
+		ValueType getAngleBetween(const Vector2 &other) const;
 
 		/**
-		 * Rotates the instance.
-		 * @param angle Angle to rotate the instance (in degrees). Positive
-		 * values make the instance rotate counter clockwise, while negative
-		 * values make the instance rotate clockwise.
+		 * Sets the angle of the vector without affecting its length.
+		 * @param newAngle New angle to set to the instance.
 		 */
-		void rotate(ValueType angle) {
-			float radians = MathHelper::degreesToRadians(angle);
-			setXY(x * cosf(radians) + y * sinf(radians),
-			      y * cosf(radians) - x * sinf(radians));
-		}
+		void setAngle(ValueType newAngle);
 
 		/**
 		 * Gets a copy of the vector, but rotated.
@@ -578,29 +427,41 @@ namespace RedBox {
 		 * make the instance rotate counter clockwise, while negative values
 		 * make the instance rotate clockwise.
 		 */
-		const Vector2T<ValueType> getRotated(ValueType angle) const {
-			Vector2T<ValueType> result(*this);
-			result.rotate(angle);
-			return result;
-		}
+		Vector2 getRotated(ValueType angle) const;
+
+		/**
+		 * Rotates the instance.
+		 * @param angle Angle to rotate the instance (in degrees). Positive
+		 * values make the instance rotate counter clockwise, while negative
+		 * values make the instance rotate clockwise.
+		 */
+		void rotate(ValueType angle);
+
+		/**
+		 * Gets a copy of the instance projected on the given direction vector.
+		 * @param direction Vector on which to project the copy.
+		 * @return Copy of the instance projected on the direction vector.
+		 */
+		Vector2 getProjection(const Vector2 &direction) const;
 
 		/**
 		 * Projects the instance on a vector.
 		 * @param other Vector to project the instance onto.
 		 */
-		void project(const Vector2T<ValueType>& other) {
-			*this = other * (*this * other) / (other * other);
-		}
+		void project(const Vector2 &direction);
+
+		/**
+		 * Gets a copy of the instance reflected about the given vector.
+		 * @param mirror Vector to reflect the copy about.
+		 * @return Copy of the instance reflected about the given vector.
+		 */
+		Vector2 getReflected(const Vector2 &mirror) const;
 
 		/**
 		 * Reflects the instance about another vector.
-		 * @param other Vector to reflect the instance about.
+		 * @param mirror Vector to reflect the instance about.
 		 */
-		void reflect(const Vector2T<ValueType>& other) {
-			Vector2T<ValueType> original(*this);
-			project(other);
-			*this += *this - original;
-		}
+		void reflect(const Vector2 &mirror);
 
 		/**
 		 * Serializes the instance to a Value.
@@ -610,13 +471,13 @@ namespace RedBox {
 		 */
 		void serialize(Value &node, bool setName = true) const {
 			if (setName) {
-				node.setName("Vector2T");
+				node.setName("Vector2");
 			}
 
 			// We set the value's attributes correctly.
-			node["x"].setDouble(static_cast<double>(getX()));
+			node["x"].setDouble(static_cast<double>(x));
 			node["x"].setAttribute(true);
-			node["y"].setDouble(static_cast<double>(getY()));
+			node["y"].setDouble(static_cast<double>(y));
 			node["y"].setAttribute(true);
 		}
 
@@ -635,8 +496,8 @@ namespace RedBox {
 			    itY != node.getObject().end() &&
 			    itX->second.isNumeric() && itY->second.isNumeric()) {
 
-				setXY(static_cast<ValueType>(itX->second.getDouble()),
-				      static_cast<ValueType>(itY->second.getDouble()));
+				x = static_cast<ValueType>(itX->second.getDouble());
+				y = static_cast<ValueType>(itY->second.getDouble());
 
 			} else {
 				result = false;
@@ -660,7 +521,7 @@ namespace RedBox {
 			       itX->second.isNumeric() && itY->second.isNumeric();
 
 		}
-	private:
+
 		/**
 		 * X coordinate. Positive values increase towards the right, while
 		 * negative values decrease towards the left.
@@ -672,23 +533,300 @@ namespace RedBox {
 		 * negative values decrease towards the top.
 		 */
 		ValueType y;
-
-		// Used to make sure the vector is templated with floating point
-		// numbers.
-		typedef typename StaticAssert<IsFloatingPointNumber<ValueType>::RESULT>::Result Test;
 	};
 #pragma pack()
+	template <typename T>
+	Vector<T, 2u>::Vector() : x(ZERO), y(ZERO) {}
+	template <typename T>
+	Vector<T, 2u>::Vector(XComponent newX) : x(newX.value), y(ZERO) {}
+	template <typename T>
+	Vector<T, 2u>::Vector(YComponent newY) : x(ZERO), y(newY.value) {}
+	template <typename T>
+	Vector<T, 2u>::Vector(XComponent newX, YComponent newY) : x(newX.value), y(newY.value) {}
+	template <typename T>
+	Vector<T, 2u>::Vector(const Vector2 &src) : x(src.x), y(src.y) {}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator=(const Vector2 &src) {
+		x = src.x;
+		y = src.y;
+		return *this;
+	}
+	template <typename T>
+	bool Vector<T, 2u>::operator==(const Vector2 &other) const {
+		return x == other.x && y == other.y;
+	}
+	template <typename T>
+	bool Vector<T, 2u>::operator!=(const Vector2 &other) const {
+		return x != other.x || y != other.y;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator+=(const Vector2 &other) {
+		x += other.x;
+		y += other.y;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator+=(ValueType delta) {
+		x += delta;
+		y += delta;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator+=(XComponent xDelta) {
+		x += xDelta.value;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator+=(YComponent yDelta) {
+		y += yDelta.value;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator-=(const Vector2 &other) {
+		x -= other.x;
+		y -= other.y;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator-=(ValueType delta) {
+		x -= delta;
+		y -= delta;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator-=(XComponent xDelta) {
+		x -= xDelta.value;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator-=(YComponent yDelta) {
+		y -= yDelta.value;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator*=(ValueType delta) {
+		x *= delta;
+		y *= delta;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator*=(XComponent xDelta) {
+		x *= xDelta.value;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator*=(YComponent yDelta) {
+		y *= yDelta.value;
+		return *this;
+	}
 
 	template <typename T>
-	std::ostream &operator<<(std::ostream &output, const Vector2T<T>& v) {
+	Vector<T, 2u> &Vector<T, 2u>::operator/=(ValueType delta) {
+		x /= delta;
+		y /= delta;
+		return *this;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator/=(XComponent xDelta) {
+		x /= xDelta.value;
+	}
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::operator/=(YComponent yDelta) {
+		y /= yDelta.value;
+	}
+
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator+(const Vector2 &other) const {
+		return Vector2(*this) += other;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator+(ValueType delta) const {
+		return Vector2(*this) += delta;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator+(XComponent xDelta) const {
+		return Vector2(*this) += xDelta;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator+(YComponent yDelta) const {
+		return Vector2(*this) += yDelta;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator+() const {
+		return Vector2(+x, +y);
+	}
+
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator-(const Vector2 &other) const {
+		return Vector2(*this) -= other;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator-(ValueType delta) const {
+		return Vector2(*this) -= delta;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator-(XComponent xDelta) const {
+		return Vector2(*this) -= xDelta;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator-(YComponent yDelta) const {
+		return Vector2(*this) -= yDelta;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator-() const {
+		return Vector2(-x, -y);
+	}
+
+	template <typename T>
+	typename Vector<T, 2u>::ValueType Vector<T, 2u>::operator*(const Vector2 &other) const {
+		return getDotProduct(other);
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator*(ValueType delta) const {
+		return Vector2(*this) *= delta;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator*(XComponent xDelta) const {
+		return Vector2(*this) *= xDelta;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator*(YComponent yDelta) const {
+		return Vector2(*this) *= yDelta;
+	}
+
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator/(ValueType delta) const {
+		return Vector2(*this) /= delta;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator/(XComponent xDelta) const {
+		return Vector2(*this) /= xDelta;
+	}
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::operator/(YComponent yDelta) const {
+		return Vector2(*this) /= yDelta;
+	}
+
+	template <typename T>
+	typename Vector<T, 2u>::ValueType Vector<T, 2u>::getLength() const {
+		return std::sqrt(getDotProduct(*this));
+	}
+
+	template <typename T>
+	void Vector<T, 2u>::setLength(Vector2::ValueType newLength) {
+		normalize();
+		this->operator*=(newLength);
+	}
+
+	template <typename T>
+	typename Vector<T, 2u>::ValueType Vector<T, 2u>::getSquaredLength() const {
+		return getDotProduct(*this);
+	}
+
+	template <typename T>
+	typename Vector<T, 2u>::ValueType Vector<T, 2u>::getDotProduct(const Vector2 &other) const {
+		return x * other.x + y * other.y;
+	}
+
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::getNormalized() const {
+		return *this / getLength();
+	}
+
+	template <typename T>
+	void Vector<T, 2u>::normalize() {
+		this->operator/=(getLength());
+	}
+
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::coordinatesMultiply(const Vector2 &other) {
+		x *= other.x;
+		y *= other.y;
+		return *this;
+	}
+
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::getCoordinatesMultiplication(const Vector2 &other) const {
+		return Vector2(*this).coordinatesMultiply(other);
+	}
+
+	template <typename T>
+	Vector<T, 2u> &Vector<T, 2u>::coordinatesDivide(const Vector2 &other) {
+		x /= other.x;
+		y /= other.y;
+		return *this;
+	}
+
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::getCoordinatesDivision(const Vector2 &other) const {
+		return Vector2(*this).coordinatesDivide(other);
+	}
+
+	template <typename T>
+	typename Vector<T, 2u>::ValueType Vector<T, 2u>::getAngle() const {
+		return (x < UP.x) ? (getAngleBetween(UP)) : (-getAngleBetween(UP));
+	}
+
+	template <typename T>
+	typename Vector<T, 2u>::ValueType Vector<T, 2u>::getAngleBetween(const Vector2 &other) const {
+		return MathHelper::AngleConvert<T>::RADIANS_TO_DEGREES * (std::acos(getDotProduct(other)) / (getLength() * other.getLength()));
+	}
+
+	template <typename T>
+	void Vector<T, 2u>::setAngle(ValueType newAngle) {
+		rotate(newAngle - getAngle());
+	}
+
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::getRotated(ValueType angle) const {
+		Vector2 result(*this);
+		result.rotate(angle);
+		return result;
+	}
+
+	template <typename T>
+	void Vector<T, 2u>::rotate(ValueType angle) {
+		ValueType radians = MathHelper::AngleConvert<ValueType>::DEGREES_TO_RADIANS * angle;
+		ValueType tmpX = x;
+		x = x * std::cos(radians) + y * std::sin(radians);
+		y = y * std::cos(radians) + tmpX * std::sin(radians);
+	}
+
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::getProjection(const Vector2 &direction) const {
+		Vector2 result(*this);
+		result.project(direction);
+		return result;
+	}
+
+	template <typename T>
+	void Vector<T, 2u>::project(const Vector2 &direction) {
+		*this = direction * (*this * direction) / (direction * direction);
+	}
+
+	template <typename T>
+	Vector<T, 2u> Vector<T, 2u>::getReflected(const Vector2 &mirror) const {
+		Vector2 result(*this);
+		result.reflect(mirror);
+		return result;
+	}
+
+	template <typename T>
+	void Vector<T, 2u>::reflect(const Vector2 &mirror) {
+		Vector2 original(*this);
+		project(mirror);
+		*this += *this - original;
+	}
+
+	template <typename T>
+	std::ostream &operator<<(std::ostream &output, const Vector<T, 2u>& v) {
 		Value tmpValue;
 		DefaultSerializer::serialize(v, tmpValue);
 		DefaultSerializer::getDefaultSerializer().writeToStream(output, tmpValue);
 		return output;
 	}
 
-	/// Used as the basic 2D vectors for RedBox.
-	typedef Vector2T<float> Vector2;
+	typedef Vector<float, 2u> Vector2;
 }
 
 #endif

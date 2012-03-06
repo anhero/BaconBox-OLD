@@ -71,24 +71,24 @@ namespace RedBox {
 				for (RenderBatch<BatchedInanimateGraphicElement<Collidable> >::BodyMap::const_iterator j = i->second->getBegin();
 				     j != i->second->getEnd(); ++j) {
 					if (notFirst) {
-						if (min.getX() > (*j)->getXPosition()) {
-							min.setX((*j)->getXPosition());
+						if (min.x > (*j)->getXPosition()) {
+							min.x = (*j)->getXPosition();
 						}
 
-						if (min.getY() > (*j)->getYPosition()) {
-							min.setY((*j)->getYPosition());
+						if (min.y > (*j)->getYPosition()) {
+							min.y = (*j)->getYPosition();
 						}
 
 						tmp = (*j)->getXPosition() + (*j)->getWidth();
 
-						if (max.getX() < tmp) {
-							max.setX(tmp);
+						if (max.x < tmp) {
+							max.x = tmp;
 						}
 
 						tmp = (*j)->getYPosition() + (*j)->getHeight();
 
-						if (max.getY() < tmp) {
-							max.setY(tmp);
+						if (max.y < tmp) {
+							max.y = tmp;
 						}
 
 					} else {
@@ -190,12 +190,12 @@ namespace RedBox {
 				(*j)->scaleFromPoint(xScaling, yScaling, fromPoint);
 
 				if (notFirst) {
-					if (newPosition.getX() > (*j)->getXPosition()) {
-						newPosition.setX((*j)->getXPosition());
+					if (newPosition.x > (*j)->getXPosition()) {
+						newPosition.x = (*j)->getXPosition();
 					}
 
-					if (newPosition.getY() > (*j)->getYPosition()) {
-						newPosition.setY((*j)->getYPosition());
+					if (newPosition.y > (*j)->getYPosition()) {
+						newPosition.y = (*j)->getYPosition();
 					}
 
 				} else {
@@ -205,8 +205,8 @@ namespace RedBox {
 			}
 		}
 
-		this->GraphicTileMapLayer::move(newPosition.getX() - this->getXPosition(),
-		                                newPosition.getY() - this->getYPosition());
+		this->GraphicTileMapLayer::move(newPosition.x - this->getXPosition(),
+		                                newPosition.y - this->getYPosition());
 	}
 
 	void GraphicTileLayer::rotateFromPoint(float rotationAngle,
@@ -222,12 +222,12 @@ namespace RedBox {
 				(*j)->rotateFromPoint(rotationAngle, rotationPoint);
 
 				if (notFirst) {
-					if (newPosition.getX() > (*j)->getXPosition()) {
-						newPosition.setX((*j)->getXPosition());
+					if (newPosition.x > (*j)->getXPosition()) {
+						newPosition.x = (*j)->getXPosition();
 					}
 
-					if (newPosition.getY() > (*j)->getYPosition()) {
-						newPosition.setY((*j)->getYPosition());
+					if (newPosition.y > (*j)->getYPosition()) {
+						newPosition.y = (*j)->getYPosition();
 					}
 
 				} else {
@@ -237,8 +237,8 @@ namespace RedBox {
 			}
 		}
 
-		this->GraphicTileMapLayer::move(newPosition.getX() - this->getXPosition(),
-		                                newPosition.getY() - this->getYPosition());
+		this->GraphicTileMapLayer::move(newPosition.x - this->getXPosition(),
+		                                newPosition.y - this->getYPosition());
 	}
 
 	void GraphicTileLayer::update() {
@@ -297,7 +297,7 @@ namespace RedBox {
 		const Tileset *tileset;
 		TileLayer::DataContainer::const_iterator::difference_type tileIndex;
 		Color tmpColor;
-		
+
 		// We add all the tiles.
 		for (TileLayer::DataContainer::const_iterator i = layer.getTiles().begin();
 		     i != layer.getTiles().end(); ++i) {
@@ -314,7 +314,9 @@ namespace RedBox {
 
 				// We calculate the tile's position.
 				tileIndex = i - layer.getTiles().begin();
-				tmpTile->setPosition(Vector2::scalarMultiplication(layer.parentMap.getTileSize(), Vector2(static_cast<float>(tileIndex % layer.getWidthInTiles()), static_cast<float>(tileIndex / layer.getWidthInTiles()))) + this->getPosition() + (layer.parentMap.getTileHeight() - tileset->getTileHeight()));
+				tmpTile->setPosition(layer.parentMap.getTileSize().getCoordinatesMultiplication(Vector2(static_cast<float>(tileIndex % layer.getWidthInTiles()),
+				                                                                                static_cast<float>(tileIndex / layer.getWidthInTiles()))) +
+				                     this->getPosition() + (layer.parentMap.getTileHeight() - tileset->getTileHeight()));
 
 				// We initialize the vertices.
 				tmpTile->getVertices().resize(4);
@@ -322,7 +324,7 @@ namespace RedBox {
 
 				// We load the texture coordinates.
 				tileset->loadTextureCoordinates(*i, tmpTile->getTextureCoordinates());
-				
+
 				// We set the tile's opacity.
 				tmpTile->setAlpha(layer.getOpacity());
 
@@ -333,10 +335,10 @@ namespace RedBox {
 				getBatch(tmpTile->getTextureInformation())->add(tmpTile);
 			}
 		}
-		
+
 		// We set the layer's visibility.
 		this->setVisible(layer.isVisible());
-		
+
 		// We set the layer's z.
 		TileMapUtility::readZ(layer.getProperties(), *this);
 	}
@@ -344,7 +346,7 @@ namespace RedBox {
 	void GraphicTileLayer::addToCollisionGroup(CollisionGroup &group) {
 		for (BatchMap::iterator i = batches.begin(); i != batches.end(); ++i) {
 			for (RenderBatch<BatchedInanimateGraphicElement<Collidable> >::BodyMap::iterator j = i->second->getBegin();
-				 j != i->second->getEnd(); ++j) {
+			     j != i->second->getEnd(); ++j) {
 				group.add(*j);
 			}
 		}
@@ -355,14 +357,14 @@ namespace RedBox {
 			delete i->second;
 		}
 	}
-	
+
 	GraphicTileLayer::BatchMap::mapped_type GraphicTileLayer::getBatch(TextureInformation *textureInformation) {
 		std::pair<BatchMap::iterator, bool> inserted = batches.insert(BatchMap::value_type(textureInformation, NULL));
-		
+
 		if (inserted.second) {
 			inserted.first->second = new RenderBatch<BatchedInanimateGraphicElement<Collidable> >(textureInformation);
 		}
-		
+
 		return inserted.first->second;
 	}
 }

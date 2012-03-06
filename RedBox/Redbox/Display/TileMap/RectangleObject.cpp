@@ -19,23 +19,24 @@ namespace RedBox {
 	}
 
 	void RectangleObject::setSize(float newWidth, float newHeight) {
-		size.setXY(newWidth, newHeight);
+		size.x = newWidth;
+		size.y = newHeight;
 	}
 
 	float RectangleObject::getWidth() const {
-		return size.getX();
+		return size.x;
 	}
 
 	void RectangleObject::setWidth(float newWidth) {
-		size.setX(newWidth);
+		size.x = newWidth;
 	}
 
 	float RectangleObject::getHeight() const {
-		return size.getY();
+		return size.y;
 	}
 
 	void RectangleObject::setHeight(float newHeight) {
-		size.setY(newHeight);
+		size.y = newHeight;
 	}
 
 	RectangleObject::RectangleObject(const std::string &newName,

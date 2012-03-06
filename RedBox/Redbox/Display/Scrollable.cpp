@@ -25,28 +25,29 @@ namespace RedBox {
 	}
 
 	void Scrollable::setScrollFactor(const Vector2 &newScrollFactor) {
-		setScrollFactor(newScrollFactor.getX(), newScrollFactor.getY());
+		setScrollFactor(newScrollFactor.x, newScrollFactor.y);
 	}
 
 	void Scrollable::setScrollFactor(float newXScrollFactor,
 	                                 float newYScrollFactor) {
-		scrollFactor.setXY(newXScrollFactor, newYScrollFactor);
+		scrollFactor.x = newXScrollFactor;
+		scrollFactor.y = newYScrollFactor;
 	}
 
 	float Scrollable::getXScrollFactor() const {
-		return scrollFactor.getX();
+		return scrollFactor.x;
 	}
 
 	void Scrollable::setXScrollFactor(float newXScrollFactor) {
-		setScrollFactor(newXScrollFactor, scrollFactor.getY());
+		setScrollFactor(newXScrollFactor, scrollFactor.y);
 	}
 
 	float Scrollable::getYScrollFactor() const {
-		return scrollFactor.getY();
+		return scrollFactor.y;
 	}
 
 	void Scrollable::setYScrollFactor(float newYScrollFactor) {
-		setScrollFactor(scrollFactor.getX(), newYScrollFactor);
+		setScrollFactor(scrollFactor.x, newYScrollFactor);
 	}
 
 	bool Scrollable::isHud() const {

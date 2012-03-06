@@ -38,15 +38,15 @@ namespace RedBox {
 	}
 
 	void Transformable::setScaling(const Vector2 &newScaling) {
-		setScaling(newScaling.getX(), newScaling.getY());
+		setScaling(newScaling.x, newScaling.y);
 	}
 
 	void Transformable::setScaling(float newXScaling, float newYScaling) {
-		scale(newXScaling / scaling.getX(), newYScaling / scaling.getY());
+		scale(newXScaling / scaling.x, newYScaling / scaling.y);
 	}
 
 	void Transformable::scale(const Vector2 &scalingToApply) {
-		scaleFromPoint(scalingToApply.getX(), scalingToApply.getY(), getCentroid());
+		scaleFromPoint(scalingToApply.x, scalingToApply.y, getCentroid());
 	}
 
 	void Transformable::scale(float xScaling, float yScaling) {
@@ -54,12 +54,12 @@ namespace RedBox {
 	}
 
 	void Transformable::addToScaling(const Vector2 &scalingToAdd) {
-		addToScaling(scalingToAdd.getX(), scalingToAdd.getY());
+		addToScaling(scalingToAdd.x, scalingToAdd.y);
 	}
 
 	void Transformable::addToScaling(float xScaling, float yScaling) {
 		if (xScaling || yScaling) {
-			if (xScaling + scaling.getX() == 0.0f) {
+			if (xScaling + scaling.x == 0.0f) {
 				if (xScaling > 0.0f) {
 					xScaling += FLT_MIN;
 
@@ -68,7 +68,7 @@ namespace RedBox {
 				}
 			}
 
-			if (yScaling + scaling.getY() == 0.0f) {
+			if (yScaling + scaling.y == 0.0f) {
 				if (yScaling > 0.0f) {
 					yScaling += FLT_MIN;
 
@@ -77,26 +77,26 @@ namespace RedBox {
 				}
 			}
 
-			setScaling(scaling.getX() + xScaling, scaling.getY() + yScaling);
+			setScaling(scaling.x + xScaling, scaling.y + yScaling);
 		}
 	}
 
 	void Transformable::scaleFromPoint(const Vector2 &scalingToApply,
 	                                   const Vector2 &fromPoint) {
-		scaleFromPoint(scalingToApply.getX(), scalingToApply.getY(), fromPoint);
+		scaleFromPoint(scalingToApply.x, scalingToApply.y, fromPoint);
 	}
 
 	void Transformable::scaleFromPoint(float xScaling, float yScaling,
 	                                   const Vector2 &) {
-		scaling.scalarMultiplication(xScaling, yScaling);
+		scaling.getCoordinatesMultiplication(Vector2(xScaling, yScaling));
 	}
 
 	float Transformable::getXScaling() const {
-		return scaling.getX();
+		return scaling.x;
 	}
 
 	void Transformable::setXScaling(float newXScaling) {
-		setScaling(newXScaling, scaling.getY());
+		setScaling(newXScaling, scaling.y);
 	}
 
 	void Transformable::scaleX(float xScaling) {
@@ -109,11 +109,11 @@ namespace RedBox {
 	}
 
 	float Transformable::getYScaling() const {
-		return scaling.getY();
+		return scaling.y;
 	}
 
 	void Transformable::setYScaling(float newYScaling) {
-		setScaling(scaling.getX(), newYScaling);
+		setScaling(scaling.x, newYScaling);
 	}
 
 	void Transformable::scaleY(float yScaling) {

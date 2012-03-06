@@ -25,11 +25,11 @@ namespace RedBox {
 	}
 
 	float Tileset::getTileWidth() const {
-		return tileSize.getX();
+		return tileSize.x;
 	}
 
 	float Tileset::getTileHeight() const {
-		return tileSize.getY();
+		return tileSize.y;
 	}
 
 	float Tileset::getTileSpacing() const {
@@ -45,11 +45,11 @@ namespace RedBox {
 	}
 
 	float Tileset::getXTileOffset() const {
-		return tileOffset.getX();
+		return tileOffset.x;
 	}
 
 	float Tileset::getYTileOffset() const {
-		return tileOffset.getY();
+		return tileOffset.y;
 	}
 
 	bool Tileset::loadTextureCoordinates(unsigned int tileId,
@@ -195,31 +195,31 @@ namespace RedBox {
 			                         (static_cast<float>(textureInformation->imageHeight) - margin) / static_cast<float>(textureInformation->poweredHeight));
 
 			// We make sure the corners make sense.
-			if (upperLeftCorner.getX() < lowerRightCorner.getX() &&
-			    upperLeftCorner.getY() < lowerRightCorner.getY()) {
+			if (upperLeftCorner.x < lowerRightCorner.x &&
+			    upperLeftCorner.y < lowerRightCorner.y) {
 
 				float realTileSpacing = tileSpacing / static_cast<float>(textureInformation->poweredWidth);
 
 				Vector2 realOffset = upperLeftCorner;
-				Vector2 realTileSize = tileSize / Vector2(static_cast<float>(textureInformation->poweredWidth), static_cast<float>(textureInformation->poweredHeight));
+				Vector2 realTileSize = tileSize.getCoordinatesDivision(Vector2(static_cast<float>(textureInformation->poweredWidth), static_cast<float>(textureInformation->poweredHeight)));
 
 				// We make sure there is enough room for at least one tile...
-				if (realOffset.getX() + realTileSize.getX() < lowerRightCorner.getX()) {
-					while (realOffset.getY() + realTileSize.getY() <= lowerRightCorner.getY()) {
+				if (realOffset.x + realTileSize.x < lowerRightCorner.x) {
+					while (realOffset.y + realTileSize.y <= lowerRightCorner.y) {
 
 						// We load the texture coordinates.
 						tileTextureCoordinates.push_back(TextureCoordinates(4, realOffset));
-						tileTextureCoordinates.back()[1].addToX(realTileSize.getX());
-						tileTextureCoordinates.back()[2].addToY(realTileSize.getY());
-						tileTextureCoordinates.back()[3].addToXY(realTileSize);
+						tileTextureCoordinates.back()[1].x += realTileSize.x;
+						tileTextureCoordinates.back()[2].y += realTileSize.y;
+						tileTextureCoordinates.back()[3] += realTileSize;
 
 						// We increase the offset to the next tile's upper left
 						// corner.
-						realOffset.addToX(realTileSize.getX() + realTileSpacing);
+						realOffset += Vector2::XComponent(realTileSize.x + realTileSpacing);
 
-						if (realOffset.getX() + realTileSize.getX() > lowerRightCorner.getX()) {
-							realOffset.setX(upperLeftCorner.getX());
-							realOffset.addToY(realTileSize.getY() + realTileSpacing);
+						if (realOffset.x + realTileSize.x > lowerRightCorner.x) {
+							realOffset.x = upperLeftCorner.x;
+							realOffset += Vector2::YComponent(realTileSize.y + realTileSpacing);
 						}
 					}
 				}

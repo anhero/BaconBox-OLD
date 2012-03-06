@@ -16,7 +16,7 @@ namespace RedBox {
 		this->setPosition(startingPosition);
 		this->setTextureInformation(newTexture);
 
-		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
+		if (newSize.x > 0.0f && newSize.y > 0.0f) {
 			construct(newSize, startingPosition, newTextureOffset, 4);
 			this->initializeAnimations();
 
@@ -41,7 +41,7 @@ namespace RedBox {
 		this->setPosition(startingPosition);
 		this->setTextureInformation(newTexture);
 
-		if (newSize.getX() > 0.0f && newSize.getY() > 0.0f) {
+		if (newSize.x > 0.0f && newSize.y > 0.0f) {
 			construct(newSize, startingPosition, newTextureOffset, 4);
 			this->initializeAnimations();
 
@@ -195,7 +195,8 @@ namespace RedBox {
 
 	void TextButton::refreshTextPosition() {
 		Vector2 tmp(getPosition() + getSize() * 0.5f - text.getSize() * 0.5f);
-		tmp.setXY(floorf(tmp.getX()), floorf(tmp.getY()));
+		tmp.x = std::floor(tmp.x);
+		tmp.y = std::floor(tmp.y);
 		text.setPosition(tmp);
 	}
 }

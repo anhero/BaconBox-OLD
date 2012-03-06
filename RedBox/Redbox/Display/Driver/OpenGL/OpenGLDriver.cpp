@@ -521,9 +521,9 @@ namespace RedBox {
 			break;
 		}
 
-		glScalef(zoom.getX(), zoom.getY(), 1);
+		glScalef(zoom.x, zoom.y, 1);
 		glRotatef(angle, 0, 0, 1);
-		glTranslatef(-(position.getX()), -(position.getY()), 0);
+		glTranslatef(-(position.x), -(position.y), 0);
 
 	}
 
@@ -652,7 +652,7 @@ namespace RedBox {
 	}
 
 	void OpenGLDriver::translate(const Vector2 &translation) {
-		glTranslatef(-translation.getX(), -translation.getY(), 0.0f);
+		glTranslatef(-translation.x, -translation.y, 0.0f);
 	}
 
 	void OpenGLDriver::loadIdentity() {

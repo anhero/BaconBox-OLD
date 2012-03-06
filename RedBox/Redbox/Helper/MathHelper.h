@@ -21,6 +21,11 @@ namespace RedBox {
 	 */
 	class MathHelper {
 	public:
+		template <typename T>
+		struct AngleConvert {
+			static const T RADIANS_TO_DEGREES;
+			static const T DEGREES_TO_RADIANS;
+		};
 		/**
 		 * Constant for PI. Usage: MathHelper::PI<float> to get PI as a float,
 		 * MathHelper::PI<double> to get PI as a double and
@@ -66,26 +71,6 @@ namespace RedBox {
 		static T roundUpDivision(T dividend, T divisor) {
 			typedef typename StaticAssert<IsIntegerNumber<T>::RESULT>::Result Test;
 			return ((dividend % divisor) ? (dividend / divisor + 1) : (dividend / divisor));
-		}
-		
-		/**
-		 * Converts the given number in degrees to radian.
-		 * @param degrees Angle in degrees to convert.
-		 * @return Angle converted to radian.
-		 */
-		template <typename T>
-		static T degreesToRadians(T degrees) {
-			return DegreesToRadians<T>()(degrees);
-		}
-		
-		/**
-		 * Converts the given number in radians to degrees.
-		 * @param radians Angle in radians to convert.
-		 * @return Angle converted to degrees.
-		 */
-		template <typename T>
-		static T radiansToDegrees(T radians) {
-			return RadiansToDegrees<T>()(radians);
 		}
 		
 		/**
@@ -141,27 +126,7 @@ namespace RedBox {
 		}
 
 	private:
-		template <typename T>
-		struct RadiansToDegrees {
-			T operator() (T radians) {
-				return radians * RADIAN_TO_DEGREE;
-			}
-		private:
-			static const T RADIAN_TO_DEGREE;
-			typedef typename StaticAssert<IsFloatingPointNumber<T>::RESULT>::Result Test;
-		};
-		
-		template <typename T>
-		struct DegreesToRadians {
-			T operator() (T degrees) {
-				return degrees * DEGREE_TO_RADIAN;
-			}
-		private:
-			static const T DEGREE_TO_RADIAN;
-			typedef typename StaticAssert<IsFloatingPointNumber<T>::RESULT>::Result Test;
-		};
-		
-		MathHelper() {}
+		MathHelper();
 	};
 }
 

@@ -74,8 +74,8 @@ namespace RedBox {
 			bool hudStarted = (*i)->isHud();
 			// We apply the scroll factor.
 			graphicDriver.pushMatrix();
-			graphicDriver.translate(Vector2(-(1.0f - lastScrollFactor.getX()) * camera.getXPosition(),
-			                                -(1.0f - lastScrollFactor.getY()) * camera.getYPosition()));
+			graphicDriver.translate(Vector2(-(1.0f - lastScrollFactor.x) * camera.getXPosition(),
+			                                -(1.0f - lastScrollFactor.y) * camera.getYPosition()));
 
 			// For each body.
 			while (i != bodies.end()) {
@@ -98,8 +98,8 @@ namespace RedBox {
 							graphicDriver.popMatrix();
 							graphicDriver.pushMatrix();
 
-							graphicDriver.translate(Vector2(-(1.0f - lastScrollFactor.getX()) * camera.getXPosition(),
-							                                -(1.0f - lastScrollFactor.getY()) * camera.getYPosition()));
+							graphicDriver.translate(Vector2(-(1.0f - lastScrollFactor.x) * camera.getXPosition(),
+							                                -(1.0f - lastScrollFactor.y) * camera.getYPosition()));
 						}
 					}
 

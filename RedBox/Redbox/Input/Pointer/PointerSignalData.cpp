@@ -17,11 +17,11 @@ const Vector2& PointerSignalData::getPosition() const {
 
 
 float PointerSignalData::getXPosition() const {
-	return getPosition().getX();
+	return getPosition().x;
 }
 
 float PointerSignalData::getYPosition() const {
-	return getPosition().getY();
+	return getPosition().y;
 }
 
 const Vector2& PointerSignalData::getPreviousPosition() const {
@@ -30,9 +30,9 @@ const Vector2& PointerSignalData::getPreviousPosition() const {
 
 
 float PointerSignalData::getPreviousXPosition() const {
-	return getPreviousPosition().getX();
+	return getPreviousPosition().x;
 }
 
 float PointerSignalData::getPreviousYPosition() const {
-	return getPreviousPosition().getY();
+	return getPreviousPosition().y;
 }
