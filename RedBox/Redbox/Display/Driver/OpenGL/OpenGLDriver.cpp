@@ -677,7 +677,7 @@ namespace RedBox {
 
 
 		PixMap poweredTo2Pixmap(widthPoweredToTwo, heightPoweredToTwo, pixMap->getColorFormat());
-		poweredTo2Pixmap.insertSubPixMap(pixMap);
+		poweredTo2Pixmap.insertSubPixMap(*pixMap);
 
 
 		texInfo->imageWidth = pixMap->getWidth();

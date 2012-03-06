@@ -24,11 +24,19 @@ namespace RedBox {
 
 	PixMap::PixMap(unsigned int newWidth, unsigned int newHeight,
 	               ColorFormat newColorFormat) : width(newWidth),
-		height(newHeight), colorFormat(newColorFormat), buffer(NULL) {
-		width = newWidth;
-		height = newHeight;
-		colorFormat = newColorFormat;
-		buffer = new uint8_t[width *height * ((colorFormat == ColorFormat::RGBA) ? (4) : (1))];
+		height(newHeight), colorFormat(newColorFormat),
+		buffer(buffer = new uint8_t[width *height * ((colorFormat == ColorFormat::RGBA) ? (4) : (1))]) {
+	}
+
+	PixMap::PixMap(unsigned int newWidth, unsigned int newHeight,
+	               uint8_t defaultValue, ColorFormat newColorFormat) :
+		width(newWidth), height(newHeight), colorFormat(newColorFormat),
+		buffer(new uint8_t[width *height * ((colorFormat == ColorFormat::RGBA) ? (4) : (1))]) {
+		unsigned int tmpLength = width * height * ((colorFormat == ColorFormat::RGBA) ? (4) : (1));
+
+		for (unsigned int i = 0; i < tmpLength; ++i) {
+			buffer[i] = defaultValue;
+		}
 	}
 
 	PixMap::PixMap(uint8_t *newBuffer, unsigned int newWidth,
@@ -124,6 +132,7 @@ namespace RedBox {
 					index += 4;
 					++j;
 				}
+
 				++i;
 			}
 		}
@@ -145,10 +154,14 @@ namespace RedBox {
 		return buffer;
 	}
 
-	void PixMap::insertSubPixMap(PixMap *subPixMap, unsigned int xOffset,
+	const uint8_t *PixMap::getBuffer() const {
+		return buffer;
+	}
+
+	void PixMap::insertSubPixMap(const PixMap &subPixMap, unsigned int xOffset,
 	                             unsigned int yOffset) {
-		if (subPixMap->getColorFormat() == colorFormat) {
-			insertSubPixMap(subPixMap->getBuffer(), subPixMap->getWidth(), subPixMap->getHeight(), xOffset, yOffset);
+		if (subPixMap.getColorFormat() == colorFormat) {
+			insertSubPixMap(subPixMap.getBuffer(), subPixMap.getWidth(), subPixMap.getHeight(), xOffset, yOffset);
 
 		} else {
 			Console::println("Can't insert sub pixmap into current pixmap, because the color format isn't compatible.");
@@ -156,7 +169,7 @@ namespace RedBox {
 	}
 
 
-	void PixMap::insertSubPixMap(uint8_t *subBuffer, unsigned int subWidth,
+	void PixMap::insertSubPixMap(const uint8_t *subBuffer, unsigned int subWidth,
 	                             unsigned int subHeight, unsigned int xOffset,
 	                             unsigned int yOffset) {
 		if (subWidth > 0u && subHeight > 0u) {
@@ -166,10 +179,7 @@ namespace RedBox {
 			unsigned int maxX = std::min(subWidth - 1u + xOffset, currentWidth);
 			unsigned int maxY = std::min(subHeight - 1u  + yOffset, currentHeight);
 
-			unsigned int baseX = std::max(xOffset, 0u);
-			unsigned int baseY = std::max(yOffset, 0u);
-
-			if (maxX > baseX && maxY > baseX) {
+			if (maxX > xOffset && maxY > yOffset) {
 				unsigned int pixelByteCount;
 
 				if (colorFormat == ColorFormat::RGBA) {
@@ -179,11 +189,11 @@ namespace RedBox {
 					pixelByteCount = 1;
 				}
 
-				for (unsigned int i = baseY; i <= maxY; ++i) {
-					for (unsigned int j = baseX; j <= maxX; ++j) {
+				for (unsigned int i = yOffset; i <= maxY; ++i) {
+					for (unsigned int j = xOffset; j <= maxX; ++j) {
 						for (unsigned int k = 0; k < pixelByteCount; ++k) {
-							buffer[(currentWidth * (i - yOffset) + (j - xOffset)) * pixelByteCount + k] =
-							    subBuffer[(subWidth * i + j) * pixelByteCount + k];
+							buffer[(i * currentWidth + j) * pixelByteCount + k] =
+							    subBuffer[(subWidth * (i - yOffset) + (j - xOffset)) * pixelByteCount + k];
 						}
 					}
 				}

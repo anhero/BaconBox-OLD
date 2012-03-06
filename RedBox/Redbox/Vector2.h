@@ -769,7 +769,7 @@ namespace RedBox {
 
 	template <typename T>
 	typename Vector<T, 2u>::ValueType Vector<T, 2u>::getAngleBetween(const Vector2 &other) const {
-		return MathHelper::AngleConvert<T>::RADIANS_TO_DEGREES * (std::acos(getDotProduct(other)) / (getLength() * other.getLength()));
+		return MathHelper::AngleConvert<T>::RADIANS_TO_DEGREES * (std::acos(getDotProduct(other) / (getLength() * other.getLength())));
 	}
 
 	template <typename T>
@@ -789,7 +789,7 @@ namespace RedBox {
 		ValueType radians = MathHelper::AngleConvert<ValueType>::DEGREES_TO_RADIANS * angle;
 		ValueType tmpX = x;
 		x = x * std::cos(radians) + y * std::sin(radians);
-		y = y * std::cos(radians) + tmpX * std::sin(radians);
+		y = y * std::cos(radians) - tmpX * std::sin(radians);
 	}
 
 	template <typename T>

@@ -470,9 +470,9 @@ namespace RedBox {
 		 * Initializes the graphic string.
 		 */
 		void initialize() {
-			Vector2 tmpPosition;
+			Vector2 tmp(this->getPosition());
 			buildString();
-			this->setPosition(tmpPosition);
+			this->move(tmp - this->getPosition());
 		}
 
 		/**
@@ -519,7 +519,7 @@ namespace RedBox {
 						newGlyph = font->getGlyphInformation(*i);
 
 						if (newGlyph->size.x > 0.0f) {
-							newGraphic = new InanimateGraphicElement<Transformable>(newGlyph->textureInformation, Vector2(0.0f, 0.0f), newGlyph->size);
+							newGraphic = new InanimateGraphicElement<Transformable>(newGlyph->textureInformation, Vector2(0.0f, 0.0f), newGlyph->size, Vector2(1.0f, 1.0f));
 							newGraphic->setScaling(this->getScaling());
 							newGraphic->setColor(getColor());
 
@@ -539,7 +539,7 @@ namespace RedBox {
 						newGlyph = font->getGlyphInformation(*i);
 
 						if (newGlyph->size.x > 0.0f) {
-							newGraphic = new InanimateGraphicElement<Transformable>(newGlyph->textureInformation, Vector2(0.0f, 0.0f), newGlyph->size);
+							newGraphic = new InanimateGraphicElement<Transformable>(newGlyph->textureInformation, Vector2(0.0f, 0.0f), newGlyph->size, Vector2(1.0f, 1.0f));
 							newGraphic->setScaling(this->getScaling());
 							newGraphic->setColor(getColor());
 

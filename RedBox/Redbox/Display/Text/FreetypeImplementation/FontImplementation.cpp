@@ -90,7 +90,9 @@ namespace RedBox {
 			std::stringstream key;
 			key << name << "-" << size << "-" << unicodeValue;
 
-			PixMap *glyphPixMap = new PixMap(currentBitmapGlyph->bitmap.buffer, glyphWidth, glyphHeight, ColorFormat::ALPHA);
+			//PixMap *glyphPixMap = new PixMap(currentBitmapGlyph->bitmap.buffer, glyphWidth, glyphHeight, ColorFormat::ALPHA);
+			PixMap *glyphPixMap = new PixMap(glyphWidth + 2, glyphHeight + 2, 0, ColorFormat::ALPHA);
+			glyphPixMap->insertSubPixMap(currentBitmapGlyph->bitmap.buffer, glyphWidth, glyphHeight, 1, 1);
 			result->textureInformation = ResourceManager::addTexture(key.str(), glyphPixMap);
 			result->advance.x = static_cast<float>(font->glyph->advance.x >> 6);
 
@@ -103,6 +105,7 @@ namespace RedBox {
 			i = glyphCache.insert(std::make_pair(size, GlyphCache::mapped_type())).first;
 
 			i->second.insert(std::make_pair(unicodeValue, result));
+			FT_Done_Glyph(currentGlyph);
 		}
 
 		return result;

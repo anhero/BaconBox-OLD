@@ -45,6 +45,21 @@ namespace RedBox {
 		       ColorFormat newColorFormat = ColorFormat::RGBA);
 
 		/**
+		 * Parameterized constructor.
+		 * @param newWidth Width of the PixMap.
+		 * @param newHeight Height of the PixMap.
+		 * @param newColorFormat Color format of the buffer, it defaults to
+		 * RGBA.
+		 * @param defaultValue Value to set to all of the buffer's data.
+		 * @see RedBox::PixMap::width
+		 * @see RedBox::PixMap::height
+		 * @see RedBox::ColorFormat::Enum
+		 */
+		PixMap(unsigned int newWidth, unsigned int newHeight,
+			   uint8_t defaultValue,
+			   ColorFormat newColorFormat = ColorFormat::RGBA);
+
+		/**
 		 * Constructor. Creates the PixMap with an existing buffer. It does not
 		 * copy the buffer, it use the same one, so don't delete the original
 		 * buffer if you are still using a pixmap object constructed by this
@@ -100,6 +115,13 @@ namespace RedBox {
 		uint8_t *getBuffer();
 
 		/**
+		 * Gets the buffer.
+		 * @return Pointer to the buffer's first element.
+		 * @see RedBox::PixMap::buffer
+		 */
+		const uint8_t *getBuffer() const;
+
+		/**
 		 * Insert a sub pixmap into the current pixmap.
 		 * Both pixmap must have the same color format or the merge
 		 * won't work.
@@ -114,9 +136,28 @@ namespace RedBox {
 		 * pixmap. (0 correspond to the top
 		 * side of the current pixmap.)
 		 */
-		void insertSubPixMap(PixMap *subPixMap, unsigned int xOffset = 0,
+		void insertSubPixMap(const PixMap &subPixMap, unsigned int xOffset = 0,
 		                     unsigned int yOffset = 0);
 
+		/**
+		 * Insert a sub pixmap into the current pixmap.
+		 * BOTH PIXMAP MUST HAVE THE SAME COLOR FORMAT OR YOUR EYES WILL BURN.
+		 * To protect the user this function is private and called by the public
+		 * version which compares the color formats before doing the merge.
+		 * The current pixmap must be big enough to insert the sub pixmap or a
+		 * part of the sub pixmap will be cut out.
+		 * @param subBuffer buffer of the pixmap we want to insert.
+		 * @param subWidth Width of the sub pixmap we want to insert.
+		 * @param subHeight Height of the sub pixmap we want to insert.
+		 * @param xOffset The horizontal position were we want to insert the sub
+		 * pixmap. (0 correspond to the left
+		 * side of the current pixmap.)
+		 * @param yOffset The vertical position were we want to insert the sub
+		 * pixmap. (0 correspond to the top side of the current pixmap.)
+		 */
+		void insertSubPixMap(const uint8_t *subBuffer, unsigned int subWidth,
+							 unsigned int subHeight, unsigned int xOffset,
+							 unsigned int yOffset);
 
 		///Convert the current PixMap to the given format.
 		void convertTo(ColorFormat colorFormat);
@@ -141,26 +182,6 @@ namespace RedBox {
 
 		/// Pointer to the first pixel of the PixMap
 		uint8_t *buffer;
-
-		/**
-		 * Insert a sub pixmap into the current pixmap.
-		 * BOTH PIXMAP MUST HAVE THE SAME COLOR FORMAT OR YOUR EYES WILL BURN.
-		 * To protect the user this function is private and called by the public
-		 * version which compares the color formats before doing the merge.
-		 * The current pixmap must be big enough to insert the sub pixmap or a
-		 * part of the sub pixmap will be cut out.
-		 * @param subBuffer buffer of the pixmap we want to insert.
-		 * @param subWidth Width of the sub pixmap we want to insert.
-		 * @param subHeight Height of the sub pixmap we want to insert.
-		 * @param xOffset The horizontal position were we want to insert the sub
-		 * pixmap. (0 correspond to the left
-		 * side of the current pixmap.)
-		 * @param yOffset The vertical position were we want to insert the sub
-		 * pixmap. (0 correspond to the top side of the current pixmap.)
-		 */
-		void insertSubPixMap(uint8_t *subBuffer, unsigned int subWidth,
-		                     unsigned int subHeight, unsigned int xOffset,
-		                     unsigned int yOffset);
 	};
 }
 
