@@ -23,7 +23,16 @@ namespace RedBox {
 	public:
 		template <typename T>
 		struct AngleConvert {
+			/**
+			 * Multiply this constant by an angle in radians to convert it into
+			 * degrees.
+			 */
 			static const T RADIANS_TO_DEGREES;
+			
+			/**
+			 * Multiply this constant by an angle in degrees to convert it into
+			 * radians.
+			 */
 			static const T DEGREES_TO_RADIANS;
 		};
 		/**

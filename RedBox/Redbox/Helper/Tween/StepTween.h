@@ -13,7 +13,7 @@ namespace RedBox {
 	 * Represents a class for tweens that uses a number of steps instead of
 	 * time.
 	 * @tparam T Type to tween
-	 * @ingroup Hepler
+	 * @ingroup Helper
 	 */
 	template <typename T>
 	class StepTween {
