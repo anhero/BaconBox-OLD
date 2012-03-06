@@ -546,7 +546,7 @@ namespace RedBox {
 	template <typename T>
 	Vector<T, 2u>::Vector(const Vector2 &src) : x(src.x), y(src.y) {}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator=(const Vector2 &src) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator=(const Vector2 &src) {
 		x = src.x;
 		y = src.y;
 		return *this;
@@ -560,120 +560,120 @@ namespace RedBox {
 		return x != other.x || y != other.y;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator+=(const Vector2 &other) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator+=(const Vector2 &other) {
 		x += other.x;
 		y += other.y;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator+=(ValueType delta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator+=(ValueType delta) {
 		x += delta;
 		y += delta;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator+=(XComponent xDelta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator+=(XComponent xDelta) {
 		x += xDelta.value;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator+=(YComponent yDelta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator+=(YComponent yDelta) {
 		y += yDelta.value;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator-=(const Vector2 &other) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator-=(const Vector2 &other) {
 		x -= other.x;
 		y -= other.y;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator-=(ValueType delta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator-=(ValueType delta) {
 		x -= delta;
 		y -= delta;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator-=(XComponent xDelta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator-=(XComponent xDelta) {
 		x -= xDelta.value;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator-=(YComponent yDelta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator-=(YComponent yDelta) {
 		y -= yDelta.value;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator*=(ValueType delta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator*=(ValueType delta) {
 		x *= delta;
 		y *= delta;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator*=(XComponent xDelta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator*=(XComponent xDelta) {
 		x *= xDelta.value;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator*=(YComponent yDelta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator*=(YComponent yDelta) {
 		y *= yDelta.value;
 		return *this;
 	}
 
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator/=(ValueType delta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator/=(ValueType delta) {
 		x /= delta;
 		y /= delta;
 		return *this;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator/=(XComponent xDelta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator/=(XComponent xDelta) {
 		x /= xDelta.value;
 	}
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::operator/=(YComponent yDelta) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::operator/=(YComponent yDelta) {
 		y /= yDelta.value;
 	}
 
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator+(const Vector2 &other) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator+(const Vector2 &other) const {
 		return Vector2(*this) += other;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator+(ValueType delta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator+(ValueType delta) const {
 		return Vector2(*this) += delta;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator+(XComponent xDelta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator+(XComponent xDelta) const {
 		return Vector2(*this) += xDelta;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator+(YComponent yDelta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator+(YComponent yDelta) const {
 		return Vector2(*this) += yDelta;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator+() const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator+() const {
 		return Vector2(+x, +y);
 	}
 
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator-(const Vector2 &other) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator-(const Vector2 &other) const {
 		return Vector2(*this) -= other;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator-(ValueType delta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator-(ValueType delta) const {
 		return Vector2(*this) -= delta;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator-(XComponent xDelta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator-(XComponent xDelta) const {
 		return Vector2(*this) -= xDelta;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator-(YComponent yDelta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator-(YComponent yDelta) const {
 		return Vector2(*this) -= yDelta;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator-() const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator-() const {
 		return Vector2(-x, -y);
 	}
 
@@ -682,28 +682,28 @@ namespace RedBox {
 		return getDotProduct(other);
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator*(ValueType delta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator*(ValueType delta) const {
 		return Vector2(*this) *= delta;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator*(XComponent xDelta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator*(XComponent xDelta) const {
 		return Vector2(*this) *= xDelta;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator*(YComponent yDelta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator*(YComponent yDelta) const {
 		return Vector2(*this) *= yDelta;
 	}
 
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator/(ValueType delta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator/(ValueType delta) const {
 		return Vector2(*this) /= delta;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator/(XComponent xDelta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator/(XComponent xDelta) const {
 		return Vector2(*this) /= xDelta;
 	}
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::operator/(YComponent yDelta) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::operator/(YComponent yDelta) const {
 		return Vector2(*this) /= yDelta;
 	}
 
@@ -713,7 +713,7 @@ namespace RedBox {
 	}
 
 	template <typename T>
-	void Vector<T, 2u>::setLength(Vector2::ValueType newLength) {
+	void Vector<T, 2u>::setLength(ValueType newLength) {
 		normalize();
 		this->operator*=(newLength);
 	}
@@ -729,7 +729,7 @@ namespace RedBox {
 	}
 
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::getNormalized() const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::getNormalized() const {
 		return *this / getLength();
 	}
 
@@ -739,26 +739,26 @@ namespace RedBox {
 	}
 
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::coordinatesMultiply(const Vector2 &other) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::coordinatesMultiply(const Vector2 &other) {
 		x *= other.x;
 		y *= other.y;
 		return *this;
 	}
 
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::getCoordinatesMultiplication(const Vector2 &other) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::getCoordinatesMultiplication(const Vector2 &other) const {
 		return Vector2(*this).coordinatesMultiply(other);
 	}
 
 	template <typename T>
-	Vector<T, 2u> &Vector<T, 2u>::coordinatesDivide(const Vector2 &other) {
+	typename Vector<T, 2u>::Vector2 &Vector<T, 2u>::coordinatesDivide(const Vector2 &other) {
 		x /= other.x;
 		y /= other.y;
 		return *this;
 	}
 
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::getCoordinatesDivision(const Vector2 &other) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::getCoordinatesDivision(const Vector2 &other) const {
 		return Vector2(*this).coordinatesDivide(other);
 	}
 
@@ -778,7 +778,7 @@ namespace RedBox {
 	}
 
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::getRotated(ValueType angle) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::getRotated(ValueType angle) const {
 		Vector2 result(*this);
 		result.rotate(angle);
 		return result;
@@ -793,7 +793,7 @@ namespace RedBox {
 	}
 
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::getProjection(const Vector2 &direction) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::getProjection(const Vector2 &direction) const {
 		Vector2 result(*this);
 		result.project(direction);
 		return result;
@@ -805,7 +805,7 @@ namespace RedBox {
 	}
 
 	template <typename T>
-	Vector<T, 2u> Vector<T, 2u>::getReflected(const Vector2 &mirror) const {
+	typename Vector<T, 2u>::Vector2 Vector<T, 2u>::getReflected(const Vector2 &mirror) const {
 		Vector2 result(*this);
 		result.reflect(mirror);
 		return result;
@@ -826,7 +826,7 @@ namespace RedBox {
 		return output;
 	}
 
-	typedef Vector<float, 2u> Vector2;
+	typedef Vector<float> Vector2;
 }
 
 #endif

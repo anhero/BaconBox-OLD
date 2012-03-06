@@ -413,7 +413,7 @@ namespace RedBox {
 			                 std::max(lineSprite.getHeight(), buttonSprite.getHeight()));
 			i->x += realSize.x;
 			++i;
-			i += realSize;
+			*i += realSize;
 			++i;
 			i->y += realSize.y;
 		}
