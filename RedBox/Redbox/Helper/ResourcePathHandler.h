@@ -67,6 +67,20 @@ namespace RedBox {
 		 * @return True if it exists, false if not.
 		 */
 		static bool folderExists(const std::string &path);
+
+		/**
+		 * Checks wether or not a file exists and is readable.
+		 * @param filePath Path to the file to check its readability.
+		 * @return True if the file exists and is readable, false if not.
+		 */
+		static bool isFileReadable(const std::string &filePath);
+
+		/**
+		 * Checks wether or not a file exists and is writable.
+		 * @param filePath Path to the file to check its writability.
+		 * @return True if the file exists and is writable, false if not.
+		 */
+		static bool isFileWritable(const std::string &filePath);
 	private:
 		/**
 		 * Default constructor, to make sure no one tries to instantiate this
