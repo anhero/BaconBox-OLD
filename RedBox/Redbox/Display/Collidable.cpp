@@ -150,8 +150,8 @@ namespace RedBox {
 	}
 
 	void Collidable::setVelocity(const Vector2 &newVelocity) {
-		velocity = Vector2(checkMaximumVelocity(newVelocity.x, maximumVelocity.x),
-		                   checkMaximumVelocity(newVelocity.y, maximumVelocity.y));
+		velocity.x = checkMaximumVelocity(newVelocity.x, maximumVelocity.x);
+		velocity.y = checkMaximumVelocity(newVelocity.y, maximumVelocity.y);
 	}
 
 	void Collidable::setVelocity(float newXVelocity, float newYVelocity) {

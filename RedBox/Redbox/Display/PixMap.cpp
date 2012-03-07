@@ -25,7 +25,7 @@ namespace RedBox {
 	PixMap::PixMap(unsigned int newWidth, unsigned int newHeight,
 	               ColorFormat newColorFormat) : width(newWidth),
 		height(newHeight), colorFormat(newColorFormat),
-		buffer(buffer = new uint8_t[width *height * ((colorFormat == ColorFormat::RGBA) ? (4) : (1))]) {
+		buffer(new uint8_t[width *height * ((colorFormat == ColorFormat::RGBA) ? (4) : (1))]) {
 	}
 
 	PixMap::PixMap(unsigned int newWidth, unsigned int newHeight,

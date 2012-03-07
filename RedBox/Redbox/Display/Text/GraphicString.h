@@ -486,9 +486,7 @@ namespace RedBox {
 			if (alignment == TextAlignment::LEFT) {
 				StandardVertexArray::ConstIterator i = vertices.getBegin();
 				Vector2 tmp = *i;
-				++i;
-				++i;
-				++i;
+				i += 3;
 				alignmentPosition = tmp + (*i - tmp) * 0.5f;
 
 			} else if (alignment == TextAlignment::RIGHT) {
@@ -625,9 +623,7 @@ namespace RedBox {
 					// with the alignment position.
 					it = vertices.getBegin();
 					delta = *it;
-					++it;
-					++it;
-					++it;
+					it += 3;
 					delta = alignmentPosition - (delta + (*it - delta) * 0.5f);
 
 				} else if (alignment == TextAlignment::RIGHT) {
