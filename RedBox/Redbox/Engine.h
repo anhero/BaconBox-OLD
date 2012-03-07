@@ -234,9 +234,9 @@ namespace RedBox {
 		/// Pointer to the current state being played.
 		State *currentState;
 
-		/// Pointer to the last updated state.
-		State *lastState;
-
+		/// Pointer to the next state.
+		State *nextState;
+		
 		/// Time at which the last update was called on the current state.
 		double lastUpdate;
 

@@ -50,6 +50,7 @@ namespace RedBox {
 
 		if (newState) {
 			if (engine.states.empty()) {
+				assert(!engine.currentState);
 				engine.currentState = newState;
 
 			} else {
@@ -81,14 +82,14 @@ namespace RedBox {
 		std::map<std::string, State *>::iterator it = engine.states.find(name);
 
 		if (it != engine.states.end()) {
-			engine.currentState = it->second;
+			engine.nextState = it->second;
 
 		} else {
 			Console::println("State \"" + name +
 			                 "\" doesn't exist so it cannot be played.");
 		}
 
-		return engine.currentState;
+		return engine.nextState;
 	}
 
 	State *Engine::getCurrentState() {
@@ -123,7 +124,7 @@ namespace RedBox {
 		Engine &engine = getInstance();
 
 		// We make sure the pointer to the current state is valid.
-		if (engine.currentState) {
+		if (engine.currentState || engine.nextState) {
 			TimeHelper::getInstance().refreshTime();
 
 			// We update the time from TimeHelper.
@@ -139,28 +140,24 @@ namespace RedBox {
 				TimeHelper::getInstance().refreshTime();
 
 				// We call the focus methods if needed.
-				if (engine.currentState != engine.lastState) {
-					if (engine.lastState) {
-						engine.lastState->internalOnLoseFocus();
-					}
-
+				if (engine.nextState) {
+					engine.currentState->internalOnLoseFocus();
+					engine.currentState = engine.nextState;
 					engine.currentState->internalOnGetFocus();
-					engine.lastState = engine.currentState;
+					engine.nextState = NULL;
 				}
 
 				// We update the current state.
 				engine.currentState->internalUpdate();
 
-				if (engine.currentState == engine.lastState) {
-					engine.renderedSinceLastUpdate = false;
-					// We update the input manager.
-					InputManager::getInstance().update();
-					// We update the timers.
-					TimerManager::update();
-					engine.nextUpdate += engine.updateDelay;
-					engine.lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
-					++engine.loops;
-				}
+				engine.renderedSinceLastUpdate = false;
+				// We update the input manager.
+				InputManager::getInstance().update();
+				// We update the timers.
+				TimerManager::update();
+				engine.nextUpdate += engine.updateDelay;
+				engine.lastUpdate = TimeHelper::getInstance().getSinceStartComplete();
+				++engine.loops;
 			}
 
 			if (!engine.renderedSinceLastUpdate) {
@@ -262,11 +259,11 @@ namespace RedBox {
 		return instance;
 	}
 
-	Engine::Engine() : currentState(NULL), lastState(NULL) , lastUpdate(0.0), lastRender(0.0),
+	Engine::Engine() : currentState(NULL), nextState(NULL) , lastUpdate(0.0), lastRender(0.0),
 		loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
 		minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false), needsExit(false),
-	    tmpExitCode(0), renderedSinceLastUpdate(false), applicationPath(),
-	    applicationName(DEFAULT_APPLICATION_NAME), mainWindow(NULL),
+		tmpExitCode(0), renderedSinceLastUpdate(false), applicationPath(),
+		applicationName(DEFAULT_APPLICATION_NAME), mainWindow(NULL),
 		graphicDriver(NULL), soundEngine(NULL), musicEngine(NULL) {
 
 		mainWindow = RB_MAIN_WINDOW_IMPL;
