@@ -88,7 +88,7 @@ namespace RedBox {
 
 	void Transformable::scaleFromPoint(float xScaling, float yScaling,
 	                                   const Vector2 &) {
-		scaling.getCoordinatesMultiplication(Vector2(xScaling, yScaling));
+		scaling = scaling.getCoordinatesMultiplication(Vector2(xScaling, yScaling));
 	}
 
 	float Transformable::getXScaling() const {
