@@ -51,7 +51,7 @@ namespace RedBox {
 		if (newState) {
 			if (engine.states.empty()) {
 				assert(!engine.currentState);
-				engine.currentState = newState;
+				engine.nextState = newState;
 
 			} else {
 				newState->deactivateSlots();
@@ -141,9 +141,18 @@ namespace RedBox {
 
 				// We call the focus methods if needed.
 				if (engine.nextState) {
-					engine.currentState->internalOnLoseFocus();
+					// If the next state is the first state the engine is
+					// playing, the current state will be set to NULL, so we
+					// call the onLoseFocus only if the currentState is valid.
+					if (engine.currentState) {
+						engine.currentState->internalOnLoseFocus();
+					}
+
+					// We set the next state as the current state.
 					engine.currentState = engine.nextState;
+					// We call the onGetFocus method.
 					engine.currentState->internalOnGetFocus();
+
 					engine.nextState = NULL;
 				}
 
@@ -262,7 +271,7 @@ namespace RedBox {
 	Engine::Engine() : currentState(NULL), nextState(NULL) , lastUpdate(0.0), lastRender(0.0),
 		loops(0), nextUpdate(0), updateDelay(1.0 / DEFAULT_UPDATES_PER_SECOND),
 		minFps(DEFAULT_MIN_FRAMES_PER_SECOND), bufferSwapped(false), needsExit(false),
-		tmpExitCode(0), renderedSinceLastUpdate(false), applicationPath(),
+		tmpExitCode(0), renderedSinceLastUpdate(true), applicationPath(),
 		applicationName(DEFAULT_APPLICATION_NAME), mainWindow(NULL),
 		graphicDriver(NULL), soundEngine(NULL), musicEngine(NULL) {
 
