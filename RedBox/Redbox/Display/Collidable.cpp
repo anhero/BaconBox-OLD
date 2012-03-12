@@ -631,6 +631,9 @@ namespace RedBox {
 				return false;
 			}
 
+			AxisAlignedBoundingBox firstBox = getAxisAlignedBoundingBox(),
+								   secondBox = other->getAxisAlignedBoundingBox();
+
 			// We calculate object delta
 			float overlap = 0.0f;
 			float obj1Delta = getXPosition() - getOldXPosition();
@@ -643,10 +646,10 @@ namespace RedBox {
 				float obj2DeltaAbs = fabsf(obj2Delta);
 				// We create AABBs of the old position with the updated horizontal
 				//position.
-				AxisAlignedBoundingBox box1(Vector2(getXPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)), getOldYPosition()),
-				                            Vector2(getWidth() + obj1DeltaAbs, getHeight()));
-				AxisAlignedBoundingBox box2(Vector2(other->getXPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)), other->getOldYPosition()),
-				                            Vector2(other->getWidth() + obj2DeltaAbs, other->getHeight()));
+				AxisAlignedBoundingBox box1(Vector2(firstBox.getXPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f)), firstBox.getYPosition() + (getOldYPosition() - getYPosition())),
+				                            Vector2(firstBox.getWidth() + obj1DeltaAbs, firstBox.getHeight()));
+				AxisAlignedBoundingBox box2(Vector2(secondBox.getXPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f)), secondBox.getYPosition() + (other->getOldYPosition() - other->getYPosition())),
+				                            Vector2(secondBox.getWidth() + obj2DeltaAbs, secondBox.getHeight()));
 
 				if (box1.overlaps(box2)) {
 					float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + OVERLAP_BIAS;
@@ -718,6 +721,9 @@ namespace RedBox {
 				return false;
 			}
 
+			AxisAlignedBoundingBox firstBox = getAxisAlignedBoundingBox(),
+			                       secondBox = other->getAxisAlignedBoundingBox();
+
 			// We calculate object delta
 			float overlap = 0.0f;
 			float obj1Delta = getYPosition() - getOldYPosition();
@@ -730,10 +736,10 @@ namespace RedBox {
 				float obj2DeltaAbs = fabsf(obj2Delta);
 				// We create AABBs of the old position with the updated horizontal
 				//position.
-				AxisAlignedBoundingBox box1(Vector2(getXPosition(), getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f))),
-				                            Vector2(getWidth(), getHeight() + obj1DeltaAbs));
-				AxisAlignedBoundingBox box2(Vector2(other->getXPosition(), other->getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f))),
-				                            Vector2(other->getWidth(), other->getHeight() + obj2DeltaAbs));
+				AxisAlignedBoundingBox box1(Vector2(firstBox.getXPosition(), firstBox.getYPosition() - ((obj1Delta > 0.0f) ? (obj1Delta) : (0.0f))),
+				                            Vector2(firstBox.getWidth(), firstBox.getHeight() + obj1DeltaAbs));
+				AxisAlignedBoundingBox box2(Vector2(secondBox.getXPosition(), secondBox.getYPosition() - ((obj2Delta > 0.0f) ? (obj2Delta) : (0.0f))),
+				                            Vector2(secondBox.getWidth(), secondBox.getHeight() + obj2DeltaAbs));
 
 				if (box1.overlaps(box2)) {
 					float maxOverlap = obj1DeltaAbs + obj2DeltaAbs + OVERLAP_BIAS;
