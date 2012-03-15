@@ -146,7 +146,7 @@ namespace RedBox {
 		 * Gets the body's center's position.
 		 * @return 2D vector containing the body's center's position.
 		 */
-		const Vector2 getPositionCenter() const;
+		virtual const Vector2 getPositionCenter() const;
 
 		/**
 		 * Gets the body's center's horizontal position.

@@ -72,15 +72,15 @@ namespace RedBox {
 	}
 
 	float Positionable::getXPositionCenter() const {
-		return getXPosition() + getWidth() * 0.5f;
+		return getPositionCenter().x;
 	}
 
 	float Positionable::getYPositionCenter() const {
-		return getYPosition() + getHeight() * 0.5f;
+		return getPositionCenter().y;
 	}
 
 	const Vector2 Positionable::getCentroid() const {
-		return Vector2(getXPosition() + getWidth() * 0.5f, getYPosition() + getHeight() * 0.5f);
+		return getPositionCenter();
 	}
 
 	float Positionable::getXCentroid() const {
