@@ -6,6 +6,7 @@
 #define RB_BIT_HELPER_H
 
 #include <stdint.h>
+#include <bitset>
 
 namespace RedBox {
 	/**
@@ -51,6 +52,18 @@ namespace RedBox {
 		 * @return Endian swapped value.
 		 */
 		static uint64_t otherEndian(uint64_t x);
+		
+		/**
+		 * Converts a value to a a bitset. Can be used to output a value in
+		 * binary format.
+		 * @param value Value to convert to binary. Must not be bigger than an
+		 * unsigned long long.
+		 * @return Bitset constructed from the value.
+		 */
+		template <typename T>
+		static const std::bitset<sizeof(T) * 8> toBinary(const T value) {
+			return std::bitset<sizeof(T) * 8>(value);
+		}
 	};
 }
 #endif
