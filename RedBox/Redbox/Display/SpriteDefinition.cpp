@@ -182,6 +182,7 @@ namespace RedBox {
 									++i2;
 
 								} else {
+									animations.erase(i2->first);
 									result = false;
 								}
 							}
@@ -198,7 +199,7 @@ namespace RedBox {
 		return result;
 	}
 
-	std::ostream &operator<<(std::ostream &output, SpriteDefinition &sd) {
+	std::ostream &operator<<(std::ostream &output, const SpriteDefinition &sd) {
 		Value tmpValue;
 		DefaultSerializer::serialize(sd, tmpValue);
 		DefaultSerializer::getDefaultSerializer().writeToStream(output, tmpValue);

@@ -488,19 +488,27 @@ namespace RedBox {
 		 */
 		bool deserialize(const Value &node) {
 			bool result = true;
-			Object::const_iterator itX = node.getObject().find("x");
-			Object::const_iterator itY = node.getObject().find("y");
 
-			// We make sure the value contains the "x" and "y" values.
-			if (itX != node.getObject().end() &&
-			    itY != node.getObject().end() &&
-			    itX->second.isNumeric() && itY->second.isNumeric()) {
-
-				x = static_cast<ValueType>(itX->second.getDouble());
-				y = static_cast<ValueType>(itY->second.getDouble());
-
+			// The vector can either be an array of two values or an object
+			// with the x and y members.
+			if (node.getArray().size() == 2) {
+				x = static_cast<ValueType>(node.getArray()[0].getDouble());
+				y = static_cast<ValueType>(node.getArray()[1].getDouble());
 			} else {
-				result = false;
+				Object::const_iterator itX = node.getObject().find("x");
+				Object::const_iterator itY = node.getObject().find("y");
+
+				// We make sure the value contains the "x" and "y" values.
+				if (itX != node.getObject().end() &&
+				    itY != node.getObject().end() &&
+				    itX->second.isNumeric() && itY->second.isNumeric()) {
+
+					x = static_cast<ValueType>(itX->second.getDouble());
+					y = static_cast<ValueType>(itY->second.getDouble());
+
+				} else {
+					result = false;
+				}
 			}
 
 			return result;
@@ -517,8 +525,8 @@ namespace RedBox {
 			Object::const_iterator itX = node.getObject().find("x");
 			Object::const_iterator itY = node.getObject().find("y");
 
-			return itX != node.getObject().end() && itY != node.getObject().end() &&
-			       itX->second.isNumeric() && itY->second.isNumeric();
+			return node.getArray().size() == 2 || (itX != node.getObject().end() && itY != node.getObject().end() &&
+			       itX->second.isNumeric() && itY->second.isNumeric());
 
 		}
 

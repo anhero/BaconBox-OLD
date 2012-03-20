@@ -7,10 +7,8 @@ namespace RedBox {
 	bool FrameDetails::isValidValue(const Value &node) {
 		bool result = true;
 		Object::const_iterator itPosition = node.getObject().find("position");
-		Object::const_iterator itOrientation = node.getObject().find("orientation");
 
-		if (itPosition != node.getObject().end() &&
-		    itOrientation != node.getObject().end()) {
+		if (itPosition != node.getObject().end()) {
 			if (!Vector2::isValidValue(itPosition->second)) {
 				result = false;
 			}
@@ -99,8 +97,7 @@ namespace RedBox {
 		Object::const_iterator itPosition = node.getObject().find("position");
 		Object::const_iterator itOrientation = node.getObject().find("orientation");
 
-		if (itPosition != node.getObject().end() &&
-		    itPosition->second.isObject()) {
+		if (itPosition != node.getObject().end()) {
 
 			if (DefaultSerializer::deserialize(itPosition->second, position)) {
 				if (itOrientation != node.getObject().end()) {
