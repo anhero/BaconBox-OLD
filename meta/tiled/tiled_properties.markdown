@@ -179,7 +179,6 @@ For animation definitions, it uses a similar idea as the frame definitions. You 
 <td>nbFrames</td>
 <td>Number of frames the sprite has defined. Cannot be set to 0 (will be set to the default value if the number of frames is invalid).</td>
 <td>1</td>
-<td></td>
 </tr>
 <tr>
 <td>frame[i].position.x</td>
