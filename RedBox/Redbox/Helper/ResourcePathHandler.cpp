@@ -72,8 +72,7 @@ namespace RedBox {
 		static bool firstTime = true;
 		std::stringstream ss;
 
-
-		ss << getpwnam(getlogin())->pw_dir << PATH << Engine::getApplicationName() << "/";
+		ss << getpwuid(getuid())->pw_dir << PATH << Engine::getApplicationName() << "/";
 
 		if (firstTime) {
 			createFolder(ss.str());
