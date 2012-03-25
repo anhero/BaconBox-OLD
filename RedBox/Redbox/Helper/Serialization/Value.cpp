@@ -33,6 +33,11 @@ namespace RedBox {
 		attribute(false), name(), arrayOfSameTypes(false) {
 	}
 
+	Value::Value(float newFloat) : type(DOUBLE),
+		data(new double(static_cast<double>(newFloat))), attribute(false),
+		name(), arrayOfSameTypes(false) {
+	}
+
 	Value::Value(const Object &newObject) : type(OBJECT),
 		data(new Object(newObject)), attribute(false), name(),
 		arrayOfSameTypes(false) {
@@ -256,6 +261,10 @@ namespace RedBox {
 		return (type == DOUBLE) ? (*data.doubleValue) : ((type == INTEGER) ? (static_cast<double>(*data.intValue)) : (EMPTY_DOUBLE));
 	}
 
+	float Value::getFloat() const {
+		return static_cast<float>(getDouble());
+	}
+
 	void Value::setDouble(double newDouble) {
 		if (type == DOUBLE) {
 			*data.doubleValue = newDouble;
@@ -265,6 +274,10 @@ namespace RedBox {
 			type = DOUBLE;
 			data.doubleValue = new double(newDouble);
 		}
+	}
+
+	void Value::setFloat(float newFloat) {
+		setDouble(static_cast<double>(newFloat));
 	}
 
 	const Object &Value::getObject() const {

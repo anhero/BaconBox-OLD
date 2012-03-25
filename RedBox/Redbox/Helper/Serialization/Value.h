@@ -66,6 +66,12 @@ namespace RedBox {
 		 * @param newDouble Double to use as the value.
 		 */
 		Value(double newDouble);
+		
+		/**
+		 * Constructs the value from a float.
+		 * @param newFloat Float to use as the value.
+		 */
+		Value(float newFloat);
 
 		/**
 		 * Constructs the value from an object.
@@ -229,6 +235,14 @@ namespace RedBox {
 		 * numeric value.
 		 */
 		double getDouble() const;
+		
+		/**
+		 * Gets the value's float value.
+		 * @return Value's float value, or the integer value casted to a float
+		 * if the value contains an integer. 0.0f if the value doesn't contain a
+		 * numeric value.
+		 */
+		float getFloat() const;
 
 		/**
 		 * Sets the value as a double.
@@ -236,6 +250,13 @@ namespace RedBox {
 		 * value's type is changed if necessary to contain the double.
 		 */
 		void setDouble(double newDouble);
+		
+		/**
+		 * Sets the value as a float.
+		 * @param newFloat New float value that the Value will contain. The
+		 * value's type is changed if necessary to contain the float.
+		 */
+		void setFloat(float newFloat);
 
 		/**
 		 * Gets the value's object value.
