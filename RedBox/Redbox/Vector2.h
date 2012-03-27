@@ -130,10 +130,10 @@ namespace RedBox {
 				return Component<C>(*this) >>= other;
 			}
 
-			Component<C> operator+() {
+			Component<C> operator+() const {
 				return Component<C>(+value);
 			}
-			Component<C> operator-() {
+			Component<C> operator-() const {
 				return Component<C>(-value);
 			}
 
