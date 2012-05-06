@@ -36,6 +36,8 @@ void Menu::render() {
 }
 
 void Menu::update() {
+	this->Collidable::update();
+	
 	for (std::list<MenuElement *>::iterator i = menuElements.begin(); i != menuElements.end(); i++) {
 		(*i)->update();
 	}

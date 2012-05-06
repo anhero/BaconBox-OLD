@@ -119,6 +119,7 @@
 #include <RedBox/DefaultSerializer.h>
 #include <RedBox/JsonSerializer.h>
 #include <RedBox/XmlSerializer.h>
+#include <RedBox/SpriteDefinition.h>
 #include <RedBox/Value.h>
 #include <RedBox/Console.h>
 #include <RedBox/Tween.h>
