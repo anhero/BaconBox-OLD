@@ -376,19 +376,23 @@ namespace RedBox {
 
 	void Animatable::loadTextureCoordinates(const VertexArray &vertices,
 	                                        const FrameArray &frameDetails) {
-		// We load as many frames as there are in the array of frame details.
-		frames.resize(frameDetails.size());
-		FrameArray::const_iterator itFrameDetails = frameDetails.begin();
-		std::vector<TextureCoordinates>::iterator itFrame = frames.begin();
-
-		while (itFrameDetails != frameDetails.end() &&
-		       itFrame != frames.end()) {
-			TextureMappable::loadTextureCoordinates(this->getTextureInformation(),
-			                                        vertices,
-			                                        *itFrameDetails,
-			                                        &(*itFrame));
-			++itFrameDetails;
-			++itFrame;
+		if (frameDetails.empty()) {
+			loadTextureCoordinates(vertices, Vector2(), 0u);
+		} else {
+			// We load as many frames as there are in the array of frame details.
+			frames.resize(frameDetails.size());
+			FrameArray::const_iterator itFrameDetails = frameDetails.begin();
+			std::vector<TextureCoordinates>::iterator itFrame = frames.begin();
+			
+			while (itFrameDetails != frameDetails.end() &&
+				   itFrame != frames.end()) {
+				TextureMappable::loadTextureCoordinates(this->getTextureInformation(),
+														vertices,
+														*itFrameDetails,
+														&(*itFrame));
+				++itFrameDetails;
+				++itFrame;
+			}
 		}
 	}
 

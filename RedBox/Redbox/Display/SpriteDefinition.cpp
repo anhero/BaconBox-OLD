@@ -9,24 +9,26 @@ namespace RedBox {
 		const Object &tmpObject = node.getObject();
 		Object::const_iterator itVertices = tmpObject.find("vertices");
 		Object::const_iterator itFrameSize = tmpObject.find("frameSize");
-		Object::const_iterator itFrames = tmpObject.find("frames");
 		Object::const_iterator itAnimations = tmpObject.find("animations");
 
 		// We make sure the vertices are valid and that we found the frame
 		// and animations attributes.
-		if (itFrames != tmpObject.end() &&
-		    ((itVertices != tmpObject.end() && StandardVertexArray::isValidValueStatic(itVertices->second)) ||
+		if (((itVertices != tmpObject.end() && StandardVertexArray::isValidValueStatic(itVertices->second)) ||
 		     (itFrameSize != tmpObject.end() && Vector2::isValidValue(itFrameSize->second)))) {
 
-			const Array &tmpArray = itFrames->second.getArray();
-			Array::const_iterator i1 = tmpArray.begin();
-
-			while (result && i1 != tmpArray.end()) {
-				if (FrameDetails::isValidValue(*i1)) {
-					++i1;
-
-				} else {
-					result = false;
+			Object::const_iterator itFrames = tmpObject.find("frames");
+			
+			if (itFrames != tmpObject.end()) {
+				const Array &tmpArray = itFrames->second.getArray();
+				Array::const_iterator i1 = tmpArray.begin();
+				
+				while (result && i1 != tmpArray.end()) {
+					if (FrameDetails::isValidValue(*i1)) {
+						++i1;
+						
+					} else {
+						result = false;
+					}
 				}
 			}
 
@@ -98,21 +100,23 @@ namespace RedBox {
 		const Object &tmpObject = node.getObject();
 		Object::const_iterator itVertices = tmpObject.find("vertices");
 		Object::const_iterator itFrameSize = tmpObject.find("frameSize");
-		Object::const_iterator itFrames = tmpObject.find("frames");
 		Object::const_iterator itAnimations = tmpObject.find("animations");
 
-		if ((itVertices != tmpObject.end() || itFrameSize != tmpObject.end()) &&
-		    itFrames != tmpObject.end()) {
+		if (itVertices != tmpObject.end() || itFrameSize != tmpObject.end()) {
 
-			const Array &tmpArray = itFrames->second.getArray();
-			Array::const_iterator i1 = tmpArray.begin();
-
-			while (result && i1 != tmpArray.end()) {
-				if (FrameDetails::isValidValue(*i1)) {
-					++i1;
-
-				} else {
-					result = false;
+			Object::const_iterator itFrames = tmpObject.find("frames");
+			
+			if (itFrames != tmpObject.end()) {
+				const Array &tmpArray = itFrames->second.getArray();
+				Array::const_iterator i1 = tmpArray.begin();
+				
+				while (result && i1 != tmpArray.end()) {
+					if (FrameDetails::isValidValue(*i1)) {
+						++i1;
+						
+					} else {
+						result = false;
+					}
 				}
 			}
 
@@ -160,15 +164,18 @@ namespace RedBox {
 					// If the vertices are valid and loaded correctly.
 					if (result) {
 						// We load the frames.
-						frames.resize(tmpArray.size());
-						FrameArray::size_type i3 = 0;
-
-						while (result && i3 < frames.size()) {
-							if (DefaultSerializer::deserialize(tmpArray[i3], frames[i3])) {
-								++i3;
-
-							} else {
-								result = false;
+						if (itFrames != tmpObject.end()) {
+							const Array &tmpArray = itFrames->second.getArray();
+							frames.resize(tmpArray.size());
+							FrameArray::size_type i3 = 0;
+							
+							while (result && i3 < frames.size()) {
+								if (DefaultSerializer::deserialize(tmpArray[i3], frames[i3])) {
+									++i3;
+									
+								} else {
+									result = false;
+								}
 							}
 						}
 
