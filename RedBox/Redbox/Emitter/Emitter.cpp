@@ -5,15 +5,16 @@
 namespace RedBox {
 	Emitter::Emitter() : elapsedTime(0.0), nbParticles(0),
 		nbParticlesToShoot(-1), lifeSpan(-1.0), started(false),
-		shootingAngle(0.0f), shootingAngleVariance(0.0f), shootingForce(0.0f),
-		shootingForceVariance(0.0f), timePerSpawn(-1.0), phases(),
-		toDeleteWhenDone(false) {
+		explosion(false), shootingAngle(0.0f), shootingAngleVariance(0.0f),
+		shootingForce(0.0f), shootingForceVariance(0.0f), timePerSpawn(-1.0),
+		phases(), toDeleteWhenDone(false) {
 	}
 
 	Emitter::Emitter(const Emitter &src) :
 		elapsedTime(src.elapsedTime), nbParticles(src.nbParticles),
 		nbParticlesToShoot(src.nbParticlesToShoot), lifeSpan(src.lifeSpan),
-		started(src.started), shootingAngle(src.shootingAngle),
+		started(src.started), explosion(src.explosion),
+		shootingAngle(src.shootingAngle),
 		shootingAngleVariance(src.shootingAngleVariance),
 		shootingForce(src.shootingForce),
 		shootingForceVariance(src.shootingForceVariance),
@@ -31,6 +32,7 @@ namespace RedBox {
 			nbParticlesToShoot = src.nbParticlesToShoot;
 			lifeSpan = src.lifeSpan;
 			started = src.started;
+			explosion = src.explosion;
 			shootingAngle = src.shootingAngle;
 			shootingAngleVariance = src.shootingAngleVariance;
 			shootingForce = src.shootingForce;
@@ -89,6 +91,14 @@ namespace RedBox {
 	void Emitter::stop() {
 		started = false;
 	}
+	
+	bool Emitter::isExplosion() const {
+		return explosion;
+	}
+	
+	void Emitter::setExplosion(bool newExplosion) {
+		explosion = newExplosion;
+	}
 
 	float Emitter::getShootingAngle() const {
 		return shootingAngle;
@@ -129,6 +139,7 @@ namespace RedBox {
 	double Emitter::getSpawningRate() const {
 		if (timePerSpawn == -1.0) {
 			return 0.0;
+
 		} else {
 			return 1.0 / timePerSpawn;
 		}
@@ -138,6 +149,7 @@ namespace RedBox {
 		if (newSpawningRate == 0.0) {
 			timePerSpawn = -1.0;
 		}
+
 		timePerSpawn = 1.0 / newSpawningRate;
 	}
 

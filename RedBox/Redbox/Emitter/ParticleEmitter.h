@@ -35,10 +35,13 @@ namespace RedBox {
 	 * @tparam Parent Collidable or Transformable.
 	 * @tparam ParticleType Type of the particle's grahpic to emit.
 	 */
-	template <typename Parent, typename ParticleType>
+	template <typename Parent, typename P>
 	class ParticleEmitter : virtual public Updateable, virtual public Maskable,
 		public Emitter, public Parent {
 	public:
+		/// Represents the particle's type of graphic element used.
+		typedef P ParticleType;
+			
 		/// Type definition for the parent type.
 		typedef ParticleEmitter<Parent, ParticleType> BaseType;
 
@@ -108,28 +111,34 @@ namespace RedBox {
 			CallUpdate<ParticleEmitter<Parent, ParticleType>, Parent, IsBaseOf<Updateable, Parent>::RESULT>()(this);
 
 			// We make sure the emitter is active and has particles to emit.
-			if (isStarted() && getSpawningRate() > 0.0 &&
-			    nbParticlesToShoot != 0) {
+			if (isStarted() && ((getSpawningRate() > 0.0 &&
+			    nbParticlesToShoot != 0) || isExplosion())) {
 				spawningCounter += Engine::getSinceLastUpdate();
 
-				// We try to shoot particles as long as the spawning rate lets
-				// us.
-				while (nbParticlesToShoot != 0 && spawningCounter > getTimeBetweenSpawns() && shootParticle()) {
-					if (nbParticlesToShoot > -1) {
-						--nbParticlesToShoot;
+				if (!isExplosion()) {
+					// We try to shoot particles as long as the spawning rate lets
+					// us.
+					while (nbParticlesToShoot != 0 && spawningCounter > getTimeBetweenSpawns() && shootParticle()) {
+						if (nbParticlesToShoot > -1) {
+							--nbParticlesToShoot;
+						}
+						
+						spawningCounter -= getTimeBetweenSpawns();
 					}
-
-					spawningCounter -= getTimeBetweenSpawns();
+					
+					// We check if we have to count the emitter's life span.
+					if (getLifeSpan() != -1.0) {
+						// We update the emitter's elapsed time.
+						elapsedTime += Engine::getSinceLastUpdate();
+						
+						if (getLifeSpan() < elapsedTime) {
+							stop();
+						}
+					}
 				}
-
-				// We check if we have to count the emitter's life span.
-				if (getLifeSpan() != -1.0) {
-					// We update the emitter's elapsed time.
-					elapsedTime += Engine::getSinceLastUpdate();
-
-					if (getLifeSpan() < elapsedTime) {
-						stop();
-					}
+				else {
+					while (shootParticle());
+					stop();
 				}
 			}
 
@@ -205,7 +214,7 @@ namespace RedBox {
 		 * Renders the emitter and its particles.
 		 */
 		virtual void render() {
-			if (isStarted()) {
+			if (true || isStarted()) {
 				for (typename ParticleVector::iterator i = particles.begin();
 				     i != particles.end(); ++i) {
 					if (i->second.timeLeft > 0.0 && i->second.graphic) {

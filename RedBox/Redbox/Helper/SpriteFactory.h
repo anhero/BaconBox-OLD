@@ -10,6 +10,7 @@
 #include "InanimateSprite.h"
 #include "ShapeFactory.h"
 #include "Color.h"
+#include "SpriteEmitter.h"
 
 namespace RedBox {
 	/**
@@ -70,6 +71,21 @@ namespace RedBox {
 		static InanimateSprite *makeInanimatePolygon(unsigned int nbSides,
 		                                             float sideLength,
 		                                             const Color &color);
+		
+		/**
+		 * Constructs a sprite emitter representing an explosions.
+		 * @param defaultGraphic Pointer to the default graphic the sprite
+		 * emitter will use.
+		 * @param nbSpritesToShoot Number of particles to shoot when the sprite
+		 * emitter explodes. It has to be higher than 0.
+		 * @param force Force at which the particles are shot. A variance of 15%
+		 * of the force is applied.
+		 * @return Pointer to the newly created sprite emitter. NULL if the
+		 * number of particles is not greater than 0.
+		 */
+		static SpriteEmitter *makeExplosion(const SpriteEmitter::ParticleType *defaultGraphic,
+											int nbParticlesToShoot, float force,
+											const Vector2 &startingPosition);
 	private:
 		/**
 		 * Default unaccessible constructor. Made private so the class cannot

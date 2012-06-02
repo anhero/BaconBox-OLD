@@ -112,12 +112,31 @@ namespace RedBox {
 		 * @see RedBox::Emitter::started
 		 */
 		void start();
-
+		
 		/**
 		 * Stops the particle emitter.
 		 * @see RedBox::Emitter::started
 		 */
 		void stop();
+		
+		/**
+		 * Checks whether or not the emitter is an explosion. When started,
+		 * an explosion emitter shoots all of its maximum number of particles
+		 * at the same time and then stops.
+		 * @return True if the emitter is an explosion, false if not.
+		 * @see RedBox::Emitter::explosion
+		 */
+		bool isExplosion() const;
+		
+		/**
+		 * Sets whether or not the emitter is an explosion. When started,
+		 * an explosion emitter shoots all of its maximum number of particles at
+		 * the same time and then stops.
+		 * @param newExplosion Set this to true if you want the emitter to be an
+		 * explosion.
+		 * @see RedBox::Emitter::explosion
+		 */
+		void setExplosion(bool newExplosion);
 
 		/**
 		 * Gets the particle emitter's shooting angle.
@@ -255,6 +274,9 @@ namespace RedBox {
 
 		/// Flag at true if the emitter is active, false if it is not.
 		bool started;
+		
+		/// Flag at true if the emitter is an explosion.
+		bool explosion;
 
 		/// Angle (in degrees) at which the emitter emits particles.
 		float shootingAngle;

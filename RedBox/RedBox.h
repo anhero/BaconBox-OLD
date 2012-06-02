@@ -72,6 +72,7 @@
 #include <RedBox/State.h>
 #include <RedBox/SimpleManageable.h>
 #include <RedBox/DebugState.h>
+#include <RedBox/TextureInformation.h>
 #include <RedBox/ResourceManager.h>
 #include <RedBox/ResourcePathHandler.h>
 #include <RedBox/SimpleButton.h>
