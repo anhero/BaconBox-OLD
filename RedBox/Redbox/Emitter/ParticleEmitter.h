@@ -41,7 +41,7 @@ namespace RedBox {
 	public:
 		/// Represents the particle's type of graphic element used.
 		typedef P ParticleType;
-			
+
 		/// Type definition for the parent type.
 		typedef ParticleEmitter<Parent, ParticleType> BaseType;
 
@@ -112,7 +112,7 @@ namespace RedBox {
 
 			// We make sure the emitter is active and has particles to emit.
 			if (isStarted() && ((getSpawningRate() > 0.0 &&
-			    nbParticlesToShoot != 0) || isExplosion())) {
+			                     nbParticlesToShoot != 0) || isExplosion())) {
 				spawningCounter += Engine::getSinceLastUpdate();
 
 				if (!isExplosion()) {
@@ -122,22 +122,23 @@ namespace RedBox {
 						if (nbParticlesToShoot > -1) {
 							--nbParticlesToShoot;
 						}
-						
+
 						spawningCounter -= getTimeBetweenSpawns();
 					}
-					
+
 					// We check if we have to count the emitter's life span.
 					if (getLifeSpan() != -1.0) {
 						// We update the emitter's elapsed time.
 						elapsedTime += Engine::getSinceLastUpdate();
-						
+
 						if (getLifeSpan() < elapsedTime) {
 							stop();
 						}
 					}
-				}
-				else {
+
+				} else {
 					while (shootParticle());
+
 					stop();
 				}
 			}
@@ -214,12 +215,10 @@ namespace RedBox {
 		 * Renders the emitter and its particles.
 		 */
 		virtual void render() {
-			if (true || isStarted()) {
-				for (typename ParticleVector::iterator i = particles.begin();
-				     i != particles.end(); ++i) {
-					if (i->second.timeLeft > 0.0 && i->second.graphic) {
-						i->second.graphic->render();
-					}
+			for (typename ParticleVector::iterator i = particles.begin();
+			     i != particles.end(); ++i) {
+				if (i->second.timeLeft > 0.0 && i->second.graphic) {
+					i->second.graphic->render();
 				}
 			}
 		}
@@ -231,12 +230,10 @@ namespace RedBox {
 		 * as a masked renderable body).
 		 */
 		virtual void mask() {
-			if (isStarted()) {
-				for (typename ParticleVector::iterator i = particles.begin();
-				     i != particles.end(); ++i) {
-					if (i->second.timeLeft > 0.0 && i->second.graphic) {
-						i->second.graphic->mask();
-					}
+			for (typename ParticleVector::iterator i = particles.begin();
+			     i != particles.end(); ++i) {
+				if (i->second.timeLeft > 0.0 && i->second.graphic) {
+					i->second.graphic->mask();
 				}
 			}
 		}
@@ -246,12 +243,10 @@ namespace RedBox {
 		 * masked renderable body has been rendered.
 		 */
 		virtual void unmask() {
-			if (isStarted()) {
-				for (typename ParticleVector::iterator i = particles.begin();
-				     i != particles.end(); ++i) {
-					if (i->second.timeLeft > 0.0 && i->second.graphic) {
-						i->second.graphic->unmask();
-					}
+			for (typename ParticleVector::iterator i = particles.begin();
+			     i != particles.end(); ++i) {
+				if (i->second.timeLeft > 0.0 && i->second.graphic) {
+					i->second.graphic->unmask();
 				}
 			}
 		}
