@@ -283,15 +283,10 @@ namespace RedBox {
 		 */
 		static void removeFont(const std::string &key);
 #endif
-	private:
-		/**
-		 * Unloads everything in the ResourceManager.
-		 */
-		static void unloadAll();
-
-		///Create a PixMap from an image file at the given path.
+		
+		/// Create a PixMap from an image file at the given path.
 		static PixMap *loadPixMap(const std::string &filePath, ColorFormat colorFormat);
-
+		
 		/**
 		 * Loads a pixmap from a file and sets a specific color as transparent.
 		 * @param filePath Path to the file to read.
@@ -299,9 +294,29 @@ namespace RedBox {
 		 */
 		static PixMap *loadPixMap(const std::string &filePath,
 		                          const Color &transparentColor);
+		
+		/**
+		 * Saves a PixMap to a file at the given path.
+		 * @param pixMap PixMap to save to a file.
+		 * @param filePath Path to the file to write.
+		 */
+		static void savePixMap(const PixMap &pixMap,
+							   const std::string &filePath);
+	private:
+		/**
+		 * Unloads everything in the ResourceManager.
+		 */
+		static void unloadAll();
 
 		///Create a PixMap from a PNG file at the given path.
 		static PixMap *loadPixMapFromPNG(const std::string &filePath);
+		
+		/**
+		 * Saves a PixMap to a PNG file.
+		 * @param pixMap PixMap to save to a PNG file.
+		 * @param filePath Path to the PNG file to write.
+		 */
+		static void savePixMapToPNG(const PixMap &pixMap, const std::string &filePath);
 
 		/// Map associating the textures' keys and their information.
 		static std::map<std::string, TextureInformation *> textures;

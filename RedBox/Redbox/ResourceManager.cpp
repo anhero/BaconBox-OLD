@@ -464,6 +464,11 @@ namespace RedBox {
 
 		return result;
 	}
+	
+	void ResourceManager::savePixMap(const RedBox::PixMap &pixMap,
+									 const std::string &filePath) {
+		savePixMapToPNG(pixMap, filePath);
+	}
 
 	PixMap *ResourceManager::loadPixMapFromPNG(const std::string &filePath) {
 		FILE *PNG_file = fopen(filePath.c_str(), "rb");
@@ -557,4 +562,81 @@ namespace RedBox {
 		return aPixMap;
 	}
 
+	void ResourceManager::savePixMapToPNG(const PixMap &pixMap, const std::string &filePath) {
+		FILE *fp = fopen(filePath.c_str(), "wb");
+		
+		if (fp) {
+			png_structp pngPointer = png_create_write_struct(PNG_LIBPNG_VER_STRING,
+															 NULL, NULL, NULL);
+			
+			if (pngPointer) {
+				png_infop infoPointer = png_create_info_struct(pngPointer);
+				
+				if (infoPointer) {
+					
+					if (!setjmp(png_jmpbuf(pngPointer))) {
+						png_init_io(pngPointer, fp);
+						
+						if (!setjmp(png_jmpbuf(pngPointer))) {
+							png_set_IHDR(pngPointer,
+										 infoPointer,
+										 pixMap.getWidth(),
+										 pixMap.getHeight(),
+										 8,
+										 ((pixMap.getColorFormat() == ColorFormat::RGBA) ? (PNG_COLOR_TYPE_RGBA) : (PNG_COLOR_TYPE_GRAY)),
+										 PNG_INTERLACE_NONE,
+										 PNG_COMPRESSION_TYPE_DEFAULT,
+										 PNG_FILTER_TYPE_DEFAULT);
+							
+							png_write_info(pngPointer, infoPointer);
+							
+							if (!setjmp(png_jmpbuf(pngPointer))) {
+								png_bytepp rows = new png_bytep[pixMap.getHeight()];
+								png_bytep tmpBuffer = const_cast<png_bytep>(pixMap.getBuffer());
+								unsigned int nbChannels = (pixMap.getColorFormat() == ColorFormat::RGBA) ? (4) : (1);
+								
+								for (unsigned int i = 0; i < pixMap.getHeight(); ++i) {
+									rows[i] = tmpBuffer + (i * nbChannels * pixMap.getWidth());
+								}
+								
+								png_write_image(pngPointer, rows);
+								delete [] rows;
+								rows = NULL;
+								
+								if (!setjmp(png_jmpbuf(pngPointer))) {
+									png_write_end(pngPointer, NULL);
+								} else {
+									Console::println("Error during end of write to PNG file.");
+									Console::printTrace();
+								}
+							} else {
+								Console::println("Error while writing bytes to PNG file.");
+								Console::printTrace();
+							}
+							
+						} else {
+							Console::println("Error while writing PNG header.");
+							Console::printTrace();
+						}
+					} else {
+						Console::println("Error during init_io.");
+						Console::printTrace();
+					}
+					
+				} else {
+					Console::println("png_create_info_struct failed.");
+					Console::printTrace();
+				}
+			} else {
+				Console::println("png_create_write_struct failed.");
+				Console::printTrace();
+			}
+			fclose(fp);
+		} else {
+			Console::print("Could not write the PixMap to the PNG file ");
+			Console::print(filePath);
+			Console::println(".");
+			Console::printTrace();
+		}
+	}
 }
