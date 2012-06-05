@@ -191,6 +191,13 @@ namespace RedBox {
 		 * @param pixMap A pixmap object containing the buffer the driver must load.
 		 */
 		TextureInformation *loadTexture(PixMap *pixMap);
+        
+        
+        /**
+         *  Remove a texture from graphic memory
+         */
+        void deleteTexture(TextureInformation * textureInfo);
+        
 	private:
 		/**
 		 * Default constructor.

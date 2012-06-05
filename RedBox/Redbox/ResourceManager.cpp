@@ -307,6 +307,11 @@ namespace RedBox {
 
 		return newBgm;
 	}
+    
+    void ResourceManager::removeTexture(const std::string &key){
+        GraphicDriver::getInstance().getInstance().deleteTexture(textures[key]);
+        textures.erase(key);
+    }
 
 	void ResourceManager::removeSound(const std::string &key) {
 		// We find the sound effect.

@@ -73,6 +73,10 @@ namespace RedBox {
 	                                                           const ColorArray &,
 	                                                           bool) {
 	}
+    
+    void NullGraphicDriver::deleteTexture(TextureInformation * textureInfo){
+        
+    }
 
 	void NullGraphicDriver::unmaskBatch(const VertexArray &,
 	                                    const IndiceArray &,

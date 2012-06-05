@@ -664,6 +664,11 @@ namespace RedBox {
 	void OpenGLDriver::popMatrix() {
 		glPopMatrix();
 	}
+    
+    
+    void OpenGLDriver::deleteTexture(TextureInformation * textureInfo){
+        glDeleteTextures(1, &(textureInfo->textureId));
+    }
 
 	TextureInformation *OpenGLDriver::loadTexture(PixMap *pixMap) {
 

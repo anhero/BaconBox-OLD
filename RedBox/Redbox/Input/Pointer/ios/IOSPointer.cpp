@@ -47,22 +47,22 @@ namespace RedBox {
 
 	void IOSPointer::convertToRedBoxScreenPosition(Vector2 *newIosPosition) {
 		if (std::max(MainWindow::getInstance().getResolutionWidth(), MainWindow::getInstance().getResolutionHeight()) == 960) {
-			newIosPosition->scalarMultiplication(2.0f);
+			(*newIosPosition)*=2.0f;
 		}
 
 		switch (MainWindow::getInstance().getOrientation().underlying()) {
 		case WindowOrientation::UPSIDE_DOWN:
-			newIosPosition->setY(MainWindow::getInstance().getResolutionHeight() - newIosPosition->getY());
+                newIosPosition->y = MainWindow::getInstance().getResolutionHeight() - newIosPosition->y;
 			break;
 
 		case WindowOrientation::HORIZONTAL_LEFT:
-			newIosPosition->setXY(newIosPosition->getY(),
-			                      MainWindow::getInstance().getResolutionHeight() - newIosPosition->getX());
+                newIosPosition->x =newIosPosition->y;
+                newIosPosition->y = MainWindow::getInstance().getResolutionHeight() - newIosPosition->x;
 			break;
 
 		case WindowOrientation::HORIZONTAL_RIGHT:
-			newIosPosition->setXY(MainWindow::getInstance().getResolutionWidth() - newIosPosition->getY(),
-			                      newIosPosition->getX());
+                newIosPosition->x = MainWindow::getInstance().getResolutionWidth() - newIosPosition->y;
+                newIosPosition->y = newIosPosition->x;
 			break;
 
 		default:
