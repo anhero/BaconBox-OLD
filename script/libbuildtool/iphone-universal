@@ -7,8 +7,8 @@ export current_dir=$(dirname ${BASH_SOURCE[0]})
 
 
 cd "$current_dir/../../libraries"
-libbuildtool -t ios -o version=4.3 -o platform=simulator \
-&& libbuildtool -t ios -o version=4.3 -o platform=os -o arch=armv6 \
-&& libbuildtool -t ios -o version=4.3 -o platform=os -o arch=armv7 \
+libbuildtool -t ios -o version=5.1 -o platform=simulator \
+&& libbuildtool -t ios -o version=5.1 -o platform=os -o arch=armv6 \
+&& libbuildtool -t ios -o version=5.1 -o platform=os -o arch=armv7 \
 && libbuildtool -t ios -o makeuniversal=true || exit 1
 

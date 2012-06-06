@@ -120,6 +120,14 @@ namespace RedBox {
 		                                                               const std::string &relativePath,
 		                                                               const Color &transparentColor,
 		                                                               bool overwrite = false);
+        
+        
+        
+        
+        /**
+         * Remove a texture  GraphicMemory.
+         */
+        static void removeTexture(const std::string &key);
 
 		/**
 		 * Gets the information about the asked texture. Uses the texture's key
