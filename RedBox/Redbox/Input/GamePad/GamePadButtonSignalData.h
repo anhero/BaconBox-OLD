@@ -21,7 +21,7 @@ namespace RedBox {
 		 * @param newButtonIndex Index of the button concerned by the signal.
 		 */
 		GamePadButtonSignalData(const GamePadState& newGamePadState,
-								unsigned int newButtonIndex);
+								unsigned int newButtonIndex, unsigned gamePadIndex);
 		/**
 		 * Destructor.
 		 */

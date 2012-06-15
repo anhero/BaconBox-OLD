@@ -109,11 +109,16 @@
 	#define RB_POINTER_IMPL new SDLPointer()
 	#define RB_POINTER_INCLUDE "SDLPointer.h"
 
+    #define RB_GAME_PAD_IMPL new SDLGamePad(i)
+    #define RB_GAME_PAD_INCLUDE "SDLGamePad.h"
+
 	#define RB_INPUT_MANAGER_IMPL RedBox::SDLInputManager
 	#define RB_INPUT_MANAGER_INCLUDE "SDLInputManager.h"
 
 	#define RB_MAIN_WINDOW_IMPL new SDLMainWindow()
 	#define RB_MAIN_WINDOW_INCLUDE "SDLMainWindow.h"
+
+
 #endif // RB_SDL
 
 //Qt platform

@@ -20,7 +20,7 @@ namespace RedBox {
 		 * Parameterized constructor.
 		 * @param newGamePadState State of the game pad that sent the signal.
 		 */
-		GamePadSignalData(const GamePadState& newGamePadState);
+		GamePadSignalData(const GamePadState& newGamePadState, unsigned int gamePadIndex);
 		
 		/**
 		 * Destructor.
@@ -29,6 +29,9 @@ namespace RedBox {
 		
 		/// Reference to the state of the game pad that sent the signal.
 		const GamePadState& gamePadState;
+        
+        
+        const unsigned int gamePadIndex;
 	};
 }
 

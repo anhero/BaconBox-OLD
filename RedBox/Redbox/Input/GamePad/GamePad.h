@@ -97,14 +97,26 @@ namespace RedBox {
 		 * @return Game pad's state.
 		 */
 		const GamePadState& getState() const;
+        
+        
+        bool isButtonPressed(unsigned int buttonIndex) const;
+
+        
+		bool isButtonHeld(unsigned int buttonIndex) const;
+     
+		bool isButtonReleased(unsigned int buttonIndex) const;
+        
+        unsigned int getIndex();
+        
 	protected:
+        
 		/// Contains the game pad's buttons' and thumbstick' state.
 		GamePadState state;
 		
 		/**
 		 * Default constructor.
 		 */
-		GamePad();
+		GamePad(int index);
 		
 		/**
 		 * Destructor.
@@ -116,6 +128,15 @@ namespace RedBox {
 		 * state.
 		 */
 		virtual void updateDevice();
+        
+        std::vector<float>& getPreviousButtons();
+		std::vector<float>& getButtons();
+        std::vector<float>& getThumbstick();
+        std::vector<float>& getPreviousThumbstick();
+        
+        
+        unsigned int gamePadIndex;
+
 	};
 }
 

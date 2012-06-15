@@ -72,7 +72,7 @@ namespace RedBox {
 		                        const Vector2 &startingPosition = Vector2(),
 		                        const Vector2 &newSize = Vector2(),
 		                        const Vector2 &newTextureOffset = Vector2(),
-		                        unsigned int nbFrames = 1) :
+		                        unsigned int nbFrames = 0) :
 			Graphic<Animatable>(newTexture), Parent(startingPosition),
 			ManageParent() {
 			// We check if we have to use the texture as the full image.
