@@ -61,6 +61,8 @@ platforms=( "Qt" "iOS" "ios" "SDL" "MusicIOS" "OpenAL" "Windows" )
 platform=${platform:-SDL}
 
 cpp.add_define "${platform}"
+#TinyXML hack.
+cpp.add_define "TIXML_USE_STL"
 
 if [[ -n "${DEBUG:-}" ]]; then
 	cpp.add_define "DEBUG"
@@ -111,7 +113,7 @@ post_build() {
 	#TODO: Include this in BoxFactory (static big libs linking)
 
 	$(project.getdirectory)/script/linkscript.sh \
-		${build_directory}/$(cpp.getoutfile) \
+		$(project.get_build_directory)/$(cpp.getoutfile) \
 		$(project.getdirectory)/libraries/current/lib/libfreetype.a \
 		$(project.getdirectory)/libraries/current/lib/libpng.a \
 		$(project.getdirectory)/libraries/current/lib/libz.a \
@@ -121,7 +123,9 @@ post_build() {
 		$(project.getdirectory)/libraries/current/lib/libvorbis.a \
 		$(project.getdirectory)/libraries/current/lib/libvorbisenc.a \
 		$(project.getdirectory)/libraries/current/lib/libvorbisfile.a \
-		${build_directory}/$(cpp.getoutfile)
+		$(project.getdirectory)/libraries/current/lib/libJsonBox.a \
+		$(project.getdirectory)/libraries/current/lib/libtinyxml.a \
+		$(project.get_build_directory)/$(cpp.getoutfile)
 
 }
 # Hooking the function as a post build step.
