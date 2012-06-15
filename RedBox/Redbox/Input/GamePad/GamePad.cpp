@@ -59,3 +59,11 @@ bool GamePad::isButtonHeld(unsigned int buttonIndex) const {
 bool GamePad::isButtonReleased(unsigned int buttonIndex) const {
 	return state.isButtonReleased(buttonIndex);
 }
+
+unsigned int GamePad::getNbOfButton(){
+    return getButtons().size();
+}
+
+unsigned int GamePad::getNbOfThumbstick(){
+    return getThumbstick().size();
+}

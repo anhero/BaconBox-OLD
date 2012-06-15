@@ -108,6 +108,11 @@ namespace RedBox {
         
         unsigned int getIndex();
         
+        unsigned int getNbOfButton();
+        unsigned int getNbOfThumbstick();
+
+        
+        
 	protected:
         
 		/// Contains the game pad's buttons' and thumbstick' state.
