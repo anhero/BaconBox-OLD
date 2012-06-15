@@ -1,5 +1,4 @@
 #include "GamePadState.h"
-
 using namespace RedBox;
 
 GamePadState::GamePadState() : InputState() {
@@ -22,9 +21,32 @@ float GamePadState::getPreviousButton(unsigned int buttonIndex) const {
 	return previousButtons[buttonIndex];
 }
 
-const Vector2& GamePadState::getThumbstick(unsigned int thumbstickIndex) const {
+
+void GamePadState::init(unsigned int nbOfButtons, unsigned int nbOfThumbstick){
+    buttons = std::vector<float>(nbOfButtons, 0.0f);
+    previousButtons = std::vector<float>(nbOfButtons, 0.0f);
+    thumbsticks = std::vector<float>(nbOfThumbstick, 0.0f);
+    previousThumbsticks = std::vector<float>(nbOfThumbstick, 0.0f);
+}
+
+const float GamePadState::getThumbstick(unsigned int thumbstickIndex) const {
 	if(thumbstickIndex >= thumbsticks.size()) {
 		thumbstickIndex = thumbsticks.size() - 1;
 	}
 	return thumbsticks[thumbstickIndex];
+}
+
+
+
+
+bool GamePadState::isButtonPressed(unsigned int buttonIndex) const {
+	return (buttons[buttonIndex] && !previousButtons[buttonIndex]);
+}
+
+bool GamePadState::isButtonHeld(unsigned int buttonIndex) const {
+	return (buttons[buttonIndex] && previousButtons[buttonIndex]);
+}
+
+bool GamePadState::isButtonReleased(unsigned int buttonIndex) const {
+	return (!buttons[buttonIndex] && previousButtons[buttonIndex]);
 }

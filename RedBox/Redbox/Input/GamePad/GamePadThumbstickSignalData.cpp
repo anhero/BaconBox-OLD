@@ -3,8 +3,8 @@
 using namespace RedBox;
 
 GamePadThumbstickSignalData::GamePadThumbstickSignalData(const GamePadState& newGamePadState,
-														 unsigned int newThumbstickIndex):
-GamePadSignalData(newGamePadState), thumbstickIndex(newThumbstickIndex) {
+														 unsigned int newThumbstickIndex, unsigned gamePadIndex):
+GamePadSignalData(newGamePadState, gamePadIndex), thumbstickIndex(newThumbstickIndex) {
 }
 
 GamePadThumbstickSignalData::~GamePadThumbstickSignalData() {

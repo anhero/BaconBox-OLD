@@ -80,8 +80,17 @@ namespace RedBox {
 	SDLMainWindow::SDLMainWindow() : MainWindow(), mainWindow(NULL),
 		mainContext(NULL) {
 
-		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+        SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
+        
+            unsigned int  nbJoystick = SDL_NumJoysticks();
+            if(nbJoystick){
+                SDL_JoystickEventState(SDL_ENABLE);
+        InputManager::getInstance().setNbGamePads(SDL_NumJoysticks());
+            }
+            
 
+//            std::cout << SDL_JoystickName(0)<< std::endl; 
+            
 		if (SDL_GL_SetAttribute(SDL_GL_RED_SIZE,   8) < 0) {
 			printf("opengl error: %s\n", SDL_GetError());
 		}

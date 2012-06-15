@@ -51,8 +51,16 @@ namespace RedBox {
 		 * @return 2-dimensional vector containing the horizontal and vertical
 		 * values of the thumbstick's position.
 		 */
-		const Vector2& getThumbstick(unsigned int thumbstickIndex) const;
+		const float getThumbstick(unsigned int thumbstickIndex) const;
+        
+        void init(unsigned int nbOfButtons, unsigned int nbOfThumbstick);
 	private:
+        
+        
+        bool isButtonPressed(unsigned int buttonIndex) const;
+        bool isButtonHeld(unsigned int buttonIndex) const;
+        bool isButtonReleased(unsigned int buttonIndex) const;
+        
 		/**
 		 * Vector containing buttons' status. Values represent the pressure
 		 * applied on the button. 0.0 means it isn't being pressed, 1.0 is when
@@ -67,7 +75,9 @@ namespace RedBox {
 		/**
 		 * Vector containing values for the thumbsticks' position.
 		 */
-		std::vector<Vector2> thumbsticks;
+		std::vector<float> thumbsticks;
+        std::vector<float> previousThumbsticks;
+
 	};
 }
 

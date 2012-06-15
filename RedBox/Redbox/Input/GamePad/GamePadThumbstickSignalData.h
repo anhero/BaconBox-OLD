@@ -22,7 +22,7 @@ namespace RedBox {
 		 * signal.
 		 */
 		GamePadThumbstickSignalData(const GamePadState& newGamePadState,
-									unsigned int newThumbstickIndex);
+									unsigned int newThumbstickIndex, unsigned gamePadIndex);
 		
 		/**
 		 * Destructor.
