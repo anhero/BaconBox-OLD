@@ -1,4 +1,9 @@
 get_filename_component(GamePad_dir ${CMAKE_CURRENT_LIST_FILE} PATH)
+
+if(${SDL})
+	include(${GamePad_dir}/SDL/Sources.cmake)
+endif(${SDL})
+
 file(GLOB RedBox_RedBox_Input_GamePad_Headers ${GamePad_dir}/*.h)
 file(GLOB RedBox_RedBox_Input_GamePad_Sources ${GamePad_dir}/*.cpp)
 
