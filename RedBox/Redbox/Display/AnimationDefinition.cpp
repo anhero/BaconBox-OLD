@@ -3,6 +3,7 @@
 #include "Value.h"
 #include "DefaultSerializer.h"
 #include "Serializer.h"
+#include "Array.h"
 
 namespace RedBox {
 	bool AnimationDefinition::isValidValue(const Value &node) {
@@ -20,10 +21,10 @@ namespace RedBox {
 		    itNbLoops->second.isNumeric()) {
 
 			const Array &tmpFrames = itFrames->second.getArray();
-			Array::const_iterator i = tmpFrames.begin();
+			Array::SizeType i = 0;
 
-			while (result && i != tmpFrames.end()) {
-				if (i->isNumeric()) {
+			while (result && i < tmpFrames.getSize()) {
+				if (tmpFrames[i].isNumeric()) {
 					++i;
 
 				} else {
@@ -92,10 +93,10 @@ namespace RedBox {
 			if (itFrames->second.isArray()) {
 				// We make sure the array contains only numbers.
 				const Array &tmpArray = itFrames->second.getArray();
-				Array::const_iterator i = tmpArray.begin();
+				Array::SizeType i = 0;
 
-				while (result && i != tmpArray.end()) {
-					if (i->isNumeric()) {
+				while (result && i < tmpArray.getSize()) {
+					if (tmpArray[i].isNumeric()) {
 						++i;
 
 					} else {
@@ -111,9 +112,9 @@ namespace RedBox {
 						nbLoops = itNbLoops->second.getInt();
 						timePerFrame = itTimePerFrame->second.getDouble();
 
-						frames.resize(tmpArray.size());
+						frames.resize(tmpArray.getSize());
 
-						for (Array::size_type i2 = 0; i2 < tmpArray.size(); ++i2) {
+						for (Array::SizeType i2 = 0; i2 < tmpArray.getSize(); ++i2) {
 							frames[i2] = static_cast<unsigned int>(tmpArray[i2].getInt());
 						}
 

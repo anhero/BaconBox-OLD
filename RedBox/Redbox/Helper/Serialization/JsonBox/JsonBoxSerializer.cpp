@@ -3,6 +3,7 @@
 #include <JsonBox.h>
 
 #include "Value.h"
+#include "Array.h"
 
 namespace RedBox {
 	void valueToJsonBoxValue(const Value &input, JsonBox::Value &output);
@@ -66,9 +67,9 @@ namespace RedBox {
 			break;
 
 		case Value::ARRAY:
-			output.setArray(JsonBox::Array(input.getArray().size()));
+			output.setArray(JsonBox::Array(input.getArray().getSize()));
 
-			for (Array::size_type i = 0; i < input.getArray().size(); ++i) {
+			for (Array::SizeType i = 0; i < input.getArray().getSize(); ++i) {
 				valueToJsonBoxValue(input.getArray()[i], output[i]);
 			}
 
@@ -109,7 +110,7 @@ namespace RedBox {
 		case JsonBox::Value::ARRAY:
 			output.setArray(Array(input.getArray().size()));
 
-			for (Array::size_type i = 0; i < input.getArray().size(); ++i) {
+			for (Array::SizeType i = 0; i < input.getArray().size(); ++i) {
 				jsonBoxValueToValue(input.getArray()[i], output[i]);
 			}
 

@@ -20,10 +20,10 @@ namespace RedBox {
 			
 			if (itFrames != tmpObject.end()) {
 				const Array &tmpArray = itFrames->second.getArray();
-				Array::const_iterator i1 = tmpArray.begin();
+				Array::SizeType i1 = 0;
 				
-				while (result && i1 != tmpArray.end()) {
-					if (FrameDetails::isValidValue(*i1)) {
+				while (result && i1 < tmpArray.getSize()) {
+					if (FrameDetails::isValidValue(tmpArray[i1])) {
 						++i1;
 						
 					} else {
@@ -108,10 +108,10 @@ namespace RedBox {
 			
 			if (itFrames != tmpObject.end()) {
 				const Array &tmpArray = itFrames->second.getArray();
-				Array::const_iterator i1 = tmpArray.begin();
+				Array::SizeType i1 = 0;
 				
-				while (result && i1 != tmpArray.end()) {
-					if (FrameDetails::isValidValue(*i1)) {
+				while (result && i1 < tmpArray.getSize()) {
+					if (FrameDetails::isValidValue(tmpArray[i1])) {
 						++i1;
 						
 					} else {
@@ -166,7 +166,7 @@ namespace RedBox {
 						// We load the frames.
 						if (itFrames != tmpObject.end()) {
 							const Array &tmpArray = itFrames->second.getArray();
-							frames.resize(tmpArray.size());
+							frames.resize(tmpArray.getSize());
 							FrameArray::size_type i3 = 0;
 							
 							while (result && i3 < frames.size()) {

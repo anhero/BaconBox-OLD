@@ -8,10 +8,10 @@
 #include <iostream>
 
 #include "Object.h"
-#include "Array.h"
 
 namespace RedBox {
 	class Serializer;
+	class Array;
 
 	/**
 	 * Represents a serializable value. Can be a string, an integer, a floating
@@ -126,7 +126,7 @@ namespace RedBox {
 		 * @param key Key identifier of the object's value to get.
 		 * @return Reference to the object's member's value.
 		 */
-		Value &operator[](const Array::size_type index);
+		Value &operator[](const size_t index);
 
 		/**
 		 * Gets the value's type.
@@ -293,7 +293,7 @@ namespace RedBox {
 		 * @param defaultValue If the new size is bigger, this value will be
 		 * used as the value to insert.
 		 */
-		void resizeArray(Array::size_type newSize,
+		void resizeArray(size_t newSize,
 						 const Value defaultValue = Value());
 
 		/**
@@ -422,49 +422,6 @@ namespace RedBox {
 			 */
 			ValueDataPointer(bool *newBoolValue);
 		};
-
-
-		/**
-		 * Empty string returned by getString() when the value doesn't contain a
-		 * string.
-		 * @see RedBox::Value::getString
-		 */
-		static const std::string EMPTY_STRING;
-
-		/**
-		 * Default int value returned by getInt() when the value doesn't contain
-		 * an integer.
-		 * @see RedBox::Value::getInt
-		 */
-		static const int EMPTY_INT = 0;
-
-		/**
-		 * Default double value returned by getDouble() when the value doesn't
-		 * contain a double.
-		 * @see RedBox::Value::getDouble
-		 */
-		static const double EMPTY_DOUBLE;
-
-		/**
-		 * Default empty object value returned by getObject() when the value
-		 * doesn't contain an object.
-		 * @see RedBox::Value::getObject
-		 */
-		static const Object EMPTY_OBJECT;
-
-		/**
-		 * Default empty array value returned by getArray() when the value
-		 * doesn't contain an array.
-		 * @see RedBox::Value::getArray
-		 */
-		static const Array EMPTY_ARRAY;
-
-		/**
-		 * Default boolean value returned by getBoolean() when the value doesn't
-		 * contain a boolean.
-		 * @see RedBox::Value::getBoolean
-		 */
-		static const bool EMPTY_BOOL = false;
 
 		/**
 		 * Resets the value.

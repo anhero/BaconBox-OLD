@@ -9,10 +9,10 @@ namespace RedBox {
 		bool result = true;
 
 		const Array &tmpArray = node.getArray();
-		Array::const_iterator i = tmpArray.begin();
+		Array::SizeType i = 0;
 
-		while (result && i != tmpArray.end()) {
-			if (Vector2::isValidValue(*i)) {
+		while (result && i < tmpArray.getSize()) {
+			if (Vector2::isValidValue(tmpArray[i])) {
 				++i;
 
 			} else {
@@ -465,8 +465,8 @@ namespace RedBox {
 		bool result = this->isValidValue(node);
 
 		if (result) {
-			this->resize(node.getArray().size());
-			for (Array::size_type i = 0; i < node.getArray().size(); ++i) {
+			this->resize(node.getArray().getSize());
+			for (Array::SizeType i = 0; i < node.getArray().getSize(); ++i) {
 				DefaultSerializer::deserialize(node.getArray()[i], this->operator[](i));
 			}
 		}

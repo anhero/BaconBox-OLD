@@ -4,57 +4,60 @@
 
 #include "DefaultSerializer.h"
 #include "Serializer.h"
+#include "Array.h"
 
 namespace RedBox {
-	const std::string Value::EMPTY_STRING = std::string();
-	const double Value::EMPTY_DOUBLE = 0.0;
-	const Object Value::EMPTY_OBJECT = Object();
-	const Array Value::EMPTY_ARRAY = Array();
+	static const std::string EMPTY_STRING = std::string();
+	static const double EMPTY_DOUBLE = 0.0;
+	static const Object EMPTY_OBJECT = Object();
+	static const Array EMPTY_ARRAY = Array();
+	static const int EMPTY_INT = 0;
+	static const bool EMPTY_BOOL = false;
 
-	Value::Value() : type(NULL_VALUE), data(), attribute(false), name(),
-		arrayOfSameTypes(false) {
+	Value::Value() : type(NULL_VALUE), data(), attribute(false),
+		arrayOfSameTypes(false), name() {
 	}
 
 	Value::Value(const std::string &newString) : type(STRING),
-		data(new std::string(newString)), attribute(false), name(),
-		arrayOfSameTypes(false) {
+		data(new std::string(newString)), attribute(false),
+		arrayOfSameTypes(false), name() {
 	}
 
 	Value::Value(const char *newCString) : type(STRING),
-		data(new std::string(newCString)), attribute(false), name(),
-		arrayOfSameTypes(false) {
+		data(new std::string(newCString)), attribute(false),
+		arrayOfSameTypes(false), name() {
 	}
 
 	Value::Value(int newInt) : type(INTEGER), data(new int(newInt)),
-		attribute(false), name(), arrayOfSameTypes(false) {
+		attribute(false), arrayOfSameTypes(false), name() {
 	}
 
 	Value::Value(double newDouble) : type(DOUBLE), data(new double(newDouble)),
-		attribute(false), name(), arrayOfSameTypes(false) {
+		attribute(false), arrayOfSameTypes(false), name() {
 	}
 
 	Value::Value(float newFloat) : type(DOUBLE),
 		data(new double(static_cast<double>(newFloat))), attribute(false),
-		name(), arrayOfSameTypes(false) {
+		arrayOfSameTypes(false), name() {
 	}
 
 	Value::Value(const Object &newObject) : type(OBJECT),
-		data(new Object(newObject)), attribute(false), name(),
-		arrayOfSameTypes(false) {
+		data(new Object(newObject)), attribute(false), arrayOfSameTypes(false),
+		name() {
 	}
 
 	Value::Value(const Array &newArray) : type(ARRAY),
-		data(new Array(newArray)), attribute(false), name(),
-		arrayOfSameTypes(false) {
+		data(new Array(newArray)), attribute(false), arrayOfSameTypes(false),
+		name() {
 	}
 
 	Value::Value(bool newBool) : type(BOOLEAN), data(new bool(newBool)),
-		attribute(false), name(), arrayOfSameTypes(false) {
+		attribute(false), arrayOfSameTypes(false), name() {
 	}
 
 	Value::Value(const Value &src) : type(src.type), data(),
-		attribute(src.attribute), name(src.name),
-		arrayOfSameTypes(src.arrayOfSameTypes) {
+		attribute(src.attribute), arrayOfSameTypes(src.arrayOfSameTypes),
+		name(src.name) {
 		switch (type) {
 		case STRING:
 			data.stringValue = new std::string(*src.data.stringValue);
@@ -144,7 +147,7 @@ namespace RedBox {
 		return (*data.objectValue)[key];
 	}
 
-	Value &Value::operator[](Array::size_type index) {
+	Value &Value::operator[](Array::SizeType index) {
 		if (type != ARRAY) {
 			clear();
 			type = ARRAY;
@@ -310,10 +313,10 @@ namespace RedBox {
 		}
 	}
 
-	void Value::resizeArray(Array::size_type newSize,
+	void Value::resizeArray(Array::SizeType newSize,
 	                        const Value defaultValue) {
 		if (type == ARRAY) {
-			data.arrayValue->resize(newSize, defaultValue);
+			data.arrayValue->setSize(newSize, defaultValue);
 
 		} else {
 			clear();
@@ -324,7 +327,7 @@ namespace RedBox {
 
 	void Value::pushBackArray(const Value &newValue) {
 		if (type == ARRAY) {
-			data.arrayValue->push_back(newValue);
+			data.arrayValue->setSize(data.arrayValue->getSize() + 1, newValue);
 
 		} else {
 			clear();

@@ -11,6 +11,7 @@
 
 #include <tinyxml.h>
 #include "Value.h"
+#include "Array.h"
 #include "Console.h"
 
 namespace RedBox {
@@ -113,7 +114,7 @@ namespace RedBox {
 			// We start by converting the attributes.
 			while (attribute) {
 				value.pushBackArray();
-				attributeToValue(*attribute, value[value.getArray().size() - 1][attribute->Name()]);
+				attributeToValue(*attribute, value[value.getArray().getSize() - 1][attribute->Name()]);
 				attribute = attribute->Next();
 			}
 
@@ -123,11 +124,11 @@ namespace RedBox {
 			while ((child = element.IterateChildren(child))) {
 				if (child->ToElement()) {
 					value.pushBackArray();
-					elementToValue(*child->ToElement(), value[value.getArray().size() - 1][child->ToElement()->Value()]);
+					elementToValue(*child->ToElement(), value[value.getArray().getSize() - 1][child->ToElement()->Value()]);
 
 				} else if (child->ToText()) {
 					value.pushBackArray();
-					textToValue(child->ToText()->Value(), value[value.getArray().size() - 1]);
+					textToValue(child->ToText()->Value(), value[value.getArray().getSize() - 1]);
 				}
 			}
 
@@ -160,7 +161,7 @@ namespace RedBox {
 						}
 
 						found.pushBackArray();
-						elementToValue(*child->ToElement(), found[found.getArray().size() - 1]);
+						elementToValue(*child->ToElement(), found[found.getArray().getSize() - 1]);
 
 					} else {
 						// If it's a new member name, we simply add it to the value.
@@ -193,17 +194,16 @@ namespace RedBox {
 		TiXmlText *newChildText;
 
 		// We check each element of the array.
-		for (Array::const_iterator i = array.begin();
-		     i != array.end(); ++i) {
+		for (Array::SizeType i = 0; i < array.getSize(); ++i) {
 			// If the element in the array is an object.
-			if (i->isObject()) {
-				objectToElement(i->getObject(), element);
+			if (array[i].isObject()) {
+				objectToElement(array[i].getObject(), element);
 
-			} else if (i->isArray()) {
-				arrayToElement(i->getArray(), element);
+			} else if (array[i].isArray()) {
+				arrayToElement(array[i].getArray(), element);
 
-			} else if (i->isStringable()) {
-				newChildText = new TiXmlText(i->getToString());
+			} else if (array[i].isStringable()) {
+				newChildText = new TiXmlText(array[i].getToString());
 				element.LinkEndChild(newChildText);
 			}
 		}
@@ -235,10 +235,9 @@ namespace RedBox {
 				if (i->second.isArrayOfSameTypes()) {
 					const Array &tmpArray = i->second.getArray();
 
-					for (Array::const_iterator j = tmpArray.begin();
-					     j != tmpArray.end(); ++j) {
+					for (Array::SizeType j = 0; j < tmpArray.getSize(); ++j) {
 						newChild = new TiXmlElement(i->first);
-						valueToElement(*j, *newChild);
+						valueToElement(tmpArray[j], *newChild);
 						element.LinkEndChild(newChild);
 					}
 
