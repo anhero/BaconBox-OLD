@@ -1,8 +1,8 @@
 #include "PlayState.h"
-#include <RedBox/SpriteFactory.h>
+#include <BaconBox/SpriteFactory.h>
 #include <cmath>
 
-using namespace RedBox;
+using namespace BaconBox;
 
 PlayState::PlayState() : State() {
 		aSprite = SpriteFactory::makePolygon(4, 50, Color::RED);

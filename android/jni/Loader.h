@@ -1,17 +1,17 @@
 #ifndef __LOADER_H
 #define __LOADER_H
 
-#include <RedBox.h>
+#include <BaconBox.h>
 
 #include "PlayState.h"
-namespace RedBox {
+namespace BaconBox {
 	class Loader  {
 	public:
 		static void load(){
 			//Setup and add your first state here
-			RedBox::Engine::setUpdatesPerSecond(60);
-			RedBox::Engine::setMinFps(5);
-			RedBox::Engine::initializeEngine(320, 480);
+			BaconBox::Engine::setUpdatesPerSecond(60);
+			BaconBox::Engine::setMinFps(5);
+			BaconBox::Engine::initializeEngine(320, 480);
 			Engine::addState(new PlayState());
 		}
 	};

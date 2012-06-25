@@ -1,6 +1,6 @@
 #!/usr/bin/env BoxFactory
 
-project.setname RedBox
+project.setname BaconBox
 
 project.discover_directory
 
@@ -10,7 +10,7 @@ project.discover_directory
 # Change this to change the library name
 # An idea would be to default to the last directory in the project_directory path, once resolved.
 # For project /home/homer/Projects/foo/bar/baz/ this would resolve as project_name "baz"
-#project.setname RedBox
+#project.setname BaconBox
 
 # Here we load the modules this project uses.
 module.load compilers/cpp
@@ -72,9 +72,9 @@ fi
 # We remove the current platform from the list of available platforms
 array_remove platforms "$platform"
 
-source_path="$(project.getdirectory)/RedBox"
+source_path="$(project.getdirectory)/BaconBox"
 
-include_paths=( "$(project.getdirectory)/RedBox/" "$(project.getdirectory)/libraries/current/include/" )
+include_paths=( "$(project.getdirectory)/BaconBox/" "$(project.getdirectory)/libraries/current/include/" )
 
 # Creating an array of parameters for excludes.
 # This is a "lazy" way to do it instead of passing the args manually

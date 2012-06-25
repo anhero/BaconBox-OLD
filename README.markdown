@@ -1,20 +1,20 @@
-The RedBox engine 
+The BaconBox engine 
 =================
 *Version: Development snapshot*
 
-What is the RedBox Engine?
+What is the BaconBox Engine?
 --------------------------
-The RedBox Engine is a 2D engine designed to run on every major platform. RedBox 
+The BaconBox Engine is a 2D engine designed to run on every major platform. BaconBox 
 was greatly inspired by the well known Flixel and Unity engines. The goal was to 
 mix the cool stuff the popular engines had and smooth out some of the rough 
 edges. There is still more to come for this engine; it is still in its infancy.
 
 More detailed informations are available on 
-[the RedBox Engine website](http://redboxengine.com/).
+[the BaconBox Engine website](http://baconbox.net/).
 
 Getting help
 ============
-For any help, you can go to [the website](http://redboxengine.com), which is
+For any help, you can go to [the website](http://baconbox.net), which is
 the documentation website or you can use [our forums](http://anhero.net/forum/)
 and make your mark in the community.
 
@@ -23,18 +23,18 @@ report on [our bug tracker](http://bugs.anhero.net/).
 
 License informations
 ======================
-For license details about RedBox, see the wiki or the license.txt file.
+For license details about BaconBox, see the wiki or the license.txt file.
 
 More details
 ============
 
 How to use
 ----------
-The RedBox engine is a library that is compiled and then used as the framework 
-for game development. You might need to lookt at a RedBoxApp project to know more
+The BaconBox engine is a library that is compiled and then used as the framework 
+for game development. You might need to lookt at a BaconBoxApp project to know more
 about how to use this.
 
-This project is more aimed at the porters, builders and hackers of The RedBox
+This project is more aimed at the porters, builders and hackers of The BaconBox
 Engine.
 
 Project structure
@@ -46,11 +46,11 @@ Project structure
 		module/           ->  Contains custom modules for CMake
 		toolchain/        ->  Contains custom CMake toolchains
 	ide/                  ->  Static IDE projects.
-	libraries/            ->  The dependencies for The RedBox Engine are there,
+	libraries/            ->  The dependencies for The BaconBox Engine are there,
 	                          They are built using libbuildtool.
 	meta/                 ->  The Doxygen config file and the generated 
 	                          documentation goes right there
-	RedBox/               ->  The RedBox Engine sources
+	BaconBox/               ->  The BaconBox Engine sources
 	CMakeLists.txt        ->  Main Cmake script
 	configure             ->  Main configure script, it calls cmake with the 
 	                          right arguments depending on the passed arguments

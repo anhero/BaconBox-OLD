@@ -4,7 +4,7 @@ In Tiled, you can set a type and properties to objects in object layers. Case ma
 
 ## Map properties
 
-RedBox has some properties that will be read and interpreted when loading a tile map.
+BaconBox has some properties that will be read and interpreted when loading a tile map.
 
 <table>
 <tr>
@@ -26,7 +26,7 @@ RedBox has some properties that will be read and interpreted when loading a tile
 
 ## Layer properties
 
-Only one property is read and interpreted by RedBox when reading a tile map.
+Only one property is read and interpreted by BaconBox when reading a tile map.
 
 <table>
 <tr>
@@ -43,14 +43,14 @@ Only one property is read and interpreted by RedBox when reading a tile map.
 
 ## Object types available
 
-RedBox has some pre-defined types you can set that RedBox will read and initialize. To load the types in Tiled, open the "Preferences" window and select the "Object Types" tab. Then, you can either enter the types manually or import them from the "redbox_types.xml" file available with this documentation.
+BaconBox has some pre-defined types you can set that BaconBox will read and initialize. To load the types in Tiled, open the "Preferences" window and select the "Object Types" tab. Then, you can either enter the types manually or import them from the "baconbox_types.xml" file available with this documentation.
 
 * Sprite
 * InanimateSprite
 
 ### Common properties
 
-Here's the list of properties that RedBox will read for both "Sprite" and "InanimateSprite". Boolean values are represented with "0" for false and "1" for true.
+Here's the list of properties that BaconBox will read for both "Sprite" and "InanimateSprite". Boolean values are represented with "0" for false and "1" for true.
 
 If a given value is invalid (for example, if you put "bob" as the value for "velocity.x"), the default value will be used when loading the body.
 

@@ -1,4 +1,4 @@
 # it is needed for ndk-r5
 APP_STL := stlport_static
 
-APP_MODULES := RedBox RedBoxApp
+APP_MODULES := BaconBox BaconBoxApp

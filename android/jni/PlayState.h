@@ -6,8 +6,8 @@
 #ifndef RB_PLAYSTATE_H
 #define RB_PLAYSTATE_H
 
-#include <RedBox.h>
-namespace RedBox{
+#include <BaconBox.h>
+namespace BaconBox{
 	/** 
 	 *
      * @ingroup Group
