@@ -9,9 +9,9 @@ namespace BaconBox {
 		bool result = true;
 
 		const Array &tmpArray = node.getArray();
-		Array::SizeType i = 0;
+		Array::size_type i = 0;
 
-		while (result && i < tmpArray.getSize()) {
+		while (result && i < tmpArray.size()) {
 			if (Vector2::isValidValue(tmpArray[i])) {
 				++i;
 
@@ -465,8 +465,8 @@ namespace BaconBox {
 		bool result = this->isValidValue(node);
 
 		if (result) {
-			this->resize(node.getArray().getSize());
-			for (Array::SizeType i = 0; i < node.getArray().getSize(); ++i) {
+			this->resize(node.getArray().size());
+			for (Array::size_type i = 0; i < node.getArray().size(); ++i) {
 				DefaultSerializer::deserialize(node.getArray()[i], this->operator[](i));
 			}
 		}

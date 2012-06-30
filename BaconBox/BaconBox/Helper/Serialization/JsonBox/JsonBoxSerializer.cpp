@@ -4,6 +4,7 @@
 
 #include "Value.h"
 #include "Array.h"
+#include "Object.h"
 
 namespace BaconBox {
 	void valueToJsonBoxValue(const Value &input, JsonBox::Value &output);
@@ -67,9 +68,9 @@ namespace BaconBox {
 			break;
 
 		case Value::ARRAY:
-			output.setArray(JsonBox::Array(input.getArray().getSize()));
+			output.setArray(JsonBox::Array(input.getArray().size()));
 
-			for (Array::SizeType i = 0; i < input.getArray().getSize(); ++i) {
+			for (Array::size_type i = 0; i < input.getArray().size(); ++i) {
 				valueToJsonBoxValue(input.getArray()[i], output[i]);
 			}
 
@@ -110,7 +111,7 @@ namespace BaconBox {
 		case JsonBox::Value::ARRAY:
 			output.setArray(Array(input.getArray().size()));
 
-			for (Array::SizeType i = 0; i < input.getArray().size(); ++i) {
+			for (Array::size_type i = 0; i < input.getArray().size(); ++i) {
 				jsonBoxValueToValue(input.getArray()[i], output[i]);
 			}
 

@@ -364,6 +364,7 @@
 		2488590114F836F200B6BF99 /* AlgorithmHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2488590014F836F200B6BF99 /* AlgorithmHelper.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		248E03FF14FE8787000BACC5 /* GraphicTileLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248E03FD14FE8786000BACC5 /* GraphicTileLayer.cpp */; };
 		248E040014FE8787000BACC5 /* GraphicTileLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 248E03FE14FE8786000BACC5 /* GraphicTileLayer.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		24E1FF4A159F8D9A009609E7 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24E1FF49159F8D9A009609E7 /* Object.cpp */; };
 		24FB3018150011340065CC99 /* NonManageable.h in Headers */ = {isa = PBXBuildFile; fileRef = 24FB3017150011340065CC99 /* NonManageable.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		24FB301B15001CFD0065CC99 /* Keyable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24FB301915001CFC0065CC99 /* Keyable.cpp */; };
 		24FB301C15001CFD0065CC99 /* Keyable.h in Headers */ = {isa = PBXBuildFile; fileRef = 24FB301A15001CFC0065CC99 /* Keyable.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -769,6 +770,7 @@
 		2488590014F836F200B6BF99 /* AlgorithmHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlgorithmHelper.h; sourceTree = "<group>"; };
 		248E03FD14FE8786000BACC5 /* GraphicTileLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicTileLayer.cpp; sourceTree = "<group>"; };
 		248E03FE14FE8786000BACC5 /* GraphicTileLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicTileLayer.h; sourceTree = "<group>"; };
+		24E1FF49159F8D9A009609E7 /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
 		24FB3017150011340065CC99 /* NonManageable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NonManageable.h; sourceTree = "<group>"; };
 		24FB301915001CFC0065CC99 /* Keyable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Keyable.cpp; sourceTree = "<group>"; };
 		24FB301A15001CFC0065CC99 /* Keyable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keyable.h; sourceTree = "<group>"; };
@@ -1471,6 +1473,7 @@
 				51282F77159F78C600AC6980 /* DefaultSerializer.h */,
 				51282F78159F78C600AC6980 /* JsonBox */,
 				51282F7B159F78C600AC6980 /* JsonSerializer.h */,
+				24E1FF49159F8D9A009609E7 /* Object.cpp */,
 				51282F7C159F78C600AC6980 /* Object.h */,
 				51282F7D159F78C600AC6980 /* Serializable.cpp */,
 				51282F7E159F78C600AC6980 /* Serializable.h */,
@@ -1961,6 +1964,7 @@
 				51282F91159F78C600AC6980 /* Serializer.cpp in Sources */,
 				51282F93159F78C600AC6980 /* TinyXMLSerializer.cpp in Sources */,
 				51282F95159F78C600AC6980 /* Value.cpp in Sources */,
+				24E1FF4A159F8D9A009609E7 /* Object.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

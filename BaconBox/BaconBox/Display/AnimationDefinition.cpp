@@ -4,6 +4,7 @@
 #include "DefaultSerializer.h"
 #include "Serializer.h"
 #include "Array.h"
+#include "Object.h"
 
 namespace BaconBox {
 	bool AnimationDefinition::isValidValue(const Value &node) {
@@ -21,9 +22,9 @@ namespace BaconBox {
 		    itNbLoops->second.isNumeric()) {
 
 			const Array &tmpFrames = itFrames->second.getArray();
-			Array::SizeType i = 0;
+			Array::size_type i = 0;
 
-			while (result && i < tmpFrames.getSize()) {
+			while (result && i < tmpFrames.size()) {
 				if (tmpFrames[i].isNumeric()) {
 					++i;
 
@@ -93,10 +94,10 @@ namespace BaconBox {
 			if (itFrames->second.isArray()) {
 				// We make sure the array contains only numbers.
 				const Array &tmpArray = itFrames->second.getArray();
-				Array::SizeType i = 0;
+				Array::const_iterator i = tmpArray.begin();
 
-				while (result && i < tmpArray.getSize()) {
-					if (tmpArray[i].isNumeric()) {
+				while (result && i != tmpArray.end()) {
+					if (i->isNumeric()) {
 						++i;
 
 					} else {
@@ -112,9 +113,9 @@ namespace BaconBox {
 						nbLoops = itNbLoops->second.getInt();
 						timePerFrame = itTimePerFrame->second.getDouble();
 
-						frames.resize(tmpArray.getSize());
+						frames.resize(tmpArray.size());
 
-						for (Array::SizeType i2 = 0; i2 < tmpArray.getSize(); ++i2) {
+						for (Array::size_type i2 = 0; i2 < tmpArray.size(); ++i2) {
 							frames[i2] = static_cast<unsigned int>(tmpArray[i2].getInt());
 						}
 

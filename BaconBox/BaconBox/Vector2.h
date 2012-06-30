@@ -13,6 +13,7 @@
 #include "DefaultSerializer.h"
 #include "Serializer.h"
 #include "Array.h"
+#include "Object.h"
 
 namespace BaconBox {
 #pragma pack(1)
@@ -492,7 +493,7 @@ namespace BaconBox {
 
 			// The vector can either be an array of two values or an object
 			// with the x and y members.
-			if (node.getArray().getSize() == 2) {
+			if (node.getArray().size() == 2) {
 				x = static_cast<ValueType>(node.getArray()[0].getDouble());
 				y = static_cast<ValueType>(node.getArray()[1].getDouble());
 			} else {
@@ -526,7 +527,7 @@ namespace BaconBox {
 			Object::const_iterator itX = node.getObject().find("x");
 			Object::const_iterator itY = node.getObject().find("y");
 
-			return node.getArray().getSize() == 2 || (itX != node.getObject().end() && itY != node.getObject().end() &&
+			return node.getArray().size() == 2 || (itX != node.getObject().end() && itY != node.getObject().end() &&
 			       itX->second.isNumeric() && itY->second.isNumeric());
 
 		}

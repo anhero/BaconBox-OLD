@@ -5,109 +5,126 @@
 #ifndef RB_ARRAY_H
 #define RB_ARRAY_H
 
-#include <cstddef>
+#include <vector>
+
+#include "Value.h"
 
 namespace BaconBox {
-	class Value;
-
-	/**
-	 * Represents a dynamic array containing Values used for serialization and
-	 * deserialization.
-	 * @see BaconBox::Value
-	 */
 	class Array {
 	public:
-		/// Type used to keep track of the array's size.
-		typedef size_t SizeType;
+		typedef std::vector<Value> container;
+		typedef container::value_type value_type;
+		typedef container::allocator_type allocator_type;
+		typedef container::size_type size_type;
+		typedef container::difference_type difference_type;
+		typedef container::reference reference;
+		typedef container::const_reference const_reference;
+		typedef container::pointer pointer;
+		typedef container::const_pointer const_pointer;
+		typedef container::iterator iterator;
+		typedef container::const_iterator const_iterator;
+		typedef container::reverse_iterator reverse_iterator;
+		typedef container::const_reverse_iterator const_reverse_iterator;
 
-		/**
-		 * Default constructor. Initializes an empty array.
-		 */
-		Array();
+		Array(const allocator_type &alloc = allocator_type());
 
-		/**
-		 * Parameterized constructor.
-		 * @param startingSize Starting size of the dynamic array. All values
-		 * are initialized with their default constructor.
-		 */
-		Array(SizeType startingSize);
+		explicit Array(size_type count, const_reference value = value_type(), const allocator_type &alloc = allocator_type());
 
-		/**
-		 * Parameterized constructor.
-		 * @param startingSize Starting size of the dynamic array. All values
-		 * are initialized with the given default value.
-		 * @param defaultValue Default value to use to initialize the values.
-		 */
-		Array(SizeType startingSize, const Value &defaultValue);
+		template <typename InputIterator>
+		Array(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type()) : data(first, last) {
+		}
 
-		/**
-		 * Copy constructor.
-		 * @param src Dynamic array to make a copy of.
-		 */
-		Array(const Array &src);
+		Array(const Array &other);
 
-		/**
-		 * Destructor. Unallocates the dynamic memory used by the array if
-		 * necessary.
-		 */
-		~Array();
+		Array &operator=(const Array &other);
+		
+		bool operator==(const Array &rhs) const;
+		
+		bool operator!=(const Array &rhs) const;
+		
+		bool operator<(const Array &rhs) const;
+		
+		bool operator<=(const Array &rhs) const;
+		
+		bool operator>(const Array &rhs) const;
+		
+		bool operator>=(const Array &rhs) const;
 
-		/**
-		 * Assignment operator overloading.
-		 * @param src Array to copy.
-		 * @return Reference to the modified instance.
-		 */
-		Array &operator=(const Array &src);
+		void assign(size_type count, const_reference value);
 
-		/**
-		 * Gets the value specified at the given index. No bound checking is
-		 * done.
-		 * @param index Index of the value to get.
-		 * @return Reference to the Value at the given index.
-		 */
-		Value &operator[](SizeType index);
+		template <typename InputIterator>
+		void assign(InputIterator first, InputIterator last) {
+			data.assign(first, last);
+		}
 
-		/**
-		 * Gets the value specified at the given index. No bound checking is
-		 * done.
-		 * @param index Index of the value to get.
-		 * @return Reference to the Value at the given index.
-		 */
-		const Value &operator[](SizeType index) const;
+		allocator_type get_allocator() const;
 
-		/**
-		 * Gets the number of values in the array.
-		 * @return Number of values in the dynamic array.
-		 */
-		SizeType getSize() const;
+		reference at(size_type pos);
 
-		/**
-		 * Resizes the dynamic array. If the new size is bigger, the values in
-		 * the existing array are kept and stay at the start of the array and
-		 * the new values are initialized with their default constructor. If the
-		 * new size is smaller, the values at the end are truncated.
-		 * @param newSize New size of the dynamic array.
-		 */
-		void setSize(SizeType newSize);
+		const_reference at(size_type pos) const;
 
-		/**
-		 * Resizes the dynamic array. If the new size is bigger, the values in
-		 * the existing array are kept and stay at the start of the array and
-		 * the new values are initialized with the given default value. If the
-		 * new size is smaller, the values at the end are truncated and the
-		 * given default value is ignored.
-		 * @param newSize New size of the dynamic array.
-		 * @param defaultValue Default value to set to the new elements at the
-		 * end of the array if the new size is bigger. Ignored if the new size
-		 * is smaller.
-		 */
-		void setSize(SizeType newSize, const Value &defaultValue);
+		reference operator[](size_type pos);
+
+		const_reference operator[](size_type pos) const;
+
+		reference front();
+
+		const_reference front() const;
+
+		reference back();
+
+		const_reference back() const;
+
+		iterator begin();
+
+		const_iterator begin() const;
+
+		iterator end();
+
+		const_iterator end() const;
+
+		reverse_iterator rbegin();
+
+		const_reverse_iterator rbegin() const;
+
+		reverse_iterator rend();
+
+		const_reverse_iterator rend() const;
+
+		bool empty() const;
+
+		size_type size() const;
+
+		size_type max_size() const;
+
+		void reserve(size_type size);
+
+		size_type capacity() const;
+
+		void clear();
+
+		iterator insert(iterator pos, const_reference value);
+
+		void insert(iterator pos, size_type count, const_reference value);
+
+		template <typename InputIterator>
+		void insert(iterator pos, InputIterator first, InputIterator last) {
+			data.insert(pos, first, last);
+		}
+
+		iterator erase(iterator pos);
+
+		iterator erase(iterator first, iterator last);
+
+		void push_back(const_reference value);
+
+		void pop_back();
+
+		void resize(size_type count, const_reference value = value_type());
+
+		void swap(Array &other);
 	private:
-		/// Pointer to the dynamic array of values.
-		Value *values;
-
-		/// Number of values in the dynamic array.
-		SizeType nbValues;
+		container data;
 	};
 }
 

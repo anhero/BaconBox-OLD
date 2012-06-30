@@ -12,6 +12,7 @@
 #include <tinyxml.h>
 #include "Value.h"
 #include "Array.h"
+#include "Object.h"
 #include "Console.h"
 
 namespace BaconBox {
@@ -114,7 +115,7 @@ namespace BaconBox {
 			// We start by converting the attributes.
 			while (attribute) {
 				value.pushBackArray();
-				attributeToValue(*attribute, value[value.getArray().getSize() - 1][attribute->Name()]);
+				attributeToValue(*attribute, value[value.getArray().size() - 1][attribute->Name()]);
 				attribute = attribute->Next();
 			}
 
@@ -124,11 +125,11 @@ namespace BaconBox {
 			while ((child = element.IterateChildren(child))) {
 				if (child->ToElement()) {
 					value.pushBackArray();
-					elementToValue(*child->ToElement(), value[value.getArray().getSize() - 1][child->ToElement()->Value()]);
+					elementToValue(*child->ToElement(), value[value.getArray().size() - 1][child->ToElement()->Value()]);
 
 				} else if (child->ToText()) {
 					value.pushBackArray();
-					textToValue(child->ToText()->Value(), value[value.getArray().getSize() - 1]);
+					textToValue(child->ToText()->Value(), value[value.getArray().size() - 1]);
 				}
 			}
 
@@ -161,7 +162,7 @@ namespace BaconBox {
 						}
 
 						found.pushBackArray();
-						elementToValue(*child->ToElement(), found[found.getArray().getSize() - 1]);
+						elementToValue(*child->ToElement(), found[found.getArray().size() - 1]);
 
 					} else {
 						// If it's a new member name, we simply add it to the value.
@@ -194,7 +195,7 @@ namespace BaconBox {
 		TiXmlText *newChildText;
 
 		// We check each element of the array.
-		for (Array::SizeType i = 0; i < array.getSize(); ++i) {
+		for (Array::size_type i = 0; i < array.size(); ++i) {
 			// If the element in the array is an object.
 			if (array[i].isObject()) {
 				objectToElement(array[i].getObject(), element);
@@ -235,7 +236,7 @@ namespace BaconBox {
 				if (i->second.isArrayOfSameTypes()) {
 					const Array &tmpArray = i->second.getArray();
 
-					for (Array::SizeType j = 0; j < tmpArray.getSize(); ++j) {
+					for (Array::size_type j = 0; j < tmpArray.size(); ++j) {
 						newChild = new TiXmlElement(i->first);
 						valueToElement(tmpArray[j], *newChild);
 						element.LinkEndChild(newChild);

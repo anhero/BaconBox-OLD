@@ -20,9 +20,9 @@ namespace BaconBox {
 			
 			if (itFrames != tmpObject.end()) {
 				const Array &tmpArray = itFrames->second.getArray();
-				Array::SizeType i1 = 0;
+				Array::size_type i1 = 0;
 				
-				while (result && i1 < tmpArray.getSize()) {
+				while (result && i1 < tmpArray.size()) {
 					if (FrameDetails::isValidValue(tmpArray[i1])) {
 						++i1;
 						
@@ -108,9 +108,9 @@ namespace BaconBox {
 			
 			if (itFrames != tmpObject.end()) {
 				const Array &tmpArray = itFrames->second.getArray();
-				Array::SizeType i1 = 0;
+				Array::size_type i1 = 0;
 				
-				while (result && i1 < tmpArray.getSize()) {
+				while (result && i1 < tmpArray.size()) {
 					if (FrameDetails::isValidValue(tmpArray[i1])) {
 						++i1;
 						
@@ -166,7 +166,7 @@ namespace BaconBox {
 						// We load the frames.
 						if (itFrames != tmpObject.end()) {
 							const Array &tmpArray = itFrames->second.getArray();
-							frames.resize(tmpArray.getSize());
+							frames.resize(tmpArray.size());
 							FrameArray::size_type i3 = 0;
 							
 							while (result && i3 < frames.size()) {

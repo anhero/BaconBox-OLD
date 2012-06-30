@@ -10,6 +10,7 @@
 #include "DefaultSerializer.h"
 #include "Serializer.h"
 #include "StringHelper.h"
+#include "Object.h"
 
 namespace BaconBox {
 	const Color Color::BLACK(0, 0, 0);

@@ -3,6 +3,7 @@
 #include "Value.h"
 #include "DefaultSerializer.h"
 #include "Serializer.h"
+#include "Object.h"
 
 namespace BaconBox {
 	bool ResourceDefinition::isValidValue(const Value &node) {

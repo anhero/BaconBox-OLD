@@ -1,107 +1,169 @@
 #include "Array.h"
 
-#include <algorithm>
-
-#include "Value.h"
-
 namespace BaconBox {
-	Array::Array() : values(NULL), nbValues(0u) {
+	Array::Array(const allocator_type &alloc) : data(alloc) {
 	}
 
-	Array::Array(SizeType startingSize) : values((startingSize) ? (new Value[startingSize]) : (NULL)) , nbValues(startingSize) {
+	Array::Array(size_type count, const_reference value, const allocator_type &alloc) : data(count, value, alloc) {
 	}
 
-	Array::Array(SizeType startingSize, const Value &defaultValue) : values((startingSize) ? (new Value[startingSize]) : (NULL)), nbValues(startingSize) {
-		for (SizeType i = 0; i < nbValues; ++i) {
-			values[i] = defaultValue;
-		}
+	Array::Array(const Array &other) : data(other.data) {
 	}
 
-	Array::Array(const Array &src) : values((src.nbValues) ? (new Value[src.nbValues]) : (NULL)), nbValues(src.nbValues) {
-		for (SizeType i = 0; i < nbValues; ++i) {
-			values[i] = src.values[i];
-		}
-	}
-
-	Array::~Array() {
-		if (values) {
-			delete [] values;
-			values = NULL;
-		}
-	}
-
-	Array &Array::operator=(const Array &src) {
-		if (this != &src) {
-			if (values) {
-				delete [] values;
-			}
-
-			values = new Value[src.nbValues];
-			nbValues = src.nbValues;
-		}
-
+	Array &Array::operator=(const Array &other) {
+		data = other.data;
 		return *this;
 	}
-
-	Value &Array::operator[](SizeType index) {
-		return values[index];
+	
+	bool Array::operator==(const Array &rhs) const {
+		return data == rhs.data;
+	}
+	
+	bool Array::operator!=(const Array &rhs) const {
+		return data != rhs.data;
+	}
+	
+	bool Array::operator<(const Array &rhs) const {
+		return data < rhs.data;
+	}
+	
+	bool Array::operator<=(const Array &rhs) const {
+		return data <= rhs.data;
+	}
+	
+	bool Array::operator>(const Array &rhs) const {
+		return data > rhs.data;
+	}
+	
+	bool Array::operator>=(const Array &rhs) const {
+		return data >= rhs.data;
+	}
+	
+	void Array::assign(size_type count, const_reference value) {
+		data.assign(count, value);
 	}
 
-	const Value &Array::operator[](SizeType index) const {
-		return values[index];
+	Array::allocator_type Array::get_allocator() const {
+		return data.get_allocator();
 	}
 
-	Array::SizeType Array::getSize() const {
-		return nbValues;
+	Array::reference Array::at(size_type pos) {
+		return data.at(pos);
 	}
 
-	void Array::setSize(SizeType newSize) {
-		if (newSize > 0) {
-			if (newSize != nbValues) {
-				Value *newValues = new Value[newSize];
-				SizeType smallerSize = std::min(nbValues, newSize);
-
-				for (SizeType i = 0; i < smallerSize; ++i) {
-					newValues[i] = values[i];
-				}
-
-				if (values) {
-					delete [] values;
-				}
-
-				values = newValues;
-			}
-
-		} else if (values) {
-			delete [] values;
-			values = NULL;
-		}
+	Array::const_reference Array::at(size_type pos) const {
+		return data.at(pos);
 	}
 
-	void Array::setSize(SizeType newSize, const Value &defaultValue) {
-		if (newSize > 0) {
-			if (newSize != nbValues) {
-				Value *newValues = new Value[newSize];
-				SizeType tmpSize = std::min(nbValues, newSize);
+	Array::reference Array::operator[](size_type pos) {
+		return data[pos];
+	}
 
-				for (SizeType i = 0; i < tmpSize; ++i) {
-					newValues[i] = values[i];
-				}
+	Array::const_reference Array::operator[](size_type pos) const {
+		return data[pos];
+	}
 
-				for (SizeType i = nbValues; i < newSize; ++i) {
-					newValues[i] = defaultValue;
-				}
+	Array::reference Array::front() {
+		return data.front();
+	}
 
-				if (values) {
-					delete [] values;
-				}
+	Array::const_reference Array::front() const {
+		return data.front();
+	}
 
-				values = newValues;
-			}
+	Array::reference Array::back() {
+		return data.back();
+	}
 
-		} else if (values) {
-			delete [] values;
-			values = NULL;
-		}
+	Array::const_reference Array::back() const {
+		return data.back();
+	}
+
+	Array::iterator Array::begin() {
+		return data.begin();
+	}
+
+	Array::const_iterator Array::begin() const {
+		return data.begin();
+	}
+
+	Array::iterator Array::end() {
+		return data.end();
+	}
+
+	Array::const_iterator Array::end() const {
+		return data.end();
+	}
+
+	Array::reverse_iterator Array::rbegin() {
+		return data.rbegin();
+	}
+
+	Array::const_reverse_iterator Array::rbegin() const {
+		return data.rbegin();
+	}
+
+	Array::reverse_iterator Array::rend() {
+		return data.rend();
+	}
+
+	Array::const_reverse_iterator Array::rend() const {
+		return data.rend();
+	}
+
+	bool Array::empty() const {
+		return data.empty();
+	}
+
+	Array::size_type Array::size() const {
+		return data.size();
+	}
+
+	Array::size_type Array::max_size() const {
+		return data.max_size();
+	}
+
+	void Array::reserve(size_type size) {
+		data.reserve(size);
+	}
+
+	Array::size_type Array::capacity() const {
+		return data.capacity();
+	}
+
+	void Array::clear() {
+		data.clear();
+	}
+
+	Array::iterator Array::insert(iterator pos, const_reference value) {
+		return data.insert(pos, value);
+	}
+
+	void Array::insert(iterator pos, size_type count, const_reference value) {
+		data.insert(pos, count, value);
+	}
+
+	Array::iterator Array::erase(iterator pos) {
+		return data.erase(pos);
+	}
+
+	Array::iterator Array::erase(iterator first, iterator last) {
+		return data.erase(first, last);
+	}
+
+	void Array::push_back(const_reference value) {
+		data.push_back(value);
+	}
+
+	void Array::pop_back() {
+		data.pop_back();
+	}
+
+	void Array::resize(size_type count, const_reference value) {
+		data.resize(count, value);
+	}
+
+	void Array::swap(Array &other) {
+		data.swap(other.data);
 	}
 }

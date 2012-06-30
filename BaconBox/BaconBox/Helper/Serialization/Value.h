@@ -6,12 +6,12 @@
 #define RB_VALUE_H
 
 #include <iostream>
-
-#include "Object.h"
+#include <string>
 
 namespace BaconBox {
 	class Serializer;
 	class Array;
+	class Object;
 
 	/**
 	 * Represents a serializable value. Can be a string, an integer, a floating
@@ -109,6 +109,59 @@ namespace BaconBox {
 		 * @return Reference to the modified value.
 		 */
 		Value &operator=(const Value &src);
+		
+		/**
+		 * Checks if the current value is equal to the right hand side value.
+		 * @param rhs Right hand side value to check for equality with.
+		 * @return True if the contents of the two values are equal, false if
+		 * not.
+		 */
+		bool operator==(const Value &rhs) const;
+
+		/**
+		 * Checks if the current value is different from the right hand side
+		 * value.
+		 * @param rhs Right hand side value to check for not equality with.
+		 * @return True if the contents of the two values are different, false
+		 * if not.
+		 */
+		bool operator!=(const Value &rhs) const;
+		
+		/**
+		 * Checks if the contents of instance are lexicographically less than
+		 * the contents of the right hand side value.
+		 * @param rhs Right hand side value to check.
+		 * @return True if the contents of of the instance are lexicographically
+		 * less than the contents of the right hand side value.
+		 */
+		bool operator <(const Value &rhs) const;
+		
+		/**
+		 * Checks if the contents of instance are lexicographically less than or
+		 * equal the contents of the right hand side value.
+		 * @param rhs Right hand side value to check.
+		 * @return True if the contents of of the instance are lexicographically
+		 * less than or equal the contents of the right hand side value.
+		 */
+		bool operator <=(const Value &rhs) const;
+		
+		/**
+		 * Checks if the contents of instance are lexicographically greater than
+		 * the contents of the right hand side value.
+		 * @param rhs Right hand side value to check.
+		 * @return True if the contents of of the instance are lexicographically
+		 * greater than the contents of the right hand side value.
+		 */
+		bool operator >(const Value &rhs) const;
+		
+		/**
+		 * Checks if the contents of instance are lexicographically greater than
+		 * or equal the contents of the right hand side value.
+		 * @param rhs Right hand side value to check.
+		 * @return True if the contents of of the instance are lexicographically
+		 * greater than or equal the contents of the right hand side value.
+		 */
+		bool operator >=(const Value &rhs) const;
 
 		/**
 		 * Bracket operator overload. If the value doesn't represent an object,
@@ -117,7 +170,7 @@ namespace BaconBox {
 		 * @param key Key identifier of the object's value to get.
 		 * @return Reference to the object's member's value.
 		 */
-		Value &operator[](const Object::key_type &key);
+		Value &operator[](const std::string &key);
 
 		/**
 		 * Bracket operator overload. If the value doesn't represent an object,
@@ -371,59 +424,6 @@ namespace BaconBox {
 		void setArrayOfSameTypes(bool newArrayOfSameTypes);
 	private:
 		/**
-		 * Union used to contain the pointer to the value's data.
-		 */
-		union ValueDataPointer {
-			std::string *stringValue;
-			int *intValue;
-			double *doubleValue;
-			Object *objectValue;
-			Array *arrayValue;
-			bool *boolValue;
-
-			/**
-			 * Default constructor. Puts the pointers at NULL.
-			 */
-			ValueDataPointer();
-
-			/**
-			 * Parameterized constructor.
-			 * @param newConstStringValue Pointer to set to the string pointer.
-			 */
-			ValueDataPointer(std::string *newStringValue);
-
-			/**
-			 * Parameterized constructor.
-			 * @param newConstIntValue Pointer to set to the int pointer.
-			 */
-			ValueDataPointer(int *newIntValue);
-
-			/**
-			 * Parameterized constructor.
-			 * @param newConstDoubleValue Pointer to set to the double pointer.
-			 */
-			ValueDataPointer(double *newDoubleValue);
-
-			/**
-			 * Parameterized constructor.
-			 * @param newConstObjectValue Pointer to set to the object pointer.
-			 */
-			ValueDataPointer(Object *newObjectValue);
-
-			/**
-			 * Parameterized constructor.
-			 * @param newConstArrayValue Pointer to set to the array pointer.
-			 */
-			ValueDataPointer(Array *newArrayValue);
-
-			/**
-			 * Parameterized constructor.
-			 * @param newConstBoolValue Pointer to set to the bool pointer.
-			 */
-			ValueDataPointer(bool *newBoolValue);
-		};
-
-		/**
 		 * Resets the value.
 		 */
 		void clear();
@@ -435,6 +435,58 @@ namespace BaconBox {
 
 		/// Type of data the value contains.
 		Type type;
+		/**
+		 * Union used to contain the pointer to the value's data->
+		 */
+		union ValueDataPointer {
+			std::string *stringValue;
+			int *intValue;
+			double *doubleValue;
+			Object *objectValue;
+			Array *arrayValue;
+			bool *boolValue;
+			
+			/**
+			 * Default constructor. Puts the pointers at NULL.
+			 */
+			ValueDataPointer();
+			
+			/**
+			 * Parameterized constructor.
+			 * @param newConstStringValue Pointer to set to the string pointer.
+			 */
+			ValueDataPointer(std::string *newStringValue);
+			
+			/**
+			 * Parameterized constructor.
+			 * @param newConstIntValue Pointer to set to the int pointer.
+			 */
+			ValueDataPointer(int *newIntValue);
+			
+			/**
+			 * Parameterized constructor.
+			 * @param newConstDoubleValue Pointer to set to the double pointer.
+			 */
+			ValueDataPointer(double *newDoubleValue);
+			
+			/**
+			 * Parameterized constructor.
+			 * @param newConstObjectValue Pointer to set to the object pointer.
+			 */
+			ValueDataPointer(Object *newObjectValue);
+			
+			/**
+			 * Parameterized constructor.
+			 * @param newConstArrayValue Pointer to set to the array pointer.
+			 */
+			ValueDataPointer(Array *newArrayValue);
+			
+			/**
+			 * Parameterized constructor.
+			 * @param newConstBoolValue Pointer to set to the bool pointer.
+			 */
+			ValueDataPointer(bool *newBoolValue);
+		};
 
 		/// Pointer to the Value's data.
 		ValueDataPointer data;

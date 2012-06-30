@@ -5,6 +5,7 @@
 #include "DefaultSerializer.h"
 #include "Serializer.h"
 #include "Array.h"
+#include "Object.h"
 
 namespace BaconBox {
 	static const std::string EMPTY_STRING = std::string();
@@ -137,6 +138,129 @@ namespace BaconBox {
 		return *this;
 	}
 
+	bool Value::operator==(const Value &rhs) const {
+		if (type == rhs.type) {
+			switch (type) {
+			case STRING:
+				return *data.stringValue == *data.stringValue;
+				break;
+
+			case INTEGER:
+				return *data.intValue == *data.intValue;
+				break;
+
+			case DOUBLE:
+				return *data.doubleValue == *data.doubleValue;
+				break;
+
+			case OBJECT:
+				return *data.objectValue == *data.objectValue;
+				break;
+
+			case ARRAY:
+				return *data.arrayValue == *data.arrayValue;
+				break;
+
+			case BOOLEAN:
+				return *data.boolValue	== *data.boolValue;
+				break;
+
+			default:
+				return true;
+				break;
+			}
+
+		} else {
+			return false;
+		}
+	}
+
+	bool Value::operator!=(const Value &rhs) const {
+		return !(*this == rhs);
+	}
+
+	bool Value::operator<(const Value &rhs) const {
+		if (type == rhs.type) {
+			switch (type) {
+			case STRING:
+				return *data.stringValue < *data.stringValue;
+				break;
+
+			case INTEGER:
+				return *data.intValue < *data.intValue;
+				break;
+
+			case DOUBLE:
+				return *data.doubleValue < *data.doubleValue;
+				break;
+
+			case OBJECT:
+				return *data.objectValue < *data.objectValue;
+				break;
+
+			case ARRAY:
+				return *data.arrayValue < *data.arrayValue;
+				break;
+
+			case BOOLEAN:
+				return *data.boolValue	< *data.boolValue;
+				break;
+
+			default:
+				return false;
+				break;
+			}
+
+		} else {
+			return false;
+		}
+	}
+
+	bool Value::operator<=(const Value &rhs) const {
+		return *this < rhs || *this == rhs;
+	}
+
+	bool Value::operator>(const Value &rhs) const {
+		if (type == rhs.type) {
+			switch (type) {
+			case STRING:
+				return *data.stringValue > *data.stringValue;
+				break;
+
+			case INTEGER:
+				return *data.intValue > *data.intValue;
+				break;
+
+			case DOUBLE:
+				return *data.doubleValue > *data.doubleValue;
+				break;
+
+			case OBJECT:
+				return *data.objectValue > *data.objectValue;
+				break;
+
+			case ARRAY:
+				return *data.arrayValue > *data.arrayValue;
+				break;
+
+			case BOOLEAN:
+				return *data.boolValue	> *data.boolValue;
+				break;
+
+			default:
+				return false;
+				break;
+			}
+
+		} else {
+			return false;
+		}
+	}
+
+	bool Value::operator>=(const Value &rhs) const {
+		return *this > rhs || *this == rhs;
+	}
+
 	Value &Value::operator[](const Object::key_type &key) {
 		if (type != OBJECT) {
 			clear();
@@ -147,7 +271,7 @@ namespace BaconBox {
 		return (*data.objectValue)[key];
 	}
 
-	Value &Value::operator[](Array::SizeType index) {
+	Value &Value::operator[](Array::size_type index) {
 		if (type != ARRAY) {
 			clear();
 			type = ARRAY;
@@ -313,10 +437,10 @@ namespace BaconBox {
 		}
 	}
 
-	void Value::resizeArray(Array::SizeType newSize,
+	void Value::resizeArray(Array::size_type newSize,
 	                        const Value defaultValue) {
 		if (type == ARRAY) {
-			data.arrayValue->setSize(newSize, defaultValue);
+			data.arrayValue->resize(newSize, defaultValue);
 
 		} else {
 			clear();
@@ -327,7 +451,7 @@ namespace BaconBox {
 
 	void Value::pushBackArray(const Value &newValue) {
 		if (type == ARRAY) {
-			data.arrayValue->setSize(data.arrayValue->getSize() + 1, newValue);
+			data.arrayValue->resize(data.arrayValue->size() + 1, newValue);
 
 		} else {
 			clear();
