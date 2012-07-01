@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		2412604515A0C33A0083ED75 /* Generate Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2412604615A0C33A0083ED75 /* Build configuration list for PBXAggregateTarget "Generate Documentation" */;
+			buildPhases = (
+				2412604915A0C3620083ED75 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Generate Documentation";
+			productName = "Generate Documentation";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		240487D814F2B1B8001F8F61 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 240485DD14F2AE57001F8F61 /* AudioEngine.cpp */; };
 		240487D914F2B1B8001F8F61 /* BackgroundMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 240485E014F2AE57001F8F61 /* BackgroundMusic.cpp */; };
@@ -1796,9 +1810,26 @@
 			projectRoot = "";
 			targets = (
 				240485CD14F2AE36001F8F61 /* BaconBox */,
+				2412604515A0C33A0083ED75 /* Generate Documentation */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2412604915A0C3620083ED75 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $PROJECT_DIR/../../../meta/documentation\n$DOXYGEN_PATH Doxyfile";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		240485CA14F2AE36001F8F61 /* Sources */ = {
@@ -2017,7 +2048,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx;
+				SDKROOT = "";
 			};
 			name = Release;
 		};
@@ -2051,6 +2082,24 @@
 			};
 			name = Release;
 		};
+		2412604715A0C33A0083ED75 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DOXYGEN_DOCSET_BUNDLE_ID = BaconBox;
+				DOXYGEN_PATH = /usr/local/bin/doxygen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2412604815A0C33A0083ED75 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DOXYGEN_DOCSET_BUNDLE_ID = BaconBox;
+				DOXYGEN_PATH = /usr/local/bin/doxygen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2071,6 +2120,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		2412604615A0C33A0083ED75 /* Build configuration list for PBXAggregateTarget "Generate Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2412604715A0C33A0083ED75 /* Debug */,
+				2412604815A0C33A0083ED75 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
