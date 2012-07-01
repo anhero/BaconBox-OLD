@@ -225,7 +225,7 @@ namespace BaconBox {
 		               const Vector2 &newPosition,
 		               const FrameDetails &frameDetails) {
 			// We initialize the vertices.
-			this->getVe rtices().resize(4);
+			this->getVertices().resize(4);
 			ShapeFactory::createRectangle(newSize, newPosition, &this->getVertices());
 			// We specify the render mode.
 			this->addRenderMode(RenderMode::SHAPE);
