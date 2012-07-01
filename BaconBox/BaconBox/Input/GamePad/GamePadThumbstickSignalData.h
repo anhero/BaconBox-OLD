@@ -20,9 +20,11 @@ namespace BaconBox {
 		 * @param newGamePadState State of the game pad that sent the signal.
 		 * @param newThumbstickIndex Index of the thumbstick concerned by the
 		 * signal.
+		 * @param gamePadIndex Index of the game pad.
 		 */
 		GamePadThumbstickSignalData(const GamePadState& newGamePadState,
-									unsigned int newThumbstickIndex, unsigned gamePadIndex);
+									unsigned int newThumbstickIndex,
+									unsigned gamePadIndex);
 		
 		/**
 		 * Destructor.

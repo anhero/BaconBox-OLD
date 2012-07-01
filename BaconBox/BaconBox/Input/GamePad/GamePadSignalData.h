@@ -19,19 +19,21 @@ namespace BaconBox {
 		/**
 		 * Parameterized constructor.
 		 * @param newGamePadState State of the game pad that sent the signal.
+		 * @param gamePadIndex Index of the game pad.
 		 */
-		GamePadSignalData(const GamePadState& newGamePadState, unsigned int gamePadIndex);
-		
+		GamePadSignalData(const GamePadState &newGamePadState,
+		                  unsigned int gamePadIndex);
+
 		/**
 		 * Destructor.
 		 */
 		virtual ~GamePadSignalData();
-		
+
 		/// Reference to the state of the game pad that sent the signal.
-		const GamePadState& gamePadState;
-        
-        
-        const unsigned int gamePadIndex;
+		const GamePadState &gamePadState;
+
+
+		const unsigned int gamePadIndex;
 	};
 }
 

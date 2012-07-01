@@ -214,7 +214,7 @@ namespace BaconBox {
 		 * @param newTileSize Size of the tiles (in pixels). 32x32 by default.
 		 * @param newTileSpacing Spacing between the tiles in the tileset image.
 		 * @param newMargin Margin around the tiles in the tileset image.
-		 * @param tileOffset Offset that is applied when drawing the tiles in
+		 * @param newTileOffset Offset that is applied when drawing the tiles in
 		 * this tileset.
 		 * @param overwrite Set this to true if you want to overwrite the
 		 * existing tileset if there is already a tileset with the same name.

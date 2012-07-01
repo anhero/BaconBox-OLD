@@ -14,7 +14,7 @@ namespace BaconBox {
 	 * (rene.nyffenegger@adp-gmbh.ch) at
 	 * http://www.adp-gmbh.ch/cpp/common/base64.html
 	 * Big thanks to him.
-	 * @ingroup Helper.
+	 * @ingroup Helper
 	 */
 	class Base64 {
 	public:

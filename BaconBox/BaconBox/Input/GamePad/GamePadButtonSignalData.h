@@ -19,6 +19,7 @@ namespace BaconBox {
 		 * Parameterized constructor.
 		 * @param newGamePadState State of the game pad that sent the signal.
 		 * @param newButtonIndex Index of the button concerned by the signal.
+		 * @param gamePadIndex Index of the game pad.
 		 */
 		GamePadButtonSignalData(const GamePadState& newGamePadState,
 								unsigned int newButtonIndex, unsigned gamePadIndex);

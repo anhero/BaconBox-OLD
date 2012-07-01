@@ -219,13 +219,13 @@ namespace BaconBox {
 		 * sprite.
 		 * @param newSize Size of the sprite.
 		 * @param newPosition Position of the sprite in the world.
-		 * @param newTextureOffset Texture coordinates' offset if needed.
+		 * @param frameDetails Frame details for the sprite.
 		 */
 		void construct(const Vector2 &newSize,
 		               const Vector2 &newPosition,
 		               const FrameDetails &frameDetails) {
 			// We initialize the vertices.
-			this->getVertices().resize(4);
+			this->getVe rtices().resize(4);
 			ShapeFactory::createRectangle(newSize, newPosition, &this->getVertices());
 			// We specify the render mode.
 			this->addRenderMode(RenderMode::SHAPE);

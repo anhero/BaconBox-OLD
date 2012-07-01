@@ -65,7 +65,7 @@ namespace BaconBox {
 		 * pixels).
 		 * @param newParentLayer Reference to the object layer that contains
 		 * this tile object.
-		 * @param newTileIndex Id of the tile to display the object.
+		 * @param newTileId Id of the tile to display the object.
 		 */
 		TileObject(const std::string &newName,
 		           const Vector2 &newPosition,

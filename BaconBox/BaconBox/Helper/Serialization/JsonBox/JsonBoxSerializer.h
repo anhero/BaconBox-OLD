@@ -20,9 +20,9 @@ namespace BaconBox {
 		 * Default and parameterized constructor.
 		 * @param newIndent Set this parameter to true if you want the output
 		 * of the serializer to be indented. Set to true by default.
-		 * @param newEscapeAll Set this parameter to true if you want the output
-		 * to escape solidus ('/') characters in strings. Set to false by
-		 * default
+		 * @param newEscapeSolidus Set this parameter to true if you want the
+		 * output to escape solidus ('/') characters in strings. Set to false by
+		 * default.
 		 */
 		explicit JsonBoxSerializer(bool newIndent = true, bool newEscapeSolidus = false);
 

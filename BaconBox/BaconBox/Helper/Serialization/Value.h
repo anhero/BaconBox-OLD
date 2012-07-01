@@ -173,11 +173,13 @@ namespace BaconBox {
 		Value &operator[](const std::string &key);
 
 		/**
-		 * Bracket operator overload. If the value doesn't represent an object,
-		 * it is changed to do so and accesses the object's member value. If
-		 * the object's member doesn't exist, it is created.
-		 * @param key Key identifier of the object's value to get.
-		 * @return Reference to the object's member's value.
+		 * Bracket operator overload. If the value doesn't represent an array,
+		 * it is changed to do so and accesses the array's member value. If the
+		 * value is already an array but the index is too high, expect problems.
+		 * If the value is not an array, it becomes one with a size big enough
+		 * for the index to be valid.
+		 * @param index Index of the value to get in the array.
+		 * @return Reference to the array's value at the specified index.
 		 */
 		Value &operator[](const size_t index);
 
@@ -365,7 +367,7 @@ namespace BaconBox {
 
 		/**
 		 * Sets the value as a boolean.
-		 * @param newBoolean New boolean value that the Value will contain. The
+		 * @param newBool New boolean value that the Value will contain. The
 		 * value's type is changed if necessary to contain the boolean.
 		 */
 		void setBool(bool newBool);
@@ -453,37 +455,37 @@ namespace BaconBox {
 			
 			/**
 			 * Parameterized constructor.
-			 * @param newConstStringValue Pointer to set to the string pointer.
+			 * @param newStringValue Pointer to set to the string pointer.
 			 */
 			ValueDataPointer(std::string *newStringValue);
 			
 			/**
 			 * Parameterized constructor.
-			 * @param newConstIntValue Pointer to set to the int pointer.
+			 * @param newIntValue Pointer to set to the int pointer.
 			 */
 			ValueDataPointer(int *newIntValue);
 			
 			/**
 			 * Parameterized constructor.
-			 * @param newConstDoubleValue Pointer to set to the double pointer.
+			 * @param newDoubleValue Pointer to set to the double pointer.
 			 */
 			ValueDataPointer(double *newDoubleValue);
 			
 			/**
 			 * Parameterized constructor.
-			 * @param newConstObjectValue Pointer to set to the object pointer.
+			 * @param newObjectValue Pointer to set to the object pointer.
 			 */
 			ValueDataPointer(Object *newObjectValue);
 			
 			/**
 			 * Parameterized constructor.
-			 * @param newConstArrayValue Pointer to set to the array pointer.
+			 * @param newArrayValue Pointer to set to the array pointer.
 			 */
 			ValueDataPointer(Array *newArrayValue);
 			
 			/**
 			 * Parameterized constructor.
-			 * @param newConstBoolValue Pointer to set to the bool pointer.
+			 * @param newBoolValue Pointer to set to the bool pointer.
 			 */
 			ValueDataPointer(bool *newBoolValue);
 		};

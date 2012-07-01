@@ -152,7 +152,7 @@ namespace BaconBox {
 		/**
 		 * Reads the animation from a property map.
 		 * @param properties Properties to use to read the animation details.
-		 * @param animationName Name of the animation to read.
+		 * @param animation Name of the animation to read.
 		 * @return Animation definition.
 		 */
 		static const AnimationDefinition readAnimation(const PropertyMap &properties,

@@ -76,10 +76,11 @@ namespace BaconBox {
 		 * Constructs a sprite emitter representing an explosions.
 		 * @param defaultGraphic Pointer to the default graphic the sprite
 		 * emitter will use.
-		 * @param nbSpritesToShoot Number of particles to shoot when the sprite
-		 * emitter explodes. It has to be higher than 0.
+		 * @param nbParticlesToShoot Number of particles to shoot when the
+		 * sprite emitter explodes. It has to be higher than 0.
 		 * @param force Force at which the particles are shot. A variance of 15%
 		 * of the force is applied.
+		 * @param startingPosition Starting position of the sprite emitter.
 		 * @return Pointer to the newly created sprite emitter. NULL if the
 		 * number of particles is not greater than 0.
 		 */

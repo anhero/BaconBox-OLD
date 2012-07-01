@@ -208,14 +208,14 @@ namespace BaconBox {
 
 		/**
 		 * Initializes the vector with the given x component.
-		 * @param newX Y component to use.
+		 * @param newY Y component to use.
 		 */
 		Vector(YComponent newY);
 
 		/**
 		 * Initializes the vector with the given x and y components.
 		 * @param newX X component to use.
-		 * @param newX Y component to use.
+		 * @param newY Y component to use.
 		 */
 		Vector(XComponent newX, YComponent newY);
 
@@ -448,7 +448,7 @@ namespace BaconBox {
 
 		/**
 		 * Projects the instance on a vector.
-		 * @param other Vector to project the instance onto.
+		 * @param direction Vector to project the instance onto.
 		 */
 		void project(const Vector2 &direction);
 

@@ -1827,7 +1827,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $PROJECT_DIR/../../../meta/documentation\n$DOXYGEN_PATH Doxyfile";
+			shellScript = "cd $PROJECT_DIR/../../../meta/documentation\n( cat Doxyfile ; echo \"GENERATE_DOCSET=YES\" ) | $DOXYGEN_PATH -\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2085,7 +2085,6 @@
 		2412604715A0C33A0083ED75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DOXYGEN_DOCSET_BUNDLE_ID = BaconBox;
 				DOXYGEN_PATH = /usr/local/bin/doxygen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2094,7 +2093,6 @@
 		2412604815A0C33A0083ED75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DOXYGEN_DOCSET_BUNDLE_ID = BaconBox;
 				DOXYGEN_PATH = /usr/local/bin/doxygen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2128,6 +2126,7 @@
 				2412604815A0C33A0083ED75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

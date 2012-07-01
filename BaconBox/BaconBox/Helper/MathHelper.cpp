@@ -3,12 +3,17 @@
 #include <cmath>
 
 namespace BaconBox {
+	/// Float containing the PI value.
 	template <> MathHelper::PI<float>::operator float() {
 		return 3.14159265f;
 	}
+	
+	/// Double containing the PI value.
 	template <> MathHelper::PI<double>::operator double() {
 		return 3.14159265;
 	}
+	
+	/// Long double containing the PI value.
 	template <> MathHelper::PI<long double>::operator long double() {
 		return 3.14159265l;
 	}

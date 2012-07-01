@@ -166,7 +166,7 @@ namespace BaconBox {
 
 		/**
 		 * Adds a polygon to the object layer.
-		 * @param newLineName Name of the new polygon object to create.
+		 * @param newPolygonName Name of the new polygon object to create.
 		 * @param newPosition Starting position of the new polygon object to
 		 * create.
 		 * @param overwrite Determines wether or or not the existing polygon

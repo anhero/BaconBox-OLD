@@ -25,6 +25,7 @@ namespace BaconBox {
 		 * @param newPosition Position of the tile map object in the layer (in
 		 * pixels).
 		 * @param newParentLayer Object layer that owns the tile map object.
+		 * @param newType Name of the custom type (optional).
 		 */
 		TileMapObject(const std::string &newName,
 		              const Vector2 &newPosition,

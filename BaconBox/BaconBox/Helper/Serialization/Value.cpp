@@ -261,7 +261,7 @@ namespace BaconBox {
 		return *this > rhs || *this == rhs;
 	}
 
-	Value &Value::operator[](const Object::key_type &key) {
+	Value &Value::operator[](const std::string &key) {
 		if (type != OBJECT) {
 			clear();
 			type = OBJECT;
@@ -271,7 +271,7 @@ namespace BaconBox {
 		return (*data.objectValue)[key];
 	}
 
-	Value &Value::operator[](Array::size_type index) {
+	Value &Value::operator[](size_t index) {
 		if (type != ARRAY) {
 			clear();
 			type = ARRAY;
