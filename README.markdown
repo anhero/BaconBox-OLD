@@ -4,7 +4,7 @@ The BaconBox engine
 
 What is the BaconBox Engine?
 --------------------------
-The BaconBox Engine is a 2D engine designed to run on every major platform. BaconBox 
+The BaconBox Engine is a 2D game engine designed to run on every major platform. BaconBox 
 was greatly inspired by the well known Flixel and Unity engines. The goal was to 
 mix the cool stuff the popular engines had and smooth out some of the rough 
 edges. There is still more to come for this engine; it is still in its infancy.
@@ -39,18 +39,9 @@ Engine.
 
 Project structure
 -----------------
-	CMake/                ->  Contains files needed by CMake.
-		configureScript/  ->  Contains special configure scripts called by the
-		                      main configure script depending on the passed 
-		                      arguments
-		module/           ->  Contains custom modules for CMake
-		toolchain/        ->  Contains custom CMake toolchains
 	ide/                  ->  Static IDE projects.
 	libraries/            ->  The dependencies for The BaconBox Engine are there,
 	                          They are built using libbuildtool.
 	meta/                 ->  The Doxygen config file and the generated 
 	                          documentation goes right there
-	BaconBox/               ->  The BaconBox Engine sources
-	CMakeLists.txt        ->  Main Cmake script
-	configure             ->  Main configure script, it calls cmake with the 
-	                          right arguments depending on the passed arguments
+	BaconBox/             ->  The BaconBox Engine sources
