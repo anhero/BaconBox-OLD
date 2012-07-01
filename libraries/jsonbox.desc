@@ -2,10 +2,10 @@
 
 _name="jsonbox"
 _license="MIT"
-_version="0.4.0"
+_version="0.4.1"
 _archive="${_name}-${_version}-src.tar.gz"
-_archive_url="https://bitbucket.org/madbranch/${_name}/downloads/${_archive}"
-_hash="d4748be2cda13cfe306c2e069321138c" #tar.gz
+_archive_url="https://github.com/downloads/anhero/JsonBox/${_archive}"
+_hash="0c36f0f50ec413ca067bf02f587fe529" #tar.gz
 
 WGET_FLAGS="--no-check-certificate"
 
