@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		2436742D14EED6F700A177ED /* BaconBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2436729E14EED6F700A177ED /* BaconBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		245EAF10134E62CD002F0596 /* sigly.h in Headers */ = {isa = PBXBuildFile; fileRef = 245EAF0F134E62CD002F0596 /* sigly.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		24FBDD5F15A08337008D84C9 /* RBAudioPlayerEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24FBDD5915A08337008D84C9 /* RBAudioPlayerEngine.cpp */; };
+		24FBDD6015A08337008D84C9 /* RBAudioPlayerEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 24FBDD5A15A08337008D84C9 /* RBAudioPlayerEngine.h */; };
+		24FBDD6115A08337008D84C9 /* RBAudioPlayerMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24FBDD5B15A08337008D84C9 /* RBAudioPlayerMusic.cpp */; };
+		24FBDD6215A08337008D84C9 /* RBAudioPlayerMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 24FBDD5C15A08337008D84C9 /* RBAudioPlayerMusic.h */; };
+		24FBDD6315A08337008D84C9 /* RBAudioPlayerMusicDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 24FBDD5D15A08337008D84C9 /* RBAudioPlayerMusicDelegate.h */; };
+		24FBDD6415A08337008D84C9 /* RBAudioPlayerMusicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FBDD5E15A08337008D84C9 /* RBAudioPlayerMusicDelegate.m */; };
 		51079083157C10480008B541 /* libtinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51079082157C10480008B541 /* libtinyxml.a */; };
 		510790CA157D964D0008B541 /* libJsonBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 510790C9157D964D0008B541 /* libJsonBox.a */; };
 		51927C0111D5EA2F00C65B15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A9351410E8934500D144F4 /* AudioToolbox.framework */; };
@@ -29,12 +35,6 @@
 		51C6B2E5157AA78A0038E0DA /* MusicEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 51C6B0F4157AA7890038E0DA /* MusicEngine.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51C6B2E6157AA78A0038E0DA /* MusicInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51C6B0F5157AA7890038E0DA /* MusicInfo.cpp */; };
 		51C6B2E7157AA78A0038E0DA /* MusicInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 51C6B0F6157AA7890038E0DA /* MusicInfo.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		51C6B2E8157AA78A0038E0DA /* RBAudioPlayerEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51C6B0F8157AA7890038E0DA /* RBAudioPlayerEngine.cpp */; };
-		51C6B2E9157AA78A0038E0DA /* RBAudioPlayerEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 51C6B0F9157AA7890038E0DA /* RBAudioPlayerEngine.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		51C6B2EA157AA78A0038E0DA /* RBAudioPlayerMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51C6B0FA157AA7890038E0DA /* RBAudioPlayerMusic.cpp */; };
-		51C6B2EB157AA78A0038E0DA /* RBAudioPlayerMusic.h in Headers */ = {isa = PBXBuildFile; fileRef = 51C6B0FB157AA7890038E0DA /* RBAudioPlayerMusic.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		51C6B2EC157AA78A0038E0DA /* RBAudioPlayerMusicDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 51C6B0FC157AA7890038E0DA /* RBAudioPlayerMusicDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		51C6B2ED157AA78A0038E0DA /* RBAudioPlayerMusicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51C6B0FD157AA7890038E0DA /* RBAudioPlayerMusicDelegate.m */; };
 		51C6B2EE157AA78A0038E0DA /* MusicParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51C6B0FF157AA7890038E0DA /* MusicParameters.cpp */; };
 		51C6B2EF157AA78A0038E0DA /* MusicParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 51C6B100157AA7890038E0DA /* MusicParameters.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51C6B2F0157AA78A0038E0DA /* NullAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51C6B101157AA7890038E0DA /* NullAudio.cpp */; };
@@ -423,6 +423,12 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2436729E14EED6F700A177ED /* BaconBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaconBox.h; sourceTree = "<group>"; };
 		245EAF0F134E62CD002F0596 /* sigly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sigly.h; path = ../../libraries/ios/universal/include/sigly.h; sourceTree = "<group>"; };
+		24FBDD5915A08337008D84C9 /* RBAudioPlayerEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBAudioPlayerEngine.cpp; sourceTree = "<group>"; };
+		24FBDD5A15A08337008D84C9 /* RBAudioPlayerEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerEngine.h; sourceTree = "<group>"; };
+		24FBDD5B15A08337008D84C9 /* RBAudioPlayerMusic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBAudioPlayerMusic.cpp; sourceTree = "<group>"; };
+		24FBDD5C15A08337008D84C9 /* RBAudioPlayerMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerMusic.h; sourceTree = "<group>"; };
+		24FBDD5D15A08337008D84C9 /* RBAudioPlayerMusicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerMusicDelegate.h; sourceTree = "<group>"; };
+		24FBDD5E15A08337008D84C9 /* RBAudioPlayerMusicDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBAudioPlayerMusicDelegate.m; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5102AA7A10F547D300585718 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -442,12 +448,6 @@
 		51C6B0F4157AA7890038E0DA /* MusicEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicEngine.h; sourceTree = "<group>"; };
 		51C6B0F5157AA7890038E0DA /* MusicInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicInfo.cpp; sourceTree = "<group>"; };
 		51C6B0F6157AA7890038E0DA /* MusicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicInfo.h; sourceTree = "<group>"; };
-		51C6B0F8157AA7890038E0DA /* RBAudioPlayerEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBAudioPlayerEngine.cpp; sourceTree = "<group>"; };
-		51C6B0F9157AA7890038E0DA /* RBAudioPlayerEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerEngine.h; sourceTree = "<group>"; };
-		51C6B0FA157AA7890038E0DA /* RBAudioPlayerMusic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBAudioPlayerMusic.cpp; sourceTree = "<group>"; };
-		51C6B0FB157AA7890038E0DA /* RBAudioPlayerMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerMusic.h; sourceTree = "<group>"; };
-		51C6B0FC157AA7890038E0DA /* RBAudioPlayerMusicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBAudioPlayerMusicDelegate.h; sourceTree = "<group>"; };
-		51C6B0FD157AA7890038E0DA /* RBAudioPlayerMusicDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBAudioPlayerMusicDelegate.m; sourceTree = "<group>"; };
 		51C6B0FF157AA7890038E0DA /* MusicParameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicParameters.cpp; sourceTree = "<group>"; };
 		51C6B100157AA7890038E0DA /* MusicParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicParameters.h; sourceTree = "<group>"; };
 		51C6B101157AA7890038E0DA /* NullAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NullAudio.cpp; sourceTree = "<group>"; };
@@ -874,6 +874,19 @@
 			path = ../../BaconBox;
 			sourceTree = "<group>";
 		};
+		24FBDD5815A08337008D84C9 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				24FBDD5915A08337008D84C9 /* RBAudioPlayerEngine.cpp */,
+				24FBDD5A15A08337008D84C9 /* RBAudioPlayerEngine.h */,
+				24FBDD5B15A08337008D84C9 /* RBAudioPlayerMusic.cpp */,
+				24FBDD5C15A08337008D84C9 /* RBAudioPlayerMusic.h */,
+				24FBDD5D15A08337008D84C9 /* RBAudioPlayerMusicDelegate.h */,
+				24FBDD5E15A08337008D84C9 /* RBAudioPlayerMusicDelegate.m */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -943,11 +956,11 @@
 				51C6B0F0157AA7890038E0DA /* AudioState.h */,
 				51C6B0F1157AA7890038E0DA /* BackgroundMusic.cpp */,
 				51C6B0F2157AA7890038E0DA /* BackgroundMusic.h */,
+				24FBDD5815A08337008D84C9 /* ios */,
 				51C6B0F3157AA7890038E0DA /* MusicEngine.cpp */,
 				51C6B0F4157AA7890038E0DA /* MusicEngine.h */,
 				51C6B0F5157AA7890038E0DA /* MusicInfo.cpp */,
 				51C6B0F6157AA7890038E0DA /* MusicInfo.h */,
-				51C6B0F7157AA7890038E0DA /* MusicIOS */,
 				51C6B0FF157AA7890038E0DA /* MusicParameters.cpp */,
 				51C6B100157AA7890038E0DA /* MusicParameters.h */,
 				51C6B101157AA7890038E0DA /* NullAudio.cpp */,
@@ -967,19 +980,6 @@
 				51C6B11F157AA7890038E0DA /* SoundParameters.h */,
 			);
 			path = Audio;
-			sourceTree = "<group>";
-		};
-		51C6B0F7157AA7890038E0DA /* MusicIOS */ = {
-			isa = PBXGroup;
-			children = (
-				51C6B0F8157AA7890038E0DA /* RBAudioPlayerEngine.cpp */,
-				51C6B0F9157AA7890038E0DA /* RBAudioPlayerEngine.h */,
-				51C6B0FA157AA7890038E0DA /* RBAudioPlayerMusic.cpp */,
-				51C6B0FB157AA7890038E0DA /* RBAudioPlayerMusic.h */,
-				51C6B0FC157AA7890038E0DA /* RBAudioPlayerMusicDelegate.h */,
-				51C6B0FD157AA7890038E0DA /* RBAudioPlayerMusicDelegate.m */,
-			);
-			path = MusicIOS;
 			sourceTree = "<group>";
 		};
 		51C6B105157AA7890038E0DA /* OpenAL */ = {
@@ -1545,9 +1545,6 @@
 				51C6B2E3157AA78A0038E0DA /* BackgroundMusic.h in Headers */,
 				51C6B2E5157AA78A0038E0DA /* MusicEngine.h in Headers */,
 				51C6B2E7157AA78A0038E0DA /* MusicInfo.h in Headers */,
-				51C6B2E9157AA78A0038E0DA /* RBAudioPlayerEngine.h in Headers */,
-				51C6B2EB157AA78A0038E0DA /* RBAudioPlayerMusic.h in Headers */,
-				51C6B2EC157AA78A0038E0DA /* RBAudioPlayerMusicDelegate.h in Headers */,
 				51C6B2EF157AA78A0038E0DA /* MusicParameters.h in Headers */,
 				51C6B2F1157AA78A0038E0DA /* NullAudio.h in Headers */,
 				51C6B2F3157AA78A0038E0DA /* NullAudioEngine.h in Headers */,
@@ -1772,6 +1769,9 @@
 				51C6B47D157AA78A0038E0DA /* SimpleBodyManager.h in Headers */,
 				51C6B47F157AA78A0038E0DA /* State.h in Headers */,
 				51C6B481157AA78A0038E0DA /* Vector2.h in Headers */,
+				24FBDD6015A08337008D84C9 /* RBAudioPlayerEngine.h in Headers */,
+				24FBDD6215A08337008D84C9 /* RBAudioPlayerMusic.h in Headers */,
+				24FBDD6315A08337008D84C9 /* RBAudioPlayerMusicDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1847,9 +1847,6 @@
 				51C6B2E2157AA78A0038E0DA /* BackgroundMusic.cpp in Sources */,
 				51C6B2E4157AA78A0038E0DA /* MusicEngine.cpp in Sources */,
 				51C6B2E6157AA78A0038E0DA /* MusicInfo.cpp in Sources */,
-				51C6B2E8157AA78A0038E0DA /* RBAudioPlayerEngine.cpp in Sources */,
-				51C6B2EA157AA78A0038E0DA /* RBAudioPlayerMusic.cpp in Sources */,
-				51C6B2ED157AA78A0038E0DA /* RBAudioPlayerMusicDelegate.m in Sources */,
 				51C6B2EE157AA78A0038E0DA /* MusicParameters.cpp in Sources */,
 				51C6B2F0157AA78A0038E0DA /* NullAudio.cpp in Sources */,
 				51C6B2F2157AA78A0038E0DA /* NullAudioEngine.cpp in Sources */,
@@ -2005,6 +2002,9 @@
 				51C6B47B157AA78A0038E0DA /* SignalData.cpp in Sources */,
 				51C6B47E157AA78A0038E0DA /* State.cpp in Sources */,
 				51C6B480157AA78A0038E0DA /* Vector2.cpp in Sources */,
+				24FBDD5F15A08337008D84C9 /* RBAudioPlayerEngine.cpp in Sources */,
+				24FBDD6115A08337008D84C9 /* RBAudioPlayerMusic.cpp in Sources */,
+				24FBDD6415A08337008D84C9 /* RBAudioPlayerMusicDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
