@@ -3,11 +3,11 @@
 _name="sigly"
 _license="MIT" 
 
-_version="0.1.1"
+_version="0.1.2"
 _archive="${_name}-${_version}-src.tar.gz"
-_archive_url="http://bitbucket.org/anhero/${_name}/downloads/${_archive}"
+_archive_url="https://github.com/downloads/anhero/${_name}/${_archive}"
 
-_hash="ab49587e12f1da054a8aa1e671ae68c3" #tar.gz
+_hash="928542aaae9bf818e089c45dba26e3f2" #tar.gz
 
 WGET_FLAGS="--no-check-certificate"
 
@@ -20,5 +20,3 @@ function build() {
 	mv sigly.h "${libs_builddir}/include/" || exit 1
 	echo done.
 }
-
-# vim: ft=sh
