@@ -19,7 +19,6 @@ namespace BaconBox {
 	struct DeletePointerDirect {
 		template <typename T>
 		void operator() (T pointer) {
-			assert(pointer);
 			delete pointer;
 		}
 	};
@@ -30,6 +29,13 @@ namespace BaconBox {
 			if(myPair.second) {
 				delete myPair.second;
 			}
+		}
+	};
+	
+	struct DeletePointerFromPairDirect {
+		template <typename T, typename U>
+		void operator() (const std::pair<T, U>& myPair) {
+			delete myPair.second;
 		}
 	};
 }
