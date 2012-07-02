@@ -6,6 +6,7 @@
 #include "Serializer.h"
 #include "Array.h"
 #include "Object.h"
+#include "Console.h"
 
 namespace BaconBox {
 	static const std::string EMPTY_STRING = std::string();
@@ -14,6 +15,7 @@ namespace BaconBox {
 	static const Array EMPTY_ARRAY = Array();
 	static const int EMPTY_INT = 0;
 	static const bool EMPTY_BOOL = false;
+	static const Value EMPTY_VALUE = Value();
 
 	Value::Value() : type(NULL_VALUE), data(), attribute(false),
 		arrayOfSameTypes(false), name() {
@@ -279,6 +281,15 @@ namespace BaconBox {
 		}
 
 		return (*data.arrayValue)[index];
+	}
+	
+	const Value &Value::operator[](size_t index) const {
+		if (type == ARRAY) {
+			return (*data.arrayValue)[index];
+		} else {
+			Console::println("Tried to access the index of the array of a const value, but the value is not an array.");
+			return EMPTY_VALUE;
+		}
 	}
 
 	Value::Type Value::getType() const {

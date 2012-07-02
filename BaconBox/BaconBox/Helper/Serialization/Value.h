@@ -181,7 +181,15 @@ namespace BaconBox {
 		 * @param index Index of the value to get in the array.
 		 * @return Reference to the array's value at the specified index.
 		 */
-		Value &operator[](const size_t index);
+		Value &operator[](size_t index);
+		
+		/**
+		 * Bracket operator overload. Will cause problems if the value is not
+		 * an array.
+		 * @param index Index of the value to get in the array.
+		 * @return Const reference to the array's value at the specified index.
+		 */
+		const Value &operator[](size_t index) const;
 
 		/**
 		 * Gets the value's type.
