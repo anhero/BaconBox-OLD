@@ -121,7 +121,7 @@ namespace BaconBox {
 		 * @param file Filename of caller.
 		 * @param line Line number of caller.
 		 * @param varname Name of the variable to print.
-		 * @param value Value of the printed variableé
+		 * @param value Value of the printed variable
 		 */
 		static void _log(std::string file, int line, std::string varname,
 		                 std::string value);
