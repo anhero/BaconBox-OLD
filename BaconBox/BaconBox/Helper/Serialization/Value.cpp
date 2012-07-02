@@ -462,7 +462,7 @@ namespace BaconBox {
 
 	void Value::pushBackArray(const Value &newValue) {
 		if (type == ARRAY) {
-			data.arrayValue->resize(data.arrayValue->size() + 1, newValue);
+			data.arrayValue->push_back(newValue);
 
 		} else {
 			clear();
