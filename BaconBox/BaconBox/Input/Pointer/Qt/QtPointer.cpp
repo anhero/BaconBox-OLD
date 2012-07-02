@@ -55,7 +55,7 @@ void QtPointer::updateDevice() {
 	// We check the mouse move events.
 	QPoint cursorPosition = this->parentWidget()->mapFromGlobal(QCursor::pos());
 	getCursorPreviousPosition(0) = getCursorPosition(0);
-	getCursorPosition(0) = Vec2(cursorPosition.x(), cursorPosition.y());
+	getCursorPosition(0) = Vector2(cursorPosition.x(), cursorPosition.y());
 	if(hasMoved()) {
 		Pointer::move.shoot(PointerSignalData(state, 0));
 	}

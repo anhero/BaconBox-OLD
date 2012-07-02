@@ -12,7 +12,7 @@
 #include <vector>
 
 #include "Pointer.h"
-#include "Vec2.h"
+#include "Vector2.h"
 
 namespace BaconBox {
 	/**
