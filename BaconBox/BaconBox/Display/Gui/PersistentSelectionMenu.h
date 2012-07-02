@@ -27,7 +27,7 @@ namespace BaconBox {
 		 * Default constructor
 		 */
 		PersistentSelectionMenu(): Parent(), selectingAnElement(),
-			selectedElementIterator(this->Parent::menuElements.begin()),
+			selectedElementIterator(this->menuElements.begin()),
 			selectionIsActive(false) {
 		}
 
@@ -67,14 +67,46 @@ namespace BaconBox {
 		}
 
 		void selectFirstElement() {
-			selectAnElement(this->Parent::menuElements.begin());
+			selectAnElement(this->menuElements.begin());
 		}
 
 
 		virtual void selectAnElement(std::list<MenuElement *>::iterator elementIterator) {
-			selectedElementIterator = elementIterator;
-			selectionIsActive = true;
-			selectingAnElement((*selectedElementIterator)->getKey());
+			if (elementIterator != this->menuElements.end()) {
+				selectedElementIterator = elementIterator;
+				selectionIsActive = true;
+				selectingAnElement((*selectedElementIterator)->getKey());
+			} else {
+				selectionIsActive = false;
+				selectedElementIterator = elementIterator;
+				selectingAnElement(std::string());
+			}
+		}
+		
+		void selectAnElement(const std::string &key) {
+			std::list<MenuElement *>::iterator i = this->menuElements.begin();
+			bool notFound = true;
+			while (notFound && i != this->menuElements.end()) {
+				if ((*i)->getKey() == key) {
+					this->selectAnElement(i);
+					notFound = false;
+				} else {
+					++i;
+				}
+			}
+		}
+		
+		void selectAnElement(MenuElement *element) {
+			std::list<MenuElement *>::iterator i = this->menuElements.begin();
+			bool notFound = true;
+			while (notFound && i != this->menuElements.end()) {
+				if (*i == element) {
+					this->selectAnElement(i);
+					notFound = false;
+				} else {
+					++i;
+				}
+			}
 		}
 
 		/**
@@ -83,23 +115,23 @@ namespace BaconBox {
 		 * The selection won't loop, if it's the last element, the
 		 * selection will stay on the last element.
 		 */
-		void selectNextElement() {
+		void selectNextElement(bool loop = false) {
 			if (selectionIsActive) {
-				selectedElementIterator++;
-				//Calling select an element this way won't change the iterator, since we
-				//we change it with the ++ operator, but it give inheriting menu the oportunity
+				++selectedElementIterator;
+
+				if (selectedElementIterator == this->menuElements.end()) {
+					if (loop) {
+						selectedElementIterator = this->menuElements.begin();
+					} else {
+						--selectedElementIterator;
+					}
+				}
+				
+				//Calling selectAnElement this way won't change the iterator, since we
+				//we change it with the -- operator, but it give inheriting menu the oportunity
 				//of overloading the selecting behavior without having to overload every selecting function
 				//(only the selectAnElement function).
 				selectAnElement(selectedElementIterator);
-
-				if (selectedElementIterator == this->Parent::menuElements.end()) {
-					selectedElementIterator--;
-					//Calling selectAnElement this way won't change the iterator, since we
-					//we change it with the -- operator, but it give inheriting menu the oportunity
-					//of overloading the selecting behavior without having to overload every selecting function
-					//(only the selectAnElement function).
-					selectAnElement(selectedElementIterator);
-				}
 
 			} else {
 				selectFirstElement();
@@ -112,16 +144,20 @@ namespace BaconBox {
 		 * The selection won't loop, if it's the first element, the
 		 * selection will stay on the first element.
 		 */
-		void selectPreviousElement() {
+		void selectPreviousElement(bool loop = false) {
 			if (selectionIsActive) {
-				if (selectedElementIterator != this->Parent::menuElements.begin()) {
-					selectedElementIterator--;
-					//Calling selectAnElement this way won't change the iterator, since we
-					//we change it with the -- operator, but it give inheriting menu the oportunity
-					//of overloading the selecting behavior without having to overload every selecting function
-					//(only the selectAnElement function).
-					selectAnElement(selectedElementIterator);
+				if (selectedElementIterator == this->menuElements.begin()) {
+					selectedElementIterator = this->menuElements.end();
+					--selectedElementIterator;
+				} else if (selectedElementIterator != this->menuElements.end()) {
+					--selectedElementIterator;
 				}
+				
+				//Calling selectAnElement this way won't change the iterator, since we
+				//we change it with the -- operator, but it give inheriting menu the oportunity
+				//of overloading the selecting behavior without having to overload every selecting function
+				//(only the selectAnElement function).
+				selectAnElement(selectedElementIterator);
 
 			} else {
 				selectFirstElement();
@@ -133,7 +169,7 @@ namespace BaconBox {
 		 */
 		virtual void clearSelection() {
 			selectionIsActive = false;
-			selectedElementIterator = this->Parent::menuElements.end();
+			this->selectAnElement(this->menuElements.end());
 		}
 
 	protected:

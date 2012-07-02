@@ -35,8 +35,10 @@ namespace BaconBox {
 	}
 
 	void LinearGraphicSelectMenu::selectAnElement(std::list<MenuElement *>::iterator elementIterator) {
-		PersistentSelectionMenu<LinearGraphicMenu>::selectAnElement(elementIterator);
-		this->selector->setPosition(getSelected()->getPosition() - getSelected()->getOffset() + this->selector->getOffset());
+		this->PersistentSelectionMenu<LinearGraphicMenu>::selectAnElement(elementIterator);
+		if (getSelected()) {
+			this->selector->setPosition(getSelected()->getPosition() - getSelected()->getOffset() + this->selector->getOffset());
+		}
 	}
 
 
@@ -55,11 +57,9 @@ namespace BaconBox {
 
 	void LinearGraphicSelectMenu::render() {
 		PersistentSelectionMenu<LinearGraphicMenu>::render();
-		this->selector->render();
+		if (getSelected()) {
+			this->selector->render();
+		}
 
-	}
-
-	void LinearGraphicSelectMenu::clearSelection() {
-		selectFirstElement();
 	}
 }

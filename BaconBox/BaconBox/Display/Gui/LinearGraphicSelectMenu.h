@@ -22,12 +22,12 @@ namespace BaconBox {
 
 		void render();
 
-		void clearSelection();
-
 		void setSelectingTolerance(float selectingTolerance);
 
 		void move(float xDelta, float yDelta);
 
+		using PersistentSelectionMenu<LinearGraphicMenu>::selectAnElement;
+		
 		void selectAnElement(std::list<MenuElement *>::iterator elementIterator);
 	protected:
 		void onPress(const Vector2 &position);
