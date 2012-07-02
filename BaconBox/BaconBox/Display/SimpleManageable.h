@@ -5,8 +5,8 @@
 #ifndef RB_SIMPLE_MANAGEABLE_H
 #define RB_SIMPLE_MANAGEABLE_H
 
-#include "Disableable.h"
-#include "Manageable.h"
+#include "BaconBox/Display/Disableable.h"
+#include "BaconBox/Display/Manageable.h"
 
 namespace BaconBox {
 	/**

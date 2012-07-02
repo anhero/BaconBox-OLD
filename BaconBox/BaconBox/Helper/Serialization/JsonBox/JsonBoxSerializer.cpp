@@ -1,10 +1,10 @@
-#include "JsonBoxSerializer.h"
+#include "BaconBox/Helper/Serialization/JsonBox/JsonBoxSerializer.h"
 
 #include <JsonBox.h>
 
-#include "Value.h"
-#include "Array.h"
-#include "Object.h"
+#include "BaconBox/Helper/Serialization/Value.h"
+#include "BaconBox/Helper/Serialization/Array.h"
+#include "BaconBox/Helper/Serialization/Object.h"
 
 namespace BaconBox {
 	void valueToJsonBoxValue(const Value &input, JsonBox::Value &output);

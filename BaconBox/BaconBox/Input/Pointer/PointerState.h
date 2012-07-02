@@ -7,8 +7,8 @@
 
 #include <vector>
 
-#include "InputState.h"
-#include "CursorState.h"
+#include "BaconBox/Input/InputState.h"
+#include "BaconBox/Input/Pointer/CursorState.h"
 
 namespace BaconBox {
 	/**

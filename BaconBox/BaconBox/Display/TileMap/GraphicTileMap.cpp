@@ -1,15 +1,15 @@
-#include "GraphicTileMap.h"
+#include "BaconBox/Display/TileMap/GraphicTileMap.h"
 
-#include "TileMap.h"
-#include "TileLayer.h"
-#include "ObjectLayer.h"
-#include "GraphicTileLayer.h"
-#include "GraphicObjectLayer.h"
-#include "State.h"
-#include "TileMapUtility.h"
-#include "Factory.h"
-#include "Sprite.h"
-#include "InanimateSprite.h"
+#include "BaconBox/Display/TileMap/TileMap.h"
+#include "BaconBox/Display/TileMap/TileLayer.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
+#include "BaconBox/Display/TileMap/GraphicTileLayer.h"
+#include "BaconBox/Display/TileMap/GraphicObjectLayer.h"
+#include "BaconBox/State.h"
+#include "BaconBox/Display/TileMap/TileMapUtility.h"
+#include "BaconBox/Factory.h"
+#include "BaconBox/Display/Sprite.h"
+#include "BaconBox/Display/InanimateSprite.h"
 
 
 namespace BaconBox {

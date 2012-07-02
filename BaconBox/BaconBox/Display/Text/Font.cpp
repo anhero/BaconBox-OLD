@@ -1,5 +1,5 @@
-#include "Font.h"
-#include "FontImplementation.h"
+#include "BaconBox/Display/Text/Font.h"
+#include "BaconBox/Display/Text/FreetypeImplementation/FontImplementation.h"
 
 using namespace BaconBox;
 

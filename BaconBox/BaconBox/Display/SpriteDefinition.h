@@ -7,9 +7,9 @@
 
 #include <iostream>
 
-#include "StandardVertexArray.h"
-#include "FrameArray.h"
-#include "AnimationDefinition.h"
+#include "BaconBox/Display/StandardVertexArray.h"
+#include "BaconBox/Display/FrameArray.h"
+#include "BaconBox/Display/AnimationDefinition.h"
 
 namespace BaconBox {
 	class Value;

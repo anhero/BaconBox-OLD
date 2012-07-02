@@ -1,10 +1,10 @@
-#include "GraphicObjectLayer.h"
+#include "BaconBox/Display/TileMap/GraphicObjectLayer.h"
 
 #include <list>
 
-#include "ObjectLayer.h"
-#include "TileMap.h"
-#include "Factory.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
+#include "BaconBox/Display/TileMap/TileMap.h"
+#include "BaconBox/Factory.h"
 
 namespace BaconBox {
 	GraphicObjectLayer::GraphicObjectLayer(const Vector2 &startingPosition) :

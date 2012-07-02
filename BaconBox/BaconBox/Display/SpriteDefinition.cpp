@@ -1,6 +1,6 @@
-#include "SpriteDefinition.h"
+#include "BaconBox/Display/SpriteDefinition.h"
 
-#include "ShapeFactory.h"
+#include "BaconBox/Helper/ShapeFactory.h"
 
 namespace BaconBox {
 	bool SpriteDefinition::isValidValue(const Value &node) {

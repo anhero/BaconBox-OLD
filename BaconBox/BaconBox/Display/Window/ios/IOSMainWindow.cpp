@@ -1,11 +1,11 @@
-#include "IOSMainWindow.h"
+#include "BaconBox/Display/Window/ios/IOSMainWindow.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
-#include "RBOpenGL.h"
-#include "Engine.h"
-#include "InputManager.h"
-#include "BaconBoxAppAppDelegate.h"
+#include "BaconBox/Display/Driver/OpenGL/RBOpenGL.h"
+#include "BaconBox/Engine.h"
+#include "BaconBox/Input/InputManager.h"
+#include "BaconBox/Display/Window/ios/BaconBoxAppAppDelegate.h"
 
 #import <UIKit/UIKit.h>
 

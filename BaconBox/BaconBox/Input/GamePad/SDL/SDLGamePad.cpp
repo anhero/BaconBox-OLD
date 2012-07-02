@@ -1,4 +1,4 @@
-#include "SDLGamePad.h"
+#include "BaconBox/Input/GamePad/SDL/SDLGamePad.h"
 
 #define RB_MIN_SDL_JOYSTICK_VALUE 32768.0f
 #define RB_MAX_SDL_JOYSTICK_VALUE 32767.0f

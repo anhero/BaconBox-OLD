@@ -1,11 +1,11 @@
-#include "TextureMappable.h"
+#include "BaconBox/Display/TextureMappable.h"
 
-#include "Console.h"
-#include "Vector2.h"
-#include "TextureCoordinates.h"
-#include "VertexArray.h"
-#include "TextureInformation.h"
-#include "FrameDetails.h"
+#include "BaconBox/Console.h"
+#include "BaconBox/Vector2.h"
+#include "BaconBox/Display/TextureCoordinates.h"
+#include "BaconBox/Display/VertexArray.h"
+#include "BaconBox/Display/TextureInformation.h"
+#include "BaconBox/Display/FrameDetails.h"
 
 namespace BaconBox {
 	void TextureMappable::loadTextureCoordinates(TexturePointer texture,

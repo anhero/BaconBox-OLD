@@ -1,7 +1,7 @@
-#include "Menu.h"
+#include "BaconBox/Display/Gui/Menu.h"
 
-#include "Engine.h"
-#include "Pointer.h"
+#include "BaconBox/Engine.h"
+#include "BaconBox/Input/Pointer/Pointer.h"
 
 
 using namespace BaconBox;

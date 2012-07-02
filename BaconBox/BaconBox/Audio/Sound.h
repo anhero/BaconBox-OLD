@@ -5,7 +5,7 @@
 #ifndef RB_SOUND_H
 #define RB_SOUND_H
 
-#include "AudioState.h"
+#include "BaconBox/Audio/AudioState.h"
 
 namespace BaconBox {
 	/**

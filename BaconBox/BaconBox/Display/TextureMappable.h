@@ -5,9 +5,9 @@
 #ifndef RB_TEXTURE_MAPPABLE_H
 #define RB_TEXTURE_MAPPABLE_H
 
-#include "Texturable.h"
-#include "TextureCoordinates.h"
-#include "TexturePointer.h"
+#include "BaconBox/Display/Texturable.h"
+#include "BaconBox/Display/TextureCoordinates.h"
+#include "BaconBox/Display/TexturePointer.h"
 
 namespace BaconBox {
 	struct FrameDetails;

@@ -5,8 +5,8 @@
 #ifndef RB_MANAGEABLE_BY_KEY_H
 #define RB_MANAGEABLE_BY_KEY_H
 
-#include "Manageable.h"
-#include "Keyable.h"
+#include "BaconBox/Display/Manageable.h"
+#include "BaconBox/Display/Keyable.h"
 
 namespace BaconBox {
 	/**

@@ -1,4 +1,4 @@
-#include "Array.h"
+#include "BaconBox/Helper/Serialization/Array.h"
 
 namespace BaconBox {
 	Array::Array(const allocator_type &alloc) : data(alloc) {

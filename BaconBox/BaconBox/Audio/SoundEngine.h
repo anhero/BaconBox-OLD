@@ -7,8 +7,8 @@
 
 #include <string>
 
-#include "SoundParameters.h"
-#include "AudioEngine.h"
+#include "BaconBox/Audio/SoundParameters.h"
+#include "BaconBox/Audio/AudioEngine.h"
 
 namespace BaconBox {
 	class SoundFX;

@@ -6,11 +6,11 @@
 #ifndef RB_MENU_H
 #define RB_MENU_H
 
-#include "MenuElement.h"
-#include "Positionable.h"
-#include "Transformable.h"
-#include "Collidable.h"
-#include "Layerable.h"
+#include "BaconBox/Display/Gui/MenuElement.h"
+#include "BaconBox/Display/Positionable.h"
+#include "BaconBox/Display/Transformable.h"
+#include "BaconBox/Display/Collidable.h"
+#include "BaconBox/Display/Layerable.h"
 #include <vector>
 
 

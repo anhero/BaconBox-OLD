@@ -5,16 +5,16 @@
 #ifndef RB_GRAPHIC_H
 #define RB_GRAPHIC_H
 
-#include "TextureMappable.h"
-#include "StaticAssert.h"
-#include "IsBaseOf.h"
-#include "Maskable.h"
-#include "Shapable.h"
-#include "Colorable.h"
-#include "StandardVertexArray.h"
-#include "GraphicDriver.h"
-#include "RenderModable.h"
-#include "TexturePointer.h"
+#include "BaconBox/Display/TextureMappable.h"
+#include "BaconBox/Helper/StaticAssert.h"
+#include "BaconBox/Helper/IsBaseOf.h"
+#include "BaconBox/Display/Maskable.h"
+#include "BaconBox/Display/Shapable.h"
+#include "BaconBox/Display/Colorable.h"
+#include "BaconBox/Display/StandardVertexArray.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
+#include "BaconBox/Display/RenderModable.h"
+#include "BaconBox/Display/TexturePointer.h"
 
 namespace BaconBox {
 	/**

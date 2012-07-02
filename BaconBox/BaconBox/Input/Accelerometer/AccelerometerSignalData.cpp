@@ -1,4 +1,4 @@
-#include "AccelerometerSignalData.h"
+#include "BaconBox/Input/Accelerometer/AccelerometerSignalData.h"
 
 using namespace BaconBox;
 

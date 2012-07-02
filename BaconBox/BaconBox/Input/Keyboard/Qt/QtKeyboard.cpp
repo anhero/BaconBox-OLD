@@ -1,10 +1,10 @@
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_QT
 
-#include "QtKeyboard.h"
+#include "BaconBox/Input/Keyboard/Qt/QtKeyboard.h"
 
-#include "InputManager.h"
+#include "BaconBox/Input/InputManager.h"
 
 #include <QKeyEvent>
 

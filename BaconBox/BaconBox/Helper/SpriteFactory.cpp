@@ -1,4 +1,4 @@
-#include "SpriteFactory.h"
+#include "BaconBox/Helper/SpriteFactory.h"
 
 namespace BaconBox {
 	Sprite *SpriteFactory::makePolygon(unsigned int nbSides, float sideLength,

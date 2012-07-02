@@ -5,12 +5,12 @@
 #ifndef RB_RB_AUDIO_PLAYER_ENGINE_H
 #define RB_RB_AUDIO_PLAYER_ENGINE_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <string>
 #include <list>
 
-#include "MusicEngine.h"
+#include "BaconBox/Audio/MusicEngine.h"
 
 namespace BaconBox {
 	class BackgroundMusic;

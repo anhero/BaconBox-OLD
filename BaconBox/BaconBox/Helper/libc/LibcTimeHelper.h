@@ -5,13 +5,13 @@
 #ifndef RB_LIBC_TIME_HELPER_H
 #define RB_LIBC_TIME_HELPER_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #if defined(RB_MAC_PLATFORM) || defined(RB_LINUX)
 
 #include <sys/time.h>
 
-#include "TimeHelper.h"
+#include "BaconBox/Helper/TimeHelper.h"
 
 namespace BaconBox {
 	/**

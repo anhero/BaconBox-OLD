@@ -1,8 +1,8 @@
-#include "Transformable.h"
+#include "BaconBox/Display/Transformable.h"
 
 #include <cfloat>
 
-#include "MathHelper.h"
+#include "BaconBox/Helper/MathHelper.h"
 
 namespace BaconBox {
 	Transformable::Transformable() : Positionable(), scaling(1.0f, 1.0f),

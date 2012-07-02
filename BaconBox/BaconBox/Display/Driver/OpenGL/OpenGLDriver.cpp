@@ -1,15 +1,15 @@
-#include "OpenGLDriver.h"
+#include "BaconBox/Display/Driver/OpenGL/OpenGLDriver.h"
 
 #include <stdint.h>
 
-#include "PlatformFlagger.h"
-#include "TextureInformation.h"
-#include "MathHelper.h"
-#include "MainWindow.h"
-#include "VertexArray.h"
-#include "Color.h"
-#include "PixMap.h"
-#include "Console.h"
+#include "BaconBox/PlatformFlagger.h"
+#include "BaconBox/Display/TextureInformation.h"
+#include "BaconBox/Helper/MathHelper.h"
+#include "BaconBox/Display/Window/MainWindow.h"
+#include "BaconBox/Display/VertexArray.h"
+#include "BaconBox/Display/Color.h"
+#include "BaconBox/Display/PixMap.h"
+#include "BaconBox/Console.h"
 
 #define GET_PTR(vertices) reinterpret_cast<const GLfloat *>(&(*vertices.getBegin()))
 #define GET_TEX_PTR(textureCoordinates) reinterpret_cast<const GLfloat *>(&(*textureCoordinates.begin()))

@@ -10,8 +10,8 @@
 #include <UIKit/UIEvent.h>
 
 #include <vector>
-#include "Pointer.h"
-#include "sigly.h"
+#include "BaconBox/Input/Pointer/Pointer.h"
+#include <sigly.h>
 
 namespace BaconBox {
 	/**

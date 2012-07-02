@@ -5,10 +5,10 @@
 #ifndef RB_GRAPHIC_DRIVER_H
 #define RB_GRAPHIC_DRIVER_H
 
-#include "ColorArray.h"
-#include "IndiceArray.h"
+#include "BaconBox/Display/Driver/ColorArray.h"
+#include "BaconBox/Display/Driver/IndiceArray.h"
 
-#include "TextureCoordinates.h"
+#include "BaconBox/Display/TextureCoordinates.h"
 
 namespace BaconBox {
 	class VertexArray;

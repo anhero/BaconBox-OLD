@@ -1,7 +1,7 @@
 #ifndef RB_OPENGL_H
 #define RB_OPENGL_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #if defined (RB_OPENGL) || defined (RB_OPENGLES)
 

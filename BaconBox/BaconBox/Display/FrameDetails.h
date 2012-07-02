@@ -8,9 +8,9 @@
 #include <iostream>
 #include <string>
 
-#include "Vector2.h"
-#include "SafeEnum.h"
-#include "Value.h"
+#include "BaconBox/Vector2.h"
+#include "BaconBox/Helper/SafeEnum.h"
+#include "BaconBox/Helper/Serialization/Value.h"
 
 namespace BaconBox {
 	/**

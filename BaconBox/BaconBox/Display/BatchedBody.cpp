@@ -1,4 +1,4 @@
-#include "BatchedBody.h"
+#include "BaconBox/Display/BatchedBody.h"
 
 namespace BaconBox {
 	BatchedBody::BatchedBody() : Deactivable(), ManageableByKey(), Orderable() {

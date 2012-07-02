@@ -5,7 +5,7 @@
 #ifndef RB_SIMPLE_BUTTON_H
 #define RB_SIMPLE_BUTTON_H
 
-#include "Button.h"
+#include "BaconBox/Display/Gui/Button.h"
 
 namespace BaconBox {
 	/**

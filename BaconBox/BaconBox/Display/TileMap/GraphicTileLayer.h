@@ -7,10 +7,10 @@
 
 #include <map>
 
-#include "GraphicTileMapLayer.h"
-#include "RenderBatch.h"
-#include "BatchedInanimateGraphicElement.h"
-#include "Collidable.h"
+#include "BaconBox/Display/TileMap/GraphicTileMapLayer.h"
+#include "BaconBox/Display/RenderBatch.h"
+#include "BaconBox/Display/BatchedInanimateGraphicElement.h"
+#include "BaconBox/Display/Collidable.h"
 
 namespace BaconBox {
 	class TileLayer;

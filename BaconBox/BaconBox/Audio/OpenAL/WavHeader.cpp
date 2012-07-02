@@ -1,4 +1,4 @@
-#include "WavHeader.h"
+#include "BaconBox/Audio/OpenAL/WavHeader.h"
 
 namespace BaconBox {
 	std::ostream &operator<<(std::ostream &output, const WavHeader &wh) {

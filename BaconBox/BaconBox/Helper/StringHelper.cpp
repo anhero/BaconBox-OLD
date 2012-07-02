@@ -1,4 +1,4 @@
-#include "StringHelper.h"
+#include "BaconBox/Helper/StringHelper.h"
 
 #include <algorithm>
 #include <functional>

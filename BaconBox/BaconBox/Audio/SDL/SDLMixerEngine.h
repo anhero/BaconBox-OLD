@@ -5,7 +5,7 @@
 #ifndef RB_SDL_MIXER_ENGINE_H
 #define RB_SDL_MIXER_ENGINE_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <stdint.h>
 
@@ -15,8 +15,8 @@
 
 #include <sigly.h>
 
-#include "SoundEngine.h"
-#include "MusicEngine.h"
+#include "BaconBox/Audio/SoundEngine.h"
+#include "BaconBox/Audio/MusicEngine.h"
 
 namespace BaconBox {
 	class SDLMixerBackgroundMusic;

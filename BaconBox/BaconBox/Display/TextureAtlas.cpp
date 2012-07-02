@@ -1,11 +1,11 @@
-#include "TextureAtlas.h"
+#include "BaconBox/Display/TextureAtlas.h"
 
-#include "TextureInformation.h"
-#include "Value.h"
-#include "DefaultSerializer.h"
-#include "Serializer.h"
-#include "TextureInformation.h"
-#include "ResourceManager.h"
+#include "BaconBox/Display/TextureInformation.h"
+#include "BaconBox/Helper/Serialization/Value.h"
+#include "BaconBox/Helper/Serialization/DefaultSerializer.h"
+#include "BaconBox/Helper/Serialization/Serializer.h"
+#include "BaconBox/Display/TextureInformation.h"
+#include "BaconBox/ResourceManager.h"
 
 namespace BaconBox {
 	bool TextureAtlas::isValidValue(const Value &node) {

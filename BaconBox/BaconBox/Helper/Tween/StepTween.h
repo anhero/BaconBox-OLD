@@ -5,8 +5,8 @@
 #ifndef RB_STEP_TWEEN_H
 #define RB_STEP_TWEEN_H
 
-#include "Ease.h"
-#include "MathHelper.h"
+#include "BaconBox/Helper/Ease.h"
+#include "BaconBox/Helper/MathHelper.h"
 
 namespace BaconBox {
 	/**

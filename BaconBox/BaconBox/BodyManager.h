@@ -11,12 +11,12 @@
 #include <algorithm>
 #include <utility>
 
-#include "DeleteHelper.h"
-#include "ManageableByKey.h"
-#include "Disableable.h"
-#include "StaticAssert.h"
-#include "IsBaseOf.h"
-#include "Console.h"
+#include "BaconBox/Helper/DeleteHelper.h"
+#include "BaconBox/Display/ManageableByKey.h"
+#include "BaconBox/Display/Disableable.h"
+#include "BaconBox/Helper/StaticAssert.h"
+#include "BaconBox/Helper/IsBaseOf.h"
+#include "BaconBox/Console.h"
 
 namespace BaconBox {
 

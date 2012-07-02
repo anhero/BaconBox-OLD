@@ -12,21 +12,21 @@
 #include <algorithm>
 #include <limits>
 
-#include "Orderable.h"
-#include "Updateable.h"
-#include "Maskable.h"
-#include "Vector2.h"
-#include "ColorArray.h"
-#include "IndiceArray.h"
-#include "RenderModable.h"
-#include "Console.h"
-#include "GraphicDriver.h"
-#include "StandardVertexArray.h"
-#include "TextureCoordinates.h"
-#include "TextureInformation.h"
-#include "Texturable.h"
-#include "IsBaseOf.h"
-#include "Animatable.h"
+#include "BaconBox/Display/Orderable.h"
+#include "BaconBox/Display/Updateable.h"
+#include "BaconBox/Display/Maskable.h"
+#include "BaconBox/Vector2.h"
+#include "BaconBox/Display/Driver/ColorArray.h"
+#include "BaconBox/Display/Driver/IndiceArray.h"
+#include "BaconBox/Display/RenderModable.h"
+#include "BaconBox/Console.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
+#include "BaconBox/Display/StandardVertexArray.h"
+#include "BaconBox/Display/TextureCoordinates.h"
+#include "BaconBox/Display/TextureInformation.h"
+#include "BaconBox/Display/Texturable.h"
+#include "BaconBox/Helper/IsBaseOf.h"
+#include "BaconBox/Display/Animatable.h"
 
 namespace BaconBox {
 	/**

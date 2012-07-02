@@ -7,9 +7,9 @@
 
 #include <sigly.h>
 
-#include "InputDevice.h"
-#include "PointerButtonSignalData.h"
-#include "PointerState.h"
+#include "BaconBox/Input/InputDevice.h"
+#include "BaconBox/Input/Pointer/PointerButtonSignalData.h"
+#include "BaconBox/Input/Pointer/PointerState.h"
 
 namespace BaconBox {
 	/**

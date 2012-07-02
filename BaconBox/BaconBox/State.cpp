@@ -1,10 +1,10 @@
-#include "State.h"
+#include "BaconBox/State.h"
 
 #include <cassert>
 #include <algorithm>
 
-#include "Console.h"
-#include "GraphicDriver.h"
+#include "BaconBox/Console.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
 
 namespace BaconBox {
 	const std::string State::DEFAULT_NAME = "State";

@@ -11,8 +11,8 @@
 #include <vector>
 #include <map>
 
-#include "GlyphInformation.h"
-#include "RBString32.h"
+#include "BaconBox/Display/Text/GlyphInformation.h"
+#include "BaconBox/Display/RBString32.h"
 
 namespace BaconBox {
 	/**

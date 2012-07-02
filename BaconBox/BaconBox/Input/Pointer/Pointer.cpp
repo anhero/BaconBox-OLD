@@ -1,6 +1,6 @@
-#include "Pointer.h"
+#include "BaconBox/Input/Pointer/Pointer.h"
 
-#include "InputManager.h"
+#include "BaconBox/Input/InputManager.h"
 
 using namespace BaconBox;
 

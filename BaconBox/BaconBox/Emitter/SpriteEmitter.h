@@ -4,10 +4,10 @@
 #ifndef RB_SPRITE_EMITTER_H
 #define RB_SPRITE_EMITTER_H
 
-#include "ParticleEmitter.h"
-#include "Layerable.h"
-#include "GraphicElement.h"
-#include "Collidable.h"
+#include "BaconBox/Emitter/ParticleEmitter.h"
+#include "BaconBox/Display/Layerable.h"
+#include "BaconBox/Display/GraphicElement.h"
+#include "BaconBox/Display/Collidable.h"
 
 namespace BaconBox {
 	/**

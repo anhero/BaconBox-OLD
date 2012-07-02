@@ -1,9 +1,9 @@
-#include "Serializer.h"
+#include "BaconBox/Helper/Serialization/Serializer.h"
 
 #include <fstream>
 
-#include "Console.h"
-#include "Value.h"
+#include "BaconBox/Console.h"
+#include "BaconBox/Helper/Serialization/Value.h"
 
 namespace BaconBox {
 	Serializer::~Serializer() {

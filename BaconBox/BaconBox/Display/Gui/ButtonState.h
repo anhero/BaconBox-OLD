@@ -1,7 +1,7 @@
 #ifndef RB_BUTTON_STATE_H
 #define RB_BUTTON_STATE_H
 
-#include "SafeEnum.h"
+#include "BaconBox/Helper/SafeEnum.h"
 
 namespace BaconBox {
 	struct ButtonStateDef {

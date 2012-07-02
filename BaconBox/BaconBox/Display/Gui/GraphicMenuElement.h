@@ -6,10 +6,10 @@
 #ifndef RB_GRAPHICEMENUELEMENT_H
 #define RB_GRAPHICEMENUELEMENT_H
 
-#include "MenuElement.h"
-#include "GraphicElement.h"
-#include "Transformable.h"
-#include "Colorable.h"
+#include "BaconBox/Display/Gui/MenuElement.h"
+#include "BaconBox/Display/GraphicElement.h"
+#include "BaconBox/Display/Transformable.h"
+#include "BaconBox/Display/Colorable.h"
 
 namespace BaconBox{
 	/** 

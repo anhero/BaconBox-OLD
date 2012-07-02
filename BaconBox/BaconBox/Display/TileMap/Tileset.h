@@ -9,10 +9,10 @@
 #include <deque>
 #include <map>
 
-#include "Vector2.h"
-#include "TileMapEntity.h"
-#include "TextureCoordinates.h"
-#include "PropertyMap.h"
+#include "BaconBox/Vector2.h"
+#include "BaconBox/Display/TileMap/TileMapEntity.h"
+#include "BaconBox/Display/TextureCoordinates.h"
+#include "BaconBox/Display/TileMap/PropertyMap.h"
 
 namespace BaconBox {
 	struct TextureInformation;

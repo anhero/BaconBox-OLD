@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "RBString32.h"
+#include "BaconBox/Display/RBString32.h"
 
 namespace BaconBox {
 	/**

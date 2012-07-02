@@ -6,8 +6,8 @@
 #define RB_FONT_H
 
 #include <string>
-#include "GlyphInformation.h"
-#include "RBString32.h"
+#include "BaconBox/Display/Text/GlyphInformation.h"
+#include "BaconBox/Display/RBString32.h"
 
 namespace BaconBox {
 	class FontImplementation;

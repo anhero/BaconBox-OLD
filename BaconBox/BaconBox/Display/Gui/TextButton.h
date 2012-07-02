@@ -5,8 +5,8 @@
 #ifndef RB_TEXT_BUTTON_H
 #define RB_TEXT_BUTTON_H
 
-#include "Button.h"
-#include "GraphicString.h"
+#include "BaconBox/Display/Gui/Button.h"
+#include "BaconBox/Display/Text/GraphicString.h"
 
 namespace BaconBox {
 	/**

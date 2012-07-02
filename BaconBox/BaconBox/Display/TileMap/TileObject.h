@@ -7,8 +7,8 @@
 
 #include <string>
 
-#include "TileMapObject.h"
-#include "TileIdRange.h"
+#include "BaconBox/Display/TileMap/TileMapObject.h"
+#include "BaconBox/Display/TileMap/TileIdRange.h"
 
 namespace BaconBox {
 	/**

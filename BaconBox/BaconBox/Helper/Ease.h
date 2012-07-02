@@ -5,7 +5,7 @@
 #ifndef RB_EASE_H
 #define RB_EASE_H
 
-#include "SafeEnum.h"
+#include "BaconBox/Helper/SafeEnum.h"
 
 namespace BaconBox {
 	struct EaseDef {

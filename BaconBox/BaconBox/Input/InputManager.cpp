@@ -1,6 +1,6 @@
-#include "InputManager.h"
+#include "BaconBox/Input/InputManager.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_ACCELEROMETER_INCLUDE
 #include RB_ACCELEROMETER_INCLUDE

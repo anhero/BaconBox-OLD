@@ -5,12 +5,12 @@
 #ifndef RB_OPENAL_SOUNDFX_H
 #define RB_OPENAL_SOUNDFX_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <vector>
 
-#include "RBOpenAL.h"
-#include "SoundFX.h"
+#include "BaconBox/Audio/OpenAL/RBOpenAL.h"
+#include "BaconBox/Audio/SoundFX.h"
 
 namespace BaconBox {
 	/**

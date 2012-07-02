@@ -7,9 +7,9 @@
 
 #include <string>
 
-#include "Vector2.h"
-#include "TileMapEntity.h"
-#include "Positionable.h"
+#include "BaconBox/Vector2.h"
+#include "BaconBox/Display/TileMap/TileMapEntity.h"
+#include "BaconBox/Display/Positionable.h"
 
 namespace BaconBox {
 	class ObjectLayer;

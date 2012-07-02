@@ -1,8 +1,8 @@
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_WIN32
 
-#include "WindowsTimeHelper.h"
+#include "BaconBox/Helper/Windows/WindowsTimeHelper.h"
 
 using namespace BaconBox;
 

@@ -6,8 +6,8 @@
 #ifndef RB_PERSISTENTSELECTIONMENU_H
 #define RB_PERSISTENTSELECTIONMENU_H
 
-#include "Menu.h"
-#include "sigly.h"
+#include "BaconBox/Display/Gui/Menu.h"
+#include <sigly.h>
 namespace BaconBox {
 	/**
 	 * Abstract class implementing common functions of Persistent Selection Menu.

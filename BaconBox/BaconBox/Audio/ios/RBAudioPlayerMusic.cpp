@@ -1,8 +1,8 @@
-#include "RBAudioPlayerMusic.h"
+#include "BaconBox/Audio/ios/RBAudioPlayerMusic.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
-#include "Console.h"
+#include "BaconBox/Console.h"
 #include <cassert>
 
 using namespace BaconBox;

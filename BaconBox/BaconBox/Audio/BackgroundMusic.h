@@ -5,7 +5,7 @@
 #ifndef RB_BACKGROUNDMUSIC_H
 #define RB_BACKGROUNDMUSIC_H
 
-#include "Sound.h"
+#include "BaconBox/Audio/Sound.h"
 
 namespace BaconBox {
 	/**

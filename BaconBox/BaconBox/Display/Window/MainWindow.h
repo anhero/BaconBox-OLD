@@ -9,7 +9,7 @@
 
 #include <string>
 
-#include "WindowOrientation.h"
+#include "BaconBox/Display/Window/WindowOrientation.h"
 
 namespace BaconBox {
 	/**

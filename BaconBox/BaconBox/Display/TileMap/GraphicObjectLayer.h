@@ -5,12 +5,12 @@
 #ifndef RB_GRAPHIC_OBJECT_LAYER_H
 #define RB_GRAPHIC_OBJECT_LAYER_H
 
-#include "GraphicTileMapLayer.h"
-#include "GraphicElement.h"
-#include "InanimateGraphicElement.h"
-#include "SimpleBodyManager.h"
-#include "Collidable.h"
-#include "SimpleManageable.h"
+#include "BaconBox/Display/TileMap/GraphicTileMapLayer.h"
+#include "BaconBox/Display/GraphicElement.h"
+#include "BaconBox/Display/InanimateGraphicElement.h"
+#include "BaconBox/SimpleBodyManager.h"
+#include "BaconBox/Display/Collidable.h"
+#include "BaconBox/Display/SimpleManageable.h"
 
 namespace BaconBox {
 	class ObjectLayer;

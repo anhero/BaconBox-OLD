@@ -7,8 +7,8 @@
 
 #include <list>
 
-#include "SoundEngine.h"
-#include "MusicEngine.h"
+#include "BaconBox/Audio/SoundEngine.h"
+#include "BaconBox/Audio/MusicEngine.h"
 
 namespace BaconBox {
 	class NullAudio;

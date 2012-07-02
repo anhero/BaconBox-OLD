@@ -1,7 +1,7 @@
-#include "Button.h"
+#include "BaconBox/Display/Gui/Button.h"
 
-#include "Pointer.h"
-#include "Engine.h"
+#include "BaconBox/Input/Pointer/Pointer.h"
+#include "BaconBox/Engine.h"
 
 namespace BaconBox {
 	Button::Button() : Sprite(), click(), hover(),

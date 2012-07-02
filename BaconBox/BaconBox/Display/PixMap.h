@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 
-#include "ColorFormat.h"
+#include "BaconBox/Display/ColorFormat.h"
 
 namespace BaconBox {
 	class Color;

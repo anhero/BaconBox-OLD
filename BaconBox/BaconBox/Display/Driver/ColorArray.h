@@ -5,7 +5,7 @@
 #define RB_COLOR_ARRAY_H
 
 #include <vector>
-#include "Color.h"
+#include "BaconBox/Display/Color.h"
 
 namespace BaconBox {
 	typedef std::vector<Color> ColorArray;

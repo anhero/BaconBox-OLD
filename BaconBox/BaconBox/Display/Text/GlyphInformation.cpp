@@ -1,4 +1,4 @@
-#include "GlyphInformation.h"
+#include "BaconBox/Display/Text/GlyphInformation.h"
 
 namespace BaconBox {
 	GlyphInformation::GlyphInformation() : advance(), horizontalBearing(),

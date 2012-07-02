@@ -5,7 +5,7 @@
 #ifndef RB_COMPRESSION_METHOD_H
 #define RB_COMPRESSION_METHOD_H
 
-#include "SafeEnum.h"
+#include "BaconBox/Helper/SafeEnum.h"
 
 namespace BaconBox {
 	/**

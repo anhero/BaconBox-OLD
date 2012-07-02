@@ -12,21 +12,21 @@
 
 #include <sigly.h>
 
-#include "MathHelper.h"
-#include "Updateable.h"
-#include "Maskable.h"
-#include "ParticlePhase.h"
-#include "Particle.h"
-#include "Animatable.h"
-#include "Colorable.h"
-#include "Collidable.h"
-#include "IsBaseOf.h"
-#include "StaticAssert.h"
-#include "IsSame.h"
-#include "Emitter.h"
-#include "Engine.h"
-#include "Random.h"
-#include "CallHelper.h"
+#include "BaconBox/Helper/MathHelper.h"
+#include "BaconBox/Display/Updateable.h"
+#include "BaconBox/Display/Maskable.h"
+#include "BaconBox/Emitter/ParticlePhase.h"
+#include "BaconBox/Emitter/Particle.h"
+#include "BaconBox/Display/Animatable.h"
+#include "BaconBox/Display/Colorable.h"
+#include "BaconBox/Display/Collidable.h"
+#include "BaconBox/Helper/IsBaseOf.h"
+#include "BaconBox/Helper/StaticAssert.h"
+#include "BaconBox/Helper/IsSame.h"
+#include "BaconBox/Emitter/Emitter.h"
+#include "BaconBox/Engine.h"
+#include "BaconBox/Helper/Random.h"
+#include "BaconBox/Helper/CallHelper.h"
 
 namespace BaconBox {
 	/**

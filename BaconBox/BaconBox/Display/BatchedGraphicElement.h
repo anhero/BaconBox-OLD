@@ -5,16 +5,16 @@
 #ifndef RB_BATCHED_GRAPHIC_ELEMENT_H
 #define RB_BATCHED_GRAPHIC_ELEMENT_H
 
-#include "BatchedGraphic.h"
-#include "Animatable.h"
-#include "BatchedBody.h"
-#include "ShapeFactory.h"
-#include "TextureInformation.h"
-#include "CallHelper.h"
-#include "IsBaseOf.h"
-#include "StaticAssert.h"
-#include "IsSame.h"
-#include "Transformable.h"
+#include "BaconBox/Display/BatchedGraphic.h"
+#include "BaconBox/Display/Animatable.h"
+#include "BaconBox/Display/BatchedBody.h"
+#include "BaconBox/Helper/ShapeFactory.h"
+#include "BaconBox/Display/TextureInformation.h"
+#include "BaconBox/Helper/CallHelper.h"
+#include "BaconBox/Helper/IsBaseOf.h"
+#include "BaconBox/Helper/StaticAssert.h"
+#include "BaconBox/Helper/IsSame.h"
+#include "BaconBox/Display/Transformable.h"
 
 namespace BaconBox {
 	/**

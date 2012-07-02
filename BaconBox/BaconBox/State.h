@@ -8,10 +8,10 @@
 
 #include <sigly.h>
 
-#include "Camera.h"
-#include "Color.h"
-#include "BodyManager.h"
-#include "Layerable.h"
+#include "BaconBox/Display/Camera.h"
+#include "BaconBox/Display/Color.h"
+#include "BaconBox/BodyManager.h"
+#include "BaconBox/Display/Layerable.h"
 
 namespace BaconBox {
 	/**

@@ -1,7 +1,7 @@
 #ifndef RB_WINDOW_ORIENTATION
 #define RB_WINDOW_ORIENTATION
 
-#include "SafeEnum.h"
+#include "BaconBox/Helper/SafeEnum.h"
 
 namespace BaconBox {
 	struct WindowOrientationDef {

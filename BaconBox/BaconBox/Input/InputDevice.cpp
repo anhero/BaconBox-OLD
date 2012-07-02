@@ -1,4 +1,4 @@
-#include "InputDevice.h"
+#include "BaconBox/Input/InputDevice.h"
 
 using namespace BaconBox;
 

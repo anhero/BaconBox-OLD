@@ -1,4 +1,4 @@
-#include "ShapeFactory.h"
+#include "BaconBox/Helper/ShapeFactory.h"
 
 #include <cmath>
 
@@ -6,7 +6,7 @@
 #include <functional>
 #include <list>
 
-#include "VertexArray.h"
+#include "BaconBox/Display/VertexArray.h"
 
 namespace BaconBox {
 	void ShapeFactory::createRegularPolygon(unsigned int nbSides, float sideLength,

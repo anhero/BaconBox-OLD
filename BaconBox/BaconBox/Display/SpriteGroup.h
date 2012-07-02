@@ -5,9 +5,9 @@
 #ifndef RB_SPRITE_GROUP_H
 #define RB_SPRITE_GROUP_H
 
-#include "Sprite.h"
-#include "SimpleBodyManager.h"
-#include "Layerable.h"
+#include "BaconBox/Display/Sprite.h"
+#include "BaconBox/SimpleBodyManager.h"
+#include "BaconBox/Display/Layerable.h"
 
 namespace BaconBox {
 	/**

@@ -1,7 +1,7 @@
-#include "Inanimate.h"
+#include "BaconBox/Display/Inanimate.h"
 
-#include "VertexArray.h"
-#include "FrameDetails.h"
+#include "BaconBox/Display/VertexArray.h"
+#include "BaconBox/Display/FrameDetails.h"
 
 namespace BaconBox {
 	Inanimate::Inanimate(TexturePointer newTexture) :

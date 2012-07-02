@@ -1,12 +1,12 @@
-#include "Tileset.h"
+#include "BaconBox/Display/TileMap/Tileset.h"
 
 #include <cassert>
 
 #include <algorithm>
 
-#include "TileMap.h"
-#include "TextureInformation.h"
-#include "TileIdRange.h"
+#include "BaconBox/Display/TileMap/TileMap.h"
+#include "BaconBox/Display/TextureInformation.h"
+#include "BaconBox/Display/TileMap/TileIdRange.h"
 
 namespace BaconBox {
 	void Tileset::setName(const std::string &newName) {

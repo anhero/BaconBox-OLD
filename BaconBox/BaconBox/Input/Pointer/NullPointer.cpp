@@ -1,4 +1,4 @@
-#include "NullPointer.h"
+#include "BaconBox/Input/Pointer/NullPointer.h"
 
 namespace BaconBox {
 	NullPointer::NullPointer() : Pointer() {

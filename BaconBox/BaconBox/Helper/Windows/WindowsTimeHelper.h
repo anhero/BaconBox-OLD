@@ -1,13 +1,13 @@
 #ifndef RB_WINDOWS_TIME_HELPER_H
 #define RB_WINDOWS_TIME_HELPER_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_WIN32
 
 #include <windows.h>
 
-#include "TimeHelper.h"
+#include "BaconBox/Helper/TimeHelper.h"
 
 namespace BaconBox {
 	class WindowsTimeHelper : public TimeHelper {

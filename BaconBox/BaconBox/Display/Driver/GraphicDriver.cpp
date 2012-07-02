@@ -1,6 +1,6 @@
-#include "GraphicDriver.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
 
-#include "Engine.h"
+#include "BaconBox/Engine.h"
 
 namespace BaconBox {
 	GraphicDriver &GraphicDriver::getInstance() {

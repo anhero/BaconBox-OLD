@@ -5,11 +5,11 @@
 #ifndef RB_SDL_INPUT_MANAGER_H
 #define RB_SDL_INPUT_MANAGER_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_SDL
 
-#include "InputManager.h"
+#include "BaconBox/Input/InputManager.h"
 
 namespace BaconBox {
 	class SDLInputManager : public InputManager {

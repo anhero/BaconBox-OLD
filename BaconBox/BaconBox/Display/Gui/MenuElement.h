@@ -8,8 +8,8 @@
 
 #include <string>
 
-#include "Maskable.h"
-#include "Collidable.h"
+#include "BaconBox/Display/Maskable.h"
+#include "BaconBox/Display/Collidable.h"
 
 namespace BaconBox{
 	/** 

@@ -5,9 +5,9 @@
 #ifndef RB_TWEEN_H
 #define RB_TWEEN_H
 
-#include "Stopwatch.h"
-#include "Ease.h"
-#include "MathHelper.h"
+#include "BaconBox/Helper/Stopwatch.h"
+#include "BaconBox/Helper/Ease.h"
+#include "BaconBox/Helper/MathHelper.h"
 
 namespace BaconBox {
 	/**

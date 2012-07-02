@@ -9,12 +9,12 @@
 
 #include <vector>
 
-#include "Updateable.h"
-#include "TextureMappable.h"
-#include "TextureCoordinates.h"
-#include "AnimationDefinition.h"
-#include "TexturePointer.h"
-#include "FrameArray.h"
+#include "BaconBox/Display/Updateable.h"
+#include "BaconBox/Display/TextureMappable.h"
+#include "BaconBox/Display/TextureCoordinates.h"
+#include "BaconBox/Display/AnimationDefinition.h"
+#include "BaconBox/Display/TexturePointer.h"
+#include "BaconBox/Display/FrameArray.h"
 
 namespace BaconBox {
 	/**

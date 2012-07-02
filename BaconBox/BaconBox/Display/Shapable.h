@@ -5,9 +5,9 @@
 #ifndef RB_SHAPABLE_H
 #define RB_SHAPABLE_H
 
-#include "VertexArray.h"
-#include "IsBaseOf.h"
-#include "StaticAssert.h"
+#include "BaconBox/Display/VertexArray.h"
+#include "BaconBox/Helper/IsBaseOf.h"
+#include "BaconBox/Helper/StaticAssert.h"
 
 namespace BaconBox {
 	/**

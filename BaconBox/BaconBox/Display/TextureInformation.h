@@ -7,10 +7,10 @@
 
 #include <iostream>
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
-#include "RBOpenGL.h"
-#include "ColorFormat.h"
+#include "BaconBox/Display/Driver/OpenGL/RBOpenGL.h"
+#include "BaconBox/Display/ColorFormat.h"
 
 namespace BaconBox {
 	/**

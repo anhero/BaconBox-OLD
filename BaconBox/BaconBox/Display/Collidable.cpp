@@ -1,11 +1,11 @@
-#include "Collidable.h"
+#include "BaconBox/Display/Collidable.h"
 
 #include <cassert>
 
 #include <algorithm>
 
-#include "Engine.h"
-#include "MathHelper.h"
+#include "BaconBox/Engine.h"
+#include "BaconBox/Helper/MathHelper.h"
 
 namespace BaconBox {
 	const float Collidable::NO_MAX_VELOCITY = -1.0f;

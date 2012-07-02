@@ -1,12 +1,12 @@
-#include "AudioEngine.h"
+#include "BaconBox/Audio/AudioEngine.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
-#include "SoundEngine.h"
-#include "MusicEngine.h"
-#include "SoundFX.h"
-#include "BackgroundMusic.h"
-#include "Engine.h"
+#include "BaconBox/Audio/SoundEngine.h"
+#include "BaconBox/Audio/MusicEngine.h"
+#include "BaconBox/Audio/SoundFX.h"
+#include "BaconBox/Audio/BackgroundMusic.h"
+#include "BaconBox/Engine.h"
 
 namespace BaconBox {
 	SoundEngine &AudioEngine::getSoundEngine() {

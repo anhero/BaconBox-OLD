@@ -5,7 +5,7 @@
 #ifndef RB_POLYGON_OBJECT_H
 #define RB_POLYGON_OBJECT_H
 
-#include "TileMapVertexArray.h"
+#include "BaconBox/Display/TileMap/TileMapVertexArray.h"
 
 namespace BaconBox {
 	class PolygonObject : public TileMapVertexArray {

@@ -5,7 +5,7 @@
 #ifndef RB_AXIS_ALIGNED_BOUNDING_BOX_H
 #define RB_AXIS_ALIGNED_BOUNDING_BOX_H
 
-#include "Vector2.h"
+#include "BaconBox/Vector2.h"
 
 namespace BaconBox {
 	/**

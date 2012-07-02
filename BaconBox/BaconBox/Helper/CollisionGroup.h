@@ -10,9 +10,9 @@
 #include <deque>
 #include <utility>
 
-#include "StackPool.h"
-#include "AxisAlignedBoundingBox.h"
-#include "CollisionDetails.h"
+#include "BaconBox/Helper/StackPool.h"
+#include "BaconBox/Display/AxisAlignedBoundingBox.h"
+#include "BaconBox/Display/CollisionDetails.h"
 
 namespace BaconBox {
 	class Collidable;

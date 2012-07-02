@@ -7,9 +7,9 @@
 
 #include <sigly.h>
 
-#include "InputDevice.h"
-#include "AccelerometerSignalData.h"
-#include "AccelerometerState.h"
+#include "BaconBox/Input/InputDevice.h"
+#include "BaconBox/Input/Accelerometer/AccelerometerSignalData.h"
+#include "BaconBox/Input/Accelerometer/AccelerometerState.h"
 
 namespace BaconBox {
 	/**

@@ -1,4 +1,4 @@
-#include "StandardVertexArray.h"
+#include "BaconBox/Display/StandardVertexArray.h"
 
 namespace BaconBox {
 	StandardVertexArray::StandardVertexArray() : VertexArray(),

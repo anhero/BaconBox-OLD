@@ -5,7 +5,7 @@
 #ifndef RB_Colorable_H
 #define RB_Colorable_H
 
-#include "Color.h"
+#include "BaconBox/Display/Color.h"
 
 namespace BaconBox {
 	/**

@@ -1,14 +1,14 @@
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
-#include "RBAudioPlayerEngine.h"
+#include "BaconBox/Audio/ios/RBAudioPlayerEngine.h"
 
-#include "RBAudioPlayerMusic.h"
-#include "MusicInfo.h"
-#include "ResourceManager.h"
-#include "AudioState.h"
-#include "NullAudio.h"
+#include "BaconBox/Audio/ios/RBAudioPlayerMusic.h"
+#include "BaconBox/Audio/MusicInfo.h"
+#include "BaconBox/ResourceManager.h"
+#include "BaconBox/Audio/AudioState.h"
+#include "BaconBox/Audio/NullAudio.h"
 
-#include "Console.h"
+#include "BaconBox/Console.h"
 
 namespace BaconBox {
 	BackgroundMusic* RBAudioPlayerEngine::getBackgroundMusic(std::string const &key,

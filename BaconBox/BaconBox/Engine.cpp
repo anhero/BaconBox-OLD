@@ -1,28 +1,28 @@
-#include "Engine.h"
+#include "BaconBox/Engine.h"
 
 #include <cassert>
 #include <cstdlib>
 
 #include <algorithm>
 
-#include "PlatformFlagger.h"
-#include "TimeHelper.h"
-#include "GraphicDriver.h"
-#include "DeleteHelper.h"
+#include "BaconBox/PlatformFlagger.h"
+#include "BaconBox/Helper/TimeHelper.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
+#include "BaconBox/Helper/DeleteHelper.h"
 
 #ifndef RB_ANDROID
-#include "Font.h"
+#include "BaconBox/Display/Text/Font.h"
 #endif
 
-#include "AudioEngine.h"
-#include "SoundEngine.h"
-#include "MusicEngine.h"
-#include "InputManager.h"
-#include "TimerManager.h"
-#include "ResourceManager.h"
-#include "Console.h"
-#include "Factory.h"
-#include "GraphicObjectLayer.h"
+#include "BaconBox/Audio/AudioEngine.h"
+#include "BaconBox/Audio/SoundEngine.h"
+#include "BaconBox/Audio/MusicEngine.h"
+#include "BaconBox/Input/InputManager.h"
+#include "BaconBox/Helper/TimerManager.h"
+#include "BaconBox/ResourceManager.h"
+#include "BaconBox/Console.h"
+#include "BaconBox/Factory.h"
+#include "BaconBox/Display/TileMap/GraphicObjectLayer.h"
 #include <libgen.h>
 
 #include RB_MAIN_WINDOW_INCLUDE

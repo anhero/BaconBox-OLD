@@ -1,12 +1,12 @@
-#include "Value.h"
+#include "BaconBox/Helper/Serialization/Value.h"
 
 #include <sstream>
 
-#include "DefaultSerializer.h"
-#include "Serializer.h"
-#include "Array.h"
-#include "Object.h"
-#include "Console.h"
+#include "BaconBox/Helper/Serialization/DefaultSerializer.h"
+#include "BaconBox/Helper/Serialization/Serializer.h"
+#include "BaconBox/Helper/Serialization/Array.h"
+#include "BaconBox/Helper/Serialization/Object.h"
+#include "BaconBox/Console.h"
 
 namespace BaconBox {
 	static const std::string EMPTY_STRING = std::string();

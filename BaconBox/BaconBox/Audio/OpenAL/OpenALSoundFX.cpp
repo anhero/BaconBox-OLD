@@ -1,11 +1,11 @@
-#include "OpenALSoundFX.h"
+#include "BaconBox/Audio/OpenAL/OpenALSoundFX.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <cassert>
 
-#include "Console.h"
-#include "OpenALEngine.h"
+#include "BaconBox/Console.h"
+#include "BaconBox/Audio/OpenAL/OpenALEngine.h"
 
 using namespace BaconBox;
 

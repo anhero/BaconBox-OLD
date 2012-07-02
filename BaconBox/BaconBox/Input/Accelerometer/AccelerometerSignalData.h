@@ -5,8 +5,8 @@
 #ifndef RB_ACCELEROMETER_SIGNAL_DATA_H
 #define RB_ACCELEROMETER_SIGNAL_DATA_H
 
-#include "InputSignalData.h"
-#include "AccelerometerState.h"
+#include "BaconBox/Input/InputSignalData.h"
+#include "BaconBox/Input/Accelerometer/AccelerometerState.h"
 
 namespace BaconBox {
 	/**

@@ -7,10 +7,10 @@
 
 #include <sigly.h>
 
-#include "InputDevice.h"
-#include "GamePadState.h"
-#include "GamePadButtonSignalData.h"
-#include "GamePadThumbstickSignalData.h"
+#include "BaconBox/Input/InputDevice.h"
+#include "BaconBox/Input/GamePad/GamePadState.h"
+#include "BaconBox/Input/GamePad/GamePadButtonSignalData.h"
+#include "BaconBox/Input/GamePad/GamePadThumbstickSignalData.h"
 
 namespace BaconBox {
 	/**

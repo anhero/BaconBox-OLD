@@ -5,9 +5,9 @@
 #ifndef RB_DRAGGABLE_MENU_H
 #define RB_DRAGGABLE_MENU_H
 
-#include "PersistentSelectionMenu.h"
-#include "LinearGraphicMenu.h"
-#include "GraphicMenuElement.h"
+#include "BaconBox/Display/Gui/PersistentSelectionMenu.h"
+#include "BaconBox/Display/Gui/LinearGraphicMenu.h"
+#include "BaconBox/Display/Gui/GraphicMenuElement.h"
 
 namespace BaconBox {
 	/**

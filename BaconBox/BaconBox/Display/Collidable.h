@@ -8,12 +8,12 @@
 #include <utility>
 #include <list>
 
-#include "Transformable.h"
-#include "Updateable.h"
-#include "FlagSet.h"
-#include "Side.h"
-#include "AxisAlignedBoundingBox.h"
-#include "CollisionDetails.h"
+#include "BaconBox/Display/Transformable.h"
+#include "BaconBox/Display/Updateable.h"
+#include "BaconBox/Helper/FlagSet.h"
+#include "BaconBox/Side.h"
+#include "BaconBox/Display/AxisAlignedBoundingBox.h"
+#include "BaconBox/Display/CollisionDetails.h"
 
 namespace BaconBox {
 	class Collidable : virtual public Updateable, public Transformable {

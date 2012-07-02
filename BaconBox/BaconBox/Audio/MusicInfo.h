@@ -5,7 +5,7 @@
 #ifndef RB_MUSIC_INFO_H
 #define RB_MUSIC_INFO_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_AV_AUDIO_PLAYER
 #include <string>

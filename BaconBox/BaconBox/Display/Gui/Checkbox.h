@@ -5,7 +5,7 @@
 #ifndef RB_CHECKBOX_H
 #define RB_CHECKBOX_H
 
-#include "Button.h"
+#include "BaconBox/Display/Gui/Button.h"
 
 namespace BaconBox {
 	/**

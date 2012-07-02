@@ -1,7 +1,7 @@
-#include "TextureInformation.h"
+#include "BaconBox/Display/TextureInformation.h"
 
-#include "PlatformFlagger.h"
-#include "MathHelper.h"
+#include "BaconBox/PlatformFlagger.h"
+#include "BaconBox/Helper/MathHelper.h"
 
 namespace BaconBox {
 

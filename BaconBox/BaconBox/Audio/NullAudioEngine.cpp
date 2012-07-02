@@ -1,11 +1,11 @@
-#include "NullAudioEngine.h"
+#include "BaconBox/Audio/NullAudioEngine.h"
 
-#include "Console.h"
+#include "BaconBox/Console.h"
 
-#include "SoundInfo.h"
-#include "MusicInfo.h"
-#include "NullAudio.h"
-#include "ResourceManager.h"
+#include "BaconBox/Audio/SoundInfo.h"
+#include "BaconBox/Audio/MusicInfo.h"
+#include "BaconBox/Audio/NullAudio.h"
+#include "BaconBox/ResourceManager.h"
 
 using namespace BaconBox;
 

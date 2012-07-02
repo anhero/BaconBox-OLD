@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "FrameDetails.h"
+#include "BaconBox/Display/FrameDetails.h"
 
 namespace BaconBox {
 	/**

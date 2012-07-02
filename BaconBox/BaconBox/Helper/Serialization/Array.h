@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "Value.h"
+#include "BaconBox/Helper/Serialization/Value.h"
 
 namespace BaconBox {
 	class Array {

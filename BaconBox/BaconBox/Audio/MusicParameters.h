@@ -5,7 +5,7 @@
 #ifndef RB_MUSIC_PARAMETERS_H
 #define RB_MUSIC_PARAMETERS_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <string>
 

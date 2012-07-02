@@ -5,7 +5,7 @@
 #ifndef RB_SHAPE_FACTORY_H
 #define RB_SHAPE_FACTORY_H
 
-#include "Vector2.h"
+#include "BaconBox/Vector2.h"
 
 namespace BaconBox {
 	class VertexArray;

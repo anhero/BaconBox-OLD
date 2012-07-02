@@ -1,20 +1,20 @@
-#include "SDLMixerEngine.h"
+#include "BaconBox/Audio/SDL/SDLMixerEngine.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <SDL/SDL.h>
 
-#include "Console.h"
+#include "BaconBox/Console.h"
 
-#include "ResourceManager.h"
-#include "SoundInfo.h"
-#include "MusicInfo.h"
-#include "AudioState.h"
-#include "NullAudio.h"
-#include "Sound.h"
+#include "BaconBox/ResourceManager.h"
+#include "BaconBox/Audio/SoundInfo.h"
+#include "BaconBox/Audio/MusicInfo.h"
+#include "BaconBox/Audio/AudioState.h"
+#include "BaconBox/Audio/NullAudio.h"
+#include "BaconBox/Audio/Sound.h"
 
-#include "SDLMixerBackgroundMusic.h"
-#include "SDLMixerSoundFX.h"
+#include "BaconBox/Audio/SDL/SDLMixerBackgroundMusic.h"
+#include "BaconBox/Audio/SDL/SDLMixerSoundFX.h"
 
 namespace BaconBox {
 	SDLMixerEngine *SDLMixerEngine::instance = NULL;

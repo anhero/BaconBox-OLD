@@ -5,8 +5,8 @@
 #ifndef RB_NULL_AUDIO_H
 #define RB_NULL_AUDIO_H
 
-#include "BackgroundMusic.h"
-#include "SoundFX.h"
+#include "BaconBox/Audio/BackgroundMusic.h"
+#include "BaconBox/Audio/SoundFX.h"
 
 namespace BaconBox {
 	/**

@@ -5,7 +5,7 @@
 #ifndef RB_GLYPH_INFORMATION_H
 #define RB_GLYPH_INFORMATION_H
 
-#include "Vector2.h"
+#include "BaconBox/Vector2.h"
 
 namespace BaconBox {
 	/**

@@ -5,14 +5,14 @@
 #ifndef RB_SDL_MIXER_SOUNDFX_H
 #define RB_SDL_MIXER_SOUNDFX_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
 
 #include <sigly.h>
 
-#include "SoundFX.h"
+#include "BaconBox/Audio/SoundFX.h"
 
 namespace BaconBox {
 	/**

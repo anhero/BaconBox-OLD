@@ -5,15 +5,15 @@
 #ifndef RB_QT_KEYBOARD_H
 #define RB_QT_KEYBOARD_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_QT
 
-#include "Keyboard.h"
+#include "BaconBox/Input/Keyboard/Keyboard.h"
 #include <QWidget>
 #include <map>
 #include <vector>
-#include "Key.h"
+#include "BaconBox/Input/Keyboard/Key.h"
 
 namespace BaconBox {
 	/**

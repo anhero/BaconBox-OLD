@@ -4,9 +4,9 @@
 #ifndef RB_BATCHED_BODY_H
 #define RB_BATCHED_BODY_H
 
-#include "Deactivable.h"
-#include "ManageableByKey.h"
-#include "Orderable.h"
+#include "BaconBox/Display/Deactivable.h"
+#include "BaconBox/Display/ManageableByKey.h"
+#include "BaconBox/Display/Orderable.h"
 
 namespace BaconBox {
 	class BatchedBody : public Deactivable, public ManageableByKey, public Orderable {

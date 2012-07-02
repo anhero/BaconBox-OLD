@@ -1,7 +1,7 @@
-#include "FrameDetails.h"
+#include "BaconBox/Display/FrameDetails.h"
 
-#include "DefaultSerializer.h"
-#include "Serializer.h"
+#include "BaconBox/Helper/Serialization/DefaultSerializer.h"
+#include "BaconBox/Helper/Serialization/Serializer.h"
 
 namespace BaconBox {
 	bool FrameDetails::isValidValue(const Value &node) {

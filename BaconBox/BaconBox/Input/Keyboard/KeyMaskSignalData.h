@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "KeyboardSignalData.h"
+#include "BaconBox/Input/Keyboard/KeyboardSignalData.h"
 
 namespace BaconBox {
 	/**

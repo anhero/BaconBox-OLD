@@ -1,6 +1,6 @@
-#include "NullAudio.h"
+#include "BaconBox/Audio/NullAudio.h"
 
-#include "Console.h"
+#include "BaconBox/Console.h"
 
 using namespace BaconBox;
 

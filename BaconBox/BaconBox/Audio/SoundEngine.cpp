@@ -1,6 +1,6 @@
-#include "SoundEngine.h"
-#include "SoundFX.h"
-#include "SoundInfo.h"
+#include "BaconBox/Audio/SoundEngine.h"
+#include "BaconBox/Audio/SoundFX.h"
+#include "BaconBox/Audio/SoundInfo.h"
 
 using namespace BaconBox;
 

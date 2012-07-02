@@ -5,7 +5,7 @@
 #ifndef RB_IOS_MAIN_WINDOW_H
 #define RB_IOS_MAIN_WINDOW_H
 
-#include "MainWindow.h"
+#include "BaconBox/Display/Window/MainWindow.h"
 
 namespace BaconBox {
 	/**

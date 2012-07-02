@@ -1,10 +1,10 @@
-#include "SDLMixerBackgroundMusic.h"
+#include "BaconBox/Audio/SDL/SDLMixerBackgroundMusic.h"
 
 #include <SDL/SDL.h>
 
-#include "Console.h"
+#include "BaconBox/Console.h"
 
-#include "SDLMixerEngine.h"
+#include "BaconBox/Audio/SDL/SDLMixerEngine.h"
 
 using namespace BaconBox;
 

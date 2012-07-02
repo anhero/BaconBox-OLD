@@ -5,7 +5,7 @@
 #ifndef RB_TEXT_DIRECTION_H
 #define RB_TEXT_DIRECTION_H
 
-#include "SafeEnum.h"
+#include "BaconBox/Helper/SafeEnum.h"
 
 namespace BaconBox {
 	struct TextDirectionDef {

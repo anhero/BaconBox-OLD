@@ -9,9 +9,9 @@
 #include <string>
 #include <map>
 
-#include "SoundParameters.h"
-#include "MusicParameters.h"
-#include "PixMap.h"
+#include "BaconBox/Audio/SoundParameters.h"
+#include "BaconBox/Audio/MusicParameters.h"
+#include "BaconBox/Display/PixMap.h"
 
 namespace BaconBox {
 	class SoundFX;

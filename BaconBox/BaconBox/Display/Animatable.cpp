@@ -1,10 +1,10 @@
-#include "Animatable.h"
+#include "BaconBox/Display/Animatable.h"
 
 #include <cassert>
 #include <cmath>
 
-#include "Engine.h"
-#include "TextureInformation.h"
+#include "BaconBox/Engine.h"
+#include "BaconBox/Display/TextureInformation.h"
 
 namespace BaconBox {
 	Animatable::Animatable(TexturePointer newTexture) :

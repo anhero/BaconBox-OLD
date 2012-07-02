@@ -7,7 +7,7 @@
 #include <vector>
 #include <list>
 
-#include "StandardVertexArray.h"
+#include "BaconBox/Display/StandardVertexArray.h"
 
 namespace BaconBox {
 	typedef std::vector<unsigned short> IndiceArray;

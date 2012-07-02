@@ -5,8 +5,8 @@
 #ifndef RB_GAME_PAD_SIGNAL_DATA_H
 #define RB_GAME_PAD_SIGNAL_DATA_H
 
-#include "InputSignalData.h"
-#include "GamePadState.h"
+#include "BaconBox/Input/InputSignalData.h"
+#include "BaconBox/Input/GamePad/GamePadState.h"
 
 namespace BaconBox {
 	/**

@@ -1,4 +1,4 @@
-#include "CollisionDetails.h"
+#include "BaconBox/Display/CollisionDetails.h"
 
 namespace BaconBox {
 	CollisionDetails::CollisionDetails() : overlap(0.0f), body1(NULL),

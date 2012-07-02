@@ -1,3 +1,3 @@
-#include "SoundInfo.h"
+#include "BaconBox/Audio/SoundInfo.h"
 
 using namespace BaconBox;

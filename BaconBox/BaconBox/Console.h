@@ -1,12 +1,12 @@
 #ifndef RB_CONSOLE_H
 #define RB_CONSOLE_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 // @TODO: Backtrace magic for other platforms than GCC... (clang?, msvc)
 // @TODO: Stack trace in an object to allow more manipulation?
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <cstdio>
 #include <cstdlib>

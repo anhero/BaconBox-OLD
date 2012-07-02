@@ -1,6 +1,6 @@
-#include "TileMapVertexArray.h"
+#include "BaconBox/Display/TileMap/TileMapVertexArray.h"
 
-#include "ObjectLayer.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
 
 namespace BaconBox {
 	void TileMapVertexArray::move(float xDelta, float yDelta) {

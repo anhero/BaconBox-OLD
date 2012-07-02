@@ -4,7 +4,7 @@
 #ifndef RB_GAMEPAD_H
 #define RB_GAMEPAD_H
 
-#include "GamePad.h"
+#include "BaconBox/Input/GamePad/GamePad.h"
 #include <SDL/SDL.h>
 
 namespace BaconBox {

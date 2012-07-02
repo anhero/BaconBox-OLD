@@ -8,8 +8,8 @@
 #include <vector>
 #include <utility>
 
-#include "InputState.h"
-#include "Vector2.h"
+#include "BaconBox/Input/InputState.h"
+#include "BaconBox/Vector2.h"
 
 namespace BaconBox {
 	/**

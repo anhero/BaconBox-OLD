@@ -1,8 +1,8 @@
-#include "SDLMixerSoundFX.h"
+#include "BaconBox/Audio/SDL/SDLMixerSoundFX.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
-#include "SDLMixerEngine.h"
+#include "BaconBox/Audio/SDL/SDLMixerEngine.h"
 
 using namespace BaconBox;
 

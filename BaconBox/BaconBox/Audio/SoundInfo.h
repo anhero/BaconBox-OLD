@@ -6,7 +6,7 @@
 #ifndef RB_SOUND_INFO_H
 #define RB_SOUND_INFO_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_OPENAL
 #ifdef RB_WIN32

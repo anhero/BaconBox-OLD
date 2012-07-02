@@ -5,7 +5,7 @@
 #ifndef RB_NULL_POINTER_H
 #define RB_NULL_POINTER_H
 
-#include "Pointer.h"
+#include "BaconBox/Input/Pointer/Pointer.h"
 
 namespace BaconBox {
 	/**

@@ -1,4 +1,4 @@
-#include "Hidable.h"
+#include "BaconBox/Display/Hidable.h"
 
 namespace BaconBox {
 	Hidable::Hidable() : Maskable(), visible(true) {

@@ -7,8 +7,8 @@
 
 #include <vector>
 
-#include "TileMapLayer.h"
-#include "TileCoordinate.h"
+#include "BaconBox/Display/TileMap/TileMapLayer.h"
+#include "BaconBox/Display/TileMap/TileCoordinate.h"
 
 namespace BaconBox {
 	/**

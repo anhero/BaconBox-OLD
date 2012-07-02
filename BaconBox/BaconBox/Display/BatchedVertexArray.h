@@ -6,8 +6,8 @@
 
 #include <algorithm>
 
-#include "VertexArray.h"
-#include "RenderBatch.h"
+#include "BaconBox/Display/VertexArray.h"
+#include "BaconBox/Display/RenderBatch.h"
 
 namespace BaconBox {
 	template <typename T>

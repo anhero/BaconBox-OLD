@@ -5,9 +5,9 @@
 #ifndef RB_DEFAULT_SERIALIZER_H
 #define RB_DEFAULT_SERIALIZER_H
 
-#include "Value.h"
-#include "IsBaseOf.h"
-#include "Serializable.h"
+#include "BaconBox/Helper/Serialization/Value.h"
+#include "BaconBox/Helper/IsBaseOf.h"
+#include "BaconBox/Helper/Serialization/Serializable.h"
 
 namespace BaconBox {
 	class Serializer;

@@ -5,7 +5,7 @@
 #ifndef RB_SDL_MIXER_BACKGROUND_MUSIC_H
 #define RB_SDL_MIXER_BACKGROUND_MUSIC_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <stdint.h>
 
@@ -13,7 +13,7 @@
 
 #include <sigly.h>
 
-#include "BackgroundMusic.h"
+#include "BaconBox/Audio/BackgroundMusic.h"
 
 namespace BaconBox {
 	/**

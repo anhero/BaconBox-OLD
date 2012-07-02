@@ -1,8 +1,8 @@
-#include "TileObject.h"
+#include "BaconBox/Display/TileMap/TileObject.h"
 
-#include "ObjectLayer.h"
-#include "TileMap.h"
-#include "Tileset.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
+#include "BaconBox/Display/TileMap/TileMap.h"
+#include "BaconBox/Display/TileMap/Tileset.h"
 
 namespace BaconBox {
 	void TileObject::setName(const std::string &newName) {

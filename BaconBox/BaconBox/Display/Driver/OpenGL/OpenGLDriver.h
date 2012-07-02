@@ -5,10 +5,10 @@
 #ifndef RB_OPENGLDRIVER
 #define RB_OPENGLDRIVER
 
-#include "GraphicDriver.h"
-#include "RBOpenGL.h"
-#include "Graphic.h"
-#include "Inanimate.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
+#include "BaconBox/Display/Driver/OpenGL/RBOpenGL.h"
+#include "BaconBox/Display/Graphic.h"
+#include "BaconBox/Display/Inanimate.h"
 
 namespace BaconBox {
 	/**

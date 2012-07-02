@@ -5,7 +5,7 @@
 #ifndef RB_TEXT_ALIGNMENT_H
 #define RB_TEXT_ALIGNMENT_H
 
-#include "SafeEnum.h"
+#include "BaconBox/Helper/SafeEnum.h"
 
 namespace BaconBox {
 	struct TextAlignmentDef {

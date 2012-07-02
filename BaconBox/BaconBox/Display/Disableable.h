@@ -5,8 +5,8 @@
 #ifndef RB_DISABLEABLE_H
 #define RB_DISABLEABLE_H
 
-#include "Deactivable.h"
-#include "Hidable.h"
+#include "BaconBox/Display/Deactivable.h"
+#include "BaconBox/Display/Hidable.h"
 
 namespace BaconBox {
 	/**

@@ -8,7 +8,7 @@
 #include <map>
 #include <string>
 
-#include "SignalAnalyzer.h"
+#include "BaconBox/SignalSlots/SignalAnalyzer.h"
 
 namespace BaconBox {
 	/**

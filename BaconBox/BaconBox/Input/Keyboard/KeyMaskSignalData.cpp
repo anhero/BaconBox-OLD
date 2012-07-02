@@ -1,4 +1,4 @@
-#include "KeyMaskSignalData.h"
+#include "BaconBox/Input/Keyboard/KeyMaskSignalData.h"
 
 using namespace BaconBox;
 

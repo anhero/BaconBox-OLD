@@ -8,7 +8,7 @@
 #include <map>
 #include <string>
 
-#include "Value.h"
+#include "BaconBox/Helper/Serialization/Value.h"
 
 namespace BaconBox {
 	class Object {

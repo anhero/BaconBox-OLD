@@ -7,9 +7,9 @@
 
 #include <sigly.h>
 
-#include "Sprite.h"
-#include "ButtonState.h"
-#include "TexturePointer.h"
+#include "BaconBox/Display/Sprite.h"
+#include "BaconBox/Display/Gui/ButtonState.h"
+#include "BaconBox/Display/TexturePointer.h"
 
 namespace BaconBox {
 	/**

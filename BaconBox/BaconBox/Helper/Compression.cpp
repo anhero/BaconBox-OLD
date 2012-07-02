@@ -1,10 +1,10 @@
-#include "Compression.h"
+#include "BaconBox/Helper/Compression.h"
 
 #include <cassert>
 
 #include <zlib.h>
 
-#include "Console.h"
+#include "BaconBox/Console.h"
 
 namespace BaconBox {
 	const std::string::size_type DEFAULT_RESULT_SIZE = 1024;

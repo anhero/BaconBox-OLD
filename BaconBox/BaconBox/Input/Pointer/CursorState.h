@@ -7,9 +7,9 @@
 
 #include <vector>
 
-#include "Vector2.h"
+#include "BaconBox/Vector2.h"
 
-#include "CursorButton.h"
+#include "BaconBox/Input/Pointer/CursorButton.h"
 
 namespace BaconBox {
 	/**

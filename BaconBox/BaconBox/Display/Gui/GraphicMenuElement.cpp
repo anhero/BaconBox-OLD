@@ -1,4 +1,4 @@
-#include "GraphicMenuElement.h"
+#include "BaconBox/Display/Gui/GraphicMenuElement.h"
 using namespace BaconBox;
 
 GraphicMenuElement::GraphicMenuElement(const std::string & textureKey): 

@@ -12,10 +12,10 @@
 
 #include <sigly.h>
 
-#include "InputDevice.h"
-#include "KeyboardState.h"
-#include "KeyMaskSignalData.h"
-#include "KeySignalData.h"
+#include "BaconBox/Input/InputDevice.h"
+#include "BaconBox/Input/Keyboard/KeyboardState.h"
+#include "BaconBox/Input/Keyboard/KeyMaskSignalData.h"
+#include "BaconBox/Input/Keyboard/KeySignalData.h"
 
 namespace BaconBox {
 	/**

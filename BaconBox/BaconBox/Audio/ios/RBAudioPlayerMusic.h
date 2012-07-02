@@ -5,15 +5,15 @@
 #ifndef RB_AV_AUDIO_PLAYER_MUSIC_H
 #define RB_AV_AUDIO_PLAYER_MUSIC_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <string>
 
-#include "RBAudioPlayerMusicDelegate.h"
+#include "BaconBox/Audio/ios/RBAudioPlayerMusicDelegate.h"
 #include <Foundation/Foundation.h>
 
-#include "AudioState.h"
-#include "BackgroundMusic.h"
+#include "BaconBox/Audio/AudioState.h"
+#include "BaconBox/Audio/BackgroundMusic.h"
 
 namespace BaconBox {
 	/**

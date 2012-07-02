@@ -5,8 +5,8 @@
 #ifndef RB_BATCHED_SPRITE_H
 #define RB_BATCHED_SPRITE_H
 
-#include "Collidable.h"
-#include "BatchedGraphicElement.h"
+#include "BaconBox/Display/Collidable.h"
+#include "BaconBox/Display/BatchedGraphicElement.h"
 
 namespace BaconBox {
 	/**

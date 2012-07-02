@@ -5,7 +5,7 @@
 #ifndef RB_LINE_OBJECT_H
 #define RB_LINE_OBJECT_H
 
-#include "TileMapVertexArray.h"
+#include "BaconBox/Display/TileMap/TileMapVertexArray.h"
 
 namespace BaconBox {
 	class LineObject : public TileMapVertexArray {

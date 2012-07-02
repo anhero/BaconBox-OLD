@@ -9,8 +9,8 @@
 #include <string>
 #include <map>
 
-#include "SpriteDefinition.h"
-#include "TextureDefinition.h"
+#include "BaconBox/Display/SpriteDefinition.h"
+#include "BaconBox/Display/TextureDefinition.h"
 
 namespace BaconBox {
 	struct TextureInformation;

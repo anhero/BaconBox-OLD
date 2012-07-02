@@ -1,6 +1,6 @@
-#include "SimpleButton.h"
+#include "BaconBox/Display/Gui/SimpleButton.h"
 
-#include "TextureInformation.h"
+#include "BaconBox/Display/TextureInformation.h"
 
 namespace BaconBox {
 	SimpleButton::SimpleButton(TexturePointer newTexture,

@@ -5,8 +5,8 @@
 #ifndef RB_RECTANGLE_OBJECT_H
 #define RB_RECTANGLE_OBJECT_H
 
-#include "TileMapObject.h"
-#include "Vector2.h"
+#include "BaconBox/Display/TileMap/TileMapObject.h"
+#include "BaconBox/Vector2.h"
 
 namespace BaconBox {
 	/**

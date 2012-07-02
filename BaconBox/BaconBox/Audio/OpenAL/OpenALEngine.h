@@ -5,7 +5,7 @@
 #ifndef RB_OPENAL_ENGINE_H
 #define RB_OPENAL_ENGINE_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <stdint.h>
 
@@ -13,9 +13,9 @@
 #include <vector>
 #include <list>
 
-#include "RBOpenAL.h"
-#include "SoundEngine.h"
-#include "SoundParameters.h"
+#include "BaconBox/Audio/OpenAL/RBOpenAL.h"
+#include "BaconBox/Audio/SoundEngine.h"
+#include "BaconBox/Audio/SoundParameters.h"
 
 namespace BaconBox {
 	class SoundFX;

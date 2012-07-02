@@ -5,7 +5,7 @@
 #ifndef RB_GAME_PAD_THUMBSTICK_SIGNAL_DATA_H
 #define RB_GAME_PAD_THUMBSTICK_SIGNAL_DATA_H
 
-#include "GamePadSignalData.h"
+#include "BaconBox/Input/GamePad/GamePadSignalData.h"
 
 namespace BaconBox {
 	/**

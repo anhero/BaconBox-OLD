@@ -1,11 +1,11 @@
 #ifndef RB_IOS_TIME_HELPER_H
 #define RB_IOS_TIME_HELPER_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_IPHONE_PLATFORM
 
-#include "TimeHelper.h"
+#include "BaconBox/Helper/TimeHelper.h"
 
 namespace BaconBox {
 	class IOSTimeHelper : public TimeHelper {

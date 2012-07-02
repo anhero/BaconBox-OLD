@@ -11,8 +11,8 @@
 #include <map>
 #include <vector>
 
-#include "Pointer.h"
-#include "Vector2.h"
+#include "BaconBox/Input/Pointer/Pointer.h"
+#include "BaconBox/Vector2.h"
 
 namespace BaconBox {
 	/**

@@ -1,12 +1,12 @@
-#include "Camera.h"
+#include "BaconBox/Display/Camera.h"
 
 #include <cmath>
 
-#include "GraphicDriver.h"
-#include "TimeHelper.h"
-#include "Random.h"
-#include "Engine.h"
-#include "MainWindow.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
+#include "BaconBox/Helper/TimeHelper.h"
+#include "BaconBox/Helper/Random.h"
+#include "BaconBox/Engine.h"
+#include "BaconBox/Display/Window/MainWindow.h"
 
 namespace BaconBox {
 	Camera::Camera() : Collidable(), Disableable(),

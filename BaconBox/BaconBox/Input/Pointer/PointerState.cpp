@@ -1,8 +1,8 @@
-#include "PointerState.h"
+#include "BaconBox/Input/Pointer/PointerState.h"
 
-#include "CursorButton.h"
+#include "BaconBox/Input/Pointer/CursorButton.h"
 
-#include "Console.h"
+#include "BaconBox/Console.h"
 
 using namespace BaconBox;
 

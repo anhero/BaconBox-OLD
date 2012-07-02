@@ -1,4 +1,4 @@
-#include "TmxTileMapReader.h"
+#include "BaconBox/Display/TileMap/TinyXML/TmxTileMapReader.h"
 
 #include <cstring>
 #include <cstdlib>
@@ -11,20 +11,20 @@
 #include <tinyxml.h>
 #include <zlib.h>
 
-#include "TileMap.h"
-#include "ResourceManager.h"
-#include "Color.h"
-#include "Tileset.h"
-#include "TileLayer.h"
-#include "ObjectLayer.h"
-#include "Base64.h"
-#include "Compression.h"
-#include "StringHelper.h"
-#include "TileMapObject.h"
-#include "LineObject.h"
-#include "PolygonObject.h"
-#include "RectangleObject.h"
-#include "TileObject.h"
+#include "BaconBox/Display/TileMap/TileMap.h"
+#include "BaconBox/ResourceManager.h"
+#include "BaconBox/Display/Color.h"
+#include "BaconBox/Display/TileMap/Tileset.h"
+#include "BaconBox/Display/TileMap/TileLayer.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
+#include "BaconBox/Helper/Base64.h"
+#include "BaconBox/Helper/Compression.h"
+#include "BaconBox/Helper/StringHelper.h"
+#include "BaconBox/Display/TileMap/TileMapObject.h"
+#include "BaconBox/Display/TileMap/LineObject.h"
+#include "BaconBox/Display/TileMap/PolygonObject.h"
+#include "BaconBox/Display/TileMap/RectangleObject.h"
+#include "BaconBox/Display/TileMap/TileObject.h"
 
 namespace BaconBox {
 	const char *NAME_ATTRIBUTE = "name";

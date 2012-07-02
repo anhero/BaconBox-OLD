@@ -8,13 +8,13 @@
 #include <string>
 #include <vector>
 
-#include "PropertyMap.h"
-#include "Vector2.h"
-#include "FrameDetails.h"
-#include "AnimationDefinition.h"
-#include "Color.h"
-#include "FrameArray.h"
-#include "Animatable.h"
+#include "BaconBox/Display/TileMap/PropertyMap.h"
+#include "BaconBox/Vector2.h"
+#include "BaconBox/Display/FrameDetails.h"
+#include "BaconBox/Display/AnimationDefinition.h"
+#include "BaconBox/Display/Color.h"
+#include "BaconBox/Display/FrameArray.h"
+#include "BaconBox/Display/Animatable.h"
 
 namespace BaconBox {
 	class Collidable;

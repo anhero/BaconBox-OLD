@@ -1,4 +1,4 @@
-#include "Disableable.h"
+#include "BaconBox/Display/Disableable.h"
 
 namespace BaconBox {
 	Disableable::Disableable() : Deactivable(), Hidable(), enabled(true) {

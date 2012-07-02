@@ -1,6 +1,6 @@
-#include "TimeHelper.h"
+#include "BaconBox/Helper/TimeHelper.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_TIME_HELPER_INCLUDE
 #include RB_TIME_HELPER_INCLUDE

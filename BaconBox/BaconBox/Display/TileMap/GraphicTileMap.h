@@ -7,9 +7,9 @@
 
 #include <vector>
 
-#include "Transformable.h"
-#include "GraphicTileMapLayer.h"
-#include "Iterators.h"
+#include "BaconBox/Display/Transformable.h"
+#include "BaconBox/Display/TileMap/GraphicTileMapLayer.h"
+#include "BaconBox/Helper/Iterators.h"
 
 namespace BaconBox {
 	class State;

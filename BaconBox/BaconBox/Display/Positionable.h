@@ -5,7 +5,7 @@
 #ifndef RB_POSITIONABLE_H
 #define RB_POSITIONABLE_H
 
-#include "Vector2.h"
+#include "BaconBox/Vector2.h"
 
 namespace BaconBox {
 	/**

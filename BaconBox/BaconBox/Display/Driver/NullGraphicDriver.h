@@ -5,7 +5,7 @@
 #ifndef RB_NULL_GRAPHIC_DRIVER_H
 #define RB_NULL_GRAPHIC_DRIVER_H
 
-#include "GraphicDriver.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
 
 namespace BaconBox {
 	/**

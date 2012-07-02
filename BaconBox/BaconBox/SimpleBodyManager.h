@@ -7,10 +7,10 @@
 #include <list>
 #include <iterator>
 
-#include "Maskable.h"
-#include "Updateable.h"
-#include "NonManageable.h"
-#include "Iterators.h"
+#include "BaconBox/Display/Maskable.h"
+#include "BaconBox/Display/Updateable.h"
+#include "BaconBox/Display/NonManageable.h"
+#include "BaconBox/Helper/Iterators.h"
 
 namespace BaconBox {
 	/**

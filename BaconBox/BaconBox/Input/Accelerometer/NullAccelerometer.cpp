@@ -1,4 +1,4 @@
-#include "NullAccelerometer.h"
+#include "BaconBox/Input/Accelerometer/NullAccelerometer.h"
 
 namespace BaconBox {
 	NullAccelerometer::NullAccelerometer() : Accelerometer() {

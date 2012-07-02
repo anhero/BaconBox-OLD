@@ -5,7 +5,7 @@
 #ifndef RB_NULL_ACCELEROMETER_H
 #define RB_NULL_ACCELEROMETER_H
 
-#include "Accelerometer.h"
+#include "BaconBox/Input/Accelerometer/Accelerometer.h"
 
 namespace BaconBox {
 	/**

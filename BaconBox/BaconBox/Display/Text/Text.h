@@ -5,9 +5,9 @@
 #ifndef RB_TEXT_H
 #define RB_TEXT_H
 
-#include "Collidable.h"
-#include "GraphicString.h"
-#include "Layerable.h"
+#include "BaconBox/Display/Collidable.h"
+#include "BaconBox/Display/Text/GraphicString.h"
+#include "BaconBox/Display/Layerable.h"
 
 namespace BaconBox {
 	/**

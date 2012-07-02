@@ -6,11 +6,11 @@
 #ifndef RB_SPRITE_FACTORY_H
 #define RB_SPRITE_FACTORY_H
 
-#include "Sprite.h"
-#include "InanimateSprite.h"
-#include "ShapeFactory.h"
-#include "Color.h"
-#include "SpriteEmitter.h"
+#include "BaconBox/Display/Sprite.h"
+#include "BaconBox/Display/InanimateSprite.h"
+#include "BaconBox/Helper/ShapeFactory.h"
+#include "BaconBox/Display/Color.h"
+#include "BaconBox/Emitter/SpriteEmitter.h"
 
 namespace BaconBox {
 	/**

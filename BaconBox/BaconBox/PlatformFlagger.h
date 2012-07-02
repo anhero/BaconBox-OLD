@@ -29,7 +29,7 @@
 	#define RB_LINUX
 
 	#define RB_TIME_HELPER_IMPL BaconBox::LibcTimeHelper
-	#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
+	#define RB_TIME_HELPER_INCLUDE "BaconBox/Helper/libc/LibcTimeHelper.h"
 
 	#ifndef RB_ANDROID
 		#define RB_HAS_GCC_STACKTRACE
@@ -45,7 +45,7 @@
 	#define RB_WIN32
 
 	#define RB_TIME_HELPER_IMPL BaconBox::WindowsTimeHelper
-	#define RB_TIME_HELPER_INCLUDE "WindowsTimeHelper.h"
+	#define RB_TIME_HELPER_INCLUDE "BaconBox/Helper/Windows/WindowsTimeHelper.h"
 #endif // _WIN32
 
 //Apple systems
@@ -75,12 +75,12 @@
         #define RB_OPENGLES
 		//Time on iOS
 		#define RB_TIME_HELPER_IMPL BaconBox::IOSTimeHelper
-		#define RB_TIME_HELPER_INCLUDE "IOSTimeHelper.h"
+		#define RB_TIME_HELPER_INCLUDE "BaconBox/Helper/ios/IOSTimeHelper.h"
 	#elif defined(RB_MAC_PLATFORM)
         #define RB_OPENGL
 		// Time on Mac OS X
 		#define RB_TIME_HELPER_IMPL BaconBox::LibcTimeHelper
-		#define RB_TIME_HELPER_INCLUDE "LibcTimeHelper.h"
+		#define RB_TIME_HELPER_INCLUDE "BaconBox/Helper/libc/LibcTimeHelper.h"
 	#endif
 
 	#define RB_HAS_GCC_STACKTRACE
@@ -97,26 +97,26 @@
 
 	//Sound engine for SDL
 	#define RB_SOUND_ENGINE_IMPL new SDLMixerEngine()
-	#define RB_SOUND_ENGINE_INCLUDE "SDLMixerEngine.h"
+	#define RB_SOUND_ENGINE_INCLUDE "BaconBox/Audio/SDL/SDLMixerEngine.h"
 
 	#define RB_MUSIC_ENGINE_IMPL SDLMixerEngine::getInstance()
-	#define RB_MUSIC_ENGINE_INCLUDE "SDLMixerEngine.h"
+	#define RB_MUSIC_ENGINE_INCLUDE "BaconBox/Audio/SDL/SDLMixerEngine.h"
 
 	//Input engine for SDL
 	#define RB_KEYBOARD_IMPL new SDLKeyboard()
-	#define RB_KEYBOARD_INCLUDE "SDLKeyboard.h"
+	#define RB_KEYBOARD_INCLUDE "BaconBox/Input/Keyboard/SDL/SDLKeyboard.h"
 
 	#define RB_POINTER_IMPL new SDLPointer()
-	#define RB_POINTER_INCLUDE "SDLPointer.h"
+	#define RB_POINTER_INCLUDE "BaconBox/Input/Pointer/SDL/SDLPointer.h"
 
     #define RB_GAME_PAD_IMPL new SDLGamePad(i)
-    #define RB_GAME_PAD_INCLUDE "SDLGamePad.h"
+    #define RB_GAME_PAD_INCLUDE "BaconBox/Input/GamePad/SDL/SDLGamePad.h"
 
 	#define RB_INPUT_MANAGER_IMPL BaconBox::SDLInputManager
-	#define RB_INPUT_MANAGER_INCLUDE "SDLInputManager.h"
+	#define RB_INPUT_MANAGER_INCLUDE "BaconBox/Input/SDL/SDLInputManager.h"
 
 	#define RB_MAIN_WINDOW_IMPL new SDLMainWindow()
-	#define RB_MAIN_WINDOW_INCLUDE "SDLMainWindow.h"
+	#define RB_MAIN_WINDOW_INCLUDE "BaconBox/Display/Window/SDL/SDLMainWindow.h"
 
 
 #endif // RB_SDL
@@ -129,17 +129,17 @@
 	//Sound engine for Qt
 	#define RB_OPENAL
 	#define RB_SOUND_ENGINE_IMPL new OpenALEngine()
-	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+	#define RB_SOUND_ENGINE_INCLUDE "BaconBox/Audio/OpenAL/OpenALEngine.h"
 
 	//Input engine for Qt
 	#define RB_KEYBOARD_IMPL new QtKeyboard()
-	#define RB_KEYBOARD_INCLUDE "QtKeyboard.h"
+	#define RB_KEYBOARD_INCLUDE "BaconBox/Input/Keyboard/Qt/QtKeyboard.h"
 
 	#define RB_POINTER_IMPL new QtPointer()
-	#define RB_POINTER_INCLUDE "QtPointer.h"
+	#define RB_POINTER_INCLUDE "BaconBox/Input/Pointer/Qt/QtPointer.h"
 
 	#define RB_MAIN_WINDOW_IMPL new QtMainWindow()
-	#define RB_MAIN_WINDOW_INCLUDE "QtMainWindow.h"
+	#define RB_MAIN_WINDOW_INCLUDE "BaconBox/Display/Window/Qt/QtMainWindow.h"
 #endif // RB_QT
 
 //iOS platform
@@ -147,12 +147,12 @@
 	//Sound engine for iOS
 	#define RB_OPENAL
 	#define RB_SOUND_ENGINE_IMPL new OpenALEngine()
-	#define RB_SOUND_ENGINE_INCLUDE "OpenALEngine.h"
+	#define RB_SOUND_ENGINE_INCLUDE "BaconBox/Audio/OpenAL/OpenALEngine.h"
 
 	//Music engine for iOS
 	#define RB_AV_AUDIO_PLAYER
 	#define RB_MUSIC_ENGINE_IMPL new RBAudioPlayerEngine()
-	#define RB_MUSIC_ENGINE_INCLUDE "RBAudioPlayerEngine.h"
+	#define RB_MUSIC_ENGINE_INCLUDE "BaconBox/Audio/ios/RBAudioPlayerEngine.h"
 
 
 	//Input engine for iOS
@@ -160,12 +160,12 @@
 	#define RB_POINTER_IMPL new IOSPointer()
 
 	#define RB_MAIN_WINDOW_IMPL new IOSMainWindow()
-	#define RB_MAIN_WINDOW_INCLUDE "IOSMainWindow.h"
+	#define RB_MAIN_WINDOW_INCLUDE "BaconBox/Input/Pointer/ios/IOSMainWindow.h"
 #endif // RB_IPHONE_PLATFORM
 
 #if defined (RB_OPENGL) || defined (RB_OPENGLES)
 	#define RB_GRAPHIC_DRIVER_IMPL new OpenGLDriver()
-	#define RB_GRAPHIC_DRIVER_INCLUDE "OpenGLDriver.h"
+	#define RB_GRAPHIC_DRIVER_INCLUDE "BaconBox/Display/Driver/OpenGL/OpenGLDriver.h"
 #endif
 
 /*
@@ -189,15 +189,15 @@
 // For NULL inputs
 #ifndef RB_POINTER_IMPL
 	#define RB_POINTER_IMPL new NullPointer()
-	#define RB_POINTER_INCLUDE "NullPointer.h"
+	#define RB_POINTER_INCLUDE "BaconBox/Input/Pointer/NullPointer.h"
 #endif
 #ifndef RB_KEYBOARD_IMPL
 	#define RB_KEYBOARD_IMPL new NullKeyboard()
-	#define RB_KEYBOARD_INCLUDE "NullKeyboard.h"
+	#define RB_KEYBOARD_INCLUDE "BaconBox/Input/Keyboard/NullKeyboard.h"
 #endif
 #ifndef RB_ACCELEROMETER_IMPL
 	#define RB_ACCELEROMETER_IMPL new NullAccelerometer()
-	#define RB_ACCELEROMETER_INCLUDE "NullAccelerometer.h"
+	#define RB_ACCELEROMETER_INCLUDE "BaconBox/Input/Accelerometer/NullAccelerometer.h"
 #endif
 #ifndef RB_GAME_PAD_IMPL
 	#define RB_GAME_PAD_IMPL NULL
@@ -212,19 +212,19 @@
 // For NULL sound engine
 #ifndef RB_SOUND_ENGINE_IMPL
 	#define RB_SOUND_ENGINE_IMPL new NullAudioEngine()
-	#define RB_SOUND_ENGINE_INCLUDE "NullAudioEngine.h"
+	#define RB_SOUND_ENGINE_INCLUDE "BaconBox/Audio/NullAudioEngine.h"
 #endif // RB_SOUND_ENGINE_IMPL
 
 // For NULL music engine
 #ifndef RB_MUSIC_ENGINE_IMPL
 	#define RB_MUSIC_ENGINE_IMPL new NullAudioEngine()
-	#define RB_MUSIC_ENGINE_INCLUDE "NullAudioEngine.h"
+	#define RB_MUSIC_ENGINE_INCLUDE "BaconBox/Audio/NullAudioEngine.h"
 #endif // RB_MUSIC_ENGINE_IMPL
 
 // For NULL graphic driver.
 #ifndef RB_GRAPHIC_DRIVER_IMPL
 	#define RB_GRAPHIC_DRIVER_IMPL new NullGraphicDriver()
-	#define RB_GRAPHIC_DRIVER_INCLUDE "NullGraphicDriver.h"
+	#define RB_GRAPHIC_DRIVER_INCLUDE "BaconBox/Display/Driver/NullGraphicDriver.h"
 #endif
 
 // Default input manager

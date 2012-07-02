@@ -1,7 +1,7 @@
 #ifndef RB_AV_AUDIO_PLAYER_MUSIC_DELEGATE_H
 #define RB_AV_AUDIO_PLAYER_MUSIC_DELEGATE_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>

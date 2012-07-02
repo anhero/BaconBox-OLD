@@ -5,7 +5,7 @@
 #ifndef RB_TMX_TILE_MAP_READER_H
 #define RB_TMX_TILE_MAP_READER_H
 
-#include "TileMapReader.h"
+#include "BaconBox/Display/TileMap/TileMapReader.h"
 
 namespace BaconBox {
 	/**

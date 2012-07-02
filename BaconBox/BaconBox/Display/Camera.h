@@ -5,14 +5,14 @@
 #ifndef RB_CAMERA_H
 #define RB_CAMERA_H
 
-#include "Color.h"
-#include "Vector2.h"
-#include "SafeEnum.h"
-#include "Renderable.h"
-#include "Collidable.h"
-#include "Disableable.h"
-#include "StandardVertexArray.h"
-#include "Shapable.h"
+#include "BaconBox/Display/Color.h"
+#include "BaconBox/Vector2.h"
+#include "BaconBox/Helper/SafeEnum.h"
+#include "BaconBox/Display/Renderable.h"
+#include "BaconBox/Display/Collidable.h"
+#include "BaconBox/Display/Disableable.h"
+#include "BaconBox/Display/StandardVertexArray.h"
+#include "BaconBox/Display/Shapable.h"
 
 namespace BaconBox {
 	/**

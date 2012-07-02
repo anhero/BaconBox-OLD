@@ -5,8 +5,8 @@
 #ifndef RB_KEYBOARD_SIGNAL_DATA_H
 #define RB_KEYBOARD_SIGNAL_DATA_H
 
-#include "InputSignalData.h"
-#include "KeyboardState.h"
+#include "BaconBox/Input/InputSignalData.h"
+#include "BaconBox/Input/Keyboard/KeyboardState.h"
 
 namespace BaconBox {
 	/**

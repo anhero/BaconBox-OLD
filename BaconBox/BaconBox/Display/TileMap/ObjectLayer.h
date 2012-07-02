@@ -8,9 +8,9 @@
 #include <map>
 #include <list>
 
-#include "TileMapLayer.h"
-#include "Vector2.h"
-#include "Color.h"
+#include "BaconBox/Display/TileMap/TileMapLayer.h"
+#include "BaconBox/Vector2.h"
+#include "BaconBox/Display/Color.h"
 
 namespace BaconBox {
 	class TileObject;

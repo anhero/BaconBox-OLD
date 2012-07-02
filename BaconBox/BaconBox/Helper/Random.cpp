@@ -1,6 +1,6 @@
-#include "Random.h"
+#include "BaconBox/Helper/Random.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <ctime>
 

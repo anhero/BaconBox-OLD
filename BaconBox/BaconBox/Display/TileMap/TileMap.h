@@ -9,13 +9,13 @@
 #include <vector>
 #include <list>
 
-#include "TileCoordinate.h"
-#include "TileMapEntity.h"
-#include "TileIdRange.h"
-#include "Vector2.h"
-#include "Color.h"
-#include "TexturePointer.h"
-#include "TileMapLayer.h"
+#include "BaconBox/Display/TileMap/TileCoordinate.h"
+#include "BaconBox/Display/TileMap/TileMapEntity.h"
+#include "BaconBox/Display/TileMap/TileIdRange.h"
+#include "BaconBox/Vector2.h"
+#include "BaconBox/Display/Color.h"
+#include "BaconBox/Display/TexturePointer.h"
+#include "BaconBox/Display/TileMap/TileMapLayer.h"
 
 namespace BaconBox {
 	class Tileset;

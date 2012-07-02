@@ -6,11 +6,11 @@
 #ifndef RB_DEBUG_STATE_H
 #define RB_DEBUG_STATE_H
 
-#include "State.h"
-#include "PointerButtonSignalData.h"
-#include "KeySignalData.h"
-#include "Key.h"
-#include "Vector2.h"
+#include "BaconBox/State.h"
+#include "BaconBox/Input/Pointer/PointerButtonSignalData.h"
+#include "BaconBox/Input/Keyboard/KeySignalData.h"
+#include "BaconBox/Input/Keyboard/Key.h"
+#include "BaconBox/Vector2.h"
 
 namespace BaconBox {
 	/**

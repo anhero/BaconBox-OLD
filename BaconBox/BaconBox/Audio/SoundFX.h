@@ -5,7 +5,7 @@
 #ifndef RB_SOUNDFX_H
 #define RB_SOUNDFX_H
 
-#include "Sound.h"
+#include "BaconBox/Audio/Sound.h"
 
 namespace BaconBox {
 	/**

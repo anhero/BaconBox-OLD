@@ -1,9 +1,9 @@
-#include "ResourceDefinition.h"
+#include "BaconBox/ResourceDefinition.h"
 
-#include "Value.h"
-#include "DefaultSerializer.h"
-#include "Serializer.h"
-#include "Object.h"
+#include "BaconBox/Helper/Serialization/Value.h"
+#include "BaconBox/Helper/Serialization/DefaultSerializer.h"
+#include "BaconBox/Helper/Serialization/Serializer.h"
+#include "BaconBox/Helper/Serialization/Object.h"
 
 namespace BaconBox {
 	bool ResourceDefinition::isValidValue(const Value &node) {

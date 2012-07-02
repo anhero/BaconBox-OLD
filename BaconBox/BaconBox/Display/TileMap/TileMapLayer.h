@@ -7,8 +7,8 @@
 
 #include <stdint.h>
 
-#include "TileMapEntity.h"
-#include "TileIdRange.h"
+#include "BaconBox/Display/TileMap/TileMapEntity.h"
+#include "BaconBox/Display/TileMap/TileIdRange.h"
 
 namespace BaconBox {
 	class ObjectLayer;

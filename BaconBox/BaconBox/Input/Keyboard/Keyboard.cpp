@@ -1,6 +1,6 @@
-#include "Keyboard.h"
+#include "BaconBox/Input/Keyboard/Keyboard.h"
 
-#include "InputManager.h"
+#include "BaconBox/Input/InputManager.h"
 
 using namespace BaconBox;
 

@@ -1,6 +1,6 @@
-#include "TileMapObject.h"
+#include "BaconBox/Display/TileMap/TileMapObject.h"
 
-#include "ObjectLayer.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
 
 namespace BaconBox {
 	TileMapObject::TileMapObject(const std::string &newName,

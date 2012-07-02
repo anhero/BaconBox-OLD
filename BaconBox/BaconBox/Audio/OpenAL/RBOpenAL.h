@@ -5,7 +5,7 @@
 #ifndef RB_OPENAL_H
 #define RB_OPENAL_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_OPENAL
 

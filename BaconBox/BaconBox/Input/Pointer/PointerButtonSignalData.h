@@ -5,8 +5,8 @@
 #ifndef RB_POINTER_BUTTON_SIGNAL_DATA_H
 #define RB_POINTER_BUTTON_SIGNAL_DATA_H
 
-#include "PointerSignalData.h"
-#include "CursorButton.h"
+#include "BaconBox/Input/Pointer/PointerSignalData.h"
+#include "BaconBox/Input/Pointer/CursorButton.h"
 
 namespace BaconBox {
 	/**

@@ -5,8 +5,8 @@
 #ifndef RB_SPRITE_BATCH_H
 #define RB_SPRITE_BATCH_H
 
-#include "LayeredBatch.h"
-#include "BatchedSprite.h"
+#include "BaconBox/Display/LayeredBatch.h"
+#include "BaconBox/Display/BatchedSprite.h"
 
 namespace BaconBox {
 	typedef LayeredBatch<BatchedSprite> SpriteBatch;

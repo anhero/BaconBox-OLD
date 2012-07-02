@@ -1,6 +1,6 @@
-#include "Checkbox.h"
+#include "BaconBox/Display/Gui/Checkbox.h"
 
-#include "TextureInformation.h"
+#include "BaconBox/Display/TextureInformation.h"
 
 namespace BaconBox {
 	Checkbox::Checkbox(TexturePointer newTexture,

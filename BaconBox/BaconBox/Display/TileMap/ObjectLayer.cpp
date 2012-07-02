@@ -1,12 +1,12 @@
-#include "ObjectLayer.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
 
 #include <cassert>
 #include <algorithm>
 
-#include "TileObject.h"
-#include "LineObject.h"
-#include "PolygonObject.h"
-#include "RectangleObject.h"
+#include "BaconBox/Display/TileMap/TileObject.h"
+#include "BaconBox/Display/TileMap/LineObject.h"
+#include "BaconBox/Display/TileMap/PolygonObject.h"
+#include "BaconBox/Display/TileMap/RectangleObject.h"
 
 namespace BaconBox {
 	ObjectLayer *ObjectLayer::asObjectLayer() {

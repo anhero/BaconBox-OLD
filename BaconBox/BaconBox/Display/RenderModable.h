@@ -5,8 +5,8 @@
 #ifndef RB_RENDER_MODABLE_H
 #define RB_RENDER_MODABLE_H
 
-#include "RenderMode.h"
-#include "FlagSet.h"
+#include "BaconBox/Display/RenderMode.h"
+#include "BaconBox/Helper/FlagSet.h"
 
 namespace BaconBox {
 	class RenderModable {

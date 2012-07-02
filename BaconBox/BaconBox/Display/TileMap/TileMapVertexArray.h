@@ -5,9 +5,9 @@
 #ifndef RB_TILE_MAP_VERTEX_ARRAY_H
 #define RB_TILE_MAP_VERTEX_ARRAY_H
 
-#include "TileMapObject.h"
-#include "Shapable.h"
-#include "StandardVertexArray.h"
+#include "BaconBox/Display/TileMap/TileMapObject.h"
+#include "BaconBox/Display/Shapable.h"
+#include "BaconBox/Display/StandardVertexArray.h"
 
 namespace BaconBox {
 	/**

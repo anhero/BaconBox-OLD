@@ -5,7 +5,7 @@
 #ifndef RB_HIDABLE_H
 #define RB_HIDABLE_H
 
-#include "Maskable.h"
+#include "BaconBox/Display/Maskable.h"
 
 namespace BaconBox {
 	/**

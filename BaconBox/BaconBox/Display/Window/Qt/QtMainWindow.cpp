@@ -1,16 +1,16 @@
-#include "QtMainWindow.h"
+#include "BaconBox/Display/Window/Qt/QtMainWindow.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
-#include "RBOpenGL.h"
-#include "Engine.h"
+#include "BaconBox/Display/Driver/OpenGL/RBOpenGL.h"
+#include "BaconBox/Engine.h"
 
-#include "QtKeyboard.h"
-#include "QtPointer.h"
+#include "BaconBox/Input/Keyboard/Qt/QtKeyboard.h"
+#include "BaconBox/Input/Pointer/Qt/QtPointer.h"
 
-#include "InputManager.h"
+#include "BaconBox/Input/InputManager.h"
 
-#include "Console.h"
+#include "BaconBox/Console.h"
 
 #include <QtGui>
 #include <QtOpenGL>

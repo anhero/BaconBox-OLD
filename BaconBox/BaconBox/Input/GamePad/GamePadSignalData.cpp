@@ -1,4 +1,4 @@
-#include "GamePadSignalData.h"
+#include "BaconBox/Input/GamePad/GamePadSignalData.h"
 
 using namespace BaconBox;
 

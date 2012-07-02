@@ -8,9 +8,9 @@
 #include <iostream>
 #include <vector>
 
-#include "Vector2.h"
-#include "AxisAlignedBoundingBox.h"
-#include "Serializable.h"
+#include "BaconBox/Vector2.h"
+#include "BaconBox/Display/AxisAlignedBoundingBox.h"
+#include "BaconBox/Helper/Serialization/Serializable.h"
 
 namespace BaconBox {
 	/**

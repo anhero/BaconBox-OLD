@@ -1,4 +1,4 @@
-#include "TileMapEntity.h"
+#include "BaconBox/Display/TileMap/TileMapEntity.h"
 
 namespace BaconBox {
 	TileMapEntity::TileMapEntity(const std::string &newName) : name(newName),

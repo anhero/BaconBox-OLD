@@ -5,7 +5,7 @@
 #ifndef RB_COLORFORMAT_H
 #define RB_COLORFORMAT_H
 
-#include "SafeEnum.h"
+#include "BaconBox/Helper/SafeEnum.h"
 
 namespace BaconBox {
 

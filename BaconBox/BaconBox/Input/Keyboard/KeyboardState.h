@@ -10,8 +10,8 @@
 #include <string>
 #include <vector>
 
-#include "InputState.h"
-#include "Key.h"
+#include "BaconBox/Input/InputState.h"
+#include "BaconBox/Input/Keyboard/Key.h"
 
 namespace BaconBox {
 	/**

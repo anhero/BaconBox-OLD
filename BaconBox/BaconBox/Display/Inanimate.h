@@ -5,9 +5,9 @@
 #ifndef RB_INANIMATE_H
 #define RB_INANIMATE_H
 
-#include "TextureMappable.h"
-#include "TextureCoordinates.h"
-#include "TexturePointer.h"
+#include "BaconBox/Display/TextureMappable.h"
+#include "BaconBox/Display/TextureCoordinates.h"
+#include "BaconBox/Display/TexturePointer.h"
 
 namespace BaconBox {
 	class VertexArray;

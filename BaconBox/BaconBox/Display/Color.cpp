@@ -1,4 +1,4 @@
-#include "Color.h"
+#include "BaconBox/Display/Color.h"
 
 #include <cmath>
 
@@ -6,11 +6,11 @@
 #include <vector>
 #include <utility>
 
-#include "Value.h"
-#include "DefaultSerializer.h"
-#include "Serializer.h"
-#include "StringHelper.h"
-#include "Object.h"
+#include "BaconBox/Helper/Serialization/Value.h"
+#include "BaconBox/Helper/Serialization/DefaultSerializer.h"
+#include "BaconBox/Helper/Serialization/Serializer.h"
+#include "BaconBox/Helper/StringHelper.h"
+#include "BaconBox/Helper/Serialization/Object.h"
 
 namespace BaconBox {
 	const Color Color::BLACK(0, 0, 0);

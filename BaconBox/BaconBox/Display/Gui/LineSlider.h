@@ -6,14 +6,14 @@
 
 #include <algorithm>
 
-#include "Slider.h"
-#include "Pointer.h"
-#include "Layerable.h"
-#include "Collidable.h"
-#include "InanimateGraphicElement.h"
-#include "Pointer.h"
-#include "Engine.h"
-#include "StandardVertexArray.h"
+#include "BaconBox/Display/Gui/Slider.h"
+#include "BaconBox/Input/Pointer/Pointer.h"
+#include "BaconBox/Display/Layerable.h"
+#include "BaconBox/Display/Collidable.h"
+#include "BaconBox/Display/InanimateGraphicElement.h"
+#include "BaconBox/Input/Pointer/Pointer.h"
+#include "BaconBox/Engine.h"
+#include "BaconBox/Display/StandardVertexArray.h"
 
 namespace BaconBox {
 	template <typename T>

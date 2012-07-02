@@ -1,4 +1,4 @@
-#include "AccelerometerState.h"
+#include "BaconBox/Input/Accelerometer/AccelerometerState.h"
 
 using namespace BaconBox;
 

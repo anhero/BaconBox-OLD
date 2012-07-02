@@ -1,4 +1,4 @@
-#include "SpriteEmitter.h"
+#include "BaconBox/Emitter/SpriteEmitter.h"
 
 namespace BaconBox {
 	SpriteEmitter::SpriteEmitter(const GraphicElement<Collidable> *newDefaultGraphic) :

@@ -5,7 +5,7 @@
 #ifndef RB_JSON_BOX_SERIALIZER_H
 #define RB_JSON_BOX_SERIALIZER_H
 
-#include "Serializer.h"
+#include "BaconBox/Helper/Serialization/Serializer.h"
 
 namespace BaconBox {
 	/**

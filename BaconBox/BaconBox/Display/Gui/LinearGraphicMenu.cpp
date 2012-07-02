@@ -1,4 +1,4 @@
-#include "LinearGraphicMenu.h"
+#include "BaconBox/Display/Gui/LinearGraphicMenu.h"
 
 namespace BaconBox {
 	LinearGraphicMenu::LinearGraphicMenu() : Menu(), needPositionUpdate(false), layout(Horizontal) {

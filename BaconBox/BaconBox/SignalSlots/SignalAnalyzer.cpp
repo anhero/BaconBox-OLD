@@ -1,4 +1,4 @@
-#include "SignalAnalyzer.h"
+#include "BaconBox/SignalSlots/SignalAnalyzer.h"
 
 using namespace BaconBox;
 

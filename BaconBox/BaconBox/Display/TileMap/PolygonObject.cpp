@@ -1,6 +1,6 @@
-#include "PolygonObject.h"
+#include "BaconBox/Display/TileMap/PolygonObject.h"
 
-#include "ObjectLayer.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
 
 namespace BaconBox {
 	void PolygonObject::setName(const std::string &newName) {

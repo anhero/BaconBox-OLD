@@ -1,4 +1,4 @@
-#include "Colorable.h"
+#include "BaconBox/Display/Colorable.h"
 
 namespace BaconBox {
 	Colorable::Colorable(const Color &newColor) : color(newColor) {

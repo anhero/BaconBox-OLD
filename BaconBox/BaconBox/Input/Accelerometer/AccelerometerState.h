@@ -5,7 +5,7 @@
 #ifndef RB_ACCELEROMETER_STATE_H
 #define RB_ACCELEROMETER_STATE_H
 
-#include "InputState.h"
+#include "BaconBox/Input/InputState.h"
 
 namespace BaconBox {
 	/**

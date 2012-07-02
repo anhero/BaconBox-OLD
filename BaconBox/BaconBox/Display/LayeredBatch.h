@@ -5,8 +5,8 @@
 #ifndef RB_LAYERED_BATCH_H
 #define RB_LAYERED_BATCH_H
 
-#include "Layerable.h"
-#include "RenderBatch.h"
+#include "BaconBox/Display/Layerable.h"
+#include "BaconBox/Display/RenderBatch.h"
 
 namespace BaconBox {
 	/**

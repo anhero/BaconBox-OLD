@@ -1,25 +1,25 @@
-#include "OpenALEngine.h"
+#include "BaconBox/Audio/OpenAL/OpenALEngine.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #include <fstream>
 #include <algorithm>
 #include <cstring>
 #include <cassert>
 
-#include "Console.h"
+#include "BaconBox/Console.h"
 
-#include "RBOpenAL.h"
+#include "BaconBox/Audio/OpenAL/RBOpenAL.h"
 
-#include "BitHelper.h"
-#include "WavHeader.h"
+#include "BaconBox/Helper/BitHelper.h"
+#include "BaconBox/Audio/OpenAL/WavHeader.h"
 
-#include "SoundFX.h"
-#include "SoundInfo.h"
-#include "NullAudio.h"
-#include "OpenALSoundFX.h"
+#include "BaconBox/Audio/SoundFX.h"
+#include "BaconBox/Audio/SoundInfo.h"
+#include "BaconBox/Audio/NullAudio.h"
+#include "BaconBox/Audio/OpenAL/OpenALSoundFX.h"
 
-#include "ResourceManager.h"
+#include "BaconBox/ResourceManager.h"
 
 namespace BaconBox {
 	int OpenALEngine::openALToBaconBoxVolume(float openALVolume) {

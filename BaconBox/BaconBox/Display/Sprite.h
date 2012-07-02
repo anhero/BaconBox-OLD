@@ -5,9 +5,9 @@
 #ifndef RB_SPRITE_H
 #define RB_SPRITE_H
 
-#include "GraphicElement.h"
-#include "Collidable.h"
-#include "Layerable.h"
+#include "BaconBox/Display/GraphicElement.h"
+#include "BaconBox/Display/Collidable.h"
+#include "BaconBox/Display/Layerable.h"
 
 namespace BaconBox {
 	typedef GraphicElement<Collidable, Layerable> Sprite;

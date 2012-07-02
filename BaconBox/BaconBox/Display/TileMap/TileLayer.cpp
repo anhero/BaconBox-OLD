@@ -1,8 +1,8 @@
-#include "TileLayer.h"
+#include "BaconBox/Display/TileMap/TileLayer.h"
 
 #include <algorithm>
 
-#include "TileMap.h"
+#include "BaconBox/Display/TileMap/TileMap.h"
 
 namespace BaconBox {
 	const TileCoordinate &TileLayer::getSizeInTiles() const {

@@ -1,4 +1,4 @@
-#include "Manageable.h"
+#include "BaconBox/Display/Manageable.h"
 
 namespace BaconBox {
 	Manageable::Manageable() : managed(false), toBeDeleted(false) {

@@ -1,8 +1,8 @@
-#include "TextButton.h"
+#include "BaconBox/Display/Gui/TextButton.h"
 
 #include <cmath>
 
-#include "TextureInformation.h"
+#include "BaconBox/Display/TextureInformation.h"
 
 namespace BaconBox {
 	TextButton::TextButton(TexturePointer newTexture,

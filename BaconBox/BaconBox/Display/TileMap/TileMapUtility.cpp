@@ -1,12 +1,12 @@
-#include "TileMapUtility.h"
+#include "BaconBox/Display/TileMap/TileMapUtility.h"
 
 #include <set>
 #include <algorithm>
 
-#include "StringHelper.h"
-#include "AlgorithmHelper.h"
-#include "Collidable.h"
-#include "Orderable.h"
+#include "BaconBox/Helper/StringHelper.h"
+#include "BaconBox/Helper/AlgorithmHelper.h"
+#include "BaconBox/Display/Collidable.h"
+#include "BaconBox/Display/Orderable.h"
 
 namespace BaconBox {
 	const std::string TileMapUtility::DEFAULT_ANIMATION_NAME("defaultAnimation");

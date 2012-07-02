@@ -1,6 +1,6 @@
-#include "RectangleObject.h"
+#include "BaconBox/Display/TileMap/RectangleObject.h"
 
-#include "ObjectLayer.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
 
 namespace BaconBox {
 	void RectangleObject::setName(const std::string &newName) {

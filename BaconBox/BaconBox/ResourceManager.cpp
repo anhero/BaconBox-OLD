@@ -1,21 +1,21 @@
-#include "ResourceManager.h"
+#include "BaconBox/ResourceManager.h"
 
 #include <utility>
-#include "Console.h"
-#include "SoundFX.h"
-#include "BackgroundMusic.h"
-#include "SoundInfo.h"
-#include "MusicInfo.h"
-#include "TextureInformation.h"
-#include "AudioEngine.h"
-#include "SoundEngine.h"
-#include "MusicEngine.h"
-#include "GraphicDriver.h"
-#include "ResourcePathHandler.h"
-#include "Color.h"
+#include "BaconBox/Console.h"
+#include "BaconBox/Audio/SoundFX.h"
+#include "BaconBox/Audio/BackgroundMusic.h"
+#include "BaconBox/Audio/SoundInfo.h"
+#include "BaconBox/Audio/MusicInfo.h"
+#include "BaconBox/Display/TextureInformation.h"
+#include "BaconBox/Audio/AudioEngine.h"
+#include "BaconBox/Audio/SoundEngine.h"
+#include "BaconBox/Audio/MusicEngine.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
+#include "BaconBox/Helper/ResourcePathHandler.h"
+#include "BaconBox/Display/Color.h"
 
 #ifndef RB_ANDROID
-#include "Font.h"
+#include "BaconBox/Display/Text/Font.h"
 #endif
 
 //For LibPNG

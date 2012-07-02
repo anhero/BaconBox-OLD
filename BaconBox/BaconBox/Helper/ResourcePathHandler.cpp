@@ -1,8 +1,8 @@
-#include "ResourcePathHandler.h"
+#include "BaconBox/Helper/ResourcePathHandler.h"
 
 #include <fstream>
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 #ifdef RB_IPHONE_PLATFORM
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -20,7 +20,7 @@
 #include <QDesktopServices>
 #endif
 
-#include "Engine.h"
+#include "BaconBox/Engine.h"
 
 namespace BaconBox {
 

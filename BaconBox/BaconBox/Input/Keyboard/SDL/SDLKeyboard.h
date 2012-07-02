@@ -1,14 +1,14 @@
 #ifndef RB_SDL_KEYBOARD_H
 #define RB_SDL_KEYBOARD_H
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
 #ifdef RB_SDL
 
 #include <vector>
 
-#include "Keyboard.h"
-#include "Key.h"
+#include "BaconBox/Input/Keyboard/Keyboard.h"
+#include "BaconBox/Input/Keyboard/Key.h"
 
 namespace BaconBox {
 	class SDLKeyboard : public Keyboard {

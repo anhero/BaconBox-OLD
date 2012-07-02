@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "PropertyMap.h"
+#include "BaconBox/Display/TileMap/PropertyMap.h"
 
 namespace BaconBox {
 	class TileMapEntity {

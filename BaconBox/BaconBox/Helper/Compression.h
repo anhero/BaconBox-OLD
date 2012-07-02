@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "CompressionMethod.h"
+#include "BaconBox/Helper/CompressionMethod.h"
 
 namespace BaconBox {
 	/**

@@ -1,6 +1,6 @@
-#include "Accelerometer.h"
+#include "BaconBox/Input/Accelerometer/Accelerometer.h"
 
-#include "InputManager.h"
+#include "BaconBox/Input/InputManager.h"
 
 using namespace BaconBox;
 

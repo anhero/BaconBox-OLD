@@ -1,13 +1,13 @@
-#include "GraphicTileLayer.h"
+#include "BaconBox/Display/TileMap/GraphicTileLayer.h"
 
-#include "TileLayer.h"
-#include "Tileset.h"
-#include "TileMap.h"
-#include "ShapeFactory.h"
-#include "TextureInformation.h"
-#include "TexturePointer.h"
-#include "TileMapUtility.h"
-#include "CollisionGroup.h"
+#include "BaconBox/Display/TileMap/TileLayer.h"
+#include "BaconBox/Display/TileMap/Tileset.h"
+#include "BaconBox/Display/TileMap/TileMap.h"
+#include "BaconBox/Helper/ShapeFactory.h"
+#include "BaconBox/Display/TextureInformation.h"
+#include "BaconBox/Display/TexturePointer.h"
+#include "BaconBox/Display/TileMap/TileMapUtility.h"
+#include "BaconBox/Helper/CollisionGroup.h"
 
 namespace BaconBox {
 	GraphicTileLayer::GraphicTileLayer(const Vector2 &startingPosition) :

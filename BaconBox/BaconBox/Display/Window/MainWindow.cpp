@@ -1,7 +1,7 @@
-#include "MainWindow.h"
+#include "BaconBox/Display/Window/MainWindow.h"
 
-#include "Engine.h"
-#include "GraphicDriver.h"
+#include "BaconBox/Engine.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
 
 namespace BaconBox {
 	const std::string MainWindow::DEFAULT_NAME = std::string("An unnamed BaconBox application");

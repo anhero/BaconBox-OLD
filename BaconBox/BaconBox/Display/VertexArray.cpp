@@ -1,8 +1,8 @@
-#include "VertexArray.h"
+#include "BaconBox/Display/VertexArray.h"
 
-#include "Value.h"
-#include "DefaultSerializer.h"
-#include "Serializer.h"
+#include "BaconBox/Helper/Serialization/Value.h"
+#include "BaconBox/Helper/Serialization/DefaultSerializer.h"
+#include "BaconBox/Helper/Serialization/Serializer.h"
 
 namespace BaconBox {
 	bool VertexArray::isValidValueStatic(const Value &node) {

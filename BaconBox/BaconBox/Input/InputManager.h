@@ -7,10 +7,10 @@
 
 #include <vector>
 
-#include "Accelerometer.h"
-#include "GamePad.h"
-#include "Keyboard.h"
-#include "Pointer.h"
+#include "BaconBox/Input/Accelerometer/Accelerometer.h"
+#include "BaconBox/Input/GamePad/GamePad.h"
+#include "BaconBox/Input/Keyboard/Keyboard.h"
+#include "BaconBox/Input/Pointer/Pointer.h"
 
 namespace BaconBox {
 	/**

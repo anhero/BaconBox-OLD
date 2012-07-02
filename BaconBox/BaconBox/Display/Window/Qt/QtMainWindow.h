@@ -6,7 +6,7 @@
 #define RB_QT_MAIN_WINDOW_H
 
 #include <sigly.h>
-#include "MainWindow.h"
+#include "BaconBox/Display/Window/MainWindow.h"
 
 #include <QMainWindow>
 #include <QtGui>

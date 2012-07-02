@@ -5,7 +5,7 @@
 #ifndef RB_TRANSFORMABLE_H
 #define RB_TRANSFORMABLE_H
 
-#include "Positionable.h"
+#include "BaconBox/Display/Positionable.h"
 
 namespace BaconBox {
 	/**

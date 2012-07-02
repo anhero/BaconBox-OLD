@@ -1,6 +1,6 @@
-#include "LineObject.h"
+#include "BaconBox/Display/TileMap/LineObject.h"
 
-#include "ObjectLayer.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
 
 namespace BaconBox {
 	void LineObject::setName(const std::string &newName) {

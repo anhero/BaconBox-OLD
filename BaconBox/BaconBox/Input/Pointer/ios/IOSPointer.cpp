@@ -1,6 +1,6 @@
-#include "IOSPointer.h"
-#include "CursorButton.h"
-#include "MainWindow.h"
+#include "BaconBox/Input/Pointer/ios/IOSPointer.h"
+#include "BaconBox/Input/Pointer/CursorButton.h"
+#include "BaconBox/Display/Window/MainWindow.h"
 
 namespace BaconBox {
 	const unsigned int MAX_IOS_NB_OF_TOUCH = 11;

@@ -1,4 +1,4 @@
-#include "BitHelper.h"
+#include "BaconBox/Helper/BitHelper.h"
 
 using namespace BaconBox;
 

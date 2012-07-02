@@ -5,8 +5,8 @@
 #ifndef RB_GRAPHIC_TILE_MAP_LAYER_H
 #define RB_GRAPHIC_TILE_MAP_LAYER_H
 
-#include "Transformable.h"
-#include "Layerable.h"
+#include "BaconBox/Display/Transformable.h"
+#include "BaconBox/Display/Layerable.h"
 
 namespace BaconBox {
 	class GraphicTileLayer;

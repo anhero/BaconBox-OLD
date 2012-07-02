@@ -1,10 +1,10 @@
-#include "AnimationDefinition.h"
+#include "BaconBox/Display/AnimationDefinition.h"
 
-#include "Value.h"
-#include "DefaultSerializer.h"
-#include "Serializer.h"
-#include "Array.h"
-#include "Object.h"
+#include "BaconBox/Helper/Serialization/Value.h"
+#include "BaconBox/Helper/Serialization/DefaultSerializer.h"
+#include "BaconBox/Helper/Serialization/Serializer.h"
+#include "BaconBox/Helper/Serialization/Array.h"
+#include "BaconBox/Helper/Serialization/Object.h"
 
 namespace BaconBox {
 	bool AnimationDefinition::isValidValue(const Value &node) {

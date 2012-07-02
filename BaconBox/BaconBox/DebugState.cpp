@@ -1,11 +1,11 @@
 #if 0
-#include "DebugState.h"
+#include "BaconBox/DebugState.h"
 
-#include "GraphicBody.h"
-#include "Console.h"
-#include "Pointer.h"
-#include "Keyboard.h"
-#include "AABB.h"
+#include "GraphicBody.h" //@TODO: WARNING: Missing file. (automated script)
+#include "BaconBox/Console.h"
+#include "BaconBox/Input/Pointer/Pointer.h"
+#include "BaconBox/Input/Keyboard/Keyboard.h"
+#include "AABB.h" //@TODO: WARNING: Missing file. (automated script)
 
 using namespace BaconBox;
 

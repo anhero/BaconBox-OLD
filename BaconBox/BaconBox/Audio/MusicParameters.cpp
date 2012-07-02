@@ -1,3 +1,3 @@
-#include "MusicParameters.h"
+#include "BaconBox/Audio/MusicParameters.h"
 
 using namespace BaconBox;

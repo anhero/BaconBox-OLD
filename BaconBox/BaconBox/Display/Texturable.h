@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "TexturePointer.h"
+#include "BaconBox/Display/TexturePointer.h"
 
 namespace BaconBox {
 	struct TextureInformation;

@@ -1,10 +1,10 @@
-#include "DefaultSerializer.h"
+#include "BaconBox/Helper/Serialization/DefaultSerializer.h"
 
 #include <cassert>
 
-#include "Serializer.h"
-#include "JsonSerializer.h"
-#include "Console.h"
+#include "BaconBox/Helper/Serialization/Serializer.h"
+#include "BaconBox/Helper/Serialization/JsonSerializer.h"
+#include "BaconBox/Console.h"
 
 namespace BaconBox {
 	Serializer &DefaultSerializer::getDefaultSerializer() {

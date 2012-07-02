@@ -7,7 +7,7 @@
 
 #include <SDL/SDL.h>
 
-#include "MainWindow.h"
+#include "BaconBox/Display/Window/MainWindow.h"
 
 namespace BaconBox {
 	/**

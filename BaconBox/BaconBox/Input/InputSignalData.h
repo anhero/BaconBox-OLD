@@ -5,7 +5,7 @@
 #ifndef RB_INPUT_SIGNAL_DATA_H
 #define RB_INPUT_SIGNAL_DATA_H
 
-#include "SignalData.h"
+#include "BaconBox/SignalSlots/SignalData.h"
 
 namespace BaconBox {
 	/**

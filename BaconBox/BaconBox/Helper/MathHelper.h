@@ -9,9 +9,9 @@
 #include <cstddef>
 #include <climits>
 
-#include "StaticAssert.h"
-#include "IsNumber.h"
-#include "Ease.h"
+#include "BaconBox/Helper/StaticAssert.h"
+#include "BaconBox/Helper/IsNumber.h"
+#include "BaconBox/Helper/Ease.h"
 
 namespace BaconBox {
 	/**

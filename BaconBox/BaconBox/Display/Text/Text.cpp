@@ -1,4 +1,4 @@
-#include "Text.h"
+#include "BaconBox/Display/Text/Text.h"
 
 namespace BaconBox {
 	Text::Text(FontPointer newFont,

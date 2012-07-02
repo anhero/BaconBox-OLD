@@ -4,7 +4,7 @@
 #ifndef RB_SIDE_H
 #define RB_SIDE_H
 
-#include "SafeEnum.h"
+#include "BaconBox/Helper/SafeEnum.h"
 
 namespace BaconBox {
 	struct SideDef {

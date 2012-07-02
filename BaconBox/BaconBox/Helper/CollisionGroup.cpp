@@ -1,4 +1,4 @@
-#include "CollisionGroup.h"
+#include "BaconBox/Helper/CollisionGroup.h"
 
 #include <cassert>
 #include <cmath>
@@ -6,9 +6,9 @@
 #include <algorithm>
 #include <queue>
 
-#include "DeleteHelper.h"
+#include "BaconBox/Helper/DeleteHelper.h"
 
-#include "Collidable.h"
+#include "BaconBox/Display/Collidable.h"
 
 namespace BaconBox {
 	CollisionGroup::CollisionGroup(const AxisAlignedBoundingBox &newBounds,

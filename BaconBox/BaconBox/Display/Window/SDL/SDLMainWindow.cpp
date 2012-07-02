@@ -1,11 +1,11 @@
-#include "SDLMainWindow.h"
+#include "BaconBox/Display/Window/SDL/SDLMainWindow.h"
 
-#include "PlatformFlagger.h"
+#include "BaconBox/PlatformFlagger.h"
 
-#include "SDLInputManager.h"
-#include "RBOpenGL.h"
-#include "Engine.h"
-#include "GraphicDriver.h"
+#include "BaconBox/Input/SDL/SDLInputManager.h"
+#include "BaconBox/Display/Driver/OpenGL/RBOpenGL.h"
+#include "BaconBox/Engine.h"
+#include "BaconBox/Display/Driver/GraphicDriver.h"
 
 namespace BaconBox {
 

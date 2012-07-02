@@ -1,13 +1,13 @@
-#include "FontImplementation.h"
+#include "BaconBox/Display/Text/FreetypeImplementation/FontImplementation.h"
 #include <sstream>
 #include <freetype/ftglyph.h>
 #include <algorithm>
 
-#include "Console.h"
-#include "ResourceManager.h"
-#include "MathHelper.h"
-#include "Parser.h"
-#include "DeleteHelper.h"
+#include "BaconBox/Console.h"
+#include "BaconBox/ResourceManager.h"
+#include "BaconBox/Helper/MathHelper.h"
+#include "BaconBox/Helper/Parser.h"
+#include "BaconBox/Helper/DeleteHelper.h"
 
 namespace BaconBox {
 	FT_Library FontImplementation::fontRenderer = NULL;

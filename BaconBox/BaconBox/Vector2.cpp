@@ -1,4 +1,4 @@
-#include "Vector2.h"
+#include "BaconBox/Vector2.h"
 
 namespace BaconBox {
 	template <> const Vector<float, 2u> Vector<float, 2u>::UP(0.0f, -1.0f);

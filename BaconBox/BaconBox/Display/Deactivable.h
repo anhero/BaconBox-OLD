@@ -4,7 +4,7 @@
 #ifndef RB_DEACTIVABLE_H
 #define RB_DEACTIVABLE_H
 
-#include "Updateable.h"
+#include "BaconBox/Display/Updateable.h"
 
 namespace BaconBox {
 	class Deactivable : virtual public Updateable {

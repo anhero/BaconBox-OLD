@@ -4,8 +4,8 @@
 #ifndef RB_SLIDER_H
 #define RB_SLIDER_H
 
-#include "MathHelper.h"
-#include "Console.h"
+#include "BaconBox/Helper/MathHelper.h"
+#include "BaconBox/Console.h"
 
 #include <sigly.h>
 

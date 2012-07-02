@@ -4,7 +4,7 @@
 #ifndef RB_PARTICLE_PHASE_H
 #define RB_PARTICLE_PHASE_H
 
-#include "Vector2.h"
+#include "BaconBox/Vector2.h"
 
 namespace BaconBox {
 	/**

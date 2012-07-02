@@ -1,9 +1,9 @@
-#include "TileMapLayer.h"
+#include "BaconBox/Display/TileMap/TileMapLayer.h"
 
 #include <cassert>
 
-#include "TileMap.h"
-#include "Color.h"
+#include "BaconBox/Display/TileMap/TileMap.h"
+#include "BaconBox/Display/Color.h"
 
 namespace BaconBox {
 

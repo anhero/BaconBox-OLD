@@ -5,7 +5,7 @@
 #ifndef RB_MASKABLE_H
 #define RB_MASKABLE_H
 
-#include "Renderable.h"
+#include "BaconBox/Display/Renderable.h"
 
 namespace BaconBox {
 	class Maskable : public Renderable {

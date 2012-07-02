@@ -7,8 +7,8 @@
 
 #include <cstdlib>
 
-#include "FlagSet.h"
-#include "Side.h"
+#include "BaconBox/Helper/FlagSet.h"
+#include "BaconBox/Side.h"
 
 namespace BaconBox {
 	class Collidable;

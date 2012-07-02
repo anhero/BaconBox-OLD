@@ -1,4 +1,4 @@
-#include "LinearGraphicSelectMenu.h"
+#include "BaconBox/Display/Gui/LinearGraphicSelectMenu.h"
 
 namespace BaconBox {
 	LinearGraphicSelectMenu::LinearGraphicSelectMenu(GraphicMenuElement *newSelector,

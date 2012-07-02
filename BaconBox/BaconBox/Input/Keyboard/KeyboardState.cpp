@@ -1,8 +1,8 @@
-#include "KeyboardState.h"
+#include "BaconBox/Input/Keyboard/KeyboardState.h"
 
 #include <string>
 
-#include "Key.h"
+#include "BaconBox/Input/Keyboard/Key.h"
 
 using namespace BaconBox;
 

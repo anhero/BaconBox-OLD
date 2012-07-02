@@ -1,9 +1,9 @@
-#include "PixMap.h"
+#include "BaconBox/Display/PixMap.h"
 
 #include <algorithm>
 
-#include "Console.h"
-#include "Color.h"
+#include "BaconBox/Console.h"
+#include "BaconBox/Display/Color.h"
 
 namespace BaconBox {
 	PixMap::PixMap() : width(0), height(0),

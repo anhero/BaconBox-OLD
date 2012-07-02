@@ -7,14 +7,14 @@
 
 #include <algorithm>
 
-#include "TextureMappable.h"
-#include "StaticAssert.h"
-#include "IsBaseOf.h"
-#include "Maskable.h"
-#include "Shapable.h"
-#include "Colorable.h"
-#include "BatchedVertexArray.h"
-#include "TexturePointer.h"
+#include "BaconBox/Display/TextureMappable.h"
+#include "BaconBox/Helper/StaticAssert.h"
+#include "BaconBox/Helper/IsBaseOf.h"
+#include "BaconBox/Display/Maskable.h"
+#include "BaconBox/Display/Shapable.h"
+#include "BaconBox/Display/Colorable.h"
+#include "BaconBox/Display/BatchedVertexArray.h"
+#include "BaconBox/Display/TexturePointer.h"
 
 namespace BaconBox {
 	/**

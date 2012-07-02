@@ -5,7 +5,7 @@
 #ifndef RB_LINEARGRAPHICMENU_H
 #define RB_LINEARGRAPHICMENU_H
 
-#include "Menu.h"
+#include "BaconBox/Display/Gui/Menu.h"
 
 namespace BaconBox {
 	/**

@@ -1,6 +1,6 @@
-#include "Emitter.h"
+#include "BaconBox/Emitter/Emitter.h"
 
-#include "MathHelper.h"
+#include "BaconBox/Helper/MathHelper.h"
 
 namespace BaconBox {
 	Emitter::Emitter() : elapsedTime(0.0), nbParticles(0),

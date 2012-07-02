@@ -1,7 +1,7 @@
-#include "Timer.h"
+#include "BaconBox/Helper/Timer.h"
 
-#include "Engine.h"
-#include "TimerManager.h"
+#include "BaconBox/Engine.h"
+#include "BaconBox/Helper/TimerManager.h"
 
 using namespace BaconBox;
 

@@ -10,21 +10,21 @@
 #include <list>
 #include <utility>
 
-#include "Font.h"
-#include "GlyphInformation.h"
-#include "UTFConvert.h"
-#include "Maskable.h"
-#include "TextDirection.h"
-#include "TextAlignment.h"
-#include "Colorable.h"
-#include "InanimateGraphicElement.h"
-#include "RBString32.h"
-#include "StandardVertexArray.h"
-#include "StaticAssert.h"
-#include "IsBaseOf.h"
-#include "Transformable.h"
-#include "FontPointer.h"
-#include "Console.h"
+#include "BaconBox/Display/Text/Font.h"
+#include "BaconBox/Display/Text/GlyphInformation.h"
+#include "BaconBox/Helper/UTFConvert.h"
+#include "BaconBox/Display/Maskable.h"
+#include "BaconBox/Display/Text/TextDirection.h"
+#include "BaconBox/Display/Text/TextAlignment.h"
+#include "BaconBox/Display/Colorable.h"
+#include "BaconBox/Display/InanimateGraphicElement.h"
+#include "BaconBox/Display/RBString32.h"
+#include "BaconBox/Display/StandardVertexArray.h"
+#include "BaconBox/Helper/StaticAssert.h"
+#include "BaconBox/Helper/IsBaseOf.h"
+#include "BaconBox/Display/Transformable.h"
+#include "BaconBox/Display/Text/FontPointer.h"
+#include "BaconBox/Console.h"
 
 namespace BaconBox {
 	/**

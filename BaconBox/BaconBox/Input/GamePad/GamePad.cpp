@@ -1,6 +1,6 @@
-#include "GamePad.h"
+#include "BaconBox/Input/GamePad/GamePad.h"
 
-#include "InputManager.h"
+#include "BaconBox/Input/InputManager.h"
 
 using namespace BaconBox;
 

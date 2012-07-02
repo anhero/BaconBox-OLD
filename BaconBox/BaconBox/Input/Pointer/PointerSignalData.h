@@ -5,8 +5,8 @@
 #ifndef RB_POINTER_SIGNAL_DATA_H
 #define RB_POINTER_SIGNAL_DATA_H
 
-#include "InputSignalData.h"
-#include "PointerState.h"
+#include "BaconBox/Input/InputSignalData.h"
+#include "BaconBox/Input/Pointer/PointerState.h"
 
 namespace BaconBox {
 	/**

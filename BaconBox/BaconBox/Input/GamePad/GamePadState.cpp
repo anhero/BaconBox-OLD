@@ -1,4 +1,4 @@
-#include "GamePadState.h"
+#include "BaconBox/Input/GamePad/GamePadState.h"
 using namespace BaconBox;
 
 GamePadState::GamePadState() : InputState() {

@@ -7,8 +7,8 @@
 
 #include <string>
 
-#include "MusicParameters.h"
-#include "AudioEngine.h"
+#include "BaconBox/Audio/MusicParameters.h"
+#include "BaconBox/Audio/AudioEngine.h"
 
 namespace BaconBox {
 	class BackgroundMusic;

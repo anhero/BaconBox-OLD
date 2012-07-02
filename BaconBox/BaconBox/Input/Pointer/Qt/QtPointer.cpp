@@ -1,6 +1,6 @@
-#include "QtPointer.h"
+#include "BaconBox/Input/Pointer/Qt/QtPointer.h"
 
-#include "InputManager.h"
+#include "BaconBox/Input/InputManager.h"
 
 #include <QMouseEvent>
 #include <QCursor>

@@ -1,14 +1,14 @@
-#include "TileMap.h"
+#include "BaconBox/Display/TileMap/TileMap.h"
 
 #include <cassert>
 
 #include <utility>
 #include <algorithm>
 
-#include "Tileset.h"
-#include "TileMapLayer.h"
-#include "TileLayer.h"
-#include "ObjectLayer.h"
+#include "BaconBox/Display/TileMap/Tileset.h"
+#include "BaconBox/Display/TileMap/TileMapLayer.h"
+#include "BaconBox/Display/TileMap/TileLayer.h"
+#include "BaconBox/Display/TileMap/ObjectLayer.h"
 
 namespace BaconBox {
 

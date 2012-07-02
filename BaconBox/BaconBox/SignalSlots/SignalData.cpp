@@ -1,4 +1,4 @@
-#include "SignalData.h"
+#include "BaconBox/SignalSlots/SignalData.h"
 
 using namespace BaconBox;
 
