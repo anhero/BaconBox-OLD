@@ -2064,6 +2064,7 @@
 				PRIVATE_HEADERS_FOLDER_PATH = /include/BaconBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = /include;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../BaconBox\"";
 			};
 			name = Debug;
 		};
@@ -2079,6 +2080,7 @@
 				PRIVATE_HEADERS_FOLDER_PATH = /include/BaconBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = /include;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../BaconBox\"";
 			};
 			name = Release;
 		};
