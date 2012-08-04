@@ -1794,7 +1794,7 @@
 		240485C514F2AE36001F8F61 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Anhero Inc.";
 			};
 			buildConfigurationList = 240485C814F2AE36001F8F61 /* Build configuration list for PBXProject "BaconBox" */;
@@ -2055,6 +2055,7 @@
 		240485D314F2AE36001F8F61 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../libraries/Darwin/x86_64/include\"";
 				LIBRARY_SEARCH_PATHS = (
@@ -2071,6 +2072,7 @@
 		240485D414F2AE36001F8F61 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../libraries/Darwin/x86_64/include\"";
 				LIBRARY_SEARCH_PATHS = (
@@ -2087,6 +2089,7 @@
 		2412604715A0C33A0083ED75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DOXYGEN_PATH = /usr/local/bin/doxygen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2095,6 +2098,7 @@
 		2412604815A0C33A0083ED75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DOXYGEN_PATH = /usr/local/bin/doxygen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
