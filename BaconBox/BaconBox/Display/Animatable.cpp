@@ -105,7 +105,7 @@ namespace BaconBox {
 		return frames;
 	}
 
-	unsigned int Animatable::getCurrentFrame() const {
+	size_t Animatable::getCurrentFrame() const {
 		return currentFrame;
 	}
 
@@ -123,13 +123,13 @@ namespace BaconBox {
 		}
 	}
 
-	void Animatable::incrementCurrentFrame(unsigned int increment) {
+	void Animatable::incrementCurrentFrame(size_t increment) {
 		// We make sure there is an animation selected.
 		if (!currentAnimation.empty()) {
 			// We find the concerned animation definition.
 			AnimationMap::const_iterator definition = animations.find(currentAnimation);
 
-			unsigned int tmpCurrentFrame = currentFrame + increment;
+			size_t tmpCurrentFrame = currentFrame + increment;
 			currentFrame = tmpCurrentFrame % definition->second.frames.size();
 
 			// We only increment the number of loops if it's not infinite.

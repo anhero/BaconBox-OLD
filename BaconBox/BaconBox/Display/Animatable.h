@@ -99,7 +99,7 @@ namespace BaconBox {
 		 * list of frames. Zero if there is no animation playing.
 		 * @see BaconBox::Animatable::currentFrame
 		 */
-		unsigned int getCurrentFrame() const;
+		size_t getCurrentFrame() const;
 
 		/**
 		 * Sets the current frame. Does nothing if the received index is too
@@ -118,7 +118,7 @@ namespace BaconBox {
 		 * @see BaconBox::Animatable::currentFrame
 		 * @see BaconBox::Animatable::currentNbLoops
 		 */
-		void incrementCurrentFrame(unsigned int increment = 1);
+		void incrementCurrentFrame(size_t increment = 1);
 
 		/**
 		 * Gets the number of times the animation has looped.
@@ -316,7 +316,7 @@ namespace BaconBox {
 		 * Animatable's frames attribute. If no animation is playing, contains
 		 * 0.
 		 */
-		unsigned int currentFrame;
+		size_t currentFrame;
 
 		/// Current number of times the animation has looped.
 		int currentNbLoops;
