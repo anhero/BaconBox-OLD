@@ -623,7 +623,7 @@ namespace BaconBox {
 					// with the alignment position.
 					it = vertices.getBegin();
 					delta = *it;
-					it += 3;
+					it += 2;
 					delta = alignmentPosition - (delta + (*it - delta) * 0.5f);
 
 				} else if (alignment == TextAlignment::RIGHT) {
@@ -632,7 +632,7 @@ namespace BaconBox {
 					it = vertices.getBegin();
 					++it;
 					delta = *it;
-					++it;
+					it += 2;
 					delta = alignmentPosition - (delta + (*it - delta) * 0.5f);
 
 				} else if (alignment == TextAlignment::CENTER) {
