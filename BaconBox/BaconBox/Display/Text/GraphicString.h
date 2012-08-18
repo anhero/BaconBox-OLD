@@ -486,14 +486,14 @@ namespace BaconBox {
 			if (alignment == TextAlignment::LEFT) {
 				StandardVertexArray::ConstIterator i = vertices.getBegin();
 				Vector2 tmp = *i;
-				i += 3;
+				i += 2;
 				alignmentPosition = tmp + (*i - tmp) * 0.5f;
 
 			} else if (alignment == TextAlignment::RIGHT) {
 				StandardVertexArray::ConstIterator i = vertices.getBegin();
 				++i;
 				Vector2 tmp = *i;
-				++i;
+				i += 2;
 				alignmentPosition = tmp + (*i - tmp) * 0.5f;
 
 			} else {
