@@ -9,7 +9,13 @@
 
 namespace BaconBox {
 	/**
-	 * Represents a simple buttons that has graphics for 4 states.
+	 * Represents a simple buttons that has graphics for 4 states. A single
+	 * texture is used for all of the button's states. The width of the button
+	 * is equal to the texture's width divided by 4 (so all of the button's
+	 * graphics are of equal size). The first graphic quarter in the texture is
+	 * used for the normal state, the second is used for the hover state, the
+	 * third is used for the pressed state and the last one is used for the
+	 * inactive state.
 	 * @ingroup GUI
 	 */
 	class SimpleButton : public Button {
