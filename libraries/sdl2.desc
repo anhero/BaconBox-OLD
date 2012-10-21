@@ -1,0 +1,33 @@
+#!/bin/bash
+
+_name="SDL2"
+_license="zlib"
+_version="2.0.0-dd7e57847ea9"
+_archive="${_name}-${_version}.tar.bz2"
+_archive_url="http://anhero.net/stuff/${_archive}"
+_hash="04406a85db1c67f848bc0110b3b43694"
+
+load_base http.fetch
+load_base configuremakemake.build
+
+if [[ "$(uname -s)" != "Darwin" ]]; then
+	config_cmdline="--enable-shared=no"
+fi
+
+if [ -n "${target_crosscompile-}" ]; then
+	if [[ -n "${configure_host-}" ]]; then
+		config_cmdline=$config_cmdline" --host=${configure_host}"
+	fi
+fi
+
+copy_function build __build
+
+function build() {
+
+	print_info Patching SDL
+	cd "${lib_workdir}/${_name}-${_version}/"
+
+	__build
+}
+
+# vim: ft=sh

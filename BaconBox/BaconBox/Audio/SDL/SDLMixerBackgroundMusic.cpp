@@ -1,6 +1,6 @@
 #include "BaconBox/Audio/SDL/SDLMixerBackgroundMusic.h"
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "BaconBox/Console.h"
 
