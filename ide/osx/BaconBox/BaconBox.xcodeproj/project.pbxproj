@@ -395,8 +395,6 @@
 		5109D1DD159921F4009861A3 /* libJsonBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5109D1DB159921F4009861A3 /* libJsonBox.a */; };
 		5109D1DE159921F4009861A3 /* libogg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5109D1DC159921F4009861A3 /* libogg.a */; };
 		5109D1E0159921FB009861A3 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5109D1DF159921FB009861A3 /* libpng.a */; };
-		5109D1E215992204009861A3 /* libSDL_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5109D1E115992204009861A3 /* libSDL_mixer.a */; };
-		5109D1E41599220F009861A3 /* libSDL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5109D1E31599220F009861A3 /* libSDL.a */; };
 		51282F71159F74E300AC6980 /* sigly.h in Headers */ = {isa = PBXBuildFile; fileRef = 51282F70159F74E300AC6980 /* sigly.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		51282F87159F78C600AC6980 /* Array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51282F74159F78C600AC6980 /* Array.cpp */; };
 		51282F88159F78C600AC6980 /* Array.h in Headers */ = {isa = PBXBuildFile; fileRef = 51282F75159F78C600AC6980 /* Array.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -415,9 +413,11 @@
 		51282F95159F78C600AC6980 /* Value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51282F84159F78C600AC6980 /* Value.cpp */; };
 		51282F96159F78C600AC6980 /* Value.h in Headers */ = {isa = PBXBuildFile; fileRef = 51282F85159F78C600AC6980 /* Value.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51282F97159F78C600AC6980 /* XmlSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 51282F86159F78C600AC6980 /* XmlSerializer.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		51282FAB159F83AB00AC6980 /* libSDLmain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51282FAA159F83AB00AC6980 /* libSDLmain.a */; };
 		51282FAD159F83BC00AC6980 /* libvorbisenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51282FAC159F83BC00AC6980 /* libvorbisenc.a */; };
 		51282FAF159F83C200AC6980 /* libvorbisfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51282FAE159F83C200AC6980 /* libvorbisfile.a */; };
+		513AB74C1623B91200BE0006 /* libSDL2_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 513AB74B1623B91200BE0006 /* libSDL2_mixer.a */; };
+		513AB74F1623B91900BE0006 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 513AB74E1623B91900BE0006 /* libSDL2.a */; };
+		513AB7511623B91F00BE0006 /* libSDL2main.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 513AB7501623B91F00BE0006 /* libSDL2main.a */; };
 		517C2EEE159922BA006C2CAB /* libtinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 517C2EED159922BA006C2CAB /* libtinyxml.a */; };
 		517C2EF1159922C1006C2CAB /* libvorbis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 517C2EF0159922C1006C2CAB /* libvorbis.a */; };
 		517C2EF3159922CD006C2CAB /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 517C2EF2159922CD006C2CAB /* libz.a */; };
@@ -801,8 +801,6 @@
 		5109D1DB159921F4009861A3 /* libJsonBox.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libJsonBox.a; path = ../../../libraries/Darwin/x86_64/lib/libJsonBox.a; sourceTree = "<group>"; };
 		5109D1DC159921F4009861A3 /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libogg.a; path = ../../../libraries/Darwin/x86_64/lib/libogg.a; sourceTree = "<group>"; };
 		5109D1DF159921FB009861A3 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../../libraries/Darwin/x86_64/lib/libpng.a; sourceTree = "<group>"; };
-		5109D1E115992204009861A3 /* libSDL_mixer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL_mixer.a; path = ../../../libraries/Darwin/x86_64/lib/libSDL_mixer.a; sourceTree = "<group>"; };
-		5109D1E31599220F009861A3 /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../../../libraries/Darwin/x86_64/lib/libSDL.a; sourceTree = "<group>"; };
 		51282F70159F74E300AC6980 /* sigly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sigly.h; path = ../../../libraries/Darwin/x86_64/include/sigly.h; sourceTree = "<group>"; };
 		51282F74159F78C600AC6980 /* Array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Array.cpp; sourceTree = "<group>"; };
 		51282F75159F78C600AC6980 /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Array.h; sourceTree = "<group>"; };
@@ -821,9 +819,11 @@
 		51282F84159F78C600AC6980 /* Value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Value.cpp; sourceTree = "<group>"; };
 		51282F85159F78C600AC6980 /* Value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Value.h; sourceTree = "<group>"; };
 		51282F86159F78C600AC6980 /* XmlSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlSerializer.h; sourceTree = "<group>"; };
-		51282FAA159F83AB00AC6980 /* libSDLmain.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDLmain.a; path = ../../../libraries/Darwin/x86_64/lib/libSDLmain.a; sourceTree = "<group>"; };
 		51282FAC159F83BC00AC6980 /* libvorbisenc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisenc.a; path = ../../../libraries/Darwin/x86_64/lib/libvorbisenc.a; sourceTree = "<group>"; };
 		51282FAE159F83C200AC6980 /* libvorbisfile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisfile.a; path = ../../../libraries/Darwin/x86_64/lib/libvorbisfile.a; sourceTree = "<group>"; };
+		513AB74B1623B91200BE0006 /* libSDL2_mixer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_mixer.a; path = ../../../libraries/Darwin/x86_64/lib/libSDL2_mixer.a; sourceTree = "<group>"; };
+		513AB74E1623B91900BE0006 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../../libraries/Darwin/x86_64/lib/libSDL2.a; sourceTree = "<group>"; };
+		513AB7501623B91F00BE0006 /* libSDL2main.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2main.a; path = ../../../libraries/Darwin/x86_64/lib/libSDL2main.a; sourceTree = "<group>"; };
 		517C2EED159922BA006C2CAB /* libtinyxml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtinyxml.a; path = ../../../libraries/Darwin/x86_64/lib/libtinyxml.a; sourceTree = "<group>"; };
 		517C2EF0159922C1006C2CAB /* libvorbis.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbis.a; path = ../../../libraries/Darwin/x86_64/lib/libvorbis.a; sourceTree = "<group>"; };
 		517C2EF2159922CD006C2CAB /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = ../../../libraries/Darwin/x86_64/lib/libz.a; sourceTree = "<group>"; };
@@ -840,14 +840,14 @@
 				5109D1DD159921F4009861A3 /* libJsonBox.a in Frameworks */,
 				5109D1DE159921F4009861A3 /* libogg.a in Frameworks */,
 				5109D1E0159921FB009861A3 /* libpng.a in Frameworks */,
-				5109D1E215992204009861A3 /* libSDL_mixer.a in Frameworks */,
-				5109D1E41599220F009861A3 /* libSDL.a in Frameworks */,
 				517C2EEE159922BA006C2CAB /* libtinyxml.a in Frameworks */,
 				517C2EF1159922C1006C2CAB /* libvorbis.a in Frameworks */,
 				517C2EF3159922CD006C2CAB /* libz.a in Frameworks */,
-				51282FAB159F83AB00AC6980 /* libSDLmain.a in Frameworks */,
 				51282FAD159F83BC00AC6980 /* libvorbisenc.a in Frameworks */,
 				51282FAF159F83C200AC6980 /* libvorbisfile.a in Frameworks */,
+				513AB74C1623B91200BE0006 /* libSDL2_mixer.a in Frameworks */,
+				513AB74F1623B91900BE0006 /* libSDL2.a in Frameworks */,
+				513AB7511623B91F00BE0006 /* libSDL2main.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1464,10 +1464,10 @@
 				51282F70159F74E300AC6980 /* sigly.h */,
 				517C2EF2159922CD006C2CAB /* libz.a */,
 				517C2EF0159922C1006C2CAB /* libvorbis.a */,
-				51282FAA159F83AB00AC6980 /* libSDLmain.a */,
+				513AB7501623B91F00BE0006 /* libSDL2main.a */,
 				517C2EED159922BA006C2CAB /* libtinyxml.a */,
-				5109D1E31599220F009861A3 /* libSDL.a */,
-				5109D1E115992204009861A3 /* libSDL_mixer.a */,
+				513AB74E1623B91900BE0006 /* libSDL2.a */,
+				513AB74B1623B91200BE0006 /* libSDL2_mixer.a */,
 				5109D1D8159921ED009861A3 /* libfreetype.a */,
 				5109D1DF159921FB009861A3 /* libpng.a */,
 				51282FAE159F83C200AC6980 /* libvorbisfile.a */,

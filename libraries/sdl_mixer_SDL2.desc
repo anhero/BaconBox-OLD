@@ -1,0 +1,53 @@
+#!/bin/bash
+
+_name="SDL_mixer"
+_license="zlib" 
+_version="1.2.11"
+_archive="${_name}-1.2.11.tar.bz2"
+_archive_url="http://anhero.net/stuff/${_archive}"
+_hash="66424413d9826161a5d44b4f5002658c" 
+
+# Library configuration
+config_cmdline="--with-sdl-prefix=${libs_builddir}"
+
+if [[ "$(uname -s)" != "Darwin" ]]; then
+	config_cmdline="${config_cmdline-} --enable-shared=no"
+fi
+
+if [ -n "${target_crosscompile-}" ]; then
+	if [[ -n "${configure_host-}" ]]; then
+		config_cmdline=$config_cmdline" --host=${configure_host}"
+	fi
+fi
+
+config_cmdline="$config_cmdline --enable-music-ogg=yes"
+config_cmdline="$config_cmdline --enable-music-ogg-tremor=no"
+#config_cmdline="$config_cmdline --enable-music-ogg-shared=no"
+
+config_cmdline="$config_cmdline --enable-music-mod=no"
+config_cmdline="$config_cmdline --enable-music-midi=no"
+config_cmdline="$config_cmdline --enable-music-timidity-midi=no"
+config_cmdline="$config_cmdline --enable-music-native-midi=no"
+config_cmdline="$config_cmdline --enable-music-native-midi-gpl=no"
+config_cmdline="$config_cmdline --enable-music-flac=no"
+config_cmdline="$config_cmdline --enable-music-flac-shared=no"
+config_cmdline="$config_cmdline --enable-music-mp3=no"
+config_cmdline="$config_cmdline --enable-music-mp3-shared=no"
+config_cmdline="$config_cmdline --enable-music-mp3-mad-gpl=no"
+
+SDL_CONFIG="${libs_builddir}/bin/sdl2-config"
+SDLLIBS="-Wl,-Bstatic $(${SDL_CONFIG} --static-libs) -Wl,-Bdynamic"
+
+
+load_base http.fetch
+load_base configuremakemake.build
+
+copy_function build __build
+
+function build() {
+	pushd "${lib_workdir}/${_name}-${_version}/"
+	
+	__build
+}
+
+# vim: ft=sh

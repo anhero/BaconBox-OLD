@@ -14,8 +14,10 @@ fi
 # For ports which aren't using SDL
 if [[ ${libs_target-} != "ios"     ]] &&
    [[ ${libs_target-} != "android" ]]; then
-	libraries+=( 'sdl' )
-	libraries+=( 'sdl_mixer' )
+   	#libraries+=( 'sdl' )
+	#libraries+=( 'sdl_mixer' )
+	libraries+=( 'sdl2' )
+	libraries+=( 'sdl_mixer_SDL2' )
 fi
 
 # Serialization libraries

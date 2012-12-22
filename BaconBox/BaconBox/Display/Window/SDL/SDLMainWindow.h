@@ -5,7 +5,7 @@
 #ifndef RB_SDL_MAIN_WINDOW_H
 #define RB_SDL_MAIN_WINDOW_H
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "BaconBox/Display/Window/MainWindow.h"
 

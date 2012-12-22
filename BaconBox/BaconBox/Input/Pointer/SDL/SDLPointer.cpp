@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 using namespace BaconBox;
 
@@ -24,8 +24,8 @@ void SDLPointer::updateDevice() {
 	getCursorButtons(0)[CursorButton::MIDDLE] = static_cast<bool>(buttons & SDL_BUTTON(SDL_BUTTON_MIDDLE));
 	getCursorButtons(0)[CursorButton::OTHER_BUTTON_1] = static_cast<bool>(buttons & SDL_BUTTON(SDL_BUTTON_X1));
 	getCursorButtons(0)[CursorButton::OTHER_BUTTON_2] = static_cast<bool>(buttons & SDL_BUTTON(SDL_BUTTON_X2));
-	getCursorButtons(0)[CursorButton::SCROLL_UP] = static_cast<bool>(buttons & SDL_BUTTON(SDL_BUTTON_WHEELUP));
-	getCursorButtons(0)[CursorButton::SCROLL_DOWN] = static_cast<bool>(buttons & SDL_BUTTON(SDL_BUTTON_WHEELDOWN));
+	//getCursorButtons(0)[CursorButton::SCROLL_UP] = static_cast<bool>(buttons & SDL_BUTTON(SDL_BUTTON_WHEELUP));
+	//getCursorButtons(0)[CursorButton::SCROLL_DOWN] = static_cast<bool>(buttons & SDL_BUTTON(SDL_BUTTON_WHEELDOWN));
 	for(CursorButton::Enum i = 0; i < CursorButton::NB_BUTTONS; ++i) {
 		if(isButtonPressed(i)) {
 			buttonPress(PointerButtonSignalData(state, 0, i));

@@ -12,7 +12,9 @@
 #endif
 
 #ifdef RB_SDL
-#include <SDL/SDL_mixer.h>
+#include <SDL2/SDL_mixer.h>
+//#include <SDL/SDL_mixer.h>
+
 #endif
 
 namespace BaconBox {
