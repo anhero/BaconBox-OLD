@@ -383,15 +383,14 @@ namespace BaconBox {
 			// width.
 			Vector2 lineLength = *i - initialPosition;
 			++i;
-			++i;
 			initialPosition += (*i - initialPosition) * 0.5f;
 			i = buttonSprite.getVertices().getBegin();
 			Vector2 tmpPosition = *i;
 			++i;
 			lineLength -= *i - tmpPosition;
 			++i;
-			++i;
 			initialPosition += (tmpPosition - *i) * 0.5f;
+            
 			buttonSprite.move((initialPosition + (lineLength * clampedValue)) - *buttonSprite.getVertices().getBegin());
 		}
 
